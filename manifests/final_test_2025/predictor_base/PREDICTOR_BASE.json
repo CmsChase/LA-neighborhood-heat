@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "final-test-predictor-base-v1-static-calendar",
+  "state": "complete_target_blind",
+  "generated_at_utc": "2026-07-23T00:55:07.123837+00:00",
+  "final_test_year": 2025,
+  "target_blind": true,
+  "target_or_qa_tables_read": [],
+  "target_values_read": false,
+  "models_loaded": false,
+  "model_scores_read": false,
+  "one_time_evaluation_consumed": false,
+  "row_count": 25208,
+  "date_count": 23,
+  "tract_count": 1096,
+  "feature_names": [
+    "nlcd_open_water_fraction",
+    "nlcd_developed_open_fraction",
+    "nlcd_developed_low_fraction",
+    "nlcd_developed_high_fraction",
+    "nlcd_barren_fraction",
+    "nlcd_forest_fraction",
+    "nlcd_shrub_grass_fraction",
+    "nlcd_agriculture_fraction",
+    "nlcd_wetland_fraction",
+    "impervious_mean_fraction",
+    "impervious_p90_fraction",
+    "impervious_at_least_50_fraction",
+    "elevation_mean_m",
+    "elevation_std_m",
+    "slope_mean_degrees",
+    "slope_p90_degrees",
+    "pacific_coast_distance_mean_km",
+    "pacific_coast_distance_p10_km",
+    "calendar_doy_sin",
+    "calendar_doy_cos"
+  ],
+  "feature_count": 20,
+  "semantic_table_sha256": "abe696c6f3d97b95480a8897181a7deac89b5a9a6821ca1af694d20a7a4216b2",
+  "formal_model_lock": {
+    "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\model_lock\\MODEL_LOCK.json",
+    "sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
+    "commit_sha256": "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b"
+  },
+  "inputs": {
+    "landsat_inventory": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\LANDSAT_INVENTORY.json",
+      "sha256": "348a728e35e32c95bac1d962526106584ba0cdf097037d0a5bdf95cbe8758988",
+      "commit_sha256": "46892f9c1fea774dc127e2bafb527907b33d4362c166a442e9557fae42b06f3e"
+    },
+    "key_universe": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\target_blind_key_universe.parquet",
+      "sha256": "40b8104f739ce5dd73481f46f3258c3e127806b606b62856a6f4a80ee9fa87ee",
+      "bytes": 20933,
+      "rows": 25208,
+      "schema_sha256": "16c90baab730f0ba0ec395ce152472ed9d464d8b6ab787624c780a2524259396"
+    },
+    "static_features": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\static_features\\static_features.parquet",
+      "sha256": "f293f1252b757f0b928fc421569364bd8febcb78c26d579a07d05576ab19be58",
+      "bytes": 150690,
+      "rows": 1096,
+      "schema_sha256": "de309ec96382183bb34920b716c35ede9b00549d643869595cb1fa22575547b9"
+    },
+    "static_provenance": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\static_features\\static_features_provenance.json",
+      "sha256": "742c757cfef57b188629a03398df5a5dbb5a0659190f0e6a1deda91767741214",
+      "commit_sha256": "1c6ea2e0ff446a53843084e4c985f7af91124c7ad6c738a7c9bbc79530f75666"
+    }
+  },
+  "pipeline_sha256": "cb7b55dfc43181ad35bc17338a0c99565eaa0c4ca53e037df7b8c6d91a04c8a8",
+  "pipeline_fingerprint": {
+    "algorithm_version": "final-test-predictor-base-v1-static-calendar",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "scripts/build_final_test_predictor_base.py": "2d87ac3228ca6b0e97eaf1f9a8b0dc541fbd8b9f4dac71b8ae5e0f5a57e457fb",
+      "src/la_heat/calendar_features.py": "53814e4ef5d0cd048086bdb3fe54eacfbb2a4414e8f08fb288cdceb30b35c942",
+      "src/la_heat/final_test_inventory.py": "ff55914d59b74ab86ebd65e876faca469b9ee59718c8755ccaf3f188c708d3e7",
+      "src/la_heat/final_test_predictor_base.py": "c29e130ef72a1a5200a7bbdefeea1ae35e1794ca4f998f6bb4d82046bf2beb11",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "output_files": {
+    "predictor_base.parquet": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\predictor_base\\predictor_base.parquet",
+      "sha256": "690617f2bc72670fbc9759634d0eeb6c980ce410309e71ecfb2d80139453769c",
+      "bytes": 205854,
+      "rows": 25208,
+      "schema_sha256": "63a114a3f0e8a4e48bc358b20a3544ec44b52a42c532a65baad587767ed4d59c"
+    }
+  },
+  "commit_sha256": "aeb4e7478863dfc15203d5b6098aab2319429faf87e16f4715603385ff22789f"
+}
