@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "phase2-combined-feature-registry-v1",
+  "status": "predeclared_draft",
+  "phase2_complete": false,
+  "registry_contract_valid": true,
+  "dynamic_values_complete": false,
+  "dynamic_coverage_complete": false,
+  "target_or_qa_tables_read": [],
+  "row_count": 49,
+  "role_counts": {
+    "model": 46,
+    "key": 2,
+    "audit_only": 1
+  },
+  "family_counts": {
+    "weather": 21,
+    "land_use": 13,
+    "geography": 6,
+    "satellite": 5,
+    "key": 2,
+    "calendar": 2
+  },
+  "ordered_registry_semantic_sha256": "0638ef9c0e8c440764efede0cff2ef694e86d8d64373e23a43f2c87623f1168e",
+  "registry_semantic_sha256": "44827f29f3dcf4e8819a193424762e05cc234ff0e9c029632c24ab7e0feb392f",
+  "configuration_semantic_sha256": "1811e6e00d3da121f853bb146c5bef661b9523d2cad869d82ef947364227a482",
+  "configuration_payload": {
+    "development_start": "2020-05-01",
+    "static_registry_semantic_sha256": "562dbf03ba0ab47c498575cdd03af49091df3ed1ee4a0469fbecdf443bfb27bd",
+    "calendar_features": [
+      "calendar_doy_sin",
+      "calendar_doy_cos"
+    ],
+    "daymet": {
+      "dataset": "Daymet V4 R1",
+      "doi": "https://doi.org/10.3334/ORNLDAAC/2129",
+      "variables": [
+        "tmax",
+        "tmin",
+        "prcp",
+        "srad",
+        "vp",
+        "dayl"
+      ],
+      "derived_variables": [
+        "srad_energy_mj_m2_day"
+      ],
+      "windows_days": [
+        1,
+        3,
+        7
+      ],
+      "window_end_offset_days": -1
+    },
+    "sentinel": {
+      "dataset": "Sentinel-2 L2A historical archive",
+      "features": [
+        "sentinel_ndvi_lag60",
+        "sentinel_evi_lag60",
+        "sentinel_ndwi_lag60",
+        "sentinel_ndbi_lag60",
+        "sentinel_albedo_proxy_lag60"
+      ],
+      "window_start_offset_days": -60,
+      "window_end_offset_days": -1
+    },
+    "historical_archive_available_by": "historical archive queried 2026-07-18"
+  },
+  "pipeline_sha256": "60731013572f03d846c84d8a397a15da09edb100377dd89c2fa08aed05a97e9a",
+  "pipeline_fingerprint": {
+    "algorithm_version": "phase2-combined-feature-registry-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "scripts/build_phase2_registry.py": "432cd35dcb27f38f74e6da13bda92507227c1867ea16e3dad690911fcf128801",
+      "src/la_heat/calendar_features.py": "53814e4ef5d0cd048086bdb3fe54eacfbb2a4414e8f08fb288cdceb30b35c942",
+      "src/la_heat/feature_registry.py": "60901968206ab383197bc62ad8fae160d27b1b8af1f1643c5796bc61747ffec8",
+      "src/la_heat/phase2_registry.py": "6ad9842d0a7ede6e9359353ecfdd9e2230d65b63f56173c355992f38218ea6da",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/sentinel_features.py": "96610e4c3b805b49fd742f533b53f6957f8a9eee55f6253ef185ab82f5946160",
+      "src/la_heat/weather_daymet.py": "49371719eddb9b9b9025f7ef2fca2b846c146f8bb572d4189a9ff703b1d0cca3"
+    }
+  },
+  "inputs": {
+    "promoted_static_registry": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\static_features\\static_feature_registry.csv",
+      "sha256": "b79cd7575962ca038b7d30d8fc2dbc30f8ca811c434d9d6eb532ee1b1160fb76",
+      "bytes": 2140,
+      "rows": 21,
+      "semantic_sha256": "562dbf03ba0ab47c498575cdd03af49091df3ed1ee4a0469fbecdf443bfb27bd"
+    },
+    "promoted_static_provenance": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\static_features\\static_features_provenance.json",
+      "sha256": "742c757cfef57b188629a03398df5a5dbb5a0659190f0e6a1deda91767741214",
+      "commit_sha256": "1c6ea2e0ff446a53843084e4c985f7af91124c7ad6c738a7c9bbc79530f75666"
+    }
+  },
+  "output_files": {
+    "combined_feature_registry_draft.csv": {
+      "sha256": "b2ffbaa45fb0e8bb526b91a27f5fa63cb5efdbfa3c6e81894504b93312d89d02",
+      "bytes": 7062,
+      "rows": 49
+    }
+  },
+  "scientific_contract": {
+    "prediction_type": "historical hindcast",
+    "prediction_origin": "00:00 Los Angeles civil time on target date",
+    "dynamic_observed_predictors_end_by": "target day -1",
+    "daymet_window_definition": "complete civil days d-n through d-1",
+    "sentinel_window_definition": "physical acquisitions d-60 through d-1",
+    "operational_weather_forecast_claimed": false,
+    "dynamic_audit_metadata_in_registry": false,
+    "draft_reason": "Dynamic predictor values and coverage audits are unfinished; this artifact freezes metadata only and cannot promote Phase 2."
+  },
+  "commit_sha256": "fe48ac10a7f094dcd12647e713ee3e12c0e9e742877d11ba0f1ad50a79f575c9"
+}

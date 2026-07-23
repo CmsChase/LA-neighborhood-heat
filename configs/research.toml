@@ -1,0 +1,154 @@
+[study]
+name = "la_neighborhood_surface_heat"
+city = "City of Los Angeles"
+timezone = "America/Los_Angeles"
+crs_analysis = "EPSG:3310"
+bbox_wgs84 = [-118.67, 33.70, -118.15, 34.34]
+warm_season_months = [5, 6, 7, 8, 9, 10]
+start_date = "2020-05-01"
+development_end_date = "2024-10-31"
+final_test_year = 2025
+unlock_final_test = false
+primary_unit = "census_tract_x_overpass_date"
+minimum_independent_valid_dates = 30
+prediction_origin_local_time = "00:00:00"
+primary_dynamic_data_latest_offset_days = -1
+
+[boundaries]
+la_city_geojson = "https://data.lacity.org/resource/brvb-jr45.geojson?$limit=10"
+census_stac_api = "https://planetarycomputer.microsoft.com/api/stac/v1"
+census_collection = "us-census"
+census_item = "2020-cb_2020_us_tract_500k"
+detailed_tract_arcgis_layer = "https://services2.arcgis.com/Uq9r85Potqm3MfRV/arcgis/rest/services/biosds3071_fpu/FeatureServer/0"
+detailed_tract_expected_count = 2498
+state_fips = "06"
+county_fips = "037"
+minimum_city_area_fraction = 0.50
+exclude_special_use_tracts = true
+
+[landsat]
+stac_api = "https://planetarycomputer.microsoft.com/api/stac/v1"
+collection = "landsat-c2-l2"
+sensors = ["landsat-8", "landsat-9"]
+target_asset = "lwir11"
+qa_pixel_asset = "qa_pixel"
+qa_radsat_asset = "qa_radsat"
+# Full development cohort uses all complete scenes; local pixel QA decides labels.
+scene_cloud_cover_max_percent = 100.0
+pilot_scene_cloud_cover_max_percent = 15.0
+excluded_qa_pixel_bits = [0, 1, 2, 3, 4, 5, 7]
+lst_scale_kelvin = 0.00341802
+lst_offset_kelvin = 149.0
+kelvin_to_celsius = 273.15
+minimum_valid_pixel_fraction = 0.60
+minimum_valid_pixels_per_tract = 20
+minimum_tract_footprint_fraction = 0.90
+minimum_st_dn = 293
+maximum_st_dn = 61440
+# ST_QA is recorded as label-quality metadata, not converted into a hard mask.
+# The 2 K value is retained only as the strict prespecified sensitivity scenario.
+maximum_st_uncertainty_kelvin = 2.0
+apply_st_uncertainty_threshold = false
+minimum_cloud_distance_km = 1.0
+exclude_terrain_occlusion = true
+maximum_overpass_span_minutes = 15
+minimum_city_union_coverage_fraction = 0.98
+target_grid_crs = "EPSG:32611"
+target_grid_resolution_m = 30.0
+# Landsat UTM 30 m pixels in the locked WRS scenes have raster edges at
+# 15 + 30*k metres and centers at 30*k metres on both axes.
+target_grid_anchor_x_m = 15.0
+target_grid_anchor_y_m = 15.0
+minimum_date_tract_retention_fraction = 0.50
+
+[static_land_mask]
+stac_api = "https://planetarycomputer.microsoft.com/api/stac/v1"
+collection = "esa-worldcover"
+year = 2020
+asset = "map"
+nodata_class = 0
+water_classes = [80]
+categorical_resampling = "mode"
+
+[static_features]
+minimum_source_coverage_fraction = 0.98
+target_support_directory = "data/interim/targets"
+raw_static_directory = "data/raw/static"
+output_directory = "data/processed/static_features"
+nlcd_land_cover_filename = "nlcd_2016_land_cover_la_subset.tif"
+nlcd_impervious_filename = "nlcd_2016_impervious_la_subset.tif"
+srtm_filenames = ["N33W119.tif", "N34W119.tif"]
+coastline_filename = "tl_2019_us_coastline.zip"
+coastline_layer = "tl_2019_us_coastline.shp"
+coastline_mtfcc = "L4150"
+coastline_search_buffer_km = 500.0
+nlcd_land_cover_nodata = 0
+nlcd_impervious_nodata = 127
+srtm_nodata = -32768
+categorical_resampling = "nearest"
+continuous_resampling = "bilinear"
+slope_operator = "horn_3x3"
+slope_edge_padding_pixels = 1
+continuous_std_ddof = 0
+quantile_method = "linear"
+
+[static_features.nlcd_land_cover_groups]
+open_water = [11]
+developed_open = [21]
+developed_low = [22]
+developed_medium = [23]
+developed_high = [24]
+barren = [31]
+forest = [41, 42, 43]
+shrub_grass = [52, 71]
+agriculture = [81, 82]
+wetland = [90, 95]
+
+[pilot]
+start_date = "2024-06-01"
+end_date = "2024-10-15"
+number_of_dates = 3
+output_directory = "data/interim/pilot"
+
+[pilot.qa_sensitivity]
+include_no_st_uncertainty_threshold = true
+st_uncertainty_thresholds_kelvin = [2.0, 3.0, 4.0, 6.0]
+cloud_distance_thresholds_km = [0.0, 0.5, 1.0, 2.0]
+
+[satellite_features]
+source = "Sentinel-2 L2A harmonized"
+lag_start_days = 60
+lag_end_days = 1
+allow_same_day_optical_primary_model = false
+indices = ["ndvi", "evi", "ndwi", "ndbi", "albedo_proxy"]
+
+[validation]
+spatial_block_size_km = 5.0
+hotspot_quantile = 0.80
+primary_metric = "mae_celsius"
+spatial_metrics = ["anomaly_mae_celsius", "per_date_spearman"]
+minimum_mae_improvement_fraction = 0.10
+minimum_median_per_date_spearman = 0.50
+minimum_relative_endpoint_tract_fraction = 0.80
+maximum_relative_endpoint_quartile_retention_gap = 0.20
+minimum_relative_joint_cell_tracts = 20
+minimum_relative_joint_cell_retention_fraction = 0.60
+
+[weather_features]
+source = "Daymet V4 R1"
+dataset_doi = "10.3334/ORNLDAAC/2129"
+cmr_collection_concept_id = "C2532426483-ORNL_CLOUD"
+cmr_granules_url = "https://cmr.earthdata.nasa.gov/search/granules.json"
+cmr_service_bridge_url = "https://cmr.earthdata.nasa.gov/service-bridge/ous/collection/C2532426483-ORNL_CLOUD"
+subset_access_route = "direct_dap4_fixed_indices_v1"
+direct_subset_y_indices = [5666, 5745]
+direct_subset_x_indices = [2900, 2963]
+region = "na"
+variables = ["tmax", "tmin", "prcp", "srad", "vp", "dayl"]
+raw_subset_directory = "data/raw/daymet/v4r1/subsets"
+manifest_directory = "manifests/daymet_grid"
+token_environment_variables = ["EARTHDATA_TOKEN", "NASA_EARTHDATA_TOKEN", "EDL_TOKEN"]
+maximum_subset_bytes = 1000000000
+latest_primary_source_offset_days = -1
+rolling_windows_days = [1, 3, 7]
+allow_target_day_observations_primary_model = false

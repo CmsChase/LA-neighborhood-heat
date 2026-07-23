@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "model-endpoint-sensor-diagnostics-v1",
+  "state": "complete",
+  "ready_for_endpoint_interpretation": true,
+  "generated_at_utc": "2026-07-22T09:22:35.616397+00:00",
+  "analysis_scope": "locked_2020_2024_development_oof_only",
+  "final_test_year": 2025,
+  "final_test_locked": true,
+  "contains_final_test_year": false,
+  "tract_date_row_count": 63403,
+  "independent_date_count": 65,
+  "independent_spatial_block_count": 71,
+  "relative_endpoint_gate_date_count": 34,
+  "family_count": 3,
+  "model_count": 5,
+  "focus_comparison": {
+    "family": "joint",
+    "model_ids": [
+      "B1",
+      "M2"
+    ]
+  },
+  "hotspot_contract": {
+    "gate_column": "relative_endpoint_coverage_pass",
+    "label_column": "relative_hotspot_top20",
+    "positive_fraction": 0.2,
+    "continuous_score_column": "y_pred",
+    "exact_top_k": true,
+    "tie_break": "tract_geoid_ascending",
+    "random_row_resampling_used": false
+  },
+  "sensor_contract": {
+    "sensors": [
+      "landsat-8",
+      "landsat-9"
+    ],
+    "mae_rmse_bias_aggregation": "arithmetic_mean_of_per_date_metrics",
+    "spearman_aggregation": "mean_and_median_of_defined_per_date_coefficients"
+  },
+  "sentinel_strata_contract": {
+    "feature_columns": [
+      "sentinel_ndvi_lag60",
+      "sentinel_evi_lag60",
+      "sentinel_ndwi_lag60",
+      "sentinel_ndbi_lag60",
+      "sentinel_albedo_proxy_lag60"
+    ],
+    "allowed_strata": [
+      "sentinel_complete",
+      "sentinel_all_five_missing"
+    ],
+    "partial_missingness_allowed": false
+  },
+  "input_authentication": {
+    "compile_provenance_file_sha256": "55416c987a2d25f9177dd974307ae595761c1db31ecaa9d7561fb6c42d4d5e7c",
+    "compile_provenance_commit_sha256": "00d1e59ce78baffbf9d24361ac8ba16a1d577b22cb193e15596627259190ed07",
+    "oof_predictions_sha256": "0c06b88fd09cd514745b699e6b6a7e12901db8d3247e42b582feaf1f7e91c04a",
+    "model_dataset_provenance_file_sha256": "1eafe424a4c718d6a3b18cff938036f958858c70b344740788993b119bfbb04b",
+    "model_dataset_commit_sha256": "9c2f903993167fc2a228b3cfe60a23fe33f57f252bae6299458338cb8eb967ad",
+    "target_progress_sha256": "3f630dfcc8a1c2a19b093e7fe0f4bdc7f830fef42266fcf1156112f0eb959046",
+    "model_ready_target_sha256": "11f4fe862570895441036964a9b308e92c2ee6ba8a87b5da9009ffd5208a4bda",
+    "date_summary_sha256": "2c6d6a597c6b1b321c4f632291c22dfe5788a058fe82fd65114a5a59d5d0be83",
+    "development_model_table_sha256": "3a365f5dd3e9d410585a34695bb444d67b220c4b40a9348288a540078bc27f75"
+  },
+  "compile_provenance_commit_sha256": "00d1e59ce78baffbf9d24361ac8ba16a1d577b22cb193e15596627259190ed07",
+  "model_dataset_commit_sha256": "9c2f903993167fc2a228b3cfe60a23fe33f57f252bae6299458338cb8eb967ad",
+  "analysis_config": {
+    "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/configs/model_endpoint_diagnostics.toml",
+    "file_sha256": "c50563978ebb4885cf1b9c0a6777badc0a3d7051de5d0b284e8ce080812865ed",
+    "semantic_sha256": "3b188221263ad4673846ce5170fa622b5395e51a4aaa750114e1793d3986975b"
+  },
+  "pipeline_sha256": "f308a24be06cd0aaf79da2a8f1215c1908607d889d5fdf6ba2c928eaf348e67c",
+  "pipeline_fingerprint": {
+    "algorithm_version": "model-endpoint-sensor-diagnostics-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "scripts/analyze_model_endpoints.py": "37520af7217e86a8d8cb85119e0c77a96ca6cdb4479f6ef4a3b43cec625614be",
+      "src/la_heat/model_endpoint_diagnostics.py": "390b5dffb952099f0c3b64c9b15d2a4194a8e853f5be650fd983244ca23d53b6",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "output_files": {
+    "hotspot_per_date.csv": {
+      "path": "hotspot_per_date.csv",
+      "path_base": "output_directory",
+      "sha256": "089c7bf557f66315143a85cda8de469a998418ef7c5605d0f8483a80df5b9cca",
+      "bytes": 404324,
+      "rows": 510,
+      "schema_sha256": "9c56776cff57702bb885d22d6aea290150ca2db0e9543801d9676bc551a4a5b5"
+    },
+    "hotspot_summary.csv": {
+      "path": "hotspot_summary.csv",
+      "path_base": "output_directory",
+      "sha256": "5fc1a8b01f5aae68829601e115ea42be6aa9e6862131ba64fb1cbff4d73903c6",
+      "bytes": 11865,
+      "rows": 15,
+      "schema_sha256": "5a025d309f29c33870a22614f80c26a91b7071a8e703cf27260bffb966069b79"
+    },
+    "sensor_per_date_metrics.csv": {
+      "path": "sensor_per_date_metrics.csv",
+      "path_base": "output_directory",
+      "sha256": "b28e6cd7c6722b1da5bf6ca28648713d04c330caa9caa8c12246a3708a0a98ff",
+      "bytes": 756779,
+      "rows": 975,
+      "schema_sha256": "1047d213050f0ec53dfbec50cbab8d6202054c4a3aaf71a75432343a2985628c"
+    },
+    "sensor_summary.csv": {
+      "path": "sensor_summary.csv",
+      "path_base": "output_directory",
+      "sha256": "8dd7a706ca932c1aaf0f309c60b14b799e59a4d0cedc5f7151c7ca418920a1f9",
+      "bytes": 24285,
+      "rows": 30,
+      "schema_sha256": "021d43585b79165b33ddb9b12a783078a2f5a69176267d8ab76bf1ffd912b0e5"
+    },
+    "sentinel_stratum_summary.csv": {
+      "path": "sentinel_stratum_summary.csv",
+      "path_base": "output_directory",
+      "sha256": "ac6968788d26374e4eaf0f250ccc2d743d8cfb07b498eb8b8c474b75e13c5083",
+      "bytes": 25754,
+      "rows": 30,
+      "schema_sha256": "e9aa3fd09a6ec4c2fa8b78c3dbcdbdec27b1c3aff855d68605042068803910ae"
+    },
+    "model_endpoint_diagnostics_summary.json": {
+      "path": "model_endpoint_diagnostics_summary.json",
+      "path_base": "output_directory",
+      "sha256": "43287b37c78c2865f6fd93317b7e84da63b90d4ffe2bb941e4d92de91031f62e",
+      "bytes": 16673
+    }
+  },
+  "commit_sha256": "2ec9540ca7817dd53802e5849a35a8499b7f0755c7057b3c3b4292183475881a"
+}

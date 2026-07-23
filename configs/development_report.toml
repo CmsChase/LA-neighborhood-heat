@@ -1,0 +1,42 @@
+schema_version = 1
+algorithm_version = "development-report-v1"
+state = "frozen_development_reporting"
+
+[paths]
+research_config = "configs/research.toml"
+model_selection_config = "configs/model_selection.toml"
+robustness_reconciliation_config = "configs/robustness_reconciliation.toml"
+literature_evidence = "docs/LITERATURE_EVIDENCE.md"
+initial_results_provenance = "reports/tables/model_results_initial/model_results_initial_provenance.json"
+initial_results_summary = "reports/tables/model_results_initial/model_results_initial_summary.json"
+endpoint_provenance = "reports/tables/model_endpoint_diagnostics/model_endpoint_diagnostics_provenance.json"
+endpoint_summary = "reports/tables/model_endpoint_diagnostics/model_endpoint_diagnostics_summary.json"
+qa_provenance = "reports/tables/model_qa_diagnostics/model_qa_diagnostics_provenance.json"
+qa_summary = "reports/tables/model_qa_diagnostics/model_qa_diagnostics_summary.json"
+residual_spatial_provenance = "reports/tables/residual_spatial/residual_spatial_diagnostics_provenance.json"
+residual_spatial_summary = "reports/tables/residual_spatial/joint_m2_b1_morans_i_summary.csv"
+diagnostic_figures_provenance = "reports/tables/model_diagnostic_figures/model_diagnostic_figures_provenance.json"
+diagnostic_figures_summary = "reports/tables/model_diagnostic_figures/model_diagnostic_figures_summary.json"
+diagnostic_figure_output_directory = "reports/figures/generated/model_diagnostics"
+feature_ablation_provenance = "reports/tables/feature_ablation/feature_ablation_analysis_provenance.json"
+feature_ablation_summary = "reports/tables/feature_ablation/feature_ablation_analysis_summary.json"
+stqa2_sensitivity_provenance = "reports/tables/stqa2_sensitivity/stqa2_sensitivity_provenance.json"
+stqa2_sensitivity_summary = "reports/tables/stqa2_sensitivity/stqa2_sensitivity_summary.json"
+robustness_reconciliation_provenance = "reports/tables/robustness_reconciliation/robustness_reconciliation_provenance.json"
+robustness_reconciliation_summary = "reports/tables/robustness_reconciliation/robustness_reconciliation_summary.json"
+output_report = "reports/DEVELOPMENT_REPORT.md"
+output_provenance = "reports/DEVELOPMENT_REPORT_provenance.json"
+
+[analysis]
+final_test_year = 2025
+final_test_locked = true
+development_years = [2020, 2021, 2022, 2023, 2024]
+expected_tract_date_row_count = 63403
+expected_independent_date_count = 65
+expected_independent_spatial_block_count = 71
+expected_relative_endpoint_date_count = 34
+family = "joint"
+baseline_model_id = "B1"
+target_model_id = "M2"
+prediction_origin_local_time = "00:00:00"
+latest_dynamic_predictor_offset_days = -1

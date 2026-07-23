@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "validation-splits-v1",
+  "state": "predeclared_draft",
+  "phase_complete": false,
+  "ready_for_model_evaluation": false,
+  "remaining_gate": "Require exact predictor-key match and fold-local preprocessing tests after the dynamic feature tables are complete.",
+  "audited_at_utc": "2026-07-19T03:19:17.139137+00:00",
+  "output_directory": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\validation_splits",
+  "development_years": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "final_test_year": 2025,
+  "final_test_locked": true,
+  "row_count": 63403,
+  "independent_date_count": 65,
+  "fixed_tract_count": 1096,
+  "legal_row_geoid_count": 1096,
+  "spatial_block_count": 71,
+  "fold_counts": {
+    "temporal": 5,
+    "spatial": 71,
+    "joint": 355
+  },
+  "fold_count_total": 431,
+  "oof_coverage_audit": {
+    "temporal": {
+      "fold_count": 5,
+      "minimum_test_assignments_per_row": 1,
+      "maximum_test_assignments_per_row": 1
+    },
+    "spatial": {
+      "fold_count": 71,
+      "minimum_test_assignments_per_row": 1,
+      "maximum_test_assignments_per_row": 1
+    },
+    "joint": {
+      "fold_count": 355,
+      "minimum_test_assignments_per_row": 1,
+      "maximum_test_assignments_per_row": 1
+    }
+  },
+  "input_column_contract": {
+    "legal_row_table": [
+      "tract_geoid",
+      "target_date",
+      "spatial_block"
+    ],
+    "fixed_tract_manifest": [
+      "GEOID",
+      "spatial_block",
+      "geometry"
+    ],
+    "target_or_predictor_values_read": false
+  },
+  "scientific_rules": {
+    "temporal": "leave one complete calendar year out",
+    "spatial": "leave one fixed target-independent 5 km block out",
+    "joint_test": "held-out calendar year AND held-out spatial block",
+    "joint_train": "other calendar years AND GEOID outside the held-out block plus the <=1000 m fixed-tract geometry buffer",
+    "joint_other_rows": "purged",
+    "spatial_distance_crs": "EPSG:3310",
+    "joint_buffer_m": 1000.0,
+    "oof_reporting": "stitch one out-of-fold prediction per legal row within each family",
+    "inner_cv": "within each outer training set, leave one remaining calendar year out; fit preprocessing and tune only on inner-train rows",
+    "outer_exclusion_from_tuning": "outer-test and outer-purged keys never enter inner train or validation"
+  },
+  "split_config_sha256": "2e7c715015967e4fba6b9904b440b082d43fef9a913847d75768127af6e880e3",
+  "split_config_file_sha256": "fbb11fe181929feb51370c84dfcc6cad1b5b3004703889c804d64d300dcedddd",
+  "input_files": {
+    "legal_row_groups": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\targets\\development_targets_model_ready.parquet",
+      "sha256": "11f4fe862570895441036964a9b308e92c2ee6ba8a87b5da9009ffd5208a4bda"
+    },
+    "fixed_tract_manifest": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\targets\\primary_tract_manifest.parquet",
+      "sha256": "fbdcd5b6e3a6d5f55d972a1f19178b453d753e3f9b3878c8074c1972eb0f68bd",
+      "semantic_sha256": "73fde5df7372404a0b4700981b612c0ded5a2c3d5edaa3fc88d4fa2626c440b0"
+    }
+  },
+  "pipeline_sha256": "b6017bc298f4b06a6707dff1203ac04751fa08a445091393d0ef5499cfad2d09",
+  "pipeline_fingerprint": {
+    "algorithm_version": "validation-splits-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "scripts/build_validation_splits.py": "6876bd2f89e64d9e6657a58379be674ed31feee8f26efbfcf60bde17fc7e9f48",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/validation_splits.py": "1764496543d94a97f3325aba4bc5cd7b59a6042e3df74809c4b578112f8ea6bd"
+    }
+  },
+  "semantic_outputs": {
+    "row_groups_sha256": "7a1f4040b9d35d930577442d5700f6c81556718a6300d9b566a1c2cfe1a14b3f",
+    "fold_definitions_sha256": "7d360c3200ef5062d34e526431af0cbe095de154cff7661cb4163080c852a969",
+    "spatial_buffer_geoids_sha256": "ea6662343ff7b4f2a3c50ad4a04e2913cc1ec6fd42a19043c1ba15659ba26c98"
+  },
+  "output_files": {
+    "row_groups.parquet": {
+      "sha256": "400de375885369777f717494aae314d1fe4e7c9ec44be1c3d11c38872fff24a8",
+      "bytes": 97784,
+      "rows": 63403,
+      "schema_sha256": "320eb0d5adb041c7a6b4f027c84710b94f8efc7b08f05d74f9a1af919a90079d"
+    },
+    "fold_definitions.csv": {
+      "sha256": "73ebb7c41847fd4a9554ba2cd71fbfa9dc8e57b54b7e0a82b91ccf3703dccf6c",
+      "bytes": 53137,
+      "rows": 431
+    },
+    "spatial_buffer_geoids.parquet": {
+      "sha256": "3e90ed1bf718120c910d398149d958756b4ea61ff514e8a5bfa5750d5548be08",
+      "bytes": 22680,
+      "rows": 2880,
+      "schema_sha256": "c05785c4d3546006a81812b2aff1d2c1355ecb50cadbdb36c1e9cbca0bb360cf"
+    }
+  },
+  "commit_sha256": "4a2a0bee89a87bae9c98e35a480606171d570ccaa743355fa0d3639d68fee213"
+}

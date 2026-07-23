@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "validation-split-promotion-v1",
+  "state": "promoted",
+  "phase_complete": true,
+  "ready_for_model_evaluation": true,
+  "promoted_at_utc": "2026-07-20T10:07:25.650585+00:00",
+  "target_values_read": false,
+  "predictor_values_read": false,
+  "model_scores_read": false,
+  "columns_read_from_model_dataset": [
+    "tract_geoid",
+    "target_date"
+  ],
+  "final_test_year": 2025,
+  "final_test_locked": true,
+  "contains_final_test_year": false,
+  "row_count": 63403,
+  "independent_date_count": 65,
+  "tract_count": 1096,
+  "spatial_block_count": 71,
+  "fold_counts": {
+    "temporal": 5,
+    "spatial": 71,
+    "joint": 355
+  },
+  "fold_count_total": 431,
+  "oof_coverage_audit": {
+    "temporal": {
+      "fold_count": 5,
+      "minimum_test_assignments_per_row": 1,
+      "maximum_test_assignments_per_row": 1
+    },
+    "spatial": {
+      "fold_count": 71,
+      "minimum_test_assignments_per_row": 1,
+      "maximum_test_assignments_per_row": 1
+    },
+    "joint": {
+      "fold_count": 355,
+      "minimum_test_assignments_per_row": 1,
+      "maximum_test_assignments_per_row": 1
+    }
+  },
+  "semantic_model_key_sha256": "af3618ce2a953d03e3e56f6668b1f434157e44cec9133146d2a8d831af6f7f66",
+  "pipeline_sha256": "16cb7657996aefc77da5387f865910b4f482ac13165396a15365d7dfc73695a3",
+  "pipeline_fingerprint": {
+    "algorithm_version": "validation-split-promotion-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "scripts/promote_validation_splits.py": "4e73a02026fb6d9c3ea976e497b8470cd408fa9ea5aa842358bffbc5a570983d",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/validation_split_promotion.py": "52d484a17a57957115c1deaf3a676ee160b0bbe2ca7d99f5e5d1f0b1fa5bd4ea",
+      "src/la_heat/validation_splits.py": "1764496543d94a97f3325aba4bc5cd7b59a6042e3df74809c4b578112f8ea6bd"
+    }
+  },
+  "inputs": {
+    "split_draft_provenance": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\validation_splits\\split_provenance.json",
+      "sha256": "8b03a143c11e1df85f7916627011f95b6c4d33edea7b81e530abbd2a0801498f",
+      "commit_sha256": "4a2a0bee89a87bae9c98e35a480606171d570ccaa743355fa0d3639d68fee213"
+    },
+    "model_dataset_provenance": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\model_dataset\\model_dataset_provenance.json",
+      "sha256": "1eafe424a4c718d6a3b18cff938036f958858c70b344740788993b119bfbb04b",
+      "commit_sha256": "9c2f903993167fc2a228b3cfe60a23fe33f57f252bae6299458338cb8eb967ad"
+    },
+    "model_dataset": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\model_dataset\\development_model_table.parquet",
+      "sha256": "3a365f5dd3e9d410585a34695bb444d67b220c4b40a9348288a540078bc27f75",
+      "bytes": 13557908,
+      "rows": 63403,
+      "schema_sha256": "7d71afda1ecb5bc0e8c60f0bdc65bd7c6fcb4d648d6100753043566b9ce68974"
+    },
+    "frozen_split_outputs": {
+      "row_groups.parquet": {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\validation_splits\\row_groups.parquet",
+        "sha256": "400de375885369777f717494aae314d1fe4e7c9ec44be1c3d11c38872fff24a8",
+        "bytes": 97784,
+        "rows": 63403,
+        "schema_sha256": "320eb0d5adb041c7a6b4f027c84710b94f8efc7b08f05d74f9a1af919a90079d"
+      },
+      "fold_definitions.csv": {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\validation_splits\\fold_definitions.csv",
+        "sha256": "73ebb7c41847fd4a9554ba2cd71fbfa9dc8e57b54b7e0a82b91ccf3703dccf6c",
+        "bytes": 53137,
+        "rows": 431
+      },
+      "spatial_buffer_geoids.parquet": {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\validation_splits\\spatial_buffer_geoids.parquet",
+        "sha256": "3e90ed1bf718120c910d398149d958756b4ea61ff514e8a5bfa5750d5548be08",
+        "bytes": 22680,
+        "rows": 2880,
+        "schema_sha256": "c05785c4d3546006a81812b2aff1d2c1355ecb50cadbdb36c1e9cbca0bb360cf"
+      }
+    }
+  },
+  "scientific_contract": {
+    "temporal_outer_split": "leave one complete calendar year out",
+    "spatial_outer_split": "leave one fixed 5 km spatial block out",
+    "joint_outer_split": "held-out year by held-out block with 1 km purge",
+    "inner_tuning_split": "whole remaining calendar years inside outer train",
+    "preprocessing_fit_scope": "inner training rows only during tuning",
+    "outer_test_or_purged_rows_used_for_tuning": false,
+    "random_row_split_allowed": false,
+    "oof_unit": "one prediction per legal row per split family"
+  },
+  "commit_sha256": "6a72169db012cf8c12aeecde573275e23205363608e60d4cde616a681fa08fcc"
+}

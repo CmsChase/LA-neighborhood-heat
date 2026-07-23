@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "phase2-target-blind-readiness-v1",
+  "state": "ready_for_feature_assembly",
+  "audit_completed": true,
+  "phase2_complete": false,
+  "ready_for_feature_assembly": true,
+  "target_blind": true,
+  "target_or_qa_tables_read": [],
+  "target_values_read": false,
+  "model_scores_read": false,
+  "final_test_year": 2025,
+  "final_test_unlocked": false,
+  "contains_final_test_year": false,
+  "blockers": [],
+  "key_count": 98640,
+  "date_count": 90,
+  "tract_count": 1096,
+  "registry_model_feature_count": 46,
+  "family_status": [
+    {
+      "family": "key_universe",
+      "status": "complete",
+      "row_count": 98640,
+      "feature_count": 0,
+      "available_row_count": 98640,
+      "missing_row_count": 0,
+      "notes": "90 dates x 1096 tracts; target-blind"
+    },
+    {
+      "family": "registry",
+      "status": "complete",
+      "row_count": 49,
+      "feature_count": 46,
+      "available_row_count": 49,
+      "missing_row_count": 0,
+      "notes": "metadata contract only; no scores or labels read"
+    },
+    {
+      "family": "static",
+      "status": "complete",
+      "row_count": 1096,
+      "feature_count": 18,
+      "available_row_count": 1096,
+      "missing_row_count": 0,
+      "notes": "18 model features plus 1 audit-only reference; fixed eligible-land denominator verified"
+    },
+    {
+      "family": "calendar",
+      "status": "complete",
+      "row_count": 98640,
+      "feature_count": 2,
+      "available_row_count": 98640,
+      "missing_row_count": 0,
+      "notes": "known at prediction origin"
+    },
+    {
+      "family": "sentinel",
+      "status": "complete",
+      "row_count": 98640,
+      "feature_count": 5,
+      "available_row_count": 97870,
+      "missing_row_count": 770,
+      "notes": "d-60 through d-1; unavailable rows are explicit all-null rows"
+    },
+    {
+      "family": "daymet",
+      "status": "complete",
+      "row_count": 98640,
+      "feature_count": 21,
+      "available_row_count": 98640,
+      "missing_row_count": 0,
+      "notes": "complete civil-day windows d-n through d-1; any missing dynamic values remain explicit for fold-local imputation"
+    }
+  ],
+  "inputs": {
+    "feature_key_universe": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\features\\feature_key_universe\\feature_key_universe.parquet",
+      "sha256": "03c6ec7fb2099026384d2e399a472c97e0ca5310683adb2ec9820cd4e127b71b",
+      "rows": 98640,
+      "provenance_sha256": "32c722541f4df0c30d98118e3991b1cd2f7bb5ed2a958d9d06df0c02c77e6dbd",
+      "provenance_commit_sha256": "ac3397d8ba8f8b09cbce19c4db7c8224185e03f329c197d0164349c04219daa9"
+    },
+    "phase2_registry": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\phase2_registry\\combined_feature_registry_draft.csv",
+      "sha256": "b2ffbaa45fb0e8bb526b91a27f5fa63cb5efdbfa3c6e81894504b93312d89d02",
+      "rows": 49,
+      "provenance_sha256": "c3d40d7877fe4568198a79996b41e42f9ed03f99e4099bc6dce1f0fac856cb6f",
+      "provenance_commit_sha256": "fe48ac10a7f094dcd12647e713ee3e12c0e9e742877d11ba0f1ad50a79f575c9"
+    },
+    "static_features": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\static_features\\static_features.parquet",
+      "sha256": "f293f1252b757f0b928fc421569364bd8febcb78c26d579a07d05576ab19be58",
+      "rows": 1096,
+      "audit_sha256": "fefcaa56b426734ee904aa7f5d0c1d896006fb8cf4562eb9211708f4c94f0875",
+      "registry_sha256": "b79cd7575962ca038b7d30d8fc2dbc30f8ca811c434d9d6eb532ee1b1160fb76",
+      "provenance_sha256": "742c757cfef57b188629a03398df5a5dbb5a0659190f0e6a1deda91767741214",
+      "provenance_commit_sha256": "1c6ea2e0ff446a53843084e4c985f7af91124c7ad6c738a7c9bbc79530f75666"
+    },
+    "calendar_features": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\features\\calendar\\calendar_features.parquet",
+      "sha256": "0f47038fee022a4f55a30a6a24bc6651793da0e91cc4d25b975d0c669040cc9a",
+      "rows": 98640,
+      "provenance_sha256": "2a7b5934e35965706a53854ca5ab385074833d8ec82da40f38e3a149bb1efd86",
+      "provenance_commit_sha256": "0d61f67d0c07fe6efd61002deefa7b0d00a9f32e6b418abb8388d429651e31f2"
+    },
+    "sentinel_features": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\sentinel_features\\sentinel_features.parquet",
+      "sha256": "aa02df3a00c51076610f442512949ade5ca70ab466b4d2d9c513826184fe82b5",
+      "rows": 98640,
+      "audit_sha256": "a414149ec1719ee2fddc997ff06e86ddbdd65f86d18df7abe1e058c623ca5f12",
+      "lineage_sha256": "57076e6a9d326c087036785118548b98aa63568741363f79501f49e0218d288a",
+      "coverage_by_date_sha256": "d067c4641799cd1a9eeb0938421e4c190ac121022ab43e31c0d80138d3af4fbf",
+      "coverage_by_tract_sha256": "57d97e84d14a3862d0737baf106efd0dd40e6e96461be9f8a74345f80d69b945",
+      "provenance_sha256": "43aeed520316629483c1bde6c7f7c3d2b8cb51df711db5315eeeed9461ca9f2a",
+      "provenance_commit_sha256": "bf3adfffcfe52df7cca7c366fa214d6cb11a5cca4bf1111454c99c87fd48e291",
+      "scientific_pipeline_sha256": "68774cc3cf9de77c55d23802d59b62a8c2a28f09c3edf79f90b8c3a4c390f34c"
+    },
+    "daymet_inventory": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\daymet_grid\\granule_inventory.csv",
+      "sha256": "43cfcc8244e06c9ffde1850fea9b0fb2e154e4a29b5441a104d52055f2deaa21",
+      "rows": 30,
+      "semantic_sha256": "7655215698f819c24514f74cbc79866f5178032beb4a521465fac2b5aff2ac5c"
+    },
+    "daymet_inventory_summary": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\daymet_grid\\inventory_summary.json",
+      "sha256": "bf957a18572a21b58df437af16b36e5a7b99eb38acba4d7dc8ed71359536c64f",
+      "state": "subsets_complete"
+    },
+    "daymet_features": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\features\\daymet\\daymet_features.parquet",
+      "sha256": "11af1670280c54637bac883c7525fbee033139d9e00d6fd42f3e91124f584590",
+      "rows": 98640
+    },
+    "daymet_features_provenance": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\features\\daymet\\daymet_features_provenance.json",
+      "sha256": "e5366a09e01b3d77aa6a2f4b775649e90945a9553431ecdce87db60382b06929",
+      "commit_sha256": "a7da6a107695787f047547275669217c6bd508b12852e2d6c244078f687c0ea9"
+    },
+    "daymet_feature_audit": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\features\\daymet\\daymet_feature_audit.parquet",
+      "sha256": "882124e6fcf6c617745b2507dcd39f10bc8d389640c49438a9aaa629f2b2c9d0",
+      "rows": 98640
+    },
+    "daymet_fixed_cell_weights": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\features\\daymet\\daymet_fixed_cell_weights.parquet",
+      "sha256": "641e5b17f0707c5b24b23365f135d5714cfee625425417c372be630296d29ff9",
+      "rows": 4544
+    }
+  },
+  "pipeline_sha256": "daf29049d2b1617f8cc29036f40b78f87a5effab0307fe98718dcda864e608e1",
+  "pipeline_fingerprint": {
+    "algorithm_version": "phase2-target-blind-readiness-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "scripts/audit_phase2_readiness.py": "4a1465c7a2c13b86017992a24881a7d21a07089f34497b68097fee27124d669a",
+      "src/la_heat/daymet_feature_stage.py": "8fb62c272cdda7569b1e609f939ea3c92cbdcfeb8767af08ad4e2c0903460a14",
+      "src/la_heat/feature_registry.py": "60901968206ab383197bc62ad8fae160d27b1b8af1f1643c5796bc61747ffec8",
+      "src/la_heat/feature_universe.py": "95ae3a6f67593519012bfeab0080b697d3f5263fd4db0b3c45c063eb50d87773",
+      "src/la_heat/phase2_readiness.py": "005494e73d7ce67f3816dac8f0a97365c46eb029f5e8a698a2afe1f302883360",
+      "src/la_heat/phase2_registry.py": "6ad9842d0a7ede6e9359353ecfdd9e2230d65b63f56173c355992f38218ea6da",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/sentinel_feature_stage.py": "5a850eff074a80856bf722059e78407d167d647cbf72cb17d12e7f828b281267",
+      "src/la_heat/sentinel_features.py": "96610e4c3b805b49fd742f533b53f6957f8a9eee55f6253ef185ab82f5946160"
+    }
+  },
+  "output_files": {
+    "feature_family_readiness.csv": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\phase2_readiness\\feature_family_readiness.csv",
+      "sha256": "0e44b3f3256e7aee9ebfb789dfd392a99038d1930a685af681cf19d7b5cf5832",
+      "rows": 6
+    }
+  },
+  "scientific_contract": {
+    "prediction_type": "historical hindcast",
+    "prediction_origin": "00:00 Los Angeles civil time on target date",
+    "dynamic_observed_predictors_end_by": "target day -1",
+    "sentinel_window": "d-60 through d-1",
+    "daymet_windows": "d-n through d-1",
+    "locked_final_test_used": false,
+    "promotion_note": "This readiness audit cannot itself promote Phase 2 or authorize target access; a separate feature-table build and audit are required."
+  },
+  "commit_sha256": "92534764be459110ff239670f320e3b947313f344ca00774c3097cff42fa3762"
+}

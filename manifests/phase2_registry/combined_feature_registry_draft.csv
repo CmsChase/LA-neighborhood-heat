@@ -1,0 +1,50 @@
+feature_name,family,role,units,source,static,available_by,source_start_offset_days,source_end_offset_days
+tract_geoid,key,key,identifier,Census 2020 tract manifest,True,2019-08-09,,
+target_date,key,key,date,Target-date join key only,False,target date,,
+nlcd_open_water_fraction,land_use,model,fraction,NLCD 2016 original land cover,True,2019-04-30,,
+nlcd_developed_open_fraction,land_use,model,fraction,NLCD 2016 original land cover,True,2019-04-30,,
+nlcd_developed_low_fraction,land_use,model,fraction,NLCD 2016 original land cover,True,2019-04-30,,
+nlcd_developed_medium_fraction,land_use,audit_only,fraction,NLCD 2016 original land cover,True,2019-04-30,,
+nlcd_developed_high_fraction,land_use,model,fraction,NLCD 2016 original land cover,True,2019-04-30,,
+nlcd_barren_fraction,land_use,model,fraction,NLCD 2016 original land cover,True,2019-04-30,,
+nlcd_forest_fraction,land_use,model,fraction,NLCD 2016 original land cover,True,2019-04-30,,
+nlcd_shrub_grass_fraction,land_use,model,fraction,NLCD 2016 original land cover,True,2019-04-30,,
+nlcd_agriculture_fraction,land_use,model,fraction,NLCD 2016 original land cover,True,2019-04-30,,
+nlcd_wetland_fraction,land_use,model,fraction,NLCD 2016 original land cover,True,2019-04-30,,
+impervious_mean_fraction,land_use,model,fraction,NLCD 2016 original imperviousness,True,2019-04-30,,
+impervious_p90_fraction,land_use,model,fraction,NLCD 2016 original imperviousness,True,2019-04-30,,
+impervious_at_least_50_fraction,land_use,model,fraction,NLCD 2016 original imperviousness,True,2019-04-30,,
+elevation_mean_m,geography,model,metres,NASA SRTMGL1 v003,True,2015-08-01,,
+elevation_std_m,geography,model,metres,NASA SRTMGL1 v003,True,2015-08-01,,
+slope_mean_degrees,geography,model,degrees,NASA SRTMGL1 v003 derived Horn slope,True,2015-08-01,,
+slope_p90_degrees,geography,model,degrees,NASA SRTMGL1 v003 derived Horn slope,True,2015-08-01,,
+pacific_coast_distance_mean_km,geography,model,kilometres,Census TIGER/Line 2019 U.S. Coastline,True,2019-08-09,,
+pacific_coast_distance_p10_km,geography,model,kilometres,Census TIGER/Line 2019 U.S. Coastline,True,2019-08-09,,
+calendar_doy_sin,calendar,model,unitless,Deterministic target-date calendar known at prediction origin,False,prediction origin,,
+calendar_doy_cos,calendar,model,unitless,Deterministic target-date calendar known at prediction origin,False,prediction origin,,
+daymet_dayl_s_mean_prev_1d,weather,model,s/day,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-1.0,-1.0
+daymet_prcp_mm_sum_prev_1d,weather,model,mm,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-1.0,-1.0
+daymet_srad_w_m2_mean_prev_1d,weather,model,W/m^2,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-1.0,-1.0
+daymet_tmax_c_mean_prev_1d,weather,model,degrees C,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-1.0,-1.0
+daymet_tmin_c_mean_prev_1d,weather,model,degrees C,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-1.0,-1.0
+daymet_vp_pa_mean_prev_1d,weather,model,Pa,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-1.0,-1.0
+daymet_srad_energy_mj_m2_sum_prev_1d,weather,model,MJ/m^2,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-1.0,-1.0
+daymet_dayl_s_mean_prev_3d,weather,model,s/day,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-3.0,-1.0
+daymet_prcp_mm_sum_prev_3d,weather,model,mm,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-3.0,-1.0
+daymet_srad_w_m2_mean_prev_3d,weather,model,W/m^2,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-3.0,-1.0
+daymet_tmax_c_mean_prev_3d,weather,model,degrees C,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-3.0,-1.0
+daymet_tmin_c_mean_prev_3d,weather,model,degrees C,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-3.0,-1.0
+daymet_vp_pa_mean_prev_3d,weather,model,Pa,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-3.0,-1.0
+daymet_srad_energy_mj_m2_sum_prev_3d,weather,model,MJ/m^2,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-3.0,-1.0
+daymet_dayl_s_mean_prev_7d,weather,model,s/day,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-7.0,-1.0
+daymet_prcp_mm_sum_prev_7d,weather,model,mm,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-7.0,-1.0
+daymet_srad_w_m2_mean_prev_7d,weather,model,W/m^2,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-7.0,-1.0
+daymet_tmax_c_mean_prev_7d,weather,model,degrees C,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-7.0,-1.0
+daymet_tmin_c_mean_prev_7d,weather,model,degrees C,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-7.0,-1.0
+daymet_vp_pa_mean_prev_7d,weather,model,Pa,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-7.0,-1.0
+daymet_srad_energy_mj_m2_sum_prev_7d,weather,model,MJ/m^2,Daymet V4 R1 daily gridded weather; DOI https://doi.org/10.3334/ORNLDAAC/2129,False,historical archive queried 2026-07-18,-7.0,-1.0
+sentinel_ndvi_lag60,satellite,model,unitless,Sentinel-2 L2A historical archive (Microsoft Planetary Computer),False,historical archive queried 2026-07-18,-60.0,-1.0
+sentinel_evi_lag60,satellite,model,unitless,Sentinel-2 L2A historical archive (Microsoft Planetary Computer),False,historical archive queried 2026-07-18,-60.0,-1.0
+sentinel_ndwi_lag60,satellite,model,unitless,Sentinel-2 L2A historical archive (Microsoft Planetary Computer),False,historical archive queried 2026-07-18,-60.0,-1.0
+sentinel_ndbi_lag60,satellite,model,unitless,Sentinel-2 L2A historical archive (Microsoft Planetary Computer),False,historical archive queried 2026-07-18,-60.0,-1.0
+sentinel_albedo_proxy_lag60,satellite,model,unitless,Sentinel-2 L2A historical archive (Microsoft Planetary Computer),False,historical archive queried 2026-07-18,-60.0,-1.0

@@ -1,0 +1,85 @@
+{
+  "inventory_schema_version": "3",
+  "inventory_config_sha256": "53818db9b1bab74aa0de98b2cd77cf13abc6b55b649762c8d09ce561578a399e",
+  "inventory_config_payload": {
+    "study": {
+      "timezone": "America/Los_Angeles",
+      "crs_analysis": "EPSG:3310",
+      "bbox_wgs84": [
+        -118.67,
+        33.7,
+        -118.15,
+        34.34
+      ],
+      "warm_season_months": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "start_date": "2020-05-01",
+      "development_end_date": "2024-10-31",
+      "final_test_year": 2025,
+      "minimum_independent_valid_dates": 30
+    },
+    "boundaries": {
+      "la_city_geojson": "https://data.lacity.org/resource/brvb-jr45.geojson?$limit=10"
+    },
+    "landsat": {
+      "stac_api": "https://planetarycomputer.microsoft.com/api/stac/v1",
+      "collection": "landsat-c2-l2",
+      "sensors": [
+        "landsat-8",
+        "landsat-9"
+      ],
+      "pilot_scene_cloud_cover_max_percent": 15.0,
+      "maximum_overpass_span_minutes": 15,
+      "minimum_city_union_coverage_fraction": 0.98
+    }
+  },
+  "research_config_file_sha256": "8112558d677aa6854203950001fb5240a5e3bc9d21aedb6f752d1e31cccdc607",
+  "inventory_pipeline_sha256": "9a81b6a2010ce684a5a018de1fe9d895ec5e554143ea2d0bf07cfdb0fe0096d5",
+  "inventory_pipeline_fingerprint": {
+    "algorithm_version": "inventory-v3-versioned-stage-config",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "pyproject.toml": "ef18ff3d40f0997f9a3f40d12bf76069fd70c99afe50ead457db2230f5a2ba20",
+      "src/la_heat/boundaries.py": "3c929ae65ffb5934c6baf8d97553e7db1538846d6e05508bc2118efd3dc5bcac",
+      "src/la_heat/config.py": "921c50b25dd3c7cc52188c11327beaede349b8f18213b5601800df8150092c60",
+      "src/la_heat/inventory.py": "466e3f592821c35020e9209222519202478573772a160f422bb3b7947ea82d9b",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/stage_config.py": "bdd48f9bdfaa4b507fd401d25c3e5c71cd3a5caedcc0af03966d711173bb40c4"
+    }
+  },
+  "city_boundary_file_sha256": "e5f9ead4a8240505f94a3d40c951f3e90fb5f1df0c3d321b7eb98e26858ce70c",
+  "city_boundary_geometry_sha256": "4297d7deead6b8627830fc35346ee56f972e1f8d4b9e632fb5ba6c35979d45eb",
+  "scene_inventory_file_sha256": "55a367216ab25a5556d50732843aeedd14666f6082f4c445514e81d0c49eac4a",
+  "scene_inventory_semantic_sha256": "6ec3093b3c4fd572326eb8326cfe1aa8ac79c394e52dddde2d71f2e71598086f",
+  "overpass_inventory_file_sha256": "035969e2135d38e7301b4e082f2ca6da40b31208a221d2c00a17b1a56b827a0a",
+  "overpass_inventory_semantic_sha256": "811f4a48c71206983943b879d768c03a53c4159428f72726ae4b10041f740514",
+  "final_test_year": 2025,
+  "final_test_unlocked": false,
+  "scene_count": 178,
+  "physical_overpass_count": 91,
+  "full_city_coverage_unambiguous_overpass_count": 90,
+  "primary_overpass_manifest_sha256": "45a69106c9217a58dc1e340fcf2c7ca08d1bd3c45e235c7f2f5d7f05246a7779",
+  "primary_overpass_manifest_semantic_sha256": "1f6ae510187182bd186ca334b7ac1d3446a5ad0ff1a43214c637074f87a05c3b",
+  "ambiguous_local_date_count": 0,
+  "multi_scene_overpass_count": 87,
+  "low_scene_cloud_sensitivity_date_count": 65,
+  "minimum_required_post_qa_dates": 30,
+  "warning": "This is a target-blind metadata inventory. The independent usable-date gate is evaluated only after local pixel and tract QA."
+}

@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "model-qa-diagnostics-v1",
+  "state": "complete",
+  "generated_at_utc": "2026-07-22T09:21:00.868489+00:00",
+  "analysis_scope": "locked_2020_2024_development_joint_oof_only",
+  "final_test_year": 2025,
+  "final_test_locked": true,
+  "contains_final_test_year": false,
+  "tract_date_row_count": 63403,
+  "independent_date_count": 65,
+  "independent_spatial_block_count": 71,
+  "analysis_config": {
+    "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/configs/model_qa_diagnostics.toml",
+    "sha256": "4cb945a140e8efbb51a9699fcd36bd1ba4e0697908920f224794067d2185beed",
+    "semantic_sha256": "7aa8bd3788cae6e66c6c4871a49473054c3d4a2a4d630e57133b0a0415c23165"
+  },
+  "input_authentication": {
+    "compile_provenance_commit_sha256": "00d1e59ce78baffbf9d24361ac8ba16a1d577b22cb193e15596627259190ed07",
+    "oof_predictions_sha256": "0c06b88fd09cd514745b699e6b6a7e12901db8d3247e42b582feaf1f7e91c04a",
+    "target_build_progress_sha256": "3f630dfcc8a1c2a19b093e7fe0f4bdc7f830fef42266fcf1156112f0eb959046",
+    "model_ready_targets_sha256": "11f4fe862570895441036964a9b308e92c2ee6ba8a87b5da9009ffd5208a4bda",
+    "date_summary_sha256": "2c6d6a597c6b1b321c4f632291c22dfe5788a058fe82fd65114a5a59d5d0be83",
+    "model_dataset_provenance_sha256": "1eafe424a4c718d6a3b18cff938036f958858c70b344740788993b119bfbb04b",
+    "model_dataset_commit_sha256": "9c2f903993167fc2a228b3cfe60a23fe33f57f252bae6299458338cb8eb967ad",
+    "model_table_sha256": "3a365f5dd3e9d410585a34695bb444d67b220c4b40a9348288a540078bc27f75",
+    "target_inventory_summary_sha256": "383360de3ab85acb85cbd6e480367323bc1407df0b318d2608125821637b5e50",
+    "scene_inventory_sha256": "55a367216ab25a5556d50732843aeedd14666f6082f4c445514e81d0c49eac4a"
+  },
+  "pipeline_sha256": "35f8afffb47e83d5124a267a1772a40a3e3da4d3b377208677cf3dbbf0c51276",
+  "pipeline_fingerprint": {
+    "algorithm_version": "model-qa-diagnostics-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "scripts/analyze_model_qa.py": "5077a53ffe59ce793873dbd58ba4d882623f9e181d95fed0796eefa322d11df4",
+      "src/la_heat/model_qa_diagnostics.py": "8c97a1b08d4a83f064926c43313ad845f8a5803914816477ffe3426a9a377b55",
+      "src/la_heat/model_result_analysis.py": "4ac498b7a242d0dc3784745d31ad8ea01fc3976406ad2d8fccf497155db42adc",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "scientific_contract": {
+    "models_fitted": false,
+    "random_row_resampling_used": false,
+    "complete_date_and_spatial_block_bootstrap_used": true,
+    "qa_or_missingness_fields_used_as_predictors": false,
+    "diagnostic_association_not_causal": true,
+    "st_qa_2k_is_tract_summary_cohort_not_pixel_reaggregation": true,
+    "final_test_unlocked": false
+  },
+  "summary_commit_sha256": "9af89798c6300d818d636abba08c5b7a391c96ab86d9789d68b8c97fa85a4745",
+  "output_files": {
+    "qa_cohort_metrics.csv": {
+      "path": "qa_cohort_metrics.csv",
+      "path_base": "output_directory",
+      "sha256": "fb181a1f9739ae2285719dfc500920204916bb599ff10e45db660cd9f892bc00",
+      "bytes": 5561,
+      "rows": 32
+    },
+    "qa_cohort_improvement.csv": {
+      "path": "qa_cohort_improvement.csv",
+      "path_base": "output_directory",
+      "sha256": "0380c22d9bcf261b15c210a191897d64db0ca1a8198293f617c8000677767092",
+      "bytes": 2643,
+      "rows": 16
+    },
+    "qa_cohort_crossed_bootstrap.csv": {
+      "path": "qa_cohort_crossed_bootstrap.csv",
+      "path_base": "output_directory",
+      "sha256": "ad87bde3f0307596294160b37c0e3e6ff6a332fa687532445550cb441d87ab89",
+      "bytes": 8073,
+      "rows": 16
+    },
+    "m2_worst_dates.csv": {
+      "path": "m2_worst_dates.csv",
+      "path_base": "output_directory",
+      "sha256": "32853d601fa9f869f75c0dd6587a18e27b56463308a5ebb1dfc64e40b8f9a7d9",
+      "bytes": 4827,
+      "rows": 25
+    },
+    "m2_worst_tracts.csv": {
+      "path": "m2_worst_tracts.csv",
+      "path_base": "output_directory",
+      "sha256": "14453f843f3fe63a5926cbacd87dc7f6ddd1d9f9a289fad68e8393af579ede4b",
+      "bytes": 4229,
+      "rows": 25
+    },
+    "model_qa_diagnostics_summary.json": {
+      "path": "model_qa_diagnostics_summary.json",
+      "path_base": "output_directory",
+      "sha256": "f4d72d56859319ba41504fc306863e60f7bf4a2fbf3f9f2efa1bef9354801644",
+      "bytes": 17442
+    }
+  },
+  "commit_sha256": "938a837cde8f49785e708e7960a4bca680ad851007a142189dbf4f3ac640ef8e"
+}

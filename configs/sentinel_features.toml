@@ -1,0 +1,42 @@
+schema_version = "1"
+algorithm_version = "sentinel-optical-v1-physical-mosaic-fixed-support"
+
+[grid]
+crs = "EPSG:32611"
+resolution_m = 20.0
+edge_anchor_x_m = 0.0
+edge_anchor_y_m = 0.0
+reflectance_resampling = "average"
+scl_resampling = "nearest"
+target_cell_aggregation = "valid_area_average_then_tract_weighted_median"
+processing_order = "validate_phase_then_area_average_dn_and_max_saturation_mask_to_20m_then_decode_boa_then_scl_4_5_gate"
+
+[qa]
+accepted_scl_classes = [4, 5]
+nodata_dn = 0
+saturated_dn = 65535
+minimum_acquisition_coverage_fraction = 0.80
+minimum_physical_acquisitions = 3
+index_denominator_epsilon = 0.000001
+global_scene_cloud_cover_filter = false
+
+[window]
+start_days_before_target = 60
+end_days_before_target = 1
+local_timezone = "America/Los_Angeles"
+
+[albedo_proxy]
+# Bonafoni & Sekertekin (2020), DOI 10.1109/LGRS.2020.2967085.
+intercept = 0.0
+B02 = 0.2266
+B03 = 0.1236
+B04 = 0.1573
+B08 = 0.3417
+B11 = 0.1170
+B12 = 0.0338
+
+[paths]
+inventory_directory = "manifests/sentinel_inventory"
+target_directory = "data/interim/targets"
+city_boundary = "manifests/target_inventory/city_boundary.geojson"
+output_directory = "data/interim/sentinel_features"

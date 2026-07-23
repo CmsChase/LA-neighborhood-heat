@@ -1,0 +1,36 @@
+schema_version = 1
+algorithm_version = "validation-splits-v1"
+state = "predeclared_draft"
+development_years = [2020, 2021, 2022, 2023, 2024]
+final_test_year = 2025
+
+[inputs]
+# Only tract_geoid, target_date, and spatial_block are read from this table.
+row_groups = "data/interim/targets/development_targets_model_ready.parquet"
+# Only GEOID, spatial_block, and geometry are read here.
+tract_manifest = "data/interim/targets/primary_tract_manifest.parquet"
+
+[spatial]
+analysis_crs = "EPSG:3310"
+block_size_km = 5.0
+joint_buffer_m = 1000.0
+
+[schemes.temporal]
+strategy = "leave_one_calendar_year_out"
+
+[schemes.spatial]
+strategy = "leave_one_existing_spatial_block_out"
+
+[schemes.joint]
+strategy = "cartesian_year_x_block_with_geometry_buffer"
+test_rule = "held_out_year_and_held_out_block"
+train_rule = "other_years_and_outside_fixed_tract_geometry_buffer"
+otherwise = "purged"
+
+[inner_cv]
+strategy = "leave_one_remaining_calendar_year_out"
+scope = "outer_train_only"
+preprocessing_fit_scope = "inner_train_only"
+
+[outputs]
+directory = "manifests/validation_splits"

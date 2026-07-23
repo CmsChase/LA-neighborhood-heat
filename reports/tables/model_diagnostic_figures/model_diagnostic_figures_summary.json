@@ -1,0 +1,338 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "model-diagnostic-figures-v1",
+  "state": "complete",
+  "analysis_scope": "locked_2020_2024_development_diagnostics_only",
+  "final_test_year": 2025,
+  "final_test_locked": true,
+  "contains_final_test_year": false,
+  "absolute_lst_interpretation": "surface-heat hazard proxy, not human heat exposure",
+  "displayed_values": {
+    "primary_joint_comparison": {
+      "baseline_mae_c": 2.516141406743445,
+      "m2_mae_c": 2.108787916748636,
+      "relative_improvement_percent": 16.189610365421885,
+      "relative_improvement_ci_lower_percent": 4.20877624053256,
+      "relative_improvement_ci_upper_percent": 27.688261874662324,
+      "bootstrap_replicates": 5000,
+      "independent_date_count": 65,
+      "independent_spatial_block_count": 71
+    },
+    "hotspot_endpoint": {
+      "B1": {
+        "mean_per_date_average_precision": 0.3976829467030205,
+        "mean_per_date_recall_at_exact_top20": 0.4207791084660095,
+        "independent_date_count": 34
+      },
+      "M2": {
+        "mean_per_date_average_precision": 0.666948801314471,
+        "mean_per_date_recall_at_exact_top20": 0.6139172662984996,
+        "independent_date_count": 34
+      }
+    },
+    "sensor_mae_c": {
+      "landsat-8": {
+        "B1": 2.4059138608319546,
+        "M2": 2.053245473319989
+      },
+      "landsat-9": {
+        "B1": 2.704446797675575,
+        "M2": 2.2036729242725754
+      }
+    },
+    "forest_cohorts": [
+      {
+        "dimension": "all",
+        "label": "all_rows",
+        "display_label": "All model-ready rows",
+        "relative_improvement_percent": 16.189610365421885,
+        "ci_lower_percent": 3.7580069672355703,
+        "ci_upper_percent": 27.42548528153056,
+        "tract_date_row_count": 63403,
+        "independent_date_count": 65,
+        "independent_spatial_block_count": 71
+      },
+      {
+        "dimension": "st_qa_2k",
+        "label": "tract_median_le_2k",
+        "display_label": "Tract median ST_QA <= 2 K (summary diagnostic)",
+        "relative_improvement_percent": 8.860758098478012,
+        "ci_lower_percent": -9.822621572136228,
+        "ci_upper_percent": 26.413313500229258,
+        "tract_date_row_count": 19548,
+        "independent_date_count": 53,
+        "independent_spatial_block_count": 71
+      },
+      {
+        "dimension": "st_qa_2k",
+        "label": "tract_median_gt_2k",
+        "display_label": "Tract median ST_QA > 2 K",
+        "relative_improvement_percent": 18.56773123704884,
+        "ci_lower_percent": 6.41444916297966,
+        "ci_upper_percent": 29.781629515654014,
+        "tract_date_row_count": 43855,
+        "independent_date_count": 65,
+        "independent_spatial_block_count": 71
+      },
+      {
+        "dimension": "valid_fraction",
+        "label": "[0.60,0.70)",
+        "display_label": "Valid pixels: 60-<70%",
+        "relative_improvement_percent": 33.98044947737083,
+        "ci_lower_percent": 19.80797450936572,
+        "ci_upper_percent": 51.80862432308475,
+        "tract_date_row_count": 447,
+        "independent_date_count": 63,
+        "independent_spatial_block_count": 58
+      },
+      {
+        "dimension": "valid_fraction",
+        "label": "[0.70,0.80)",
+        "display_label": "Valid pixels: 70-<80%",
+        "relative_improvement_percent": 32.819574027128446,
+        "ci_lower_percent": 17.333047219317933,
+        "ci_upper_percent": 50.94882246600624,
+        "tract_date_row_count": 529,
+        "independent_date_count": 62,
+        "independent_spatial_block_count": 54
+      },
+      {
+        "dimension": "valid_fraction",
+        "label": "[0.80,0.90)",
+        "display_label": "Valid pixels: 80-<90%",
+        "relative_improvement_percent": 35.08972477337542,
+        "ci_lower_percent": 15.76421763933326,
+        "ci_upper_percent": 53.97856164642181,
+        "tract_date_row_count": 649,
+        "independent_date_count": 65,
+        "independent_spatial_block_count": 60
+      },
+      {
+        "dimension": "valid_fraction",
+        "label": "[0.90,1.00]",
+        "display_label": "Valid pixels: 90-100%",
+        "relative_improvement_percent": 15.609574416469338,
+        "ci_lower_percent": 2.904561543616428,
+        "ci_upper_percent": 27.35505411762969,
+        "tract_date_row_count": 61778,
+        "independent_date_count": 65,
+        "independent_spatial_block_count": 71
+      },
+      {
+        "dimension": "sentinel_availability",
+        "label": "complete",
+        "display_label": "Sentinel-2: all five features present",
+        "relative_improvement_percent": 16.234756250132456,
+        "ci_lower_percent": 4.408784539629812,
+        "ci_upper_percent": 27.737502538479763,
+        "tract_date_row_count": 63235,
+        "independent_date_count": 65,
+        "independent_spatial_block_count": 71
+      },
+      {
+        "dimension": "sentinel_availability",
+        "label": "all_five_missing",
+        "display_label": "Sentinel-2: all five features missing",
+        "relative_improvement_percent": 16.713426304915753,
+        "ci_lower_percent": -59.51314094798483,
+        "ci_upper_percent": 53.31881952809464,
+        "tract_date_row_count": 168,
+        "independent_date_count": 12,
+        "independent_spatial_block_count": 29
+      },
+      {
+        "dimension": "scene_cloud_metadata",
+        "label": "any_scene_cloud_lt_15pct",
+        "display_label": "Any contributing scene cloud < 15%",
+        "relative_improvement_percent": 15.562510022539328,
+        "ci_lower_percent": 2.895107134298527,
+        "ci_upper_percent": 27.34078587379477,
+        "tract_date_row_count": 59110,
+        "independent_date_count": 60,
+        "independent_spatial_block_count": 71
+      },
+      {
+        "dimension": "scene_cloud_metadata",
+        "label": "no_scene_cloud_lt_15pct",
+        "display_label": "No contributing scene cloud < 15%",
+        "relative_improvement_percent": 24.914100011299627,
+        "ci_lower_percent": 5.770656626282707,
+        "ci_upper_percent": 38.36257233876635,
+        "tract_date_row_count": 4293,
+        "independent_date_count": 5,
+        "independent_spatial_block_count": 70
+      }
+    ],
+    "worst_dates": [
+      {
+        "target_date": "2024-07-14",
+        "platform": "landsat-8",
+        "b1_mae_c": 3.0500111862177066,
+        "m2_mae_c": 6.635071844963997,
+        "m2_bias_c": 6.635071844963997,
+        "signed_error_direction": "overprediction"
+      },
+      {
+        "target_date": "2020-09-05",
+        "platform": "landsat-8",
+        "b1_mae_c": 4.42823478073709,
+        "m2_mae_c": 6.139841058032956,
+        "m2_bias_c": -6.110599477710495,
+        "signed_error_direction": "underprediction"
+      },
+      {
+        "target_date": "2022-07-17",
+        "platform": "landsat-9",
+        "b1_mae_c": 5.266507270830191,
+        "m2_mae_c": 5.9421265212759735,
+        "m2_bias_c": -5.93530158719528,
+        "signed_error_direction": "underprediction"
+      },
+      {
+        "target_date": "2024-09-08",
+        "platform": "landsat-9",
+        "b1_mae_c": 4.185383066243281,
+        "m2_mae_c": 5.285558526865531,
+        "m2_bias_c": -5.280400230015385,
+        "signed_error_direction": "underprediction"
+      },
+      {
+        "target_date": "2021-09-08",
+        "platform": "landsat-8",
+        "b1_mae_c": 2.7353414930804907,
+        "m2_mae_c": 5.279504811164062,
+        "m2_bias_c": 5.279325651211136,
+        "signed_error_direction": "overprediction"
+      },
+      {
+        "target_date": "2020-05-16",
+        "platform": "landsat-8",
+        "b1_mae_c": 3.1255883634628665,
+        "m2_mae_c": 4.346501904580142,
+        "m2_bias_c": -4.279209766210898,
+        "signed_error_direction": "underprediction"
+      },
+      {
+        "target_date": "2023-07-04",
+        "platform": "landsat-9",
+        "b1_mae_c": 3.8534953624024,
+        "m2_mae_c": 4.281904816498909,
+        "m2_bias_c": 4.28084206359329,
+        "signed_error_direction": "overprediction"
+      },
+      {
+        "target_date": "2022-05-14",
+        "platform": "landsat-9",
+        "b1_mae_c": 2.876223528787611,
+        "m2_mae_c": 4.235162981734354,
+        "m2_bias_c": -3.658807389804908,
+        "signed_error_direction": "underprediction"
+      },
+      {
+        "target_date": "2022-09-27",
+        "platform": "landsat-8",
+        "b1_mae_c": 2.5417284595962566,
+        "m2_mae_c": 3.8616329123783615,
+        "m2_bias_c": -3.8578061701692654,
+        "signed_error_direction": "underprediction"
+      },
+      {
+        "target_date": "2021-10-26",
+        "platform": "landsat-8",
+        "b1_mae_c": 4.100202421640214,
+        "m2_mae_c": 2.9749249857553037,
+        "m2_bias_c": 2.9724772668043853,
+        "signed_error_direction": "overprediction"
+      }
+    ],
+    "protocol_fixed_pilot_maps": {
+      "date_selection": "protocol_fixed_not_score_selected",
+      "color_limit_method": "full finite authenticated value range; no percentile clipping",
+      "dates": [
+        {
+          "target_date": "2024-06-20",
+          "model_ready_tract_count": 1050,
+          "relative_endpoint_coverage_pass": true
+        },
+        {
+          "target_date": "2024-08-23",
+          "model_ready_tract_count": 1041,
+          "relative_endpoint_coverage_pass": true
+        },
+        {
+          "target_date": "2024-10-10",
+          "model_ready_tract_count": 870,
+          "relative_endpoint_coverage_pass": false
+        }
+      ],
+      "shared_color_limits": {
+        "lst_c": {
+          "minimum": 28.85424727999998,
+          "maximum": 49.75543958000003
+        },
+        "residual_c": {
+          "minimum": -7.238322542772913,
+          "maximum": 7.238322542772913
+        },
+        "st_qa_k": {
+          "minimum": 1.77,
+          "maximum": 3.17
+        }
+      },
+      "geometry_used_for_diagnostics_only": true,
+      "coordinates_used_as_predictors": false
+    }
+  },
+  "interpretive_caveats": {
+    "st_qa_le_2k": "The <=2 K cohort uses tract-median ST_QA and is not the pixel-level hard-mask sensitivity.",
+    "sentinel_all_missing": "The all-five-missing Sentinel-2 stratum is sparse and its crossed interval is wide.",
+    "worst_dates": "Failure-case dates are descriptive grouped-OOF diagnostics."
+  },
+  "figure_files": {
+    "joint_performance_overview.png": {
+      "path": "joint_performance_overview.png",
+      "path_base": "figure_output_directory",
+      "sha256": "7ab4c2ffa4ebff23b29b59a88dd99050dc108626e8e2dc31c4f3310882f73aae",
+      "bytes": 127630,
+      "width_px": 2640,
+      "height_px": 960,
+      "dpi_x": 199.9996,
+      "dpi_y": 199.9996,
+      "non_background_pixel_fraction": 0.2546618529040404
+    },
+    "qa_cohort_improvement_forest.png": {
+      "path": "qa_cohort_improvement_forest.png",
+      "path_base": "figure_output_directory",
+      "sha256": "221cc792654125732df07284be3e35ed19a06db657d0ac05b302456392dbdf85",
+      "bytes": 223525,
+      "width_px": 2560,
+      "height_px": 1660,
+      "dpi_x": 199.9996,
+      "dpi_y": 199.9996,
+      "non_background_pixel_fraction": 0.04273249246987952
+    },
+    "worst_date_errors.png": {
+      "path": "worst_date_errors.png",
+      "path_base": "figure_output_directory",
+      "sha256": "f90fcb02666ea8f80dd525a3210f6620774cb743826fb471107a260e8139d129",
+      "bytes": 148517,
+      "width_px": 2460,
+      "height_px": 1420,
+      "dpi_x": 199.9996,
+      "dpi_y": 199.9996,
+      "non_background_pixel_fraction": 0.15866283064239092
+    },
+    "fixed_date_lst_prediction_maps.png": {
+      "path": "fixed_date_lst_prediction_maps.png",
+      "path_base": "figure_output_directory",
+      "sha256": "9cef74d43facd3f03086bdd9e902b7216b014351da7db8318e3c7fbae8dbdeca",
+      "bytes": 1172383,
+      "width_px": 2700,
+      "height_px": 2000,
+      "dpi_x": 199.9996,
+      "dpi_y": 199.9996,
+      "non_background_pixel_fraction": 0.15034981481481483
+    }
+  },
+  "commit_sha256": "dae87aaecc3fe2b16208957bc2a18230d4270a3d557c726f4c54ec5b0bbbc401"
+}

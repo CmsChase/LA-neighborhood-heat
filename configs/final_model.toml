@@ -1,0 +1,51 @@
+schema_version = 1
+algorithm_version = "full-development-final-model-v1"
+state = "frozen_development_only"
+
+[paths]
+output_root = "data/interim/final_model_staging"
+model_lock_staging = "manifests/model_lock/MODEL_LOCK_STAGING.json"
+
+[analysis]
+development_years = [2020, 2021, 2022, 2023, 2024]
+final_test_year = 2025
+final_test_locked = true
+model_ids = ["B1", "M2"]
+baseline_model_id = "B1"
+primary_model_id = "M2"
+expected_tract_date_rows = 63403
+expected_independent_dates = 65
+expected_independent_spatial_blocks = 71
+expected_model_feature_count = 46
+
+[selection]
+strategy = "leave_one_development_year_out"
+score_input_unit = "one_mae_per_independent_validation_date"
+primary_metric = "equal_date_weighted_mae_c"
+rule = "minimum_stitched_date_macro_mae"
+candidate_coverage = "exact_same_validation_dates"
+tie_absolute_tolerance_c = 1.0e-12
+tie_relative_tolerance = 0.0
+tie_breakers = ["complexity_rank", "candidate_id"]
+
+[hotspot]
+gate = "relative_endpoint_coverage_pass"
+label = "relative_hotspot_top20"
+positive_fraction = 0.20
+rank_order = "score_desc_geoid_asc"
+exact_top_k = true
+average_precision_input = "continuous_y_pred"
+
+[model_lock]
+formal_lock_generation_allowed = false
+required_robustness_provenance = [
+  "reports/tables/feature_ablation/feature_ablation_analysis_provenance.json",
+  "reports/tables/stqa2_sensitivity/stqa2_sensitivity_provenance.json",
+  "reports/tables/robustness_reconciliation/robustness_reconciliation_provenance.json",
+]
+planned_figures = [
+  "frozen_2025_performance_table",
+  "frozen_2025_observed_predicted_residual_maps",
+  "frozen_2025_per_date_error_and_rank_plot",
+  "frozen_2025_hotspot_precision_recall_plot",
+]

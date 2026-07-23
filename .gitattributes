@@ -1,0 +1,17 @@
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.parquet binary
+*.tif binary
+*.tiff binary
+*.nc binary
+*.zip binary
+
+# Generated audit artifacts carry byte-level provenance locks. Preserve their
+# exact serialized bytes instead of applying Git newline normalization.
+manifests/** -text
+reports/tables/** -text
+reports/DEVELOPMENT_REPORT.md -text
+reports/DEVELOPMENT_REPORT_provenance.json -text

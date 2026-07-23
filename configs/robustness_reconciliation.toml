@@ -1,0 +1,26 @@
+schema_version = 1
+algorithm_version = "development-robustness-reconciliation-v1"
+state = "frozen_development_reconciliation"
+
+[paths]
+initial_results_provenance = "reports/tables/model_results_initial/model_results_initial_provenance.json"
+endpoint_provenance = "reports/tables/model_endpoint_diagnostics/model_endpoint_diagnostics_provenance.json"
+qa_provenance = "reports/tables/model_qa_diagnostics/model_qa_diagnostics_provenance.json"
+residual_spatial_provenance = "reports/tables/residual_spatial/residual_spatial_diagnostics_provenance.json"
+diagnostic_figures_provenance = "reports/tables/model_diagnostic_figures/model_diagnostic_figures_provenance.json"
+diagnostic_figure_output_directory = "reports/figures/generated/model_diagnostics"
+feature_ablation_provenance = "reports/tables/feature_ablation/feature_ablation_analysis_provenance.json"
+stqa2_sensitivity_provenance = "reports/tables/stqa2_sensitivity/stqa2_sensitivity_provenance.json"
+output_directory = "reports/tables/robustness_reconciliation"
+
+[analysis]
+final_test_year = 2025
+final_test_locked = true
+family = "joint"
+baseline_model_id = "B1"
+target_model_id = "M2"
+expected_tract_date_row_count = 63403
+expected_independent_date_count = 65
+expected_independent_spatial_block_count = 71
+expected_relative_endpoint_date_count = 34
+expected_diagnostic_figure_count = 4

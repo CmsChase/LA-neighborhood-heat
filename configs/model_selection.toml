@@ -1,0 +1,193 @@
+schema_version = 1
+algorithm_version = "model-selection-v1"
+state = "frozen_pre_score"
+development_years = [2020, 2021, 2022, 2023, 2024]
+final_test_year = 2025
+unlock_final_test = false
+random_state = 20260719
+
+[inner_cv]
+strategy = "leave_one_remaining_calendar_year_out"
+scope = "outer_train_only"
+preprocessing_fit_scope = "inner_train_only"
+refit_scope = "complete_outer_train_only_after_selection"
+
+[selection]
+primary_metric = "equal_date_weighted_mae_c"
+score_input_unit = "one_mae_per_independent_validation_date"
+aggregation = "mean_across_stitched_inner_oof_dates"
+rule = "minimum_stitched_date_macro_mae"
+candidate_coverage = "exact_same_validation_dates"
+tie_absolute_tolerance_c = 1.0e-12
+tie_relative_tolerance = 0.0
+tie_breakers = ["complexity_rank", "candidate_id"]
+
+[models.B0]
+factory_model_id = "B0"
+
+[[models.B0.candidates]]
+candidate_id = "B0-fixed"
+complexity_rank = 0
+parameters = {}
+
+[models.B1]
+factory_model_id = "B1"
+
+[[models.B1.candidates]]
+candidate_id = "B1-ridge-a100"
+complexity_rank = 0
+parameters = { ridge_alpha = 100.0 }
+
+[[models.B1.candidates]]
+candidate_id = "B1-ridge-a10"
+complexity_rank = 1
+parameters = { ridge_alpha = 10.0 }
+
+[[models.B1.candidates]]
+candidate_id = "B1-ridge-a1"
+complexity_rank = 2
+parameters = { ridge_alpha = 1.0 }
+
+[[models.B1.candidates]]
+candidate_id = "B1-ridge-a0p1"
+complexity_rank = 3
+parameters = { ridge_alpha = 0.1 }
+
+[[models.B1.candidates]]
+candidate_id = "B1-ridge-a0p01"
+complexity_rank = 4
+parameters = { ridge_alpha = 0.01 }
+
+[models.B2]
+factory_model_id = "B2"
+
+[[models.B2.candidates]]
+candidate_id = "B2-ridge-a100"
+complexity_rank = 0
+parameters = { ridge_alpha = 100.0 }
+
+[[models.B2.candidates]]
+candidate_id = "B2-ridge-a10"
+complexity_rank = 1
+parameters = { ridge_alpha = 10.0 }
+
+[[models.B2.candidates]]
+candidate_id = "B2-ridge-a1"
+complexity_rank = 2
+parameters = { ridge_alpha = 1.0 }
+
+[[models.B2.candidates]]
+candidate_id = "B2-ridge-a0p1"
+complexity_rank = 3
+parameters = { ridge_alpha = 0.1 }
+
+[[models.B2.candidates]]
+candidate_id = "B2-ridge-a0p01"
+complexity_rank = 4
+parameters = { ridge_alpha = 0.01 }
+
+[models.M1]
+factory_model_id = "M1"
+
+[[models.M1.candidates]]
+candidate_id = "M1-en-a1-l1r0p9"
+complexity_rank = 0
+parameters = { elastic_alpha = 1.0, elastic_l1_ratio = 0.9 }
+
+[[models.M1.candidates]]
+candidate_id = "M1-en-a1-l1r0p5"
+complexity_rank = 1
+parameters = { elastic_alpha = 1.0, elastic_l1_ratio = 0.5 }
+
+[[models.M1.candidates]]
+candidate_id = "M1-en-a1-l1r0p1"
+complexity_rank = 2
+parameters = { elastic_alpha = 1.0, elastic_l1_ratio = 0.1 }
+
+[[models.M1.candidates]]
+candidate_id = "M1-en-a0p1-l1r0p9"
+complexity_rank = 3
+parameters = { elastic_alpha = 0.1, elastic_l1_ratio = 0.9 }
+
+[[models.M1.candidates]]
+candidate_id = "M1-en-a0p1-l1r0p5"
+complexity_rank = 4
+parameters = { elastic_alpha = 0.1, elastic_l1_ratio = 0.5 }
+
+[[models.M1.candidates]]
+candidate_id = "M1-en-a0p1-l1r0p1"
+complexity_rank = 5
+parameters = { elastic_alpha = 0.1, elastic_l1_ratio = 0.1 }
+
+[[models.M1.candidates]]
+candidate_id = "M1-en-a0p01-l1r0p9"
+complexity_rank = 6
+parameters = { elastic_alpha = 0.01, elastic_l1_ratio = 0.9 }
+
+[[models.M1.candidates]]
+candidate_id = "M1-en-a0p01-l1r0p5"
+complexity_rank = 7
+parameters = { elastic_alpha = 0.01, elastic_l1_ratio = 0.5 }
+
+[[models.M1.candidates]]
+candidate_id = "M1-en-a0p01-l1r0p1"
+complexity_rank = 8
+parameters = { elastic_alpha = 0.01, elastic_l1_ratio = 0.1 }
+
+[[models.M1.candidates]]
+candidate_id = "M1-en-a0p001-l1r0p9"
+complexity_rank = 9
+parameters = { elastic_alpha = 0.001, elastic_l1_ratio = 0.9 }
+
+[[models.M1.candidates]]
+candidate_id = "M1-en-a0p001-l1r0p5"
+complexity_rank = 10
+parameters = { elastic_alpha = 0.001, elastic_l1_ratio = 0.5 }
+
+[[models.M1.candidates]]
+candidate_id = "M1-en-a0p001-l1r0p1"
+complexity_rank = 11
+parameters = { elastic_alpha = 0.001, elastic_l1_ratio = 0.1 }
+
+[models.M2]
+factory_model_id = "M2"
+
+[[models.M2.candidates]]
+candidate_id = "M2-hgb-leaf15-min50-l2-1"
+complexity_rank = 0
+parameters = { hgb_learning_rate = 0.05, hgb_max_iter = 300, hgb_max_leaf_nodes = 15, hgb_min_samples_leaf = 50, hgb_l2_regularization = 1.0 }
+
+[[models.M2.candidates]]
+candidate_id = "M2-hgb-leaf15-min50-l2-0"
+complexity_rank = 1
+parameters = { hgb_learning_rate = 0.05, hgb_max_iter = 300, hgb_max_leaf_nodes = 15, hgb_min_samples_leaf = 50, hgb_l2_regularization = 0.0 }
+
+[[models.M2.candidates]]
+candidate_id = "M2-hgb-leaf15-min20-l2-1"
+complexity_rank = 2
+parameters = { hgb_learning_rate = 0.05, hgb_max_iter = 300, hgb_max_leaf_nodes = 15, hgb_min_samples_leaf = 20, hgb_l2_regularization = 1.0 }
+
+[[models.M2.candidates]]
+candidate_id = "M2-hgb-leaf15-min20-l2-0"
+complexity_rank = 3
+parameters = { hgb_learning_rate = 0.05, hgb_max_iter = 300, hgb_max_leaf_nodes = 15, hgb_min_samples_leaf = 20, hgb_l2_regularization = 0.0 }
+
+[[models.M2.candidates]]
+candidate_id = "M2-hgb-leaf31-min50-l2-1"
+complexity_rank = 4
+parameters = { hgb_learning_rate = 0.05, hgb_max_iter = 300, hgb_max_leaf_nodes = 31, hgb_min_samples_leaf = 50, hgb_l2_regularization = 1.0 }
+
+[[models.M2.candidates]]
+candidate_id = "M2-hgb-leaf31-min50-l2-0"
+complexity_rank = 5
+parameters = { hgb_learning_rate = 0.05, hgb_max_iter = 300, hgb_max_leaf_nodes = 31, hgb_min_samples_leaf = 50, hgb_l2_regularization = 0.0 }
+
+[[models.M2.candidates]]
+candidate_id = "M2-hgb-leaf31-min20-l2-1"
+complexity_rank = 6
+parameters = { hgb_learning_rate = 0.05, hgb_max_iter = 300, hgb_max_leaf_nodes = 31, hgb_min_samples_leaf = 20, hgb_l2_regularization = 1.0 }
+
+[[models.M2.candidates]]
+candidate_id = "M2-hgb-leaf31-min20-l2-0"
+complexity_rank = 7
+parameters = { hgb_learning_rate = 0.05, hgb_max_iter = 300, hgb_max_leaf_nodes = 31, hgb_min_samples_leaf = 20, hgb_l2_regularization = 0.0 }

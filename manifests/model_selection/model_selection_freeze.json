@@ -1,0 +1,376 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "model-selection-v1",
+  "state": "frozen_pre_score",
+  "frozen_before_scores": true,
+  "target_tables_read": [],
+  "score_tables_read": [],
+  "models_fitted": false,
+  "final_test_year": 2025,
+  "final_test_unlocked": false,
+  "development_years": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "random_state": 20260719,
+  "config": {
+    "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\configs\\model_selection.toml",
+    "file_sha256": "ba38d906a069da01978b29354f41d99a6ae4a3d6c842dd2e78a26bfb1e3d3af1",
+    "semantic_sha256": "98f0429f3f2daa6f61f2bf260ff284f7fe08cc52487ee6f11abcab05b98fcec0"
+  },
+  "candidate_counts": {
+    "B0": 1,
+    "B1": 5,
+    "B2": 5,
+    "M1": 12,
+    "M2": 8
+  },
+  "candidate_count_total": 31,
+  "candidates": [
+    {
+      "model_id": "B0",
+      "candidate_id": "B0-fixed",
+      "complexity_rank": 0,
+      "parameters": {}
+    },
+    {
+      "model_id": "B1",
+      "candidate_id": "B1-ridge-a100",
+      "complexity_rank": 0,
+      "parameters": {
+        "ridge_alpha": 100.0
+      }
+    },
+    {
+      "model_id": "B1",
+      "candidate_id": "B1-ridge-a10",
+      "complexity_rank": 1,
+      "parameters": {
+        "ridge_alpha": 10.0
+      }
+    },
+    {
+      "model_id": "B1",
+      "candidate_id": "B1-ridge-a1",
+      "complexity_rank": 2,
+      "parameters": {
+        "ridge_alpha": 1.0
+      }
+    },
+    {
+      "model_id": "B1",
+      "candidate_id": "B1-ridge-a0p1",
+      "complexity_rank": 3,
+      "parameters": {
+        "ridge_alpha": 0.1
+      }
+    },
+    {
+      "model_id": "B1",
+      "candidate_id": "B1-ridge-a0p01",
+      "complexity_rank": 4,
+      "parameters": {
+        "ridge_alpha": 0.01
+      }
+    },
+    {
+      "model_id": "B2",
+      "candidate_id": "B2-ridge-a100",
+      "complexity_rank": 0,
+      "parameters": {
+        "ridge_alpha": 100.0
+      }
+    },
+    {
+      "model_id": "B2",
+      "candidate_id": "B2-ridge-a10",
+      "complexity_rank": 1,
+      "parameters": {
+        "ridge_alpha": 10.0
+      }
+    },
+    {
+      "model_id": "B2",
+      "candidate_id": "B2-ridge-a1",
+      "complexity_rank": 2,
+      "parameters": {
+        "ridge_alpha": 1.0
+      }
+    },
+    {
+      "model_id": "B2",
+      "candidate_id": "B2-ridge-a0p1",
+      "complexity_rank": 3,
+      "parameters": {
+        "ridge_alpha": 0.1
+      }
+    },
+    {
+      "model_id": "B2",
+      "candidate_id": "B2-ridge-a0p01",
+      "complexity_rank": 4,
+      "parameters": {
+        "ridge_alpha": 0.01
+      }
+    },
+    {
+      "model_id": "M1",
+      "candidate_id": "M1-en-a1-l1r0p9",
+      "complexity_rank": 0,
+      "parameters": {
+        "elastic_alpha": 1.0,
+        "elastic_l1_ratio": 0.9
+      }
+    },
+    {
+      "model_id": "M1",
+      "candidate_id": "M1-en-a1-l1r0p5",
+      "complexity_rank": 1,
+      "parameters": {
+        "elastic_alpha": 1.0,
+        "elastic_l1_ratio": 0.5
+      }
+    },
+    {
+      "model_id": "M1",
+      "candidate_id": "M1-en-a1-l1r0p1",
+      "complexity_rank": 2,
+      "parameters": {
+        "elastic_alpha": 1.0,
+        "elastic_l1_ratio": 0.1
+      }
+    },
+    {
+      "model_id": "M1",
+      "candidate_id": "M1-en-a0p1-l1r0p9",
+      "complexity_rank": 3,
+      "parameters": {
+        "elastic_alpha": 0.1,
+        "elastic_l1_ratio": 0.9
+      }
+    },
+    {
+      "model_id": "M1",
+      "candidate_id": "M1-en-a0p1-l1r0p5",
+      "complexity_rank": 4,
+      "parameters": {
+        "elastic_alpha": 0.1,
+        "elastic_l1_ratio": 0.5
+      }
+    },
+    {
+      "model_id": "M1",
+      "candidate_id": "M1-en-a0p1-l1r0p1",
+      "complexity_rank": 5,
+      "parameters": {
+        "elastic_alpha": 0.1,
+        "elastic_l1_ratio": 0.1
+      }
+    },
+    {
+      "model_id": "M1",
+      "candidate_id": "M1-en-a0p01-l1r0p9",
+      "complexity_rank": 6,
+      "parameters": {
+        "elastic_alpha": 0.01,
+        "elastic_l1_ratio": 0.9
+      }
+    },
+    {
+      "model_id": "M1",
+      "candidate_id": "M1-en-a0p01-l1r0p5",
+      "complexity_rank": 7,
+      "parameters": {
+        "elastic_alpha": 0.01,
+        "elastic_l1_ratio": 0.5
+      }
+    },
+    {
+      "model_id": "M1",
+      "candidate_id": "M1-en-a0p01-l1r0p1",
+      "complexity_rank": 8,
+      "parameters": {
+        "elastic_alpha": 0.01,
+        "elastic_l1_ratio": 0.1
+      }
+    },
+    {
+      "model_id": "M1",
+      "candidate_id": "M1-en-a0p001-l1r0p9",
+      "complexity_rank": 9,
+      "parameters": {
+        "elastic_alpha": 0.001,
+        "elastic_l1_ratio": 0.9
+      }
+    },
+    {
+      "model_id": "M1",
+      "candidate_id": "M1-en-a0p001-l1r0p5",
+      "complexity_rank": 10,
+      "parameters": {
+        "elastic_alpha": 0.001,
+        "elastic_l1_ratio": 0.5
+      }
+    },
+    {
+      "model_id": "M1",
+      "candidate_id": "M1-en-a0p001-l1r0p1",
+      "complexity_rank": 11,
+      "parameters": {
+        "elastic_alpha": 0.001,
+        "elastic_l1_ratio": 0.1
+      }
+    },
+    {
+      "model_id": "M2",
+      "candidate_id": "M2-hgb-leaf15-min50-l2-1",
+      "complexity_rank": 0,
+      "parameters": {
+        "hgb_learning_rate": 0.05,
+        "hgb_max_iter": 300,
+        "hgb_max_leaf_nodes": 15,
+        "hgb_min_samples_leaf": 50,
+        "hgb_l2_regularization": 1.0
+      }
+    },
+    {
+      "model_id": "M2",
+      "candidate_id": "M2-hgb-leaf15-min50-l2-0",
+      "complexity_rank": 1,
+      "parameters": {
+        "hgb_learning_rate": 0.05,
+        "hgb_max_iter": 300,
+        "hgb_max_leaf_nodes": 15,
+        "hgb_min_samples_leaf": 50,
+        "hgb_l2_regularization": 0.0
+      }
+    },
+    {
+      "model_id": "M2",
+      "candidate_id": "M2-hgb-leaf15-min20-l2-1",
+      "complexity_rank": 2,
+      "parameters": {
+        "hgb_learning_rate": 0.05,
+        "hgb_max_iter": 300,
+        "hgb_max_leaf_nodes": 15,
+        "hgb_min_samples_leaf": 20,
+        "hgb_l2_regularization": 1.0
+      }
+    },
+    {
+      "model_id": "M2",
+      "candidate_id": "M2-hgb-leaf15-min20-l2-0",
+      "complexity_rank": 3,
+      "parameters": {
+        "hgb_learning_rate": 0.05,
+        "hgb_max_iter": 300,
+        "hgb_max_leaf_nodes": 15,
+        "hgb_min_samples_leaf": 20,
+        "hgb_l2_regularization": 0.0
+      }
+    },
+    {
+      "model_id": "M2",
+      "candidate_id": "M2-hgb-leaf31-min50-l2-1",
+      "complexity_rank": 4,
+      "parameters": {
+        "hgb_learning_rate": 0.05,
+        "hgb_max_iter": 300,
+        "hgb_max_leaf_nodes": 31,
+        "hgb_min_samples_leaf": 50,
+        "hgb_l2_regularization": 1.0
+      }
+    },
+    {
+      "model_id": "M2",
+      "candidate_id": "M2-hgb-leaf31-min50-l2-0",
+      "complexity_rank": 5,
+      "parameters": {
+        "hgb_learning_rate": 0.05,
+        "hgb_max_iter": 300,
+        "hgb_max_leaf_nodes": 31,
+        "hgb_min_samples_leaf": 50,
+        "hgb_l2_regularization": 0.0
+      }
+    },
+    {
+      "model_id": "M2",
+      "candidate_id": "M2-hgb-leaf31-min20-l2-1",
+      "complexity_rank": 6,
+      "parameters": {
+        "hgb_learning_rate": 0.05,
+        "hgb_max_iter": 300,
+        "hgb_max_leaf_nodes": 31,
+        "hgb_min_samples_leaf": 20,
+        "hgb_l2_regularization": 1.0
+      }
+    },
+    {
+      "model_id": "M2",
+      "candidate_id": "M2-hgb-leaf31-min20-l2-0",
+      "complexity_rank": 7,
+      "parameters": {
+        "hgb_learning_rate": 0.05,
+        "hgb_max_iter": 300,
+        "hgb_max_leaf_nodes": 31,
+        "hgb_min_samples_leaf": 20,
+        "hgb_l2_regularization": 0.0
+      }
+    }
+  ],
+  "inner_cv": {
+    "strategy": "leave_one_remaining_calendar_year_out",
+    "scope": "outer_train_only",
+    "preprocessing_fit_scope": "inner_train_only",
+    "refit_scope": "complete_outer_train_only_after_selection"
+  },
+  "selection": {
+    "primary_metric": "equal_date_weighted_mae_c",
+    "score_input_unit": "one_mae_per_independent_validation_date",
+    "aggregation": "mean_across_stitched_inner_oof_dates",
+    "rule": "minimum_stitched_date_macro_mae",
+    "candidate_coverage": "exact_same_validation_dates",
+    "tie_breakers": [
+      "complexity_rank",
+      "candidate_id"
+    ],
+    "tie_absolute_tolerance_c": 1e-12,
+    "tie_relative_tolerance": 0.0
+  },
+  "pipeline_sha256": "da7166854a082fb46c7678c79e3e563fa2738577a1ea9c0c74e4eba47c16baf0",
+  "pipeline_fingerprint": {
+    "algorithm_version": "model-selection-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "configs/model_selection.toml": "ba38d906a069da01978b29354f41d99a6ae4a3d6c842dd2e78a26bfb1e3d3af1",
+      "scripts/audit_model_selection_freeze.py": "312d4988405d38a673933e988b6ed1fce3c949847b58bb8375ac459aa58c8420",
+      "src/la_heat/model_selection.py": "6c84dd075460297603ffd957bae8f75264268fe2e41f4af1bc54abfc350f3b60",
+      "src/la_heat/modeling.py": "4af880e6a3a2ef6ffc9e4c38760ee72e9de66205a95807d58b550fd85eaa98f8",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/validation_splits.py": "1764496543d94a97f3325aba4bc5cd7b59a6042e3df74809c4b578112f8ea6bd"
+    }
+  },
+  "scientific_contract": {
+    "outer_split_unit": "grouped whole date, spatial block, or joint cell",
+    "inner_split_unit": "whole calendar year inside outer training only",
+    "preprocessing_scope": "inner training fold only",
+    "selection_unit": "independent validation date",
+    "selection_metric": "equal-date-weighted MAE in degrees C",
+    "locked_final_test_used": false
+  },
+  "commit_sha256": "4d8c2bd37be67f9f46d89d1dec8d5ed0aab196b24b43f9745ff730f040f2a6cd"
+}

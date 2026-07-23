@@ -1,0 +1,33 @@
+schema_version = 1
+algorithm_version = "feature-ablation-analysis-v1"
+state = "frozen_development_diagnostics"
+
+[paths]
+result_analysis_config = "configs/result_analysis.toml"
+feature_ablation_compile_directory = "data/processed/feature_ablation/5d1959708f99227f8d1f3be8be9327dc1bb4152a168f11d042b37a72a4ece3fb"
+output_directory = "reports/tables/feature_ablation"
+
+[analysis]
+expected_run_id = "5d1959708f99227f8d1f3be8be9327dc1bb4152a168f11d042b37a72a4ece3fb"
+expected_source_run_id = "eb2d09ce9592d5531b51e3e507634aa25f25ef1323376b056dd79fae948876f5"
+final_test_year = 2025
+final_test_locked = true
+model_id = "M2"
+split_families = ["temporal", "spatial", "joint"]
+fitted_scenario_ids = [
+  "calendar_weather",
+  "calendar_land_use_geography",
+  "calendar_satellite",
+]
+all_feature_scenario_id = "all_features"
+expected_tract_date_row_count_per_family = 63403
+expected_independent_date_count = 65
+expected_independent_spatial_block_count = 71
+
+[bootstrap]
+method = "crossed_date_spatial_block"
+sampling_unit = "complete_clusters_only"
+seed = 20260726
+replicates = 5000
+confidence_level = 0.95
+relative_improvement_threshold_fraction = 0.10

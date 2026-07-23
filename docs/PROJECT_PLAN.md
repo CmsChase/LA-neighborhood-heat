@@ -1,0 +1,114 @@
+# Project Execution Plan
+
+This table is the working roadmap for the simulated ISEF project. Week numbers
+are relative; scientific gates control progression more than calendar dates.
+
+| Phase | Target weeks | Work | Main outputs | Exit gate | Primary owner |
+|---|---:|---|---|---|---|
+| 0. Scope and feasibility — complete | 1–2 | Lock question, outcome, unit, leakage rules; run real Landsat pilot | Protocol, decision log, three-date target pilot, QA waterfall and sensitivity table | Absolute-label feasibility passes; June/August relative endpoints pass and October is withheld by locked gates | Codex implements; ChatGPT challenges assumptions; student approves scientific claim |
+| 1. Target dataset — complete | 3–4 | Build and audit all 90 primary 2020–2024 physical overpasses on the corrected fixed grid | Frozen mother/primary tract manifests, pixel-level scene lineage, target table, missingness/coverage report | Unique keys; static pixel-identity denominator; mosaic/QA contract; 65 post-QA usable dates; no 2025 rows | Codex |
+| 2. Predictor dataset — complete | 5–7 | Build and audit static, calendar, 21 Daymet, and `d−60:d−1` Sentinel-2 features; perform a target-blind assembly before the legal target join | Frozen 98,640 × 49 Phase 2 table and 63,403 × 50 development modeling table; 46 model features plus one audit-only field | Every feature has units/version/time window; readiness blockers are empty; forbidden-feature, cutoff, key, and 2025-lock checks pass | Codex with ChatGPT review |
+| 3. Validation design — complete and promoted | 8 | Predeclare 5 km spatial blocks, whole-year folds, Cartesian joint folds, 1 km buffer, nested year tuning, metrics, and the 31-candidate selection rule | Promoted 63,403-key manifest with 5 temporal, 71 spatial, and 355 joint folds; reference metric code and frozen selection configuration | One OOF test assignment per legal row/family; no date/block/buffer overlap; preprocessing isolation tests pass; no values or scores read at promotion | Codex |
+| 4. Baselines and models — development OOF complete | 9–10 | Run the 57,800-task durable plan for B0/B1/B2, Elastic Net, and histogram gradient boosting using nested grouped validation | Authenticated OOF predictions, metrics, tuning log, and initial result analysis | Required development gates pass without split or threshold changes | Codex computes; ChatGPT interprets |
+| 5. Robustness and interpretation — complete with limitations | 11 | Feature-family ablations, strict pixel-level ST_QA sensitivity, QA cohorts, sensor checks, uncertainty intervals, endpoint and residual diagnostics | Authenticated ablation/sensitivity tables, unified evidence table, generated development report, hotspot and spatial diagnostics | Complete: strict 2 K date-support gate failed and spatial clustering remains, so the claim is explicitly narrowed | Codex + ChatGPT |
+| 6. Model lock and final test | 12 | Freeze code/config/features/model/figures, create hashes, then unlock 2025 once | `MODEL_LOCK.json`, one-way 2025 predictions and metrics | Evaluator never fits; every hash matches; one final run only | Codex executes after student approval |
+| 7. Research communication | 13–14 | Write paper, abstract, poster, notebook/demo, limitations, and oral-defense questions | Final report, poster figures, reproducibility instructions | Every number traceable to a table or script; claims match estimand | ChatGPT drafts; Codex verifies; student presents |
+
+## Planned result package
+
+The final project should report a result even if the model fails the success
+criteria. Required artifacts are:
+
+1. Data-flow and leakage-prevention diagram.
+2. Maps of observed LST, predicted LST, within-date residuals, and uncertainty.
+3. Temporal, spatial, joint, and frozen-year performance table.
+4. Date-macro MAE with grouped confidence intervals.
+5. Within-date Spearman and hotspot recall/precision results.
+6. Feature-family ablation table: weather; land-use/geography; satellite; all.
+7. QA and missingness sensitivity analyses.
+8. Residual spatial autocorrelation and error-stratification diagnostics.
+9. A limitations section that distinguishes LST from air temperature and human
+   health risk.
+
+## Codex and ChatGPT division of labor
+
+| Codex | ChatGPT | Human/student decisions |
+|---|---|---|
+| Download/query data, create deterministic pipelines, write tests, fit models, generate exact tables/figures, record hashes and lineage | Refine hypotheses, critique design, interpret outputs, draft explanations, rehearse defense questions | Approve scope and protocol changes, understand and verify the methods, decide what claims to present |
+
+Chat output is never treated as evidence. Every reported number must be generated
+from code and every scientific claim must be supportable from the frozen data,
+protocol, or cited source.
+
+## Current execution checkpoint
+
+Phases 0 and 1 are complete. The corrected builder ran all 90 frozen physical
+overpasses end to end and committed `state=model_ready`: 98,640 complete tract
+QA rows, 65 absolute-usable dates, 34 relative-endpoint dates, and 63,403 legal
+absolute-model rows. There are zero duplicate keys and zero 2025 rows; exact
+static eligible-pixel identity is unchanged for every GEOID across all dates.
+The ≥30-date gate passed without changing its threshold.
+
+Phase 2 is complete. The promoted fixed-support static table has 1,096
+unique GEOIDs, 18 legal model features, one audit-only NLCD reference fraction,
+no missing values, and full observed coverage for all five source layers.
+Official MRLC NLCD subsets, both SRTM tiles, and the Census coastline ZIP are
+downloaded and hash-audited.
+
+The official Daymet CMR inventory is frozen at 30 development granules
+(2020–2024 × six variables) and zero 2025 entries. All 30 official subsets are
+downloaded and hash-audited, and the completed compiler produced 21 lagged
+weather features on every one of the 98,640 target-blind tract-date keys.
+
+The Sentinel inventory is frozen at 226 physical acquisitions, 449 selected
+tile items, and 1,045 legal window memberships. All 226 caches are complete and
+validated, totaling 247,696 acquisition-tract rows. Formal promotion produced a
+98,640-row predictor table with 97,870 available and 770 explicit all-five-null
+rows, plus 1,145,320 lineage rows whose ages are exactly 1–60 days. The
+canonical processed feature SHA is
+`aa02df3a00c51076610f442512949ade5ca70ab466b4d2d9c513826184fe82b5`.
+
+The target-blind predictor support is an audited 90-date × 1,096-tract grid with
+98,640 keys. Readiness now covers static, calendar, Daymet, and Sentinel with
+`blockers=[]`, while reading no target value, target QA, or model score. A
+separate target-blind assembly froze the 98,640 × 49 Phase 2 table (two keys, 46
+model features, and one audit-only field) under commit
+`3f5e4017713f90a47a4a5b1eefdb4e91bb6141bfb1f0458d9a168dd785c2a364`.
+
+The gated legal target join then produced the 63,403 × 50 development modeling
+table across 65 independent dates. It has 46 model features, one audit-only
+field, 63,235 complete model-feature rows, zero duplicate keys, and zero 2025
+rows. Its commit is
+`9c2f903993167fc2a228b3cfe60a23fe33f57f252bae6299458338cb8eb967ad`.
+
+The grouped-validation manifest is now formally promoted over all 63,403 keys,
+65 dates, and 71 fixed spatial blocks. It freezes 5 temporal, 71 spatial, and
+355 joint outer folds (431 total), plus strict year-grouped inner CV and the
+reference absolute-LST metric code. Promotion read only keys and split metadata,
+not target values, predictor values, or model scores; 2025 remains locked. Its
+commit is
+`6a72169db012cf8c12aeecde573275e23205363608e60d4cde616a681fa08fcc`.
+The recoverable nested grouped run is complete: 55,645 inner fits and 2,155
+outer refits, or 57,800 / 57,800 tasks, with no quarantine. Canonical import
+from the returned ZIP preserved all original outer fragments and compiled
+951,045 authenticated development OOF rows. Joint M2 improves date-macro MAE
+by 16.1896% over B1, with a paired crossed-cluster 95% interval of
+4.2088%–27.6883%; the required development gates pass without changing the
+frozen split, candidates, metrics, or thresholds.
+
+The pre-score model-selection contract is no longer pending. It freezes 31
+candidates across B0/B1/B2/M1/M2, whole-year inner CV, stitched date-macro MAE,
+and deterministic tie-breaking under commit
+`4d8c2bd37be67f9f46d89d1dec8d5ed0aab196b24b43f9745ff730f040f2a6cd`.
+The endpoint, sensor, Sentinel-missingness, QA/failure-case, residual, Moran's I,
+and diagnostic-figure stages are also complete and provenance-locked. They show
+useful hotspot skill and improvement for both Landsat sensors, while identifying
+strong remaining residual spatial clustering and weak evidence in the small
+tract-median-ST_QA and Sentinel-missing cohorts. All 1,293 feature-ablation
+refits are complete with zero quarantine. The strict pixel-level ST_QA rebuild
+is also complete, but retained only 15 usable dates versus the required 30 and
+its frozen-OOF improvement interval crosses zero. These limitations are
+preserved in the authenticated reconciliation and generated development report.
+No 2025 target or evaluation has been inspected or reported. Full-development
+final tuning/refitting is prepared as a separate resumable job but has not been
+started automatically.

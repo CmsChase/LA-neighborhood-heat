@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "development-report-v1",
+  "state": "complete",
+  "generated_at_utc": "2026-07-22T15:37:47.992152+00:00",
+  "analysis_scope": "locked_2020_2024_development_report_only",
+  "final_test_year": 2025,
+  "final_test_locked": true,
+  "final_test_used": false,
+  "contains_final_test_year": false,
+  "analysis_config": {
+    "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/configs/development_report.toml",
+    "sha256": "5c647a82b9d52025c3ff997d7260ec10e8c660c9db8ae52340f0b7f102640e93",
+    "semantic_sha256": "c3534ba10d64478ae18758e8a4f2d39f25fbfa89652d626d207dc5350ec72a1b"
+  },
+  "input_locks": {
+    "research_config_sha256": "77d8badff06aa17f3a22c3cf8669c4143f1bf5847868e77eb3372617cfa570db",
+    "model_selection_config_sha256": "ba38d906a069da01978b29354f41d99a6ae4a3d6c842dd2e78a26bfb1e3d3af1",
+    "literature_evidence_sha256": "275941d3b39e5d21a7d7f4cd143e137b44c5943cb238d2f23743338b2a0a85f4",
+    "reconciliation_provenance_sha256": "bdb244717474e590cbae3e399076f546816dba247384da3891ea73d657d25d53",
+    "reconciliation_provenance_commit_sha256": "7b7aa40a49ae5d3fb415e16ed8202205f70c8bdce795087b1d98467f453722df",
+    "reconciliation_summary_commit_sha256": "e1eff002bef32e22cc349bec2c106486bde58e92eb13e144af0602152ce98bb1",
+    "source_provenance_commits": {
+      "initial_results": "d8bfaf258590d2ef42abe37a73fb92eeba3d66d61f23fd5f85b8e8c5616844c4",
+      "endpoint": "2ec9540ca7817dd53802e5849a35a8499b7f0755c7057b3c3b4292183475881a",
+      "qa": "938a837cde8f49785e708e7960a4bca680ad851007a142189dbf4f3ac640ef8e",
+      "residual_spatial": "44047f7c9dd72135ab93d06bb4dc31144772ea012de98ba117768a185fdccc30",
+      "diagnostic_figures": "0e69b5bff544a92fb14015ebc75da5f27437420e68c83d55167749de97defda8",
+      "feature_ablation": "31afec41abc3448f9732567ad671d73938d5a620f0adc7d2421cb690edc76ae1",
+      "stqa2_sensitivity": "71b9b5fd3b0768086852f0fa8d9fcd834d8719778a93f5d65ef6e1a8dfe46021"
+    }
+  },
+  "scientific_contract": {
+    "historical_hindcast_not_operational_forecast": true,
+    "lst_is_surface_heat_proxy_not_human_exposure": true,
+    "predictive_association_not_causation": true,
+    "independent_dates_and_blocks_reported": true,
+    "strict_pixel_gate_failure_reported": true,
+    "residual_spatial_clustering_reported": true,
+    "final_test_unlocked": false
+  },
+  "pipeline_sha256": "48a9d04a69c4564fe6691f27d8596d58b3ee553f5420e69ccf3b468ad1d674ee",
+  "pipeline_fingerprint": {
+    "algorithm_version": "development-report-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "configs/development_report.toml": "5c647a82b9d52025c3ff997d7260ec10e8c660c9db8ae52340f0b7f102640e93",
+      "scripts/generate_development_report.py": "c127d5c4b3498d04e5e95bfc1ae3f1e0528c4c8f3e795241c2312eb0a04549eb",
+      "src/la_heat/development_report.py": "196a1a47c4ebebbd50b8fb9a6ad6649e1ba29046ccd03c2c60ba0bf32be8cb4d",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/robustness_reconciliation.py": "b96cee6ad21983add1cc67393d1472401841ed9a38cb3ef7d92f0bf935f0361e"
+    }
+  },
+  "output_files": {
+    "DEVELOPMENT_REPORT.md": {
+      "path": "DEVELOPMENT_REPORT.md",
+      "path_base": "report_directory",
+      "sha256": "d0fbdc5a598b9b4acb23ae7c3cbc7afe2596d1cb428bdbba6042cdb738574d31",
+      "bytes": 5674
+    }
+  },
+  "commit_sha256": "dadf41b90c03c61c2dae6817de86f30df40b7aa52bea204526f043513b9563c7"
+}

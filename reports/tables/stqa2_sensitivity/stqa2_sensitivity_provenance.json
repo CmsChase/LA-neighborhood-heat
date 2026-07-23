@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "stqa2-pixel-label-sensitivity-v2",
+  "state": "complete",
+  "generated_at_utc": "2026-07-22T15:25:58.472472+00:00",
+  "final_test_year": 2025,
+  "final_test_locked": true,
+  "contains_final_test_year": false,
+  "analysis_config": {
+    "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/configs/stqa2_sensitivity_analysis.toml",
+    "sha256": "c5a4a45c5c4423f3e52015ac23ef5442e70b95546908543d446de71ffe88506d",
+    "semantic_sha256": "cb0ab46576d068e278eb2ec392439b6a01f53eccf7ac068dacdef57f7c38216e"
+  },
+  "input_authentication": {
+    "primary_config_file_sha256": "77d8badff06aa17f3a22c3cf8669c4143f1bf5847868e77eb3372617cfa570db",
+    "strict_config_file_sha256": "48e1d4b2e482347e91f591741c0e2bf49dafd751d9c96ed62f07b498cff9cf1c",
+    "primary_target_config_sha256": "936a841746580eb94b3350839f73382e68410ec5749e81ead44356ed85cd703c",
+    "strict_target_config_sha256": "c20ffab0f484a538c51ac50359b1c1dfcbb778461af61ccdb597b5d1a03c9556",
+    "primary_progress_sha256": "3f630dfcc8a1c2a19b093e7fe0f4bdc7f830fef42266fcf1156112f0eb959046",
+    "strict_progress_sha256": "78ab1b1a7b875558a1699fb84a2afbe040c5392f8906a64027f4d1081a409f40",
+    "primary_fixed_grid_lock_sha256": "b93f139d8425b960de5c7943be24c72f3d7e2b75340dc001bdacb4a33bcd86ae",
+    "strict_fixed_grid_lock_sha256": "3e57a406cb8ff89dac69706137011b40a0a310271c65fb3027dab3ce89c2d485",
+    "model_compile_provenance_commit_sha256": "00d1e59ce78baffbf9d24361ac8ba16a1d577b22cb193e15596627259190ed07",
+    "model_oof_predictions_sha256": "0c06b88fd09cd514745b699e6b6a7e12901db8d3247e42b582feaf1f7e91c04a"
+  },
+  "pipeline_sha256": "365512f48f3d59d7e680bb988d837497c9454852d7b8507e30173aec6515c150",
+  "pipeline_fingerprint": {
+    "algorithm_version": "stqa2-pixel-label-sensitivity-v2",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "configs/stqa2_sensitivity_analysis.toml": "c5a4a45c5c4423f3e52015ac23ef5442e70b95546908543d446de71ffe88506d",
+      "scripts/analyze_stqa2_sensitivity.py": "c0f1ce35c521a9736ff30b3789af278a603304705bfa77c811c2681c45d8942f",
+      "src/la_heat/model_result_analysis.py": "4ac498b7a242d0dc3784745d31ad8ea01fc3976406ad2d8fccf497155db42adc",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/stqa2_sensitivity_analysis.py": "a6679507cc02d03ba639d7f926f933fad1ff626319eeca7abb36d49b1bf79671"
+    }
+  },
+  "scientific_contract": {
+    "strict_threshold_applied_at_pixel_level": true,
+    "fixed_eligible_land_denominator": true,
+    "complete_gate_failed_strict_qa_is_accepted_but_not_promoted": true,
+    "strict_analysis_rows_derived_from_complete_qa": true,
+    "primary_oof_predictions_refit": false,
+    "random_row_resampling_used": false,
+    "complete_date_and_spatial_block_bootstrap_used_when_estimable": true,
+    "final_test_unlocked": false
+  },
+  "summary_commit_sha256": "17d310f973e0503f4d6453b599f8c52ea81c19d064236fa5113190c49a6c296c",
+  "output_files": {
+    "stqa2_date_retention.csv": {
+      "path": "stqa2_date_retention.csv",
+      "path_base": "output_directory",
+      "sha256": "a99578edb2a7bbfb0e5d968ddc88c392ed3057879b99cb00faea50f94edcafcb",
+      "bytes": 12402,
+      "rows": 90,
+      "schema_sha256": "43c18ac6af58d246c1517e72c41202a7d7a3435064db19aa8ae51359911b3f3f"
+    },
+    "stqa2_label_shift_by_date.csv": {
+      "path": "stqa2_label_shift_by_date.csv",
+      "path_base": "output_directory",
+      "sha256": "2596682563a19684d585bf6b32d57795a85c0c29f7fe40081de1f854c81d2088",
+      "bytes": 6095,
+      "rows": 54,
+      "schema_sha256": "beb08a0db4b108f3a0d1ef54033624eb5cd9dd5a63ef176a73725ee47d92fd1d"
+    },
+    "stqa2_frozen_primary_oof_metrics.csv": {
+      "path": "stqa2_frozen_primary_oof_metrics.csv",
+      "path_base": "output_directory",
+      "sha256": "f64893d91f73d33d0814b98653b677ec0eb81cef319dabd11e8b6b8160c4b4e1",
+      "bytes": 526,
+      "rows": 2,
+      "schema_sha256": "ed6b78e73b609196e20546662b106bdb96d67aa2ac6e95dd533ecb6969977cbe"
+    },
+    "stqa2_frozen_primary_oof_bootstrap.csv": {
+      "path": "stqa2_frozen_primary_oof_bootstrap.csv",
+      "path_base": "output_directory",
+      "sha256": "91353d1e4d3eae43f8039776c61051c03296b7dbe2bf7cb2552915f5bc3dab04",
+      "bytes": 1368,
+      "rows": 1,
+      "schema_sha256": "11eb829b1c9ec10c008cc62410d1d55ddc1378d9e6f7e09abb123c31ab21ed0c"
+    },
+    "stqa2_sensitivity_summary.json": {
+      "path": "stqa2_sensitivity_summary.json",
+      "path_base": "output_directory",
+      "sha256": "bbe8dd1b19c2a418280d4505ba63d1a8ac09cff77db7b0e8448cb7731845de60",
+      "bytes": 4269
+    }
+  },
+  "commit_sha256": "71b9b5fd3b0768086852f0fa8d9fcd834d8719778a93f5d65ef6e1a8dfe46021"
+}

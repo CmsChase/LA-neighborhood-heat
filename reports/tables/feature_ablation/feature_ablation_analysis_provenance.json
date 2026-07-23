@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "feature-ablation-analysis-v1",
+  "state": "complete",
+  "generated_at_utc": "2026-07-22T15:26:45.056404+00:00",
+  "analysis_scope": "locked_2020_2024_development_oof_feature_set_diagnostic",
+  "final_test_year": 2025,
+  "final_test_locked": true,
+  "contains_final_test_year": false,
+  "feature_ablation_run_id": "5d1959708f99227f8d1f3be8be9327dc1bb4152a168f11d042b37a72a4ece3fb",
+  "canonical_model_run_id": "eb2d09ce9592d5531b51e3e507634aa25f25ef1323376b056dd79fae948876f5",
+  "analysis_config": {
+    "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/configs/feature_ablation_analysis.toml",
+    "sha256": "16e1c895d410ded70d97dd22ea832674649ccd30b289c8499532ec0f9f8ea300",
+    "semantic_sha256": "2e69128288ef9510c5abb72db07c6ca959358f56b2f6ef757d54699e64257091"
+  },
+  "input_authentication": {
+    "canonical_model_result_authentication": {
+      "compile_provenance_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/processed/model_evaluation/model_run_compile_provenance.json",
+      "compile_provenance_file_sha256": "55416c987a2d25f9177dd974307ae595761c1db31ecaa9d7561fb6c42d4d5e7c",
+      "compile_provenance_commit_sha256": "00d1e59ce78baffbf9d24361ac8ba16a1d577b22cb193e15596627259190ed07",
+      "compile_run_id": "eb2d09ce9592d5531b51e3e507634aa25f25ef1323376b056dd79fae948876f5",
+      "oof_predictions_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/processed/model_evaluation/oof_predictions.parquet",
+      "oof_predictions_sha256": "0c06b88fd09cd514745b699e6b6a7e12901db8d3247e42b582feaf1f7e91c04a",
+      "summary_metrics_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/processed/model_evaluation/summary_metrics.csv",
+      "summary_metrics_sha256": "08f2aeb73c59033cb6256389374254b7bf216b05727372e7a77324c26b5aed05"
+    },
+    "canonical_model_compile_commit_sha256": "00d1e59ce78baffbf9d24361ac8ba16a1d577b22cb193e15596627259190ed07",
+    "canonical_model_run_id": "eb2d09ce9592d5531b51e3e507634aa25f25ef1323376b056dd79fae948876f5",
+    "canonical_all_feature_oof_sha256": "0c06b88fd09cd514745b699e6b6a7e12901db8d3247e42b582feaf1f7e91c04a",
+    "feature_ablation_compile_provenance_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/processed/feature_ablation/5d1959708f99227f8d1f3be8be9327dc1bb4152a168f11d042b37a72a4ece3fb/feature_ablation_compile_provenance.json",
+    "feature_ablation_compile_provenance_file_sha256": "968da03c5861d680969a7ecd05da616d2a0f3d70b1915971075ec9766f90103d",
+    "feature_ablation_compile_commit_sha256": "2cf94eb058a4c5604d19cba410c4dc13cbb5870182391b28e505a57cf5d84f65",
+    "feature_ablation_run_id": "5d1959708f99227f8d1f3be8be9327dc1bb4152a168f11d042b37a72a4ece3fb",
+    "source_run_manifest_commit_sha256": "2ba981ac131959af785ffa50d9a8a7ac573f55b16b397f0ebeb503b0da5e7361",
+    "source_selection_and_all_oof_lock_sha256": "02cbca8420febed11bb8b7590f4bd54fdd6c4180a4e8e5b998773d676ea76392",
+    "compiler_pipeline_sha256": "fef88217e8b39faec9b93cd998defb2c3a6f4d198805ab4d9393a719389f12dc",
+    "feature_ablation_oof_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/processed/feature_ablation/5d1959708f99227f8d1f3be8be9327dc1bb4152a168f11d042b37a72a4ece3fb/feature_ablation_oof_predictions.parquet",
+    "feature_ablation_oof_sha256": "a7bd1fc0fadde8df80ca8179ead3556074df8c1718a68bcaff19a8a3789c65ab",
+    "feature_ablation_oof_bytes": 6855727,
+    "feature_ablation_oof_rows": 570627,
+    "feature_ablation_oof_schema_sha256": "a66b97dc9b7add982023f8ee0aad99dbdf07d5a86c186cfdc56a486acfb54a23"
+  },
+  "pipeline_sha256": "1b9220d17bae72c8571dced97d0242e54d6e8830e905a550d0dcfa0bb3ecf7e4",
+  "pipeline_fingerprint": {
+    "algorithm_version": "feature-ablation-analysis-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "scripts/analyze_feature_ablation.py": "a97dfe47a6a4a72cd394978fab8227d929a538f72612cb42cbac2dfa5e9a3938",
+      "src/la_heat/feature_ablation_analysis.py": "e508ab267c67b6744f386d327db736255db43aba641a999b36869c534f365144",
+      "src/la_heat/model_result_analysis.py": "4ac498b7a242d0dc3784745d31ad8ea01fc3976406ad2d8fccf497155db42adc",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "scientific_contract": {
+    "final_test_unlocked": false,
+    "models_fitted_by_analysis": false,
+    "all_feature_reference_refit": false,
+    "random_row_resampling_used": false,
+    "complete_date_and_spatial_block_bootstrap_used": true,
+    "fitted_scenarios_are_reduced_feature_set_refits": true,
+    "causal_importance_interpretation_allowed": false,
+    "leave_one_feature_family_out_interpretation_allowed": false
+  },
+  "summary_commit_sha256": "eaa941d5361254031904ad08e87a18e0ada976bb256a5382e128605fb88bfad2",
+  "output_files": {
+    "feature_ablation_metrics.csv": {
+      "path": "feature_ablation_metrics.csv",
+      "path_base": "output_directory",
+      "sha256": "6662f792c7130d12991bcfbf83fd0da139f8c2ad06e7fa7abcfdbac52081047b",
+      "bytes": 3278,
+      "rows": 12
+    },
+    "feature_ablation_joint_crossed_bootstrap.csv": {
+      "path": "feature_ablation_joint_crossed_bootstrap.csv",
+      "path_base": "output_directory",
+      "sha256": "c649055d9a3e4d9a93065d41021807924d3b5febd5f0215dab8884d92db117e3",
+      "bytes": 2968,
+      "rows": 3
+    },
+    "feature_ablation_analysis_summary.json": {
+      "path": "feature_ablation_analysis_summary.json",
+      "path_base": "output_directory",
+      "sha256": "bb11ce9b925d955b53093150096a0a79751dfc342eaa1a0f19ef1fda807eaa06",
+      "bytes": 6031
+    }
+  },
+  "commit_sha256": "31afec41abc3448f9732567ad671d73938d5a620f0adc7d2421cb690edc76ae1"
+}

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>LA Heat 模型运行器</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        background: #111;
+        color: #f4f4f4;
+      }
+      body { max-width: 1100px; margin: 0 auto; padding: 24px; }
+      header, .controls, .stats { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+      header { justify-content: space-between; }
+      button, select { border: 0; border-radius: 7px; padding: 10px 18px; font-weight: 700; }
+      button { cursor: pointer; }
+      select { background: #292929; color: white; }
+      #start { background: #287ee7; color: white; }
+      #pause { background: #444; color: white; }
+      button:disabled { opacity: .45; cursor: default; }
+      progress { width: 100%; height: 18px; margin: 18px 0; accent-color: #287ee7; }
+      .stats { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); }
+      .card { background: #1c1c1c; border: 1px solid #383838; border-radius: 8px; padding: 14px; }
+      .value { display: block; margin-top: 5px; font-size: 1.45rem; font-weight: 750; }
+      .notice { margin: 16px 0; padding: 12px; border-radius: 7px; background: #29230f; color: #ffe28c; }
+      table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+      th, td { padding: 9px 8px; border-bottom: 1px solid #333; text-align: left; }
+      th { color: #aaa; }
+      pre { white-space: pre-wrap; background: #181818; border-radius: 7px; padding: 12px; max-height: 190px; overflow: auto; }
+      .muted { color: #aaa; }
+      @media (max-width: 600px) { body { padding: 14px; } th:nth-child(3), td:nth-child(3) { display:none; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>嵌套分组建模</h1>
+        <div class="muted">57,800 次拟合 · 2025 保持锁定</div>
+      </div>
+      <div class="controls">
+        <label for="worker-select">Worker</label>
+        <select id="worker-select" aria-label="Worker 数量">
+          <option value="4">4</option>
+          <option value="6">6（推荐）</option>
+          <option value="8">8</option>
+        </select>
+        <button id="start" type="button">开始 / 继续</button>
+        <button id="pause" type="button">安全暂停</button>
+      </div>
+    </header>
+
+    <progress id="progress" max="1" value="0"></progress>
+    <div class="stats">
+      <div class="card">状态<span class="value" id="state">连接中</span></div>
+      <div class="card">已完成<span class="value" id="completed">—</span></div>
+      <div class="card">正在运行<span class="value" id="active">—</span></div>
+      <div class="card">预计剩余<span class="value" id="eta">估算中</span></div>
+      <div class="card">Worker<span class="value" id="workers">—</span></div>
+      <div class="card">隔离错误<span class="value" id="quarantined">—</span></div>
+    </div>
+    <div class="notice" id="notice">暂停会等待当前单次拟合完成；Worker 只能在完全暂停后切换。</div>
+
+    <h2>当前任务</h2>
+    <table>
+      <thead><tr><th>任务</th><th>阶段</th><th>Worker</th><th>耗时</th></tr></thead>
+      <tbody id="tasks"><tr><td colspan="4" class="muted">暂无</td></tr></tbody>
+    </table>
+
+    <h2>最近事件</h2>
+    <pre id="events">等待运行器…</pre>
+
+    <script>
+      const byId = (id) => document.getElementById(id);
+      const fmtEta = (seconds) => {
+        if (seconds == null || !Number.isFinite(seconds)) return "估算中";
+        if (seconds < 60) return `${Math.ceil(seconds)} 秒`;
+        if (seconds < 3600) return `${Math.ceil(seconds / 60)} 分钟`;
+        return `${(seconds / 3600).toFixed(1)} 小时`;
+      };
+      async function action(path) {
+        try { await fetch(path, { method: "POST" }); } catch (_) {}
+        await refresh();
+      }
+      async function setWorkers() {
+        const workers = Number(byId("worker-select").value);
+        try {
+          await fetch("/api/workers", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-ISEF-Control": __ISEF_CONTROL_TOKEN
+            },
+            body: JSON.stringify({ workers })
+          });
+        } catch (_) {}
+        await refresh();
+      }
+      function render(data) {
+        const total = Number(data.total || 0);
+        const done = Number(data.completed || 0);
+        byId("progress").max = Math.max(1, total);
+        byId("progress").value = done;
+        byId("state").textContent = data.state || "未知";
+        byId("completed").textContent = `${done.toLocaleString()} / ${total.toLocaleString()}`;
+        byId("active").textContent = Number(data.active || 0).toLocaleString();
+        byId("eta").textContent = fmtEta(data.eta_seconds);
+        byId("workers").textContent = Number(data.workers || 0).toLocaleString();
+        if ([4, 6, 8].includes(Number(data.workers))) {
+          byId("worker-select").value = String(data.workers);
+        }
+        byId("quarantined").textContent = Number(data.quarantined || 0).toLocaleString();
+        byId("start").disabled = ["running", "pausing", "compiling", "complete"].includes(data.state);
+        byId("pause").disabled = !["running", "restarting"].includes(data.state);
+        byId("worker-select").disabled = data.state !== "paused";
+        const tasks = Array.isArray(data.active_tasks) ? data.active_tasks : [];
+        byId("tasks").innerHTML = tasks.length ? tasks.map((task) =>
+          `<tr><td>${task.task_id || "—"}</td><td>${task.kind || "—"}</td><td>${task.worker || "—"}</td><td>${task.elapsed_seconds ? task.elapsed_seconds.toFixed(1) + " 秒" : "—"}</td></tr>`
+        ).join("") : `<tr><td colspan="4" class="muted">暂无</td></tr>`;
+        const events = Array.isArray(data.events) ? data.events : [];
+        byId("events").textContent = events.length ? events.map((event) => `${event.at || ""}  ${event.message || ""}`).join("\n") : "暂无事件";
+        if (data.error) byId("notice").textContent = `错误：${data.error.type || "Unknown"}。运行器会按规则处理或等待修复。`;
+      }
+      async function refresh() {
+        try {
+          const response = await fetch("/api/status", { cache: "no-store" });
+          if (!response.ok) throw new Error("status");
+          render(await response.json());
+        } catch (_) { byId("state").textContent = "未连接"; }
+      }
+      byId("start").addEventListener("click", () => action("/api/start"));
+      byId("pause").addEventListener("click", () => action("/api/pause"));
+      byId("worker-select").addEventListener("change", setWorkers);
+      refresh();
+      setInterval(refresh, 1000);
+    </script>
+  </body>
+</html>

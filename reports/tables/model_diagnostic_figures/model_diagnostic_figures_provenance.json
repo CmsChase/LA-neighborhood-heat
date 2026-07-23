@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "model-diagnostic-figures-v1",
+  "state": "complete",
+  "ready_for_visual_interpretation": true,
+  "generated_at_utc": "2026-07-22T10:01:18.799235+00:00",
+  "analysis_scope": "locked_2020_2024_development_diagnostics_only",
+  "final_test_year": 2025,
+  "final_test_locked": true,
+  "contains_final_test_year": false,
+  "input_authentication": {
+    "upstream_provenance": {
+      "initial": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/model_results_initial/model_results_initial_provenance.json",
+        "file_sha256": "9af197ba695549161c98a7640b54451950476b9fed82194308cab19d818a4ec9",
+        "commit_sha256": "d8bfaf258590d2ef42abe37a73fb92eeba3d66d61f23fd5f85b8e8c5616844c4"
+      },
+      "endpoint": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/model_endpoint_diagnostics/model_endpoint_diagnostics_provenance.json",
+        "file_sha256": "0d7ff2d95d0cdcab5552a9b5fdb5db4979640d757c1f46a8110c2faf43661497",
+        "commit_sha256": "2ec9540ca7817dd53802e5849a35a8499b7f0755c7057b3c3b4292183475881a"
+      },
+      "qa": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/model_qa_diagnostics/model_qa_diagnostics_provenance.json",
+        "file_sha256": "a39889e4dcec4aab4a233d9e7ab100853d4a0f6941e38be0cb834a060087aa4b",
+        "commit_sha256": "938a837cde8f49785e708e7960a4bca680ad851007a142189dbf4f3ac640ef8e"
+      },
+      "residual_spatial": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/residual_spatial/residual_spatial_diagnostics_provenance.json",
+        "file_sha256": "716de8a0812fb86da59ef3e1d9d4428e87b107d6cf58548417faa27c87ff610d",
+        "commit_sha256": "44047f7c9dd72135ab93d06bb4dc31144772ea012de98ba117768a185fdccc30"
+      }
+    },
+    "input_tables": {
+      "primary_bootstrap": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/model_results_initial/joint_m2_crossed_cluster_bootstrap.csv",
+        "sha256": "2fac621e1bbe41865ac3e60769ce6b8072b244f00b438eb5d5b86bb588318fc3",
+        "bytes": 1913,
+        "rows": 1
+      },
+      "hotspot_summary": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/model_endpoint_diagnostics/hotspot_summary.csv",
+        "sha256": "5fc1a8b01f5aae68829601e115ea42be6aa9e6862131ba64fb1cbff4d73903c6",
+        "bytes": 11865,
+        "rows": 15
+      },
+      "sensor_summary": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/model_endpoint_diagnostics/sensor_summary.csv",
+        "sha256": "8dd7a706ca932c1aaf0f309c60b14b799e59a4d0cedc5f7151c7ca418920a1f9",
+        "bytes": 24285,
+        "rows": 30
+      },
+      "qa_cohort_bootstrap": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/model_qa_diagnostics/qa_cohort_crossed_bootstrap.csv",
+        "sha256": "ad87bde3f0307596294160b37c0e3e6ff6a332fa687532445550cb441d87ab89",
+        "bytes": 8073,
+        "rows": 16
+      },
+      "worst_dates": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/model_qa_diagnostics/m2_worst_dates.csv",
+        "sha256": "32853d601fa9f869f75c0dd6587a18e27b56463308a5ebb1dfc64e40b8f9a7d9",
+        "bytes": 4827,
+        "rows": 25
+      },
+      "target_build_progress": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/interim/targets/build_progress.json",
+        "sha256": "3f630dfcc8a1c2a19b093e7fe0f4bdc7f830fef42266fcf1156112f0eb959046",
+        "bytes": 2321
+      },
+      "oof_predictions": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/processed/model_evaluation/oof_predictions.parquet",
+        "sha256": "0c06b88fd09cd514745b699e6b6a7e12901db8d3247e42b582feaf1f7e91c04a",
+        "bytes": 10081537,
+        "rows": 951045
+      },
+      "model_ready_targets": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/interim/targets/development_targets_model_ready.parquet",
+        "sha256": "11f4fe862570895441036964a9b308e92c2ee6ba8a87b5da9009ffd5208a4bda",
+        "bytes": 3568332,
+        "rows": 63403
+      },
+      "date_summary": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/interim/targets/date_summary.parquet",
+        "sha256": "2c6d6a597c6b1b321c4f632291c22dfe5788a058fe82fd65114a5a59d5d0be83",
+        "bytes": 25080,
+        "rows": 90
+      },
+      "tract_manifest": {
+        "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/interim/targets/primary_tract_manifest.parquet",
+        "sha256": "fbdcd5b6e3a6d5f55d972a1f19178b453d753e3f9b3878c8074c1972eb0f68bd",
+        "bytes": 1434226,
+        "rows": 1096
+      }
+    },
+    "compile_provenance_commit_sha256": "00d1e59ce78baffbf9d24361ac8ba16a1d577b22cb193e15596627259190ed07",
+    "oof_predictions_sha256": "0c06b88fd09cd514745b699e6b6a7e12901db8d3247e42b582feaf1f7e91c04a"
+  },
+  "analysis_config": {
+    "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/configs/model_diagnostic_figures.toml",
+    "file_sha256": "440b5c09e81b492071b00ae78dc401f59828fb57c683158943fad4913a09b27f",
+    "semantic_sha256": "c2d77d7ab37bc176247b9bf746ffbb0788e1bb12291cfb7466a0773df3e051f5"
+  },
+  "figure_contract": {
+    "dpi": 200,
+    "minimum_verified_dpi": 180,
+    "forest_cohorts_prespecified": true,
+    "pilot_map_dates_prespecified": [
+      "2024-06-20",
+      "2024-08-23",
+      "2024-10-10"
+    ],
+    "pilot_map_dates_score_selected": false,
+    "pilot_map_color_limit_method": "full finite authenticated value range; no percentile clipping",
+    "geometry_used_for_diagnostics_only": true,
+    "coordinates_used_as_predictors": false,
+    "values_generated_from_authenticated_tables": true,
+    "manual_figure_values_used": false,
+    "models_fitted": false,
+    "final_test_unlocked": false
+  },
+  "pipeline_sha256": "0834e2fe8c9319dc659aa8eb0e811883a201174637b96c1d45cf828e8a5fd787",
+  "pipeline_fingerprint": {
+    "algorithm_version": "model-diagnostic-figures-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2",
+      "matplotlib": "3.11.1",
+      "Pillow": "12.3.0"
+    },
+    "files": {
+      "scripts/generate_model_diagnostic_figures.py": "8a9cb8b8d36f09a85074ceb16d87b8e1d70b1ddae72c25531eacd83c87838988",
+      "src/la_heat/model_diagnostic_figures.py": "7ae2dcbf31fe79d6f444d98fa5fe91c1309b6ac4fd2aabc0cca70ea07d0a7669",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "output_files": {
+    "joint_performance_overview.png": {
+      "path": "joint_performance_overview.png",
+      "path_base": "figure_output_directory",
+      "sha256": "7ab4c2ffa4ebff23b29b59a88dd99050dc108626e8e2dc31c4f3310882f73aae",
+      "bytes": 127630,
+      "width_px": 2640,
+      "height_px": 960,
+      "dpi_x": 199.9996,
+      "dpi_y": 199.9996,
+      "non_background_pixel_fraction": 0.2546618529040404
+    },
+    "qa_cohort_improvement_forest.png": {
+      "path": "qa_cohort_improvement_forest.png",
+      "path_base": "figure_output_directory",
+      "sha256": "221cc792654125732df07284be3e35ed19a06db657d0ac05b302456392dbdf85",
+      "bytes": 223525,
+      "width_px": 2560,
+      "height_px": 1660,
+      "dpi_x": 199.9996,
+      "dpi_y": 199.9996,
+      "non_background_pixel_fraction": 0.04273249246987952
+    },
+    "worst_date_errors.png": {
+      "path": "worst_date_errors.png",
+      "path_base": "figure_output_directory",
+      "sha256": "f90fcb02666ea8f80dd525a3210f6620774cb743826fb471107a260e8139d129",
+      "bytes": 148517,
+      "width_px": 2460,
+      "height_px": 1420,
+      "dpi_x": 199.9996,
+      "dpi_y": 199.9996,
+      "non_background_pixel_fraction": 0.15866283064239092
+    },
+    "fixed_date_lst_prediction_maps.png": {
+      "path": "fixed_date_lst_prediction_maps.png",
+      "path_base": "figure_output_directory",
+      "sha256": "9cef74d43facd3f03086bdd9e902b7216b014351da7db8318e3c7fbae8dbdeca",
+      "bytes": 1172383,
+      "width_px": 2700,
+      "height_px": 2000,
+      "dpi_x": 199.9996,
+      "dpi_y": 199.9996,
+      "non_background_pixel_fraction": 0.15034981481481483
+    },
+    "model_diagnostic_figures_summary.json": {
+      "path": "model_diagnostic_figures_summary.json",
+      "path_base": "table_output_directory",
+      "sha256": "aa08afb239ed16a7a2ab0a52eb32a5bed0e7d7901f3752c5c33157839ff262c7",
+      "bytes": 12283
+    }
+  },
+  "summary_commit_sha256": "dae87aaecc3fe2b16208957bc2a18230d4270a3d557c726f4c54ec5b0bbbc401",
+  "commit_sha256": "0e69b5bff544a92fb14015ebc75da5f27437420e68c83d55167749de97defda8"
+}

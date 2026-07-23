@@ -1,0 +1,58 @@
+{
+  "state": "subsets_complete",
+  "queried_at_utc": "2026-07-20T09:05:01.156953+00:00",
+  "dataset": "Daymet: Daily Surface Weather Data on a 1-km Grid for North America, V4 R1",
+  "dataset_doi": "https://doi.org/10.3334/ORNLDAAC/2129",
+  "cmr_collection_concept_id": "C2532426483-ORNL_CLOUD",
+  "cmr_granules_url": "https://cmr.earthdata.nasa.gov/search/granules.json",
+  "cmr_service_bridge_url": "https://cmr.earthdata.nasa.gov/service-bridge/ous/collection/C2532426483-ORNL_CLOUD",
+  "subset_access_route": "direct_dap4_fixed_indices_v1",
+  "direct_subset_y_indices": [
+    5666,
+    5745
+  ],
+  "direct_subset_x_indices": [
+    2900,
+    2963
+  ],
+  "years": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "variables": [
+    "tmax",
+    "tmin",
+    "prcp",
+    "srad",
+    "vp",
+    "dayl"
+  ],
+  "region": "na",
+  "bbox_wgs84": [
+    -118.67,
+    33.7,
+    -118.15,
+    34.34
+  ],
+  "final_test_year": 2025,
+  "final_test_unlocked": false,
+  "contains_final_test_year": false,
+  "daymet_grid_config_sha256": "d406d2ffc2c77830a437ef9d2db3bfa8c77e673e08297ed03c77387117b7dd87",
+  "granule_count": 30,
+  "inventory_semantic_sha256": "7655215698f819c24514f74cbc79866f5178032beb4a521465fac2b5aff2ac5c",
+  "inventory_file_sha256": "43cfcc8244e06c9ffde1850fea9b0fb2e154e4a29b5441a104d52055f2deaa21",
+  "inventory_path": "manifests/daymet_grid/granule_inventory.csv",
+  "access_note": "CMR discovery is public. Fixed-index DAP4 spatial subsetting and NetCDF download require an Earthdata bearer token. Token values are never persisted.",
+  "subset_count": 30,
+  "subset_grid_shape": [
+    80,
+    64
+  ],
+  "download_manifest_path": "manifests/daymet_grid/subset_downloads.csv",
+  "download_manifest_sha256": "329dbfdac420c8ebef2a48d5a75de36c7a98cde5fa20268ccb5f3a6eec3d73b4",
+  "download_semantic_sha256": "3c8d6939c6def26c08cf2ffd7433277608dbb29e99895e74c2b87487c17056bc",
+  "credential_source": "EARTHDATA_TOKEN"
+}

@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentinel-2 构建控制台</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      --background: Canvas;
+      --foreground: CanvasText;
+      --muted: GrayText;
+      --border: color-mix(in srgb, CanvasText 18%, Canvas);
+      --soft: color-mix(in srgb, CanvasText 5%, Canvas);
+      --primary: Highlight;
+      --primary-foreground: HighlightText;
+      --danger: Mark;
+      --danger-foreground: MarkText;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--foreground);
+    }
+
+    main {
+      width: min(100% - 32px, 1080px);
+      margin: 28px auto 48px;
+    }
+
+    header,
+    .control-row,
+    .metric-grid,
+    .progress-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    header { justify-content: space-between; }
+    header > div { flex: 1 1 420px; min-width: 0; }
+
+    h1, h2, p { margin-top: 0; }
+    h1 { margin-bottom: 6px; font-size: clamp(1.35rem, 3vw, 2rem); font-weight: 500; }
+    h2 { margin-bottom: 12px; font-size: 1rem; font-weight: 500; }
+
+    .subtitle,
+    .muted { color: var(--muted); }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 5px 11px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--soft);
+      font-weight: 500;
+    }
+
+    .control-row {
+      margin: 22px 0;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    button {
+      min-height: 40px;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: ButtonFace;
+      color: ButtonText;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button.primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+
+    button:disabled { cursor: not-allowed; opacity: 0.55; }
+    button:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+
+    .progress-wrap { margin: 20px 0 18px; }
+    .progress-head { justify-content: space-between; margin-bottom: 8px; }
+    .progress-value { font-variant-numeric: tabular-nums; font-weight: 500; }
+    progress { width: 100%; height: 18px; accent-color: var(--primary); }
+
+    .metric-grid {
+      align-items: stretch;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .metric {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--soft);
+    }
+
+    .metric-label { color: var(--muted); font-size: 0.9rem; }
+    .metric-value { margin-top: 4px; font-size: 1.35rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+
+    section { margin-top: 26px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 9px 8px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-weight: 500; }
+    td.number, th.number { text-align: right; font-variant-numeric: tabular-nums; }
+    code { overflow-wrap: anywhere; }
+
+    .empty {
+      padding: 14px 0;
+      color: var(--muted);
+    }
+
+    .error {
+      margin-top: 14px;
+      padding: 10px 12px;
+      background: var(--danger);
+      color: var(--danger-foreground);
+      border-radius: 8px;
+    }
+
+    .event-time { white-space: nowrap; color: var(--muted); }
+
+    @media (max-width: 680px) {
+      main { width: min(100% - 20px, 1080px); margin-top: 18px; }
+      header { align-items: flex-start; }
+      header .status { flex-basis: 100%; width: max-content; }
+      .progress-head { align-items: flex-start; }
+      .progress-value { flex-basis: 100%; overflow-wrap: anywhere; }
+      .metric-grid { grid-template-columns: 1fr; }
+      #active-table th:nth-child(2),
+      #active-table td:nth-child(2) { display: none; }
+      .control-row button { flex: 1 1 140px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Sentinel‑2 全批处理</h1>
+        <p class="subtitle">本地、安全暂停、自动从完整 acquisition 缓存继续</p>
+      </div>
+      <span id="state" class="status" role="status" aria-live="polite">连接中</span>
+    </header>
+
+    <div class="control-row" aria-label="构建控制">
+      <button id="start" class="primary" type="button">开始</button>
+      <button id="pause" type="button" disabled>安全暂停</button>
+      <span class="muted">暂停会先让当前 acquisition 完整落盘，再停止提交下一个。</span>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-head">
+        <span>总体进度</span>
+        <span id="progress-label" class="progress-value">—</span>
+      </div>
+      <progress id="progress" max="226" value="0">0 / 226</progress>
+    </div>
+
+    <div class="metric-grid" aria-label="构建指标">
+      <div class="metric">
+        <div class="metric-label">已完成</div>
+        <div id="completed" class="metric-value">—</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">正在运行</div>
+        <div id="active-count" class="metric-value">—</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">预计剩余</div>
+        <div id="eta" class="metric-value">—</div>
+      </div>
+    </div>
+
+    <div id="error" class="error" role="alert" hidden></div>
+
+    <section aria-labelledby="active-heading">
+      <h2 id="active-heading">当前 acquisition</h2>
+      <div id="active-empty" class="empty">当前没有正在处理的 acquisition。</div>
+      <table id="active-table" hidden>
+        <thead>
+          <tr><th>Physical acquisition ID</th><th>开始时间</th><th class="number">已运行</th></tr>
+        </thead>
+        <tbody id="active-body"></tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="events-heading">
+      <h2 id="events-heading">最近事件</h2>
+      <table>
+        <thead><tr><th>时间</th><th>事件</th></tr></thead>
+        <tbody id="events"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    const token = "__CONTROL_TOKEN__";
+    const stateEl = document.getElementById("state");
+    const startButton = document.getElementById("start");
+    const pauseButton = document.getElementById("pause");
+    const progress = document.getElementById("progress");
+    const progressLabel = document.getElementById("progress-label");
+    const completedEl = document.getElementById("completed");
+    const activeCountEl = document.getElementById("active-count");
+    const etaEl = document.getElementById("eta");
+    const errorEl = document.getElementById("error");
+    const activeTable = document.getElementById("active-table");
+    const activeEmpty = document.getElementById("active-empty");
+    const activeBody = document.getElementById("active-body");
+    const eventsBody = document.getElementById("events");
+
+    const stateNames = {
+      initializing: "正在验证固定 support",
+      idle: "等待开始",
+      running: "运行中",
+      pausing: "等待安全暂停",
+      paused: "已暂停",
+      restarting: "自动重建中",
+      compiling: "正在编译检查点",
+      complete: "全部完成",
+      error: "需要重试"
+    };
+
+    function formatDuration(seconds) {
+      if (seconds === null || seconds === undefined || !Number.isFinite(seconds)) return "估算中";
+      if (seconds < 60) return `${Math.max(0, Math.round(seconds))} 秒`;
+      const minutes = Math.round(seconds / 60);
+      if (minutes < 60) return `${minutes} 分钟`;
+      const hours = Math.floor(minutes / 60);
+      const rest = minutes % 60;
+      return `${hours} 小时 ${rest} 分钟`;
+    }
+
+    function formatTime(value) {
+      if (!value) return "—";
+      return new Intl.DateTimeFormat("zh-CN", {
+        hour: "2-digit", minute: "2-digit", second: "2-digit"
+      }).format(new Date(value));
+    }
+
+    function addCell(row, text, className) {
+      const cell = document.createElement("td");
+      cell.textContent = text;
+      if (className) cell.className = className;
+      row.appendChild(cell);
+    }
+
+    function render(data) {
+      stateEl.textContent = stateNames[data.state] || data.state;
+      progress.max = data.total;
+      progress.value = data.completed;
+      progress.textContent = `${data.completed} / ${data.total}`;
+      const percent = (100 * data.progress_fraction).toFixed(1);
+      const verificationLabel = data.verification_pending ? "；本地 markers，待严格验证" : "";
+      progressLabel.textContent = `${data.completed} / ${data.total}（${percent}%${verificationLabel}）`;
+      completedEl.textContent = `${data.completed} / ${data.total}`;
+      activeCountEl.textContent = `${data.active.length} / ${data.workers}`;
+      etaEl.textContent = formatDuration(data.eta_seconds);
+
+      const canQueueStart = data.state === "initializing" && !data.start_queued;
+      const canStart = canQueueStart || ["idle", "paused", "error"].includes(data.state);
+      const canPause = ["running", "restarting"].includes(data.state) || Boolean(data.start_queued);
+      startButton.disabled = !canStart;
+      if (data.state === "initializing") {
+        startButton.textContent = data.start_queued ? "已排队自动开始" : "验证后自动开始";
+      } else if (data.state === "error" && data.verification_pending) {
+        startButton.textContent = "重试验证";
+      } else {
+        startButton.textContent = data.state === "idle" ? "开始" : "继续";
+      }
+      pauseButton.textContent = data.start_queued ? "取消自动开始" : "安全暂停";
+      pauseButton.disabled = !canPause;
+
+      if (data.error) {
+        errorEl.hidden = false;
+        const autoRecovering = data.auto_restart_enabled && data.error.retryable === true;
+        const action = autoRecovering
+          ? "程序将自动重建并继续，无需点击。"
+          : (data.verification_pending ? "点击“重试验证”再次检查。" : "修复后点击“继续”重试。");
+        errorEl.textContent = `未完成：${data.error.physical_acquisition_id}（${data.error.type}）。${action}`;
+      } else {
+        errorEl.hidden = true;
+        errorEl.textContent = "";
+      }
+
+      activeBody.replaceChildren();
+      activeTable.hidden = data.active.length === 0;
+      activeEmpty.hidden = data.active.length !== 0;
+      data.active.forEach(item => {
+        const row = document.createElement("tr");
+        const idCell = document.createElement("td");
+        const code = document.createElement("code");
+        code.textContent = item.physical_acquisition_id;
+        idCell.appendChild(code);
+        row.appendChild(idCell);
+        addCell(row, formatTime(item.started_at_utc));
+        addCell(row, formatDuration(item.elapsed_seconds), "number");
+        activeBody.appendChild(row);
+      });
+
+      eventsBody.replaceChildren();
+      [...data.events].reverse().slice(0, 12).forEach(event => {
+        const row = document.createElement("tr");
+        addCell(row, formatTime(event.at), "event-time");
+        addCell(row, event.message);
+        eventsBody.appendChild(row);
+      });
+    }
+
+    async function getStatus() {
+      const response = await fetch("/api/status", {cache: "no-store"});
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      render(await response.json());
+    }
+
+    async function control(action) {
+      startButton.disabled = true;
+      pauseButton.disabled = true;
+      const response = await fetch(`/api/${action}`, {
+        method: "POST",
+        headers: {"X-ISEF-Control": token, "Content-Type": "application/json"},
+        body: "{}"
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      render(await response.json());
+    }
+
+    startButton.addEventListener("click", () => control("start").catch(showConnectionError));
+    pauseButton.addEventListener("click", () => control("pause").catch(showConnectionError));
+
+    function showConnectionError(error) {
+      stateEl.textContent = "连接失败";
+      errorEl.hidden = false;
+      errorEl.textContent = `无法连接本地控制器：${error.message}`;
+    }
+
+    getStatus().catch(showConnectionError);
+    setInterval(() => getStatus().catch(showConnectionError), 1000);
+  </script>
+</body>
+</html>

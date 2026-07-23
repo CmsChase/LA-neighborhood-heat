@@ -1,0 +1,3 @@
+family,model_id,tract_date_row_count,independent_date_count,independent_spatial_block_count,equal_date_weighted_mae_c,equal_date_weighted_rmse_c,pooled_rmse_c,equal_date_weighted_mean_signed_error_c,median_per_date_spearman,spearman_defined_date_count,spearman_undefined_date_count
+joint,B1,11808,15,71,2.6695142537621535,3.2083356019853912,3.338931876147656,-0.8841686279580904,0.19629135465313957,15,0
+joint,M2,11808,15,71,2.1951365394149405,2.4830408896504177,2.85745687365021,-0.36494610746380024,0.80326623684573,15,0

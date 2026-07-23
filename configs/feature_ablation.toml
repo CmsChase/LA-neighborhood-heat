@@ -1,0 +1,29 @@
+[feature_ablation]
+schema_version = 1
+algorithm_version = "feature-ablation-outer-refit-v1"
+source_run_id = "eb2d09ce9592d5531b51e3e507634aa25f25ef1323376b056dd79fae948876f5"
+source_runs_root = "data/interim/model_runs/runs"
+source_evaluation_directory = "data/processed/model_evaluation"
+queue_path = "data/interim/feature_ablation/feature_ablation_tasks.sqlite3"
+runs_root = "data/interim/feature_ablation/runs"
+status_path = "data/interim/feature_ablation/status.json"
+output_directory = "data/processed/feature_ablation"
+final_test_year = 2025
+unlock_final_test = false
+model_id = "M2"
+workers_maximum = 8
+lease_seconds = 900
+heartbeat_seconds = 30
+max_attempts = 3
+
+[[feature_ablation.ablations]]
+ablation_id = "calendar_weather"
+feature_families = ["calendar", "weather"]
+
+[[feature_ablation.ablations]]
+ablation_id = "calendar_land_use_geography"
+feature_families = ["calendar", "land_use", "geography"]
+
+[[feature_ablation.ablations]]
+ablation_id = "calendar_satellite"
+feature_families = ["calendar", "satellite"]

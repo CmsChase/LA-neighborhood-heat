@@ -1,0 +1,103 @@
+schema_version = 1
+algorithm_version = "model-diagnostic-figures-v1"
+state = "frozen_development_figures"
+
+[paths]
+initial_provenance = "reports/tables/model_results_initial/model_results_initial_provenance.json"
+primary_bootstrap = "reports/tables/model_results_initial/joint_m2_crossed_cluster_bootstrap.csv"
+endpoint_provenance = "reports/tables/model_endpoint_diagnostics/model_endpoint_diagnostics_provenance.json"
+hotspot_summary = "reports/tables/model_endpoint_diagnostics/hotspot_summary.csv"
+sensor_summary = "reports/tables/model_endpoint_diagnostics/sensor_summary.csv"
+qa_provenance = "reports/tables/model_qa_diagnostics/model_qa_diagnostics_provenance.json"
+qa_cohort_bootstrap = "reports/tables/model_qa_diagnostics/qa_cohort_crossed_bootstrap.csv"
+worst_dates = "reports/tables/model_qa_diagnostics/m2_worst_dates.csv"
+residual_provenance = "reports/tables/residual_spatial/residual_spatial_diagnostics_provenance.json"
+target_build_progress = "data/interim/targets/build_progress.json"
+oof_predictions = "data/processed/model_evaluation/oof_predictions.parquet"
+model_ready_targets = "data/interim/targets/development_targets_model_ready.parquet"
+date_summary = "data/interim/targets/date_summary.parquet"
+tract_manifest = "data/interim/targets/primary_tract_manifest.parquet"
+figure_output_directory = "reports/figures/generated/model_diagnostics"
+table_output_directory = "reports/tables/model_diagnostic_figures"
+
+[analysis]
+final_test_year = 2025
+final_test_locked = true
+family = "joint"
+baseline_model_id = "B1"
+target_model_id = "M2"
+sensors = ["landsat-8", "landsat-9"]
+expected_bootstrap_replicates = 5000
+worst_date_limit = 10
+figure_dpi = 200
+
+[pilot_maps]
+dates = [2024-06-20, 2024-08-23, 2024-10-10]
+date_selection = "protocol_fixed_not_score_selected"
+geometry_role = "diagnostic_only_never_predictor"
+
+[[forest.cohorts]]
+dimension = "all"
+label = "all_rows"
+display_label = "All model-ready rows"
+group = "Overall"
+
+[[forest.cohorts]]
+dimension = "st_qa_2k"
+label = "tract_median_le_2k"
+display_label = "Tract median ST_QA <= 2 K (summary diagnostic)"
+group = "ST_QA tract summary"
+
+[[forest.cohorts]]
+dimension = "st_qa_2k"
+label = "tract_median_gt_2k"
+display_label = "Tract median ST_QA > 2 K"
+group = "ST_QA tract summary"
+
+[[forest.cohorts]]
+dimension = "valid_fraction"
+label = "[0.60,0.70)"
+display_label = "Valid pixels: 60-<70%"
+group = "Valid-pixel fraction"
+
+[[forest.cohorts]]
+dimension = "valid_fraction"
+label = "[0.70,0.80)"
+display_label = "Valid pixels: 70-<80%"
+group = "Valid-pixel fraction"
+
+[[forest.cohorts]]
+dimension = "valid_fraction"
+label = "[0.80,0.90)"
+display_label = "Valid pixels: 80-<90%"
+group = "Valid-pixel fraction"
+
+[[forest.cohorts]]
+dimension = "valid_fraction"
+label = "[0.90,1.00]"
+display_label = "Valid pixels: 90-100%"
+group = "Valid-pixel fraction"
+
+[[forest.cohorts]]
+dimension = "sentinel_availability"
+label = "complete"
+display_label = "Sentinel-2: all five features present"
+group = "Sentinel-2 availability"
+
+[[forest.cohorts]]
+dimension = "sentinel_availability"
+label = "all_five_missing"
+display_label = "Sentinel-2: all five features missing"
+group = "Sentinel-2 availability"
+
+[[forest.cohorts]]
+dimension = "scene_cloud_metadata"
+label = "any_scene_cloud_lt_15pct"
+display_label = "Any contributing scene cloud < 15%"
+group = "Scene cloud metadata"
+
+[[forest.cohorts]]
+dimension = "scene_cloud_metadata"
+label = "no_scene_cloud_lt_15pct"
+display_label = "No contributing scene cloud < 15%"
+group = "Scene cloud metadata"

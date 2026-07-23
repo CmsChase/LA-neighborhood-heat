@@ -1,0 +1,41 @@
+schema_version = 1
+algorithm_version = "model-endpoint-sensor-diagnostics-v1"
+state = "frozen_development_endpoint_diagnostics"
+
+[paths]
+evaluation_directory = "data/processed/model_evaluation"
+target_directory = "data/interim/targets"
+model_dataset_directory = "data/processed/model_dataset"
+output_directory = "reports/tables/model_endpoint_diagnostics"
+
+[analysis]
+final_test_year = 2025
+final_test_locked = true
+families = ["temporal", "spatial", "joint"]
+models = ["B0", "B1", "B2", "M1", "M2"]
+focus_family = "joint"
+focus_models = ["B1", "M2"]
+expected_tract_date_rows = 63403
+expected_independent_dates = 65
+expected_independent_spatial_blocks = 71
+expected_relative_gate_dates = 34
+sensors = ["landsat-8", "landsat-9"]
+
+[hotspot]
+label_column = "relative_hotspot_top20"
+gate_column = "relative_endpoint_coverage_pass"
+positive_fraction = 0.20
+average_precision_input = "continuous_y_pred"
+rank_order = "score_desc_geoid_asc"
+exact_top_k = true
+
+[sentinel_strata]
+enabled = true
+feature_columns = [
+  "sentinel_ndvi_lag60",
+  "sentinel_evi_lag60",
+  "sentinel_ndwi_lag60",
+  "sentinel_ndbi_lag60",
+  "sentinel_albedo_proxy_lag60",
+]
+allowed_strata = ["sentinel_complete", "sentinel_all_five_missing"]

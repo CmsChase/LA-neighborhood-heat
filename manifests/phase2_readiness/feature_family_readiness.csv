@@ -1,0 +1,7 @@
+family,status,row_count,feature_count,available_row_count,missing_row_count,notes
+key_universe,complete,98640,0,98640,0,90 dates x 1096 tracts; target-blind
+registry,complete,49,46,49,0,metadata contract only; no scores or labels read
+static,complete,1096,18,1096,0,18 model features plus 1 audit-only reference; fixed eligible-land denominator verified
+calendar,complete,98640,2,98640,0,known at prediction origin
+sentinel,complete,98640,5,97870,770,d-60 through d-1; unavailable rows are explicit all-null rows
+daymet,complete,98640,21,98640,0,complete civil-day windows d-n through d-1; any missing dynamic values remain explicit for fold-local imputation

@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "la-neighborhood-heat"
+version = "0.1.0"
+description = "Reproducible prediction of neighborhood-scale surface heat in Los Angeles"
+readme = "README.md"
+requires-python = ">=3.12,<3.15"
+dependencies = [
+  "geopandas>=1.0",
+  "matplotlib>=3.9",
+  "numpy>=2.1",
+  "pandas>=2.2",
+  "planetary-computer>=1.0",
+  "pyarrow>=18",
+  "pyogrio>=0.10",
+  "pystac-client>=0.8",
+  "rasterio>=1.4",
+  "requests>=2.32",
+  "scikit-learn>=1.6",
+  "shapely>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3",
+  "pytest-cov>=6.0",
+  "ruff>=0.9",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+

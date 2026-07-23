@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "development-robustness-reconciliation-v1",
+  "state": "complete",
+  "ready_for_development_robustness_interpretation": true,
+  "generated_at_utc": "2026-07-22T15:32:32.006070+00:00",
+  "analysis_scope": "locked_2020_2024_development_robustness_reconciliation",
+  "final_test_year": 2025,
+  "final_test_locked": true,
+  "contains_final_test_year": false,
+  "analysis_config": {
+    "path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/configs/robustness_reconciliation.toml",
+    "sha256": "591c37de05cb6c63bbf236002201c4119ab98dd6c89dae384cfa64be27d8626f",
+    "semantic_sha256": "15801f154ec2c4bd5ab7fa2904ca727fed1a4a6127a6c33be2ec74a0b5a83d76"
+  },
+  "input_authentication": {
+    "shared_model_compile_commit_sha256": "00d1e59ce78baffbf9d24361ac8ba16a1d577b22cb193e15596627259190ed07",
+    "shared_oof_predictions_sha256": "0c06b88fd09cd514745b699e6b6a7e12901db8d3247e42b582feaf1f7e91c04a",
+    "sources": {
+      "initial_results": {
+        "provenance_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/model_results_initial/model_results_initial_provenance.json",
+        "provenance_file_sha256": "9af197ba695549161c98a7640b54451950476b9fed82194308cab19d818a4ec9",
+        "provenance_commit_sha256": "d8bfaf258590d2ef42abe37a73fb92eeba3d66d61f23fd5f85b8e8c5616844c4",
+        "authenticated_output_count": 4
+      },
+      "endpoint": {
+        "provenance_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/model_endpoint_diagnostics/model_endpoint_diagnostics_provenance.json",
+        "provenance_file_sha256": "0d7ff2d95d0cdcab5552a9b5fdb5db4979640d757c1f46a8110c2faf43661497",
+        "provenance_commit_sha256": "2ec9540ca7817dd53802e5849a35a8499b7f0755c7057b3c3b4292183475881a",
+        "authenticated_output_count": 6
+      },
+      "qa": {
+        "provenance_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/model_qa_diagnostics/model_qa_diagnostics_provenance.json",
+        "provenance_file_sha256": "a39889e4dcec4aab4a233d9e7ab100853d4a0f6941e38be0cb834a060087aa4b",
+        "provenance_commit_sha256": "938a837cde8f49785e708e7960a4bca680ad851007a142189dbf4f3ac640ef8e",
+        "authenticated_output_count": 6
+      },
+      "residual_spatial": {
+        "provenance_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/residual_spatial/residual_spatial_diagnostics_provenance.json",
+        "provenance_file_sha256": "716de8a0812fb86da59ef3e1d9d4428e87b107d6cf58548417faa27c87ff610d",
+        "provenance_commit_sha256": "44047f7c9dd72135ab93d06bb4dc31144772ea012de98ba117768a185fdccc30",
+        "authenticated_output_count": 5
+      },
+      "diagnostic_figures": {
+        "provenance_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/model_diagnostic_figures/model_diagnostic_figures_provenance.json",
+        "provenance_file_sha256": "53445afd81340d92136cb22299b345da07389be0ab497a101f7fd10cb2b260d7",
+        "provenance_commit_sha256": "0e69b5bff544a92fb14015ebc75da5f27437420e68c83d55167749de97defda8",
+        "authenticated_output_count": 5
+      },
+      "feature_ablation": {
+        "provenance_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/feature_ablation/feature_ablation_analysis_provenance.json",
+        "provenance_file_sha256": "367def5bc95aadebc10752fcf45a2f605e79ee4613e6b2b02ae5e87deebbcdaa",
+        "provenance_commit_sha256": "31afec41abc3448f9732567ad671d73938d5a620f0adc7d2421cb690edc76ae1",
+        "authenticated_output_count": 3
+      },
+      "stqa2_sensitivity": {
+        "provenance_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/reports/tables/stqa2_sensitivity/stqa2_sensitivity_provenance.json",
+        "provenance_file_sha256": "031e3f6018ad1e6634d33330b19f3337ffe2036cddfe7ade100582e5dcce2c69",
+        "provenance_commit_sha256": "71b9b5fd3b0768086852f0fa8d9fcd834d8719778a93f5d65ef6e1a8dfe46021",
+        "authenticated_output_count": 5
+      }
+    }
+  },
+  "scientific_contract": {
+    "primary_and_qa_bootstrap_intervals_kept_distinct": true,
+    "tract_summary_and_pixel_hard_mask_kept_distinct": true,
+    "causal_feature_importance_claim_allowed": false,
+    "sparse_group_claims_are_exploratory": true,
+    "residual_spatial_clustering_reported_as_limitation": true,
+    "models_fitted": false,
+    "random_row_resampling_used": false,
+    "final_test_unlocked": false,
+    "automatic_final_test_unlock_authorized": false
+  },
+  "pipeline_sha256": "3aaa739ec87a9f916dc82f2ad3d7ce577f40a5174c2e3b7745e4e805a3b7bae6",
+  "pipeline_fingerprint": {
+    "algorithm_version": "development-robustness-reconciliation-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "configs/robustness_reconciliation.toml": "591c37de05cb6c63bbf236002201c4119ab98dd6c89dae384cfa64be27d8626f",
+      "scripts/reconcile_development_robustness.py": "631212a94eade1cce92e52ad08cf6122ba1a84552c1c973c8be246b63b416d63",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/robustness_reconciliation.py": "b96cee6ad21983add1cc67393d1472401841ed9a38cb3ef7d92f0bf935f0361e"
+    }
+  },
+  "summary_commit_sha256": "e1eff002bef32e22cc349bec2c106486bde58e92eb13e144af0602152ce98bb1",
+  "output_files": {
+    "robustness_reconciliation_summary.json": {
+      "path": "robustness_reconciliation_summary.json",
+      "path_base": "output_directory",
+      "sha256": "ef67c794e7c9043a775fd0b4ee811dc6f03925a7371cde812640563a610b33e2",
+      "bytes": 20968
+    },
+    "robustness_evidence.csv": {
+      "path": "robustness_evidence.csv",
+      "path_base": "output_directory",
+      "sha256": "32019ce72501619997be56b855fc0388ca19f491224ed6b3c13373bea770a553",
+      "bytes": 4461,
+      "rows": 15,
+      "schema_sha256": "bdd2cd861694ad19c875b4b41f808dbaf11f9888cfb05cee5dcb16744d3f98a3"
+    }
+  },
+  "commit_sha256": "7b7aa40a49ae5d3fb415e16ed8202205f70c8bdce795087b1d98467f453722df"
+}

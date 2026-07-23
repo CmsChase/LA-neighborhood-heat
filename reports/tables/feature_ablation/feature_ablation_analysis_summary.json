@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "feature-ablation-analysis-v1",
+  "state": "complete",
+  "analysis_scope": "locked_2020_2024_development_oof_feature_set_diagnostic",
+  "final_test_year": 2025,
+  "final_test_locked": true,
+  "contains_final_test_year": false,
+  "feature_ablation_run_id": "5d1959708f99227f8d1f3be8be9327dc1bb4152a168f11d042b37a72a4ece3fb",
+  "canonical_model_run_id": "eb2d09ce9592d5531b51e3e507634aa25f25ef1323376b056dd79fae948876f5",
+  "model_id": "M2",
+  "split_families": [
+    "temporal",
+    "spatial",
+    "joint"
+  ],
+  "fitted_scenario_ids": [
+    "calendar_weather",
+    "calendar_land_use_geography",
+    "calendar_satellite"
+  ],
+  "all_feature_scenario_id": "all_features",
+  "scenario_count_including_reference": 4,
+  "tract_date_row_count_per_family_scenario": 63403,
+  "independent_date_count": 65,
+  "independent_spatial_block_count": 71,
+  "joint_comparisons": [
+    {
+      "reduced_scenario_id": "calendar_weather",
+      "reduced_feature_set_description": "calendar + weather",
+      "reduced_date_macro_mae_c": 2.565019855709145,
+      "all_features_date_macro_mae_c": 2.108787916748636,
+      "absolute_mae_improvement_c": 0.45623193896050873,
+      "relative_mae_improvement_fraction": 0.17786682545362809,
+      "relative_mae_improvement_ci_lower_fraction": 0.09619113683185661,
+      "relative_mae_improvement_ci_upper_fraction": 0.2582029040208805,
+      "probability_improvement_gt_zero": 1.0,
+      "probability_relative_improvement_gt_10_percent": 0.9674
+    },
+    {
+      "reduced_scenario_id": "calendar_land_use_geography",
+      "reduced_feature_set_description": "calendar + land_use + geography",
+      "reduced_date_macro_mae_c": 3.3520431001261013,
+      "all_features_date_macro_mae_c": 2.108787916748636,
+      "absolute_mae_improvement_c": 1.2432551833774652,
+      "relative_mae_improvement_fraction": 0.3708947487371791,
+      "relative_mae_improvement_ci_lower_fraction": 0.25333712142731685,
+      "relative_mae_improvement_ci_upper_fraction": 0.4689522131595536,
+      "probability_improvement_gt_zero": 1.0,
+      "probability_relative_improvement_gt_10_percent": 1.0
+    },
+    {
+      "reduced_scenario_id": "calendar_satellite",
+      "reduced_feature_set_description": "calendar + lagged satellite",
+      "reduced_date_macro_mae_c": 3.614204691142234,
+      "all_features_date_macro_mae_c": 2.108787916748636,
+      "absolute_mae_improvement_c": 1.5054167743935976,
+      "relative_mae_improvement_fraction": 0.41652781262862715,
+      "relative_mae_improvement_ci_lower_fraction": 0.3197400823421254,
+      "relative_mae_improvement_ci_upper_fraction": 0.5017123328101101,
+      "probability_improvement_gt_zero": 1.0,
+      "probability_relative_improvement_gt_10_percent": 1.0
+    }
+  ],
+  "interpretation": {
+    "reduced_scenarios_are_refits": true,
+    "all_feature_model_refit_performed": false,
+    "causal_feature_importance": false,
+    "leave_one_feature_family_out": false,
+    "feature_importance_claim_allowed": false,
+    "allowed_claim": "predictive_association_under_predeclared_reduced_feature_sets"
+  },
+  "input_authentication": {
+    "canonical_model_result_authentication": {
+      "compile_provenance_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/processed/model_evaluation/model_run_compile_provenance.json",
+      "compile_provenance_file_sha256": "55416c987a2d25f9177dd974307ae595761c1db31ecaa9d7561fb6c42d4d5e7c",
+      "compile_provenance_commit_sha256": "00d1e59ce78baffbf9d24361ac8ba16a1d577b22cb193e15596627259190ed07",
+      "compile_run_id": "eb2d09ce9592d5531b51e3e507634aa25f25ef1323376b056dd79fae948876f5",
+      "oof_predictions_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/processed/model_evaluation/oof_predictions.parquet",
+      "oof_predictions_sha256": "0c06b88fd09cd514745b699e6b6a7e12901db8d3247e42b582feaf1f7e91c04a",
+      "summary_metrics_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/processed/model_evaluation/summary_metrics.csv",
+      "summary_metrics_sha256": "08f2aeb73c59033cb6256389374254b7bf216b05727372e7a77324c26b5aed05"
+    },
+    "canonical_model_compile_commit_sha256": "00d1e59ce78baffbf9d24361ac8ba16a1d577b22cb193e15596627259190ed07",
+    "canonical_model_run_id": "eb2d09ce9592d5531b51e3e507634aa25f25ef1323376b056dd79fae948876f5",
+    "canonical_all_feature_oof_sha256": "0c06b88fd09cd514745b699e6b6a7e12901db8d3247e42b582feaf1f7e91c04a",
+    "feature_ablation_compile_provenance_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/processed/feature_ablation/5d1959708f99227f8d1f3be8be9327dc1bb4152a168f11d042b37a72a4ece3fb/feature_ablation_compile_provenance.json",
+    "feature_ablation_compile_provenance_file_sha256": "968da03c5861d680969a7ecd05da616d2a0f3d70b1915971075ec9766f90103d",
+    "feature_ablation_compile_commit_sha256": "2cf94eb058a4c5604d19cba410c4dc13cbb5870182391b28e505a57cf5d84f65",
+    "feature_ablation_run_id": "5d1959708f99227f8d1f3be8be9327dc1bb4152a168f11d042b37a72a4ece3fb",
+    "source_run_manifest_commit_sha256": "2ba981ac131959af785ffa50d9a8a7ac573f55b16b397f0ebeb503b0da5e7361",
+    "source_selection_and_all_oof_lock_sha256": "02cbca8420febed11bb8b7590f4bd54fdd6c4180a4e8e5b998773d676ea76392",
+    "compiler_pipeline_sha256": "fef88217e8b39faec9b93cd998defb2c3a6f4d198805ab4d9393a719389f12dc",
+    "feature_ablation_oof_path": "D:/HuaweiMoveData/Users/haora/Documents/ISEF/data/processed/feature_ablation/5d1959708f99227f8d1f3be8be9327dc1bb4152a168f11d042b37a72a4ece3fb/feature_ablation_oof_predictions.parquet",
+    "feature_ablation_oof_sha256": "a7bd1fc0fadde8df80ca8179ead3556074df8c1718a68bcaff19a8a3789c65ab",
+    "feature_ablation_oof_bytes": 6855727,
+    "feature_ablation_oof_rows": 570627,
+    "feature_ablation_oof_schema_sha256": "a66b97dc9b7add982023f8ee0aad99dbdf07d5a86c186cfdc56a486acfb54a23"
+  },
+  "commit_sha256": "eaa941d5361254031904ad08e87a18e0ada976bb256a5382e128605fb88bfad2"
+}
