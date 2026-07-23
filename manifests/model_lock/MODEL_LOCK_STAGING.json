@@ -2,18 +2,18 @@
   "schema_version": 1,
   "algorithm_version": "model-lock-staging-v1",
   "state": "blocked",
-  "generated_at_utc": "2026-07-22T23:52:40.607587+00:00",
+  "generated_at_utc": "2026-07-23T00:15:55.602003+00:00",
   "formal_model_lock_written": false,
   "formal_model_lock_generation_allowed_by_this_command": false,
   "ready_for_formal_model_lock": false,
   "blockers": [
-    "git_head_missing"
+    "git_working_tree_not_clean"
   ],
   "git": {
-    "head_present": false,
-    "training_code_git_commit": null,
+    "head_present": true,
+    "training_code_git_commit": "15b67cf426b2ce03c99c24afdb98c45b06afc5d4",
     "working_tree_clean": false,
-    "status_entry_count": null
+    "status_entry_count": 1
   },
   "development_build": {
     "algorithm_version": "full-development-final-model-v1",
@@ -264,5 +264,5 @@
   "final_test_unlocked": false,
   "final_test_used": false,
   "contains_final_test_year": false,
-  "commit_sha256": "dd2a626cbbbdb5770dd31ea243c67bdc6d70cbdc5e7c835aba3759abaa58988d"
+  "commit_sha256": "043902c04df0b1a109e9ffca8dfafb7c1e912c089185d0583adba00b788bfb1b"
 }

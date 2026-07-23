@@ -311,6 +311,10 @@ def stage_model_lock(
     if output.name.casefold() == FORMAL_MODEL_LOCK_FILENAME.casefold():
         raise PermissionError("This command is forbidden from generating MODEL_LOCK.json.")
     output.parent.mkdir(parents=True, exist_ok=True)
+    # Inspect repository cleanliness before replacing a tracked prior staging
+    # record. Otherwise this command would mistake its own unlink for preexisting
+    # working-tree drift and could never restage from a clean checkout.
+    git = _git_state(_project_root())
     # A failed restaging attempt must never leave an older marker looking current.
     output.unlink(missing_ok=True)
     output.with_suffix(output.suffix + ".partial").unlink(missing_ok=True)
@@ -333,7 +337,6 @@ def stage_model_lock(
         raise ModelLockStagingError("Final build disagrees with the current frozen lock config.")
 
     blockers: list[str] = []
-    git = _git_state(_project_root())
     if not git["head_present"]:
         blockers.append("git_head_missing")
     elif not git["working_tree_clean"]:

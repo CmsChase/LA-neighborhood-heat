@@ -289,6 +289,31 @@ def test_stage_records_complete_lock_surface_but_never_writes_formal_lock(
     assert not (tmp_path / "MODEL_LOCK.json").exists()
 
 
+def test_git_cleanliness_is_checked_before_tracked_staging_is_replaced(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    config_path = _write_config(tmp_path, robustness_exists=True)
+    build = _build_provenance(tmp_path, config_path)
+    staging_path = tmp_path / "MODEL_LOCK_STAGING.json"
+    staging_path.write_text('{"old": true}', encoding="utf-8")
+
+    def git_state(_root: Path) -> dict[str, object]:
+        return {
+            "head_present": True,
+            "training_code_git_commit": "d" * 40,
+            "working_tree_clean": staging_path.is_file(),
+            "status_entry_count": 0 if staging_path.is_file() else 1,
+        }
+
+    monkeypatch.setattr(staging_module, "_git_state", git_state)
+
+    result = stage_model_lock(build, config_path=config_path)
+
+    assert result["state"] == "eligible_for_later_formal_promotion"
+    assert result["git"]["working_tree_clean"] is True
+
+
 def test_missing_git_and_robustness_are_explicit_blockers(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
