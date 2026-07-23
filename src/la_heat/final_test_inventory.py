@@ -8,8 +8,9 @@ from __future__ import annotations
 
 import json
 import time
+from calendar import monthrange
 from dataclasses import asdict
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from typing import Any, Final, Protocol
 from urllib.parse import urlsplit, urlunsplit
@@ -67,6 +68,21 @@ class _SearchResult(Protocol):
 
 class _StacClient(Protocol):
     def search(self, **kwargs: object) -> _SearchResult: ...
+
+
+def _monthly_query_intervals(start_date: date, end_date: date) -> list[tuple[date, date]]:
+    intervals: list[tuple[date, date]] = []
+    cursor = start_date
+    while cursor <= end_date:
+        month_end = date(
+            cursor.year,
+            cursor.month,
+            monthrange(cursor.year, cursor.month)[1],
+        )
+        interval_end = min(month_end, end_date)
+        intervals.append((cursor, interval_end))
+        cursor = interval_end + timedelta(days=1)
+    return intervals
 
 
 def _read_json(path: Path) -> dict[str, Any]:
@@ -142,36 +158,48 @@ def discover_final_test_scenes(
         raise FinalTestInventoryError("At least one STAC query attempt is required.")
     landsat = config.raw["landsat"]
     study = config.raw["study"]
-    search_arguments = {
-        "collections": [landsat["collection"]],
-        "bbox": study["bbox_wgs84"],
-        "datetime": f"{start_date.isoformat()}/{end_date.isoformat()}",
-        "query": {
-            "landsat:collection_category": {"eq": "T1"},
-            "landsat:correction": {"eq": "L2SP"},
-        },
-    }
-    items: list[Any] | None = None
-    last_error: Exception | None = None
-    for attempt in range(1, maximum_query_attempts + 1):
-        try:
-            items = list(client.search(**search_arguments).items())
-            break
-        except Exception as error:  # network/client exceptions vary by backend
-            last_error = error
-            if attempt < maximum_query_attempts:
-                time.sleep(min(2 ** (attempt - 1), 8))
-    if items is None:
-        raise FinalTestInventoryError(
-            f"STAC metadata query failed after {maximum_query_attempts} attempts."
-        ) from last_error
+    items_by_id: dict[str, Any] = {}
+    for interval_start, interval_end in _monthly_query_intervals(start_date, end_date):
+        interval = f"{interval_start.isoformat()}/{interval_end.isoformat()}"
+        search_arguments = {
+            "collections": [landsat["collection"]],
+            "bbox": study["bbox_wgs84"],
+            "datetime": interval,
+            "query": {
+                "landsat:collection_category": {"eq": "T1"},
+                "landsat:correction": {"eq": "L2SP"},
+            },
+            "limit": 100,
+        }
+        interval_items: list[Any] | None = None
+        last_error: Exception | None = None
+        for attempt in range(1, maximum_query_attempts + 1):
+            try:
+                interval_items = list(client.search(**search_arguments).items())
+                break
+            except Exception as error:  # network/client exceptions vary by backend
+                last_error = error
+                if attempt < maximum_query_attempts:
+                    time.sleep(min(2 ** (attempt - 1), 8))
+        if interval_items is None:
+            raise FinalTestInventoryError(
+                f"STAC metadata query {interval} failed after "
+                f"{maximum_query_attempts} attempts."
+            ) from last_error
+        for item in interval_items:
+            previous = items_by_id.get(str(item.id))
+            if previous is not None and previous.to_dict() != item.to_dict():
+                raise FinalTestInventoryError(
+                    f"Conflicting repeated STAC item: {item.id}"
+                )
+            items_by_id[str(item.id)] = item
     allowed_platforms = set(landsat["sensors"])
     warm_months = set(study["warm_season_months"])
     timezone = ZoneInfo(study["timezone"])
     city = city_boundary.to_crs(study["crs_analysis"]).geometry.union_all()
 
     by_id: dict[str, SceneRecord] = {}
-    for item in items:
+    for item in items_by_id.values():
         if not scene_is_eligible(item, allowed_platforms=allowed_platforms):
             continue
         acquired = item.datetime

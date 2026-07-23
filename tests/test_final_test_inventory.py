@@ -26,9 +26,11 @@ class _Client:
     def __init__(self, items: list[Item]) -> None:
         self.items = items
         self.kwargs: dict[str, object] | None = None
+        self.searches: list[dict[str, object]] = []
 
     def search(self, **kwargs: object) -> _Results:
         self.kwargs = kwargs
+        self.searches.append(kwargs)
         return _Results(self.items)
 
 
@@ -87,7 +89,14 @@ def test_discovery_is_exact_2025_metadata_without_cloud_cutoff() -> None:
     assert "?" not in scenes[0].asset_hrefs["lwir11"]
     assert len(overpasses) == 1
     assert client.kwargs is not None
-    assert client.kwargs["datetime"] == "2025-05-01/2025-10-31"
+    assert [row["datetime"] for row in client.searches] == [
+        "2025-05-01/2025-05-31",
+        "2025-06-01/2025-06-30",
+        "2025-07-01/2025-07-31",
+        "2025-08-01/2025-08-31",
+        "2025-09-01/2025-09-30",
+        "2025-10-01/2025-10-31",
+    ]
     assert "eo:cloud_cover" not in str(client.kwargs["query"])
 
 
@@ -118,7 +127,7 @@ def test_discovery_retries_transient_stac_failure(monkeypatch: pytest.MonkeyPatc
         client, config=config, city_boundary=city
     )
     assert [row.item_id for row in scenes] == ["inside"]
-    assert client.calls == 2
+    assert client.calls == 7
 
 
 def test_target_blind_key_universe_is_complete_and_unique() -> None:
