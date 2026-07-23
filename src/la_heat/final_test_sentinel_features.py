@@ -860,6 +860,26 @@ def validate_fixed_support_arrays(
     )
 
 
+def _fixed_support_grid_identity(
+    *,
+    grid_definition_sha256: str,
+    zone_raster_sha256: str,
+    static_land_mask_sha256: str,
+    expected_identity_sha256: str,
+) -> str:
+    """Recreate the exact unhashed identity used by the frozen support stage."""
+
+    identity = (
+        f"{grid_definition_sha256}|zone={zone_raster_sha256}"
+        f"|land={static_land_mask_sha256}"
+    )
+    if hashlib.sha256(identity.encode("utf-8")).hexdigest() != expected_identity_sha256:
+        raise FinalTestSentinelFeatureError(
+            "Combined fixed-support identity failed its frozen lock."
+        )
+    return identity
+
+
 def authenticate_fixed_spatial_support(
     *,
     project_root: Path,
@@ -950,12 +970,18 @@ def authenticate_fixed_spatial_support(
     if not worldcover_path.is_file():
         _download_worldcover(worldcover_path)
     eligible_land = _read_worldcover_mask(worldcover_path, target_grid=target_grid)
+    fixed_support_identity = _fixed_support_grid_identity(
+        grid_definition_sha256=target_grid.sha256,
+        zone_raster_sha256=str(grid_lock["zone_raster_sha256"]),
+        static_land_mask_sha256=str(grid_lock["static_land_mask_sha256"]),
+        expected_identity_sha256=str(grid_lock["target_grid_identity_sha256"]),
+    )
     eligible_counts, identities = validate_fixed_support_arrays(
         zones=zones,
         eligible_land=eligible_land,
         tract_geoids=tract_geoids,
         audit=audit,
-        grid_identity=str(grid_lock["target_grid_identity_sha256"]),
+        grid_identity=fixed_support_identity,
         expected_zone_sha256=str(grid_lock["zone_raster_sha256"]),
         expected_land_sha256=str(grid_lock["static_land_mask_sha256"]),
     )

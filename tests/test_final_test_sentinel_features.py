@@ -14,6 +14,7 @@ from la_heat.final_test_sentinel_features import (
     FinalTestSentinelEngineLock,
     FinalTestSentinelFeatureError,
     _authenticate_snapshot_files,
+    _fixed_support_grid_identity,
     decode_cog_reflectance,
     execute_acquisition_queue,
     validate_exact_lag_membership,
@@ -180,6 +181,57 @@ def test_fixed_support_rejects_one_changed_land_pixel() -> None:
             tract_geoids=("g1", "g2"),
             audit=audit,
             grid_identity="grid",
+            expected_zone_sha256=hashlib.sha256(zones.tobytes()).hexdigest(),
+            expected_land_sha256=hashlib.sha256(
+                np.packbits(eligible.ravel()).tobytes()
+            ).hexdigest(),
+        )
+
+
+def test_fixed_support_recreates_unhashed_frozen_grid_identity() -> None:
+    identity = "grid|zone=zones|land=land"
+    expected = hashlib.sha256(identity.encode("utf-8")).hexdigest()
+    assert (
+        _fixed_support_grid_identity(
+            grid_definition_sha256="grid",
+            zone_raster_sha256="zones",
+            static_land_mask_sha256="land",
+            expected_identity_sha256=expected,
+        )
+        == identity
+    )
+    with pytest.raises(FinalTestSentinelFeatureError, match="Combined fixed-support"):
+        _fixed_support_grid_identity(
+            grid_definition_sha256="grid",
+            zone_raster_sha256="zones",
+            static_land_mask_sha256="land",
+            expected_identity_sha256="0" * 64,
+        )
+
+
+def test_fixed_support_rejects_identity_sha_as_zonal_seed() -> None:
+    zones = np.array([[1, 1, 2], [1, 2, 2]], dtype=np.int32)
+    eligible = np.array([[True, False, True], [True, True, False]])
+    identity = "grid|zone=zones|land=land"
+    audit = pd.DataFrame(
+        {
+            "tract_geoid": ["g1", "g2"],
+            "eligible_pixel_count_static": [2, 2],
+            "eligible_pixel_identity_sha256": zonal_mask_identity_hashes(
+                zones,
+                eligible,
+                zone_count=2,
+                grid_identity=identity,
+            ),
+        }
+    )
+    with pytest.raises(FinalTestSentinelFeatureError, match="pixel identities"):
+        validate_fixed_support_arrays(
+            zones=zones,
+            eligible_land=eligible,
+            tract_geoids=("g1", "g2"),
+            audit=audit,
+            grid_identity=hashlib.sha256(identity.encode("utf-8")).hexdigest(),
             expected_zone_sha256=hashlib.sha256(zones.tobytes()).hexdigest(),
             expected_land_sha256=hashlib.sha256(
                 np.packbits(eligible.ravel()).tobytes()
