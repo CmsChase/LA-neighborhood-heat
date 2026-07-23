@@ -7,6 +7,7 @@ any Landsat asset, target raster, target QA table, fitted model, or model score.
 from __future__ import annotations
 
 import json
+import time
 from dataclasses import asdict
 from datetime import UTC, date, datetime
 from pathlib import Path
@@ -129,6 +130,7 @@ def discover_final_test_scenes(
     city_boundary: gpd.GeoDataFrame,
     start_date: date = FINAL_TEST_START,
     end_date: date = FINAL_TEST_END,
+    maximum_query_attempts: int = 4,
 ) -> tuple[list[SceneRecord], list[Any]]:
     """Discover all eligible 2025 Tier-1 L2SP scenes from metadata only."""
 
@@ -136,24 +138,40 @@ def discover_final_test_scenes(
         raise FinalTestInventoryError("Final-test inventory dates must remain in 2025.")
     if end_date < start_date:
         raise FinalTestInventoryError("Final-test end date precedes its start date.")
+    if maximum_query_attempts < 1:
+        raise FinalTestInventoryError("At least one STAC query attempt is required.")
     landsat = config.raw["landsat"]
     study = config.raw["study"]
-    search = client.search(
-        collections=[landsat["collection"]],
-        bbox=study["bbox_wgs84"],
-        datetime=f"{start_date.isoformat()}/{end_date.isoformat()}",
-        query={
+    search_arguments = {
+        "collections": [landsat["collection"]],
+        "bbox": study["bbox_wgs84"],
+        "datetime": f"{start_date.isoformat()}/{end_date.isoformat()}",
+        "query": {
             "landsat:collection_category": {"eq": "T1"},
             "landsat:correction": {"eq": "L2SP"},
         },
-    )
+    }
+    items: list[Any] | None = None
+    last_error: Exception | None = None
+    for attempt in range(1, maximum_query_attempts + 1):
+        try:
+            items = list(client.search(**search_arguments).items())
+            break
+        except Exception as error:  # network/client exceptions vary by backend
+            last_error = error
+            if attempt < maximum_query_attempts:
+                time.sleep(min(2 ** (attempt - 1), 8))
+    if items is None:
+        raise FinalTestInventoryError(
+            f"STAC metadata query failed after {maximum_query_attempts} attempts."
+        ) from last_error
     allowed_platforms = set(landsat["sensors"])
     warm_months = set(study["warm_season_months"])
     timezone = ZoneInfo(study["timezone"])
     city = city_boundary.to_crs(study["crs_analysis"]).geometry.union_all()
 
     by_id: dict[str, SceneRecord] = {}
-    for item in search.items():
+    for item in items:
         if not scene_is_eligible(item, allowed_platforms=allowed_platforms):
             continue
         acquired = item.datetime

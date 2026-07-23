@@ -32,6 +32,18 @@ class _Client:
         return _Results(self.items)
 
 
+class _TransientClient(_Client):
+    def __init__(self, items: list[Item]) -> None:
+        super().__init__(items)
+        self.calls = 0
+
+    def search(self, **kwargs: object) -> _Results:
+        self.calls += 1
+        if self.calls == 1:
+            raise RuntimeError("temporary timeout")
+        return super().search(**kwargs)
+
+
 def _item(item_id: str, *, when: datetime, cloud: float = 100.0) -> Item:
     geometry = box(-118.8, 33.6, -118.0, 34.5)
     item = Item(
@@ -91,6 +103,22 @@ def test_discovery_rejects_nonfinal_date_contract() -> None:
             city_boundary=city,
             start_date=date(2024, 5, 1),
         )
+
+
+def test_discovery_retries_transient_stac_failure(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr("la_heat.final_test_inventory.time.sleep", lambda _: None)
+    config = load_config("configs/research.toml")
+    city = gpd.GeoDataFrame(
+        geometry=[box(-118.7, 33.7, -118.15, 34.34)], crs="EPSG:4326"
+    )
+    client = _TransientClient(
+        [_item("inside", when=datetime(2025, 7, 1, 18, tzinfo=UTC))]
+    )
+    scenes, _ = discover_final_test_scenes(
+        client, config=config, city_boundary=city
+    )
+    assert [row.item_id for row in scenes] == ["inside"]
+    assert client.calls == 2
 
 
 def test_target_blind_key_universe_is_complete_and_unique() -> None:
