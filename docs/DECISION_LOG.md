@@ -848,3 +848,40 @@ No unlock has occurred. `unlock_final_test` remains `false`.
 - The inventory stage read metadata only and did not open optical pixels,
   Landsat target/QA assets, models, predictions, or scores. The 2025 label lock
   remains closed.
+
+## 2026-07-23 — First 2025 Sentinel feature run superseded
+
+- Processed all 34 frozen physical acquisitions from 67 public optical COG
+  tiles, with adjacent tiles mosaicked before tract aggregation. Transient warp
+  failures were retried automatically; all 34 acquisition caches completed and
+  the final compile reported zero failures.
+- The run produced 25,208 structurally complete tract-date rows, but the
+  post-run cross-provider calibration audit invalidated every optical feature.
+  Legacy Earth Search `sentinel-2-l2a` COG pixels had already incorporated the
+  BOA additive offset even though their raster metadata advertised `-0.1`.
+  Applying that metadata caused a second subtraction.
+- For the same 2025-04-27 tile and pixel window, Planetary Computer and Earth
+  Search `sentinel-2-c1-l2a` raw DNs matched exactly, while every tested legacy
+  COG DN was 1,000 lower. Invalid value ranges in NDVI, NDWI, and albedo
+  independently corroborated the failure. Because the indices are nonlinear,
+  no aggregate correction is permitted.
+- Moved the original 34 caches and aggregate outputs unchanged to
+  `data/interim/superseded/sentinel_features_double_offset_20260723/`. They are
+  audit evidence only and cannot satisfy any final-predictor provenance check.
+  The replacement will use the C1 collection after raw-DN parity validation.
+- Every source date is between target day minus 60 and target day minus one.
+  Static eligible-land counts and exact pixel identities remained invariant for
+  all 1,096 tracts. No Landsat target, QA, prediction, or score value was read,
+  and the one-time final evaluation remains unconsumed.
+
+## 2026-07-23 — Target-blind 2025 Daymet subsets completed
+
+- Downloaded the six frozen Daymet V4 R1 variables through the official direct
+  DAP4 fixed-index route. The files contain the exact 80 by 64 Los Angeles grid
+  cells required by the previously frozen tract weights.
+- Recorded every source URL, variable, array slice, byte count, and SHA-256 in
+  `manifests/final_test_2025/daymet_grid/subset_downloads.csv`; total payload
+  size is 14,131,863 bytes.
+- This stage accessed weather predictors only. It did not read a Landsat
+  target, QA value, fitted prediction, or score, and did not consume the
+  one-time final evaluation.

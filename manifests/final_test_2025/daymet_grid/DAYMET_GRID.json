@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "algorithm_version": "final-test-daymet-grid-v1-target-blind",
-  "state": "inventory_complete",
+  "state": "subsets_complete",
   "generated_at_utc": "2026-07-23T01:09:55.749285+00:00",
-  "updated_at_utc": "2026-07-23T01:09:55.749305+00:00",
+  "updated_at_utc": "2026-07-23T06:35:28.791426+00:00",
   "final_test_year": 2025,
   "final_test_unlocked": false,
   "target_blind": true,
@@ -41,7 +41,7 @@
   ],
   "granule_count": 6,
   "expected_subset_count": 6,
-  "completed_subset_count": 0,
+  "completed_subset_count": 6,
   "manifest_directory": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid",
   "raw_subset_directory": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets",
   "dataset": "Daymet: Daily Surface Weather Data on a 1-km Grid for North America, V4 R1",
@@ -118,7 +118,20 @@
       "bytes": 4060,
       "rows": 161,
       "schema_sha256": "b11792d476f7f68ded55b2a2b8018663db7c0c38b0e2948868aa6462f22b67c4"
+    },
+    "subset_downloads.csv": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\subset_downloads.csv",
+      "sha256": "e8b5aa7b012e2929455961bef780baab009b373ef42fdeb77e3d2e7d5dbf610b",
+      "bytes": 5037,
+      "rows": 6,
+      "schema_sha256": "46e2975d0fbbc23b41e3f6a8fb257c92bbae9257c414308a75eb2a010de9f894"
     }
   },
-  "commit_sha256": "6b165e366c2a71fc41505c085e0d2ed476539a8f55bf88d7f260aefc5c9b7f79"
+  "download_subsets_requested": true,
+  "subset_grid_shape": [
+    80,
+    64
+  ],
+  "download_manifest_semantic_sha256": "48cbfe25d787e12edf4784a5889c4f303c1a69fdc15b48dd1b9f88c7ed67d389",
+  "commit_sha256": "7fe7ab8415011905b92f12bf36f90a04a7f4703bd751c4370a8b7b78659a152b"
 }
