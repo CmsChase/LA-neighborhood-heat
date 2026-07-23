@@ -802,3 +802,18 @@ No unlock has occurred. `unlock_final_test` remains `false`.
 - Re-ran the complete repository verification: 541 tests passed and Ruff
   passed. No final fit, 2025 read, model-lock promotion, or final-test unlock
   occurred.
+
+## 2026-07-23 — Full-development models and formal lock frozen
+
+- Completed the development-only final tuning plan and refit the selected B1
+  ridge and M2 histogram-gradient-boosting pipelines on all legal 2020–2024
+  development rows. Both serialized artifacts and their runtime fingerprints
+  were authenticated before promotion.
+- Promoted the immutable `MODEL_LOCK.json` from committed training code
+  `1437fb8317a5bdc93b1d4587a9627ca8fa4f46f6` and committed staging record
+  `dc73353f2ab8a270a862628d462915b67dc9317c`. The formal lock commit SHA-256 is
+  `584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b`.
+- The lock records `final_test_locked=true`, `final_test_values_read=false`, and
+  `one_time_final_evaluation_authorized=false`. No 2025 feature, target, score,
+  or metric was read. A separate frozen predict-only evaluator and one-way
+  authorization are required before the single final-test run.

@@ -50,7 +50,7 @@ temperature, personal exposure, illness, or mortality.
 - [x] Feature-family ablation complete
 - [x] Pixel-level ST_QA <= 2 K sensitivity complete (15/30 date gate failed)
 - [x] Development robustness reconciled and generated report complete
-- [ ] Model lock created
+- [x] Model lock created
 - [ ] 2025 final test unlocked and run once
 
 The feasibility pilot created a 1,110-tract mother manifest and froze 1,096
@@ -300,6 +300,13 @@ final-test access:
 ```powershell
 .\.venv\Scripts\python scripts\promote_formal_model_lock.py --approve-formal-lock
 ```
+
+Formal promotion completed on 2026-07-23. The immutable lock is
+`manifests/model_lock/MODEL_LOCK.json`, with commit SHA-256
+`584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b`.
+It freezes the selected B1 and M2 artifacts while keeping calendar year 2025
+locked and the one-time final evaluation unauthorized until its isolated
+evaluator is frozen.
 
 The pilot queries public STAC metadata, reads only the required remote COG
 windows, applies the locked Landsat QA and temperature scaling, aggregates to

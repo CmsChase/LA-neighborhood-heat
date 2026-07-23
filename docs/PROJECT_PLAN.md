@@ -11,7 +11,7 @@ are relative; scientific gates control progression more than calendar dates.
 | 3. Validation design — complete and promoted | 8 | Predeclare 5 km spatial blocks, whole-year folds, Cartesian joint folds, 1 km buffer, nested year tuning, metrics, and the 31-candidate selection rule | Promoted 63,403-key manifest with 5 temporal, 71 spatial, and 355 joint folds; reference metric code and frozen selection configuration | One OOF test assignment per legal row/family; no date/block/buffer overlap; preprocessing isolation tests pass; no values or scores read at promotion | Codex |
 | 4. Baselines and models — development OOF complete | 9–10 | Run the 57,800-task durable plan for B0/B1/B2, Elastic Net, and histogram gradient boosting using nested grouped validation | Authenticated OOF predictions, metrics, tuning log, and initial result analysis | Required development gates pass without split or threshold changes | Codex computes; ChatGPT interprets |
 | 5. Robustness and interpretation — complete with limitations | 11 | Feature-family ablations, strict pixel-level ST_QA sensitivity, QA cohorts, sensor checks, uncertainty intervals, endpoint and residual diagnostics | Authenticated ablation/sensitivity tables, unified evidence table, generated development report, hotspot and spatial diagnostics | Complete: strict 2 K date-support gate failed and spatial clustering remains, so the claim is explicitly narrowed | Codex + ChatGPT |
-| 6. Model lock and final test | 12 | Freeze code/config/features/model/figures, create hashes, then unlock 2025 once | `MODEL_LOCK.json`, one-way 2025 predictions and metrics | Evaluator never fits; every hash matches; one final run only | Codex executes after student approval |
+| 6. Model lock complete; final test pending | 12 | Freeze code/config/features/model/figures, create hashes, then unlock 2025 once | `MODEL_LOCK.json`, one-way 2025 predictions and metrics | Evaluator never fits; every hash matches; one final run only | Codex executes after student approval |
 | 7. Research communication | 13–14 | Write paper, abstract, poster, notebook/demo, limitations, and oral-defense questions | Final report, poster figures, reproducibility instructions | Every number traceable to a table or script; claims match estimand | ChatGPT drafts; Codex verifies; student presents |
 
 ## Planned result package
@@ -110,5 +110,6 @@ is also complete, but retained only 15 usable dates versus the required 30 and
 its frozen-OOF improvement interval crosses zero. These limitations are
 preserved in the authenticated reconciliation and generated development report.
 No 2025 target or evaluation has been inspected or reported. Full-development
-final tuning/refitting is prepared as a separate resumable job but has not been
-started automatically.
+final tuning/refitting is complete, and the selected B1/M2 artifacts are frozen
+in the formal immutable model lock. The isolated predict-only 2025 evaluator
+and its separate one-way authorization remain pending.

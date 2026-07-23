@@ -410,26 +410,26 @@ The generated development report is `reports/DEVELOPMENT_REPORT.md`, report SHA
 
 ## Immediate next work
 
-1. Freeze the now-verified code and configuration in the repository's first
-   Git commit after a repository author identity is intentionally configured.
-2. Run the already prepared 65-task full-development B1/M2 tuning plus two final
-   refits only through the separate resumable controller at
-   `scripts/final_model_runner_ui.py`; this compute has not been started.
-   Every controller session begins paused and requires an explicit click before
-   it can launch or resume work.
-3. Create and review `MODEL_LOCK_STAGING.json`, then promote a formal model lock
-   only from a clean committed code state.
-4. Keep 2025 locked. Unlock and evaluate it once only
-   after the complete robustness package and model lock are reviewed and
-   intentionally approved.
+1. The full-development B1/M2 tuning and refits are complete and authenticated.
+   The formal immutable model lock has been promoted with commit SHA-256
+   `584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b`.
+2. Implement and freeze the isolated 2025 data builder and predict-only final
+   evaluator. It must never call `fit`, and it must fail closed on any model,
+   feature, configuration, support, or provenance mismatch.
+3. Freeze a separate one-way authorization record only after the evaluator and
+   its tests are committed. Target-blind preparation may then run before label
+   access; the labels and metrics remain a single irreversible evaluation stage.
+4. Keep 2025 locked until that authorization exists. Never use its values to
+   retune, retrain, alter thresholds, or repeat the final evaluation.
 
 ## Current verification state
 
-The development report, reconciled robustness evidence, prepared final-fit
-plan, and opt-in controller are covered by the complete repository test suite:
-541 tests passed on 2026-07-23, and `python -m ruff check .` passed. The
-Sentinel scientific pipeline fingerprint remains byte-identical to the frozen
-226-acquisition build. No final-model fit process or controller is running.
+The development report, reconciled robustness evidence, completed final fit,
+formal model lock, and opt-in controller are covered by the complete repository
+test suite: 548 tests passed on 2026-07-23, and `python -m ruff check .` passed.
+The Sentinel scientific pipeline fingerprint remains byte-identical to the
+frozen 226-acquisition build. No 2025 value has been read and no final-test
+evaluation has run.
 
 The exact scientific contract is in `docs/RESEARCH_PROTOCOL.md`; the Phase 2
 implementation contract is in `docs/PHASE2_FEATURE_SPEC.md`.
