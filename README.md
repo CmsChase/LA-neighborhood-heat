@@ -292,6 +292,15 @@ are retained across pauses. A transient exit restarts with bounded backoff, but
 repeated exits without new progress fail closed. The controller never unlocks
 or reads the 2025 final test.
 
+After the staging audit is committed from a clean tree, formal promotion is a
+separate one-way command. It re-authenticates the fitted B1/M2 artifacts and all
+frozen inputs, refuses to overwrite an existing lock, and does not authorize
+final-test access:
+
+```powershell
+.\.venv\Scripts\python scripts\promote_formal_model_lock.py --approve-formal-lock
+```
+
 The pilot queries public STAC metadata, reads only the required remote COG
 windows, applies the locked Landsat QA and temperature scaling, aggregates to
 Los Angeles Census tracts, and writes auditable coverage, mask-waterfall, and

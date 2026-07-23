@@ -106,8 +106,11 @@ def current_run(root: str | Path) -> tuple[Path | None, dict[str, Any]]:
 
 
 def model_lock_stage_status(root: str | Path) -> dict[str, Any]:
-    path = Path(root).resolve() / "manifests/model_lock/MODEL_LOCK_STAGING.json"
+    project = Path(root).resolve()
+    path = project / "manifests/model_lock/MODEL_LOCK_STAGING.json"
     payload = _read_json(path)
+    formal_path = project / "manifests/model_lock/MODEL_LOCK.json"
+    formal = _read_json(formal_path)
     blockers = payload.get("blockers")
     return {
         "exists": path.is_file() and bool(payload),
@@ -116,6 +119,11 @@ def model_lock_stage_status(root: str | Path) -> dict[str, Any]:
         "formal_model_lock_written": payload.get("formal_model_lock_written") is True,
         "blockers": blockers if isinstance(blockers, list) else [],
         "commit_sha256": payload.get("commit_sha256"),
+        "formal_lock_exists": formal_path.is_file() and bool(formal),
+        "formal_lock_state": formal.get("state", "not_created"),
+        "formal_lock_commit_sha256": formal.get("commit_sha256"),
+        "formal_lock_keeps_2025_locked": formal.get("final_test_locked") is True
+        and formal.get("final_test_values_read") is False,
     }
 
 
@@ -430,7 +438,7 @@ class FinalModelController:
         }
 
 
-HTML: Final = r"""<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ISEF 最终模型任务</title><style>body{font:16px system-ui;margin:0;background:#111;color:#eee}main{max-width:780px;margin:30px auto;padding:18px}.card{background:#1d1d1d;border:1px solid #383838;border-radius:12px;padding:18px;margin-bottom:16px}.row{display:flex;justify-content:space-between;gap:12px}.big{font-size:28px;font-weight:700}.bar{height:14px;background:#3a3a3a;border-radius:8px;overflow:hidden;margin:12px 0}.fill{height:100%;background:#3182f6}button{font-size:16px;padding:10px 18px;margin:8px 8px 0 0;border:0;border-radius:8px;cursor:pointer}.pause{background:#ffcc33}.resume{background:#2ecc71}.muted{color:#aaa;font-size:14px}.error{color:#ff8a8a}.ok{color:#71dc91}.blocker{padding:10px;background:#342626;border-radius:8px}</style></head><body><main><h1>ISEF 项目运行状态</h1><div id="root">读取中…</div></main><script>const esc=s=>String(s??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const blockerName=b=>b==='git_head_missing'?'尚未创建 Git 首次提交':b;async function action(n){await fetch('/api/'+n,{method:'POST'});refresh()}async function refresh(){const s=await(await fetch('/api/status')).json(),m=s.model_lock_stage||{};document.querySelector('#root').innerHTML=`<section class="card"><div class="row"><b>${s.complete?'最终模型：已完成':s.running?'最终模型：运行中':s.desired_state==='paused'||!s.session_armed?'最终模型：未启动/已暂停':'最终模型：等待自动续跑'}</b><span>2025 锁定</span></div><div class="big">调参 ${s.tuning_completed} / ${s.tuning_total}</div><div class="bar"><div class="fill" style="width:${s.percent}%"></div></div><div>预计剩余：${esc(s.eta)}　最终拟合：${s.final_models_complete}/2</div><button class="pause" onclick="action('pause')">暂停</button><button class="resume" onclick="action('resume')">开始 / 继续</button><p class="muted">模型完成后无需再次点击开始。<br>${esc(s.last_action||'')}</p>${s.last_error||!s.process_discovery_ok?`<p class="error">${esc(s.last_error||s.process_discovery_error)}</p>`:''}</section><section class="card"><div class="row"><b>下一步：模型锁审计</b><span class="${m.ready_for_formal_model_lock?'ok':'error'}">${!m.exists?'尚未运行':m.ready_for_formal_model_lock?'审计通过':'审计已完成，但有阻塞'}</span></div>${m.blockers?.length?`<p class="blocker">阻塞原因：${m.blockers.map(blockerName).map(esc).join('；')}</p>`:'<p class="ok">没有审计阻塞项。</p>'}<p class="muted">这是数秒完成的完整性检查，不是另一个训练任务。正式模型锁建立前，2025 始终保持锁定。</p></section>`}refresh();setInterval(refresh,3000)</script></body></html>"""
+HTML: Final = r"""<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LA Heat 最终模型任务</title><style>body{font:16px system-ui;margin:0;background:#111;color:#eee}main{max-width:780px;margin:30px auto;padding:18px}.card{background:#1d1d1d;border:1px solid #383838;border-radius:12px;padding:18px;margin-bottom:16px}.row{display:flex;justify-content:space-between;gap:12px}.big{font-size:28px;font-weight:700}.bar{height:14px;background:#3a3a3a;border-radius:8px;overflow:hidden;margin:12px 0}.fill{height:100%;background:#3182f6}button{font-size:16px;padding:10px 18px;margin:8px 8px 0 0;border:0;border-radius:8px;cursor:pointer}.pause{background:#ffcc33}.resume{background:#2ecc71}.muted{color:#aaa;font-size:14px}.error{color:#ff8a8a}.ok{color:#71dc91}.blocker{padding:10px;background:#342626;border-radius:8px}</style></head><body><main><h1>LA Heat 项目运行状态</h1><div id="root">读取中…</div></main><script>const esc=s=>String(s??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const blockerName=b=>b==='git_head_missing'?'尚未创建 Git 首次提交':b;async function action(n){await fetch('/api/'+n,{method:'POST'});refresh()}async function refresh(){const s=await(await fetch('/api/status')).json(),m=s.model_lock_stage||{};document.querySelector('#root').innerHTML=`<section class="card"><div class="row"><b>${s.complete?'最终模型：已完成':s.running?'最终模型：运行中':s.desired_state==='paused'||!s.session_armed?'最终模型：未启动/已暂停':'最终模型：等待自动续跑'}</b><span>2025 锁定</span></div><div class="big">调参 ${s.tuning_completed} / ${s.tuning_total}</div><div class="bar"><div class="fill" style="width:${s.percent}%"></div></div><div>预计剩余：${esc(s.eta)}　最终拟合：${s.final_models_complete}/2</div><button class="pause" onclick="action('pause')">暂停</button><button class="resume" onclick="action('resume')">开始 / 继续</button><p class="muted">模型完成后无需再次点击开始。<br>${esc(s.last_action||'')}</p>${s.last_error||!s.process_discovery_ok?`<p class="error">${esc(s.last_error||s.process_discovery_error)}</p>`:''}</section><section class="card"><div class="row"><b>模型锁</b><span class="${m.formal_lock_exists||m.ready_for_formal_model_lock?'ok':'error'}">${m.formal_lock_exists?'正式锁已建立':!m.exists?'尚未审计':m.ready_for_formal_model_lock?'资格审计通过，等待正式锁':'资格审计有阻塞'}</span></div>${m.blockers?.length?`<p class="blocker">阻塞原因：${m.blockers.map(blockerName).map(esc).join('；')}</p>`:m.formal_lock_exists?'<p class="ok">模型、配置、数据拆分和特征均已正式冻结。</p>':'<p class="ok">没有资格审计阻塞项。</p>'}<p class="muted">正式锁只冻结开发决策，不自动读取或评估 2025。</p></section>`}refresh();setInterval(refresh,3000)</script></body></html>"""
 
 
 def make_handler(controller: FinalModelController) -> type[BaseHTTPRequestHandler]:

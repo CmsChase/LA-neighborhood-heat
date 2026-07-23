@@ -170,6 +170,28 @@ def test_status_exposes_completed_model_lock_audit(tmp_path: Path) -> None:
     assert status["exists"] is True
     assert status["state"] == "blocked"
     assert status["blockers"] == ["git_head_missing"]
+    assert status["formal_lock_exists"] is False
+
+
+def test_status_exposes_formal_lock_without_unlocking_2025(tmp_path: Path) -> None:
+    destination = tmp_path / "manifests/model_lock/MODEL_LOCK.json"
+    destination.parent.mkdir(parents=True)
+    destination.write_text(
+        json.dumps(
+            {
+                "state": "frozen_for_one_time_2025_evaluation",
+                "final_test_locked": True,
+                "final_test_values_read": False,
+                "commit_sha256": "b" * 64,
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    status = model_lock_stage_status(tmp_path)
+
+    assert status["formal_lock_exists"] is True
+    assert status["formal_lock_keeps_2025_locked"] is True
 
 
 def test_exact_process_match_requires_project_python_script_and_config(tmp_path: Path) -> None:
