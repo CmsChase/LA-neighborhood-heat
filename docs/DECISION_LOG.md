@@ -831,8 +831,16 @@ No unlock has occurred. `unlock_final_test` remains `false`.
 ## 2026-07-23 — Target-blind 2025 Sentinel inventory frozen
 
 - Queried Element 84 Earth Search for the exact d-60 through d-1 windows of the
-  23 locked target dates, without a global scene-cloud cutoff. Froze 67 physical
-  acquisitions, 67 selected tile items, and 381 target-window memberships.
+  23 locked target dates, without a global scene-cloud cutoff. Froze 34 physical
+  acquisitions represented by 67 selected tile items and 192 exact
+  target-window memberships. Thirty-three acquisitions are adjacent two-tile
+  mosaics and one is a single-tile acquisition.
+- Corrected the first metadata-only draft before opening any optical pixels:
+  Earth Search records adjacent tiles about 14 seconds apart even though their
+  shared Sentinel datatake timestamp identifies one physical overpass. Physical
+  acquisition time is now derived and cross-validated from `s2:datatake_id` and
+  `s2:product_uri`; the superseded 67-acquisition draft is retained under
+  `data/interim/superseded/` for audit only.
 - Kept the official requester-pays product-metadata S3 URI as audit lineage and
   did not synthesize an inaccessible HTTPS URL. For scientific decoding, froze
   each public COG asset's STAC Raster scale and offset; all selected reflectance

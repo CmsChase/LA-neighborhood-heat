@@ -51,7 +51,9 @@ from la_heat.sentinel_inventory import (
 )
 
 SCHEMA_VERSION: Final = 1
-ALGORITHM_VERSION: Final = "final-test-sentinel-inventory-v2-earth-search-cog-contract"
+ALGORITHM_VERSION: Final = (
+    "final-test-sentinel-inventory-v3-datatake-physical-time"
+)
 PROVENANCE_FILENAME: Final = "FINAL_TEST_SENTINEL_INVENTORY.json"
 DEFAULT_STAC_API: Final = "https://earth-search.aws.element84.com/v1"
 STAC_PROVIDER: Final = "Element 84 Earth Search"
@@ -94,6 +96,9 @@ EARTH_SEARCH_ASSET_ALIASES: Final = {
 EARTH_SEARCH_PROPERTY_DERIVATIONS: Final = {
     "s2:mgrs_tile": "grid:code formatted as MGRS-<tile>",
     "sat:relative_orbit": "_Rddd_ token in s2:product_uri",
+    "physical_acquisition_datetime": (
+        "shared sensing timestamp in s2:datatake_id and s2:product_uri"
+    ),
 }
 EARTH_SEARCH_SUPPORTED_PLATFORMS: Final = ("sentinel-2a", "sentinel-2b")
 CALIBRATION_CONTRACT_PROPERTY: Final = "la_heat:cog_calibration_contract"
@@ -110,6 +115,13 @@ _REFLECTANCE_ASSET_ALIASES: Final = {
 }
 _MGRS_CODE = re.compile(r"^MGRS-(?P<tile>\d{2}[A-Z]{3})$", re.IGNORECASE)
 _RELATIVE_ORBIT = re.compile(r"(?:^|_)R(?P<orbit>\d{3})(?:_|$)")
+_DATATAKE_ID = re.compile(
+    r"^GS2(?P<satellite>[AB])_(?P<sensing>\d{8}T\d{6})_\d+_N\d+\.\d+$"
+)
+_PRODUCT_URI = re.compile(
+    r"^S2(?P<satellite>[AB])_MSIL2A_(?P<sensing>\d{8}T\d{6})_"
+    r"N\d{4}_R\d{3}_T\d{2}[A-Z]{3}_\d{8}T\d{6}(?:\.SAFE)?$"
+)
 _PRODUCT_METADATA_S3_PATH = re.compile(
     r"^/tiles/(?P<zone>\d{2})/(?P<band>[A-Z])/(?P<square>[A-Z]{2})/"
     r"(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/\d+/"
@@ -142,6 +154,7 @@ class _AuthenticatedInputs:
 @dataclass(frozen=True, slots=True)
 class _AdaptedEarthSearchItem:
     original: Any
+    physical_datetime: datetime
     properties: dict[str, Any]
     assets: dict[str, Any]
 
@@ -155,7 +168,7 @@ class _AdaptedEarthSearchItem:
 
     @property
     def datetime(self) -> datetime | None:
-        return self.original.datetime
+        return self.physical_datetime
 
     def to_dict(self) -> dict[str, Any]:
         payload = deepcopy(self.original.to_dict())
@@ -296,6 +309,49 @@ def _cog_calibration_contract(item: Any, *, mgrs_tile: str) -> dict[str, Any]:
     }
 
 
+def _physical_acquisition_datetime(
+    item: Any,
+    *,
+    platform: str,
+    product_uri: str,
+) -> tuple[datetime, datetime]:
+    """Return one shared datatake time plus the tile-specific audit time."""
+
+    datatake_id = str(item.properties.get("s2:datatake_id", "")).strip()
+    datatake_match = _DATATAKE_ID.fullmatch(datatake_id)
+    product_match = _PRODUCT_URI.fullmatch(product_uri)
+    expected_satellite = {"sentinel-2a": "A", "sentinel-2b": "B"}.get(platform)
+    if (
+        datatake_match is None
+        or product_match is None
+        or expected_satellite is None
+        or datatake_match.group("satellite") != expected_satellite
+        or product_match.group("satellite") != expected_satellite
+        or datatake_match.group("sensing") != product_match.group("sensing")
+    ):
+        raise FinalTestSentinelInventoryError(
+            f"Earth Search item {item.id} has conflicting datatake sensing metadata."
+        )
+    physical = datetime.strptime(
+        datatake_match.group("sensing"), "%Y%m%dT%H%M%S"
+    ).replace(tzinfo=UTC)
+    tile_datetime = item.datetime
+    if (
+        tile_datetime is None
+        or tile_datetime.tzinfo is None
+        or tile_datetime.utcoffset() is None
+    ):
+        raise FinalTestSentinelInventoryError(
+            f"Earth Search item {item.id} lacks an aware tile datetime."
+        )
+    tile_utc = tile_datetime.astimezone(UTC)
+    if abs((tile_utc - physical).total_seconds()) > 30 * 60:
+        raise FinalTestSentinelInventoryError(
+            f"Earth Search item {item.id} tile time conflicts with its datatake."
+        )
+    return physical, tile_utc
+
+
 def adapt_earth_search_item(item: Any) -> _AdaptedEarthSearchItem:
     """Map Earth Search metadata names to the frozen Sentinel parser contract."""
 
@@ -348,11 +404,22 @@ def adapt_earth_search_item(item: Any) -> _AdaptedEarthSearchItem:
     properties["platform"] = platform
     properties["s2:mgrs_tile"] = mgrs_tile
     properties["sat:relative_orbit"] = relative_orbit
+    physical_datetime, tile_datetime = _physical_acquisition_datetime(
+        item,
+        platform=platform,
+        product_uri=product_uri,
+    )
+    properties["la_heat:physical_acquisition_utc"] = physical_datetime.isoformat().replace(
+        "+00:00", "Z"
+    )
+    properties["la_heat:tile_datetime_utc"] = tile_datetime.isoformat().replace(
+        "+00:00", "Z"
+    )
     properties[CALIBRATION_CONTRACT_PROPERTY] = _cog_calibration_contract(item, mgrs_tile=mgrs_tile)
     assets = {
         canonical: item.assets[source] for canonical, source in EARTH_SEARCH_ASSET_ALIASES.items()
     }
-    return _AdaptedEarthSearchItem(item, properties, assets)
+    return _AdaptedEarthSearchItem(item, physical_datetime, properties, assets)
 
 
 def _project_root() -> Path:

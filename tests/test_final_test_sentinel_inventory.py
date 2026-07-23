@@ -13,6 +13,7 @@ from la_heat.final_test_sentinel_inventory import (
     CALIBRATION_CONTRACT_PROPERTY,
     EARTH_SEARCH_ASSET_ALIASES,
     FinalTestSentinelInventoryError,
+    _allow_audited_product_metadata_s3,
     adapt_earth_search_item,
     build_final_test_sentinel_inventory_artifacts,
 )
@@ -21,6 +22,10 @@ from la_heat.provenance import (
     canonical_sha256,
     geometry_semantic_sha256,
     sha256_file,
+)
+from la_heat.sentinel_inventory import (
+    physical_acquisition_key,
+    sentinel_record_from_item,
 )
 
 AOI = box(-118.6, 34.0, -118.4, 34.2)
@@ -223,6 +228,33 @@ def test_earth_search_adapter_maps_assets_tile_and_orbit() -> None:
     assert contract["formula"] == "reflectance = DN * scale + offset"
     assert contract["bands"]["B02"]["offset"] == -0.1
     assert adapted.assets["product-metadata"].href.startswith("s3://sentinel-s2-l2a/")
+
+
+def test_adjacent_tiles_share_one_datatake_physical_acquisition() -> None:
+    south = _earth_search_item()
+    north = _earth_search_item()
+    north.id = "S2A_11SLU_20250829_0_L2A"
+    north.datetime = datetime(2025, 8, 29, 18, 30, 14, tzinfo=UTC)
+    north.properties["grid:code"] = "MGRS-11SLU"
+    north.properties["s2:product_uri"] = str(
+        north.properties["s2:product_uri"]
+    ).replace("T11SLT", "T11SLU")
+    north.assets["product_metadata"].href = str(
+        north.assets["product_metadata"].href
+    ).replace("/S/LT/", "/S/LU/")
+
+    south_adapted = adapt_earth_search_item(south)
+    north_adapted = adapt_earth_search_item(north)
+    expected = datetime(2025, 8, 29, 18, 30, tzinfo=UTC)
+    assert south_adapted.datetime == expected
+    assert north_adapted.datetime == expected
+    assert north_adapted.properties["la_heat:tile_datetime_utc"] == (
+        "2025-08-29T18:30:14Z"
+    )
+    with _allow_audited_product_metadata_s3():
+        assert physical_acquisition_key(
+            sentinel_record_from_item(south_adapted)
+        ) == physical_acquisition_key(sentinel_record_from_item(north_adapted))
 
 
 def test_build_is_target_blind_exact_2025_and_isolated(tmp_path: Path) -> None:
