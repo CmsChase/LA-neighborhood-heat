@@ -827,3 +827,16 @@ No unlock has occurred. `unlock_final_test` remains `false`.
 - This stage read metadata only. It did not download weather values, open a
   Landsat target or QA asset, load a fitted model, or consume the one-time final
   evaluation. The 2025 label lock remains closed.
+
+## 2026-07-23 — Target-blind 2025 Sentinel inventory frozen
+
+- Queried Element 84 Earth Search for the exact d-60 through d-1 windows of the
+  23 locked target dates, without a global scene-cloud cutoff. Froze 67 physical
+  acquisitions, 67 selected tile items, and 381 target-window memberships.
+- Kept the official requester-pays product-metadata S3 URI as audit lineage and
+  did not synthesize an inaccessible HTTPS URL. For scientific decoding, froze
+  each public COG asset's STAC Raster scale and offset; all selected reflectance
+  bands specify `DN * 0.0001 - 0.1`.
+- The inventory stage read metadata only and did not open optical pixels,
+  Landsat target/QA assets, models, predictions, or scores. The 2025 label lock
+  remains closed.
