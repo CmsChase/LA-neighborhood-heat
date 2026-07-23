@@ -26,7 +26,6 @@ from la_heat.inventory import (
     REQUIRED_ASSETS,
     SceneRecord,
     group_physical_overpasses,
-    scene_is_eligible,
 )
 from la_heat.provenance import (
     atomic_csv,
@@ -56,6 +55,8 @@ PIPELINE_FILES: Final = (
     "src/la_heat/provenance.py",
     "scripts/build_final_test_inventory.py",
 )
+USGS_STAC_API: Final = "https://landsatlook.usgs.gov/stac-server"
+USGS_SURFACE_TEMPERATURE_COLLECTION: Final = "landsat-c2l2-st"
 
 
 class FinalTestInventoryError(RuntimeError):
@@ -139,6 +140,35 @@ def _canonical_url(url: str) -> str:
     return urlunsplit((parsed.scheme.lower(), parsed.netloc.lower(), parsed.path, "", ""))
 
 
+def _normalized_platform(item: Any) -> str:
+    raw = str(item.properties.get("platform", "")).strip().lower().replace("_", "-")
+    aliases = {"landsat8": "landsat-8", "landsat9": "landsat-9"}
+    return aliases.get(raw, raw)
+
+
+def _asset_key(item: Any, canonical_name: str) -> str | None:
+    aliases = {
+        "lwir11": ("lwir11",),
+        "qa_pixel": ("qa_pixel", "QA_PIXEL"),
+        "qa": ("qa", "QA"),
+        "cdist": ("cdist", "CDIST"),
+        "qa_radsat": ("qa_radsat", "QA_RADSAT"),
+    }
+    for candidate in aliases[canonical_name]:
+        if candidate in item.assets:
+            return candidate
+    return None
+
+
+def _scene_metadata_is_eligible(item: Any, *, allowed_platforms: set[str]) -> bool:
+    return bool(
+        _normalized_platform(item) in allowed_platforms
+        and item.properties.get("landsat:collection_category") == "T1"
+        and item.properties.get("landsat:correction") == "L2SP"
+        and all(_asset_key(item, name) is not None for name in REQUIRED_ASSETS)
+    )
+
+
 def discover_final_test_scenes(
     client: _StacClient,
     *,
@@ -147,6 +177,7 @@ def discover_final_test_scenes(
     start_date: date = FINAL_TEST_START,
     end_date: date = FINAL_TEST_END,
     maximum_query_attempts: int = 4,
+    stac_collection: str = USGS_SURFACE_TEMPERATURE_COLLECTION,
 ) -> tuple[list[SceneRecord], list[Any]]:
     """Discover all eligible 2025 Tier-1 L2SP scenes from metadata only."""
 
@@ -162,7 +193,7 @@ def discover_final_test_scenes(
     for interval_start, interval_end in _monthly_query_intervals(start_date, end_date):
         interval = f"{interval_start.isoformat()}/{interval_end.isoformat()}"
         search_arguments = {
-            "collections": [landsat["collection"]],
+            "collections": [stac_collection],
             "bbox": study["bbox_wgs84"],
             "datetime": interval,
             "query": {
@@ -200,7 +231,7 @@ def discover_final_test_scenes(
 
     by_id: dict[str, SceneRecord] = {}
     for item in items_by_id.values():
-        if not scene_is_eligible(item, allowed_platforms=allowed_platforms):
+        if not _scene_metadata_is_eligible(item, allowed_platforms=allowed_platforms):
             continue
         acquired = item.datetime
         if acquired is None or acquired.tzinfo is None or acquired.utcoffset() is None:
@@ -221,7 +252,7 @@ def discover_final_test_scenes(
         cloud = item.properties.get("eo:cloud_cover", np.nan)
         record = SceneRecord(
             item_id=str(item.id),
-            platform=str(item.properties["platform"]),
+            platform=_normalized_platform(item),
             acquired_utc=acquired,
             local_date=local_date.isoformat(),
             wrs_path=str(item.properties.get("landsat:wrs_path", "")),
@@ -230,7 +261,7 @@ def discover_final_test_scenes(
             city_coverage_fraction=coverage,
             geometry_wgs84=geometry_wgs84,
             asset_hrefs={
-                asset: _canonical_url(item.assets[asset].href)
+                asset: _canonical_url(item.assets[_asset_key(item, asset)].href)
                 for asset in REQUIRED_ASSETS
             },
         )
@@ -406,6 +437,8 @@ def build_final_test_inventory_artifacts(
     ),
     target_progress_path: str | Path = "data/interim/targets/build_progress.json",
     output_directory: str | Path = "manifests/final_test_2025/landsat_inventory",
+    stac_api: str = USGS_STAC_API,
+    stac_collection: str = USGS_SURFACE_TEMPERATURE_COLLECTION,
     client: _StacClient | None = None,
 ) -> dict[str, Any]:
     """Freeze target-blind 2025 metadata and its tract-date key universe."""
@@ -456,11 +489,12 @@ def build_final_test_inventory_artifacts(
     if client is None:
         from pystac_client import Client
 
-        client = Client.open(config.raw["landsat"]["stac_api"])
+        client = Client.open(stac_api)
     scenes, overpasses = discover_final_test_scenes(
         client,
         config=config,
         city_boundary=city,
+        stac_collection=stac_collection,
     )
     scenes_table = _scene_frame(scenes)
     overpasses_table = _overpass_frame(
@@ -530,6 +564,10 @@ def build_final_test_inventory_artifacts(
         "model_scores_read": False,
         "one_time_evaluation_consumed": False,
         "global_scene_cloud_cover_filter": False,
+        "stac_api": stac_api,
+        "stac_collection": stac_collection,
+        "stac_provider": "USGS LandsatLook",
+        "asset_alias_normalization": {"CDIST": "cdist"},
         "scene_count": len(scenes_table),
         "physical_overpass_count": len(overpasses_table),
         "primary_overpass_count": len(primary),
@@ -561,6 +599,11 @@ def build_final_test_inventory_artifacts(
             "research_config": {
                 "path": str(config.path),
                 "sha256": sha256_file(config.path),
+            },
+            "landsat_metadata_service": {
+                "provider": "U.S. Geological Survey",
+                "api": stac_api,
+                "collection": stac_collection,
             },
         },
         "semantic_hashes": {

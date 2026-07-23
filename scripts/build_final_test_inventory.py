@@ -5,7 +5,11 @@ from __future__ import annotations
 import argparse
 import json
 
-from la_heat.final_test_inventory import build_final_test_inventory_artifacts
+from la_heat.final_test_inventory import (
+    USGS_STAC_API,
+    USGS_SURFACE_TEMPERATURE_COLLECTION,
+    build_final_test_inventory_artifacts,
+)
 
 
 def main() -> None:
@@ -18,11 +22,17 @@ def main() -> None:
         "--output-directory",
         default="manifests/final_test_2025/landsat_inventory",
     )
+    parser.add_argument("--stac-api", default=USGS_STAC_API)
+    parser.add_argument(
+        "--stac-collection", default=USGS_SURFACE_TEMPERATURE_COLLECTION
+    )
     args = parser.parse_args()
     payload = build_final_test_inventory_artifacts(
         config_path=args.config,
         formal_lock_path=args.formal_lock,
         output_directory=args.output_directory,
+        stac_api=args.stac_api,
+        stac_collection=args.stac_collection,
     )
     print(
         json.dumps(
@@ -46,4 +56,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

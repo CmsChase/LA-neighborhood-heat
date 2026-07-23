@@ -70,6 +70,13 @@ def _item(item_id: str, *, when: datetime, cloud: float = 100.0) -> Item:
     return item
 
 
+def _usgs_item(item_id: str, *, when: datetime) -> Item:
+    item = _item(item_id, when=when)
+    item.properties["platform"] = "LANDSAT_9"
+    item.assets["CDIST"] = item.assets.pop("cdist")
+    return item
+
+
 def test_discovery_is_exact_2025_metadata_without_cloud_cutoff() -> None:
     config = load_config("configs/research.toml")
     city = gpd.GeoDataFrame(
@@ -128,6 +135,21 @@ def test_discovery_retries_transient_stac_failure(monkeypatch: pytest.MonkeyPatc
     )
     assert [row.item_id for row in scenes] == ["inside"]
     assert client.calls == 7
+
+
+def test_discovery_normalizes_official_usgs_platform_and_cdist_asset() -> None:
+    config = load_config("configs/research.toml")
+    city = gpd.GeoDataFrame(
+        geometry=[box(-118.7, 33.7, -118.15, 34.34)], crs="EPSG:4326"
+    )
+    client = _Client(
+        [_usgs_item("usgs", when=datetime(2025, 7, 1, 18, tzinfo=UTC))]
+    )
+    scenes, _ = discover_final_test_scenes(
+        client, config=config, city_boundary=city
+    )
+    assert scenes[0].platform == "landsat-9"
+    assert scenes[0].asset_hrefs["cdist"].endswith("/cdist.tif")
 
 
 def test_target_blind_key_universe_is_complete_and_unique() -> None:
