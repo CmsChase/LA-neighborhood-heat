@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "final-test-landsat-inventory-v1-target-blind",
+  "state": "target_blind_inventory_frozen",
+  "generated_at_utc": "2026-07-23T00:51:24.803657+00:00",
+  "final_test_year": 2025,
+  "date_range": [
+    "2025-05-01",
+    "2025-10-31"
+  ],
+  "target_blind": true,
+  "target_assets_opened": false,
+  "target_or_qa_values_read": false,
+  "labels_created": false,
+  "models_loaded": false,
+  "model_scores_read": false,
+  "one_time_evaluation_consumed": false,
+  "global_scene_cloud_cover_filter": false,
+  "stac_api": "https://landsatlook.usgs.gov/stac-server",
+  "stac_collection": "landsat-c2l2-st",
+  "stac_provider": "USGS LandsatLook",
+  "asset_alias_normalization": {
+    "CDIST": "cdist"
+  },
+  "scene_count": 45,
+  "physical_overpass_count": 23,
+  "primary_overpass_count": 23,
+  "tract_count": 1096,
+  "key_count": 25208,
+  "formal_model_lock": {
+    "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\model_lock\\MODEL_LOCK.json",
+    "sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
+    "commit_sha256": "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b"
+  },
+  "frozen_support": {
+    "city_boundary_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\target_inventory\\city_boundary.geojson",
+    "city_boundary_sha256": "e5f9ead4a8240505f94a3d40c951f3e90fb5f1df0c3d321b7eb98e26858ce70c",
+    "city_boundary_geometry_sha256": "4297d7deead6b8627830fc35346ee56f972e1f8d4b9e632fb5ba6c35979d45eb",
+    "primary_tract_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\targets\\primary_tract_manifest.parquet",
+    "primary_tract_sha256": "fbdcd5b6e3a6d5f55d972a1f19178b453d753e3f9b3878c8074c1972eb0f68bd",
+    "primary_tract_commit_sha256": "5e117dbae993fbcfe0ef8472cc0bfb67d2710a3b2767621dc7e8fa170e7f5680",
+    "tract_count": 1096
+  },
+  "source_records": {
+    "development_inventory_summary": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\target_inventory\\inventory_summary.json",
+      "sha256": "383360de3ab85acb85cbd6e480367323bc1407df0b318d2608125821637b5e50"
+    },
+    "development_target_progress": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\targets\\build_progress.json",
+      "sha256": "3f630dfcc8a1c2a19b093e7fe0f4bdc7f830fef42266fcf1156112f0eb959046"
+    },
+    "research_config": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\configs\\research.toml",
+      "sha256": "77d8badff06aa17f3a22c3cf8669c4143f1bf5847868e77eb3372617cfa570db"
+    },
+    "landsat_metadata_service": {
+      "provider": "U.S. Geological Survey",
+      "api": "https://landsatlook.usgs.gov/stac-server",
+      "collection": "landsat-c2l2-st"
+    }
+  },
+  "semantic_hashes": {
+    "scenes": "29fda6dd21b780bf30a03df4a10536e0b4113b00f2fd249fffd7bb06ef365683",
+    "overpasses": "f21dd8d010826dd973fd0f059f355292957aa242b3b47ab87ae2d22a57f0f7df",
+    "primary_overpasses": "f21dd8d010826dd973fd0f059f355292957aa242b3b47ab87ae2d22a57f0f7df",
+    "key_universe": "54b833ea4e074551c3b9293dca24c873efb3ffc692e1fd1bf8b5b0d84213e9bf"
+  },
+  "pipeline_sha256": "bc2d02f2a39ff5c5a0ec61b12e37dcb1231b8aed49247aef2e990dd938b5e81e",
+  "pipeline_fingerprint": {
+    "algorithm_version": "final-test-landsat-inventory-v1-target-blind",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "scripts/build_final_test_inventory.py": "321f761cf7b4ad2cf15139be761fbfd33a63c3f56f5f7d970a06bf2d7bb9f4b8",
+      "src/la_heat/final_test_inventory.py": "ff55914d59b74ab86ebd65e876faca469b9ee59718c8755ccaf3f188c708d3e7",
+      "src/la_heat/inventory.py": "466e3f592821c35020e9209222519202478573772a160f422bb3b7947ea82d9b",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "output_files": {
+    "scene_inventory.csv": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\scene_inventory.csv",
+      "sha256": "647c28635489ceb130a7cea242edccff0b3a938a323c5e03bf1a8eff7123cecd",
+      "bytes": 46633,
+      "rows": 45
+    },
+    "overpass_inventory.csv": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\overpass_inventory.csv",
+      "sha256": "f5246fb85a07e2d76b6fb2b82616455c1f59458dfc006f05eb8f4633dd7ced88",
+      "bytes": 7405,
+      "rows": 23
+    },
+    "primary_overpass_manifest.csv": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\primary_overpass_manifest.csv",
+      "sha256": "f5246fb85a07e2d76b6fb2b82616455c1f59458dfc006f05eb8f4633dd7ced88",
+      "bytes": 7405,
+      "rows": 23
+    },
+    "target_blind_key_universe.parquet": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\target_blind_key_universe.parquet",
+      "sha256": "40b8104f739ce5dd73481f46f3258c3e127806b606b62856a6f4a80ee9fa87ee",
+      "bytes": 20933,
+      "rows": 25208,
+      "schema_sha256": "16c90baab730f0ba0ec395ce152472ed9d464d8b6ab787624c780a2524259396"
+    }
+  },
+  "commit_sha256": "46892f9c1fea774dc127e2bafb527907b33d4362c166a442e9557fae42b06f3e"
+}
