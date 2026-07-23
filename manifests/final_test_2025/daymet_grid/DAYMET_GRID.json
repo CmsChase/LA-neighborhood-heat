@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "final-test-daymet-grid-v1-target-blind",
+  "state": "inventory_complete",
+  "generated_at_utc": "2026-07-23T01:09:55.749285+00:00",
+  "updated_at_utc": "2026-07-23T01:09:55.749305+00:00",
+  "final_test_year": 2025,
+  "final_test_unlocked": false,
+  "target_blind": true,
+  "target_or_qa_tables_read": [],
+  "target_values_read": false,
+  "models_loaded": false,
+  "model_scores_read": false,
+  "one_time_evaluation_consumed": false,
+  "dynamic_observed_predictors_end_by": "target_day_minus_1",
+  "required_lag_days": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "annual_container_contains_unused_dates": true,
+  "contains_final_test_predictor_source_year": true,
+  "target_date_count": 23,
+  "required_weather_date_count": 161,
+  "required_weather_date_min": "2025-04-29",
+  "required_weather_date_max": "2025-10-28",
+  "source_years": [
+    2025
+  ],
+  "variables": [
+    "dayl",
+    "prcp",
+    "srad",
+    "tmax",
+    "tmin",
+    "vp"
+  ],
+  "granule_count": 6,
+  "expected_subset_count": 6,
+  "completed_subset_count": 0,
+  "manifest_directory": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid",
+  "raw_subset_directory": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets",
+  "dataset": "Daymet: Daily Surface Weather Data on a 1-km Grid for North America, V4 R1",
+  "dataset_doi": "https://doi.org/10.3334/ORNLDAAC/2129",
+  "cmr_collection_concept_id": "C2532426483-ORNL_CLOUD",
+  "cmr_granules_url": "https://cmr.earthdata.nasa.gov/search/granules.json",
+  "cmr_service_bridge_url": "https://cmr.earthdata.nasa.gov/service-bridge/ous/collection/C2532426483-ORNL_CLOUD",
+  "subset_access_route": "direct_dap4_fixed_indices_v1",
+  "direct_subset_y_indices": [
+    5666,
+    5745
+  ],
+  "direct_subset_x_indices": [
+    2900,
+    2963
+  ],
+  "bbox_wgs84": [
+    -118.67,
+    33.7,
+    -118.15,
+    34.34
+  ],
+  "weather_config_semantic_sha256": "832a629a3e550022f14b9000447024d28ec397914bd41b7df139e3eb23d0cc95",
+  "weather_requirement_semantic_sha256": "3957f79e5ea8aed2b459457c807dc2cd995142f5e5672971ca63c83c51a8369d",
+  "formal_model_lock": {
+    "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\model_lock\\MODEL_LOCK.json",
+    "sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
+    "commit_sha256": "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b"
+  },
+  "landsat_inventory": {
+    "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\LANDSAT_INVENTORY.json",
+    "sha256": "348a728e35e32c95bac1d962526106584ba0cdf097037d0a5bdf95cbe8758988",
+    "commit_sha256": "46892f9c1fea774dc127e2bafb527907b33d4362c166a442e9557fae42b06f3e"
+  },
+  "key_universe": {
+    "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\target_blind_key_universe.parquet",
+    "sha256": "40b8104f739ce5dd73481f46f3258c3e127806b606b62856a6f4a80ee9fa87ee",
+    "bytes": 20933
+  },
+  "pipeline_sha256": "a4dc1a6752ae2617a8a0e6bd49636e0b4296a598424b86af7496fb140302c0aa",
+  "pipeline_fingerprint": {
+    "algorithm_version": "final-test-daymet-grid-v1-target-blind",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "scripts/stage_final_test_daymet_grid.py": "10b95265e6f114bcfbb7d0206effd6ec88d03a3e9bfdd51ae9024edd1eae3836",
+      "src/la_heat/daymet_grid.py": "31e95189360d39d2a90cf88f2637a470ff6f04e5e952b122fc342f68c29ef7a1",
+      "src/la_heat/final_test_daymet_grid.py": "48639e2d801fe5de94122af6c77912dfb4f278ed98a7c9804b0f79ae0013deb8",
+      "src/la_heat/final_test_inventory.py": "ff55914d59b74ab86ebd65e876faca469b9ee59718c8755ccaf3f188c708d3e7",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "output_files": {
+    "granule_inventory.csv": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\granule_inventory.csv",
+      "sha256": "a16f44a35aa3af02bb60d3d8ca5bfefb485f2789ca7ea77d1451864b84e93701",
+      "bytes": 2246,
+      "rows": 6,
+      "schema_sha256": "8e38db7b01c34e40e267f116ff8170aeffec741c18ae3aecd6979eda7e653667"
+    },
+    "weather_date_requirements.csv": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\weather_date_requirements.csv",
+      "sha256": "a37c7c68313c7ea1bed2fc9d30c262252c0a033315f1ea98d624f980d47bfdab",
+      "bytes": 4060,
+      "rows": 161,
+      "schema_sha256": "b11792d476f7f68ded55b2a2b8018663db7c0c38b0e2948868aa6462f22b67c4"
+    }
+  },
+  "commit_sha256": "6b165e366c2a71fc41505c085e0d2ed476539a8f55bf88d7f260aefc5c9b7f79"
+}

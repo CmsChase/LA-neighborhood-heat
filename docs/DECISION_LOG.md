@@ -817,3 +817,13 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   `one_time_final_evaluation_authorized=false`. No 2025 feature, target, score,
   or metric was read. A separate frozen predict-only evaluator and one-way
   authorization are required before the single final-test run.
+
+## 2026-07-23 — Target-blind 2025 weather inventory frozen
+
+- Derived the exact weather requirement from the frozen 23-date by 1,096-tract
+  key universe. All dynamic weather windows end on target day minus one.
+- Queried NASA CMR and froze the six Daymet V4 R1 annual granules required for
+  161 weather dates from 2025-04-29 through 2025-10-28.
+- This stage read metadata only. It did not download weather values, open a
+  Landsat target or QA asset, load a fitted model, or consume the one-time final
+  evaluation. The 2025 label lock remains closed.
