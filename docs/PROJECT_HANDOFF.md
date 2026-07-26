@@ -1,9 +1,16 @@
 # Mandatory project handoff
 
-Last material update: 2026-07-26 09:45 Asia/Shanghai
+Last material update: 2026-07-26 09:52 Asia/Shanghai
 
-Latest required scientific code checkpoint:
-`1dbb0232c9c278118875a6c4eb9af2c6e8e29720` on `main`
+Latest required scientific checkpoints on `main`:
+
+- audit/authorization/assembler code:
+  `1dbb0232c9c278118875a6c4eb9af2c6e8e29720`
+- formal Sentinel audit marker and its documentation:
+  `48f7da0`
+- final predictor provenance and this completed handoff are in the commit with
+  subject `Freeze final predictor matrix`; obtain its exact Git hash with
+  `git log --oneline --grep="Freeze final predictor matrix" -1`
 
 The mandatory handoff protocol itself was introduced at:
 `6818f17732c4a72c792c564d0b3fe40153e46c0e`
@@ -349,6 +356,63 @@ The formal audit passed and published:
 Predictor assembly is permitted only while this marker and every authenticated
 input still match exactly.
 
+## Completed frozen 2025 predictor matrix
+
+Command:
+
+```powershell
+.\.venv\Scripts\python scripts\build_final_test_predictors.py
+```
+
+The command completed and a second invocation authenticated the existing
+result without rebuilding it.
+
+Canonical output:
+
+`data/processed/final_test_2025/predictors/final_predictors.parquet`
+
+Tracked external provenance:
+
+`manifests/final_test_2025/predictors/PREDICTOR_ASSEMBLY.json`
+
+Audited facts:
+
+- state: `complete_target_blind`
+- rows: `25,208`; dates: `23`; tracts: `1,096`
+- columns: two keys plus `46` features in frozen order
+- family counts: `20` static/calendar + `21` Daymet + `5` Sentinel
+- unique keys: yes; 11-digit GEOIDs are keys, not predictors
+- non-Sentinel missing values: `0`
+- Sentinel available rows: `24,633`
+- Sentinel all-five-missing rows: `575`; partial missing rows: `0`
+- infinite numeric values: `0`
+- target/QA tables or values read: none
+- models/scores/predictions read: none
+- one-time evaluation consumed: `false`
+- predictor file SHA-256:
+  `f02b3428a1070b1d95152bb225652bc063330b3793322aeb364e8a0dd267fa0a`
+- predictor schema SHA-256:
+  `d3c34680721b3852c0d8fbf1679743befeb619b565d3d35b7822d0cf01aa0a16`
+- semantic predictor SHA-256:
+  `793af3c05589532887d436bbccaa0e415bc08e5106af447004f6444f766f27d0`
+- semantic key SHA-256:
+  `cd6ddcd4800e6d41b7f4b89d6be007be80e509dd6567dfaf416cfb6903e3b870`
+- missingness CSV SHA-256:
+  `63eb4710a01bb5f9b61ddb689fc98a4f49cfce87e683fddce808fe38bc0d7b34`
+- external provenance file SHA-256:
+  `4f94bd00ba5e7a6cdbd08abdb14483ea2018a5429406db3bd2f0549470f74541`
+- provenance canonical commit:
+  `b8ce453ecd2c4c067251d0f84bdf647b59cef9c10cbc57820286b6cb4c838d3f`
+
+An independent read-only audit reconstructed the exact one-to-one merge from
+the 20 base, 21 Daymet, and five Sentinel source columns and found every value
+equal with NaN-aware comparison. It independently matched all 46 columns to the
+formal M2 lock and reauthenticated the full existing-output chain.
+
+The large Parquet and internal provenance remain intentionally untracked under
+`data/processed/**`; their hashes above are the transfer/authentication
+contract.
+
 ## Invalid and superseded artifacts: never use
 
 These paths are audit evidence only:
@@ -395,38 +459,11 @@ frozen.
 
 ## Exact next steps
 
-### 1. Build the frozen 46-feature final predictor matrix
+At this checkpoint, `git status --short` should show only the four quarantined
+evaluator drafts listed above. Never use `git add .`; none of those four files
+belongs to the frozen predictor checkpoint.
 
-The assembler code is committed and now imports the authoritative Sentinel
-expected acquisition count instead of hard-coding the old value.
-
-The Sentinel audit gate has passed. Run:
-
-```powershell
-.\.venv\Scripts\python scripts\build_final_test_predictors.py
-```
-
-Expected result:
-
-- 25,208 exact rows
-- 46 model features in frozen order
-- 20 base + 21 Daymet + 5 Sentinel
-- output:
-  `data/processed/final_test_2025/predictors/final_predictors.parquet`
-- provenance:
-  `manifests/final_test_2025/predictors/PREDICTOR_ASSEMBLY.json`
-- no target/QA/model/score path opened
-
-Audit and record the output hashes before proceeding.
-
-### 2. Audit and freeze the predictor matrix
-
-Authenticate the exact row-key set, 46-feature order, source hashes, missing
-patterns, and target-blind flags. Update `docs/DATA_MANIFEST.csv`,
-`docs/DECISION_LOG.md`, and this handoff, run the full checks, and commit/push
-only the allowlisted predictor artifacts and documentation.
-
-### 3. Redesign and freeze the independent final evaluator
+### 1. Redesign and freeze the independent final evaluator
 
 Do not use the quarantined drafts. The accepted evaluator must:
 
@@ -437,7 +474,7 @@ Do not use the quarantined drafts. The accepted evaluator must:
 - emit predictions and metrics atomically with complete provenance;
 - forbid threshold or model changes after any 2025 target value is opened.
 
-### 4. One-time authorization and final evaluation
+### 2. One-time authorization and final evaluation
 
 This is intentionally not authorized yet.
 
@@ -475,11 +512,11 @@ Before completing any code change:
 .\.venv\Scripts\python -m ruff check .
 ```
 
-Latest verified results through checkpoint `1dbb023`:
+Latest verified results after the completed predictor assembly:
 
 - audit/authorization/assembler focused suite: `37 passed`
-- full test suite after the audit-gate implementation: passed, zero failures
-- full Ruff after the audit-gate implementation: passed
+- full test suite: `673 passed`, zero failures
+- full Ruff: passed
 
 Generated manifests under `manifests/**` are marked `-text` in
 `.gitattributes` because byte-level hashes are authoritative. On Windows,

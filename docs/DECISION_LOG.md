@@ -972,3 +972,38 @@ No unlock has occurred. `unlock_final_test` remains `false`.
 - No Landsat target or QA path was opened, no fitted model was loaded, and no
   prediction, score, or metric was read. The one-time final evaluation remains
   unconsumed.
+
+## 2026-07-26 — Frozen 2025 target-blind predictor matrix completed
+
+- Assembled the authenticated final-test predictor base, final-test Daymet
+  features, and audited Collection 1 Sentinel features in the exact frozen M2
+  feature order. The result contains 25,208 unique tract-date rows, 23 dates,
+  1,096 tracts, and 46 model predictors: 20 static/calendar, 21 weather, and
+  five lagged optical features.
+- The output has no duplicate keys, contains only 2025 dates, preserves
+  11-digit tract GEOIDs as keys rather than predictors, and contains no target,
+  QA, label, prediction, residual, score, or metric column. All numeric values
+  are finite where present.
+- All 41 non-Sentinel predictors have zero missing values. Exactly 575 rows
+  have all five Sentinel predictors missing and 24,633 have all five present;
+  partial optical-feature missingness is impossible under the frozen contract.
+- The predictor Parquet SHA-256 is
+  `f02b3428a1070b1d95152bb225652bc063330b3793322aeb364e8a0dd267fa0a`,
+  schema SHA-256 is
+  `d3c34680721b3852c0d8fbf1679743befeb619b565d3d35b7822d0cf01aa0a16`,
+  and semantic predictor SHA-256 is
+  `793af3c05589532887d436bbccaa0e415bc08e5106af447004f6444f766f27d0`.
+- External and internal `PREDICTOR_ASSEMBLY.json` files are byte-identical.
+  Their file SHA-256 is
+  `4f94bd00ba5e7a6cdbd08abdb14483ea2018a5429406db3bd2f0549470f74541`
+  and canonical internal commit is
+  `b8ce453ecd2c4c067251d0f84bdf647b59cef9c10cbc57820286b6cb4c838d3f`.
+  A second invocation reauthenticated the existing artifact and returned the
+  same commit without rebuilding it.
+- An independent read-only audit rebuilt the one-to-one merge from the 20
+  base, 21 Daymet, and five Sentinel source features and found every value
+  exactly equal with NaN-aware comparison. It also independently authenticated
+  the frozen M2 feature order and all upstream commits.
+- This assembly was target-blind: no Landsat target/QA table, fitted model,
+  prediction, or score was opened. The authorization file is absent and the
+  one-time final evaluation remains unconsumed.

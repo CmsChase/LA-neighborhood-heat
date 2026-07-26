@@ -1,0 +1,1256 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "final-test-predictor-assembly-v1-target-blind",
+  "state": "complete_target_blind",
+  "generated_at_utc": "2026-07-26T01:43:30.387991+00:00",
+  "final_test_year": 2025,
+  "final_test_unlocked": false,
+  "contains_only_final_test_year": true,
+  "contains_final_test_year": true,
+  "target_blind": true,
+  "contains_target_values": false,
+  "contains_target_or_qa_values": false,
+  "contains_model_outputs": false,
+  "target_or_qa_tables_read": [],
+  "target_or_qa_value_columns_read": [],
+  "target_values_read": false,
+  "models_loaded": false,
+  "model_scores_read": false,
+  "one_time_evaluation_consumed": false,
+  "publication_protocol": "staged_directory_atomic_replace_v1",
+  "request": {
+    "schema_version": 1,
+    "algorithm_version": "final-test-predictor-assembly-v1-target-blind",
+    "final_test_year": 2025,
+    "formal_model_lock_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\model_lock\\MODEL_LOCK.json",
+    "predictor_base_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\predictor_base\\predictor_base.parquet",
+    "predictor_base_provenance_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\predictor_base\\PREDICTOR_BASE.json",
+    "daymet_feature_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\daymet_features\\daymet_features.parquet",
+    "daymet_provenance_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_features\\DAYMET_FEATURES.json",
+    "sentinel_feature_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\sentinel_features.parquet",
+    "sentinel_build_progress_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\build_progress.json",
+    "sentinel_pipeline_fingerprint_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\pipeline_fingerprint.json",
+    "sentinel_postrun_audit_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\sentinel_features\\SENTINEL_FEATURE_AUDIT.json",
+    "research_config_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\configs\\research.toml",
+    "sentinel_stage_config_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\configs\\sentinel_features.toml",
+    "sentinel_inventory_directory": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\sentinel_inventory",
+    "sentinel_raw_stac_directory": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items",
+    "output_directory": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\final_test_2025\\predictors",
+    "predictor_output_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\final_test_2025\\predictors\\final_predictors.parquet",
+    "missingness_output_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\final_test_2025\\predictors\\predictor_missingness.csv",
+    "internal_provenance_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\final_test_2025\\predictors\\PREDICTOR_ASSEMBLY.json",
+    "external_provenance_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\predictors\\PREDICTOR_ASSEMBLY.json",
+    "expected_row_count": 25208,
+    "expected_model_feature_count": 46
+  },
+  "request_sha256": "82f671b4661cb1133af9e37ec710ffc39fee4cb3a735d8e895fd2acaa886b686",
+  "row_count": 25208,
+  "date_count": 23,
+  "tract_count": 1096,
+  "feature_count": 46,
+  "feature_names": [
+    "nlcd_open_water_fraction",
+    "nlcd_developed_open_fraction",
+    "nlcd_developed_low_fraction",
+    "nlcd_developed_high_fraction",
+    "nlcd_barren_fraction",
+    "nlcd_forest_fraction",
+    "nlcd_shrub_grass_fraction",
+    "nlcd_agriculture_fraction",
+    "nlcd_wetland_fraction",
+    "impervious_mean_fraction",
+    "impervious_p90_fraction",
+    "impervious_at_least_50_fraction",
+    "elevation_mean_m",
+    "elevation_std_m",
+    "slope_mean_degrees",
+    "slope_p90_degrees",
+    "pacific_coast_distance_mean_km",
+    "pacific_coast_distance_p10_km",
+    "calendar_doy_sin",
+    "calendar_doy_cos",
+    "daymet_dayl_s_mean_prev_1d",
+    "daymet_prcp_mm_sum_prev_1d",
+    "daymet_srad_w_m2_mean_prev_1d",
+    "daymet_tmax_c_mean_prev_1d",
+    "daymet_tmin_c_mean_prev_1d",
+    "daymet_vp_pa_mean_prev_1d",
+    "daymet_srad_energy_mj_m2_sum_prev_1d",
+    "daymet_dayl_s_mean_prev_3d",
+    "daymet_prcp_mm_sum_prev_3d",
+    "daymet_srad_w_m2_mean_prev_3d",
+    "daymet_tmax_c_mean_prev_3d",
+    "daymet_tmin_c_mean_prev_3d",
+    "daymet_vp_pa_mean_prev_3d",
+    "daymet_srad_energy_mj_m2_sum_prev_3d",
+    "daymet_dayl_s_mean_prev_7d",
+    "daymet_prcp_mm_sum_prev_7d",
+    "daymet_srad_w_m2_mean_prev_7d",
+    "daymet_tmax_c_mean_prev_7d",
+    "daymet_tmin_c_mean_prev_7d",
+    "daymet_vp_pa_mean_prev_7d",
+    "daymet_srad_energy_mj_m2_sum_prev_7d",
+    "sentinel_ndvi_lag60",
+    "sentinel_evi_lag60",
+    "sentinel_ndwi_lag60",
+    "sentinel_ndbi_lag60",
+    "sentinel_albedo_proxy_lag60"
+  ],
+  "key_columns": [
+    "tract_geoid",
+    "target_date"
+  ],
+  "geoid_used_as_feature": false,
+  "family_feature_counts": {
+    "static_calendar": 20,
+    "weather": 21,
+    "satellite": 5
+  },
+  "missing_count_by_feature": {
+    "nlcd_open_water_fraction": 0,
+    "nlcd_developed_open_fraction": 0,
+    "nlcd_developed_low_fraction": 0,
+    "nlcd_developed_high_fraction": 0,
+    "nlcd_barren_fraction": 0,
+    "nlcd_forest_fraction": 0,
+    "nlcd_shrub_grass_fraction": 0,
+    "nlcd_agriculture_fraction": 0,
+    "nlcd_wetland_fraction": 0,
+    "impervious_mean_fraction": 0,
+    "impervious_p90_fraction": 0,
+    "impervious_at_least_50_fraction": 0,
+    "elevation_mean_m": 0,
+    "elevation_std_m": 0,
+    "slope_mean_degrees": 0,
+    "slope_p90_degrees": 0,
+    "pacific_coast_distance_mean_km": 0,
+    "pacific_coast_distance_p10_km": 0,
+    "calendar_doy_sin": 0,
+    "calendar_doy_cos": 0,
+    "daymet_dayl_s_mean_prev_1d": 0,
+    "daymet_prcp_mm_sum_prev_1d": 0,
+    "daymet_srad_w_m2_mean_prev_1d": 0,
+    "daymet_tmax_c_mean_prev_1d": 0,
+    "daymet_tmin_c_mean_prev_1d": 0,
+    "daymet_vp_pa_mean_prev_1d": 0,
+    "daymet_srad_energy_mj_m2_sum_prev_1d": 0,
+    "daymet_dayl_s_mean_prev_3d": 0,
+    "daymet_prcp_mm_sum_prev_3d": 0,
+    "daymet_srad_w_m2_mean_prev_3d": 0,
+    "daymet_tmax_c_mean_prev_3d": 0,
+    "daymet_tmin_c_mean_prev_3d": 0,
+    "daymet_vp_pa_mean_prev_3d": 0,
+    "daymet_srad_energy_mj_m2_sum_prev_3d": 0,
+    "daymet_dayl_s_mean_prev_7d": 0,
+    "daymet_prcp_mm_sum_prev_7d": 0,
+    "daymet_srad_w_m2_mean_prev_7d": 0,
+    "daymet_tmax_c_mean_prev_7d": 0,
+    "daymet_tmin_c_mean_prev_7d": 0,
+    "daymet_vp_pa_mean_prev_7d": 0,
+    "daymet_srad_energy_mj_m2_sum_prev_7d": 0,
+    "sentinel_ndvi_lag60": 575,
+    "sentinel_evi_lag60": 575,
+    "sentinel_ndwi_lag60": 575,
+    "sentinel_ndbi_lag60": 575,
+    "sentinel_albedo_proxy_lag60": 575
+  },
+  "sentinel_available_row_count": 24633,
+  "sentinel_missing_row_count": 575,
+  "sentinel_all_or_none_missingness": true,
+  "sentinel_postrun_audit_passed": true,
+  "sentinel_postrun_audit_commit_sha256": "412c818b12b31efd8203f4fe4a12b6404c948bf8e18b933bee3fb051d2198434",
+  "non_sentinel_missing_count": 0,
+  "semantic_key_sha256": "cd6ddcd4800e6d41b7f4b89d6be007be80e509dd6567dfaf416cfb6903e3b870",
+  "semantic_predictor_table_sha256": "793af3c05589532887d436bbccaa0e415bc08e5106af447004f6444f766f27d0",
+  "semantic_missingness_table_sha256": "bf9b46f716cbe0ef7ef595abbfab6a120f1392d5b5443714cd2ffe0642e81a0a",
+  "formal_model_lock": {
+    "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\model_lock\\MODEL_LOCK.json",
+    "sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
+    "commit_sha256": "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b"
+  },
+  "upstream_commits": {
+    "predictor_base": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\predictor_base\\PREDICTOR_BASE.json",
+      "sha256": "14f95acf2d43cb8124d9ca3ca2ebccb234546ddd0dfd3f0d3a38f5f948c670f5",
+      "commit_sha256": "aeb4e7478863dfc15203d5b6098aab2319429faf87e16f4715603385ff22789f"
+    },
+    "daymet_features": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_features\\DAYMET_FEATURES.json",
+      "sha256": "64731546e57dba13212e77a85969c4e9370d83340ce826e24bb17a0b5afc22f9",
+      "commit_sha256": "5615c5a304e22636d7426cc12da5c3f361b631ecddc181cc0f9244697b348433"
+    },
+    "sentinel_build_progress": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\build_progress.json",
+      "sha256": "37a943f4f4251fe99b7774ced0616a36947964b8cc7fe8ebd95fda7181870c0a",
+      "pipeline_sha256": "b25505861742768d17d4f576f124e4d2ae59b6cba6e52beac4e8cb6bee4b6178"
+    },
+    "sentinel_postrun_audit": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\sentinel_features\\SENTINEL_FEATURE_AUDIT.json",
+      "sha256": "8a19fe7b07be6caaba53798364765d3ba0c4cca89b64f2d83becfe6331a2169e",
+      "commit_sha256": "412c818b12b31efd8203f4fe4a12b6404c948bf8e18b933bee3fb051d2198434",
+      "audit_pipeline_sha256": "c5bf84ef1892a4a81133b06726774014cf38b50dc55a73f978961cfcb01363aa"
+    }
+  },
+  "immutable_input_files": [
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\configs\\research.toml",
+      "sha256": "77d8badff06aa17f3a22c3cf8669c4143f1bf5847868e77eb3372617cfa570db",
+      "bytes": 5417
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\configs\\sentinel_features.toml",
+      "sha256": "8e0052bf7cca109a33e9a351a4dedbe87758b12113d5f4414208b9c1b1f4ed93",
+      "bytes": 1171
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\features\\daymet\\daymet_features_provenance.json",
+      "sha256": "e5366a09e01b3d77aa6a2f4b775649e90945a9553431ecdce87db60382b06929",
+      "bytes": 17738
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\features\\daymet\\daymet_fixed_cell_weights.parquet",
+      "sha256": "641e5b17f0707c5b24b23365f135d5714cfee625425417c372be630296d29ff9",
+      "bytes": 116142
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\daymet_features\\DAYMET_FEATURES.json",
+      "sha256": "64731546e57dba13212e77a85969c4e9370d83340ce826e24bb17a0b5afc22f9",
+      "bytes": 21049
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\daymet_features\\daymet_feature_audit.parquet",
+      "sha256": "068208536e205ebaafdc3108520fd996247a3b3e016287d5cd7eabe79438bcb8",
+      "bytes": 46324
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\daymet_features\\daymet_features.parquet",
+      "sha256": "79275b1f1494249e34dad8400cfc3690d8651743fea77a8f30c7b19c70971d8f",
+      "bytes": 4019117
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\predictor_base\\predictor_base.parquet",
+      "sha256": "690617f2bc72670fbc9759634d0eeb6c980ce410309e71ecfb2d80139453769c",
+      "bytes": 205854
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\acquisition_tract.parquet",
+      "sha256": "46185f05149a5127e2552c830e19ad57c6f6a5bc3716bc7f78dd21dc4d22afb8",
+      "bytes": 2281748
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\build_progress.json",
+      "sha256": "37a943f4f4251fe99b7774ced0616a36947964b8cc7fe8ebd95fda7181870c0a",
+      "bytes": 7381
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\08f7b5cdcc66dd162571\\acquisition_tract.parquet",
+      "sha256": "4577a200c2c3ed5c68fe10fa2fc1f9eed23a55d9b1601d3a5b7f0867956c44d2",
+      "bytes": 119047
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\08f7b5cdcc66dd162571\\summary.json",
+      "sha256": "f3b8c15b4f8de23cdaa24abc90d952ec1a8a96180933ee2d27996595540c153a",
+      "bytes": 6726
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\1a7e42d9f9c1771e79db\\acquisition_tract.parquet",
+      "sha256": "262265cc938dd7bf11331be49c1f61b9bfd6c4e0aa77938a0341db9cffe4f5c1",
+      "bytes": 186016
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\1a7e42d9f9c1771e79db\\summary.json",
+      "sha256": "6206467f9fc6047547ba512649489fe185307d94c36963d0d1386a5f076c8490",
+      "bytes": 6715
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\2548bc94bfe76a198975\\acquisition_tract.parquet",
+      "sha256": "c342d64c879a1aded5ebcc2d93063331b1f087eb9fbdb97c47440ffcc97fc7ec",
+      "bytes": 212543
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\2548bc94bfe76a198975\\summary.json",
+      "sha256": "ab6123e6be224983cd59fd5a5558072d3dd51ca5804eb04ef42c06283a3f6666",
+      "bytes": 6731
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\32c390e26f43cc76a110\\acquisition_tract.parquet",
+      "sha256": "943205afd107fe9bfb43453f68bc5241ed83a4d2ce7e55ec8a20d7560b3e0572",
+      "bytes": 175452
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\32c390e26f43cc76a110\\summary.json",
+      "sha256": "b77f7041726b9ec4f952f83b82146a12e1a717551e08886646752d918aa94105",
+      "bytes": 6693
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\367332a12f3c370f975c\\acquisition_tract.parquet",
+      "sha256": "55e5c7c00854e99e768e6a3ee622d06f4052e6f20c8491facba94df1310ef19c",
+      "bytes": 129340
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\367332a12f3c370f975c\\summary.json",
+      "sha256": "f08776d91ceea41fcc1d6e4a0e05bfb80de8b07711111d51714cbfc0e8130a2d",
+      "bytes": 6726
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\3a2748ec5299b1c591a9\\acquisition_tract.parquet",
+      "sha256": "4e68b5078ae6d6b75732771d347d57b2c8cd825fa6e81f11c6a2018ee4b559d6",
+      "bytes": 122294
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\3a2748ec5299b1c591a9\\summary.json",
+      "sha256": "b8fb11b2e5c057e8c664515c5564c7a9d1f402bc5fa7edd434e6b94a2afc7186",
+      "bytes": 6710
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\3d239ff301c3baf3ef23\\acquisition_tract.parquet",
+      "sha256": "8e6442a23d7f5c4892d1c360d1e2274dc92579b121b3d24f923b8dc1efdfbfe6",
+      "bytes": 181110
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\3d239ff301c3baf3ef23\\summary.json",
+      "sha256": "a42a534f275def765ba602aa02d699b5512c2772f6add82668522204af43891d",
+      "bytes": 6716
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\4199ad2b0617e462a6e4\\acquisition_tract.parquet",
+      "sha256": "92067d89c14a363d67da754493ee2fbb167d0c96f1054195d3e40290ca5a6b87",
+      "bytes": 174589
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\4199ad2b0617e462a6e4\\summary.json",
+      "sha256": "132578042a6fdf7aa94e78c1bd00a9ea412f66441ca05fc085dc6e65f9b4dd60",
+      "bytes": 6738
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\4476de4348d11359e97e\\acquisition_tract.parquet",
+      "sha256": "a68709b7f8937d69049019a5fb88a053b208716e95fef0df9159ed0f980b1908",
+      "bytes": 201635
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\4476de4348d11359e97e\\summary.json",
+      "sha256": "c1c50b07a8a0600d6de884954aa5a90f01dbca550f93f92535d4f77e94a7a43e",
+      "bytes": 6723
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\4e1ea25b17da2b02dac8\\acquisition_tract.parquet",
+      "sha256": "424daab976a5347ffafcee2a6e15dbb6d0c55b5546b4931f20d165a80c148fee",
+      "bytes": 177852
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\4e1ea25b17da2b02dac8\\summary.json",
+      "sha256": "8c3ca81ee073dacd7015d583cf17b07a428ce674732d2b454ed447e4e3082428",
+      "bytes": 6710
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\4e90b02c4d40b06f80d6\\acquisition_tract.parquet",
+      "sha256": "b502705b01739a8c33c9cd7ecfd0696aff10e0cc648074c8a08ae4a25f32e3ae",
+      "bytes": 172021
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\4e90b02c4d40b06f80d6\\summary.json",
+      "sha256": "ae8c90c5e7432ed752f1f785f29f749bc9b52d08a74ed0c88ff1b5ed979d2de7",
+      "bytes": 6716
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\4f9fb716acb6b5d38ce4\\acquisition_tract.parquet",
+      "sha256": "1232d1db7d04e705b4a5a19424ebaffc62848f6ba63aed20a5d335f2cf8239ef",
+      "bytes": 110089
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\4f9fb716acb6b5d38ce4\\summary.json",
+      "sha256": "525c347ca00d9da799302de844cb9f7d0127ca6774720d4bdf8db45c1d89ef5c",
+      "bytes": 6611
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\5024297b8ac0672cc1bb\\acquisition_tract.parquet",
+      "sha256": "b6525f600dd90d79ff519562855e4b0b9d8ffd783c5a347bb0e6db95e2a69ee4",
+      "bytes": 218034
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\5024297b8ac0672cc1bb\\summary.json",
+      "sha256": "f8539ab94843440c6e00552da9b88fd60fd9cdf329029c5b5b62966147556aa4",
+      "bytes": 6728
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\52fe64ddd676d5e86658\\acquisition_tract.parquet",
+      "sha256": "01312b0c6f7a129384f3691cdcea6ca806b27a8dea7cb7a1379daee4a52d1d35",
+      "bytes": 183284
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\52fe64ddd676d5e86658\\summary.json",
+      "sha256": "26ac906c98ce8c4746b0644a3c6839744b651ddea3c77558924cdf18df912328",
+      "bytes": 6689
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\555779dc0efebd4317e9\\acquisition_tract.parquet",
+      "sha256": "da1c7e1177cd64a50dc5a4578f5611623cc5ccd4ab65f854a9049f3374cca541",
+      "bytes": 178869
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\555779dc0efebd4317e9\\summary.json",
+      "sha256": "ee43f1362686680b5501d779e0b860e4e0bf6432c36e3f8f7954455301137b0a",
+      "bytes": 6710
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\567d386cf2249cd23333\\acquisition_tract.parquet",
+      "sha256": "c5d040d9016b5ce876ad71e475a3998200895cc13ea2b1ad08538887beaca25f",
+      "bytes": 201959
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\567d386cf2249cd23333\\summary.json",
+      "sha256": "54ec0c9bf55a91201f7553e13319669959111d2c41711f32c3ae2bd6c594f162",
+      "bytes": 6735
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\5b5df217d0817c7434f5\\acquisition_tract.parquet",
+      "sha256": "cbab6db3845618f0301e89c5d71d72e6906719d90679d37f3ad48b1ddb7443c9",
+      "bytes": 141161
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\5b5df217d0817c7434f5\\summary.json",
+      "sha256": "022168d0b351cfd5512f156364b03008844ae2170011a7be7b8aac94bec4849c",
+      "bytes": 6732
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\6e045dd2a5aab95c8862\\acquisition_tract.parquet",
+      "sha256": "52646f638c5aaab7f95d7bd304e62ce91700b8074fa135e7f1965f51f63c87f1",
+      "bytes": 110089
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\6e045dd2a5aab95c8862\\summary.json",
+      "sha256": "c3d85108dae1a5afb821bd1444c34dd698a80efe5ccbc5d8123476d0823b90fb",
+      "bytes": 6609
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\6f6104c5894e32de1f21\\acquisition_tract.parquet",
+      "sha256": "dd0c9262d2e98edd806c71cd77f92ce5c6ff8d247d1539e50be8a8256282365e",
+      "bytes": 214366
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\6f6104c5894e32de1f21\\summary.json",
+      "sha256": "ed4d69cfafe7fabcfcea009f39ec9ccf62f5e846fb636bd173a8f1c61e9559b7",
+      "bytes": 6727
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\7978f4584d3a31cb226a\\acquisition_tract.parquet",
+      "sha256": "c56294ca054e71690c3e6350b4f4894d9a98275c26278da653929351a839b538",
+      "bytes": 169088
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\7978f4584d3a31cb226a\\summary.json",
+      "sha256": "e8260e5405992fe03f91c36b748891dd4a4ff755dbd0420c2be6738d14063f35",
+      "bytes": 6717
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\7f55c2c76bff8b5f3fc4\\acquisition_tract.parquet",
+      "sha256": "21ffa7fe4be947e7a64f2bdda2140803d3c4e874ff22196a8ec8541a8ac42725",
+      "bytes": 199396
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\7f55c2c76bff8b5f3fc4\\summary.json",
+      "sha256": "e069485c5826ddd6f7fa0719ed0eff9b4bf46f7d1270aae4e394d5b29683f9a1",
+      "bytes": 6716
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\84ea6a85d5a0a3b8e3f8\\acquisition_tract.parquet",
+      "sha256": "e7b3923e5f5898e1034665c93cc082f9be317b90d6f798e2978470d77af94df3",
+      "bytes": 200221
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\84ea6a85d5a0a3b8e3f8\\summary.json",
+      "sha256": "c5c86ec42d6943941a1bedd59018899b4915c310e5313b551aaefaeb067d9b59",
+      "bytes": 6717
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\85874bf49553cadf9e02\\acquisition_tract.parquet",
+      "sha256": "fd41a7e5b004f00b35a66b19059ffaf923a4be742021bc55899f09cea5f29ba7",
+      "bytes": 188321
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\85874bf49553cadf9e02\\summary.json",
+      "sha256": "896949974b816c1df0180f37ea925d040f8f142c73097726b31ea5220e260f20",
+      "bytes": 6716
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\8d6469d69841234a0c37\\acquisition_tract.parquet",
+      "sha256": "b7a65773256936cb4eb3c670853e56c8f1de34c5193a9169acb9934b94ad99bd",
+      "bytes": 145127
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\8d6469d69841234a0c37\\summary.json",
+      "sha256": "c6a160d2b380cf79479be89a32a2aef7dd2e8a5fc8912840f9847b6a61561626",
+      "bytes": 6720
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\98ae047e8ea3199d4bdd\\acquisition_tract.parquet",
+      "sha256": "ec930fb9ee3aad75d21424dd83770d02f3c83e9a5758fbd7b53cd93f6f8dbba7",
+      "bytes": 168209
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\98ae047e8ea3199d4bdd\\summary.json",
+      "sha256": "68676436056a712591f6bb9e55a95f00125a45235570c1e874f20e33a4f3ed5e",
+      "bytes": 6713
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\9b18460181dfd5f3f47b\\acquisition_tract.parquet",
+      "sha256": "f84b70e4948635343ef6a5b3e9a74caa7cc906a4a864f7336681205564b1e992",
+      "bytes": 189987
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\9b18460181dfd5f3f47b\\summary.json",
+      "sha256": "5fa7e3ff3e8d3c141ba7ad8a1dbcfe8e123aae2d7d44e9c9d7eb6c58e6fad500",
+      "bytes": 6714
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\9b8d24e33fd5ed3560e7\\acquisition_tract.parquet",
+      "sha256": "d2ff68eeb899d1e510bc32a315be43d04944784eb878506c95316bc85679fdb5",
+      "bytes": 214564
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\9b8d24e33fd5ed3560e7\\summary.json",
+      "sha256": "29145c7286df845f86514bf2884e1deee4ea8629fe47b5d83ef25d4170eb07d9",
+      "bytes": 6733
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\a6b33d14146a19ee4c7f\\acquisition_tract.parquet",
+      "sha256": "dabbe90574bbb1df304f252754c0d9d36951080b09477832a58bf35249560245",
+      "bytes": 208080
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\a6b33d14146a19ee4c7f\\summary.json",
+      "sha256": "e5b928e180ee7914fd830ea2b549e9c6f89f48ac8d5e3df2678810e231b5b2d8",
+      "bytes": 6726
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\ad80bb8241d4c0fbbe1a\\acquisition_tract.parquet",
+      "sha256": "16195758efc816799ea989a28f74174eb3ac36216ee35868a9ae5c9c90a33dab",
+      "bytes": 170329
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\ad80bb8241d4c0fbbe1a\\summary.json",
+      "sha256": "ccacf4772be35624cf4ad905332c53b8403bd14aeb695e6d74f5366163ee3138",
+      "bytes": 6735
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\affd1245c3141de5ca44\\acquisition_tract.parquet",
+      "sha256": "a4647a2768d09368b63e9253b414fe5d8e78fc85c172de1231aa3b04c4ffd3c3",
+      "bytes": 168348
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\affd1245c3141de5ca44\\summary.json",
+      "sha256": "5cc6ca1e3c4f1b74411b70209fd743ca10fe55e79a8b67fea89ff578acfa85c6",
+      "bytes": 6709
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\bca061f2afea86d3f97d\\acquisition_tract.parquet",
+      "sha256": "0e92ba68ccc3be4afc08a363badd22ebb3e0c5afa6d6d3be1b3714520e7b8124",
+      "bytes": 162243
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\bca061f2afea86d3f97d\\summary.json",
+      "sha256": "ceceba8ea2304281ade6492e836fc62227b3fd8012e75fbcc25529a4e35e5fc8",
+      "bytes": 6728
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\c77df1263dce04e9eb77\\acquisition_tract.parquet",
+      "sha256": "6342ce3a2cb2b021348c6d9f6873cd3cdc482513eceb53d13bd607ec8f8c3be2",
+      "bytes": 179149
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\c77df1263dce04e9eb77\\summary.json",
+      "sha256": "f8a5e53fce1aad59abec4e25249f11b4d69fc162f41108789604cf75d5085eb4",
+      "bytes": 6698
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\d1f98a5164a8ced9ef15\\acquisition_tract.parquet",
+      "sha256": "34cb0d11fcc677b904a6f683c9684ea6677073ba5b562d16b71cedd396b2cd79",
+      "bytes": 110084
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\d1f98a5164a8ced9ef15\\summary.json",
+      "sha256": "cb8159a5fc6e5916a2071f54a45275502b765908287cae061d122ee55d0c4700",
+      "bytes": 6660
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\deb973ec243b9bc2de0b\\acquisition_tract.parquet",
+      "sha256": "b7432792ee0d646aff042732514785a3410a94d70682442de31a92c0128050b4",
+      "bytes": 130111
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\deb973ec243b9bc2de0b\\summary.json",
+      "sha256": "2f73753929a3f7ecc66f57a28a4c18e90e6c5eaaebac4e352543162911eb730c",
+      "bytes": 6694
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\f0d391a17f412a35f9d8\\acquisition_tract.parquet",
+      "sha256": "13962da32f78f5bbadc40c03f2b2506d5469061119bb11d982cff366e6f51e59",
+      "bytes": 170975
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\f0d391a17f412a35f9d8\\summary.json",
+      "sha256": "a3a2bf5545b01f9216d1f0b80bf40f33ebb75820d89384000ea22f439b5c9e4b",
+      "bytes": 6710
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\fc564420e04f24684682\\acquisition_tract.parquet",
+      "sha256": "04e4dbd7d730107eb5e9b9fe2e34e4b0bb637b7c125bbb03c746713c9a4ab20c",
+      "bytes": 198310
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\by_acquisition\\fc564420e04f24684682\\summary.json",
+      "sha256": "859316beb3e891f40d892e6ec0f6a9c2cb11f01132afe44f9953f14b78f6027e",
+      "bytes": 6691
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\pipeline_fingerprint.json",
+      "sha256": "c3ec73847c72166c29c188678e43a79a9f3fb0043cd2a06e2bd5858e5608e746",
+      "bytes": 1996
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\sentinel_feature_audit.parquet",
+      "sha256": "01414f6019b5d5da51f148e1e3991182f70efdaff6fe13df07b3054dc8f73f40",
+      "bytes": 112200
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\sentinel_features.parquet",
+      "sha256": "13a048bd344087c1ebc165834f5b98bcf0074b62151d1a18493375ba336d8a36",
+      "bytes": 754877
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\sentinel_lineage.parquet",
+      "sha256": "7fe10c0dd06dbcc5c5ea975ab1fbbf974fb94b52e77391e3a04466ba721bf1c4",
+      "bytes": 4319856
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\sentinel\\status.json",
+      "sha256": "2527f6a54a6d62b8713ac9874f8765e5a7bd22f84cdf2f90d8a7e09007605db2",
+      "bytes": 7638
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\sentinel_features\\acquisition_tract.parquet",
+      "sha256": "f1eebb7346a36b034924b1870fd73df6631dfabd9cb868b6e277243bca95e54b",
+      "bytes": 14313875
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\sentinel_features\\sentinel_features.parquet",
+      "sha256": "1114f61188f55258e4dae95c23cbd02d79bd0b60969e1e2d595b13ad2c9c8154",
+      "bytes": 3411098
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\superseded\\sentinel_features_double_offset_20260723\\acquisition_tract.parquet",
+      "sha256": "10dd7a0b5df785d68a92aee06c5eaedfc704ab74db313525adeb762e5cf13683",
+      "bytes": 2117684
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\superseded\\sentinel_features_double_offset_20260723\\sentinel_features.parquet",
+      "sha256": "261f68cecd4e614e37ef1cdc270931766a236f513709fee83e0d15471f67f551",
+      "bytes": 739751
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\targets\\fixed_grid_lock.json",
+      "sha256": "b93f139d8425b960de5c7943be24c72f3d7e2b75340dc001bdacb4a33bcd86ae",
+      "bytes": 5606
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\targets\\primary_tract_manifest.parquet",
+      "sha256": "fbdcd5b6e3a6d5f55d972a1f19178b453d753e3f9b3878c8074c1972eb0f68bd",
+      "bytes": 1434226
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\model_dataset\\model_dataset_provenance.json",
+      "sha256": "1eafe424a4c718d6a3b18cff938036f958858c70b344740788993b119bfbb04b",
+      "bytes": 8987
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\phase2_features\\phase2_features_provenance.json",
+      "sha256": "9a0ae25d75e8f1ebaf9310b23c7b7099082590f3fd2448a52ee737d0ee98821e",
+      "bytes": 10528
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\static_features\\static_feature_audit.parquet",
+      "sha256": "fefcaa56b426734ee904aa7f5d0c1d896006fb8cf4562eb9211708f4c94f0875",
+      "bytes": 123033
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\static_features\\static_feature_registry.csv",
+      "sha256": "b79cd7575962ca038b7d30d8fc2dbc30f8ca811c434d9d6eb532ee1b1160fb76",
+      "bytes": 2140
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\static_features\\static_features.parquet",
+      "sha256": "f293f1252b757f0b928fc421569364bd8febcb78c26d579a07d05576ab19be58",
+      "bytes": 150690
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\static_features\\static_features_provenance.json",
+      "sha256": "742c757cfef57b188629a03398df5a5dbb5a0659190f0e6a1deda91767741214",
+      "bytes": 8364
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_dayl_2025_la_subset.nc",
+      "sha256": "75ac4c64e0fb7a617af0f62d73a78bd71a51e3337b9e2b54ac546dd1cdc2b4fe",
+      "bytes": 378823
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_prcp_2025_la_subset.nc",
+      "sha256": "0a19a594db5f0f170a77ec02f112f265c9076b55f93f916685c1c00a3c282a5a",
+      "bytes": 555617
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_srad_2025_la_subset.nc",
+      "sha256": "804cfba32610f9b08f973585f108c9731cc6391b7fdfa6f7e40d4ee0f9ee66a9",
+      "bytes": 3859849
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_tmax_2025_la_subset.nc",
+      "sha256": "aef744007af64807523d90bc7029f0c22dad9ae9bc977562608a431decc4b6ca",
+      "bytes": 2795471
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_tmin_2025_la_subset.nc",
+      "sha256": "57dec8ffb3e624a5c12e00b70987149ffc5ccccc38831a5c1a1c0e1a730194aa",
+      "bytes": 2397625
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_vp_2025_la_subset.nc",
+      "sha256": "d5cb48ec22bc4a96b7f5ec731ee30f3dbed9cefc2a4ee510e01737ae178a1a5c",
+      "bytes": 4144478
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLT_20250315T183823_L2A-d663c2e6632c.json",
+      "sha256": "9fb8a53a86d2f3a2bc0f07c3c8defa220ea1eb2fb9791ee10491324fcbaca145",
+      "bytes": 12255
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLT_20250404T184021_L2A-b3aa5d59f461.json",
+      "sha256": "5b289357327aec19cb2c58a23b9f68bc4568062372b7c87423f9ef61eec25630",
+      "bytes": 12253
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLT_20250424T184345_L2A-109969b91eee.json",
+      "sha256": "a54d683629b680d42cb03ffd9bab4800f5b610dc782f9f78e8625eb5926e1dcf",
+      "bytes": 12250
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLT_20250514T183824_L2A-27e01d61895b.json",
+      "sha256": "08b016d554aa9000c20fca5547c16dc4d8c6d87bcd3eacab55ece20c7705eb9a",
+      "bytes": 12253
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLT_20250603T183827_L2A-b0cdedd02bae.json",
+      "sha256": "ac13335075df17aa8f2f1109335b5bdf873f98acddd88512d40436f706bd9714",
+      "bytes": 12248
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLT_20250623T183825_L2A-ed41493645d9.json",
+      "sha256": "b9ce71316afe1d9c09e18d918da19b6dd1869cf4741147775d33fc96c5a86fa5",
+      "bytes": 12249
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLT_20250713T183829_L2A-a3e81ea2fba8.json",
+      "sha256": "ef9dd1e34243a060c7be387caafe189e1ac09c40351670abe7d5f24cc77da27d",
+      "bytes": 12249
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLT_20250802T184316_L2A-5598cbd29beb.json",
+      "sha256": "3e5a48a39bbe2ccd81db4a5accbefb7eb63024b96b0b70cb75ac33c8caa13379",
+      "bytes": 12250
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLT_20250822T183824_L2A-5324e9bb667e.json",
+      "sha256": "2dad33ef66e597195aa4e255c84761db99b30345c257331f68b0a0ca4cb5ba3a",
+      "bytes": 12248
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLT_20250911T183822_L2A-7a8e37827bc8.json",
+      "sha256": "264941575f329e9a0e9d68104aad5335a15bee685a73f2acfbc16dcf39f42525",
+      "bytes": 12258
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLT_20251001T184032_L2A-b44ff423a57d.json",
+      "sha256": "103b74b7abb9b25f7efea881ac48c8a3feeb53913e03ec7bccc3db4a95c7fd27",
+      "bytes": 12274
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLT_20251021T183825_L2A-cd437b0b9b34.json",
+      "sha256": "e044a15c224ed1486e8d5be79c86b2e2e938a6c4f40317ebf548a88e04db8af6",
+      "bytes": 12275
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLU_20250315T183823_L2A-244d7db65b47.json",
+      "sha256": "f3b9c8f9ba480d1c10982c481b099e5f7f7cf7eef5b5d0da0337bb7f415c6bad",
+      "bytes": 12254
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLU_20250404T184021_L2A-63a017b61a29.json",
+      "sha256": "470e10a9f2ff2f85252551bc7e2e335e110df71540f6ee02f2d4bf682b6c1fa4",
+      "bytes": 12250
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLU_20250424T184345_L2A-6cb3d49c2bd5.json",
+      "sha256": "ff13e4ff94a99f6daa384fb6a03c13fe7738fd5d965feda9120a6ee0c6132b09",
+      "bytes": 12248
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLU_20250514T183824_L2A-db9a70336098.json",
+      "sha256": "d89480862a9b8d45dc96c9f848ea4ceb296b1e0806ef8bca7731bf9985f8139b",
+      "bytes": 12248
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLU_20250603T183827_L2A-a1faa75acac0.json",
+      "sha256": "025bc494158e6704ae5feddbe0b1589f3505b4c0d6be3b25c73aaf0f02fd66c0",
+      "bytes": 12248
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLU_20250623T183825_L2A-130af8ac85cb.json",
+      "sha256": "17cff554accb47b89298744526a4f4015dd69d409a1d78e8769c1c52fc3761b9",
+      "bytes": 12248
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLU_20250713T183829_L2A-cbdcff7b7035.json",
+      "sha256": "1e8e25309cc7b85f1192479b3ca54c74a24814055d2216dbe56356399242667e",
+      "bytes": 12247
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLU_20250802T184316_L2A-5b38fc69e317.json",
+      "sha256": "78796fe2ddc6f5b2e1173196079c4736debdd95ec3371745b10ee97f591ce8f6",
+      "bytes": 12240
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLU_20250822T183824_L2A-cbef63889ada.json",
+      "sha256": "58a37bea5c83f287f42bac644caadf9230c50c3cf2bedf2320f73b4ef4bca89e",
+      "bytes": 12247
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLU_20250911T183822_L2A-24608ec014d7.json",
+      "sha256": "20c01d6fc3fa5880352bb5bf5757f7be32e85c35f1738a9e6e67e4b74cbf92d2",
+      "bytes": 12248
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLU_20251001T184032_L2A-2260a4ae9657.json",
+      "sha256": "e382ed381ece7f36982c7e418fd34665b245619b6d6984fe1d954aad2c0869f4",
+      "bytes": 12264
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2A_T11SLU_20251021T183825_L2A-2e511b5d21b1.json",
+      "sha256": "79c73241a1a9cc1939b88c88e6588ea8a8f5739e0dcbd979c94e13c47738d389",
+      "bytes": 12272
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250308T184359_L2A-6bacb7ed435d.json",
+      "sha256": "07ffc6bb53bfc7f6c0272b83955e905d2fb618eb2a40a9b80e2739bdac62d688",
+      "bytes": 12255
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250318T183352_L2A-570e411d61dc.json",
+      "sha256": "3e07ff784e02b33abb9067f1c3afc38113e6653918d582262c8c1a3af06c5d2e",
+      "bytes": 12255
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250328T184405_L2A-f8e5fc61d51a.json",
+      "sha256": "1b609c48ed4a98cd49247e5cff220935e19d3d56ff13ab425cdd6b66c2e177f7",
+      "bytes": 12252
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250407T184304_L2A-22d6143686a1.json",
+      "sha256": "710c70736d289d139fafb4e72a14e9f463a61a6a9d84c4b6bfcd0887f5179227",
+      "bytes": 12251
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250417T183914_L2A-6fabe52571b9.json",
+      "sha256": "a80de990f828f50d21a40588f701459991720389b1685ec78e6b5de2badc6376",
+      "bytes": 12251
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250427T183446_L2A-95f671a97725.json",
+      "sha256": "91fd205494a638a13566a42f148b72a579451709a23f26fb380e597b7c506ab2",
+      "bytes": 12258
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250507T183501_L2A-b75a5817ad8e.json",
+      "sha256": "890f66c1fe5083b1abc3741627380f402bf6037d271623bf99538f55f0d4e056",
+      "bytes": 12249
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250517T184314_L2A-6b589392081e.json",
+      "sha256": "507d0b44f636177c9a20a98f37fff3bf17def164c85f33ab664092f094ac8def",
+      "bytes": 12231
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250527T183949_L2A-45687a109289.json",
+      "sha256": "7b45a0de49230a18875d8417833c579165bdc2329248723da45dbec6c2f921af",
+      "bytes": 12250
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250606T183401_L2A-a5deaec9c52e.json",
+      "sha256": "eaa18931938e88d46c71c20217940c9385cd8651e7fd25131cab48c948a73d5e",
+      "bytes": 12240
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250616T184204_L2A-1e20e0efa787.json",
+      "sha256": "beb8fb08c611802607ac1c2f594805811e8c3820de0360764bb93d8be78e1f8b",
+      "bytes": 12251
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250626T183534_L2A-745b679256d1.json",
+      "sha256": "87f982ee753376a34fad906e38ef30694580faf5611ce683ddf5f2610d6cccd6",
+      "bytes": 12250
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250706T184035_L2A-8d7f96b7a22f.json",
+      "sha256": "02b8c7bb686763e4dfa826141bbc064fdbe66382d2c2deb458dbc609dfa6c660",
+      "bytes": 12247
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250716T183655_L2A-b9f771cdf548.json",
+      "sha256": "5c49e29979ef6a60316ea2e4173553d2928761c7b899b652ce978d6ee3e31d8a",
+      "bytes": 12254
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250726T183327_L2A-6d7ddccb0530.json",
+      "sha256": "4b1f748986fdefcc89e302038ee0ab3a201c06920b7e5ab2bf520e916b4878f2",
+      "bytes": 12250
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250805T183920_L2A-ed575f5a6db7.json",
+      "sha256": "1502a57cc9d6431a203828e2862fd79f026ad81672d6690cc51397795e5fc323",
+      "bytes": 12247
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250815T183339_L2A-885dc15ccb26.json",
+      "sha256": "26555bac1c782b1c606190457493bf6d75f4fee8d00bd4ae259717bbe1dcd293",
+      "bytes": 12247
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250825T184243_L2A-cc0199521f15.json",
+      "sha256": "b02f9634602587adc8880ed328826fed3eb94e3ec0fa4929d9f06193fe354bcb",
+      "bytes": 12250
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250904T184230_L2A-aa05cd7f03e0.json",
+      "sha256": "e5a000a05feb614fa02c6458ffeffb86283c5dc7fd0787a6ccd9a8dbccad5d15",
+      "bytes": 12259
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250914T184428_L2A-7dc2579a0c62.json",
+      "sha256": "40e196bb68cdf3cf4b0776715673c75eff0fa8b3ef7c6ac6fb055e7232dc8abf",
+      "bytes": 12258
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20250924T183552_L2A-4c021d29cda2.json",
+      "sha256": "aa4e3312c5598b619a183f2f6620f8e35eae608a937856431316cda09af0ca59",
+      "bytes": 12257
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20251004T184235_L2A-b6a0adf3873a.json",
+      "sha256": "0a69055b4c64ed7474e7d5a534b827780f34605cc028285236713c29936ddf72",
+      "bytes": 12275
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20251014T183834_L2A-411a8dd5f6b9.json",
+      "sha256": "15c401b3072da48c89b2d261cb57ce62d53d6272907f4a5d8210d178acffe448",
+      "bytes": 12266
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLT_20251024T184113_L2A-2c346aa51256.json",
+      "sha256": "8649e89bd59ea7916c79b095cbe4cab747b0d40144b6888b9cdf9dbc9ef4273d",
+      "bytes": 12273
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250308T184359_L2A-bcb2af4451d4.json",
+      "sha256": "2098182f98f05d6413dab3c87b8b4bd2807141011742cb07a0646b7a06271c40",
+      "bytes": 12252
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250318T183352_L2A-5037198bdc4f.json",
+      "sha256": "923a5bc8c0c1f49b804265432983998c11715cd19bf0d761188fd226239c7cd5",
+      "bytes": 12254
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250328T184405_L2A-622c4584a36d.json",
+      "sha256": "72da1a99fc326924d2edbaf9e9b71d4ae9a337ef34ad92909f04bd218653a88b",
+      "bytes": 12253
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250407T184304_L2A-19978f32086a.json",
+      "sha256": "8749ee907c17942428dda093846aba316daf9ed1027388ca550b0f0850942cf6",
+      "bytes": 12245
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250417T183914_L2A-12af1418c69d.json",
+      "sha256": "54f766b35af1660a5bc9c1c9dab4fc8ada00e949a0c52b8fe3eacca382547080",
+      "bytes": 12246
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250427T183446_L2A-d689bb3a5a43.json",
+      "sha256": "13266b990a1b02cf19e43cfae7153dbf0b9ced0d49f73e1494af05b5479f4286",
+      "bytes": 12253
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250507T183501_L2A-0b22aafbae39.json",
+      "sha256": "8328abe4c77bf29b59442b3e60cb9e89080fbb77e4dd6a6e01e2094e1bb97314",
+      "bytes": 12246
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250517T184314_L2A-4ca5c8d43a02.json",
+      "sha256": "573b789ef6f5e35c4fb64691d259ba4b1f7854b919d2bf94c1b3b8b9ba1c2cd1",
+      "bytes": 12249
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250527T183949_L2A-e703fa170680.json",
+      "sha256": "8680cbef2ab746105d0f8de6afc6834921fcbdefa748edba8f21f7882314152c",
+      "bytes": 12246
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250606T183401_L2A-b4029ffa6b01.json",
+      "sha256": "1db8dc13c9adea49c5a4464c33fe857b6099f0c53284b40b7d7f8e91ed5140a5",
+      "bytes": 12246
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250616T184204_L2A-a24cf44b64c8.json",
+      "sha256": "261f1e9f7de8cbae648b937484124d93dd5fa4d4a1183b783e25eeacd0e6b861",
+      "bytes": 12239
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250626T183534_L2A-6b342b2ed8c0.json",
+      "sha256": "cbb7472a1eeb5b84da0e1478371b235b8f3415fdc55acd05976e0f44aac6899b",
+      "bytes": 12242
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250706T184035_L2A-b9666d37be3d.json",
+      "sha256": "02fae23312492e0cb94cc72ee66008dd6887edef341e8423b4b0b96cffbbb4c7",
+      "bytes": 12246
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250716T183655_L2A-84d1ff4937b1.json",
+      "sha256": "23fe0ed597bf32fc66840a6e567543037b69c33b4b6f448ce1c3fc37922ac047",
+      "bytes": 12244
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250726T183327_L2A-ce2021b214e6.json",
+      "sha256": "de90837cebbe3fbacffc44fd1f9d20d9ea74531b342e5ea80e405fe9b946d9a0",
+      "bytes": 12247
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250805T183920_L2A-7c0ea7a9ac8a.json",
+      "sha256": "1251bde42a6bbd6ca9454e7bad7843440db95143d48a494b2b9f43fdbc6b790d",
+      "bytes": 12248
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250815T183339_L2A-c70641ce9585.json",
+      "sha256": "2f517f3936f8984fa5b567e9dab1e6b9b4eed61f875a3a9bada5a476fa1e8fd8",
+      "bytes": 12241
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250825T184243_L2A-e5496ef1d342.json",
+      "sha256": "c1bbd7fd524052b24723dbbd5fce0bc7887783f72154bc91f52a5787fa991903",
+      "bytes": 12247
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250904T184230_L2A-042695079dc0.json",
+      "sha256": "fe8044fefaf6fd910ff554b75755718ee1953cb29d3475a895d6f3eb6a315dd9",
+      "bytes": 12247
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250914T184428_L2A-b8f314903902.json",
+      "sha256": "b8c1a17a0f7b3e3bd6a55e1bd7dc43a913d8046f5392e551e6cbb94345f829c7",
+      "bytes": 12240
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20250924T183552_L2A-7ca7ebc62973.json",
+      "sha256": "fb355ae47a1ea7be55437dec3c9b5b632e452b21f874670969ae11a9d6aa7783",
+      "bytes": 12247
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20251004T184235_L2A-15ae0c691102.json",
+      "sha256": "eb6795dbfde1551ff84b47a6a85c589c0f781087935bf833110e30d96f705234",
+      "bytes": 12264
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20251014T183834_L2A-34a2df233ba1.json",
+      "sha256": "bdb0f78eacfc1b2a518da46e040b5cc4a41ecb0a0f516d735a37110f3853879f",
+      "bytes": 12259
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\sentinel\\stac_items\\S2B_T11SLU_20251024T184113_L2A-885fdda051de.json",
+      "sha256": "0f7d2f3a2d3da41ab7d9bc56ef3369bfd2efe90f35e01e8f710559439481de00",
+      "bytes": 12256
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\static\\ESA_WorldCover_10m_2020_v100_N33W120_Map.tif",
+      "sha256": "6f0fd33693669856d0f732f88358f13bb4b62016cbc65d0d2427bcb232eb8716",
+      "bytes": 104207525
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_features\\DAYMET_FEATURES.json",
+      "sha256": "64731546e57dba13212e77a85969c4e9370d83340ce826e24bb17a0b5afc22f9",
+      "bytes": 21049
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\DAYMET_GRID.json",
+      "sha256": "166985f8e219eccffa863d8f9e3b41d1d55d433a4b1434386b56e138e6674d06",
+      "bytes": 5746
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\granule_inventory.csv",
+      "sha256": "a16f44a35aa3af02bb60d3d8ca5bfefb485f2789ca7ea77d1451864b84e93701",
+      "bytes": 2246
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\subset_downloads.csv",
+      "sha256": "e8b5aa7b012e2929455961bef780baab009b373ef42fdeb77e3d2e7d5dbf610b",
+      "bytes": 5037
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\weather_date_requirements.csv",
+      "sha256": "a37c7c68313c7ea1bed2fc9d30c262252c0a033315f1ea98d624f980d47bfdab",
+      "bytes": 4060
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\LANDSAT_INVENTORY.json",
+      "sha256": "348a728e35e32c95bac1d962526106584ba0cdf097037d0a5bdf95cbe8758988",
+      "bytes": 5670
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\overpass_inventory.csv",
+      "sha256": "f5246fb85a07e2d76b6fb2b82616455c1f59458dfc006f05eb8f4633dd7ced88",
+      "bytes": 7405
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\primary_overpass_manifest.csv",
+      "sha256": "f5246fb85a07e2d76b6fb2b82616455c1f59458dfc006f05eb8f4633dd7ced88",
+      "bytes": 7405
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\scene_inventory.csv",
+      "sha256": "647c28635489ceb130a7cea242edccff0b3a938a323c5e03bf1a8eff7123cecd",
+      "bytes": 46633
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\target_blind_key_universe.parquet",
+      "sha256": "40b8104f739ce5dd73481f46f3258c3e127806b606b62856a6f4a80ee9fa87ee",
+      "bytes": 20933
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\predictor_base\\PREDICTOR_BASE.json",
+      "sha256": "14f95acf2d43cb8124d9ca3ca2ebccb234546ddd0dfd3f0d3a38f5f948c670f5",
+      "bytes": 4694
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\sentinel_features\\SENTINEL_FEATURE_AUDIT.json",
+      "sha256": "8a19fe7b07be6caaba53798364765d3ba0c4cca89b64f2d83becfe6331a2169e",
+      "bytes": 54256
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\sentinel_inventory\\FINAL_TEST_SENTINEL_INVENTORY.json",
+      "sha256": "14ec6f28a5840c09000fb60a31fb3504b2dc660e4788bfb25311f81fd96feade",
+      "bytes": 29008
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\sentinel_inventory\\inventory_summary.json",
+      "sha256": "44f1a64878b30ffddf9fbf0caf2772f90ccddaffed24f7fe0c62392f9bc9aa18",
+      "bytes": 21784
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\sentinel_inventory\\selected_acquisitions.csv",
+      "sha256": "7f554ae3df6d1c4dfd17a0ccf3d66f6f5edd623ba51d2c17073e9ce61c5541ba",
+      "bytes": 9672
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\sentinel_inventory\\selected_items.csv",
+      "sha256": "43f1998f6e037df720fb53c4a3191730b71a6d944f80be1deb31fe6c9cac7a86",
+      "bytes": 130480
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\sentinel_inventory\\target_window_membership.csv",
+      "sha256": "51d7df19f507d9245b9e7c64328df52393d58f0aafdef83ca983999b9f4fcf77",
+      "bytes": 18874
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\model_lock\\MODEL_LOCK.json",
+      "sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
+      "bytes": 12162
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\phase2_readiness\\phase2_readiness.json",
+      "sha256": "86938c7e597be689659fa56b6246a7d81be55092af08c1c6bda8cac18f5d228e",
+      "bytes": 9528
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\target_inventory\\city_boundary.geojson",
+      "sha256": "e5f9ead4a8240505f94a3d40c951f3e90fb5f1df0c3d321b7eb98e26858ce70c",
+      "bytes": 380699
+    }
+  ],
+  "pipeline_sha256": "efd7706dc312e48bad1499899e5513af86afe9956c91e1629af433d1d424aae7",
+  "pipeline_fingerprint": {
+    "algorithm_version": "final-test-predictor-assembly-v1-target-blind",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "configs/research.toml": "77d8badff06aa17f3a22c3cf8669c4143f1bf5847868e77eb3372617cfa570db",
+      "configs/sentinel_features.toml": "8e0052bf7cca109a33e9a351a4dedbe87758b12113d5f4414208b9c1b1f4ed93",
+      "pyproject.toml": "ef18ff3d40f0997f9a3f40d12bf76069fd70c99afe50ead457db2230f5a2ba20",
+      "scripts/audit_final_test_sentinel_features.py": "d87f8d83c8ee9cdbb80c152aa7c9e2b3be3bde10e240575f126a5fff061362c3",
+      "scripts/build_final_test_daymet_features.py": "f6759db4e62b26f5abc20ae0eef079b98f12c37a1fc8b3e38352dddcbc32017b",
+      "scripts/build_final_test_predictor_base.py": "2d87ac3228ca6b0e97eaf1f9a8b0dc541fbd8b9f4dac71b8ae5e0f5a57e457fb",
+      "scripts/build_final_test_predictors.py": "fd7619a3fab612dfa531c67e613848ff473b681a15a034534779ab4937e96274",
+      "scripts/build_final_test_sentinel_features.py": "f83ca38e64131943afe7b668b2d02fd638d57af032e4ffdb488bed1201512ca2",
+      "src/la_heat/calendar_features.py": "53814e4ef5d0cd048086bdb3fe54eacfbb2a4414e8f08fb288cdceb30b35c942",
+      "src/la_heat/config.py": "921c50b25dd3c7cc52188c11327beaede349b8f18213b5601800df8150092c60",
+      "src/la_heat/daymet_feature_stage.py": "8fb62c272cdda7569b1e609f939ea3c92cbdcfeb8767af08ad4e2c0903460a14",
+      "src/la_heat/daymet_grid.py": "31e95189360d39d2a90cf88f2637a470ff6f04e5e952b122fc342f68c29ef7a1",
+      "src/la_heat/final_test_daymet_features.py": "15090fecc6ff6f2249a6eb805e9f2ce28965b303e3c1aea37de2e5a8099309c6",
+      "src/la_heat/final_test_daymet_grid.py": "48639e2d801fe5de94122af6c77912dfb4f278ed98a7c9804b0f79ae0013deb8",
+      "src/la_heat/final_test_inventory.py": "ff55914d59b74ab86ebd65e876faca469b9ee59718c8755ccaf3f188c708d3e7",
+      "src/la_heat/final_test_predictor_assembler.py": "348f8146e18d72d48126f822cb9dd421eec32477227de9e1a7a959e74f83d36a",
+      "src/la_heat/final_test_predictor_base.py": "c29e130ef72a1a5200a7bbdefeea1ae35e1794ca4f998f6bb4d82046bf2beb11",
+      "src/la_heat/final_test_sentinel_audit.py": "c816fefd8b8739029dfdd98df97a6b11dae0952c744d722fea9b3847b18e210f",
+      "src/la_heat/final_test_sentinel_features.py": "6e4c934dc6d5c15701bca4b49654d28b5e4f6f617a8479a01ad32ea69b51714c",
+      "src/la_heat/final_test_sentinel_inventory.py": "6fd332904dd93e2b65fc44b9e4f890809580c0d88beea1a34425093d27cda684",
+      "src/la_heat/final_test_state_lock.py": "4dbcca53bc57a22e7be64593ce63f7325acf10dabcbdbcae298c7774f6ecbe12",
+      "src/la_heat/grid.py": "a875c023ac4d981b005f26317a905815f581437b77e6da979d0fcb249f534848",
+      "src/la_heat/guardrails.py": "72d287fde274136973c35feefc2e2ed3fcad8cbaaf9268e7c447829172f9a8bc",
+      "src/la_heat/landmask.py": "73f2ddf5c92339a07691f91fec9a33e0108499f66d206cc6c7113f2475b8863e",
+      "src/la_heat/landsat.py": "8357f1851161831fc5b733ab843e26e176e292710786cde8c1a6ee2cfddb4683",
+      "src/la_heat/phase2_registry.py": "6ad9842d0a7ede6e9359353ecfdd9e2230d65b63f56173c355992f38218ea6da",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/sentinel_compile_adapter.py": "15302e0715362cbcd549e3cb7599887dde48874cda190e2572c6913429de611b",
+      "src/la_heat/sentinel_feature_builder.py": "67c2e3319137c1f6a8aa046cbcff8e575240e1187d48ba94893ede7649da7baa",
+      "src/la_heat/sentinel_feature_stage.py": "5a850eff074a80856bf722059e78407d167d647cbf72cb17d12e7f828b281267",
+      "src/la_heat/sentinel_features.py": "96610e4c3b805b49fd742f533b53f6957f8a9eee55f6253ef185ab82f5946160",
+      "src/la_heat/sentinel_inventory.py": "907fad7499dbaf4131f60dc7b65cade11d971081086aba779f18a63eb3229b5a",
+      "src/la_heat/weather_daymet.py": "49371719eddb9b9b9025f7ef2fca2b846c146f8bb572d4189a9ff703b1d0cca3"
+    }
+  },
+  "output_files": {
+    "final_predictors.parquet": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\final_test_2025\\predictors\\final_predictors.parquet",
+      "sha256": "f02b3428a1070b1d95152bb225652bc063330b3793322aeb364e8a0dd267fa0a",
+      "bytes": 4945661,
+      "rows": 25208,
+      "schema_sha256": "d3c34680721b3852c0d8fbf1679743befeb619b565d3d35b7822d0cf01aa0a16"
+    },
+    "predictor_missingness.csv": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\final_test_2025\\predictors\\predictor_missingness.csv",
+      "sha256": "63eb4710a01bb5f9b61ddb689fc98a4f49cfce87e683fddce808fe38bc0d7b34",
+      "bytes": 3052,
+      "rows": 46,
+      "schema_sha256": "c0da7c0818a4a41f6b87d996689eb023d972043d093197ebda24ca0555739b32",
+      "semantic_sha256": "bf9b46f716cbe0ef7ef595abbfab6a120f1392d5b5443714cd2ffe0642e81a0a"
+    }
+  },
+  "remaining_gate": "Keep all Landsat target/QA values closed until the separate one-time evaluation authorization and consumption protocol is complete.",
+  "commit_sha256": "b8ce453ecd2c4c067251d0f84bdf647b59cef9c10cbc57820286b6cb4c838d3f"
+}
