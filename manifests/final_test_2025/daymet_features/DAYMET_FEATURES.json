@@ -1,0 +1,395 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "final-test-daymet-features-v1-frozen-weights",
+  "state": "complete_target_blind",
+  "generated_at_utc": "2026-07-26T00:14:56.343833+00:00",
+  "final_test_year": 2025,
+  "final_test_unlocked": false,
+  "target_blind": true,
+  "target_or_qa_tables_read": [],
+  "target_or_qa_value_columns_read": [],
+  "target_values_read": false,
+  "models_loaded": false,
+  "model_scores_read": false,
+  "one_time_evaluation_consumed": false,
+  "publication_protocol": "staged_directory_atomic_replace_v1",
+  "request": {
+    "schema_version": 1,
+    "algorithm_version": "final-test-daymet-features-v1-frozen-weights",
+    "final_test_year": 2025,
+    "window_days": [
+      1,
+      3,
+      7
+    ],
+    "formal_model_lock_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\model_lock\\MODEL_LOCK.json",
+    "landsat_inventory_directory": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory",
+    "landsat_inventory_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\LANDSAT_INVENTORY.json",
+    "key_universe_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\target_blind_key_universe.parquet",
+    "daymet_manifest_directory": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid",
+    "daymet_grid_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\DAYMET_GRID.json",
+    "daymet_granule_inventory_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\granule_inventory.csv",
+    "daymet_weather_requirements_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\weather_date_requirements.csv",
+    "daymet_subset_manifest_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\subset_downloads.csv",
+    "output_directory": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\daymet_features",
+    "feature_output_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\daymet_features\\daymet_features.parquet",
+    "audit_output_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\daymet_features\\daymet_feature_audit.parquet",
+    "internal_provenance_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\daymet_features\\DAYMET_FEATURES.json",
+    "external_provenance_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_features\\DAYMET_FEATURES.json",
+    "inspector": "la_heat.final_test_daymet_grid.inspect_exact_final_test_daymet_netcdf",
+    "cell_reader": "la_heat.daymet_grid.read_daymet_netcdf_cells"
+  },
+  "request_sha256": "d7cf47b0c892f64ae6bf0aa55c6afa0cc9171863353ee439f67910a95756fc76",
+  "row_count": 25208,
+  "date_count": 23,
+  "tract_count": 1096,
+  "feature_count": 21,
+  "feature_names": [
+    "daymet_dayl_s_mean_prev_1d",
+    "daymet_prcp_mm_sum_prev_1d",
+    "daymet_srad_w_m2_mean_prev_1d",
+    "daymet_tmax_c_mean_prev_1d",
+    "daymet_tmin_c_mean_prev_1d",
+    "daymet_vp_pa_mean_prev_1d",
+    "daymet_srad_energy_mj_m2_sum_prev_1d",
+    "daymet_dayl_s_mean_prev_3d",
+    "daymet_prcp_mm_sum_prev_3d",
+    "daymet_srad_w_m2_mean_prev_3d",
+    "daymet_tmax_c_mean_prev_3d",
+    "daymet_tmin_c_mean_prev_3d",
+    "daymet_vp_pa_mean_prev_3d",
+    "daymet_srad_energy_mj_m2_sum_prev_3d",
+    "daymet_dayl_s_mean_prev_7d",
+    "daymet_prcp_mm_sum_prev_7d",
+    "daymet_srad_w_m2_mean_prev_7d",
+    "daymet_tmax_c_mean_prev_7d",
+    "daymet_tmin_c_mean_prev_7d",
+    "daymet_vp_pa_mean_prev_7d",
+    "daymet_srad_energy_mj_m2_sum_prev_7d"
+  ],
+  "window_days": [
+    1,
+    3,
+    7
+  ],
+  "source_window_definition": "complete civil days d-n through d-1",
+  "source_end_offset_days": -1,
+  "target_day_observations_included": false,
+  "annual_container_contains_unused_dates": true,
+  "source": "Daymet V4 R1 daily gridded weather",
+  "dataset_doi": "https://doi.org/10.3334/ORNLDAAC/2129",
+  "date_specific_weight_renormalization": false,
+  "static_eligible_land_denominator_invariant": true,
+  "srad_energy_computed_cell_first": true,
+  "complete_feature_rows": 25208,
+  "incomplete_feature_rows": 0,
+  "missing_count_by_feature": {
+    "daymet_dayl_s_mean_prev_1d": 0,
+    "daymet_prcp_mm_sum_prev_1d": 0,
+    "daymet_srad_w_m2_mean_prev_1d": 0,
+    "daymet_tmax_c_mean_prev_1d": 0,
+    "daymet_tmin_c_mean_prev_1d": 0,
+    "daymet_vp_pa_mean_prev_1d": 0,
+    "daymet_srad_energy_mj_m2_sum_prev_1d": 0,
+    "daymet_dayl_s_mean_prev_3d": 0,
+    "daymet_prcp_mm_sum_prev_3d": 0,
+    "daymet_srad_w_m2_mean_prev_3d": 0,
+    "daymet_tmax_c_mean_prev_3d": 0,
+    "daymet_tmin_c_mean_prev_3d": 0,
+    "daymet_vp_pa_mean_prev_3d": 0,
+    "daymet_srad_energy_mj_m2_sum_prev_3d": 0,
+    "daymet_dayl_s_mean_prev_7d": 0,
+    "daymet_prcp_mm_sum_prev_7d": 0,
+    "daymet_srad_w_m2_mean_prev_7d": 0,
+    "daymet_tmax_c_mean_prev_7d": 0,
+    "daymet_tmin_c_mean_prev_7d": 0,
+    "daymet_vp_pa_mean_prev_7d": 0,
+    "daymet_srad_energy_mj_m2_sum_prev_7d": 0
+  },
+  "semantic_key_sha256": "cd6ddcd4800e6d41b7f4b89d6be007be80e509dd6567dfaf416cfb6903e3b870",
+  "semantic_feature_table_sha256": "aa6349a71c1572468123e3927d87c664db3a2b23ecb1d643024a622b2d65b7f7",
+  "semantic_audit_table_sha256": "ef23f9c8f6f55884371e00271fc00da98e05c0a4295167d0cf5080d5a69fb3e3",
+  "formal_model_lock": {
+    "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\model_lock\\MODEL_LOCK.json",
+    "sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
+    "commit_sha256": "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b"
+  },
+  "landsat_inventory": {
+    "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\LANDSAT_INVENTORY.json",
+    "sha256": "348a728e35e32c95bac1d962526106584ba0cdf097037d0a5bdf95cbe8758988",
+    "commit_sha256": "46892f9c1fea774dc127e2bafb527907b33d4362c166a442e9557fae42b06f3e"
+  },
+  "key_universe": {
+    "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\target_blind_key_universe.parquet",
+    "sha256": "40b8104f739ce5dd73481f46f3258c3e127806b606b62856a6f4a80ee9fa87ee",
+    "bytes": 20933
+  },
+  "daymet_grid": {
+    "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\DAYMET_GRID.json",
+    "sha256": "166985f8e219eccffa863d8f9e3b41d1d55d433a4b1434386b56e138e6674d06",
+    "commit_sha256": "7fe7ab8415011905b92f12bf36f90a04a7f4703bd751c4370a8b7b78659a152b",
+    "subset_manifest_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\subset_downloads.csv",
+    "subset_manifest_sha256": "e8b5aa7b012e2929455961bef780baab009b373ef42fdeb77e3d2e7d5dbf610b",
+    "locked_manifest_files": [
+      {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\granule_inventory.csv",
+        "sha256": "a16f44a35aa3af02bb60d3d8ca5bfefb485f2789ca7ea77d1451864b84e93701",
+        "bytes": 2246
+      },
+      {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\weather_date_requirements.csv",
+        "sha256": "a37c7c68313c7ea1bed2fc9d30c262252c0a033315f1ea98d624f980d47bfdab",
+        "bytes": 4060
+      },
+      {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\subset_downloads.csv",
+        "sha256": "e8b5aa7b012e2929455961bef780baab009b373ef42fdeb77e3d2e7d5dbf610b",
+        "bytes": 5037
+      }
+    ],
+    "subset_files": [
+      {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_dayl_2025_la_subset.nc",
+        "variable": "dayl",
+        "year": 2025,
+        "bytes": 378823,
+        "sha256": "75ac4c64e0fb7a617af0f62d73a78bd71a51e3337b9e2b54ac546dd1cdc2b4fe"
+      },
+      {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_prcp_2025_la_subset.nc",
+        "variable": "prcp",
+        "year": 2025,
+        "bytes": 555617,
+        "sha256": "0a19a594db5f0f170a77ec02f112f265c9076b55f93f916685c1c00a3c282a5a"
+      },
+      {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_srad_2025_la_subset.nc",
+        "variable": "srad",
+        "year": 2025,
+        "bytes": 3859849,
+        "sha256": "804cfba32610f9b08f973585f108c9731cc6391b7fdfa6f7e40d4ee0f9ee66a9"
+      },
+      {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_tmax_2025_la_subset.nc",
+        "variable": "tmax",
+        "year": 2025,
+        "bytes": 2795471,
+        "sha256": "aef744007af64807523d90bc7029f0c22dad9ae9bc977562608a431decc4b6ca"
+      },
+      {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_tmin_2025_la_subset.nc",
+        "variable": "tmin",
+        "year": 2025,
+        "bytes": 2397625,
+        "sha256": "57dec8ffb3e624a5c12e00b70987149ffc5ccccc38831a5c1a1c0e1a730194aa"
+      },
+      {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_vp_2025_la_subset.nc",
+        "variable": "vp",
+        "year": 2025,
+        "bytes": 4144478,
+        "sha256": "d5cb48ec22bc4a96b7f5ec731ee30f3dbed9cefc2a4ee510e01737ae178a1a5c"
+      }
+    ],
+    "requirements": {
+      "source_start": "2025-04-29",
+      "source_end": "2025-10-28",
+      "source_years": [
+        2025
+      ],
+      "semantic_sha256": "3957f79e5ea8aed2b459457c807dc2cd995142f5e5672971ca63c83c51a8369d"
+    }
+  },
+  "development_fixed_weights": {
+    "formal_chain": {
+      "model_dataset_provenance": {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\model_dataset\\model_dataset_provenance.json",
+        "sha256": "1eafe424a4c718d6a3b18cff938036f958858c70b344740788993b119bfbb04b",
+        "commit_sha256": "9c2f903993167fc2a228b3cfe60a23fe33f57f252bae6299458338cb8eb967ad"
+      },
+      "phase2_provenance": {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\phase2_features\\phase2_features_provenance.json",
+        "sha256": "9a0ae25d75e8f1ebaf9310b23c7b7099082590f3fd2448a52ee737d0ee98821e",
+        "commit_sha256": "3f5e4017713f90a47a4a5b1eefdb4e91bb6141bfb1f0458d9a168dd785c2a364"
+      },
+      "phase2_readiness": {
+        "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\phase2_readiness\\phase2_readiness.json",
+        "sha256": "86938c7e597be689659fa56b6246a7d81be55092af08c1c6bda8cac18f5d228e",
+        "commit_sha256": "92534764be459110ff239670f320e3b947313f344ca00774c3097cff42fa3762"
+      }
+    },
+    "development_daymet_provenance": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\features\\daymet\\daymet_features_provenance.json",
+      "sha256": "e5366a09e01b3d77aa6a2f4b775649e90945a9553431ecdce87db60382b06929",
+      "commit_sha256": "a7da6a107695787f047547275669217c6bd508b12852e2d6c244078f687c0ea9"
+    },
+    "fixed_cell_weights": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\features\\daymet\\daymet_fixed_cell_weights.parquet",
+      "sha256": "641e5b17f0707c5b24b23365f135d5714cfee625425417c372be630296d29ff9",
+      "bytes": 116142,
+      "rows": 4544
+    },
+    "target_support_locks": {
+      "target_grid_identity_sha256": "04f9caaa35d60827549c62b71791c7e6a0eff5c3b7d6e895277f4bb924bd835e",
+      "grid_definition_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+      "zone_raster_sha256": "bc5159a5b690d0c2248ba0dd21e396ed1701a6d7b940bb16dab5107c31227949",
+      "static_land_mask_sha256": "55bd1ced363272602039c3b29ce41d5d88a5475c264c15c1a889f81202e339a0",
+      "tract_manifest_sha256": "5e117dbae993fbcfe0ef8472cc0bfb67d2710a3b2767621dc7e8fa170e7f5680",
+      "tract_manifest_file_sha256": "fbdcd5b6e3a6d5f55d972a1f19178b453d753e3f9b3878c8074c1972eb0f68bd",
+      "target_config_sha256": "936a841746580eb94b3350839f73382e68410ec5749e81ead44356ed85cd703c",
+      "worldcover_collection": "esa-worldcover",
+      "worldcover_item_id": "ESA_WorldCover_10m_2020_v100_N33W120",
+      "worldcover_asset": "map"
+    }
+  },
+  "immutable_input_files": [
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\model_lock\\MODEL_LOCK.json",
+      "sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
+      "bytes": 12162
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\LANDSAT_INVENTORY.json",
+      "sha256": "348a728e35e32c95bac1d962526106584ba0cdf097037d0a5bdf95cbe8758988",
+      "bytes": 5670
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\target_blind_key_universe.parquet",
+      "sha256": "40b8104f739ce5dd73481f46f3258c3e127806b606b62856a6f4a80ee9fa87ee",
+      "bytes": 20933
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\DAYMET_GRID.json",
+      "sha256": "166985f8e219eccffa863d8f9e3b41d1d55d433a4b1434386b56e138e6674d06",
+      "bytes": 5746
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\granule_inventory.csv",
+      "sha256": "a16f44a35aa3af02bb60d3d8ca5bfefb485f2789ca7ea77d1451864b84e93701",
+      "bytes": 2246
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\weather_date_requirements.csv",
+      "sha256": "a37c7c68313c7ea1bed2fc9d30c262252c0a033315f1ea98d624f980d47bfdab",
+      "bytes": 4060
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\daymet_grid\\subset_downloads.csv",
+      "sha256": "e8b5aa7b012e2929455961bef780baab009b373ef42fdeb77e3d2e7d5dbf610b",
+      "bytes": 5037
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\model_dataset\\model_dataset_provenance.json",
+      "sha256": "1eafe424a4c718d6a3b18cff938036f958858c70b344740788993b119bfbb04b",
+      "commit_sha256": "9c2f903993167fc2a228b3cfe60a23fe33f57f252bae6299458338cb8eb967ad"
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\processed\\phase2_features\\phase2_features_provenance.json",
+      "sha256": "9a0ae25d75e8f1ebaf9310b23c7b7099082590f3fd2448a52ee737d0ee98821e",
+      "commit_sha256": "3f5e4017713f90a47a4a5b1eefdb4e91bb6141bfb1f0458d9a168dd785c2a364"
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\phase2_readiness\\phase2_readiness.json",
+      "sha256": "86938c7e597be689659fa56b6246a7d81be55092af08c1c6bda8cac18f5d228e",
+      "commit_sha256": "92534764be459110ff239670f320e3b947313f344ca00774c3097cff42fa3762"
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\features\\daymet\\daymet_features_provenance.json",
+      "sha256": "e5366a09e01b3d77aa6a2f4b775649e90945a9553431ecdce87db60382b06929",
+      "commit_sha256": "a7da6a107695787f047547275669217c6bd508b12852e2d6c244078f687c0ea9"
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\features\\daymet\\daymet_fixed_cell_weights.parquet",
+      "sha256": "641e5b17f0707c5b24b23365f135d5714cfee625425417c372be630296d29ff9",
+      "bytes": 116142,
+      "rows": 4544
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_dayl_2025_la_subset.nc",
+      "variable": "dayl",
+      "year": 2025,
+      "bytes": 378823,
+      "sha256": "75ac4c64e0fb7a617af0f62d73a78bd71a51e3337b9e2b54ac546dd1cdc2b4fe"
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_prcp_2025_la_subset.nc",
+      "variable": "prcp",
+      "year": 2025,
+      "bytes": 555617,
+      "sha256": "0a19a594db5f0f170a77ec02f112f265c9076b55f93f916685c1c00a3c282a5a"
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_srad_2025_la_subset.nc",
+      "variable": "srad",
+      "year": 2025,
+      "bytes": 3859849,
+      "sha256": "804cfba32610f9b08f973585f108c9731cc6391b7fdfa6f7e40d4ee0f9ee66a9"
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_tmax_2025_la_subset.nc",
+      "variable": "tmax",
+      "year": 2025,
+      "bytes": 2795471,
+      "sha256": "aef744007af64807523d90bc7029f0c22dad9ae9bc977562608a431decc4b6ca"
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_tmin_2025_la_subset.nc",
+      "variable": "tmin",
+      "year": 2025,
+      "bytes": 2397625,
+      "sha256": "57dec8ffb3e624a5c12e00b70987149ffc5ccccc38831a5c1a1c0e1a730194aa"
+    },
+    {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\raw\\final_test_2025\\daymet\\subsets\\daymet_v4r1_daily_na_vp_2025_la_subset.nc",
+      "variable": "vp",
+      "year": 2025,
+      "bytes": 4144478,
+      "sha256": "d5cb48ec22bc4a96b7f5ec731ee30f3dbed9cefc2a4ee510e01737ae178a1a5c"
+    }
+  ],
+  "pipeline_sha256": "957787662640d234345e36f65342e5e4d46ba1db43b0d88b6b87a845f34e7ac8",
+  "pipeline_fingerprint": {
+    "algorithm_version": "final-test-daymet-features-v1-frozen-weights",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "scripts/build_final_test_daymet_features.py": "f6759db4e62b26f5abc20ae0eef079b98f12c37a1fc8b3e38352dddcbc32017b",
+      "src/la_heat/daymet_feature_stage.py": "8fb62c272cdda7569b1e609f939ea3c92cbdcfeb8767af08ad4e2c0903460a14",
+      "src/la_heat/daymet_grid.py": "31e95189360d39d2a90cf88f2637a470ff6f04e5e952b122fc342f68c29ef7a1",
+      "src/la_heat/final_test_daymet_features.py": "15090fecc6ff6f2249a6eb805e9f2ce28965b303e3c1aea37de2e5a8099309c6",
+      "src/la_heat/final_test_daymet_grid.py": "48639e2d801fe5de94122af6c77912dfb4f278ed98a7c9804b0f79ae0013deb8",
+      "src/la_heat/final_test_inventory.py": "ff55914d59b74ab86ebd65e876faca469b9ee59718c8755ccaf3f188c708d3e7",
+      "src/la_heat/phase2_registry.py": "6ad9842d0a7ede6e9359353ecfdd9e2230d65b63f56173c355992f38218ea6da",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/weather_daymet.py": "49371719eddb9b9b9025f7ef2fca2b846c146f8bb572d4189a9ff703b1d0cca3"
+    }
+  },
+  "output_files": {
+    "daymet_features.parquet": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\daymet_features\\daymet_features.parquet",
+      "sha256": "79275b1f1494249e34dad8400cfc3690d8651743fea77a8f30c7b19c70971d8f",
+      "bytes": 4019117,
+      "rows": 25208,
+      "schema_sha256": "42bf71ad9405c8e0e4227a2e0e7d3f7df3e2df2c9b17935ca040bbb7ed4be497"
+    },
+    "daymet_feature_audit.parquet": {
+      "path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\final_test_2025\\daymet_features\\daymet_feature_audit.parquet",
+      "sha256": "068208536e205ebaafdc3108520fd996247a3b3e016287d5cd7eabe79438bcb8",
+      "bytes": 46324,
+      "rows": 25208,
+      "schema_sha256": "e9996a3614f4f50c0d7cc18648b7ddd90206db600d07e449b7202491f4f5cbf9"
+    }
+  },
+  "remaining_gate": "Join the frozen static/calendar, Daymet, and lagged Sentinel predictor families before any final-test target values are opened.",
+  "commit_sha256": "5615c5a304e22636d7426cc12da5c3f361b631ecddc181cc0f9244697b348433"
+}

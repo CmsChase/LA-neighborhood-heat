@@ -2,8 +2,10 @@
 
 The builder authenticates the frozen model and inventory chain, reads only
 public Earth Search optical COGs, and decodes every reflectance band with the
-frozen STAC ``raster:bands`` rule ``DN * scale + offset``.  The requester-pays
-Sentinel product XML is retained as lineage only and is never opened.
+frozen STAC ``raster:bands`` rule ``DN * scale + offset``.  Only the C1
+collection's native uint16 DN encoding is permitted; the legacy Earth Search
+collection is rejected.  Public Sentinel product XML is retained as lineage
+only and is never opened.
 """
 
 from __future__ import annotations
@@ -45,7 +47,13 @@ from la_heat.final_test_inventory import (
 from la_heat.final_test_sentinel_inventory import (
     CALIBRATION_CONTRACT_ID,
     CALIBRATION_CONTRACT_PROPERTY,
+    CALIBRATION_ENCODING,
     CALIBRATION_FORMULA,
+    EARTH_SEARCH_C1_DATA_HOST,
+    PROHIBITED_LEGACY_COLLECTION,
+    PROVIDER_PARITY_CONTRACT_ID,
+    PROVIDER_PARITY_EVIDENCE_SHA256,
+    STAC_COLLECTION,
     _authenticate_base_inventory,
     _authenticate_landsat_inventory,
     _authenticate_provenance,
@@ -88,7 +96,7 @@ from la_heat.sentinel_features import (
 )
 
 SCHEMA_VERSION: Final = 1
-ALGORITHM_VERSION: Final = "final-test-sentinel-features-v1-earth-search-cog"
+ALGORITHM_VERSION: Final = "final-test-sentinel-features-v2-c1-native-dn"
 RUNNER_VERSION: Final = "final-test-sentinel-runner-v1"
 OUTPUT_SUFFIX: Final = Path("data/interim/final_test_2025/sentinel")
 INVENTORY_SUFFIX: Final = Path("manifests/final_test_2025/sentinel_inventory")
@@ -101,10 +109,10 @@ WORLD_COVER_URL: Final = (
 )
 WORLD_COVER_FILENAME: Final = "ESA_WorldCover_10m_2020_v100_N33W120_Map.tif"
 WORLD_COVER_EXPECTED_BYTES: Final = 104_207_525
-EARTH_SEARCH_COG_HOST: Final = "sentinel-cogs.s3.us-west-2.amazonaws.com"
+EARTH_SEARCH_COG_HOST: Final = EARTH_SEARCH_C1_DATA_HOST
 EXPECTED_TRACT_COUNT: Final = 1_096
-EXPECTED_ACQUISITION_COUNT: Final = 34
-EXPECTED_ITEM_COUNT: Final = 67
+EXPECTED_ACQUISITION_COUNT: Final = 36
+EXPECTED_ITEM_COUNT: Final = 72
 PIPELINE_FILES: Final = (
     "pyproject.toml",
     "scripts/build_final_test_sentinel_features.py",
@@ -378,12 +386,29 @@ def _canonical_public_cog_url(value: str) -> str:
     if (
         parsed.scheme.lower() != "https"
         or parsed.netloc.lower() != EARTH_SEARCH_COG_HOST
+        or not parsed.path.startswith(f"/{STAC_COLLECTION}/")
         or not parsed.path.lower().endswith(".tif")
         or parsed.query
         or parsed.fragment
     ):
         raise FinalTestSentinelFeatureError(
-            "Sentinel optical inputs must be public frozen Earth Search HTTPS COGs."
+            "Sentinel optical inputs must be public frozen Earth Search C1 HTTPS COGs."
+        )
+    return urlunsplit(("https", EARTH_SEARCH_COG_HOST, parsed.path, "", ""))
+
+
+def _canonical_public_product_metadata_url(value: str) -> str:
+    parsed = urlsplit(value)
+    if (
+        parsed.scheme.lower() != "https"
+        or parsed.netloc.lower() != EARTH_SEARCH_COG_HOST
+        or not parsed.path.startswith(f"/{STAC_COLLECTION}/")
+        or not parsed.path.endswith("/product_metadata.xml")
+        or parsed.query
+        or parsed.fragment
+    ):
+        raise FinalTestSentinelFeatureError(
+            "Sentinel product metadata must retain its public Earth Search C1 HTTPS URI."
         )
     return urlunsplit(("https", EARTH_SEARCH_COG_HOST, parsed.path, "", ""))
 
@@ -403,22 +428,42 @@ def _extract_cog_calibration(
     assets = payload.get("assets")
     if not isinstance(properties, dict) or not isinstance(assets, dict):
         raise FinalTestSentinelFeatureError("Frozen STAC snapshot schema changed.")
+    collection = str(payload.get("collection", "")).strip()
+    if collection == PROHIBITED_LEGACY_COLLECTION:
+        raise FinalTestSentinelFeatureError(
+            "Legacy Earth Search sentinel-2-l2a COGs are prohibited."
+        )
+    if collection != STAC_COLLECTION:
+        raise FinalTestSentinelFeatureError(
+            "Frozen STAC snapshot is not from sentinel-2-c1-l2a."
+        )
     contract = properties.get(CALIBRATION_CONTRACT_PROPERTY)
     if (
         not isinstance(contract, dict)
         or contract.get("id") != CALIBRATION_CONTRACT_ID
+        or contract.get("source_collection") != STAC_COLLECTION
+        or contract.get("raw_dn_encoding") != CALIBRATION_ENCODING
+        or contract.get("legacy_collection_prohibited")
+        != PROHIBITED_LEGACY_COLLECTION
         or contract.get("formula") != CALIBRATION_FORMULA
         or contract.get("offset_application_order") != "after_scale"
         or contract.get("product_metadata_use")
-        != "audit_lineage_only_requester_pays_s3"
+        != "audit_lineage_only_public_https"
+        or contract.get("provider_parity_evidence")
+        != {
+            "id": PROVIDER_PARITY_CONTRACT_ID,
+            "sha256": PROVIDER_PARITY_EVIDENCE_SHA256,
+        }
     ):
         raise FinalTestSentinelFeatureError("Frozen Earth Search calibration contract changed.")
     product_uri = str(contract.get("product_metadata_uri", ""))
     if (
-        not product_uri.startswith("s3://sentinel-s2-l2a/")
-        or product_uri != str(item_row.asset_product_metadata_href)
+        _canonical_public_product_metadata_url(product_uri)
+        != _canonical_public_product_metadata_url(
+            str(item_row.asset_product_metadata_href)
+        )
     ):
-        raise FinalTestSentinelFeatureError("Requester-pays XML lineage URI changed.")
+        raise FinalTestSentinelFeatureError("Public product XML lineage URI changed.")
     contract_bands = contract.get("bands")
     if not isinstance(contract_bands, dict) or set(contract_bands) != set(
         REFLECTANCE_BANDS
@@ -465,14 +510,27 @@ def _extract_cog_calibration(
         semantic_bands[band] = {"scale": float(scale), "offset": float(offset)}
 
     scl_asset = assets.get("SCL")
+    classification_contract = contract.get("classification_asset")
     if (
         not isinstance(scl_asset, dict)
+        or not isinstance(classification_contract, dict)
+        or classification_contract.get("source_asset") != "scl"
         or _canonical_public_cog_url(str(scl_asset.get("href", "")))
+        != _canonical_public_cog_url(str(item_row.asset_scl_href))
+        or _canonical_public_cog_url(
+            str(classification_contract.get("href", ""))
+        )
         != _canonical_public_cog_url(str(item_row.asset_scl_href))
     ):
         raise FinalTestSentinelFeatureError("Frozen SCL COG URL changed.")
     calibration_sha = canonical_sha256(
-        {"id": CALIBRATION_CONTRACT_ID, "bands": semantic_bands}
+        {
+            "id": CALIBRATION_CONTRACT_ID,
+            "source_collection": STAC_COLLECTION,
+            "raw_dn_encoding": CALIBRATION_ENCODING,
+            "provider_parity_evidence_sha256": PROVIDER_PARITY_EVIDENCE_SHA256,
+            "bands": semantic_bands,
+        }
     )
     return CogCalibration(
         item_id=str(item_row.item_id),
@@ -513,6 +571,15 @@ def _authenticate_snapshot_files(
             raise FinalTestSentinelFeatureError("Raw STAC snapshot byte/set lock failed.")
         by_item[item_id] = path
         filenames.add(filename)
+    actual_json_files = {
+        path.name
+        for path in raw_directory.iterdir()
+        if path.is_file() and path.suffix.lower() == ".json"
+    }
+    if actual_json_files != filenames:
+        raise FinalTestSentinelFeatureError(
+            "Raw STAC snapshot directory contains an undeclared JSON file."
+        )
     return by_item
 
 
@@ -1183,6 +1250,7 @@ def _process_acquisition(
                 "product_metadata_path": str(calibration.snapshot_path),
                 "product_metadata_sha256": calibration.snapshot_sha256,
                 "requester_pays_product_xml_opened": False,
+                "public_product_xml_opened": False,
                 "calibration_sha256": calibration.calibration_sha256,
             }
         )
@@ -1259,9 +1327,14 @@ def _process_acquisition(
         "item_ids": list(mosaic.item_ids),
         "mgrs_tiles": list(mosaic.mgrs_tiles),
         "owned_optical_grid_pixels": list(mosaic.owned_pixel_counts),
+        "source_collection": STAC_COLLECTION,
+        "raw_dn_encoding": CALIBRATION_ENCODING,
+        "prohibited_legacy_collection": PROHIBITED_LEGACY_COLLECTION,
+        "provider_parity_evidence_sha256": PROVIDER_PARITY_EVIDENCE_SHA256,
         "calibration_sha256s": list(mosaic.calibration_sha256s),
         "product_metadata": snapshot_records,
         "requester_pays_product_xml_opened": False,
+        "public_product_xml_opened": False,
         "cog_decode_formula": CALIBRATION_FORMULA,
         "global_scene_cloud_cover_filter": None,
         "accepted_scl_classes": list(qa["accepted_scl_classes"]),
@@ -1565,6 +1638,13 @@ def _prepare_build_inputs(
         "sentinel_stage_config_sha256": stage.sha256,
         "target_blind_predictor_access": "2025_predictors_only_no_labels",
         "requester_pays_product_xml_opened": "false",
+        "public_product_xml_opened": "false",
+        "sentinel_source_collection": STAC_COLLECTION,
+        "sentinel_raw_dn_encoding": CALIBRATION_ENCODING,
+        "sentinel_prohibited_legacy_collection": PROHIBITED_LEGACY_COLLECTION,
+        "sentinel_provider_parity_evidence_sha256": (
+            PROVIDER_PARITY_EVIDENCE_SHA256
+        ),
         **authenticated.locks,
         **spatial.locks,
     }
@@ -1756,6 +1836,10 @@ def _build_final_test_sentinel_features_locked(
         "compile": compile_result,
         "target_or_qa_values_read": False,
         "requester_pays_product_xml_opened": False,
+        "public_product_xml_opened": False,
+        "source_collection": STAC_COLLECTION,
+        "raw_dn_encoding": CALIBRATION_ENCODING,
+        "provider_parity_evidence_sha256": PROVIDER_PARITY_EVIDENCE_SHA256,
     }
 
 

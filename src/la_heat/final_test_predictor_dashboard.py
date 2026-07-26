@@ -32,7 +32,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Protocol
 
-TOTAL_ACQUISITIONS = 34
+TOTAL_ACQUISITIONS = 36
 ALLOWED_WORKERS = frozenset({6, 8})
 ENGINE_RELATIVE_PATH = Path("scripts/build_final_test_sentinel_features.py")
 STATE_RELATIVE_DIRECTORY = Path("data/interim/final_test_2025/sentinel")
@@ -569,7 +569,7 @@ pre{background:#1b1b1b;padding:12px;white-space:pre-wrap;max-height:280px;overfl
 <p>状态：<b id="state">读取中</b>　预计剩余：<span id="eta">—</span></p>
 <div class="bar"><div id="fill"></div></div>
 <div class="cards">
- <div class="card">完成<div class="n"><span id="done">0</span> / 34</div></div>
+ <div class="card">完成<div class="n"><span id="done">0</span> / 36</div></div>
  <div class="card">运行<div class="n" id="running">0</div></div>
  <div class="card">失败<div class="n" id="failed">0</div></div>
  <div class="card">自动重启<div class="n" id="restarts">0</div></div>

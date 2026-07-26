@@ -8,14 +8,20 @@ import pytest
 from pystac import Asset, Item
 from shapely.geometry import box
 
+from la_heat.final_test_sentinel_features import _extract_cog_calibration
 from la_heat.final_test_sentinel_inventory import (
     CALIBRATION_CONTRACT_ID,
     CALIBRATION_CONTRACT_PROPERTY,
+    CALIBRATION_ENCODING,
     EARTH_SEARCH_ASSET_ALIASES,
+    PROHIBITED_LEGACY_COLLECTION,
+    PROVIDER_PARITY_CONTRACT_ID,
+    PROVIDER_PARITY_EVIDENCE_SHA256,
+    STAC_COLLECTION,
     FinalTestSentinelInventoryError,
-    _allow_audited_product_metadata_s3,
     adapt_earth_search_item,
     build_final_test_sentinel_inventory_artifacts,
+    provider_parity_evidence,
 )
 from la_heat.provenance import (
     canonical_frame_sha256,
@@ -75,12 +81,13 @@ def _formal_lock(path: Path) -> dict[str, object]:
     )
 
 
-def _earth_search_item() -> Item:
+def _earth_search_item(*, collection: str = STAC_COLLECTION) -> Item:
     item = Item(
-        id="S2A_11SLT_20250829_0_L2A",
+        id="S2A_T11SLT_20250829T183000_L2A",
         geometry=AOI.__geo_interface__,
         bbox=list(AOI.bounds),
         datetime=datetime(2025, 8, 29, 18, 30, tzinfo=UTC),
+        collection=collection,
         properties={
             "platform": "sentinel-2a",
             "grid:code": "MGRS-11SLT",
@@ -89,14 +96,19 @@ def _earth_search_item() -> Item:
             "s2:processing_baseline": "05.11",
             "s2:generation_time": "2025-08-29T22:00:00Z",
             "eo:cloud_cover": 100.0,
-            "earthsearch:boa_offset_applied": True,
         },
     )
-    for source in EARTH_SEARCH_ASSET_ALIASES.values():
+    for canonical, source in EARTH_SEARCH_ASSET_ALIASES.items():
         if source == "product_metadata":
             item.add_asset(
                 source,
-                Asset(href=("s3://sentinel-s2-l2a/tiles/11/S/LT/2025/8/29/0/product_metadata.xml")),
+                Asset(
+                    href=(
+                        "https://e84-earth-search-sentinel-data.s3.us-west-2."
+                        "amazonaws.com/sentinel-2-c1-l2a/11/S/LT/2025/8/"
+                        f"{item.id}/product_metadata.xml"
+                    )
+                ),
             )
             continue
         extra_fields = {}
@@ -108,7 +120,9 @@ def _earth_search_item() -> Item:
             source,
             Asset(
                 href=(
-                    f"HTTPS://EXAMPLE.TEST/earth-search/{source}.tif?signature=temporary#fragment"
+                    "https://e84-earth-search-sentinel-data.s3.us-west-2."
+                    "amazonaws.com/sentinel-2-c1-l2a/11/S/LT/2025/8/"
+                    f"{item.id}/{canonical}.tif"
                 ),
                 extra_fields=extra_fields,
             ),
@@ -225,23 +239,36 @@ def test_earth_search_adapter_maps_assets_tile_and_orbit() -> None:
     assert adapted.properties["platform"] == "sentinel-2a"
     contract = adapted.properties[CALIBRATION_CONTRACT_PROPERTY]
     assert contract["id"] == CALIBRATION_CONTRACT_ID
+    assert contract["source_collection"] == STAC_COLLECTION
+    assert contract["raw_dn_encoding"] == CALIBRATION_ENCODING
     assert contract["formula"] == "reflectance = DN * scale + offset"
     assert contract["bands"]["B02"]["offset"] == -0.1
-    assert adapted.assets["product-metadata"].href.startswith("s3://sentinel-s2-l2a/")
+    assert contract["provider_parity_evidence"] == {
+        "id": PROVIDER_PARITY_CONTRACT_ID,
+        "sha256": PROVIDER_PARITY_EVIDENCE_SHA256,
+    }
+    assert adapted.assets["product-metadata"].href.startswith(
+        "https://e84-earth-search-sentinel-data.s3.us-west-2.amazonaws.com/"
+        "sentinel-2-c1-l2a/"
+    )
 
 
 def test_adjacent_tiles_share_one_datatake_physical_acquisition() -> None:
     south = _earth_search_item()
     north = _earth_search_item()
-    north.id = "S2A_11SLU_20250829_0_L2A"
+    old_item_id = north.id
+    north.id = "S2A_T11SLU_20250829T183014_L2A"
     north.datetime = datetime(2025, 8, 29, 18, 30, 14, tzinfo=UTC)
     north.properties["grid:code"] = "MGRS-11SLU"
     north.properties["s2:product_uri"] = str(
         north.properties["s2:product_uri"]
     ).replace("T11SLT", "T11SLU")
-    north.assets["product_metadata"].href = str(
-        north.assets["product_metadata"].href
-    ).replace("/S/LT/", "/S/LU/")
+    for asset in north.assets.values():
+        asset.href = (
+            str(asset.href)
+            .replace("/S/LT/", "/S/LU/")
+            .replace(old_item_id, north.id)
+        )
 
     south_adapted = adapt_earth_search_item(south)
     north_adapted = adapt_earth_search_item(north)
@@ -251,10 +278,9 @@ def test_adjacent_tiles_share_one_datatake_physical_acquisition() -> None:
     assert north_adapted.properties["la_heat:tile_datetime_utc"] == (
         "2025-08-29T18:30:14Z"
     )
-    with _allow_audited_product_metadata_s3():
-        assert physical_acquisition_key(
-            sentinel_record_from_item(south_adapted)
-        ) == physical_acquisition_key(sentinel_record_from_item(north_adapted))
+    assert physical_acquisition_key(
+        sentinel_record_from_item(south_adapted)
+    ) == physical_acquisition_key(sentinel_record_from_item(north_adapted))
 
 
 def test_build_is_target_blind_exact_2025_and_isolated(tmp_path: Path) -> None:
@@ -263,9 +289,12 @@ def test_build_is_target_blind_exact_2025_and_isolated(tmp_path: Path) -> None:
     payload = _build(paths, client)
 
     assert len(client.calls) == 1
-    assert client.calls[0]["collections"] == ["sentinel-2-l2a"]
+    assert client.calls[0]["collections"] == [STAC_COLLECTION]
     assert client.calls[0]["query"] == {"platform": {"in": ["sentinel-2a", "sentinel-2b"]}}
     assert payload["stac_provider"] == "Element 84 Earth Search"
+    assert payload["stac_collection"] == STAC_COLLECTION
+    assert payload["prohibited_legacy_collection"] == PROHIBITED_LEGACY_COLLECTION
+    assert payload["provider_parity_evidence"] == provider_parity_evidence()
     assert payload["earth_search_adapter"]["asset_aliases"] == (EARTH_SEARCH_ASSET_ALIASES)
     assert payload["target_or_qa_tables_read"] == []
     assert payload["target_or_qa_values_read"] is False
@@ -282,23 +311,43 @@ def test_build_is_target_blind_exact_2025_and_isolated(tmp_path: Path) -> None:
     assert Path(base["raw_stac_snapshots"]["directory"]).resolve() == paths["raw"].resolve()
     assert list(paths["raw"].glob("*.json"))
     selected = pd.read_csv(paths["output"] / "selected_items.csv")
-    assert selected.loc[0, "asset_product_metadata_href"].startswith("s3://sentinel-s2-l2a/")
+    assert selected.loc[0, "asset_product_metadata_href"].startswith(
+        "https://e84-earth-search-sentinel-data.s3.us-west-2.amazonaws.com/"
+        "sentinel-2-c1-l2a/"
+    )
+    selected_item = next(selected.itertuples(index=False))
+    calibration = _extract_cog_calibration(
+        selected_item,
+        snapshot_path=paths["raw"] / str(selected_item.snapshot_filename),
+        expected_snapshot_sha256=str(selected_item.snapshot_sha256),
+    )
+    assert calibration.band_scale_offsets["B04"] == (0.0001, -0.1)
 
 
-def test_adapter_uses_raster_contract_when_item_offset_flag_is_false() -> None:
+def test_provider_parity_evidence_binds_native_c1_dn_and_legacy_negative_control() -> None:
+    evidence = provider_parity_evidence()
+    reference = evidence["reference"]
+    c1 = evidence["earth_search_c1"]
+    legacy = evidence["legacy_negative_control"]
+    assert c1["collection"] == STAC_COLLECTION
+    assert c1["raw_dn_sha256"] == reference["raw_dn_sha256"]
+    assert c1["equals_reference_pixel_for_pixel"] is True
+    assert legacy["collection"] == PROHIBITED_LEGACY_COLLECTION
+    assert legacy["raw_dn_sha256"] != reference["raw_dn_sha256"]
+    assert legacy["legacy_minus_reference_dn"] == -1000
+    assert canonical_sha256(evidence) == PROVIDER_PARITY_EVIDENCE_SHA256
+
+
+def test_adapter_rejects_legacy_collection() -> None:
+    item = _earth_search_item(collection=PROHIBITED_LEGACY_COLLECTION)
+    with pytest.raises(FinalTestSentinelInventoryError, match="Legacy.*prohibited"):
+        adapt_earth_search_item(item)
+
+
+def test_adapter_rejects_legacy_offset_flag_on_c1_item() -> None:
     item = _earth_search_item()
     item.properties["earthsearch:boa_offset_applied"] = False
-    adapted = adapt_earth_search_item(item)
-    contract = adapted.properties[CALIBRATION_CONTRACT_PROPERTY]
-    assert contract["earthsearch:boa_offset_applied"] is False
-    assert contract["bands"]["B02"]["scale"] == 0.0001
-    assert contract["bands"]["B02"]["offset"] == -0.1
-
-
-def test_adapter_fails_closed_without_boolean_offset_audit_flag() -> None:
-    item = _earth_search_item()
-    item.properties.pop("earthsearch:boa_offset_applied")
-    with pytest.raises(FinalTestSentinelInventoryError, match="boolean boa_offset_applied"):
+    with pytest.raises(FinalTestSentinelInventoryError, match="legacy.*flag"):
         adapt_earth_search_item(item)
 
 
@@ -347,3 +396,84 @@ def test_committed_result_is_idempotent_without_new_query(tmp_path: Path) -> Non
     second = _build(paths, second_client)
     assert first["commit_sha256"] == second["commit_sha256"]
     assert second_client.calls == []
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("schema_version", 999),
+        ("algorithm_version", "wrong-final-sentinel-inventory"),
+    ],
+)
+def test_committed_provenance_rejects_schema_or_algorithm_drift(
+    tmp_path: Path,
+    field: str,
+    value: object,
+) -> None:
+    paths = _source_inventory(tmp_path)
+    _build(paths, _Client((_earth_search_item(),)))
+    marker = paths["output"] / "FINAL_TEST_SENTINEL_INVENTORY.json"
+    payload = json.loads(marker.read_text(encoding="utf-8"))
+    payload.pop("commit_sha256")
+    payload[field] = value
+    _write_committed_json(marker, payload)
+    with pytest.raises(
+        FinalTestSentinelInventoryError,
+        match="does not match frozen inputs",
+    ):
+        _build(paths, _Client(()))
+
+
+def test_committed_provenance_rejects_pipeline_fingerprint_drift(
+    tmp_path: Path,
+) -> None:
+    paths = _source_inventory(tmp_path)
+    _build(paths, _Client((_earth_search_item(),)))
+    marker = paths["output"] / "FINAL_TEST_SENTINEL_INVENTORY.json"
+    payload = json.loads(marker.read_text(encoding="utf-8"))
+    payload.pop("commit_sha256")
+    payload["pipeline_sha256"] = "0" * 64
+    _write_committed_json(marker, payload)
+    with pytest.raises(
+        FinalTestSentinelInventoryError,
+        match="does not match frozen inputs",
+    ):
+        _build(paths, _Client(()))
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("schema_version", "999"),
+        ("algorithm_version", "wrong-generic-sentinel-inventory"),
+    ],
+)
+def test_base_inventory_rejects_schema_or_algorithm_drift(
+    tmp_path: Path,
+    field: str,
+    value: object,
+) -> None:
+    paths = _source_inventory(tmp_path)
+    _build(paths, _Client((_earth_search_item(),)))
+    summary_path = paths["output"] / "inventory_summary.json"
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    summary[field] = value
+    summary_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    with pytest.raises(FinalTestSentinelInventoryError, match="base inventory lock"):
+        _build(paths, _Client(()))
+
+
+def test_committed_inventory_rejects_undeclared_raw_snapshot_json(
+    tmp_path: Path,
+) -> None:
+    paths = _source_inventory(tmp_path)
+    _build(paths, _Client((_earth_search_item(),)))
+    (paths["raw"] / "undeclared-legacy.json").write_text(
+        '{"collection":"sentinel-2-l2a"}\n',
+        encoding="utf-8",
+    )
+    with pytest.raises(
+        FinalTestSentinelInventoryError,
+        match="undeclared JSON",
+    ):
+        _build(paths, _Client(()))

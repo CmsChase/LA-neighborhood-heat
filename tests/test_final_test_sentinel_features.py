@@ -10,10 +10,14 @@ import pandas as pd
 import pytest
 
 from la_heat.final_test_sentinel_features import (
+    EXPECTED_ACQUISITION_COUNT,
+    EXPECTED_ITEM_COUNT,
     FinalTestSentinelEngineAlreadyRunningError,
     FinalTestSentinelEngineLock,
     FinalTestSentinelFeatureError,
     _authenticate_snapshot_files,
+    _canonical_public_cog_url,
+    _extract_cog_calibration,
     _fixed_support_grid_identity,
     decode_cog_reflectance,
     execute_acquisition_queue,
@@ -21,7 +25,7 @@ from la_heat.final_test_sentinel_features import (
     validate_fixed_support_arrays,
 )
 from la_heat.landsat import zonal_mask_identity_hashes
-from la_heat.provenance import canonical_sha256
+from la_heat.provenance import canonical_sha256, sha256_file
 
 
 def test_cog_calibration_is_scale_then_offset_and_keeps_negative_values() -> None:
@@ -31,6 +35,51 @@ def test_cog_calibration_is_scale_then_offset_and_keeps_negative_values() -> Non
     assert decoded[0, 1] == pytest.approx(-0.05)
     assert decoded[0, 2] == pytest.approx(0.0, abs=1e-7)
     assert np.isnan(decoded[0, 3])
+
+
+def test_c1_metadata_preflight_cardinality_contract() -> None:
+    assert EXPECTED_ACQUISITION_COUNT == 36
+    assert EXPECTED_ITEM_COUNT == 72
+
+
+def test_only_c1_cog_host_and_collection_path_are_accepted() -> None:
+    c1_url = (
+        "https://e84-earth-search-sentinel-data.s3.us-west-2.amazonaws.com/"
+        "sentinel-2-c1-l2a/11/S/LT/2025/4/"
+        "S2B_T11SLT_20250427T183446_L2A/B04.tif"
+    )
+    assert _canonical_public_cog_url(c1_url) == c1_url
+    legacy_url = (
+        "https://sentinel-cogs.s3.us-west-2.amazonaws.com/"
+        "sentinel-s2-l2a-cogs/11/S/LT/2025/4/"
+        "S2B_11SLT_20250427_0_L2A/B04.tif"
+    )
+    with pytest.raises(FinalTestSentinelFeatureError, match="C1"):
+        _canonical_public_cog_url(legacy_url)
+
+
+def test_feature_contract_rejects_legacy_collection_before_asset_reads(
+    tmp_path: Path,
+) -> None:
+    snapshot = tmp_path / "legacy.json"
+    snapshot.write_text(
+        json.dumps(
+            {
+                "id": "legacy-item",
+                "collection": "sentinel-2-l2a",
+                "properties": {},
+                "assets": {},
+            }
+        ),
+        encoding="utf-8",
+    )
+    row = SimpleNamespace(item_id="legacy-item")
+    with pytest.raises(FinalTestSentinelFeatureError, match="Legacy.*prohibited"):
+        _extract_cog_calibration(
+            row,
+            snapshot_path=snapshot,
+            expected_snapshot_sha256=sha256_file(snapshot),
+        )
 
 
 @pytest.mark.parametrize(
@@ -255,6 +304,23 @@ def test_snapshot_authentication_rejects_tampering(tmp_path: Path) -> None:
     with pytest.raises(FinalTestSentinelFeatureError, match="byte/set lock"):
         _authenticate_snapshot_files([record], raw_directory=tmp_path)
     assert canonical_sha256([record])
+
+
+def test_snapshot_authentication_rejects_undeclared_json(tmp_path: Path) -> None:
+    snapshot = tmp_path / "item.json"
+    snapshot.write_text('{"id":"item"}\n', encoding="utf-8")
+    record = {
+        "item_id": "item",
+        "filename": snapshot.name,
+        "sha256": hashlib.sha256(snapshot.read_bytes()).hexdigest(),
+        "bytes": snapshot.stat().st_size,
+    }
+    (tmp_path / "undeclared-legacy.json").write_text(
+        '{"collection":"sentinel-2-l2a"}\n',
+        encoding="utf-8",
+    )
+    with pytest.raises(FinalTestSentinelFeatureError, match="undeclared JSON"):
+        _authenticate_snapshot_files([record], raw_directory=tmp_path)
 
 
 def test_queue_resumes_cache_and_continues_after_one_failure(

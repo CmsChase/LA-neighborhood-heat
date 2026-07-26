@@ -555,6 +555,7 @@ def query_sentinel_items(
     intersects: BaseGeometry | Mapping[str, object],
     datetime_interval: str,
     global_cloud_cover_max: float | None = None,
+    collection: str = SENTINEL_COLLECTION,
 ) -> tuple[Any, ...]:
     """Query every intersecting L2A item without a global cloud-cover cutoff.
 
@@ -567,6 +568,8 @@ def query_sentinel_items(
         raise ValueError("Global Sentinel-2 cloud-cover cutoffs are prohibited.")
     if not datetime_interval.strip():
         raise ValueError("Sentinel query datetime interval cannot be empty.")
+    if not collection.strip():
+        raise ValueError("Sentinel collection cannot be empty.")
     if isinstance(intersects, BaseGeometry):
         if intersects.is_empty or not intersects.is_valid:
             raise ValueError("Sentinel query geometry must be non-empty and valid.")
@@ -574,7 +577,7 @@ def query_sentinel_items(
     else:
         intersects_payload = dict(intersects)
     search = client.search(
-        collections=[SENTINEL_COLLECTION],
+        collections=[collection],
         intersects=intersects_payload,
         datetime=datetime_interval,
     )
@@ -968,6 +971,7 @@ def build_sentinel_inventory_artifacts(
     final_test_year: int = FINAL_TEST_YEAR,
     query_time_utc: datetime | None = None,
     analysis_crs: str = "EPSG:3310",
+    collection: str = SENTINEL_COLLECTION,
 ) -> dict[str, object]:
     """Query, select, serialize, and atomically commit the Sentinel inventory.
 
@@ -1014,6 +1018,7 @@ def build_sentinel_inventory_artifacts(
             client,
             intersects=aoi,
             datetime_interval=interval.utc_datetime_interval,
+            collection=collection,
         )
         query_response_item_count += len(queried)
         for item in queried:
@@ -1107,7 +1112,7 @@ def build_sentinel_inventory_artifacts(
         "schema_version": INVENTORY_SCHEMA_VERSION,
         "algorithm_version": INVENTORY_ALGORITHM_VERSION,
         "queried_at_utc": _utc_isoformat(queried_at),
-        "collection": SENTINEL_COLLECTION,
+        "collection": collection,
         "global_scene_cloud_cover_filter": None,
         "local_timezone": str(SENTINEL_TIMEZONE),
         "window_start_days_before_target": WINDOW_START_DAYS,

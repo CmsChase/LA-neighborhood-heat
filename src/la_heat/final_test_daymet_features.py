@@ -154,6 +154,52 @@ CellReader = Callable[..., pd.DataFrame]
 MarkerWriter = Callable[[dict[str, Any], Path], None]
 
 
+def _is_semantic_string_series(series: pd.Series) -> bool:
+    """Return whether a series contains only strings and missing values."""
+
+    if isinstance(series.dtype, pd.StringDtype):
+        return True
+    if not pd.api.types.is_object_dtype(series.dtype):
+        return False
+    present = series.dropna()
+    return bool(not present.empty and present.map(lambda value: isinstance(value, str)).all())
+
+
+def _assert_parquet_round_trip(
+    frozen: pd.DataFrame,
+    source: pd.DataFrame,
+    *,
+    label: str,
+) -> None:
+    """Require an exact round trip except for equivalent pandas string dtypes."""
+
+    checked_frozen = frozen.copy()
+    checked_source = source.copy()
+    if checked_frozen.columns.equals(checked_source.columns):
+        canonical_string_dtype = pd.StringDtype(storage="python")
+        for column in checked_source.columns:
+            if _is_semantic_string_series(
+                checked_source[column]
+            ) and _is_semantic_string_series(checked_frozen[column]):
+                checked_source[column] = checked_source[column].astype(
+                    canonical_string_dtype
+                )
+                checked_frozen[column] = checked_frozen[column].astype(
+                    canonical_string_dtype
+                )
+    try:
+        pd.testing.assert_frame_equal(
+            checked_frozen,
+            checked_source,
+            check_dtype=True,
+            check_exact=True,
+        )
+    except AssertionError as error:
+        raise FinalTestDaymetFeatureError(
+            f"{label} Parquet round trip changed its schema, dtype, or values: {error}"
+        ) from error
+
+
 def _project_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
@@ -1271,8 +1317,16 @@ def build_final_test_daymet_feature_artifacts(
         atomic_parquet(compilation.audit, staged_audit_path)
         frozen_features = pd.read_parquet(staged_feature_path)
         frozen_audit = pd.read_parquet(staged_audit_path)
-        pd.testing.assert_frame_equal(frozen_features, compilation.features, check_dtype=True)
-        pd.testing.assert_frame_equal(frozen_audit, compilation.audit, check_dtype=True)
+        _assert_parquet_round_trip(
+            frozen_features,
+            compilation.features,
+            label="Final-test Daymet feature table",
+        )
+        _assert_parquet_round_trip(
+            frozen_audit,
+            compilation.audit,
+            label="Final-test Daymet audit table",
+        )
         payload: dict[str, Any] = {
             "schema_version": SCHEMA_VERSION,
             "algorithm_version": ALGORITHM_VERSION,

@@ -58,7 +58,7 @@ def test_exact_engine_command_allows_only_6_or_8_workers(tmp_path: Path) -> None
         build_engine_command(tmp_path, workers=7)
 
 
-def test_status_contract_is_exactly_34_and_redacts_signed_urls() -> None:
+def test_status_contract_is_exactly_36_and_redacts_signed_urls() -> None:
     status = normalize_engine_status(
         {
             "state": "running",
@@ -75,14 +75,14 @@ def test_status_contract_is_exactly_34_and_redacts_signed_urls() -> None:
             "estimated_remaining_seconds": 123,
         }
     )
-    assert status["total"] == 34
+    assert status["total"] == 36
     assert status["completed"] == 2
     assert status["running"] == 1
     assert status["failed"] == 1
     assert status["current"] == ["c"]
     assert status["eta_seconds"] == 123
     assert "secret" not in status["log_tail"][0]
-    assert status["status_contract_error"] == "engine total must remain 34"
+    assert status["status_contract_error"] == "engine total must remain 36"
 
 
 def test_dashboard_is_idle_by_default_and_start_uses_exact_child(

@@ -824,4 +824,4 @@ def test_local_http_controls_require_same_origin_token(tmp_path: Path) -> None:
 def test_dashboard_files_do_not_change_the_scientific_pipeline_sha() -> None:
     project_root = Path(__file__).resolve().parents[1]
     pipeline_sha, _ = _pipeline_fingerprint(project_root)
-    assert pipeline_sha == "68774cc3cf9de77c55d23802d59b62a8c2a28f09c3edf79f90b8c3a4c390f34c"
+    assert pipeline_sha == "dd0723206eac0acb73fadc718b2f6cf5bc8898489f75eb20e05e46ec72a564c2"

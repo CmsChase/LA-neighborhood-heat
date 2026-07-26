@@ -11,19 +11,16 @@ from __future__ import annotations
 import json
 import math
 import re
-from contextlib import contextmanager
 from copy import deepcopy
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
-from threading import Lock
 from typing import Any, Final
 from urllib.parse import urlsplit, urlunsplit
 
 import numpy as np
 import pandas as pd
 
-import la_heat.sentinel_inventory as _sentinel_inventory
 from la_heat.final_test_inventory import (
     FINAL_TEST_YEAR,
     KEY_UNIVERSE_FILENAME,
@@ -41,22 +38,28 @@ from la_heat.provenance import (
     sha256_file,
 )
 from la_heat.sentinel_inventory import (
+    INVENTORY_ALGORITHM_VERSION,
+    INVENTORY_SCHEMA_VERSION,
     INVENTORY_SUMMARY_FILENAME,
     SELECTED_ACQUISITIONS_FILENAME,
     SELECTED_ITEMS_FILENAME,
     TARGET_WINDOW_MEMBERSHIP_FILENAME,
     SentinelSearchClient,
     build_sentinel_inventory_artifacts,
-    canonical_asset_url,
 )
 
-SCHEMA_VERSION: Final = 1
+SCHEMA_VERSION: Final = 2
 ALGORITHM_VERSION: Final = (
-    "final-test-sentinel-inventory-v3-datatake-physical-time"
+    "final-test-sentinel-inventory-v4-c1-native-dn-datatake-time"
 )
 PROVENANCE_FILENAME: Final = "FINAL_TEST_SENTINEL_INVENTORY.json"
 DEFAULT_STAC_API: Final = "https://earth-search.aws.element84.com/v1"
 STAC_PROVIDER: Final = "Element 84 Earth Search"
+STAC_COLLECTION: Final = "sentinel-2-c1-l2a"
+PROHIBITED_LEGACY_COLLECTION: Final = "sentinel-2-l2a"
+EARTH_SEARCH_C1_DATA_HOST: Final = (
+    "e84-earth-search-sentinel-data.s3.us-west-2.amazonaws.com"
+)
 EXPECTED_TRACT_COUNT: Final = 1_096
 LANDSAT_INVENTORY_SUFFIX: Final = Path("manifests/final_test_2025/landsat_inventory")
 OUTPUT_SUFFIX: Final = Path("manifests/final_test_2025/sentinel_inventory")
@@ -102,10 +105,15 @@ EARTH_SEARCH_PROPERTY_DERIVATIONS: Final = {
 }
 EARTH_SEARCH_SUPPORTED_PLATFORMS: Final = ("sentinel-2a", "sentinel-2b")
 CALIBRATION_CONTRACT_PROPERTY: Final = "la_heat:cog_calibration_contract"
-CALIBRATION_CONTRACT_ID: Final = "earth-search-raster-bands-scale-offset-v1"
+CALIBRATION_CONTRACT_ID: Final = "earth-search-c1-native-dn-scale-offset-v2"
 CALIBRATION_FORMULA: Final = "reflectance = DN * scale + offset"
+CALIBRATION_ENCODING: Final = "sen2cor_native_uint16_dn_offset_not_preapplied"
+PROVIDER_PARITY_CONTRACT_ID: Final = (
+    "earth-search-c1-planetary-computer-raw-dn-parity-v1"
+)
 CALIBRATION_SOURCES: Final = (
-    "https://github.com/Element84/earth-search#gainoffset-in-items-after-jan-25-2022",
+    "https://earth-search.aws.element84.com/v1/collections/sentinel-2-c1-l2a",
+    "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-2-l2a",
     "https://github.com/stac-extensions/raster#scale-and-offset-uses-and-examples",
 )
 _REFLECTANCE_ASSET_ALIASES: Final = {
@@ -122,12 +130,11 @@ _PRODUCT_URI = re.compile(
     r"^S2(?P<satellite>[AB])_MSIL2A_(?P<sensing>\d{8}T\d{6})_"
     r"N\d{4}_R\d{3}_T\d{2}[A-Z]{3}_\d{8}T\d{6}(?:\.SAFE)?$"
 )
-_PRODUCT_METADATA_S3_PATH = re.compile(
-    r"^/tiles/(?P<zone>\d{2})/(?P<band>[A-Z])/(?P<square>[A-Z]{2})/"
-    r"(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/\d+/"
-    r"product_metadata\.xml$"
+_C1_ASSET_PATH = re.compile(
+    r"^/sentinel-2-c1-l2a/(?P<zone>\d{2})/(?P<band>[A-Z])/"
+    r"(?P<square>[A-Z]{2})/(?P<year>\d{4})/(?P<month>\d{1,2})/"
+    r"(?P<item_id>[^/]+)/(?P<filename>[^/]+)$"
 )
-_CANONICALIZER_LOCK = Lock()
 
 
 class FinalTestSentinelInventoryError(RuntimeError):
@@ -192,72 +199,200 @@ class _EarthSearchClientAdapter:
     def search(self, **kwargs: object) -> _AdaptedSearchResult:
         if "query" in kwargs:
             raise FinalTestSentinelInventoryError("Unexpected pre-existing STAC query.")
+        if kwargs.get("collections") != [STAC_COLLECTION]:
+            raise FinalTestSentinelInventoryError(
+                "The final Sentinel inventory must query only sentinel-2-c1-l2a."
+            )
         kwargs["query"] = {"platform": {"in": list(EARTH_SEARCH_SUPPORTED_PLATFORMS)}}
         return _AdaptedSearchResult(self._client.search(**kwargs))
 
 
-def _canonical_product_metadata_s3_uri(value: str) -> str:
+def provider_parity_evidence() -> dict[str, Any]:
+    """Return the frozen raw-DN provider-parity calibration evidence.
+
+    This is an encoding calibration control, not a predictor or target sample.
+    The same 256 x 256 uint16 B04 window was read before any scale/offset
+    decoding from an independent Planetary Computer L2A asset and the Earth
+    Search C1 asset.  The legacy Earth Search collection is retained only as a
+    negative control because its stored DN values are exactly 1,000 lower.
+    """
+
+    reference_sha256 = (
+        "3eb49b99198de50b65a2397457f53d790a735093b7c624335cb47bd758084ca3"
+    )
+    return {
+        "id": PROVIDER_PARITY_CONTRACT_ID,
+        "verification_date_utc": "2026-07-23",
+        "purpose": "provider_encoding_calibration_only_not_model_input",
+        "product_uri": (
+            "S2B_MSIL2A_20250427T182919_N0511_R027_T11SLT_"
+            "20250427T223357.SAFE"
+        ),
+        "mgrs_tile": "11SLT",
+        "band": "B04",
+        "window": {
+            "column_offset": 4096,
+            "row_offset": 4096,
+            "width": 256,
+            "height": 256,
+            "array_dtype": "uint16",
+            "byte_serialization": "numpy_c_order_little_endian_u2",
+        },
+        "reference": {
+            "provider": "Microsoft Planetary Computer",
+            "collection": "sentinel-2-l2a",
+            "item_id": (
+                "S2B_MSIL2A_20250427T182919_R027_T11SLT_20250427T223357"
+            ),
+            "asset_href_unsigned": (
+                "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/"
+                "11/S/LT/2025/04/27/"
+                "S2B_MSIL2A_20250427T182919_N0511_R027_T11SLT_"
+                "20250427T223357.SAFE/GRANULE/"
+                "L2A_T11SLT_A042524_20250427T183446/IMG_DATA/R10m/"
+                "T11SLT_20250427T182919_B04_10m.tif"
+            ),
+            "raw_dn_sha256": reference_sha256,
+            "minimum_dn": 1073,
+            "maximum_dn": 1230,
+            "reference_role": "independent_native_sen2cor_l2a_dn",
+        },
+        "earth_search_c1": {
+            "collection": STAC_COLLECTION,
+            "item_id": "S2B_T11SLT_20250427T183446_L2A",
+            "asset_href": (
+                "https://e84-earth-search-sentinel-data.s3.us-west-2."
+                "amazonaws.com/sentinel-2-c1-l2a/11/S/LT/2025/4/"
+                "S2B_T11SLT_20250427T183446_L2A/B04.tif"
+            ),
+            "raw_dn_sha256": reference_sha256,
+            "minimum_dn": 1073,
+            "maximum_dn": 1230,
+            "equals_reference_pixel_for_pixel": True,
+        },
+        "legacy_negative_control": {
+            "collection": PROHIBITED_LEGACY_COLLECTION,
+            "item_id": "S2B_11SLT_20250427_0_L2A",
+            "asset_href": (
+                "https://sentinel-cogs.s3.us-west-2.amazonaws.com/"
+                "sentinel-s2-l2a-cogs/11/S/LT/2025/4/"
+                "S2B_11SLT_20250427_0_L2A/B04.tif"
+            ),
+            "raw_dn_sha256": (
+                "346a2375212291dc73a3a49ae810cb696755d500c167ee07dc22296512db6dbf"
+            ),
+            "minimum_dn": 73,
+            "maximum_dn": 230,
+            "legacy_minus_reference_dn": -1000,
+            "prohibited_for_feature_building": True,
+        },
+        "conclusion": (
+            "Earth Search sentinel-2-c1-l2a preserves native uint16 L2A DN; "
+            "decode once with STAC raster:bands scale then offset. The legacy "
+            "Earth Search sentinel-2-l2a COG is prohibited."
+        ),
+    }
+
+
+PROVIDER_PARITY_EVIDENCE_SHA256: Final = canonical_sha256(
+    provider_parity_evidence()
+)
+
+
+def _calibration_provenance_contract() -> dict[str, Any]:
+    return {
+        "id": CALIBRATION_CONTRACT_ID,
+        "source_collection": STAC_COLLECTION,
+        "raw_dn_encoding": CALIBRATION_ENCODING,
+        "legacy_collection_prohibited": PROHIBITED_LEGACY_COLLECTION,
+        "formula": CALIBRATION_FORMULA,
+        "offset_application_order": "after_scale",
+        "product_metadata_policy": (
+            "preserve exact public C1 HTTPS URI; XML remains audit-only"
+        ),
+        "provider_parity_evidence": {
+            "id": PROVIDER_PARITY_CONTRACT_ID,
+            "sha256": PROVIDER_PARITY_EVIDENCE_SHA256,
+        },
+        "official_sources": list(CALIBRATION_SOURCES),
+    }
+
+
+def _item_collection_id(item: Any) -> str:
+    collection = getattr(item, "collection_id", None)
+    if collection in {None, ""}:
+        payload = item.to_dict()
+        collection = payload.get("collection")
+    value = str(collection or "").strip()
+    if value != STAC_COLLECTION:
+        if value == PROHIBITED_LEGACY_COLLECTION:
+            raise FinalTestSentinelInventoryError(
+                "Legacy Earth Search sentinel-2-l2a is prohibited because its "
+                "COGs have the BOA offset pre-applied."
+            )
+        raise FinalTestSentinelInventoryError(
+            f"Earth Search item {item.id} is not from {STAC_COLLECTION}."
+        )
+    return value
+
+
+def _canonical_c1_asset_url(
+    value: str,
+    *,
+    item_id: str,
+    mgrs_tile: str,
+    acquired: datetime,
+    filename: str,
+) -> str:
     parsed = urlsplit(value)
     if (
-        parsed.scheme.lower() != "s3"
-        or parsed.netloc.lower() != "sentinel-s2-l2a"
+        parsed.scheme.lower() != "https"
+        or parsed.netloc.lower() != EARTH_SEARCH_C1_DATA_HOST
         or parsed.query
         or parsed.fragment
-        or _PRODUCT_METADATA_S3_PATH.fullmatch(parsed.path) is None
     ):
         raise FinalTestSentinelInventoryError(
-            "Earth Search product metadata is not the expected requester-pays S3 URI."
+            "Earth Search C1 assets must use the frozen public HTTPS data host."
         )
-    return urlunsplit(("s3", "sentinel-s2-l2a", parsed.path, "", ""))
-
-
-def _inventory_asset_url(value: str) -> str:
-    try:
-        return canonical_asset_url(value)
-    except ValueError:
-        return _canonical_product_metadata_s3_uri(value)
-
-
-@contextmanager
-def _allow_audited_product_metadata_s3() -> Any:
-    """Narrowly allow the official requester-pays XML URI in the frozen builder."""
-
-    with _CANONICALIZER_LOCK:
-        previous = _sentinel_inventory.canonical_asset_url
-        _sentinel_inventory.canonical_asset_url = _inventory_asset_url
-        try:
-            yield
-        finally:
-            _sentinel_inventory.canonical_asset_url = previous
+    match = _C1_ASSET_PATH.fullmatch(parsed.path)
+    expected_tile = mgrs_tile.upper()
+    if (
+        match is None
+        or "".join(
+            (match.group("zone"), match.group("band"), match.group("square"))
+        )
+        != expected_tile
+        or match.group("item_id") != item_id
+        or match.group("filename") != filename
+        or int(match.group("year")) != acquired.year
+        or int(match.group("month")) != acquired.month
+    ):
+        raise FinalTestSentinelInventoryError(
+            f"Earth Search C1 asset lineage conflicts for {item_id} {filename}."
+        )
+    return urlunsplit(("https", EARTH_SEARCH_C1_DATA_HOST, parsed.path, "", ""))
 
 
 def _cog_calibration_contract(item: Any, *, mgrs_tile: str) -> dict[str, Any]:
-    boa_offset_applied = item.properties.get("earthsearch:boa_offset_applied")
-    if not isinstance(boa_offset_applied, bool):
+    collection = _item_collection_id(item)
+    if "earthsearch:boa_offset_applied" in item.properties:
         raise FinalTestSentinelInventoryError(
-            f"Earth Search item {item.id} lacks a boolean boa_offset_applied audit flag."
+            f"Earth Search C1 item {item.id} unexpectedly carries the legacy "
+            "boa_offset_applied flag."
+        )
+    acquired = item.datetime
+    if acquired is None:
+        raise FinalTestSentinelInventoryError(
+            f"Earth Search C1 item {item.id} has no acquisition datetime."
         )
     product_asset = item.assets["product_metadata"]
-    product_uri = _canonical_product_metadata_s3_uri(str(product_asset.href))
-    product_path = _PRODUCT_METADATA_S3_PATH.fullmatch(urlsplit(product_uri).path)
-    assert product_path is not None
-    path_tile = "".join(
-        (product_path.group("zone"), product_path.group("band"), product_path.group("square"))
+    product_uri = _canonical_c1_asset_url(
+        str(product_asset.href),
+        item_id=str(item.id),
+        mgrs_tile=mgrs_tile,
+        acquired=acquired,
+        filename="product_metadata.xml",
     )
-    acquired = item.datetime
-    if (
-        path_tile != mgrs_tile
-        or acquired is None
-        or (
-            int(product_path.group("year")),
-            int(product_path.group("month")),
-            int(product_path.group("day")),
-        )
-        != (acquired.year, acquired.month, acquired.day)
-    ):
-        raise FinalTestSentinelInventoryError(
-            f"Earth Search item {item.id} product-metadata S3 lineage conflicts."
-        )
 
     bands: dict[str, dict[str, Any]] = {}
     for canonical, source in _REFLECTANCE_ASSET_ALIASES.items():
@@ -287,23 +422,43 @@ def _cog_calibration_contract(item: Any, *, mgrs_tile: str) -> dict[str, Any]:
             raise FinalTestSentinelInventoryError(
                 f"Earth Search item {item.id} {source} has invalid scale/offset."
             )
-        href = canonical_asset_url(str(asset.href))
+        href = _canonical_c1_asset_url(
+            str(asset.href),
+            item_id=str(item.id),
+            mgrs_tile=mgrs_tile,
+            acquired=acquired,
+            filename=f"{canonical}.tif",
+        )
         bands[canonical] = {
             "source_asset": source,
             "href": href,
             "scale": float(scale),
             "offset": float(offset),
         }
+    scl_href = _canonical_c1_asset_url(
+        str(item.assets["scl"].href),
+        item_id=str(item.id),
+        mgrs_tile=mgrs_tile,
+        acquired=acquired,
+        filename="SCL.tif",
+    )
     return {
         "id": CALIBRATION_CONTRACT_ID,
-        # Element 84 documents raster:bands scale/offset as the authoritative
-        # decoding rule.  The item-level flag is retained for audit only: real
-        # 2025 items can legitimately contain either boolean value.
-        "earthsearch:boa_offset_applied": boa_offset_applied,
+        "source_collection": collection,
+        "raw_dn_encoding": CALIBRATION_ENCODING,
+        "legacy_collection_prohibited": PROHIBITED_LEGACY_COLLECTION,
         "formula": CALIBRATION_FORMULA,
         "offset_application_order": "after_scale",
         "product_metadata_uri": product_uri,
-        "product_metadata_use": "audit_lineage_only_requester_pays_s3",
+        "product_metadata_use": "audit_lineage_only_public_https",
+        "provider_parity_evidence": {
+            "id": PROVIDER_PARITY_CONTRACT_ID,
+            "sha256": PROVIDER_PARITY_EVIDENCE_SHA256,
+        },
+        "classification_asset": {
+            "source_asset": "scl",
+            "href": scl_href,
+        },
         "bands": bands,
         "official_sources": list(CALIBRATION_SOURCES),
     }
@@ -476,6 +631,67 @@ def _locked_file(path: Path, record: object, *, label: str) -> str:
     return str(record["sha256"])
 
 
+def _authenticate_raw_snapshot_set(
+    raw_stac: Path,
+    snapshots: object,
+) -> None:
+    if not isinstance(snapshots, dict):
+        raise FinalTestSentinelInventoryError(
+            "Sentinel raw STAC snapshot set lock is missing."
+        )
+    records = snapshots.get("files")
+    if (
+        not isinstance(records, list)
+        or not records
+        or snapshots.get("count") != len(records)
+        or snapshots.get("set_sha256") != canonical_sha256(records)
+    ):
+        raise FinalTestSentinelInventoryError(
+            "Sentinel raw STAC snapshot set contract changed."
+        )
+    filenames: set[str] = set()
+    item_ids: set[str] = set()
+    for record in records:
+        if not isinstance(record, dict):
+            raise FinalTestSentinelInventoryError(
+                "Sentinel raw STAC snapshot record is invalid."
+            )
+        item_id = str(record.get("item_id", ""))
+        filename = str(record.get("filename", ""))
+        path = (raw_stac / filename).resolve()
+        if (
+            not item_id
+            or not filename
+            or Path(filename).name != filename
+            or Path(filename).suffix.lower() != ".json"
+            or path.parent != raw_stac.resolve()
+            or item_id in item_ids
+            or filename in filenames
+            or not path.is_file()
+            or path.stat().st_size != record.get("bytes")
+            or sha256_file(path) != record.get("sha256")
+        ):
+            raise FinalTestSentinelInventoryError(
+                "Sentinel raw STAC snapshot byte/set lock failed."
+            )
+        item_ids.add(item_id)
+        filenames.add(filename)
+    try:
+        actual_json_files = {
+            path.name
+            for path in raw_stac.iterdir()
+            if path.is_file() and path.suffix.lower() == ".json"
+        }
+    except OSError as error:
+        raise FinalTestSentinelInventoryError(
+            "Cannot enumerate the Sentinel raw STAC snapshot directory."
+        ) from error
+    if actual_json_files != filenames:
+        raise FinalTestSentinelInventoryError(
+            "Sentinel raw STAC snapshot directory contains an undeclared JSON file."
+        )
+
+
 def _civil_2025(values: pd.Series, *, label: str) -> pd.Series:
     try:
         parsed = pd.to_datetime(values, format="%Y-%m-%d", errors="raise")
@@ -635,6 +851,9 @@ def _authenticate_base_inventory(
     if (
         summary.get("state") != "complete"
         or summary.get("artifacts_valid") is not True
+        or summary.get("schema_version") != INVENTORY_SCHEMA_VERSION
+        or summary.get("algorithm_version") != INVENTORY_ALGORITHM_VERSION
+        or summary.get("collection") != STAC_COLLECTION
         or summary.get("final_test_year") != FINAL_TEST_YEAR
         or summary.get("unlock_final_test") is not True
         or summary.get("global_scene_cloud_cover_filter") is not None
@@ -650,6 +869,7 @@ def _authenticate_base_inventory(
         or Path(str(snapshots.get("directory", ""))).resolve() != raw_stac
     ):
         raise FinalTestSentinelInventoryError("Sentinel base inventory lock is invalid.")
+    _authenticate_raw_snapshot_set(raw_stac, snapshots)
     primary_input = inputs.get("primary_overpass_manifest")
     city_input = inputs.get("city_boundary")
     if (
@@ -700,8 +920,15 @@ def _authenticate_provenance(
 ) -> dict[str, Any]:
     payload, _ = _read_json(path, label="Final-test Sentinel provenance")
     _verify_commit(payload, label="Final-test Sentinel provenance")
+    pipeline_sha, pipeline = code_runtime_fingerprint(
+        project_root=_project_root(),
+        relative_paths=PIPELINE_FILES,
+        algorithm_version=ALGORITHM_VERSION,
+    )
     if (
-        payload.get("state") != "target_blind_inventory_frozen"
+        payload.get("schema_version") != SCHEMA_VERSION
+        or payload.get("algorithm_version") != ALGORITHM_VERSION
+        or payload.get("state") != "target_blind_inventory_frozen"
         or payload.get("final_test_year") != FINAL_TEST_YEAR
         or payload.get("exact_final_test_year") is not True
         or payload.get("target_blind") is not True
@@ -712,10 +939,17 @@ def _authenticate_provenance(
         or payload.get("model_scores_read") is not False
         or payload.get("one_time_evaluation_consumed") is not False
         or payload.get("stac_provider") != STAC_PROVIDER
+        or payload.get("stac_collection") != STAC_COLLECTION
+        or payload.get("prohibited_legacy_collection")
+        != PROHIBITED_LEGACY_COLLECTION
+        or payload.get("provider_parity_evidence")
+        != provider_parity_evidence()
         or payload.get("earth_search_adapter", {}).get("asset_aliases")
         != EARTH_SEARCH_ASSET_ALIASES
         or payload.get("earth_search_adapter", {}).get("property_derivations")
         != EARTH_SEARCH_PROPERTY_DERIVATIONS
+        or payload.get("earth_search_adapter", {}).get("calibration_contract")
+        != _calibration_provenance_contract()
         or payload.get("formal_model_lock", {}).get("sha256") != formal_lock_sha256
         or payload.get("formal_model_lock", {}).get("commit_sha256")
         != formal_lock.get("commit_sha256")
@@ -724,6 +958,8 @@ def _authenticate_provenance(
         or payload.get("landsat_inventory", {}).get("commit_sha256")
         != authenticated.landsat_commit_sha256
         or payload.get("sentinel_inventory", {}).get("sha256") != base_summary_sha256
+        or payload.get("pipeline_sha256") != pipeline_sha
+        or payload.get("pipeline_fingerprint") != pipeline
         or Path(str(payload.get("output_directory", ""))).resolve() != output
         or Path(str(payload.get("raw_stac_directory", ""))).resolve() != raw_stac
     ):
@@ -787,17 +1023,17 @@ def build_final_test_sentinel_inventory_artifacts(
             from pystac_client import Client
 
             client = Client.open(stac_api)
-        with _allow_audited_product_metadata_s3():
-            base_summary = build_sentinel_inventory_artifacts(
-                city_boundary_path=authenticated.city_path,
-                primary_overpass_manifest_path=authenticated.primary_path,
-                output_directory=output,
-                raw_stac_directory=raw_stac,
-                client=_EarthSearchClientAdapter(client),
-                unlock_final_test=True,
-                final_test_year=FINAL_TEST_YEAR,
-                query_time_utc=query_time_utc,
-            )
+        base_summary = build_sentinel_inventory_artifacts(
+            city_boundary_path=authenticated.city_path,
+            primary_overpass_manifest_path=authenticated.primary_path,
+            output_directory=output,
+            raw_stac_directory=raw_stac,
+            client=_EarthSearchClientAdapter(client),
+            unlock_final_test=True,
+            final_test_year=FINAL_TEST_YEAR,
+            query_time_utc=query_time_utc,
+            collection=STAC_COLLECTION,
+        )
         base_summary, base_sha = _authenticate_base_inventory(output, raw_stac, authenticated)
 
     pipeline_sha, pipeline = code_runtime_fingerprint(
@@ -824,20 +1060,14 @@ def build_final_test_sentinel_inventory_artifacts(
         "window_end_days_before_target": 1,
         "stac_provider": STAC_PROVIDER,
         "stac_api": stac_api,
-        "stac_collection": "sentinel-2-l2a",
+        "stac_collection": STAC_COLLECTION,
+        "prohibited_legacy_collection": PROHIBITED_LEGACY_COLLECTION,
+        "provider_parity_evidence": provider_parity_evidence(),
         "earth_search_adapter": {
             "asset_aliases": EARTH_SEARCH_ASSET_ALIASES,
             "property_derivations": EARTH_SEARCH_PROPERTY_DERIVATIONS,
             "supported_platforms": list(EARTH_SEARCH_SUPPORTED_PLATFORMS),
-            "calibration_contract": {
-                "id": CALIBRATION_CONTRACT_ID,
-                "formula": CALIBRATION_FORMULA,
-                "offset_application_order": "after_scale",
-                "product_metadata_policy": (
-                    "preserve official requester-pays s3 URI; never synthesize HTTPS"
-                ),
-                "official_sources": list(CALIBRATION_SOURCES),
-            },
+            "calibration_contract": _calibration_provenance_contract(),
         },
         "target_date_count": len(authenticated.target_dates),
         "tract_count": authenticated.tract_count,

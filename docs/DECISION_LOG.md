@@ -885,3 +885,58 @@ No unlock has occurred. `unlock_final_test` remains `false`.
 - This stage accessed weather predictors only. It did not read a Landsat
   target, QA value, fitted prediction, or score, and did not consume the
   one-time final evaluation.
+
+## 2026-07-26 — Sentinel Collection 1 metadata cardinality preflight
+
+- Requeried the exact frozen 23-date `d−60 … d−1` window against Element 84
+  Earth Search `sentinel-2-c1-l2a`, without opening optical pixels or applying
+  a global scene-cloud cutoff.
+- The complete Collection 1 cohort contains 36 physical acquisitions,
+  72 selected tile items, and 207 exact target-window memberships. All 36
+  acquisitions are adjacent two-tile mosaics. Relative to the superseded
+  legacy inventory, Collection 1 adds the eligible 2025-06-16 and 2025-07-06
+  overpasses and supplies both required tiles for every retained acquisition.
+- Updated the feature-engine and dashboard cardinality contracts to 36
+  acquisitions and 72 items. Membership remains derived and authenticated as
+  an exact crosswalk rather than hard-coded.
+- This was a metadata-only reproducibility preflight. It did not start the
+  36-acquisition pixel build, read Landsat target/QA values, load predictions
+  or scores, or consume the one-time final evaluation.
+
+## 2026-07-26 — Sentinel Collection 1 final-test inventory frozen
+
+- Rebuilt the canonical 2025 Sentinel inventory exclusively from Element 84
+  Earth Search `sentinel-2-c1-l2a`. The authenticated inventory contains 36
+  physical acquisitions, 72 tile items, and 207 exact target-window
+  memberships; every acquisition is an `11SLT + 11SLU` mosaic.
+- Froze all 72 raw STAC snapshots and authenticated their exact filename,
+  item-ID, byte-count, and SHA-256 set. Every selected raster URL is on the
+  fixed Collection 1 host and path, with no query string, legacy COG URL, or
+  `earthsearch:boa_offset_applied` flag.
+- Locked the decoding contract to native Sen2Cor L2A integer values:
+  `reflectance = DN × 0.0001 − 0.1`, applied exactly once. The independent
+  256 × 256 B04 calibration window matched Planetary Computer pixel-for-pixel;
+  the prohibited legacy COG negative control was exactly 1,000 DN lower at
+  every pixel.
+- Independent audit passed the complete date-window crosswalk, two-tile mosaic
+  membership, URL/calibration contracts, snapshot exact set, current pipeline
+  fingerprint, and target-blind flags. A PySTAC storage-extension migration
+  warning was classified as non-material because the pipeline never consumes
+  that extension and no selected asset or calibration metadata was changed.
+- The legacy 34-acquisition inventory remains only under
+  `data/interim/superseded/sentinel_inventory_legacy_double_offset_20260723/`.
+  It is prohibited for feature generation.
+
+## 2026-07-26 — Target-blind 2025 Daymet features completed
+
+- Compiled the six frozen Daymet V4 R1 subsets through the invariant
+  development-era 1 km cell weights into 25,208 tract-date rows
+  (23 dates × 1,096 tracts) and 21 frozen lagged weather predictors.
+- All `d−1`, `d−3`, and `d−7` windows end on target day minus one. All 21
+  predictors have zero missing and zero infinite values; all 25,208 audit rows
+  are complete.
+- Independent audit authenticated all 18 immutable inputs, the 4,544-row fixed
+  weight table, six NetCDF files, request and pipeline fingerprints, both
+  Parquet outputs, and matching internal/external provenance.
+- This stage did not read Landsat target or QA values, load a fitted model,
+  produce a prediction, or consume the one-time final evaluation.

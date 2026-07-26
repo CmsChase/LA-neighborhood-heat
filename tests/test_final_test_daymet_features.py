@@ -167,6 +167,51 @@ def test_compile_is_exact_21_feature_table_with_d_minus_one_lineage(
         )
 
 
+@pytest.mark.parametrize("table_name", ("features", "audit"))
+def test_compiled_tables_accept_only_semantic_string_dtype_round_trip(
+    tmp_path: Path,
+    table_name: str,
+) -> None:
+    compilation = _compile(tmp_path)
+    source = getattr(compilation, table_name)
+    parquet_path = tmp_path / f"{table_name}.parquet"
+    source.to_parquet(parquet_path, index=False)
+    frozen = pd.read_parquet(parquet_path)
+
+    assert source["tract_geoid"].dtype == np.dtype("object")
+    assert isinstance(frozen["tract_geoid"].dtype, pd.StringDtype)
+    final_stage._assert_parquet_round_trip(
+        frozen,
+        source,
+        label=f"synthetic {table_name}",
+    )
+
+
+@pytest.mark.parametrize("change", ("numeric_dtype", "numeric_value"))
+def test_parquet_round_trip_keeps_numeric_dtypes_and_values_strict(
+    change: str,
+) -> None:
+    source = pd.DataFrame(
+        {
+            "tract_geoid": pd.Series(["06037101110"], dtype=object),
+            "daymet_value": pd.Series([1.0], dtype="float64"),
+        }
+    )
+    frozen = source.copy()
+    frozen["tract_geoid"] = frozen["tract_geoid"].astype("str")
+    if change == "numeric_dtype":
+        frozen["daymet_value"] = frozen["daymet_value"].astype("float32")
+    else:
+        frozen.loc[0, "daymet_value"] = np.nextafter(1.0, 2.0)
+
+    with pytest.raises(FinalTestDaymetFeatureError, match="Parquet round trip"):
+        final_stage._assert_parquet_round_trip(
+            frozen,
+            source,
+            label="synthetic feature table",
+        )
+
+
 def test_target_day_and_future_values_cannot_change_target_features(
     tmp_path: Path,
 ) -> None:
