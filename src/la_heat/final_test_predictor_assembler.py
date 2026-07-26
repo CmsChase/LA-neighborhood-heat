@@ -21,6 +21,21 @@ import numpy as np
 import pandas as pd
 
 from la_heat.final_test_inventory import FINAL_TEST_YEAR, authenticate_formal_model_lock
+from la_heat.final_test_sentinel_audit import (
+    ALGORITHM_VERSION as SENTINEL_AUDIT_ALGORITHM_VERSION,
+)
+from la_heat.final_test_sentinel_audit import (
+    AUDIT_PIPELINE_FILES as SENTINEL_AUDIT_PIPELINE_FILES,
+)
+from la_heat.final_test_sentinel_audit import (
+    AUTHORIZATION_PATH as FINAL_TEST_AUTHORIZATION_PATH,
+)
+from la_heat.final_test_sentinel_audit import (
+    DEFAULT_AUDIT_PATH as DEFAULT_SENTINEL_AUDIT_PATH,
+)
+from la_heat.final_test_sentinel_audit import (
+    SCHEMA_VERSION as SENTINEL_AUDIT_SCHEMA_VERSION,
+)
 from la_heat.final_test_sentinel_features import (
     ALGORITHM_VERSION as SENTINEL_ALGORITHM_VERSION,
 )
@@ -155,6 +170,7 @@ _PIPELINE_FILES: Final = tuple(
             "scripts/build_final_test_predictors.py",
             *_BASE_PIPELINE_FILES,
             *_DAYMET_PIPELINE_FILES,
+            *SENTINEL_AUDIT_PIPELINE_FILES,
             *SENTINEL_PIPELINE_FILES,
             "src/la_heat/final_test_inventory.py",
             "src/la_heat/final_test_predictor_assembler.py",
@@ -1012,6 +1028,263 @@ def _authenticate_sentinel(
     return progress, snapshots, progress_sha256
 
 
+def _is_sha256(value: object) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(character in "0123456789abcdef" for character in value)
+    )
+
+
+def _authenticate_sentinel_postrun_audit(
+    *,
+    path: Path,
+    sentinel_path: Path,
+    progress_path: Path,
+    pipeline_path: Path,
+    progress: Mapping[str, Any],
+    progress_sha256: str,
+    formal_sha256: str,
+    formal_commit: str,
+    root: Path,
+) -> tuple[dict[str, Any], list[dict[str, Any]], str, str]:
+    """Require the isolated, current, target-blind Sentinel safety audit."""
+
+    canonical_path = _resolve(root, DEFAULT_SENTINEL_AUDIT_PATH)
+    if path != canonical_path:
+        raise FinalTestPredictorAssemblyError(
+            "Sentinel audit path must be the exact canonical production path."
+        )
+    if (root / FINAL_TEST_AUTHORIZATION_PATH).exists():
+        raise FinalTestPredictorAssemblyError(
+            "Final-test authorization already exists; predictor-only assembly is closed."
+        )
+
+    payload, audit_sha256 = _read_json_stable(
+        path, label="Final-test Sentinel post-run audit"
+    )
+    commit = _verify_commit(payload, label="Final-test Sentinel post-run audit")
+    if (
+        payload.get("schema_version") != SENTINEL_AUDIT_SCHEMA_VERSION
+        or payload.get("algorithm_version") != SENTINEL_AUDIT_ALGORITHM_VERSION
+        or payload.get("state") != "passed"
+        or payload.get("safe_for_final_predictor_assembly") is not True
+        or payload.get("target_blind") is not True
+        or payload.get("target_or_qa_values_read") is not False
+        or payload.get("target_or_qa_paths_opened") != []
+        or payload.get("fitted_models_loaded") is not False
+        or payload.get("predictions_scores_or_metrics_read") is not False
+        or payload.get("authorization_file_present") is not False
+        or payload.get("sentinel_algorithm_version")
+        != SENTINEL_ALGORITHM_VERSION
+    ):
+        raise FinalTestPredictorAssemblyError(
+            "Final-test Sentinel audit is absent, unsafe, or not target-blind."
+        )
+    _verify_upstream_pipeline(
+        payload.get("audit_pipeline_fingerprint"),
+        payload.get("audit_pipeline_sha256"),
+        root=root,
+        label="Final-test Sentinel post-run audit",
+        expected_algorithm_version=SENTINEL_AUDIT_ALGORITHM_VERSION,
+        expected_files=SENTINEL_AUDIT_PIPELINE_FILES,
+    )
+
+    raw_snapshots = payload.get("authenticated_input_files")
+    if (
+        not isinstance(raw_snapshots, list)
+        or not raw_snapshots
+        or payload.get("authenticated_input_file_set_sha256")
+        != canonical_sha256(raw_snapshots)
+    ):
+        raise FinalTestPredictorAssemblyError(
+            "Sentinel audit authenticated-input set is invalid."
+        )
+    recorded_paths = [
+        str(record.get("path", ""))
+        for record in raw_snapshots
+        if isinstance(record, Mapping)
+    ]
+    if (
+        len(recorded_paths) != len(raw_snapshots)
+        or recorded_paths != sorted(recorded_paths)
+    ):
+        raise FinalTestPredictorAssemblyError(
+            "Sentinel audit authenticated-input ordering is invalid."
+        )
+
+    snapshots_by_path: dict[Path, dict[str, Any]] = {}
+    for raw_record in raw_snapshots:
+        if (
+            not isinstance(raw_record, Mapping)
+            or set(raw_record) != {"path", "sha256", "bytes"}
+            or not isinstance(raw_record.get("path"), str)
+            or not raw_record["path"]
+            or not _is_sha256(raw_record.get("sha256"))
+            or isinstance(raw_record.get("bytes"), bool)
+            or not isinstance(raw_record.get("bytes"), int)
+            or int(raw_record["bytes"]) < 0
+        ):
+            raise FinalTestPredictorAssemblyError(
+                "Sentinel audit contains an invalid authenticated-input record."
+            )
+        input_path = _resolve(root, str(raw_record["path"]))
+        if input_path in snapshots_by_path:
+            raise FinalTestPredictorAssemblyError(
+                "Sentinel audit contains duplicate authenticated-input paths."
+            )
+        snapshots_by_path[input_path] = _snapshot_record(
+            input_path,
+            expected=raw_record,
+            label=f"Sentinel audit input {raw_record['path']}",
+        )
+
+    def require_audited(path_to_require: Path, *, label: str) -> dict[str, Any]:
+        record = snapshots_by_path.get(path_to_require.resolve())
+        if record is None:
+            raise FinalTestPredictorAssemblyError(
+                f"Sentinel audit does not authenticate {label}."
+            )
+        return record
+
+    status_path = progress_path.parent / "status.json"
+    require_audited(status_path, label="the canonical completion status")
+    audited_progress = require_audited(
+        progress_path, label="the canonical build progress"
+    )
+    audited_pipeline = require_audited(
+        pipeline_path, label="the canonical pipeline fingerprint"
+    )
+    if (
+        audited_progress["sha256"] != progress_sha256
+        or audited_pipeline["sha256"] != sha256_file(pipeline_path)
+    ):
+        raise FinalTestPredictorAssemblyError(
+            "Sentinel audit no longer binds the active progress/pipeline files."
+        )
+
+    aggregates = progress.get("aggregate_outputs")
+    if not isinstance(aggregates, Mapping) or set(aggregates) != _SENTINEL_AGGREGATE_FILES:
+        raise FinalTestPredictorAssemblyError(
+            "Sentinel audit cannot bind an incomplete aggregate output set."
+        )
+    for name in sorted(_SENTINEL_AGGREGATE_FILES):
+        record = aggregates.get(name)
+        if not isinstance(record, Mapping):
+            raise FinalTestPredictorAssemblyError(
+                f"Sentinel aggregate output {name} is invalid."
+            )
+        aggregate_path = progress_path.parent / name
+        audited = require_audited(
+            aggregate_path, label=f"Sentinel aggregate output {name}"
+        )
+        if (
+            audited["sha256"] != record.get("sha256")
+            or audited["bytes"] != record.get("bytes")
+        ):
+            raise FinalTestPredictorAssemblyError(
+                f"Sentinel audit/aggregate hash mismatch: {name}."
+            )
+    if sentinel_path != progress_path.parent / "sentinel_features.parquet":
+        raise FinalTestPredictorAssemblyError(
+            "Sentinel audit feature path is outside the authenticated production build."
+        )
+
+    completion = payload.get("completion_contract")
+    semantic = payload.get("semantic_contract")
+    acquisition = semantic.get("acquisition") if isinstance(semantic, Mapping) else None
+    cache = payload.get("cache_contract")
+    calibration = payload.get("calibration_classification")
+    feature_record = aggregates.get("sentinel_features.parquet")
+    if (
+        not isinstance(completion, Mapping)
+        or completion.get("status_complete") is not True
+        or completion.get("progress_complete") is not True
+        or completion.get("algorithm_version") != SENTINEL_ALGORITHM_VERSION
+        or completion.get("completed_physical_acquisition_count")
+        != SENTINEL_EXPECTED_ACQUISITION_COUNT
+        or completion.get("feature_available_row_count")
+        != progress.get("feature_available_row_count")
+        or not isinstance(semantic, Mapping)
+        or semantic.get("feature_row_count") != EXPECTED_ROW_COUNT
+        or semantic.get("audit_row_count") != EXPECTED_ROW_COUNT
+        or semantic.get("target_date_count") != EXPECTED_DATE_COUNT
+        or semantic.get("tract_count") != EXPECTED_TRACT_COUNT
+        or semantic.get("feature_available_row_count")
+        != progress.get("feature_available_row_count")
+        or semantic.get("all_or_none_feature_missingness") is not True
+        or semantic.get("minimum_source_age_days", 0) < 1
+        or semantic.get("maximum_source_age_days", 61) > 60
+        or semantic.get("target_day_or_future_source_count") != 0
+        or not isinstance(feature_record, Mapping)
+        or not _is_sha256(semantic.get("semantic_feature_table_sha256"))
+        or not isinstance(acquisition, Mapping)
+        or acquisition.get("physical_acquisition_count")
+        != SENTINEL_EXPECTED_ACQUISITION_COUNT
+        or acquisition.get("tract_count") != EXPECTED_TRACT_COUNT
+        or acquisition.get("fixed_denominator_invariant") is not True
+        or acquisition.get("two_tile_mosaic_invariant") is not True
+        or not isinstance(cache, Mapping)
+        or cache.get("cache_count") != SENTINEL_EXPECTED_ACQUISITION_COUNT
+        or cache.get("all_current") is not True
+        or not isinstance(calibration, Mapping)
+        or calibration.get("passed") is not True
+        or calibration.get("classification") != "c1_calibration_consistent"
+    ):
+        raise FinalTestPredictorAssemblyError(
+            "Final-test Sentinel audit safety/semantic contract failed."
+        )
+
+    upstream = payload.get("upstream_locks")
+    expected_upstream = {
+        "formal_model_lock_sha256": formal_sha256,
+        "formal_model_lock_commit_sha256": formal_commit,
+        "sentinel_inventory_provenance_sha256": progress.get(
+            "final_sentinel_inventory_provenance_sha256"
+        ),
+        "sentinel_inventory_commit_sha256": progress.get(
+            "final_sentinel_inventory_commit_sha256"
+        ),
+        "sentinel_inventory_semantic_sha256": progress.get(
+            "sentinel_inventory_semantic_sha256"
+        ),
+        "raw_stac_snapshot_set_sha256": progress.get(
+            "raw_stac_snapshot_set_sha256"
+        ),
+        "static_feature_audit_sha256": progress.get(
+            "static_feature_audit_sha256"
+        ),
+        "target_grid_identity_sha256": progress.get(
+            "target_grid_identity_sha256"
+        ),
+    }
+    if (
+        not isinstance(upstream, Mapping)
+        or dict(upstream) != expected_upstream
+        or any(not _is_sha256(value) for value in expected_upstream.values())
+        or payload.get("source_collection")
+        != progress.get("sentinel_source_collection")
+        or payload.get("raw_dn_encoding")
+        != progress.get("sentinel_raw_dn_encoding")
+        or payload.get("prohibited_legacy_collection")
+        != progress.get("sentinel_prohibited_legacy_collection")
+        or payload.get("provider_parity_evidence_sha256")
+        != progress.get("sentinel_provider_parity_evidence_sha256")
+    ):
+        raise FinalTestPredictorAssemblyError(
+            "Final-test Sentinel audit upstream locks drifted."
+        )
+
+    audit_snapshot = _snapshot_record(
+        path, label="Final-test Sentinel post-run audit"
+    )
+    snapshots = _deduplicate_snapshot(
+        [audit_snapshot, *snapshots_by_path.values()]
+    )
+    _verify_snapshot(snapshots)
+    return payload, snapshots, commit, audit_sha256
+
+
 def _normalize_keys(
     frame: pd.DataFrame,
     *,
@@ -1284,6 +1557,7 @@ def _request_payload(
     sentinel_path: Path,
     sentinel_progress_path: Path,
     sentinel_pipeline_path: Path,
+    sentinel_audit_path: Path,
     research_config_path: Path,
     sentinel_stage_config_path: Path,
     sentinel_inventory_directory: Path,
@@ -1303,6 +1577,7 @@ def _request_payload(
         "sentinel_feature_path": str(sentinel_path),
         "sentinel_build_progress_path": str(sentinel_progress_path),
         "sentinel_pipeline_fingerprint_path": str(sentinel_pipeline_path),
+        "sentinel_postrun_audit_path": str(sentinel_audit_path),
         "research_config_path": str(research_config_path),
         "sentinel_stage_config_path": str(sentinel_stage_config_path),
         "sentinel_inventory_directory": str(sentinel_inventory_directory),
@@ -1409,6 +1684,40 @@ def _authenticate_existing(
     formal_path = Path(str(expected_request["formal_model_lock_path"]))
     formal, formal_sha256 = authenticate_formal_model_lock(formal_path)
     _, _, _, formal_model_names = _model_feature_contract(formal)
+    sentinel_progress_path = Path(
+        str(expected_request["sentinel_build_progress_path"])
+    )
+    sentinel_pipeline_path = Path(
+        str(expected_request["sentinel_pipeline_fingerprint_path"])
+    )
+    sentinel_audit_path = Path(
+        str(expected_request["sentinel_postrun_audit_path"])
+    )
+    sentinel_progress, sentinel_progress_sha256 = _read_json_stable(
+        sentinel_progress_path, label="Final-test Sentinel build progress"
+    )
+    (
+        sentinel_audit,
+        _,
+        sentinel_audit_commit,
+        sentinel_audit_sha256,
+    ) = _authenticate_sentinel_postrun_audit(
+        path=sentinel_audit_path,
+        sentinel_path=Path(str(expected_request["sentinel_feature_path"])),
+        progress_path=sentinel_progress_path,
+        pipeline_path=sentinel_pipeline_path,
+        progress=sentinel_progress,
+        progress_sha256=sentinel_progress_sha256,
+        formal_sha256=formal_sha256,
+        formal_commit=str(formal["commit_sha256"]),
+        root=root,
+    )
+    upstream_commits = payload.get("upstream_commits")
+    recorded_audit = (
+        upstream_commits.get("sentinel_postrun_audit")
+        if isinstance(upstream_commits, Mapping)
+        else None
+    )
     if (
         payload.get("feature_names") != formal_model_names
         or payload.get("formal_model_lock")
@@ -1417,9 +1726,20 @@ def _authenticate_existing(
             "sha256": formal_sha256,
             "commit_sha256": formal["commit_sha256"],
         }
+        or payload.get("sentinel_postrun_audit_passed") is not True
+        or payload.get("sentinel_postrun_audit_commit_sha256")
+        != sentinel_audit_commit
+        or not isinstance(recorded_audit, Mapping)
+        or dict(recorded_audit)
+        != {
+            "path": str(sentinel_audit_path),
+            "sha256": sentinel_audit_sha256,
+            "commit_sha256": sentinel_audit_commit,
+            "audit_pipeline_sha256": sentinel_audit["audit_pipeline_sha256"],
+        }
     ):
         raise FinalTestPredictorAssemblyError(
-            "Published predictors disagree with the active formal model lock."
+            "Published predictors disagree with the active model/Sentinel audit locks."
         )
     outputs = payload.get("output_files")
     expected_outputs = {
@@ -1575,6 +1895,7 @@ def build_final_test_predictor_artifacts(
     sentinel_feature_path: str | Path = DEFAULT_SENTINEL_PATH,
     sentinel_progress_path: str | Path = DEFAULT_SENTINEL_PROGRESS_PATH,
     sentinel_pipeline_path: str | Path = DEFAULT_SENTINEL_PIPELINE_PATH,
+    sentinel_audit_path: str | Path = DEFAULT_SENTINEL_AUDIT_PATH,
     research_config_path: str | Path = DEFAULT_RESEARCH_CONFIG_PATH,
     sentinel_stage_config_path: str | Path = DEFAULT_SENTINEL_STAGE_CONFIG_PATH,
     sentinel_inventory_directory: str | Path = DEFAULT_SENTINEL_INVENTORY_DIRECTORY,
@@ -1594,6 +1915,7 @@ def build_final_test_predictor_artifacts(
     sentinel_path = _resolve(root, sentinel_feature_path)
     sentinel_progress_path = _resolve(root, sentinel_progress_path)
     sentinel_pipeline_path = _resolve(root, sentinel_pipeline_path)
+    sentinel_audit_path = _resolve(root, sentinel_audit_path)
     research_config_path = _resolve(root, research_config_path)
     sentinel_stage_config_path = _resolve(root, sentinel_stage_config_path)
     sentinel_inventory_directory = _resolve(root, sentinel_inventory_directory)
@@ -1609,6 +1931,7 @@ def build_final_test_predictor_artifacts(
         sentinel_path,
         sentinel_progress_path,
         sentinel_pipeline_path,
+        sentinel_audit_path,
         research_config_path,
         sentinel_stage_config_path,
     }
@@ -1642,6 +1965,7 @@ def build_final_test_predictor_artifacts(
         sentinel_path=sentinel_path,
         sentinel_progress_path=sentinel_progress_path,
         sentinel_pipeline_path=sentinel_pipeline_path,
+        sentinel_audit_path=sentinel_audit_path,
         research_config_path=research_config_path,
         sentinel_stage_config_path=sentinel_stage_config_path,
         sentinel_inventory_directory=sentinel_inventory_directory,
@@ -1669,6 +1993,7 @@ def build_final_test_predictor_artifacts(
         ("Daymet provenance", daymet_provenance_path),
         ("Sentinel build progress", sentinel_progress_path),
         ("Sentinel pipeline fingerprint", sentinel_pipeline_path),
+        ("Sentinel post-run safety audit", sentinel_audit_path),
     ):
         if not required.is_file():
             raise FileNotFoundError(f"Missing {label}: {required}")
@@ -1720,12 +2045,29 @@ def build_final_test_predictor_artifacts(
             root=root,
         )
     )
+    (
+        sentinel_audit,
+        sentinel_audit_snapshots,
+        sentinel_audit_commit,
+        sentinel_audit_sha256,
+    ) = _authenticate_sentinel_postrun_audit(
+        path=sentinel_audit_path,
+        sentinel_path=sentinel_path,
+        progress_path=sentinel_progress_path,
+        pipeline_path=sentinel_pipeline_path,
+        progress=sentinel_progress,
+        progress_sha256=sentinel_progress_sha256,
+        formal_sha256=formal_sha256,
+        formal_commit=formal_commit,
+        root=root,
+    )
     immutable_inputs = _deduplicate_snapshot(
         [
             _snapshot_record(formal_path, label="Formal model lock"),
             *base_snapshots,
             *daymet_snapshots,
             *sentinel_snapshots,
+            *sentinel_audit_snapshots,
         ]
     )
     _verify_snapshot(immutable_inputs)
@@ -1833,6 +2175,10 @@ def build_final_test_predictor_artifacts(
             ),
             "sentinel_missing_row_count": sentinel_missing_rows,
             "sentinel_all_or_none_missingness": True,
+            "sentinel_postrun_audit_passed": (
+                sentinel_audit["safe_for_final_predictor_assembly"]
+            ),
+            "sentinel_postrun_audit_commit_sha256": sentinel_audit_commit,
             "non_sentinel_missing_count": int(
                 predictors.loc[:, [*base_names, *daymet_names]].isna().sum().sum()
             ),
@@ -1867,6 +2213,14 @@ def build_final_test_predictor_artifacts(
                     "sha256": sentinel_progress_sha256,
                     "pipeline_sha256": sentinel_progress[
                         "final_test_sentinel_feature_pipeline_sha256"
+                    ],
+                },
+                "sentinel_postrun_audit": {
+                    "path": str(sentinel_audit_path),
+                    "sha256": sentinel_audit_sha256,
+                    "commit_sha256": sentinel_audit_commit,
+                    "audit_pipeline_sha256": sentinel_audit[
+                        "audit_pipeline_sha256"
                     ],
                 },
             },

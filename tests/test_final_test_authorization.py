@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +17,11 @@ from la_heat.final_test_authorization import (
     _git_state,
     authorize_final_test_2025,
     preflight_final_test_2025,
+)
+from la_heat.final_test_state_lock import (
+    DEFAULT_FINAL_TEST_STATE_LOCK_PATH,
+    FinalTestStateLock,
+    FinalTestStateLockBusyError,
 )
 from la_heat.provenance import canonical_sha256, sha256_file
 
@@ -369,3 +375,83 @@ def test_atomic_publication_never_replaces_an_existing_authorization(
 
     assert destination.read_bytes() == b"original"
     assert not list(tmp_path.glob("*.partial"))
+
+
+def test_authorization_rechecks_absence_after_preflight(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    module, config, _, _ = _synthetic_lock(tmp_path, monkeypatch)
+    output = tmp_path / "manifests/final_test_2025/AUTHORIZATION.json"
+    call_count = 0
+
+    def racing_git_state(_root: Path) -> dict[str, Any]:
+        nonlocal call_count
+        call_count += 1
+        if call_count == 2:
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_bytes(b"racing publisher")
+        return {
+            "head": "a" * 40,
+            "working_tree_clean": True,
+            "status_entry_count": 0,
+        }
+
+    monkeypatch.setattr(authorization_module, "_git_state", racing_git_state)
+
+    with pytest.raises(FileExistsError, match="never be overwritten"):
+        authorize_final_test_2025(
+            evaluator_module=module,
+            evaluator_config=config,
+            approve_one_time_2025=True,
+        )
+
+    assert output.read_bytes() == b"racing publisher"
+
+
+def test_authorization_publisher_respects_shared_state_lock(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    module, config, _, _ = _synthetic_lock(tmp_path, monkeypatch)
+    lock_path = tmp_path / DEFAULT_FINAL_TEST_STATE_LOCK_PATH
+
+    with FinalTestStateLock(lock_path):
+        with pytest.raises(FinalTestStateLockBusyError):
+            authorize_final_test_2025(
+                evaluator_module=module,
+                evaluator_config=config,
+                approve_one_time_2025=True,
+            )
+
+    assert not (
+        tmp_path / "manifests/final_test_2025/AUTHORIZATION.json"
+    ).exists()
+
+
+def test_shared_state_lock_excludes_another_process(tmp_path: Path) -> None:
+    lock_path = tmp_path / DEFAULT_FINAL_TEST_STATE_LOCK_PATH
+    child = "\n".join(
+        (
+            "import sys",
+            "from pathlib import Path",
+            "from la_heat.final_test_state_lock import (",
+            "    FinalTestStateLock, FinalTestStateLockBusyError,",
+            ")",
+            "try:",
+            "    with FinalTestStateLock(Path(sys.argv[1])):",
+            "        raise SystemExit(2)",
+            "except FinalTestStateLockBusyError:",
+            "    raise SystemExit(0)",
+        )
+    )
+
+    with FinalTestStateLock(lock_path):
+        result = subprocess.run(
+            [sys.executable, "-c", child, str(lock_path)],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+
+    assert result.returncode == 0, result.stderr

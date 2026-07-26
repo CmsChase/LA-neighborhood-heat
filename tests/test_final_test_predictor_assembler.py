@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -254,6 +255,11 @@ def _synthetic_artifacts(
         algorithm_version=assembler.SENTINEL_ALGORITHM_VERSION,
         files=assembler.SENTINEL_PIPELINE_FILES,
     )
+    sentinel_audit_pipeline_sha256, sentinel_audit_pipeline = _mini_pipeline(
+        root,
+        algorithm_version=assembler.SENTINEL_AUDIT_ALGORITHM_VERSION,
+        files=assembler.SENTINEL_AUDIT_PIPELINE_FILES,
+    )
     base, daymet, sentinel = _frames()
 
     formal_path = tmp_path / "formal" / "MODEL_LOCK.json"
@@ -411,6 +417,11 @@ def _synthetic_artifacts(
         "build_complete": True,
         "target_blind_predictor_access": "2025_predictors_only_no_labels",
         "requester_pays_product_xml_opened": "false",
+        "public_product_xml_opened": "false",
+        "sentinel_source_collection": "sentinel-2-c1-l2a",
+        "sentinel_raw_dn_encoding": "native_dn_scale_offset_once",
+        "sentinel_prohibited_legacy_collection": "sentinel-2-l2a",
+        "sentinel_provider_parity_evidence_sha256": "b" * 64,
         "expected_physical_acquisition_count": (
             assembler.SENTINEL_EXPECTED_ACQUISITION_COUNT
         ),
@@ -425,6 +436,12 @@ def _synthetic_artifacts(
         "formal_model_lock_commit_sha256": formal["commit_sha256"],
         "landsat_inventory_sha256": landsat_record["sha256"],
         "landsat_inventory_commit_sha256": landsat_record["commit_sha256"],
+        "final_sentinel_inventory_provenance_sha256": "c" * 64,
+        "final_sentinel_inventory_commit_sha256": "d" * 64,
+        "sentinel_inventory_semantic_sha256": "e" * 64,
+        "raw_stac_snapshot_set_sha256": "f" * 64,
+        "static_feature_audit_sha256": "1" * 64,
+        "target_grid_identity_sha256": "2" * 64,
         "final_test_sentinel_feature_pipeline_sha256": sentinel_pipeline_sha256,
         "final_test_sentinel_feature_pipeline_fingerprint_sha256": sha256_file(
             sentinel_pipeline_path
@@ -436,6 +453,129 @@ def _synthetic_artifacts(
         "aggregate_outputs": aggregate_records,
     }
     _write_json(sentinel_progress_path, sentinel_progress)
+    sentinel_status_path = sentinel_directory / "status.json"
+    _write_json(
+        sentinel_status_path,
+        {
+            "state": "complete",
+            "algorithm_version": assembler.SENTINEL_ALGORITHM_VERSION,
+            "total": assembler.SENTINEL_EXPECTED_ACQUISITION_COUNT,
+            "completed": assembler.SENTINEL_EXPECTED_ACQUISITION_COUNT,
+            "running": 0,
+            "failed": 0,
+            "current": [],
+            "failures": [],
+            "compile_state": "complete",
+            "promoted_outputs_valid": True,
+        },
+    )
+    audit_inputs = sorted(
+        [
+            _file_record(sentinel_status_path),
+            _file_record(sentinel_progress_path),
+            _file_record(sentinel_pipeline_path),
+            *[
+                _file_record(sentinel_directory / name)
+                for name in sorted(aggregate_frames)
+            ],
+        ],
+        key=lambda record: str(record["path"]),
+    )
+    sentinel_audit_path = (
+        tmp_path
+        / "sentinel_manifest"
+        / "SENTINEL_FEATURE_AUDIT.json"
+    )
+    sentinel_audit_payload = {
+        "schema_version": assembler.SENTINEL_AUDIT_SCHEMA_VERSION,
+        "algorithm_version": assembler.SENTINEL_AUDIT_ALGORITHM_VERSION,
+        "state": "passed",
+        "safe_for_final_predictor_assembly": True,
+        "target_blind": True,
+        "target_or_qa_values_read": False,
+        "target_or_qa_paths_opened": [],
+        "fitted_models_loaded": False,
+        "predictions_scores_or_metrics_read": False,
+        "authorization_file_present": False,
+        "sentinel_algorithm_version": assembler.SENTINEL_ALGORITHM_VERSION,
+        "source_collection": sentinel_progress["sentinel_source_collection"],
+        "raw_dn_encoding": sentinel_progress["sentinel_raw_dn_encoding"],
+        "prohibited_legacy_collection": sentinel_progress[
+            "sentinel_prohibited_legacy_collection"
+        ],
+        "provider_parity_evidence_sha256": sentinel_progress[
+            "sentinel_provider_parity_evidence_sha256"
+        ],
+        "completion_contract": {
+            "status_complete": True,
+            "progress_complete": True,
+            "algorithm_version": assembler.SENTINEL_ALGORITHM_VERSION,
+            "completed_physical_acquisition_count": (
+                assembler.SENTINEL_EXPECTED_ACQUISITION_COUNT
+            ),
+            "feature_available_row_count": 2,
+        },
+        "semantic_contract": {
+            "feature_row_count": 4,
+            "audit_row_count": 4,
+            "target_date_count": 2,
+            "tract_count": 2,
+            "feature_available_row_count": 2,
+            "all_or_none_feature_missingness": True,
+            "minimum_source_age_days": 1,
+            "maximum_source_age_days": 60,
+            "target_day_or_future_source_count": 0,
+            "semantic_feature_table_sha256": canonical_frame_sha256(
+                sentinel, sort_by=["target_date", "tract_geoid"]
+            ),
+            "acquisition": {
+                "physical_acquisition_count": (
+                    assembler.SENTINEL_EXPECTED_ACQUISITION_COUNT
+                ),
+                "tract_count": 2,
+                "fixed_denominator_invariant": True,
+                "two_tile_mosaic_invariant": True,
+            },
+        },
+        "cache_contract": {
+            "cache_count": assembler.SENTINEL_EXPECTED_ACQUISITION_COUNT,
+            "all_current": True,
+        },
+        "calibration_classification": {
+            "passed": True,
+            "classification": "c1_calibration_consistent",
+        },
+        "authenticated_input_files": audit_inputs,
+        "authenticated_input_file_set_sha256": canonical_sha256(audit_inputs),
+        "upstream_locks": {
+            "formal_model_lock_sha256": formal_sha256,
+            "formal_model_lock_commit_sha256": formal["commit_sha256"],
+            "sentinel_inventory_provenance_sha256": sentinel_progress[
+                "final_sentinel_inventory_provenance_sha256"
+            ],
+            "sentinel_inventory_commit_sha256": sentinel_progress[
+                "final_sentinel_inventory_commit_sha256"
+            ],
+            "sentinel_inventory_semantic_sha256": sentinel_progress[
+                "sentinel_inventory_semantic_sha256"
+            ],
+            "raw_stac_snapshot_set_sha256": sentinel_progress[
+                "raw_stac_snapshot_set_sha256"
+            ],
+            "static_feature_audit_sha256": sentinel_progress[
+                "static_feature_audit_sha256"
+            ],
+            "target_grid_identity_sha256": sentinel_progress[
+                "target_grid_identity_sha256"
+            ],
+        },
+        "audit_pipeline_sha256": sentinel_audit_pipeline_sha256,
+        "audit_pipeline_fingerprint": sentinel_audit_pipeline,
+    }
+    _write_json(sentinel_audit_path, _commit(sentinel_audit_payload))
+    monkeypatch.setattr(
+        assembler, "DEFAULT_SENTINEL_AUDIT_PATH", sentinel_audit_path
+    )
 
     return {
         "formal": formal_path,
@@ -446,25 +586,30 @@ def _synthetic_artifacts(
         "sentinel": sentinel_path,
         "sentinel_progress": sentinel_progress_path,
         "sentinel_pipeline": sentinel_pipeline_path,
+        "sentinel_audit": sentinel_audit_path,
         "output": tmp_path / "published" / "predictors",
         "marker": tmp_path / "manifest" / "PREDICTOR_ASSEMBLY.json",
     }
 
 
 def _build(paths: dict[str, Path], **kwargs: Any) -> dict[str, Any]:
-    return assembler.build_final_test_predictor_artifacts(
-        formal_lock_path=paths["formal"],
-        predictor_base_path=paths["base"],
-        predictor_base_provenance_path=paths["base_provenance"],
-        daymet_feature_path=paths["daymet"],
-        daymet_provenance_path=paths["daymet_provenance"],
-        sentinel_feature_path=paths["sentinel"],
-        sentinel_progress_path=paths["sentinel_progress"],
-        sentinel_pipeline_path=paths["sentinel_pipeline"],
-        output_directory=paths["output"],
-        provenance_path=paths["marker"],
-        **kwargs,
-    )
+    arguments: dict[str, Any] = {
+        "formal_lock_path": paths["formal"],
+        "predictor_base_path": paths["base"],
+        "predictor_base_provenance_path": paths["base_provenance"],
+        "daymet_feature_path": paths["daymet"],
+        "daymet_provenance_path": paths["daymet_provenance"],
+        "sentinel_feature_path": paths["sentinel"],
+        "sentinel_progress_path": paths["sentinel_progress"],
+        "sentinel_pipeline_path": paths["sentinel_pipeline"],
+        "sentinel_audit_path": paths.get(
+            "sentinel_audit", assembler.DEFAULT_SENTINEL_AUDIT_PATH
+        ),
+        "output_directory": paths["output"],
+        "provenance_path": paths["marker"],
+    }
+    arguments.update(kwargs)
+    return assembler.build_final_test_predictor_artifacts(**arguments)
 
 
 def test_full_build_is_target_blind_exact_and_reauthenticates(
@@ -588,6 +733,79 @@ def test_missing_daymet_commit_fails_before_any_predictor_parquet_read(
     monkeypatch.setattr(pd, "read_parquet", forbidden_read)
     with pytest.raises(FileNotFoundError, match="Daymet provenance"):
         _build(paths)
+
+
+def test_missing_sentinel_postrun_audit_blocks_assembly(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    paths = _synthetic_artifacts(tmp_path, monkeypatch)
+    paths["sentinel_audit"].unlink()
+
+    with pytest.raises(FileNotFoundError, match="Sentinel post-run safety audit"):
+        _build(paths)
+    assert not paths["output"].exists()
+    assert not paths["marker"].exists()
+
+
+def test_tampered_sentinel_postrun_audit_input_hash_blocks_assembly(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    paths = _synthetic_artifacts(tmp_path, monkeypatch)
+    payload = json.loads(paths["sentinel_audit"].read_text(encoding="utf-8"))
+    payload.pop("commit_sha256")
+    feature_record = next(
+        record
+        for record in payload["authenticated_input_files"]
+        if Path(record["path"]).name == "sentinel_features.parquet"
+    )
+    feature_record["sha256"] = "0" * 64
+    payload["authenticated_input_file_set_sha256"] = canonical_sha256(
+        payload["authenticated_input_files"]
+    )
+    _write_json(paths["sentinel_audit"], _commit(payload))
+
+    with pytest.raises(
+        assembler.FinalTestPredictorAssemblyError,
+        match="SHA-256 lock failed",
+    ):
+        _build(paths)
+    assert not paths["output"].exists()
+
+
+def test_unsafe_sentinel_postrun_audit_blocks_assembly(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    paths = _synthetic_artifacts(tmp_path, monkeypatch)
+    payload = json.loads(paths["sentinel_audit"].read_text(encoding="utf-8"))
+    payload.pop("commit_sha256")
+    payload["safe_for_final_predictor_assembly"] = False
+    _write_json(paths["sentinel_audit"], _commit(payload))
+
+    with pytest.raises(
+        assembler.FinalTestPredictorAssemblyError,
+        match="absent, unsafe, or not target-blind",
+    ):
+        _build(paths)
+    assert not paths["output"].exists()
+
+
+def test_noncanonical_sentinel_audit_path_is_rejected(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    paths = _synthetic_artifacts(tmp_path, monkeypatch)
+    alternate = tmp_path / "alternate" / "SENTINEL_FEATURE_AUDIT.json"
+    alternate.parent.mkdir()
+    shutil.copyfile(paths["sentinel_audit"], alternate)
+
+    with pytest.raises(
+        assembler.FinalTestPredictorAssemblyError,
+        match="exact canonical production path",
+    ):
+        _build(paths, sentinel_audit_path=alternate)
 
 
 def test_existing_commit_rejects_changed_cli_request(

@@ -15,6 +15,7 @@ from la_heat.final_test_predictor_assembler import (
     DEFAULT_OUTPUT_DIRECTORY,
     DEFAULT_PROVENANCE_PATH,
     DEFAULT_RESEARCH_CONFIG_PATH,
+    DEFAULT_SENTINEL_AUDIT_PATH,
     DEFAULT_SENTINEL_INVENTORY_DIRECTORY,
     DEFAULT_SENTINEL_PATH,
     DEFAULT_SENTINEL_PIPELINE_PATH,
@@ -56,6 +57,15 @@ def build_parser() -> argparse.ArgumentParser:
         default=DEFAULT_SENTINEL_PIPELINE_PATH,
     )
     parser.add_argument(
+        "--sentinel-audit",
+        type=Path,
+        default=DEFAULT_SENTINEL_AUDIT_PATH,
+        help=(
+            "Canonical post-run safety audit; non-canonical paths are rejected "
+            "by the production assembler."
+        ),
+    )
+    parser.add_argument(
         "--research-config", type=Path, default=DEFAULT_RESEARCH_CONFIG_PATH
     )
     parser.add_argument(
@@ -89,6 +99,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         sentinel_feature_path=args.sentinel_features,
         sentinel_progress_path=args.sentinel_progress,
         sentinel_pipeline_path=args.sentinel_pipeline,
+        sentinel_audit_path=args.sentinel_audit,
         research_config_path=args.research_config,
         sentinel_stage_config_path=args.sentinel_stage_config,
         sentinel_inventory_directory=args.sentinel_inventory_directory,

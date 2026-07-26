@@ -12,6 +12,10 @@ from pathlib import Path
 from typing import Any, Final
 
 from la_heat.final_model import FinalModelError, authenticate_final_build_provenance
+from la_heat.final_test_state_lock import (
+    DEFAULT_FINAL_TEST_STATE_LOCK_PATH,
+    FinalTestStateLock,
+)
 from la_heat.formal_model_lock import (
     FORMAL_MODEL_LOCK_ALGORITHM_VERSION,
     FORMAL_MODEL_LOCK_SCHEMA_VERSION,
@@ -354,14 +358,14 @@ def _authorization_absent(path: Path) -> None:
         )
 
 
-def preflight_final_test_2025(
+def _preflight_final_test_2025_locked(
     *,
     evaluator_module: str | Path,
     evaluator_config: str | Path,
     model_lock_path: str | Path = DEFAULT_MODEL_LOCK_PATH,
     authorization_path: str | Path = DEFAULT_AUTHORIZATION_PATH,
 ) -> dict[str, Any]:
-    """Validate authorization readiness without reading or authorizing 2025 values."""
+    """Validate readiness while the caller owns the shared final-test lock."""
 
     root = _project_root().resolve()
     lock_path = _require_exact_path(
@@ -440,6 +444,25 @@ def preflight_final_test_2025(
     }
 
 
+def preflight_final_test_2025(
+    *,
+    evaluator_module: str | Path,
+    evaluator_config: str | Path,
+    model_lock_path: str | Path = DEFAULT_MODEL_LOCK_PATH,
+    authorization_path: str | Path = DEFAULT_AUTHORIZATION_PATH,
+) -> dict[str, Any]:
+    """Validate readiness without reading or authorizing 2025 values."""
+
+    root = _project_root().resolve()
+    with FinalTestStateLock(root / DEFAULT_FINAL_TEST_STATE_LOCK_PATH):
+        return _preflight_final_test_2025_locked(
+            evaluator_module=evaluator_module,
+            evaluator_config=evaluator_config,
+            model_lock_path=model_lock_path,
+            authorization_path=authorization_path,
+        )
+
+
 def _atomic_create_json(payload: dict[str, Any], destination: Path) -> None:
     """Publish a complete JSON file atomically while refusing any existing name."""
 
@@ -476,41 +499,48 @@ def authorize_final_test_2025(
         raise PermissionError(
             "2025 final-test authorization requires explicit --approve-one-time-2025."
         )
-    preflight = preflight_final_test_2025(
-        evaluator_module=evaluator_module,
-        evaluator_config=evaluator_config,
-        model_lock_path=model_lock_path,
-        authorization_path=authorization_path,
-    )
     root = _project_root().resolve()
-    output = _require_exact_path(
-        root,
-        authorization_path,
-        DEFAULT_AUTHORIZATION_PATH,
-        label="Authorization output",
-        require_file=False,
-    )
+    with FinalTestStateLock(root / DEFAULT_FINAL_TEST_STATE_LOCK_PATH):
+        preflight = _preflight_final_test_2025_locked(
+            evaluator_module=evaluator_module,
+            evaluator_config=evaluator_config,
+            model_lock_path=model_lock_path,
+            authorization_path=authorization_path,
+        )
+        output = _require_exact_path(
+            root,
+            authorization_path,
+            DEFAULT_AUTHORIZATION_PATH,
+            label="Authorization output",
+            require_file=False,
+        )
 
-    # Recheck the clean HEAD and every committed authorization input directly
-    # before exclusive publication. No final-test path is accepted or opened.
-    git = _git_state(root)
-    if git["head"] != preflight["evaluator_code_git_commit"]:
-        raise FinalTestAuthorizationError("Git HEAD changed during authorization preflight.")
-    for key in ("formal_model_lock", "evaluator_module", "evaluator_config"):
-        record = preflight[key]
-        path, _ = _resolve_project_path(root, record["path"], label=key)
-        expected_sha = record.get("file_sha256", record.get("sha256"))
-        if sha256_file(path) != expected_sha:
-            raise FinalTestAuthorizationError(f"{key} changed during authorization preflight.")
+        # Recheck the clean HEAD and every committed authorization input
+        # directly before exclusive publication. The shared lock remains owned
+        # from the initial absence check through the atomic create.
+        git = _git_state(root)
+        if git["head"] != preflight["evaluator_code_git_commit"]:
+            raise FinalTestAuthorizationError(
+                "Git HEAD changed during authorization preflight."
+            )
+        for key in ("formal_model_lock", "evaluator_module", "evaluator_config"):
+            record = preflight[key]
+            path, _ = _resolve_project_path(root, record["path"], label=key)
+            expected_sha = record.get("file_sha256", record.get("sha256"))
+            if sha256_file(path) != expected_sha:
+                raise FinalTestAuthorizationError(
+                    f"{key} changed during authorization preflight."
+                )
+        _authorization_absent(output)
 
-    payload: dict[str, Any] = {
-        **preflight,
-        "state": "authorized_for_one_time_2025_evaluation",
-        "generated_at_utc": datetime.now(UTC).isoformat(),
-        "authorized": True,
-        "values_read": False,
-        "authorization_consumed": False,
-    }
-    payload["commit_sha256"] = canonical_sha256(payload)
-    _atomic_create_json(payload, output)
-    return payload
+        payload: dict[str, Any] = {
+            **preflight,
+            "state": "authorized_for_one_time_2025_evaluation",
+            "generated_at_utc": datetime.now(UTC).isoformat(),
+            "authorized": True,
+            "values_read": False,
+            "authorization_consumed": False,
+        }
+        payload["commit_sha256"] = canonical_sha256(payload)
+        _atomic_create_json(payload, output)
+        return payload
