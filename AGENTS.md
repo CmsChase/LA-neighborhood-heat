@@ -2,6 +2,21 @@
 
 This repository contains a reproducible student research project about predicting neighborhood-scale surface heat in the City of Los Angeles. These rules apply to the entire repository.
 
+## Mandatory session startup and handoff
+
+- Before doing any repository work, read `docs/PROJECT_HANDOFF.md` in full.
+  Do not rely on conversation memory or an older status document.
+- Before editing files, starting computation, downloading data, or accessing
+  any final-test artifact, verify the live Git and runtime state using the
+  commands in that handoff.
+- After every material result, failure, decision, commit, or runtime-state
+  change, update `docs/PROJECT_HANDOFF.md`. Update it again immediately before
+  ending or transferring a session so another contributor can resume exactly.
+- Never put credentials, bearer tokens, signed URLs, cookies, or other secrets
+  in the handoff. If the handoff conflicts with an authenticated manifest,
+  generated provenance, or this file, stop and resolve the discrepancy before
+  continuing.
+
 ## Scientific objective
 
 Predict QA-filtered daytime Landsat land-surface temperature (LST) at census-tract × overpass-date resolution from public weather, land-use, geography, and lagged non-thermal satellite features. Treat LST as a surface-heat hazard proxy, never as measured human heat exposure or a health outcome.
