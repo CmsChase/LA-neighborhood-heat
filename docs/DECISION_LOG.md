@@ -940,3 +940,35 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   Parquet outputs, and matching internal/external provenance.
 - This stage did not read Landsat target or QA values, load a fitted model,
   produce a prediction, or consume the one-time final evaluation.
+
+## 2026-07-26 — Collection 1 final-test Sentinel features completed and audited
+
+- Completed all 36 authenticated Collection 1 physical acquisitions with six
+  workers. The build ended with 36 completed, zero running, zero failed, and
+  zero supervisor restarts. One isolated 2025-03-15 warp failed transiently on
+  attempt one and completed on automatic retry two.
+- Produced 39,456 acquisition-tract rows, 25,208 feature rows, 25,208 audit
+  rows, and 226,872 lineage rows. There are 24,633 rows with all five lagged
+  optical features available and 575 with all five missing; no row is partially
+  missing.
+- The formal target-blind post-run audit reaggregated all
+  `207 × 1,096 = 226,872` lineage rows, authenticated all 36 cache pairs and
+  178 input files, verified invariant WorldCover eligible-pixel identities,
+  and proved every source age is between one and 60 days.
+- The calibration classification is `c1_calibration_consistent`. Across 23,593
+  finite same-date/tract pairs shared with the superseded run, the median
+  albedo shift is `+0.1000000015`; its median error to the required `+0.1`
+  correction is approximately `5.96e-9`, versus `0.1000000015` for the
+  repeated-offset hypothesis. Final NDVI, NDWI, and albedo distributions are
+  each closer to the valid development control than to the frozen invalid
+  legacy control.
+- Published the fail-closed audit marker at
+  `manifests/final_test_2025/sentinel_features/SENTINEL_FEATURE_AUDIT.json`.
+  It records `state = passed`, `target_blind = true`, and
+  `safe_for_final_predictor_assembly = true`; its file SHA-256 is
+  `8a19fe7b07be6caaba53798364765d3ba0c4cca89b64f2d83becfe6331a2169e`
+  and internal canonical commit is
+  `412c818b12b31efd8203f4fe4a12b6404c948bf8e18b933bee3fb051d2198434`.
+- No Landsat target or QA path was opened, no fitted model was loaded, and no
+  prediction, score, or metric was read. The one-time final evaluation remains
+  unconsumed.

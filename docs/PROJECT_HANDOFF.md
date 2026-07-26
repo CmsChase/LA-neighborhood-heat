@@ -1,8 +1,16 @@
 # Mandatory project handoff
 
-Last material update: 2026-07-26 08:32 Asia/Shanghai
+Last material update: 2026-07-26 09:45 Asia/Shanghai
 
-Last scientific code/data checkpoint: `ea36c02` on `main`
+Latest required scientific code checkpoint:
+`1dbb0232c9c278118875a6c4eb9af2c6e8e29720` on `main`
+
+The mandatory handoff protocol itself was introduced at:
+`6818f17732c4a72c792c564d0b3fe40153e46c0e`
+
+Always verify the actual checkout with `git rev-parse HEAD` and
+`git status --short`; this document intentionally avoids claiming its own
+circular Git commit identifier.
 
 Canonical remote: `https://github.com/CmsChase/LA-neighborhood-heat.git`
 
@@ -52,7 +60,8 @@ day minus one. It must not be described as an operational weather forecast.
   same-scene optical band, future observation, or tract ID as a predictor.
 - The primary model never uses raw coordinates.
 - Sentinel composites use only `d−60` through `d−1`.
-- Daymet windows use complete `d−1`, `d−3`, and `d−7` periods ending `d−1`.
+- Daymet features use complete 1-, 3-, and 7-day rolling windows, each ending
+  at `d−1`.
 - Imputation, scaling, feature selection, climatology, and tuning are fit on
   training folds only.
 - Adjacent Landsat WRS scenes and Sentinel MGRS tiles from one physical
@@ -69,7 +78,11 @@ Authoritative lock:
 
 `manifests/model_lock/MODEL_LOCK.json`
 
-Lock commit SHA-256:
+MODEL_LOCK file SHA-256:
+
+`bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245`
+
+Internal canonical `commit_sha256`:
 
 `584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b`
 
@@ -210,7 +223,7 @@ A PySTAC storage-extension migration warning was audited and is non-material.
 The pipeline does not consume that extension, and the warning changes no
 selected URL, DN value, scale, offset, collection, or calibration contract.
 
-## Live work in progress
+## Live runtime and latest completed computation
 
 Task: build the valid 2025 C1 Sentinel lagged optical features.
 
@@ -229,23 +242,33 @@ Expected total: 36 physical acquisitions
 Required algorithm:
 `final-test-sentinel-features-v2-c1-native-dn`
 
-Snapshot at 2026-07-26 08:32:24 Asia/Shanghai:
+Completed: 2026-07-26 09:03:59 Asia/Shanghai
 
-- state: `running`
-- completed: `0 / 36`
-- running: `6`
-- current: the first six authenticated C1 acquisitions
+Snapshot at 2026-07-26 09:32 Asia/Shanghai:
+
+- state: `complete`
+- completed: `36 / 36`
+- running: `0`
+- failed: `0`
+- managed engine: stopped cleanly
+- desired running state: `false`
 - automatic restarts: `0`
 - contract error: none
+- one transient `WarpOperationError` affected the 2025-03-15 acquisition on
+  attempt 1; the isolated acquisition succeeded on attempt 2 without human
+  intervention
 
-This snapshot will become stale. The live API is authoritative:
+The dashboard may remain available for read-only inspection on this same
+computer only. Its loopback API is:
 
 ```powershell
 Invoke-RestMethod -Uri "http://127.0.0.1:8768/api/status"
 ```
 
-If the API responds, do not launch a second dashboard or engine. Open the URL
-and use its Start/Continue or Pause control.
+If the API responds on this computer, do not launch a second dashboard or
+engine. A different computer cannot reach this loopback service; that does not
+mean it should start another process against the canonical output directory.
+The completed build must not be restarted merely to reproduce the UI state.
 
 If the API does not respond, first verify that no process owns port 8768 and
 that no engine is already writing the canonical state directory. Only then
@@ -256,20 +279,32 @@ restart the dashboard:
   --workers 6 --host 127.0.0.1 --port 8768 --no-browser
 ```
 
+That command is foreground/blocking and should run in a dedicated terminal.
+For a hidden local launch:
+
+```powershell
+Start-Process -FilePath ".\.venv\Scripts\python.exe" `
+  -ArgumentList "scripts\run_final_test_predictor_dashboard.py", `
+    "--workers","6","--host","127.0.0.1","--port","8768","--no-browser" `
+  -WorkingDirectory (Get-Location) -WindowStyle Hidden -PassThru
+```
+
 The dashboard does not automatically start computation after a fresh launch.
-Open `http://127.0.0.1:8768/`, select 6 workers, and click Start/Continue.
+Do not click Start/Continue for this completed build unless a future audited
+code change explicitly invalidates it.
 
 Pause is cooperative. Active acquisitions may finish before the engine stops.
 The supervisor automatically restarts unexpected process exits with backoff.
 A failed individual acquisition remains retryable and does not authorize use
 of partial aggregate outputs.
 
-Canonical output directory under construction:
+Canonical completed output directory:
 
 `data/interim/final_test_2025/sentinel/`
 
-Expected completed files:
+Completed files:
 
+- `status.json`
 - `build_progress.json`
 - `pipeline_fingerprint.json`
 - `acquisition_tract.parquet`
@@ -277,9 +312,42 @@ Expected completed files:
 - `sentinel_feature_audit.parquet`
 - `sentinel_lineage.parquet`
 
-Do not declare this step complete merely because the UI reaches 36/36. First
-authenticate the completion marker, hashes, fixed support, lag dates, missing
-pattern, lineage, and feature distributions.
+Completed aggregate facts:
+
+- acquisition-tract rows: `39,456 = 36 × 1,096`
+- feature and audit rows: `25,208`
+- feature-available rows: `24,633`; all-five-feature-missing rows: `575`
+- lineage rows: `226,872 = 207 × 1,096`
+- target dates: `23`; tracts: `1,096`
+- pipeline SHA-256:
+  `b25505861742768d17d4f576f124e4d2ae59b6cba6e52beac4e8cb6bee4b6178`
+- `acquisition_tract.parquet` SHA-256:
+  `46185f05149a5127e2552c830e19ad57c6f6a5bc3716bc7f78dd21dc4d22afb8`
+- `sentinel_features.parquet` SHA-256:
+  `13a048bd344087c1ebc165834f5b98bcf0074b62151d1a18493375ba336d8a36`
+- `sentinel_feature_audit.parquet` SHA-256:
+  `01414f6019b5d5da51f148e1e3991182f70efdaff6fe13df07b3054dc8f73f40`
+- `sentinel_lineage.parquet` SHA-256:
+  `7fe10c0dd06dbcc5c5ea975ab1fbbf974fb94b52e77391e3a04466ba721bf1c4`
+
+The formal audit passed and published:
+
+`manifests/final_test_2025/sentinel_features/SENTINEL_FEATURE_AUDIT.json`
+
+- state: `passed`
+- target blind: `true`
+- safe for final predictor assembly: `true`
+- authenticated input files: `178`
+- calibration: `c1_calibration_consistent`
+- audit file SHA-256:
+  `8a19fe7b07be6caaba53798364765d3ba0c4cca89b64f2d83becfe6331a2169e`
+- internal canonical commit:
+  `412c818b12b31efd8203f4fe4a12b6404c948bf8e18b933bee3fb051d2198434`
+- audit-pipeline SHA-256:
+  `c5bf84ef1892a4a81133b06726774014cf38b50dc55a73f978961cfcb01363aa`
+
+Predictor assembly is permitted only while this marker and every authenticated
+input still match exactly.
 
 ## Invalid and superseded artifacts: never use
 
@@ -305,7 +373,8 @@ must never satisfy a canonical feature-build dependency.
 The legacy COG had already incorporated the BOA offset, but the old run
 subtracted `0.1` again. All 34 caches and aggregate outputs are invalid.
 NDVI, NDWI, EVI, NDBI, and albedo are nonlinear, so the aggregate result
-cannot be repaired. It must be fully recomputed from C1, which is the live task.
+cannot be repaired. The required C1 recomputation is now complete and audited;
+the legacy files remain permanently prohibited.
 
 Never copy any file from these directories into a canonical output path.
 
@@ -318,7 +387,7 @@ The following untracked files came from an incomplete evaluator design review:
 - `src/la_heat/final_test_evaluator.py`
 - `tests/test_final_test_evaluator.py`
 
-They are not part of checkpoint `ea36c02`, are not approved, and must not be
+They are not part of checkpoint `1dbb023`, are not approved, and must not be
 staged, run, or treated as a final-evaluation implementation. Preserve them
 unless a user explicitly authorizes their deletion. A later contributor must
 redesign and audit the predict-only evaluator after the predictor matrix is
@@ -326,37 +395,12 @@ frozen.
 
 ## Exact next steps
 
-### 1. Let the C1 Sentinel build finish
-
-Use the live dashboard. Do not run a duplicate engine. Six workers are the
-normal setting for this machine.
-
-### 2. Audit the completed C1 outputs
-
-Required before assembly:
-
-- `state = complete`
-- `completed_physical_acquisition_count = 36`
-- `expected_physical_acquisition_count = 36`
-- `failed = 0`
-- `promoted_outputs_valid = true`
-- `build_complete = true`
-- algorithm is `final-test-sentinel-features-v2-c1-native-dn`
-- every source date is within `d−60 … d−1`
-- all 1,096 static eligible-land denominators and pixel identities are invariant
-- no target, QA, model score, or prediction value was read
-- every aggregate output hash and pipeline fingerprint authenticates
-- feature distributions are physically plausible and do not reproduce the
-  legacy double-offset pathology
-
-Run the relevant test set and add an independent read-only artifact audit.
-
-### 3. Build the frozen 46-feature final predictor matrix
+### 1. Build the frozen 46-feature final predictor matrix
 
 The assembler code is committed and now imports the authoritative Sentinel
 expected acquisition count instead of hard-coding the old value.
 
-Only after step 2 passes:
+The Sentinel audit gate has passed. Run:
 
 ```powershell
 .\.venv\Scripts\python scripts\build_final_test_predictors.py
@@ -375,7 +419,14 @@ Expected result:
 
 Audit and record the output hashes before proceeding.
 
-### 4. Redesign and freeze the independent final evaluator
+### 2. Audit and freeze the predictor matrix
+
+Authenticate the exact row-key set, 46-feature order, source hashes, missing
+patterns, and target-blind flags. Update `docs/DATA_MANIFEST.csv`,
+`docs/DECISION_LOG.md`, and this handoff, run the full checks, and commit/push
+only the allowlisted predictor artifacts and documentation.
+
+### 3. Redesign and freeze the independent final evaluator
 
 Do not use the quarantined drafts. The accepted evaluator must:
 
@@ -386,7 +437,7 @@ Do not use the quarantined drafts. The accepted evaluator must:
 - emit predictions and metrics atomically with complete provenance;
 - forbid threshold or model changes after any 2025 target value is opened.
 
-### 5. One-time authorization and final evaluation
+### 4. One-time authorization and final evaluation
 
 This is intentionally not authorized yet.
 
@@ -424,11 +475,11 @@ Before completing any code change:
 .\.venv\Scripts\python -m ruff check .
 ```
 
-Latest verified results at checkpoint `ea36c02`:
+Latest verified results through checkpoint `1dbb023`:
 
-- full test suite: passed
-- Ruff: passed
-- final predictor targeted suite: 95 passed
+- audit/authorization/assembler focused suite: `37 passed`
+- full test suite after the audit-gate implementation: passed, zero failures
+- full Ruff after the audit-gate implementation: passed
 
 Generated manifests under `manifests/**` are marked `-text` in
 `.gitattributes` because byte-level hashes are authoritative. On Windows,
@@ -438,7 +489,12 @@ whitespace. Do not rewrite a frozen manifest merely to remove that warning.
 ## Multi-contributor coordination
 
 - Never let two contributors mutate the same working tree concurrently.
-- For parallel work, use separate clones or worktrees and separate branches.
+- For parallel code review, use separate clones or worktrees and branches.
+- Large canonical data under `data/**` are intentionally untracked. A Git clone
+  or worktree alone cannot run data audit or assembly. Those steps must have
+  exactly one writer in this canonical workspace. Another machine may take over
+  only after copying the required data/manifests and authenticating every hash
+  recorded here.
 - Assign one owner per file group and one bounded task per branch.
 - Do not run two processes against the same canonical output directory.
 - Before starting, fetch the remote, read this file, inspect Git status, and
