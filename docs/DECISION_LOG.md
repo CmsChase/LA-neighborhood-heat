@@ -1098,6 +1098,12 @@ No unlock has occurred. `unlock_final_test` remains `false`.
 - Repaired the ignored local virtual-environment launcher by pointing it to
   the preserved portable Python 3.14.4 base runtime. The frozen package
   versions import successfully.
+- A later readiness attempt stopped before marker creation because the frozen
+  predictor directory retained the same protected other-laptop ACL. Enabled
+  inheritance only on that directory; the predictor Parquet and provenance
+  hashes remained exactly equal to their frozen locks. A subsequent read-only
+  authentication verified 25,208 predictor rows and the 23-overpass inventory
+  with `target_or_qa_values_read = false`.
 - No readiness, authorization, claim, frozen-prediction, values-opened,
   completion, target-cache, target/QA, residual, metric, or final figure
   artifact existed after these repairs. `unlock_final_test` remained false.

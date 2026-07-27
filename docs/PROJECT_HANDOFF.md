@@ -619,6 +619,22 @@ Python 3.14.4 runtime already preserved under
 package versions, including NumPy 2.5.1, pandas 3.0.3, GeoPandas 1.1.4,
 rasterio 1.5.0, scikit-learn 1.9.0, PyArrow 25.0.0, and Matplotlib 3.11.1.
 
+After the source-binding commit, a second readiness attempt also stopped
+before creating a marker because
+`data/processed/final_test_2025/predictors` retained the same protected
+other-laptop ACL. Inheritance was enabled only on that exact directory; no
+data bytes were edited. The recovered predictor Parquet is 4,945,661 bytes
+with SHA-256
+`f02b3428a1070b1d95152bb225652bc063330b3793322aeb364e8a0dd267fa0a`,
+and the internal predictor provenance is 71,020 bytes with SHA-256
+`4f94bd00ba5e7a6cdbd08abdb14483ea2018a5429406db3bd2f0549470f74541`;
+both exactly match the frozen evaluation configuration.
+
+A read-only target-blind authentication then succeeded for the formal model
+lock, the 25,208-row predictor surface, and the 45-scene/23-overpass/25,208-key
+Landsat metadata inventory. The inventory again reported
+`target_or_qa_values_read = false`.
+
 The first safe state-changing command, after this handoff correction and the
 final source-binding hardening are committed and pushed to a clean `main`, is
 the target-blind readiness command in step 1 below.
