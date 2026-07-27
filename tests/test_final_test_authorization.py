@@ -10,6 +10,8 @@ import pytest
 
 import la_heat.final_test_authorization as authorization_module
 from la_heat.final_test_authorization import (
+    EVALUATION_READINESS_ALGORITHM_VERSION,
+    EVALUATION_READINESS_SCHEMA_VERSION,
     FinalTestAuthorizationError,
     _atomic_create_json,
     _authenticate_formal_model_lock,
@@ -49,8 +51,8 @@ def _synthetic_lock(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> tuple[Path, Path, Path, dict[str, Any]]:
-    evaluator_module = tmp_path / "src/la_heat/final_test_evaluator.py"
-    evaluator_config = tmp_path / "configs/final_test_2025.toml"
+    evaluator_module = tmp_path / "src/la_heat/final_evaluation_protocol.py"
+    evaluator_config = tmp_path / "configs/final_evaluation_2025.toml"
     evaluator_module.parent.mkdir(parents=True)
     evaluator_config.parent.mkdir(parents=True)
     evaluator_module.write_text("def evaluate():\n    return None\n", encoding="utf-8")
@@ -195,16 +197,68 @@ def _synthetic_lock(
         }
 
     monkeypatch.setattr(authorization_module, "_project_root", lambda: tmp_path)
+    readiness_path = (
+        tmp_path
+        / "manifests/final_test_2025/evaluation/EVALUATION_READINESS.json"
+    )
+    module_record = committed_record(
+        tmp_path,
+        evaluator_module,
+        head=head,
+        label="Evaluator module",
+    )
+    config_record = committed_record(
+        tmp_path,
+        evaluator_config,
+        head=head,
+        label="Evaluator configuration",
+    )
+    lock_record = committed_record(
+        tmp_path,
+        lock_path,
+        head=head,
+        label="Formal model lock",
+    )
+    formal_record = {
+        **{key: value for key, value in lock_record.items() if key != "sha256"},
+        "file_sha256": lock_record["sha256"],
+        "commit_sha256": formal_lock["commit_sha256"],
+    }
+    readiness_request = {"synthetic_contract": "target_blind"}
+    _committed_json(
+        {
+            "schema_version": EVALUATION_READINESS_SCHEMA_VERSION,
+            "algorithm_version": EVALUATION_READINESS_ALGORITHM_VERSION,
+            "state": "ready_target_blind",
+            "target_blind": True,
+            "values_read": False,
+            "authorized": False,
+            "code_git_commit": head,
+            "evaluator_module": module_record,
+            "evaluator_config": config_record,
+            "formal_model_lock": formal_record,
+            "request": readiness_request,
+            "request_sha256": canonical_sha256(readiness_request),
+        },
+        readiness_path,
+    )
+
     monkeypatch.setattr(
         authorization_module,
         "_git_state",
-        lambda _root: {
+        lambda _root, **_kwargs: {
             "head": head,
             "working_tree_clean": True,
-            "status_entry_count": 0,
+            "status_entry_count": 1,
+            "allowed_untracked_state_entry_count": 1,
         },
     )
     monkeypatch.setattr(authorization_module, "_committed_file_record", committed_record)
+    monkeypatch.setattr(
+        authorization_module,
+        "_validate_readiness_request_contract",
+        lambda *_args, **_kwargs: None,
+    )
     monkeypatch.setattr(
         authorization_module,
         "authenticate_final_build_provenance",
@@ -254,6 +308,10 @@ def test_preflight_reads_no_final_values_and_authorization_is_one_way(
     assert result["authorization_consumed"] is False
     assert result["evaluator_code_git_commit"] == "a" * 40
     assert result["working_tree_clean"] is True
+    assert result["allowed_untracked_state_entry_count"] == 1
+    assert result["evaluation_readiness"]["path"].endswith(
+        "evaluation/EVALUATION_READINESS.json"
+    )
     assert result["formal_model_lock"]["commit_sha256"] == formal["commit_sha256"]
     assert result["formal_model_lock"]["file_sha256"] == sha256_file(
         tmp_path / "manifests/model_lock/MODEL_LOCK.json"
@@ -385,7 +443,7 @@ def test_authorization_rechecks_absence_after_preflight(
     output = tmp_path / "manifests/final_test_2025/AUTHORIZATION.json"
     call_count = 0
 
-    def racing_git_state(_root: Path) -> dict[str, Any]:
+    def racing_git_state(_root: Path, **_kwargs: object) -> dict[str, Any]:
         nonlocal call_count
         call_count += 1
         if call_count == 2:
@@ -394,7 +452,8 @@ def test_authorization_rechecks_absence_after_preflight(
         return {
             "head": "a" * 40,
             "working_tree_clean": True,
-            "status_entry_count": 0,
+            "status_entry_count": 1,
+            "allowed_untracked_state_entry_count": 1,
         }
 
     monkeypatch.setattr(authorization_module, "_git_state", racing_git_state)

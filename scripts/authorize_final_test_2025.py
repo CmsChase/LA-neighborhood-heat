@@ -9,17 +9,34 @@ from pathlib import Path
 
 from la_heat.final_test_authorization import (
     DEFAULT_AUTHORIZATION_PATH,
+    DEFAULT_EVALUATION_READINESS_PATH,
     DEFAULT_MODEL_LOCK_PATH,
     authorize_final_test_2025,
     preflight_final_test_2025,
 )
 
+DEFAULT_EVALUATOR_MODULE = Path("src/la_heat/final_evaluation_protocol.py")
+DEFAULT_EVALUATOR_CONFIG = Path("configs/final_evaluation_2025.toml")
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--evaluator-module", type=Path, required=True)
-    parser.add_argument("--evaluator-config", type=Path, required=True)
+    parser.add_argument(
+        "--evaluator-module",
+        type=Path,
+        default=DEFAULT_EVALUATOR_MODULE,
+    )
+    parser.add_argument(
+        "--evaluator-config",
+        type=Path,
+        default=DEFAULT_EVALUATOR_CONFIG,
+    )
     parser.add_argument("--model-lock", type=Path, default=DEFAULT_MODEL_LOCK_PATH)
+    parser.add_argument(
+        "--evaluation-readiness",
+        type=Path,
+        default=DEFAULT_EVALUATION_READINESS_PATH,
+    )
     parser.add_argument("--authorization", type=Path, default=DEFAULT_AUTHORIZATION_PATH)
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--preflight-only", action="store_true")
@@ -33,6 +50,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         "evaluator_module": args.evaluator_module,
         "evaluator_config": args.evaluator_config,
         "model_lock_path": args.model_lock,
+        "readiness_path": args.evaluation_readiness,
         "authorization_path": args.authorization,
     }
     if args.preflight_only:

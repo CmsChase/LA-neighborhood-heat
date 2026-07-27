@@ -1007,3 +1007,73 @@ No unlock has occurred. `unlock_final_test` remains `false`.
 - This assembly was target-blind: no Landsat target/QA table, fitted model,
   prediction, or score was opened. The authorization file is absent and the
   one-time final evaluation remains unconsumed.
+
+## 2026-07-26 — Freeze the independent one-time final-evaluation protocol
+
+- Rejected the four untracked evaluator drafts from the formal workflow. They
+  remain quarantined and untouched. The replacement uses the distinct
+  `final_evaluation_*` module, configuration, script, and test names.
+- Froze the primary comparison to authenticated B1 versus M2 on all 25,208
+  inventory keys. Both blind prediction surfaces must be persisted and
+  committed before the first Landsat thermal or QA value is opened. No model
+  fitting, tuning, selection, threshold adjustment, or target-derived
+  imputation is permitted.
+- Froze an append-only state sequence:
+  target-blind readiness, explicit authorization, one consumption claim,
+  blind-prediction commitment, values-opened commitment, atomic output
+  promotion, and completion. A crash may resume only the same claim; a second
+  claim or replacement of a published output is prohibited.
+- The final target transaction assesses all 23 frozen physical-overpass dates
+  using the unchanged tract/date QA rules. The development promotion rule of
+  at least 30 independent dates is not applied to the single 2025 test year;
+  the report instead gives the actual usable and excluded date counts.
+- Froze the primary metric, B1/M2 paired crossed date-by-spatial-block
+  bootstrap (5,000 replicates, seed 20260722, 95% interval), 10% improvement
+  gate, median per-date Spearman gate, exact top-20% hotspot rule, sensor and
+  Sentinel-availability strata, missingness audit, and three diagnostic
+  figures before any 2025 target value is read.
+- Readiness must be created while `unlock_final_test = false`. Authorization
+  binds the committed evaluator and recomputes the readiness contract. The
+  only permitted post-authorization Git transition changes the research
+  unlock flag from false to true and records that future event in this log;
+  that irreversible unlock has not occurred.
+- Target-blind dry-run validation authenticated the 45-scene/23-overpass
+  Landsat metadata inventory and the exact 46-feature predictor table. It
+  loaded the frozen B1/M2 artifacts and produced 25,208 finite predictions per
+  model in memory only. No prediction file, target/QA value, residual, metric,
+  readiness marker, authorization, claim, or completion marker was produced.
+
+## 2026-07-27 — Harden and complete the locked final-evaluation implementation
+
+- Added deterministic replay of both blind prediction surfaces from the
+  authenticated predictor table and locked fitted B1/M2 artifacts immediately
+  before the target-value boundary and again before publication. The published
+  blind-prediction bytes must match the append-only prediction marker.
+- Moved same-claim target-cache authentication behind the values-opened gate,
+  so remote thermal/QA assets and cached target bytes share the same
+  fail-closed first-access boundary.
+- Strengthened the independent target audit to recompute primitive QA
+  booleans, counts, fractions, availability, date gates, relative endpoints,
+  exact hotspot labels, tract exclusion reasons, fixed-grid and static
+  eligible-pixel identities, and scene-to-overpass-date lineage.
+- Froze the final output as an exact regular-file set with predeclared column
+  order, canonical 2025 civil dates, unique primary keys, 11-digit GEOIDs,
+  schema/semantic commitments, exact derived key sets, and cross-table
+  cardinality/arithmetic checks. Same-claim recovery reruns the deep contract
+  before promotion.
+- Added deterministic replay of model, per-date, paired date-block,
+  5,000-draw crossed-bootstrap, protocol-gate, hotspot, sensor, and
+  Sentinel-availability results from the committed evaluation rows. Bootstrap
+  point estimates are independently reconciled to the primary model metrics.
+- Replaced the placeholder map representation with an authenticated
+  census-tract choropleth summary and six-panel PDF covering observed LST, B1,
+  M2, both residual surfaces, and evaluated-date support. The figure contract
+  binds the claim's tract file, tract manifest, CRS, and source-table semantic
+  hash; zero-support tracts remain explicit with support count/fraction zero.
+  Deep authentication regenerates all three figures and requires byte-identical
+  PDF/PNG output.
+- Final verification results are recorded in `docs/PROJECT_HANDOFF.md`.
+  Throughout this implementation `unlock_final_test` remained false. No
+  readiness, authorization, claim, prediction, values-opened, completion,
+  target-cache, final target/QA, metric, or figure artifact was created, and
+  the one-time evaluation remains unconsumed.

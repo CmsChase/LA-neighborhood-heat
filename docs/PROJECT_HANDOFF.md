@@ -1,16 +1,17 @@
 # Mandatory project handoff
 
-Last material update: 2026-07-26 09:52 Asia/Shanghai
+Last material update: 2026-07-27 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
-- audit/authorization/assembler code:
+- frozen target-blind predictor baseline:
+  `e0fb4878ac6ecec53a44a0fe027ca46c5a9d2196`
+- locked final-evaluation implementation and this handoff are in the commit
+  with subject `Add locked final evaluation protocol`; obtain its exact hash
+  with
+  `git log --oneline --grep="Add locked final evaluation protocol" -1`
+- earlier audit/authorization/assembler checkpoint:
   `1dbb0232c9c278118875a6c4eb9af2c6e8e29720`
-- formal Sentinel audit marker and its documentation:
-  `48f7da0`
-- final predictor provenance and this completed handoff are in the commit with
-  subject `Freeze final predictor matrix`; obtain its exact Git hash with
-  `git log --oneline --grep="Freeze final predictor matrix" -1`
 
 The mandatory handoff protocol itself was introduced at:
 `6818f17732c4a72c792c564d0b3fe40153e46c0e`
@@ -41,6 +42,37 @@ Before ending a session, update:
 5. the first safe next command.
 
 Never write a password, bearer token, signed URL, cookie, or other secret here.
+
+## Current safe state
+
+Branch: `main`.
+
+The project is still target-blind and locked:
+
+- `configs/research.toml`: `unlock_final_test = false`
+- MODEL_LOCK: `final_test_locked = true`
+- MODEL_LOCK: `final_test_values_read = false`
+- MODEL_LOCK: `one_time_final_evaluation_authorized = false`
+
+These six canonical state markers do not exist:
+
+- `manifests/final_test_2025/evaluation/EVALUATION_READINESS.json`
+- `manifests/final_test_2025/AUTHORIZATION.json`
+- `manifests/final_test_2025/evaluation/CONSUMPTION_CLAIM.json`
+- `manifests/final_test_2025/evaluation/PREDICTIONS_FROZEN.json`
+- `manifests/final_test_2025/evaluation/VALUES_OPENED.json`
+- `manifests/final_test_2025/evaluation/EVALUATION_COMPLETE.json`
+
+These canonical runtime/output directories also do not exist:
+
+- `data/processed/final_test_2025/.final_evaluation.staging`
+- `data/interim/final_test_2025/evaluation/target_cache`
+- `data/processed/final_test_2025/final_evaluation`
+
+No canonical 2025 Landsat thermal value, QA value, target table, residual,
+score, metric, or final figure has been opened or produced. Synthetic unit
+tests and target-blind in-memory prediction dry runs are not final-test value
+access and do not consume the evaluation.
 
 ## Research question and fixed interpretation
 
@@ -105,7 +137,10 @@ evaluation:
 `manifests/final_test_2025/AUTHORIZATION.json`
 
 As of this handoff it does not exist. No 2025 Landsat target value, QA value,
-prediction, residual, score, or metric has been read or produced.
+residual, score, or metric has been read or produced. A target-blind interface
+dry run produced 25,208 finite B1 predictions and 25,208 finite M2 predictions
+in memory only; it wrote no prediction artifact and did not consume the final
+evaluation.
 
 ## Completed development phase
 
@@ -451,30 +486,110 @@ The following untracked files came from an incomplete evaluator design review:
 - `src/la_heat/final_test_evaluator.py`
 - `tests/test_final_test_evaluator.py`
 
-They are not part of checkpoint `1dbb023`, are not approved, and must not be
-staged, run, or treated as a final-evaluation implementation. Preserve them
-unless a user explicitly authorizes their deletion. A later contributor must
-redesign and audit the predict-only evaluator after the predictor matrix is
-frozen.
+They are not part of the approved workflow and must not be read, staged, run,
+or treated as a final-evaluation implementation. Preserve them unless a user
+explicitly authorizes their deletion or relocation. The audited replacement
+now exists under the distinct `final_evaluation_*` names below, so these drafts
+are obsolete implementation-wise but remain a worktree-cleanliness blocker.
+Never use `git add .`.
 
 ## Exact next steps
 
-At this checkpoint, `git status --short` should show only the four quarantined
-evaluator drafts listed above. Never use `git add .`; none of those four files
-belongs to the frozen predictor checkpoint.
+### Independent final evaluator implemented and audited
 
-### 1. Redesign and freeze the independent final evaluator
+The new, independent protocol uses names that do not overlap the four
+quarantined drafts. Its frozen configuration is:
 
-Do not use the quarantined drafts. The accepted evaluator must:
+`configs/final_evaluation_2025.toml`
 
-- be predict-only and never fit or tune;
-- authenticate both frozen B1/M2 models and the exact 46-feature matrix;
-- keep target construction separate from predictor preparation;
-- prevent repeated authorization or evaluation;
-- emit predictions and metrics atomically with complete provenance;
-- forbid threshold or model changes after any 2025 target value is opened.
+New implementation files:
 
-### 2. One-time authorization and final evaluation
+- `src/la_heat/final_evaluation_protocol.py`
+- `src/la_heat/final_evaluation_targets.py`
+- `src/la_heat/final_evaluation_reporting.py`
+- `scripts/prepare_final_evaluation.py`
+- `scripts/execute_locked_final_evaluation.py`
+- `tests/test_final_evaluation_protocol.py`
+- `tests/test_final_evaluation_targets.py`
+- `tests/test_final_evaluation_reporting.py`
+- `src/la_heat/final_test_authorization.py`
+- `scripts/authorize_final_test_2025.py`
+- `tests/test_final_test_authorization.py`
+- `docs/DECISION_LOG.md`
+- `docs/PROJECT_HANDOFF.md`
+
+The authorization module and script now require and bind the readiness marker.
+No readiness, authorization, claim, values-opened, completion, target, QA,
+residual, score, or metric artifact exists. The new protocol freezes:
+
+- exact B1/M2, predictor, Landsat inventory, target-grid/QA, and feature locks;
+- a target-blind, no-clobber readiness marker generated while the research
+  lock is still false and reauthenticated during authorization;
+- append-only authorization, consumption-claim, values-opened, frozen-
+  prediction, and completion markers;
+- predictions frozen before the first target/QA asset is opened;
+- same-claim crash recovery but no second authorization or second claim;
+- all 23 inventory dates assessed by the unchanged per-date QA rules, without
+  reusing the development-only minimum of 30 dates;
+- exact output paths, metrics, crossed date/spatial-block bootstrap, hotspot
+  rules, and planned figures before any 2025 value is read.
+- deterministic B1/M2 replay from the locked predictors and fitted models
+  immediately before the value-opening boundary and again before publication;
+- the value marker before any remote asset or cached target bytes are read;
+- independent primitive QA/count/fraction/date/tract/hotspot recomputation,
+  fixed-grid/eligible-pixel identities, and scene-to-overpass-date lineage;
+- exact regular-file output set, predeclared columns, canonical civil dates,
+  11-digit GEOIDs, primary keys, semantic hashes, cross-table key/cardinality
+  checks, and same-claim committed-staging recovery;
+- deterministic replay of model, per-date, paired-cell, bootstrap, gate,
+  hotspot, sensor, and Sentinel-stratum reports from published evaluation rows;
+- a real authenticated-tract six-panel map PDF plus
+  `tract_choropleth_summary.csv`; zero-support tracts retain support count and
+  fraction zero, and the figure binds the claim's tract file, manifest, CRS,
+  and source-table semantics. Deep recovery regenerates all three figures and
+  requires byte-identical PDF/PNG output.
+
+Target-blind validation completed without opening any Landsat asset:
+
+- authenticated frozen predictor rows/dates: `25,208 / 23`
+- authenticated Landsat metadata: `45 scenes / 23 overpasses / 25,208 keys`
+- inventory reports `target_or_qa_values_read = false`
+- authenticated B1 and M2 artifacts each produced `25,208` finite in-memory
+  predictions; no predictions were persisted
+- evaluator-focused suite after final hardening: `43 passed`
+- final full project suite: `706 passed` in `168 s`
+- full-repository Ruff: passed
+
+The implementation is committed under the subject
+`Add locked final evaluation protocol`; use the checkpoint command at the top
+to obtain its non-circular hash. The same four old drafts remain untracked and
+untouched.
+
+### 1. First safe action and the current blocker
+
+Run only these read-only commands first:
+
+```powershell
+git rev-parse HEAD
+git status --short
+```
+
+After the evaluator commit, the expected status contains exactly the four
+quarantined untracked paths listed above. If it contains more or fewer paths,
+fail closed and investigate without deleting anything.
+
+### 2. Resolve the authorization cleanliness blocker
+
+The authorization gate requires a clean working tree except for its exact
+readiness marker. The four quarantined untracked drafts therefore block both
+readiness and authorization. Do not delete, move, ignore, or commit them
+without explicit user permission.
+
+This is authorization A: the user must explicitly choose how to handle those
+four files. Without authorization A, stop and ask the user; do not run
+readiness preparation.
+
+### 3. One-time authorization and final evaluation
 
 This is intentionally not authorized yet.
 
@@ -487,8 +602,41 @@ Authorization may occur only after:
 - the final target builder and all output paths are frozen;
 - the user explicitly approves the irreversible one-time step.
 
-After authorization, run the final evaluation exactly once. Never retune on
-2025 results.
+That approval is authorization B and is separate from authorization A. Even
+after the worktree is clean, do not authorize, unlock, or execute the final
+evaluation without explicit authorization B.
+
+The locked sequence is:
+
+1. while `configs/research.toml` still has `unlock_final_test = false`, run:
+
+   ```powershell
+   .\.venv\Scripts\python scripts\prepare_final_evaluation.py `
+     --config configs\final_evaluation_2025.toml
+   ```
+
+2. run the preflight and, only under authorization B, the explicit one-time
+   authorization:
+
+   ```powershell
+   .\.venv\Scripts\python scripts\authorize_final_test_2025.py --preflight-only
+   .\.venv\Scripts\python scripts\authorize_final_test_2025.py `
+     --approve-one-time-2025
+   ```
+
+3. commit the separately documented `false -> true` research unlock and its
+   decision-log entry, changing no evaluator/scientific setting;
+4. execute exactly once or resume the same append-only claim after a crash:
+
+   ```powershell
+   .\.venv\Scripts\python scripts\execute_locked_final_evaluation.py `
+     --config configs\final_evaluation_2025.toml
+   ```
+
+The commands above are a future gated sequence, not permission to execute them
+in the current session.
+
+Never retune or change thresholds after target values are opened.
 
 ## Verification commands
 
@@ -512,11 +660,15 @@ Before completing any code change:
 .\.venv\Scripts\python -m ruff check .
 ```
 
-Latest verified results after the completed predictor assembly:
+Latest verified results during evaluator implementation:
 
-- audit/authorization/assembler focused suite: `37 passed`
-- full test suite: `673 passed`, zero failures
-- full Ruff: passed
+- evaluator/authorization/target/reporting focused suite:
+  `43 passed`, zero failures
+- full project suite: `706 passed`, zero failures (`168 s`)
+- full-repository Ruff: passed
+- no canonical readiness, authorization, claim, predictions-frozen,
+  values-opened, completion, target-cache, staging, or final-output artifact
+  existed during validation
 
 Generated manifests under `manifests/**` are marked `-text` in
 `.gitattributes` because byte-level hashes are authoritative. On Windows,
