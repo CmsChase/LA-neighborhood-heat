@@ -1145,3 +1145,31 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   passed all 711 tests in 214.87 seconds, full-repository Ruff passed, and an
   independent read-only re-audit found no remaining P0/P1 issue. No real 2025
   target value was opened during this hardening.
+
+## 2026-07-27 - Authorize and commit the one-time 2025 evaluation unlock
+
+- Generated a new target-blind readiness from repaired evaluator commit
+  `407aefcb4f54ba9fc6265ea5830b1747b7977ba4`. It records
+  `target_blind = true`, `values_read = false`, request SHA-256
+  `6cde25bcda2f52724b67754432b92b0a3aee84e5bae4aa92a4d4595e9bd434b5`,
+  internal commit
+  `fda4bcab8ec0963ad4824a3e863974be5887d3143c26c502081789a9a878acdb`,
+  and file SHA-256
+  `a2676a10d239248906dee6a42f3ecec4224b4c31556f180b682d958e7580a314`.
+- The authorization preflight returned `eligible_but_not_authorized` with
+  `values_read = false`. Under the user's explicit one-time authorization,
+  created the canonical authorization marker. It records
+  `authorized = true`, `values_read = false`, internal commit
+  `3490c71100e1ea063ec8f71f0823b50715963a7cead12f62f5bdffe86c706a9a`,
+  and file SHA-256
+  `fb1174c01da85f8c149c1e286cba9da42de2ea0925d732caaf75b9420b3c6241`.
+- This commit changes only `configs/research.toml` from
+  `unlock_final_test = false` to `true` and updates this decision log and the
+  mandatory handoff. It changes no model, feature, target rule, metric,
+  bootstrap, threshold, output contract, or evaluator code.
+- At this transition no consumption claim, frozen prediction, values-opened
+  marker, target cache, target/QA table, residual, score, metric, figure,
+  staging commit, final output, or completion marker exists. The next and only
+  safe action after push is:
+
+  `.\.venv\Scripts\python scripts\execute_locked_final_evaluation.py --config configs\final_evaluation_2025.toml`

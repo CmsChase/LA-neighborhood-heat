@@ -43,21 +43,36 @@ Before ending a session, update:
 
 Never write a password, bearer token, signed URL, cookie, or other secret here.
 
-## Current safe state
+## Current one-time evaluation state
 
 Branch: `main`.
 
-The project is still target-blind and locked:
+The project remains target-blind at the documented unlock transition:
 
-- `configs/research.toml`: `unlock_final_test = false`
+- `configs/research.toml`: `unlock_final_test = true`
 - MODEL_LOCK: `final_test_locked = true`
 - MODEL_LOCK: `final_test_values_read = false`
 - MODEL_LOCK: `one_time_final_evaluation_authorized = false`
 
-These six canonical state markers do not exist:
+These two canonical, target-blind state markers exist:
 
 - `manifests/final_test_2025/evaluation/EVALUATION_READINESS.json`
 - `manifests/final_test_2025/AUTHORIZATION.json`
+
+The readiness binds evaluator commit
+`407aefcb4f54ba9fc6265ea5830b1747b7977ba4`, has internal commit
+`fda4bcab8ec0963ad4824a3e863974be5887d3143c26c502081789a9a878acdb`,
+file SHA-256
+`a2676a10d239248906dee6a42f3ecec4224b4c31556f180b682d958e7580a314`,
+and records `target_blind = true` and `values_read = false`. The authorization
+has internal commit
+`3490c71100e1ea063ec8f71f0823b50715963a7cead12f62f5bdffe86c706a9a`,
+file SHA-256
+`fb1174c01da85f8c149c1e286cba9da42de2ea0925d732caaf75b9420b3c6241`,
+and records `authorized = true` and `values_read = false`.
+
+These four later state markers do not exist:
+
 - `manifests/final_test_2025/evaluation/CONSUMPTION_CLAIM.json`
 - `manifests/final_test_2025/evaluation/PREDICTIONS_FROZEN.json`
 - `manifests/final_test_2025/evaluation/VALUES_OPENED.json`
@@ -648,23 +663,26 @@ was moved intact to:
 
 `D:\HuaweiMoveData\Users\haora\Documents\ISEF_INVALID_READINESS_20260727_824e8d3`
 
-The canonical readiness path is absent again. No authorization, claim,
-prediction, values-opened, target-cache, output, or completion artifact was
-created. The runtime registries now both include Pillow, and a regression test
-requires them to remain identical. A fresh readiness must bind the repaired
-committed code; never restore the archived invalid marker.
+At that point the canonical readiness path was absent again and no
+authorization, claim, prediction, values-opened, target-cache, output, or
+completion artifact had been created. The runtime registries now both include
+Pillow, and a regression test requires them to remain identical. The current
+readiness and authorization described above bind the repaired committed code;
+never restore the archived invalid marker.
 
-The first safe state-changing command, after this handoff correction and the
-final source-binding hardening are committed and pushed to a clean `main`, is
-the target-blind readiness command in step 1 below.
+Readiness and one-time authorization are complete. This handoff update is part
+of the only permitted `false -> true` unlock commit. After that commit is
+pushed and the worktree contains only the two allowed untracked markers, the
+first safe command is the execution command in step 4 below.
 
 ### 2. One-time authorization and final evaluation
 
 On 2026-07-27, after the two distinct authorizations and the irreversible
 one-time boundary were explained, the user instructed the project to perform
 the described sequence. Authorization A (draft relocation) and Authorization
-B (one one-time 2025 evaluation) are therefore explicit for this run. No
-authorization marker, unlock, claim, target read, prediction file, metric, or
+B (one one-time 2025 evaluation) are therefore explicit for this run. The
+readiness and authorization markers now exist and the research unlock is being
+committed separately. No claim, target read, prediction file, metric, or
 figure exists at this handoff checkpoint.
 
 Authorization may occur only after:
@@ -774,7 +792,8 @@ Latest verified results during evaluator implementation:
 - full-repository Ruff: passed
 - no canonical readiness, authorization, claim, predictions-frozen,
   values-opened, completion, target-cache, staging, or final-output artifact
-  existed during validation
+  existed during code validation; readiness and authorization were created
+  only afterward and still record `values_read = false`
 
 Generated manifests under `manifests/**` are marked `-text` in
 `.gitattributes` because byte-level hashes are authoritative. On Windows,
