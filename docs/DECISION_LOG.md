@@ -1104,6 +1104,23 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   hashes remained exactly equal to their frozen locks. A subsequent read-only
   authentication verified 25,208 predictor rows and the 23-overpass inventory
   with `target_or_qa_values_read = false`.
+- A readiness generated from committed target-blind code was rejected by the
+  authorization preflight before authorization or unlock. The evaluator's
+  extended-runtime registry included Pillow 12.3.0, but the authorization
+  module's duplicate registry omitted Pillow; all pipeline hashes and other
+  runtime fields matched. Preserved the invalid readiness intact outside the
+  repository at
+  `D:\HuaweiMoveData\Users\haora\Documents\ISEF_INVALID_READINESS_20260727_824e8d3`
+  (28,960 bytes; SHA-256
+  `7af7778a2fa83aa3936856c740961dafff73ad6d305b96e1056fec5595f9188a`).
+  No authorization, claim, prediction, values-opened, target cache, output, or
+  completion artifact was created.
+- Added Pillow to the authorization runtime registry and a regression test
+  requiring the evaluator and authorization registries to remain identical.
+  The canonical readiness path remains absent until the repaired code and this
+  audit record are committed and pushed. The authorization/evaluator/target/
+  reporting suite passed all 55 tests, the complete project suite passed all
+  712 tests in 244.69 seconds, and full-repository Ruff passed.
 - No readiness, authorization, claim, frozen-prediction, values-opened,
   completion, target-cache, target/QA, residual, metric, or final figure
   artifact existed after these repairs. `unlock_final_test` remained false.

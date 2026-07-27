@@ -47,6 +47,7 @@ _MODEL_IDS: Final = ("B1", "M2")
 _EXTRA_EVALUATION_RUNTIME_PACKAGES: Final = (
     "joblib",
     "matplotlib",
+    "Pillow",
     "scikit-learn",
     "scipy",
 )

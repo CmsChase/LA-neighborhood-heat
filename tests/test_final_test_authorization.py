@@ -28,6 +28,16 @@ from la_heat.final_test_state_lock import (
 from la_heat.provenance import canonical_sha256, sha256_file
 
 
+def test_authorization_runtime_registry_matches_evaluator() -> None:
+    from la_heat.final_evaluation_protocol import _EXTRA_RUNTIME_PACKAGES
+
+    assert (
+        authorization_module._EXTRA_EVALUATION_RUNTIME_PACKAGES
+        == _EXTRA_RUNTIME_PACKAGES
+    )
+    assert "Pillow" in _EXTRA_RUNTIME_PACKAGES
+
+
 def _committed_json(payload: dict[str, Any], path: Path) -> dict[str, Any]:
     result = dict(payload)
     result["commit_sha256"] = canonical_sha256(result)

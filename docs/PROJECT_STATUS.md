@@ -433,7 +433,7 @@ The generated development report is `reports/DEVELOPMENT_REPORT.md`, report SHA
 
 The development report, reconciled robustness evidence, completed final fit,
 formal model lock, and opt-in controller are covered by the complete repository
-test suite: 711 tests passed on 2026-07-27, and `python -m ruff check .` passed.
+test suite: 712 tests passed on 2026-07-27, and `python -m ruff check .` passed.
 The Sentinel scientific pipeline fingerprint remains byte-identical to the
 frozen 226-acquisition build. No 2025 value has been read and no final-test
 evaluation has run.

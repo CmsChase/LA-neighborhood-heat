@@ -578,7 +578,9 @@ Target-blind validation completed without opening any Landsat asset:
   predictions; no predictions were persisted
 - evaluator/target/reporting suite after source-binding hardening:
   `44 passed`
-- final full project suite: `711 passed` in `214.87 s`
+- authorization/evaluator/target/reporting suite after runtime-registry repair:
+  `55 passed`
+- final full project suite: `712 passed` in `244.69 s`
 - full-repository Ruff: passed
 
 The implementation is committed under the subject
@@ -634,6 +636,23 @@ A read-only target-blind authentication then succeeded for the formal model
 lock, the 25,208-row predictor surface, and the 45-scene/23-overpass/25,208-key
 Landsat metadata inventory. The inventory again reported
 `target_or_qa_values_read = false`.
+
+A readiness generated from commit
+`824e8d3795d51992ccb87983b77c82d15093c258` was immediately rejected by
+the authorization preflight before authorization or unlock. The evaluator
+recorded Pillow 12.3.0 in its extended runtime, while the authorization
+module's duplicate registry omitted Pillow; every pipeline file/hash and all
+other runtime fields matched. The invalid 28,960-byte readiness, SHA-256
+`7af7778a2fa83aa3936856c740961dafff73ad6d305b96e1056fec5595f9188a`,
+was moved intact to:
+
+`D:\HuaweiMoveData\Users\haora\Documents\ISEF_INVALID_READINESS_20260727_824e8d3`
+
+The canonical readiness path is absent again. No authorization, claim,
+prediction, values-opened, target-cache, output, or completion artifact was
+created. The runtime registries now both include Pillow, and a regression test
+requires them to remain identical. A fresh readiness must bind the repaired
+committed code; never restore the archived invalid marker.
 
 The first safe state-changing command, after this handoff correction and the
 final source-binding hardening are committed and pushed to a clean `main`, is
@@ -749,7 +768,9 @@ Latest verified results during evaluator implementation:
 
 - evaluator/target/reporting focused suite:
   `44 passed`, zero failures
-- full project suite: `711 passed`, zero failures (`214.87 s`)
+- authorization/evaluator/target/reporting focused suite:
+  `55 passed`, zero failures
+- full project suite: `712 passed`, zero failures (`244.69 s`)
 - full-repository Ruff: passed
 - no canonical readiness, authorization, claim, predictions-frozen,
   values-opened, completion, target-cache, staging, or final-output artifact
