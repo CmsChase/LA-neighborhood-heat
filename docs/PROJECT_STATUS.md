@@ -1,5 +1,9 @@
 # Project Status — 2026-07-22
 
+This file is a historical scientific summary. Before any work, read
+`docs/PROJECT_HANDOFF.md` in full; that document is authoritative for the live
+Git, authorization, runtime, and final-test state.
+
 ## Outcome so far
 
 Phases 0–5 and the frozen development-model run are complete. The robustness
@@ -413,20 +417,23 @@ The generated development report is `reports/DEVELOPMENT_REPORT.md`, report SHA
 1. The full-development B1/M2 tuning and refits are complete and authenticated.
    The formal immutable model lock has been promoted with commit SHA-256
    `584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b`.
-2. Implement and freeze the isolated 2025 data builder and predict-only final
-   evaluator. It must never call `fit`, and it must fail closed on any model,
-   feature, configuration, support, or provenance mismatch.
-3. Freeze a separate one-way authorization record only after the evaluator and
-   its tests are committed. Target-blind preparation may then run before label
-   access; the labels and metrics remain a single irreversible evaluation stage.
-4. Keep 2025 locked until that authorization exists. Never use its values to
-   retune, retrain, alter thresholds, or repeat the final evaluation.
+2. The isolated 2025 target builder and predict-only evaluator are implemented,
+   frozen, independently audited, committed, and pushed. They never call
+   `fit`, freeze predictions before target access, and fail closed on identity,
+   schema, provenance, report, bootstrap, or figure mismatch.
+3. The obsolete evaluator drafts were recoverably relocated outside the
+   repository with SHA-256 records. The user has authorized the frozen
+   one-time sequence; target-blind readiness is the next gate.
+4. Keep 2025 locked until readiness and authorization records exist. Then make
+   the separately documented unlock-only commit and execute the single claim.
+   Never use its values to retune, retrain, alter thresholds, or repeat the
+   final evaluation.
 
 ## Current verification state
 
 The development report, reconciled robustness evidence, completed final fit,
 formal model lock, and opt-in controller are covered by the complete repository
-test suite: 548 tests passed on 2026-07-23, and `python -m ruff check .` passed.
+test suite: 711 tests passed on 2026-07-27, and `python -m ruff check .` passed.
 The Sentinel scientific pipeline fingerprint remains byte-identical to the
 frozen 226-acquisition build. No 2025 value has been read and no final-test
 evaluation has run.

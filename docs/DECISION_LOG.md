@@ -1077,3 +1077,48 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   readiness, authorization, claim, prediction, values-opened, completion,
   target-cache, final target/QA, metric, or figure artifact was created, and
   the one-time evaluation remains unconsumed.
+
+## 2026-07-27 - Clear final-evaluation preparation blockers without reading targets
+
+- After the separate draft-handling and irreversible evaluation boundaries
+  were explained, the user instructed the project to perform the described
+  sequence. This grants relocation authorization for the four obsolete drafts
+  and one authorization for the already frozen 2025 evaluation protocol. It
+  does not grant a second claim, a changed evaluator, or post-result tuning.
+- Moved the four obsolete, untracked drafts without reading or executing them
+  to the recoverable external quarantine directory
+  `D:\HuaweiMoveData\Users\haora\Documents\ISEF_QUARANTINED_DRAFTS_20260727`.
+  Their byte counts and pre/post-move SHA-256 values are recorded in
+  `docs/PROJECT_HANDOFF.md`. The repository was clean after relocation.
+- The first target-blind readiness attempt failed before writing a marker
+  because the Daymet feature directory copied from the other laptop retained
+  a protected ACL. Enabled inherited permissions only on that exact directory.
+  No data bytes changed, and all three recovered files match the frozen
+  predictor-manifest byte counts and SHA-256 values.
+- Repaired the ignored local virtual-environment launcher by pointing it to
+  the preserved portable Python 3.14.4 base runtime. The frozen package
+  versions import successfully.
+- No readiness, authorization, claim, frozen-prediction, values-opened,
+  completion, target-cache, target/QA, residual, metric, or final figure
+  artifact existed after these repairs. `unlock_final_test` remained false.
+- The held-out test evidence will be preserved as an append-only chain of
+  readiness, authorization, claim, prediction freeze, value opening, 23
+  overpass cache commits, exact output commitment, completion marker, Git
+  history, and SHA-256 export manifest. This is the electronic data-book
+  record; a screenshot alone is not accepted as result evidence.
+- A final independent audit found one pre-readiness recovery-authentication
+  gap: a self-consistent replacement evaluation surface could replay its own
+  reports without being reconstructed from the committed target, blind
+  prediction, predictor, and date-QA source tables.
+- Closed that gap before readiness. Deep staging/recovery authentication now
+  reauthenticates the inventory, predictor provenance and model feature
+  contract, research unlock, target/date/contribution artifacts, and target
+  configuration; rebuilds the joined evaluation surface and QA summary; and
+  requires exact evaluation-row and safe-count replay.
+- Synthetic tamper tests cover target values, B1/M2 predictions, Sentinel
+  availability, date and tract QA, target provenance, predictor/inventory
+  provenance, research unlock, QA summary, and safe-count drift. The focused
+  evaluator/target/reporting suite passed 44 tests. The complete project suite
+  passed all 711 tests in 214.87 seconds, full-repository Ruff passed, and an
+  independent read-only re-audit found no remaining P0/P1 issue. No real 2025
+  target value was opened during this hardening.

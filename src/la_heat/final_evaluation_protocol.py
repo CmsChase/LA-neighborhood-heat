@@ -2713,6 +2713,7 @@ def _claim_tract_geometry_contract(
 def _staged_output_records(
     config: FinalEvaluationConfig,
     *,
+    claim: Mapping[str, Any],
     expected_prediction_output: Mapping[str, Any],
     safe_count_summary: Mapping[str, Any],
 ) -> dict[str, dict[str, Any]]:
@@ -2726,7 +2727,11 @@ def _staged_output_records(
         raise FinalEvaluationProtocolError(
             "Staged final-evaluation output set is not exact regular files."
         )
-    _assert_staged_output_cardinalities(config)
+    _assert_staged_output_cardinalities(
+        config,
+        claim=claim,
+        safe_count_summary=safe_count_summary,
+    )
     records: dict[str, dict[str, Any]] = {}
     for filename, sort_by in OUTPUT_SEMANTIC_SORT_BY.items():
         path = staging / filename
@@ -3307,9 +3312,210 @@ def _assert_replayed_report_outputs(
         )
 
 
+def _normalized_evaluation_rows_for_comparison(
+    frame: pd.DataFrame,
+) -> pd.DataFrame:
+    """Canonicalize only representation details before an exact row comparison."""
+
+    result = frame.copy()
+    result["tract_geoid"] = result["tract_geoid"].astype("string")
+    result["target_date"] = pd.to_datetime(
+        result["target_date"],
+        errors="raise",
+    ).astype("datetime64[ns]")
+    textual_columns = (
+        "spatial_block",
+        "sensor",
+        "source_scene_ids",
+        "tract_exclusion_reason",
+        "date_exclusion_reason",
+        "sentinel_stratum",
+    )
+    for column in textual_columns:
+        result[column] = result[column].astype("string")
+    return result.sort_values(
+        ["target_date", "tract_geoid"],
+        kind="stable",
+    ).reset_index(drop=True)
+
+
+def _assert_source_bound_outputs(
+    config: FinalEvaluationConfig,
+    *,
+    claim: Mapping[str, Any],
+    tables: Mapping[str, pd.DataFrame],
+    safe_count_summary: Mapping[str, Any],
+) -> None:
+    """Rebuild the evaluation surface from independently authenticated sources."""
+
+    from la_heat.final_evaluation_reporting import (
+        FinalEvaluationReportingError,
+        build_final_evaluation_reporting,
+    )
+    from la_heat.final_evaluation_targets import (
+        FinalEvaluationTargetError,
+        audit_final_target_artifacts,
+    )
+
+    request = claim.get("request")
+    if (
+        not isinstance(request, Mapping)
+        or not isinstance(request.get("landsat_inventory"), Mapping)
+        or not isinstance(request.get("predictors"), Mapping)
+        or not isinstance(request.get("models"), Mapping)
+        or not isinstance(request.get("unlock_transition"), Mapping)
+    ):
+        raise FinalEvaluationProtocolError(
+            "Consumption claim lacks source records for deep output authentication."
+        )
+    inventory, inventory_record = _default_inventory_authenticator(config)
+    if inventory_record != request["landsat_inventory"]:
+        raise FinalEvaluationProtocolError(
+            "Deep output inventory differs from the consumption claim."
+        )
+    _, predictors, predictor_record = _predictor_readiness_record(config)
+    if predictor_record != request["predictors"]:
+        raise FinalEvaluationProtocolError(
+            "Deep output predictors differ from the consumption claim."
+        )
+    predictors = _validate_predictor_frame(
+        predictors,
+        formal=request,
+        config=config,
+    )
+    research = load_config(config.paths["research_config"])
+    expected_target_config_sha256 = config.locks[
+        "target_config_semantic_sha256"
+    ]
+    try:
+        observed_target_config_sha256 = target_config_sha256(research)
+    except (KeyError, TypeError, ValueError) as error:
+        raise FinalEvaluationProtocolError(
+            "Deep output target configuration cannot be authenticated."
+        ) from error
+    unlock_transition = request["unlock_transition"]
+    if (
+        request.get("final_test_year") != 2025
+        or getattr(research, "final_test_year", None) != 2025
+        or unlock_transition.get("unlock_final_test") is not True
+        or unlock_transition.get("target_config_semantic_sha256")
+        != expected_target_config_sha256
+        or unlock_transition.get("research_config_file_sha256")
+        != sha256_file(config.paths["research_config"])
+        or observed_target_config_sha256 != expected_target_config_sha256
+    ):
+        raise FinalEvaluationProtocolError(
+            "Deep output target configuration or unlock differs from "
+            "the consumption claim."
+        )
+    try:
+        audit = audit_final_target_artifacts(
+            tables["final_target_qa.parquet"],
+            tables["date_summary.parquet"],
+            tables["scene_contributions.parquet"],
+            inventory=inventory,
+            config=research,
+            expected_target_config_sha256=expected_target_config_sha256,
+        )
+        joined = _joined_reporting_rows(
+            target_qa=tables["final_target_qa.parquet"],
+            date_summary=tables["date_summary.parquet"],
+            blind_predictions=tables["blind_predictions.parquet"],
+            predictors=predictors,
+        )
+        rebuilt_reports = build_final_evaluation_reporting(
+            joined,
+            _reporting_settings(config),
+        )
+        rebuilt = rebuilt_reports.evaluation_rows
+    except (FinalEvaluationTargetError, FinalEvaluationReportingError) as error:
+        raise FinalEvaluationProtocolError(
+            "Deep output source reconstruction failed."
+        ) from error
+
+    observed = tables["evaluation_rows.parquet"]
+    try:
+        pd.testing.assert_frame_equal(
+            _normalized_evaluation_rows_for_comparison(observed),
+            _normalized_evaluation_rows_for_comparison(rebuilt),
+            check_dtype=False,
+            check_exact=True,
+            check_categorical=False,
+        )
+    except (AssertionError, KeyError, TypeError, ValueError) as error:
+        raise FinalEvaluationProtocolError(
+            "Evaluation rows do not exactly replay from authenticated "
+            "targets, predictions, predictors, and date QA."
+        ) from error
+
+    try:
+        observed_qa = tables["qa_missingness_summary.csv"].copy()
+        rebuilt_qa = rebuilt_reports.qa_missingness_summary.loc[
+            :,
+            observed_qa.columns,
+        ].copy()
+        for frame in (observed_qa, rebuilt_qa):
+            frame["target_date"] = pd.to_datetime(
+                frame["target_date"],
+                errors="coerce",
+            ).dt.strftime("%Y-%m-%d")
+            frame.sort_values(
+                ["summary_level", "target_date"],
+                kind="stable",
+                inplace=True,
+                na_position="first",
+            )
+            frame.reset_index(drop=True, inplace=True)
+        pd.testing.assert_frame_equal(
+            observed_qa,
+            rebuilt_qa,
+            check_dtype=False,
+            check_exact=False,
+            rtol=1e-12,
+            atol=1e-12,
+            check_categorical=False,
+        )
+    except (AssertionError, KeyError, TypeError, ValueError) as error:
+        raise FinalEvaluationProtocolError(
+            "QA missingness summary does not replay from authenticated "
+            "target, predictor, and date-QA sources."
+        ) from error
+
+    geometry = _claim_tract_geometry_contract(claim, config=config)
+    try:
+        expected_safe_count_summary = {
+            "target_audit": dict(audit),
+            "evaluation_row_count": int(len(rebuilt)),
+            "inventory_date_count": int(audit["inventory_date_count"]),
+            "usable_date_count": int(rebuilt["target_date"].nunique()),
+            "independent_spatial_block_count": int(
+                rebuilt["spatial_block"].nunique()
+            ),
+            "tract_choropleth": {
+                **geometry,
+                "aggregation": (
+                    "unweighted_per_tract_mean_over_all_usable_matched_dates"
+                ),
+                "geometry_used_for_diagnostics_only": True,
+                "coordinates_used_as_predictors": False,
+            },
+        }
+    except (KeyError, TypeError, ValueError) as error:
+        raise FinalEvaluationProtocolError(
+            "Rebuilt source audit lacks its frozen count contract."
+        ) from error
+    if dict(safe_count_summary) != expected_safe_count_summary:
+        raise FinalEvaluationProtocolError(
+            "Final output safe-count summary does not replay from "
+            "authenticated source artifacts."
+        )
+
+
 def _assert_staged_output_cardinalities(
     config: FinalEvaluationConfig,
     *,
+    claim: Mapping[str, Any],
+    safe_count_summary: Mapping[str, Any],
     directory: Path | None = None,
 ) -> None:
     staging = config.paths["staging_root"] if directory is None else directory
@@ -3681,6 +3887,12 @@ def _assert_staged_output_cardinalities(
         raise FinalEvaluationProtocolError(
             "Staged final-evaluation table cardinalities violate the frozen contract."
         )
+    _assert_source_bound_outputs(
+        config,
+        claim=claim,
+        tables=tables,
+        safe_count_summary=safe_count_summary,
+    )
 
 
 def _authenticate_output_commit(
@@ -3899,15 +4111,17 @@ def _authenticate_output_commit(
                 f"Final output has no provenance contract: {filename}"
             )
     if deep_structured:
+        _assert_staged_output_cardinalities(
+            config,
+            claim=claim,
+            safe_count_summary=safe_count_summary,
+            directory=directory,
+        )
         _assert_replayed_figure_outputs(
             directory,
             config=config,
             claim=claim,
             output_records=outputs,
-        )
-        _assert_staged_output_cardinalities(
-            config,
-            directory=directory,
         )
     return payload, commit
 
@@ -4337,6 +4551,7 @@ def execute_locked_final_evaluation(
         else:
             records = _staged_output_records(
                 config,
+                claim=claim,
                 expected_prediction_output=replayed_marker["output"],
                 safe_count_summary=safe_summary,
             )

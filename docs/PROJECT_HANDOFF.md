@@ -477,9 +477,9 @@ the legacy files remain permanently prohibited.
 
 Never copy any file from these directories into a canonical output path.
 
-## Quarantined evaluator drafts: do not run or commit
+## Quarantined evaluator drafts: relocated outside the repository
 
-The following untracked files came from an incomplete evaluator design review:
+The following files came from an incomplete evaluator design review:
 
 - `configs/final_test_2025.toml`
 - `scripts/run_final_test_evaluation.py`
@@ -487,11 +487,27 @@ The following untracked files came from an incomplete evaluator design review:
 - `tests/test_final_test_evaluator.py`
 
 They are not part of the approved workflow and must not be read, staged, run,
-or treated as a final-evaluation implementation. Preserve them unless a user
-explicitly authorizes their deletion or relocation. The audited replacement
-now exists under the distinct `final_evaluation_*` names below, so these drafts
-are obsolete implementation-wise but remain a worktree-cleanliness blocker.
-Never use `git add .`.
+or treated as a final-evaluation implementation. On 2026-07-27 the user
+explicitly authorized the previously described safe handling step. The four
+files were moved, without opening or executing them, to the recoverable
+external quarantine directory:
+
+`D:\HuaweiMoveData\Users\haora\Documents\ISEF_QUARANTINED_DRAFTS_20260727`
+
+Their relative paths, byte counts, and pre/post-move SHA-256 values are:
+
+- `configs/final_test_2025.toml`: 1,004 bytes,
+  `15a483d863bc6736e10c3e884869dd86731c2a174a9c2cabac076c261d30c103`
+- `scripts/run_final_test_evaluation.py`: 1,314 bytes,
+  `e109f945a17d0819bc83b8a1a586a9c30936fe89769f5caf301ec8c04384b1a7`
+- `src/la_heat/final_test_evaluator.py`: 39,062 bytes,
+  `380ef5f83181ec216a1221a7312a858a86a62ac3dcef0bdb49462ed78737fc5f`
+- `tests/test_final_test_evaluator.py`: 13,812 bytes,
+  `742fe7ad1bfe61fd3a8cd241aa628ab1e94ff89840a479cf27b1f6d8f06b9b33`
+
+The four source paths no longer exist in the repository and the worktree was
+clean immediately after relocation. Authorization A is satisfied. Never copy
+these drafts back into the repository or use `git add .`.
 
 ## Exact next steps
 
@@ -541,6 +557,10 @@ residual, score, or metric artifact exists. The new protocol freezes:
 - exact regular-file output set, predeclared columns, canonical civil dates,
   11-digit GEOIDs, primary keys, semantic hashes, cross-table key/cardinality
   checks, and same-claim committed-staging recovery;
+- deep publication/recovery authentication that reauthenticates the inventory,
+  predictor provenance, model feature contract, research unlock, target
+  artifacts, date/tract QA, and scene contributions, then reconstructs the
+  canonical evaluation rows from source tables and compares them exactly;
 - deterministic replay of model, per-date, paired-cell, bootstrap, gate,
   hotspot, sensor, and Sentinel-stratum reports from published evaluation rows;
 - a real authenticated-tract six-panel map PDF plus
@@ -556,16 +576,17 @@ Target-blind validation completed without opening any Landsat asset:
 - inventory reports `target_or_qa_values_read = false`
 - authenticated B1 and M2 artifacts each produced `25,208` finite in-memory
   predictions; no predictions were persisted
-- evaluator-focused suite after final hardening: `43 passed`
-- final full project suite: `706 passed` in `168 s`
+- evaluator/target/reporting suite after source-binding hardening:
+  `44 passed`
+- final full project suite: `711 passed` in `214.87 s`
 - full-repository Ruff: passed
 
 The implementation is committed under the subject
 `Add locked final evaluation protocol`; use the checkpoint command at the top
-to obtain its non-circular hash. The same four old drafts remain untracked and
-untouched.
+to obtain its non-circular hash. The four old drafts are recoverably
+quarantined outside the repository as recorded above.
 
-### 1. First safe action and the current blocker
+### 1. Current preparation state
 
 Run only these read-only commands first:
 
@@ -574,24 +595,42 @@ git rev-parse HEAD
 git status --short
 ```
 
-After the evaluator commit, the expected status contains exactly the four
-quarantined untracked paths listed above. If it contains more or fewer paths,
-fail closed and investigate without deleting anything.
+The expected status is now completely empty. If it is not empty, fail closed
+and investigate without deleting anything.
 
-### 2. Resolve the authorization cleanliness blocker
+The first readiness attempt on 2026-07-27 stopped before creating any marker:
+the copied
+`data/interim/final_test_2025/daymet_features` directory retained a protected
+ACL owned by the other laptop account. Inheritance was enabled only on that
+exact directory; no data bytes were edited. The three recovered files now
+match the frozen predictor manifest exactly:
 
-The authorization gate requires a clean working tree except for its exact
-readiness marker. The four quarantined untracked drafts therefore block both
-readiness and authorization. Do not delete, move, ignore, or commit them
-without explicit user permission.
+- `DAYMET_FEATURES.json`: 21,049 bytes,
+  `64731546e57dba13212e77a85969c4e9370d83340ce826e24bb17a0b5afc22f9`
+- `daymet_features.parquet`: 4,019,117 bytes,
+  `79275b1f1494249e34dad8400cfc3690d8651743fea77a8f30c7b19c70971d8f`
+- `daymet_feature_audit.parquet`: 46,324 bytes,
+  `068208536e205ebaafdc3108520fd996247a3b3e016287d5cd7eabe79438bcb8`
 
-This is authorization A: the user must explicitly choose how to handle those
-four files. Without authorization A, stop and ask the user; do not run
-readiness preparation.
+The original Python 3.14.4 installation used by `.venv` was no longer present.
+The ignored local `.venv/pyvenv.cfg` was repointed to the exact portable
+Python 3.14.4 runtime already preserved under
+`exports/FINAL_RESULT/runtime/python`. Imports authenticate the same frozen
+package versions, including NumPy 2.5.1, pandas 3.0.3, GeoPandas 1.1.4,
+rasterio 1.5.0, scikit-learn 1.9.0, PyArrow 25.0.0, and Matplotlib 3.11.1.
 
-### 3. One-time authorization and final evaluation
+The first safe state-changing command, after this handoff correction and the
+final source-binding hardening are committed and pushed to a clean `main`, is
+the target-blind readiness command in step 1 below.
 
-This is intentionally not authorized yet.
+### 2. One-time authorization and final evaluation
+
+On 2026-07-27, after the two distinct authorizations and the irreversible
+one-time boundary were explained, the user instructed the project to perform
+the described sequence. Authorization A (draft relocation) and Authorization
+B (one one-time 2025 evaluation) are therefore explicit for this run. No
+authorization marker, unlock, claim, target read, prediction file, metric, or
+figure exists at this handoff checkpoint.
 
 Authorization may occur only after:
 
@@ -602,9 +641,9 @@ Authorization may occur only after:
 - the final target builder and all output paths are frozen;
 - the user explicitly approves the irreversible one-time step.
 
-That approval is authorization B and is separate from authorization A. Even
-after the worktree is clean, do not authorize, unlock, or execute the final
-evaluation without explicit authorization B.
+That approval is authorization B and is separate from authorization A. It has
+now been granted once for the frozen protocol. It does not authorize any
+second claim, rerun with changed code/settings, or post-result tuning.
 
 The locked sequence is:
 
@@ -633,10 +672,40 @@ The locked sequence is:
      --config configs\final_evaluation_2025.toml
    ```
 
-The commands above are a future gated sequence, not permission to execute them
-in the current session.
+The commands above are now the authorized gated sequence. Every gate must
+still pass exactly; a failure must remain fail-closed.
 
 Never retune or change thresholds after target values are opened.
+
+### 3. Preserve the test-set result as auditable evidence
+
+The canonical evidence is not a screenshot. Preserve the append-only chain:
+
+1. target-blind readiness and explicit authorization;
+2. the one consumption claim and frozen blind-prediction commitment;
+3. the values-opened boundary marker;
+4. all 23 per-overpass target-cache commits;
+5. the exact 21-file final output directory and its
+   `EVALUATION_COMMIT.json`;
+6. `EVALUATION_COMPLETE.json`, the Git commits, decision log, handoff, and
+   final checksums.
+
+After completion, rerun the same execution command once in authentication
+mode. It must authenticate the completed transaction without opening target
+tables. Only after that succeeds may metrics and figures be inspected. Then
+create a separate, read-only export that copies existing evidence bytes and
+writes a SHA-256 manifest; do not recalculate or hand-edit any result. The
+repository has no approved final-evaluation ZIP exporter yet, so the old
+portable development-run packagers must not be reused.
+
+The official science-fair rules do not require a project data book or research
+paper, but strongly recommend them for judging. The official judging criteria
+also score systematic data collection, reproducibility, and supporting
+documentation. This append-only evidence chain is the project's electronic
+data-book record for the held-out test evaluation. Official references:
+
+- `https://www.societyforscience.org/isef/international-rules/rules-for-all-projects/`
+- `https://www.societyforscience.org/isef/grand-award/criteria/`
 
 ## Verification commands
 
@@ -662,9 +731,9 @@ Before completing any code change:
 
 Latest verified results during evaluator implementation:
 
-- evaluator/authorization/target/reporting focused suite:
-  `43 passed`, zero failures
-- full project suite: `706 passed`, zero failures (`168 s`)
+- evaluator/target/reporting focused suite:
+  `44 passed`, zero failures
+- full project suite: `711 passed`, zero failures (`214.87 s`)
 - full-repository Ruff: passed
 - no canonical readiness, authorization, claim, predictions-frozen,
   values-opened, completion, target-cache, staging, or final-output artifact

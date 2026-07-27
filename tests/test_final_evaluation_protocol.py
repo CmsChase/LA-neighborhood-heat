@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from dataclasses import replace
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
 
 import numpy as np
@@ -152,6 +153,322 @@ def _predictors(features: list[str]) -> pd.DataFrame:
     for index, feature in enumerate(features):
         keys[feature] = float(index)
     return keys
+
+
+def _source_binding_tables() -> tuple[
+    dict[str, pd.DataFrame],
+    pd.DataFrame,
+    pd.DataFrame,
+]:
+    dates = pd.to_datetime(["2025-07-01", "2025-07-01"])
+    geoids = ["06037000001", "06037000002"]
+    target = pd.DataFrame(
+        {
+            "tract_geoid": geoids,
+            "target_date": dates,
+            "platform": ["landsat-9", "landsat-9"],
+            "spatial_block": ["block-a", "block-b"],
+            "target_lst_c": [31.0, 32.0],
+            "target_available": [True, True],
+            "date_usable": [True, True],
+            "relative_hotspot_top20": [False, True],
+            "source_scene_count": [2, 2],
+            "source_scene_ids": ["scene-a;scene-b", "scene-a;scene-b"],
+            "rasterized_pixel_count": [20, 22],
+            "footprint_pixel_count": [18, 20],
+            "eligible_pixel_count_static": [17, 19],
+            "valid_pixel_count": [16, 18],
+            "footprint_fraction": [0.90, 0.91],
+            "valid_fraction": [0.94, 0.95],
+            "median_st_uncertainty_k": [0.5, 0.6],
+            "p90_st_uncertainty_k": [0.8, 0.9],
+            "median_cloud_distance_km": [3.0, 4.0],
+            "tract_exclusion_reason": [pd.NA, pd.NA],
+            "date_exclusion_reason": [pd.NA, pd.NA],
+        }
+    )
+    date_summary = pd.DataFrame(
+        {
+            "target_date": [pd.Timestamp("2025-07-01")],
+            "relative_endpoint_coverage_pass": [True],
+            "date_exclusion_reason": [pd.NA],
+            "union_city_coverage_fraction": [0.99],
+            "retained_tract_count": [2],
+            "retained_tract_fraction": [1.0],
+            "minimum_eligible_joint_cell_retention_fraction": [0.9],
+        }
+    )
+    blind = pd.DataFrame(
+        {
+            "tract_geoid": geoids,
+            "target_date": dates,
+            "y_pred_b1": [30.0, 30.5],
+            "y_pred_m2": [31.1, 31.8],
+        }
+    )
+    predictors = pd.DataFrame(
+        {
+            "tract_geoid": geoids,
+            "target_date": dates,
+            **{
+                feature: [0.2, np.nan]
+                for feature in protocol.SENTINEL_FEATURES
+            },
+        }
+    )
+    contributions = pd.DataFrame(
+        {
+            "target_date": dates,
+            "overpass_id": ["overpass-a", "overpass-a"],
+            "scene_id": ["scene-a", "scene-b"],
+            "selected_valid_pixel_count": [16, 18],
+            "tract_geoid": geoids,
+        }
+    )
+    joined = protocol._joined_reporting_rows(
+        target_qa=target,
+        date_summary=date_summary,
+        blind_predictions=blind,
+        predictors=predictors,
+    )
+    reports = _fake_source_bound_reporting(joined, object())
+    return (
+        {
+            "blind_predictions.parquet": blind,
+            "final_target_qa.parquet": target,
+            "date_summary.parquet": date_summary,
+            "scene_contributions.parquet": contributions,
+            "evaluation_rows.parquet": reports.evaluation_rows,
+            "qa_missingness_summary.csv": reports.qa_missingness_summary,
+        },
+        predictors,
+        reports.evaluation_rows,
+    )
+
+
+def _fake_source_bound_reporting(
+    rows: pd.DataFrame,
+    _settings: object,
+) -> SimpleNamespace:
+    source = rows.loc[
+        rows["date_usable"].astype(bool)
+        & rows["target_available"].astype(bool)
+    ].copy()
+    evaluation = pd.DataFrame(
+        {
+            "tract_geoid": source["tract_geoid"],
+            "target_date": source["target_date"],
+            "spatial_block": source["spatial_block"],
+            "sensor": source["sensor"],
+            "sentinel_available": source["sentinel_available"],
+            "target_available": source["target_available"],
+            "date_usable": source["date_usable"],
+            "relative_endpoint_coverage_pass": source[
+                "relative_endpoint_coverage_pass"
+            ],
+            "relative_hotspot_top20": source["relative_hotspot_top20"],
+            "y_true": source["y_true"],
+            "y_pred_b1": source["y_pred_b1"],
+            "y_pred_m2": source["y_pred_m2"],
+        }
+    )
+    qa_columns = (
+        "source_scene_count",
+        "source_scene_ids",
+        "rasterized_pixel_count",
+        "footprint_pixel_count",
+        "eligible_pixel_count_static",
+        "valid_pixel_count",
+        "footprint_fraction",
+        "valid_fraction",
+        "median_st_uncertainty_k",
+        "p90_st_uncertainty_k",
+        "median_cloud_distance_km",
+        "tract_exclusion_reason",
+        "date_exclusion_reason",
+        "union_city_coverage_fraction",
+        "retained_tract_count",
+        "retained_tract_fraction",
+        "minimum_eligible_joint_cell_retention_fraction",
+    )
+    for column in qa_columns:
+        evaluation[column] = source[column]
+    evaluation["sentinel_stratum"] = np.where(
+        evaluation["sentinel_available"],
+        "sentinel_complete",
+        "sentinel_all_five_missing",
+    )
+    evaluation["b1_error_c"] = (
+        evaluation["y_pred_b1"] - evaluation["y_true"]
+    )
+    evaluation["m2_error_c"] = (
+        evaluation["y_pred_m2"] - evaluation["y_true"]
+    )
+    evaluation["b1_absolute_error_c"] = evaluation["b1_error_c"].abs()
+    evaluation["m2_absolute_error_c"] = evaluation["m2_error_c"].abs()
+    columns = protocol._output_table_column_contracts()[
+        "evaluation_rows.parquet"
+    ]
+    qa_columns = protocol._output_table_column_contracts()[
+        "qa_missingness_summary.csv"
+    ]
+    qa_record: dict[str, Any] = {
+        column: np.nan for column in qa_columns
+    }
+    qa_record.update(
+        {
+            "summary_level": "overall",
+            "sensor": "all",
+            "inventory_key_count": int(len(rows)),
+            "independent_date_count": int(rows["target_date"].nunique()),
+            "independent_spatial_block_count": int(
+                rows["spatial_block"].nunique()
+            ),
+            "target_available_count": int(
+                rows["target_available"].astype(bool).sum()
+            ),
+            "target_unavailable_count": int(
+                (~rows["target_available"].astype(bool)).sum()
+            ),
+            "target_availability_fraction": float(
+                rows["target_available"].astype(bool).mean()
+            ),
+            "qa_rules_json": "{}",
+        }
+    )
+    return SimpleNamespace(
+        evaluation_rows=evaluation.loc[:, list(columns)].reset_index(drop=True),
+        qa_missingness_summary=pd.DataFrame(
+            [qa_record],
+            columns=list(qa_columns),
+        ),
+    )
+
+
+def _source_binding_context(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> tuple[
+    FinalEvaluationConfig,
+    dict[str, Any],
+    dict[str, pd.DataFrame],
+    pd.DataFrame,
+    dict[str, Any],
+]:
+    import la_heat.final_evaluation_reporting as reporting
+    import la_heat.final_evaluation_targets as targets
+
+    config = replace(
+        _config(tmp_path),
+        locks={"target_config_semantic_sha256": "c" * 64},
+        analysis={
+            **_analysis(),
+            "expected_key_count": 2,
+            "expected_tract_count": 2,
+            "expected_inventory_overpass_count": 1,
+            "expected_inventory_scene_count": 2,
+        },
+    )
+    config.paths["research_config"].parent.mkdir(parents=True, exist_ok=True)
+    config.paths["research_config"].write_text(
+        "synthetic unlocked research configuration",
+        encoding="utf-8",
+    )
+    research_file_sha256 = protocol.sha256_file(
+        config.paths["research_config"]
+    )
+    inventory_record = {
+        "tract_count": 2,
+        "tract_crs": "EPSG:3310",
+        "locks": {
+            "tract_manifest_sha256": "a" * 64,
+            "primary_tract_file_sha256": "b" * 64,
+        },
+    }
+    claim = {
+        "claim_id": "source-bound-claim",
+        "request": {
+            "final_test_year": 2025,
+            "unlock_transition": {
+                "research_config_file_sha256": research_file_sha256,
+                "target_config_semantic_sha256": "c" * 64,
+                "unlock_final_test": True,
+            },
+            "landsat_inventory": inventory_record,
+            "predictors": {"file_sha256": "d" * 64},
+            "models": {"B1": {}, "M2": {}},
+        },
+    }
+    tables, predictors, _ = _source_binding_tables()
+    audit = {
+        "state": "complete_all_inventory_dates_assessed",
+        "target_row_count": 2,
+        "inventory_date_count": 1,
+        "tract_count": 2,
+        "exact_key_universe": True,
+        "static_eligible_denominator_invariant": True,
+        "qa_contract_exact": True,
+        "minimum_development_date_gate_applied": False,
+    }
+    safe_count_summary = {
+        "target_audit": audit,
+        "evaluation_row_count": 2,
+        "inventory_date_count": 1,
+        "usable_date_count": 1,
+        "independent_spatial_block_count": 2,
+        "tract_choropleth": {
+            "tract_manifest_sha256": "a" * 64,
+            "primary_tract_file_sha256": "b" * 64,
+            "tract_count": 2,
+            "crs": "EPSG:3310",
+            "aggregation": (
+                "unweighted_per_tract_mean_over_all_usable_matched_dates"
+            ),
+            "geometry_used_for_diagnostics_only": True,
+            "coordinates_used_as_predictors": False,
+        },
+    }
+    monkeypatch.setattr(
+        protocol,
+        "_default_inventory_authenticator",
+        lambda _config: (SimpleNamespace(), inventory_record),
+    )
+    monkeypatch.setattr(
+        protocol,
+        "_predictor_readiness_record",
+        lambda _config: (
+            {},
+            predictors.copy(),
+            claim["request"]["predictors"],
+        ),
+    )
+    monkeypatch.setattr(
+        protocol,
+        "_validate_predictor_frame",
+        lambda frame, **_kwargs: frame.copy(),
+    )
+    monkeypatch.setattr(
+        protocol,
+        "load_config",
+        lambda _path: SimpleNamespace(raw={}, final_test_year=2025),
+    )
+    monkeypatch.setattr(
+        protocol,
+        "target_config_sha256",
+        lambda _config: "c" * 64,
+    )
+    monkeypatch.setattr(protocol, "_reporting_settings", lambda _config: object())
+    monkeypatch.setattr(
+        targets,
+        "audit_final_target_artifacts",
+        lambda *_args, **_kwargs: audit,
+    )
+    monkeypatch.setattr(
+        reporting,
+        "build_final_evaluation_reporting",
+        _fake_source_bound_reporting,
+    )
+    return config, claim, tables, predictors, safe_count_summary
 
 
 def test_default_config_freezes_exact_outputs_and_all_inventory_dates() -> None:
@@ -331,6 +648,217 @@ def test_join_requires_exact_target_prediction_and_predictor_keys() -> None:
             date_summary=summaries,
             blind_predictions=predictions.iloc[:1],
             predictors=sentinel,
+        )
+
+
+def test_deep_source_binding_accepts_exact_reconstruction(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    config, claim, tables, _, safe_summary = _source_binding_context(
+        tmp_path,
+        monkeypatch,
+    )
+
+    protocol._assert_source_bound_outputs(
+        config,
+        claim=claim,
+        tables=tables,
+        safe_count_summary=safe_summary,
+    )
+
+
+def test_deep_source_binding_rejects_predictor_provenance_drift(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    config, claim, tables, predictors, safe_summary = (
+        _source_binding_context(tmp_path, monkeypatch)
+    )
+    monkeypatch.setattr(
+        protocol,
+        "_predictor_readiness_record",
+        lambda _config: (
+            {},
+            predictors.copy(),
+            {"file_sha256": "e" * 64},
+        ),
+    )
+
+    with pytest.raises(
+        FinalEvaluationProtocolError,
+        match="predictors differ from the consumption claim",
+    ):
+        protocol._assert_source_bound_outputs(
+            config,
+            claim=claim,
+            tables=tables,
+            safe_count_summary=safe_summary,
+        )
+
+
+def test_deep_source_binding_rejects_inventory_provenance_drift(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    config, claim, tables, _, safe_summary = _source_binding_context(
+        tmp_path,
+        monkeypatch,
+    )
+    monkeypatch.setattr(
+        protocol,
+        "_default_inventory_authenticator",
+        lambda _config: (
+            SimpleNamespace(),
+            {
+                **claim["request"]["landsat_inventory"],
+                "tract_crs": "EPSG:4326",
+            },
+        ),
+    )
+
+    with pytest.raises(
+        FinalEvaluationProtocolError,
+        match="inventory differs from the consumption claim",
+    ):
+        protocol._assert_source_bound_outputs(
+            config,
+            claim=claim,
+            tables=tables,
+            safe_count_summary=safe_summary,
+        )
+
+
+def test_deep_source_binding_rejects_unlock_configuration_drift(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    config, claim, tables, _, safe_summary = _source_binding_context(
+        tmp_path,
+        monkeypatch,
+    )
+    claim["request"]["unlock_transition"]["unlock_final_test"] = False
+
+    with pytest.raises(
+        FinalEvaluationProtocolError,
+        match="configuration or unlock differs",
+    ):
+        protocol._assert_source_bound_outputs(
+            config,
+            claim=claim,
+            tables=tables,
+            safe_count_summary=safe_summary,
+        )
+
+
+@pytest.mark.parametrize(
+    "drift",
+    ("y_true", "y_pred", "sentinel", "date_qa", "tract_qa"),
+)
+def test_deep_source_binding_rejects_source_drift(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    drift: str,
+) -> None:
+    config, claim, tables, predictors, safe_summary = (
+        _source_binding_context(tmp_path, monkeypatch)
+    )
+    if drift == "y_true":
+        tables["final_target_qa.parquet"].loc[0, "target_lst_c"] = 99.0
+    elif drift == "y_pred":
+        tables["blind_predictions.parquet"].loc[0, "y_pred_m2"] = 99.0
+    elif drift == "sentinel":
+        predictors.loc[0, list(protocol.SENTINEL_FEATURES)] = np.nan
+    elif drift == "date_qa":
+        tables["date_summary.parquet"].loc[
+            0,
+            "relative_endpoint_coverage_pass",
+        ] = False
+    elif drift == "tract_qa":
+        tables["final_target_qa.parquet"].loc[0, "source_scene_count"] = 99
+    else:  # pragma: no cover - parameter registry is closed above.
+        raise AssertionError(drift)
+
+    with pytest.raises(
+        FinalEvaluationProtocolError,
+        match="do not exactly replay",
+    ):
+        protocol._assert_source_bound_outputs(
+            config,
+            claim=claim,
+            tables=tables,
+            safe_count_summary=safe_summary,
+        )
+
+
+def test_deep_source_binding_rejects_target_provenance_failure(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import la_heat.final_evaluation_targets as targets
+
+    config, claim, tables, _, safe_summary = _source_binding_context(
+        tmp_path,
+        monkeypatch,
+    )
+
+    def reject_provenance(*_args: object, **_kwargs: object) -> None:
+        raise targets.FinalEvaluationTargetError("provenance drift")
+
+    monkeypatch.setattr(
+        targets,
+        "audit_final_target_artifacts",
+        reject_provenance,
+    )
+    with pytest.raises(
+        FinalEvaluationProtocolError,
+        match="source reconstruction failed",
+    ):
+        protocol._assert_source_bound_outputs(
+            config,
+            claim=claim,
+            tables=tables,
+            safe_count_summary=safe_summary,
+        )
+
+
+def test_deep_source_binding_rejects_qa_summary_or_safe_count_drift(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    config, claim, tables, _, safe_summary = _source_binding_context(
+        tmp_path,
+        monkeypatch,
+    )
+    tables["qa_missingness_summary.csv"].loc[
+        0,
+        "inventory_key_count",
+    ] = 999
+    with pytest.raises(
+        FinalEvaluationProtocolError,
+        match="QA missingness summary does not replay",
+    ):
+        protocol._assert_source_bound_outputs(
+            config,
+            claim=claim,
+            tables=tables,
+            safe_count_summary=safe_summary,
+        )
+
+    _, _, clean_tables, _, clean_summary = _source_binding_context(
+        tmp_path,
+        monkeypatch,
+    )
+    clean_summary["evaluation_row_count"] = 999
+    with pytest.raises(
+        FinalEvaluationProtocolError,
+        match="safe-count summary does not replay",
+    ):
+        protocol._assert_source_bound_outputs(
+            config,
+            claim=claim,
+            tables=clean_tables,
+            safe_count_summary=clean_summary,
         )
 
 
@@ -692,6 +1220,7 @@ def test_staged_output_contract_rejects_unexpected_directory(
     ):
         protocol._staged_output_records(
             config,
+            claim={},
             expected_prediction_output={},
             safe_count_summary={},
         )
