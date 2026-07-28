@@ -4,6 +4,10 @@ Last material update: 2026-07-28 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
+- source-backed `website-display-export-v3` is deployed from nested website
+  commit `206c04b797b184aa3dcb3aec60ac0ffaba8775bb`; GitHub Actions run
+  `30358959707` succeeded and the public page plus all four JSON files passed
+  HTTP and hash verification
 - repository navigation, display-export v2, and the tract-level website
   explorer are in the commit with subject
   `Organize project and add tract detail explorer`; obtain its exact hash with
@@ -137,25 +141,62 @@ the exact 21 final outputs, 23 cache commits/93 cache files, 16 recovery files,
 both unlock snapshots, and an independently cloned and `git fsck`-checked
 repository bundle. Do not rebuild or overwrite this package.
 
-## Completed interactive results website
+## Interactive results website
 
 The read-only held-out result explorer is deployed at
 `https://cmschase.github.io/LA-surface-heat-atlas/` with public access. It
 shows synchronized Landsat-observed, model-predicted, and residual tract maps
 for all 15 usable 2025 dates, plus scatter, per-date, bootstrap, and hotspot
-diagnostics. A separate larger map supports zoom, pan, reset, GEOID search,
+diagnostics. A separate larger map supports button zoom, pan, reset, GEOID or
+Mapping L.A. neighborhood search,
 mouse/keyboard tract selection, and a complete 15-date tract timeline and
 table with observed LST, prediction, signed/absolute error, valid fraction,
 median uncertainty, and Sentinel availability. It does not train, retune, or
 rerun the final evaluation.
+
+The current public deployment is the verified
+`website-display-export-v3` release. Its presentation contract is:
+
+- an equal-square homepage field with 40 columns, 59 rows, and exactly 869
+  included Los Angeles cells;
+- cell color from the fixed `2025-09-03` M2 prediction, with the selected tract
+  assigned by maximum overlap between the equal display cell and tract
+  geometry; every retained cell resolves to that tract's GEOID and
+  source-backed neighborhood label;
+- source-backed human-readable names from exactly 114 City of Los Angeles
+  Mapping L.A. neighborhoods;
+- a tract's primary name chosen by maximum polygon-intersection area in the
+  shared projected CRS, while every nonzero cross-boundary covered-area
+  proportion and total source coverage remain in the display export;
+- no wheel/scroll zoom on the detailed map; explicit plus/minus zoom,
+  drag-to-pan, reset, and mouse/keyboard selection remain;
+- a shorter viewport-bounded detailed map and search by either GEOID or
+  Mapping L.A. neighborhood name.
+
+The square field and neighborhood names are display metadata only. They do
+not replace census tracts as the analysis unit, create a new model output,
+alter the held-out cohort, or change any reported metric.
+
+The frozen neighborhood input is:
+
+- provider: Los Angeles Times Data and Graphics Department, Mapping L.A.;
+- repository commit:
+  `5acc817cd8e9ef1800dc9641493e46efe7ce35b0`;
+- exact raw URL:
+  `https://raw.githubusercontent.com/datadesk/mapping-la-data/5acc817cd8e9ef1800dc9641493e46efe7ce35b0/geojson/la-county-neighborhoods-v6.geojson`;
+- local path:
+  `data/raw/neighborhoods/mapping-la/la-county-neighborhoods-v6.geojson`;
+- SHA-256:
+  `ada200f59e0d2cd7e04a212eb5510cfe570765d68b7ff29d83b97cc5abeb6ead`;
+- license: MIT.
 
 The public GitHub Pages source is an independent nested Git project in the
 root-ignored `website-github-pages/` directory:
 
 - repository: `https://github.com/CmsChase/LA-surface-heat-atlas`
 - deployed source commit:
-  `128283948c74ad262401a3ced390e452d285e0b1`
-- successful GitHub Actions deployment run: `30353854439`
+  `206c04b797b184aa3dcb3aec60ac0ffaba8775bb`
+- successful GitHub Actions deployment run: `30358959707`
 
 The earlier root-ignored `website/` project remains the original visual source
 but is superseded as the public deployment. The root repository owns only the
@@ -166,32 +207,43 @@ deterministic display-data exporter and tests:
 - `tests/test_website_export.py`
 - `docs/RESULTS_WEBSITE.md`
 
-Current validation passed all 744 root tests, full-repository Ruff, the
-deterministic website-export authentication, website lint/TypeScript/static
-export tests, GitHub Actions deployment, and public HTTP/data checks. The
-current public manifest reports `website-display-export-v2` and all 1,096
-tract labels are unique.
+The deterministic v3 website export authenticated, and website
+lint/TypeScript/static-export tests passed in the successful GitHub Actions
+deployment. Public HTTP returned 200 for the page and all four JSON files;
+their bytes matched the authenticated v3 hashes. The deployed JavaScript
+confirmed the new interface and contained no `Scroll to zoom` control. Root
+validation used an independent D-drive pytest base directory and passed 747
+tests with five warnings in 550.87 seconds; full-repository Ruff passed. The
+earlier v2 release's 744-test validation remains historical provenance rather
+than being overwritten by this count.
 
 The display manifest authenticates 1,096 tract geometries, 15,116 held-out
 rows, and 15 dates against the canonical claim, completion commit, and evidence
 ZIP hash. It records:
 
 - `tracts.json`:
-  `c33fefe79d225fc6afababe0f117dda092f5e3f22f3827bd4f58bbf654867196`
+  `3712654983cee108eea2e54066b8286ff1bb3fd291e6126bace538b820ac670f`
 - `evaluation-2025.json`:
   `617eac416e348b4a0445a06c2d3627d1fd51421faf6c23f4c513835a06aa7938`
 - `metrics.json`:
   `494db653c65ba75ae2d2b312c808e80a376e75d97a177d3b8785342130f80aeb`
 - `display-manifest.json`:
-  `253435604ee2ceece0e820b8df71ab86584e3d4aac39ad7e485e1fe362b2816c`
+  `675f69e8138d7a1255973b3da70928a19ee70f4ec52d580421e5d9786af18e85`
 
-Display-export v2 changes only the tract presentation label: it combines the
-authenticated TIGER `NAMELSAD` type and `NAME` number. The evaluation and
-metric JSON files are byte-identical to v1.
+Display-export v3 adds the source-backed Mapping L.A. labels, preserved
+cross-boundary proportions, and equal-square homepage field. Its evaluation
+and metric JSON files are byte-identical to v2. The historical v2 display
+manifest SHA-256 is
+`253435604ee2ceece0e820b8df71ab86584e3d4aac39ad7e485e1fe362b2816c`;
+its website commit `128283948c74ad262401a3ced390e452d285e0b1` and Actions
+run `30353854439` are retained only as earlier deployment provenance.
 
 Safe authentication commands:
 
 ```powershell
+.\.venv\Scripts\python scripts\stage_mapping_la_neighborhoods.py
+.\.venv\Scripts\python scripts\build_website_data.py `
+  --output-dir website-github-pages\public\data
 .\.venv\Scripts\python scripts\build_website_data.py --verify-only `
   --output-dir website-github-pages\public\data
 $env:GITHUB_PAGES = "true"
@@ -205,7 +257,9 @@ Pop-Location
 
 Do not edit the compact JSON files by hand. Regenerate them only from the
 already frozen canonical outputs, then inspect the manifest and rerun both the
-Python exporter tests and website tests.
+Python exporter tests and website tests. The staging command downloads only
+the frozen commit-pinned Mapping L.A. GeoJSON or authenticates an existing
+copy; it fails closed on any SHA-256 difference.
 
 ## Completed repository navigation refresh
 

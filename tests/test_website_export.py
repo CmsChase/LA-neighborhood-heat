@@ -4,8 +4,9 @@ import hashlib
 import json
 from pathlib import Path
 
+import geopandas as gpd
 import pytest
-from shapely.geometry import MultiPolygon, Polygon
+from shapely.geometry import MultiPolygon, Polygon, box
 
 import la_heat.website_export as website_export
 from la_heat.website_export import (
@@ -46,6 +47,57 @@ def test_tract_display_name_combines_tiger_type_and_number() -> None:
     assert tract_display_name("1011.10", "Census Tract") == "Census Tract 1011.10"
     assert tract_display_name("1013", "") == "Census Tract 1013"
     assert tract_display_name("", "Census Tract") == "Census Tract"
+
+
+def test_mapping_la_loader_rejects_a_changed_snapshot(tmp_path: Path) -> None:
+    changed = tmp_path / "neighborhoods.geojson"
+    changed.write_text("{}", encoding="utf-8")
+
+    with pytest.raises(WebsiteExportError, match="snapshot changed"):
+        website_export._load_mapping_la_neighborhoods(
+            changed,
+            target_crs="EPSG:3310",
+        )
+
+
+def test_neighborhood_assignment_uses_maximum_covered_area_and_keeps_overlaps() -> None:
+    tracts = gpd.GeoDataFrame(
+        {"GEOID": ["06037000001"]},
+        geometry=[box(0, 0, 10, 10)],
+        crs="EPSG:3310",
+    )
+    neighborhoods = gpd.GeoDataFrame(
+        {"name": ["West", "East"]},
+        geometry=[box(0, 0, 6, 10), box(6, 0, 10, 10)],
+        crs="EPSG:3310",
+    )
+
+    assignments = website_export._assign_neighborhoods(tracts, neighborhoods)
+
+    assert assignments == [
+        {
+            "neighborhood": "West",
+            "neighborhoodShare": 0.6,
+            "neighborhoodCoverage": 1.0,
+            "neighborhoods": [["West", 0.6], ["East", 0.4]],
+        }
+    ]
+
+
+def test_hero_pixel_grid_uses_equal_cells_and_deterministic_tract_indices() -> None:
+    tracts = gpd.GeoDataFrame(
+        {"GEOID": ["06037000001", "06037000002"]},
+        geometry=[box(0, 0, 20, 10), box(20, 0, 40, 10)],
+        crs="EPSG:3310",
+    )
+
+    grid = website_export._build_hero_pixel_grid(tracts)
+
+    assert grid["columns"] == 40
+    assert grid["rows"] == 10
+    assert grid["pixelCount"] == 400
+    assert grid["cells"][0] == [0, 0, 0]
+    assert grid["cells"][-1] == [39, 9, 1]
 
 
 def _build_minimal_valid_export(
@@ -93,7 +145,13 @@ def _build_minimal_valid_export(
         "algorithmVersion": website_export.ALGORITHM_VERSION,
         "scientificIdentity": identity,
         "displayRules": {"metricsRecomputedFromRoundedDisplayValues": False},
-        "counts": {"tracts": 1096, "evaluationRows": 15116, "independentDates": 15},
+        "counts": {
+            "tracts": 1096,
+            "evaluationRows": 15116,
+            "independentDates": 15,
+            "neighborhoods": 114,
+            "heroPixels": 869,
+        },
         "sources": [
             {"path": "source.txt", "bytes": 6, "sha256": source_hash},
             {

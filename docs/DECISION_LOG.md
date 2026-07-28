@@ -1319,3 +1319,50 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   `128283948c74ad262401a3ced390e452d285e0b1` deployed successfully in GitHub
   Actions run `30353854439`. This is a presentation and repository-navigation
   change only; the one-time final evaluation remains untouched.
+
+## 2026-07-28 - Add source-backed neighborhood labels and a pixel homepage
+
+- Decision: advance the deterministic presentation export to
+  `website-display-export-v3` without changing any canonical model, predictor,
+  target, threshold, evaluation row, metric, uncertainty draw, or protocol
+  conclusion.
+- Human-readable names come from the Los Angeles Times Data and Graphics
+  Department `mapping-la-data` repository, frozen at commit
+  `5acc817cd8e9ef1800dc9641493e46efe7ce35b0`. The exact
+  `la-county-neighborhoods-v6.geojson` snapshot has SHA-256
+  `ada200f59e0d2cd7e04a212eb5510cfe570765d68b7ff29d83b97cc5abeb6ead`
+  and is available under the MIT license. The exporter accepts exactly the 114
+  records identified by the source metadata as City of Los Angeles
+  neighborhoods.
+- Each census tract receives a primary display label from the neighborhood
+  with the largest polygon-intersection area in the shared projected CRS.
+  The export also preserves every nonzero cross-boundary covered-area
+  proportion and the total neighborhood-source coverage, so the primary label
+  does not erase boundary ambiguity. Neighborhood names remain display
+  metadata and are not model inputs, target values, split groups, or new
+  evaluation strata.
+- The homepage receives a 40-column by 59-row field of equal display squares.
+  The frozen coverage and maximum-tract-overlap rules retain exactly 869
+  Los Angeles cells. Their color comes from the M2 prediction on the explicitly
+  fixed display date `2025-09-03`; each cell also resolves to its assigned
+  tract GEOID and source-backed neighborhood label. This raster-like field is
+  an interface summary, not a new analytical surface or an additional
+  performance result.
+- The detailed map no longer captures the mouse wheel. Zoom remains available
+  through explicit plus/minus controls, alongside drag-to-pan and reset. Its
+  height is reduced and bounded by the viewport, and search accepts either a
+  tract GEOID or a Mapping L.A. neighborhood name.
+- The verified v3 display SHA-256 values are:
+  `3712654983cee108eea2e54066b8286ff1bb3fd291e6126bace538b820ac670f`
+  for `tracts.json`,
+  `617eac416e348b4a0445a06c2d3627d1fd51421faf6c23f4c513835a06aa7938`
+  for `evaluation-2025.json`,
+  `494db653c65ba75ae2d2b312c808e80a376e75d97a177d3b8785342130f80aeb`
+  for `metrics.json`, and
+  `675f69e8138d7a1255973b3da70928a19ee70f4ec52d580421e5d9786af18e85`
+  for `display-manifest.json`.
+- Public website commit
+  `206c04b797b184aa3dcb3aec60ac0ffaba8775bb` deployed successfully in
+  GitHub Actions run `30358959707`. Public HTTP checks returned 200 for the
+  page and four JSON files, all deployed hashes matched, and the deployed
+  JavaScript contained the new interface without `Scroll to zoom`.

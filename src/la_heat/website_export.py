@@ -10,15 +10,27 @@ from pathlib import Path
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-from shapely.geometry import MultiPolygon, Polygon
+from shapely.geometry import MultiPolygon, Polygon, box
 
-ALGORITHM_VERSION = "website-display-export-v2"
+ALGORITHM_VERSION = "website-display-export-v3"
 DISPLAY_FILES = ("tracts.json", "evaluation-2025.json", "metrics.json")
 FINAL_RELATIVE = Path("data/processed/final_test_2025/final_evaluation")
 TRACT_RELATIVE = Path("data/interim/targets/primary_tract_manifest.parquet")
+NEIGHBORHOOD_RELATIVE = Path(
+    "data/raw/neighborhoods/mapping-la/la-county-neighborhoods-v6.geojson"
+)
 EVIDENCE_RELATIVE = Path("manifests/final_test_2025/evaluation/EVIDENCE_EXPORT.json")
+MAPPING_LA_COMMIT = "5acc817cd8e9ef1800dc9641493e46efe7ce35b0"
+MAPPING_LA_SHA256 = "ada200f59e0d2cd7e04a212eb5510cfe570765d68b7ff29d83b97cc5abeb6ead"
+MAPPING_LA_SOURCE_URL = (
+    "https://raw.githubusercontent.com/datadesk/mapping-la-data/"
+    f"{MAPPING_LA_COMMIT}/geojson/la-county-neighborhoods-v6.geojson"
+)
+HERO_GRID_COLUMNS = 40
+HERO_GRID_MIN_CELL_COVERAGE = 0.15
 SOURCE_RELATIVES = (
     TRACT_RELATIVE,
+    NEIGHBORHOOD_RELATIVE,
     FINAL_RELATIVE / "evaluation_rows.parquet",
     FINAL_RELATIVE / "model_metrics.csv",
     FINAL_RELATIVE / "per_date_metrics.csv",
@@ -162,7 +174,186 @@ def tract_display_name(name: object, namelsad: object) -> str:
     return tract_type
 
 
-def _build_tracts(tract_path: Path) -> tuple[dict[str, object], list[str]]:
+def _load_mapping_la_neighborhoods(
+    path: Path,
+    *,
+    target_crs: object,
+    enforce_source_hash: bool = True,
+) -> gpd.GeoDataFrame:
+    if enforce_source_hash and _sha256(path) != MAPPING_LA_SHA256:
+        raise WebsiteExportError("The frozen Mapping L.A. neighborhood snapshot changed.")
+    neighborhoods = gpd.read_file(path)
+    required = {"name", "metadata", "geometry"}
+    if not required.issubset(neighborhoods.columns):
+        raise WebsiteExportError(
+            "Mapping L.A. source is missing "
+            f"{sorted(required - set(neighborhoods.columns))}."
+        )
+    if neighborhoods.crs is None:
+        raise WebsiteExportError("Mapping L.A. neighborhood source has no CRS.")
+    city_mask = neighborhoods["metadata"].map(
+        lambda value: isinstance(value, dict) and value.get("city") == "los-angeles"
+    )
+    neighborhoods = neighborhoods.loc[city_mask, ["name", "geometry"]].copy()
+    neighborhoods["name"] = neighborhoods["name"].astype("string").str.strip()
+    if (
+        len(neighborhoods) != 114
+        or neighborhoods["name"].isna().any()
+        or neighborhoods["name"].eq("").any()
+        or neighborhoods["name"].duplicated().any()
+    ):
+        raise WebsiteExportError(
+            "Expected exactly 114 uniquely named Mapping L.A. city neighborhoods."
+        )
+    if neighborhoods.geometry.is_empty.any() or not neighborhoods.geometry.is_valid.all():
+        raise WebsiteExportError("Mapping L.A. source contains invalid or empty geometry.")
+    return neighborhoods.to_crs(target_crs).sort_values("name", kind="stable").reset_index(
+        drop=True
+    )
+
+
+def _assign_neighborhoods(
+    tracts: gpd.GeoDataFrame,
+    neighborhoods: gpd.GeoDataFrame,
+) -> list[dict[str, object]]:
+    """Assign human-readable Mapping L.A. labels by maximum covered area."""
+    if tracts.crs is None or neighborhoods.crs is None or tracts.crs != neighborhoods.crs:
+        raise WebsiteExportError("Tracts and neighborhoods must share one projected CRS.")
+    if not tracts.crs.is_projected:
+        raise WebsiteExportError("Neighborhood overlap must be computed in a projected CRS.")
+
+    tract_surface = gpd.GeoDataFrame(
+        {
+            "tractIndex": np.arange(len(tracts), dtype=np.int64),
+            "tractArea": tracts.geometry.area.to_numpy(),
+        },
+        geometry=tracts.geometry.to_numpy(),
+        crs=tracts.crs,
+    )
+    neighborhood_surface = neighborhoods.rename(columns={"name": "neighborhood"})
+    intersections = gpd.overlay(
+        tract_surface,
+        neighborhood_surface[["neighborhood", "geometry"]],
+        how="intersection",
+        keep_geom_type=False,
+    )
+    intersections["intersectionArea"] = intersections.geometry.area
+    intersections = intersections.loc[intersections["intersectionArea"].gt(0)].copy()
+    areas = (
+        intersections.groupby(["tractIndex", "neighborhood"], as_index=False, sort=True)[
+            "intersectionArea"
+        ]
+        .sum()
+        .sort_values(
+            ["tractIndex", "intersectionArea", "neighborhood"],
+            ascending=[True, False, True],
+            kind="stable",
+        )
+    )
+    covered_sum = areas.groupby("tractIndex", sort=True)["intersectionArea"].sum()
+    covered_union = intersections[["tractIndex", "geometry"]].dissolve(
+        by="tractIndex",
+        sort=True,
+    ).geometry.area
+    tract_areas = tract_surface.set_index("tractIndex")["tractArea"]
+    if len(covered_union) != len(tracts):
+        missing = sorted(set(range(len(tracts))) - set(covered_union.index))
+        raise WebsiteExportError(
+            f"Mapping L.A. labels did not cover every tract; missing {missing[:5]}."
+        )
+    coverage = covered_union / tract_areas
+    if coverage.le(0).any() or coverage.gt(1.00001).any():
+        raise WebsiteExportError("Mapping L.A. tract coverage is outside the valid range.")
+
+    assignments: list[dict[str, object]] = []
+    for tract_index in range(len(tracts)):
+        rows = areas.loc[areas["tractIndex"].eq(tract_index)].copy()
+        covered_area = float(covered_sum.loc[tract_index])
+        rows["coveredShare"] = rows["intersectionArea"] / covered_area
+        overlaps = [
+            [str(row.neighborhood), round(float(row.coveredShare), 4)]
+            for row in rows.itertuples(index=False)
+        ]
+        assignments.append(
+            {
+                "neighborhood": overlaps[0][0],
+                "neighborhoodShare": overlaps[0][1],
+                "neighborhoodCoverage": round(float(coverage.loc[tract_index]), 4),
+                "neighborhoods": overlaps,
+            }
+        )
+    return assignments
+
+
+def _build_hero_pixel_grid(tracts: gpd.GeoDataFrame) -> dict[str, object]:
+    """Rasterize the tract surface into equal display squares for the homepage."""
+    min_x, min_y, max_x, max_y = [float(value) for value in tracts.total_bounds]
+    cell_size = (max_x - min_x) / HERO_GRID_COLUMNS
+    rows = int(math.ceil((max_y - min_y) / cell_size))
+    grid_records: list[dict[str, object]] = []
+    for row in range(rows):
+        top = max_y - row * cell_size
+        for column in range(HERO_GRID_COLUMNS):
+            left = min_x + column * cell_size
+            grid_records.append(
+                {
+                    "column": column,
+                    "row": row,
+                    "geometry": box(
+                        left,
+                        top - cell_size,
+                        left + cell_size,
+                        top,
+                    ),
+                }
+            )
+    grid = gpd.GeoDataFrame(grid_records, geometry="geometry", crs=tracts.crs)
+    tract_surface = gpd.GeoDataFrame(
+        {"tractIndex": np.arange(len(tracts), dtype=np.int64)},
+        geometry=tracts.geometry.to_numpy(),
+        crs=tracts.crs,
+    )
+    intersections = gpd.overlay(
+        grid,
+        tract_surface,
+        how="intersection",
+        keep_geom_type=False,
+    )
+    intersections["intersectionArea"] = intersections.geometry.area
+    overlaps = intersections.groupby(
+        ["column", "row", "tractIndex"], as_index=False, sort=True
+    )["intersectionArea"].sum()
+    selected = (
+        overlaps.sort_values(
+            ["column", "row", "intersectionArea", "tractIndex"],
+            ascending=[True, True, False, True],
+            kind="stable",
+        )
+        .drop_duplicates(["column", "row"], keep="first")
+        .copy()
+    )
+    selected["cellCoverage"] = selected["intersectionArea"] / (cell_size * cell_size)
+    selected = selected.loc[
+        selected["cellCoverage"].ge(HERO_GRID_MIN_CELL_COVERAGE)
+    ].sort_values(["row", "column"], kind="stable")
+    cells = [
+        [int(row.column), int(row.row), int(row.tractIndex)]
+        for row in selected.itertuples(index=False)
+    ]
+    if not cells:
+        raise WebsiteExportError("Homepage pixel grid did not contain any LA cells.")
+    return {
+        "columns": HERO_GRID_COLUMNS,
+        "rows": rows,
+        "pixelCount": len(cells),
+        "cells": cells,
+    }
+
+
+def _build_tracts(
+    tract_path: Path,
+    neighborhood_path: Path,
+) -> tuple[dict[str, object], list[str]]:
     tracts = gpd.read_parquet(tract_path)
     required = {"GEOID", "spatial_block", "geometry"}
     if not required.issubset(tracts.columns):
@@ -180,9 +371,19 @@ def _build_tracts(tract_path: Path) -> tuple[dict[str, object], list[str]]:
     if not tracts.geometry.is_valid.all():
         raise WebsiteExportError("Tract manifest contains invalid geometry.")
     tracts = tracts.sort_values("GEOID", kind="stable").reset_index(drop=True)
-    tracts.geometry = tracts.geometry.simplify(10.0, preserve_topology=True)
+    neighborhoods = _load_mapping_la_neighborhoods(
+        neighborhood_path,
+        target_crs=tracts.crs,
+    )
+    assignments = _assign_neighborhoods(tracts, neighborhoods)
+    pixel_grid = _build_hero_pixel_grid(tracts)
+    display_tracts = tracts.copy()
+    display_tracts.geometry = display_tracts.geometry.simplify(
+        10.0,
+        preserve_topology=True,
+    )
 
-    min_x, min_y, max_x, max_y = [float(value) for value in tracts.total_bounds]
+    min_x, min_y, max_x, max_y = [float(value) for value in display_tracts.total_bounds]
     width, height, margin = 620.0, 760.0, 12.0
     scale = min(
         (width - 2 * margin) / (max_x - min_x),
@@ -194,7 +395,7 @@ def _build_tracts(tract_path: Path) -> tuple[dict[str, object], list[str]]:
     offset_y = margin + (height - 2 * margin - drawn_height) / 2
 
     features: list[dict[str, object]] = []
-    for row in tracts.itertuples(index=False):
+    for index, row in enumerate(display_tracts.itertuples(index=False)):
         geometry = row.geometry
         if not isinstance(geometry, (Polygon, MultiPolygon)):
             raise WebsiteExportError(f"Unsupported tract geometry type: {geometry.geom_type}")
@@ -206,6 +407,7 @@ def _build_tracts(tract_path: Path) -> tuple[dict[str, object], list[str]]:
                     getattr(row, "NAMELSAD", ""),
                 ),
                 "block": str(row.spatial_block),
+                **assignments[index],
                 "path": geometry_svg_path(
                     geometry,
                     min_x=min_x,
@@ -219,11 +421,19 @@ def _build_tracts(tract_path: Path) -> tuple[dict[str, object], list[str]]:
         )
 
     payload = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "projection": str(tracts.crs),
         "simplificationMeters": 10,
         "viewBox": [0, 0, int(width), int(height)],
         "tractCount": len(features),
+        "neighborhoodCount": len(neighborhoods),
+        "neighborhoodSource": {
+            "name": "Los Angeles Times Mapping L.A.",
+            "repositoryCommit": MAPPING_LA_COMMIT,
+            "sourceSha256": MAPPING_LA_SHA256,
+            "assignment": "maximum-area overlap on covered tract area",
+        },
+        "pixelGrid": pixel_grid,
         "tracts": features,
     }
     return payload, tracts["GEOID"].astype(str).tolist()
@@ -357,7 +567,10 @@ def build_website_export(project_root: Path, output_directory: Path) -> dict[str
         if not (project_root / relative).is_file():
             raise WebsiteExportError(f"Required source is missing: {relative.as_posix()}")
 
-    tracts, tract_ids = _build_tracts(project_root / TRACT_RELATIVE)
+    tracts, tract_ids = _build_tracts(
+        project_root / TRACT_RELATIVE,
+        project_root / NEIGHBORHOOD_RELATIVE,
+    )
     evaluation = _build_evaluation(
         project_root / FINAL_RELATIVE / "evaluation_rows.parquet",
         tract_ids,
@@ -410,11 +623,17 @@ def build_website_export(project_root: Path, output_directory: Path) -> dict[str
             "temperatureColorDomainC": [28, 56],
             "residualColorDomainC": [-8, 8],
             "metricsRecomputedFromRoundedDisplayValues": False,
+            "neighborhoodLabelsAreDisplayOnly": True,
+            "neighborhoodAssignment": "maximum-area overlap on covered tract area",
+            "heroPixelAssignment": "maximum tract overlap per equal display cell",
+            "heroPixelMinimumCellCoverage": HERO_GRID_MIN_CELL_COVERAGE,
         },
         "counts": {
             "tracts": tracts["tractCount"],
             "evaluationRows": evaluation["evaluationRowCount"],
             "independentDates": evaluation["independentDateCount"],
+            "neighborhoods": tracts["neighborhoodCount"],
+            "heroPixels": tracts["pixelGrid"]["pixelCount"],
         },
         "sources": sources,
         "outputs": outputs,
@@ -456,7 +675,13 @@ def verify_website_export(project_root: Path, output_directory: Path) -> None:
         raise WebsiteExportError("Display manifest output inventory is not exact.")
 
     counts = manifest.get("counts")
-    if counts != {"tracts": 1096, "evaluationRows": 15116, "independentDates": 15}:
+    if counts != {
+        "tracts": 1096,
+        "evaluationRows": 15116,
+        "independentDates": 15,
+        "neighborhoods": 114,
+        "heroPixels": 869,
+    }:
         raise WebsiteExportError("Display manifest counts do not match the frozen cohort.")
     rules = manifest.get("displayRules")
     if not isinstance(rules, dict) or rules.get(

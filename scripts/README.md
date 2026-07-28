@@ -16,8 +16,26 @@ many historical stages are already complete.
 | Development diagnostics | `analyze_model_results.py`, `analyze_model_endpoints.py`, `analyze_model_qa.py`, `analyze_residual_spatial.py`, `analyze_feature_ablation.py`, `analyze_stqa2_sensitivity.py`, `reconcile_development_robustness.py`, `generate_model_diagnostic_figures.py`, `generate_development_report.py` |
 | Final-test predictor preparation | files beginning `build_final_test_`, `stage_final_test_`, `run_final_test_`, and `audit_final_test_` |
 | Final evaluation and evidence | `prepare_final_evaluation.py`, `authorize_final_test_2025.py`, `execute_locked_final_evaluation.py`, `build_final_evaluation_evidence.py`, `verify_final_evaluation_evidence.py` |
-| Communication | `build_website_data.py`, `build_research_paper.py` |
+| Communication | `stage_mapping_la_neighborhoods.py`, `build_website_data.py`, `build_research_paper.py` |
 | Transfer and local control | `create_portable_relocation.py`, `verify_portable_relocation.py`, `transfer_queue_snapshot.py`, `*_dashboard.py`, `*_watchdog.py`, `research_runner_ui.py`, and the PowerShell transfer helpers |
+
+## Website source staging
+
+```powershell
+.\.venv\Scripts\python scripts\stage_mapping_la_neighborhoods.py
+```
+
+`stage_mapping_la_neighborhoods.py` downloads or reauthenticates the exact
+commit-pinned Los Angeles Times Mapping L.A. GeoJSON used only for website
+labels. It refuses an existing or downloaded file unless its frozen SHA-256
+matches. `build_website_data.py` then derives display-only neighborhood
+assignments and homepage pixels from that source and the already frozen
+evaluation; neither command trains or retunes a model.
+
+The current public output is `website-display-export-v3`, deployed from the
+nested website commit `206c04b797b184aa3dcb3aec60ac0ffaba8775bb` by successful
+GitHub Actions run `30358959707`. Exact display hashes are recorded in
+[`docs/RESULTS_WEBSITE.md`](../docs/RESULTS_WEBSITE.md).
 
 ## Safe read-only checks
 
