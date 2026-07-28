@@ -1,9 +1,11 @@
 # Mandatory project handoff
 
-Last material update: 2026-07-27 Asia/Shanghai
+Last material update: 2026-07-28 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
+- completed final-evaluation records, report, tests, and evidence tooling:
+  `e077e520629a287b9e855e00162cc9729852e45f`
 - frozen target-blind predictor baseline:
   `e0fb4878ac6ecec53a44a0fe027ca46c5a9d2196`
 - locked final-evaluation implementation and this handoff are in the commit
@@ -105,6 +107,22 @@ and the final compatibility helper SHA-256 is
 The helper accepted only the authorized research unlock, claim-bound predictor
 authentication, and CSV/Parquet representation normalization; all patches were
 restored before the separate original-command completion authentication.
+
+The read-only evidence export is complete and independently verified:
+
+- directory: `exports/FINAL_EVALUATION_EVIDENCE` (239 files);
+- ZIP: `exports/FINAL_EVALUATION_EVIDENCE.zip` (21,787,327 bytes);
+- external ZIP SHA-256:
+  `61a853c3eeea3f1ae92bf7999f0fd057018797f70498fcd017d1394dbd621b51`;
+- package Git head:
+  `e077e520629a287b9e855e00162cc9729852e45f`;
+- attestation:
+  `manifests/final_test_2025/evaluation/EVIDENCE_EXPORT.json`.
+
+The verifier authenticated all 239 files, the six-state transaction chain,
+the exact 21 final outputs, 23 cache commits/93 cache files, 16 recovery files,
+both unlock snapshots, and an independently cloned and `git fsck`-checked
+repository bundle. Do not rebuild or overwrite this package.
 
 ## Research question and fixed interpretation
 

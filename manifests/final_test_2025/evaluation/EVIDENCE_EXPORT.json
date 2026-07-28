@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "state": "verified_read_only_evidence_export",
+  "generated_at_utc": "2026-07-28T04:44:57.3822691+00:00",
+  "claim_id": "c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f",
+  "completion_commit_sha256": "4cc8a5536cf1055d42876577f8d9f6300c799176779a7ec89cd1d3ed819d77a0",
+  "package_repository_git_head": "e077e520629a287b9e855e00162cc9729852e45f",
+  "directory": "exports/FINAL_EVALUATION_EVIDENCE",
+  "directory_file_count": 239,
+  "inventoried_file_count": 236,
+  "inventoried_bytes": 26238361,
+  "files_csv_sha256": "cc9b21b1f815edbcb6e0bbb8591fb3f161e161214de51491fbdaaba64cdf59b6",
+  "files_sha256_sha256": "32f2b6fd149e2fe996410cae262bff103e3015b4e03d22b57a3db95395a4c869",
+  "zip": "exports/FINAL_EVALUATION_EVIDENCE.zip",
+  "zip_bytes": 21787327,
+  "zip_sha256": "61a853c3eeea3f1ae92bf7999f0fd057018797f70498fcd017d1394dbd621b51",
+  "zip_checksum": "exports/FINAL_EVALUATION_EVIDENCE.zip.sha256",
+  "verification_command": ".\\.venv\\Scripts\\python.exe scripts\\verify_final_evaluation_evidence.py exports\\FINAL_EVALUATION_EVIDENCE",
+  "verified": true,
+  "commit_sha256": "87942c00858d82aaacf3d2c14e86c5c116d6f3b7dd0b815f770a304a6a29525a"
+}

@@ -52,6 +52,7 @@ temperature, personal exposure, illness, or mortality.
 - [x] Development robustness reconciled and generated report complete
 - [x] Model lock created
 - [x] One-time 2025 final evaluation completed and authenticated
+- [x] Read-only final-evaluation evidence package built and independently verified
 
 The feasibility pilot created a 1,110-tract mother manifest and froze 1,096
 City-clipped, non-special-use primary tracts. It retained 95.5%, 95.0%, and
@@ -136,6 +137,14 @@ generated development report is `reports/DEVELOPMENT_REPORT.md`. The
 full-development fit, formal model lock, and one-time 2025 evaluation are now
 complete. The held-out result and its required limitations are summarized in
 `reports/FINAL_EVALUATION_REPORT.md`.
+
+The complete audit package is `exports/FINAL_EVALUATION_EVIDENCE.zip`
+(SHA-256
+`61a853c3eeea3f1ae92bf7999f0fd057018797f70498fcd017d1394dbd621b51`).
+Its tracked attestation is
+`manifests/final_test_2025/evaluation/EVIDENCE_EXPORT.json`; verify the
+unpacked directory with
+`scripts/verify_final_evaluation_evidence.py`.
 
 ## Study design
 

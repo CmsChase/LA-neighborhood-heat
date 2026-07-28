@@ -109,9 +109,13 @@ All numbers above come directly from:
 - `data/processed/final_test_2025/final_evaluation/sensor_summary.csv`
 - `data/processed/final_test_2025/final_evaluation/sentinel_stratum_summary.csv`
 - `manifests/final_test_2025/evaluation/EVALUATION_COMPLETE.json`
+- `manifests/final_test_2025/evaluation/EVIDENCE_EXPORT.json`
 
 The final directory contains the exact committed 21-file output set, including
 the observed/predicted/residual map PDF and two diagnostic PNG figures. The
 canonical evaluator was rerun after publication in completion-authentication
 mode and returned the same completion commit without reopening or recomputing
 the evaluation.
+
+The separate read-only evidence ZIP has SHA-256
+`61a853c3eeea3f1ae92bf7999f0fd057018797f70498fcd017d1394dbd621b51`.

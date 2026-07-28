@@ -119,3 +119,8 @@ median per-date Spearman was 0.8447. The 95% relative-improvement interval was
 protocol success flag did not pass. The result remains frozen; no retuning,
 threshold change, second claim, or repeat evaluation is permitted. Phase 7
 must communicate this qualified result and its 15-date uncertainty honestly.
+The 239-file read-only evidence export is complete and externally anchored by
+ZIP SHA-256
+`61a853c3eeea3f1ae92bf7999f0fd057018797f70498fcd017d1394dbd621b51`.
+Remaining Phase 7 work is communication only: paper, abstract, poster, and
+oral-defense preparation.

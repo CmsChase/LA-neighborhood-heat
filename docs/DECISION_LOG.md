@@ -1219,3 +1219,25 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   overall protocol success flag is false. This qualified result is final:
   no retuning, retraining, threshold change, second claim, or repeat evaluation
   is permitted.
+
+## 2026-07-28 — Freeze and externally anchor the final evidence export
+
+- Decision: preserve the completed one-time evaluation as a no-overwrite,
+  read-only directory plus deterministic ZIP, with an external ZIP checksum
+  recorded in the repository.
+- Package Git head:
+  `e077e520629a287b9e855e00162cc9729852e45f`.
+- Evidence directory: `exports/FINAL_EVALUATION_EVIDENCE`; exact file count:
+  239.
+- Evidence ZIP: `exports/FINAL_EVALUATION_EVIDENCE.zip`; bytes: 21,787,327;
+  SHA-256:
+  `61a853c3eeea3f1ae92bf7999f0fd057018797f70498fcd017d1394dbd621b51`.
+- Verification: all inventory hashes, the six-state chain, exact 21 final
+  outputs, 23 cache commits/93 cache files, 16 recovery files, pre/post unlock
+  snapshots, ZIP byte equivalence, and an isolated clone plus
+  `git fsck --full --strict` of the repository bundle passed.
+- The attestation is
+  `manifests/final_test_2025/evaluation/EVIDENCE_EXPORT.json`, canonical commit
+  `87942c00858d82aaacf3d2c14e86c5c116d6f3b7dd0b815f770a304a6a29525a`.
+- This export copies existing evidence bytes; it does not rerun, refit,
+  recalculate, or alter the scientific result.

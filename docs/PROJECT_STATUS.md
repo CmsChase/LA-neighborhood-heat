@@ -1,4 +1,4 @@
-# Project Status — 2026-07-27
+# Project Status — 2026-07-28
 
 This file is a historical scientific summary. Before any work, read
 `docs/PROJECT_HANDOFF.md` in full; that document is authoritative for the live
@@ -21,6 +21,14 @@ from 3.1165 °C to 2.1650 °C (30.53%) and reached median per-date Spearman
 -10.13% to 58.46%. The point and rank gates passed, but the required positive
 lower-bound gate failed; therefore the frozen overall protocol success flag is
 false. This is a qualified result, not permission to retune or rerun.
+
+The final read-only evidence export is also complete. Its 239-file directory
+and 21,787,327-byte ZIP were independently verified, including all 23 target
+cache commits and an isolated clone/fsck of the Git bundle. The external ZIP
+SHA-256 is
+`61a853c3eeea3f1ae92bf7999f0fd057018797f70498fcd017d1394dbd621b51`;
+the tracked attestation is
+`manifests/final_test_2025/evaluation/EVIDENCE_EXPORT.json`.
 
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.
