@@ -5,9 +5,10 @@ Last material update: 2026-07-28 Asia/Shanghai
 Latest required scientific checkpoints on `main`:
 
 - source-backed `website-display-export-v3` is deployed from nested website
-  commit `206c04b797b184aa3dcb3aec60ac0ffaba8775bb`; GitHub Actions run
-  `30358959707` succeeded and the public page plus all four JSON files passed
-  HTTP and hash verification
+  commit `0f360543d85bdd0401cea473d57d5ddd3abcef5a`; GitHub Actions run
+  `30362483324` succeeded, the public page plus all four JSON files passed HTTP
+  and hash verification, and a public-browser tract selection changed the
+  selected neighborhood, timeline, and complete table together
 - repository navigation, display-export v2, and the tract-level website
   explorer are in the commit with subject
   `Organize project and add tract detail explorer`; obtain its exact hash with
@@ -171,7 +172,13 @@ The current public deployment is the verified
 - no wheel/scroll zoom on the detailed map; explicit plus/minus zoom,
   drag-to-pan, reset, and mouse/keyboard selection remain;
 - a shorter viewport-bounded detailed map and search by either GEOID or
-  Mapping L.A. neighborhood name.
+  Mapping L.A. neighborhood name;
+- an oversized homepage square field whose SVG alone may extend beyond the
+  hero while its date/scale and neighborhood readout remain pinned inside the
+  viewport;
+- pointer input on the detailed map distinguishes a short tract selection from
+  a drag after a five-pixel threshold, so pointer capture no longer suppresses
+  the selected tract or its synchronized timeline and table.
 
 The square field and neighborhood names are display metadata only. They do
 not replace census tracts as the analysis unit, create a new model output,
@@ -195,8 +202,8 @@ root-ignored `website-github-pages/` directory:
 
 - repository: `https://github.com/CmsChase/LA-surface-heat-atlas`
 - deployed source commit:
-  `206c04b797b184aa3dcb3aec60ac0ffaba8775bb`
-- successful GitHub Actions deployment run: `30358959707`
+  `0f360543d85bdd0401cea473d57d5ddd3abcef5a`
+- successful GitHub Actions deployment run: `30362483324`
 
 The earlier root-ignored `website/` project remains the original visual source
 but is superseded as the public deployment. The root repository owns only the
@@ -208,14 +215,17 @@ deterministic display-data exporter and tests:
 - `docs/RESULTS_WEBSITE.md`
 
 The deterministic v3 website export authenticated, and website
-lint/TypeScript/static-export tests passed in the successful GitHub Actions
-deployment. Public HTTP returned 200 for the page and all four JSON files;
-their bytes matched the authenticated v3 hashes. The deployed JavaScript
-confirmed the new interface and contained no `Scroll to zoom` control. Root
-validation used an independent D-drive pytest base directory and passed 747
-tests with five warnings in 550.87 seconds; full-repository Ruff passed. The
-earlier v2 release's 744-test validation remains historical provenance rather
-than being overwritten by this count.
+lint/TypeScript/static-export tests passed in GitHub Actions run `30362483324`.
+Public HTTP returned 200 for the page and all four JSON files; their bytes
+matched the authenticated v3 hashes. Public browser verification confirmed
+that both homepage cards stayed inside the viewport while the map exceeded the
+hero height, and that selecting Tujunga tract `06037101110` set
+`aria-pressed=true` and changed the neighborhood identity, timeline label, and
+table caption together. The deployed JavaScript still contains no
+`Scroll to zoom` control. Root validation used an independent D-drive pytest
+base directory and passed 747 tests with five warnings in 529.02 seconds;
+full-repository Ruff passed. The earlier v2 release's 744-test validation
+remains historical provenance rather than being overwritten by this count.
 
 The display manifest authenticates 1,096 tract geometries, 15,116 held-out
 rows, and 15 dates against the canonical claim, completion commit, and evidence

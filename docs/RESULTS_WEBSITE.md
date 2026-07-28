@@ -18,13 +18,16 @@ The currently deployed site is the verified
   is colored from the M2 prediction for the fixed display date
   `2025-09-03`, assigned by maximum tract overlap, separated by a visible gap,
   and linked to the assigned tract's source-backed neighborhood name and
-  GEOID;
+  GEOID; the field is oversized and may extend beyond the hero, while its
+  date/scale and selected-place cards remain inside the viewport;
 - synchronized census-tract maps for Landsat-observed LST, M2 or B1
   predictions, and prediction residuals;
 - a larger, viewport-bounded tract map with button zoom, drag-to-pan, reset,
   GEOID or Mapping L.A. neighborhood search, mouse selection, and keyboard
   selection; wheel/scroll zoom is deliberately disabled so normal page
-  scrolling is not captured;
+  scrolling is not captured; a short pointer tap selects the tract and a
+  movement beyond five pixels becomes a pan, so the selection and the data
+  below remain synchronized;
 - a source-backed Mapping L.A. neighborhood label for every tract, with the
   tract GEOID retained and cross-boundary neighborhood proportions available
   rather than hiding boundary ambiguity;
@@ -68,7 +71,7 @@ ignored `website-github-pages/` directory. Its public repository and deployed
 source commit are:
 
 - `https://github.com/CmsChase/LA-surface-heat-atlas`
-- `206c04b797b184aa3dcb3aec60ac0ffaba8775bb`
+- `0f360543d85bdd0401cea473d57d5ddd3abcef5a`
 
 The earlier `website/` project is retained locally as the original visual
 source, but it is not the current public deployment.
@@ -150,16 +153,21 @@ npm run lint
 ```
 
 The v3 root validation used an independent D-drive pytest base directory and
-passed all 747 tests with five warnings in 550.87 seconds. Full-repository Ruff
+passed all 747 tests with five warnings in 529.02 seconds. Full-repository Ruff
 also passed. These results supplement rather than replace the earlier v2
 validation record.
 
-GitHub Actions run `30358959707` passed installation, linting, TypeScript,
+GitHub Actions run `30362483324` passed installation, linting, TypeScript,
 static export, exact data/hash tests, artifact upload, and deployment from
-commit `206c04b797b184aa3dcb3aec60ac0ffaba8775bb`. Public HTTP checks returned
-200 for the page and all four JSON files, matched every deployed v3 hash, and
-confirmed the new interface JavaScript without a `Scroll to zoom` control.
-The earlier v2 deployment at commit
-`128283948c74ad262401a3ced390e452d285e0b1` and run `30353854439` remains
+commit `0f360543d85bdd0401cea473d57d5ddd3abcef5a`. Public HTTP checks returned
+200 for the page and all four JSON files and matched every deployed v3 hash.
+Public browser verification confirmed that both homepage cards stayed inside
+the viewport, the square map exceeded the hero height, and selecting Tujunga
+tract `06037101110` changed its `aria-pressed` state, selected neighborhood,
+timeline label, and complete table caption together. The interface still has
+no `Scroll to zoom` control. The preceding v3 interface deployment at commit
+`206c04b797b184aa3dcb3aec60ac0ffaba8775bb` and run `30358959707`, and the
+earlier v2 deployment at commit
+`128283948c74ad262401a3ced390e452d285e0b1` and run `30353854439` remain
 historical provenance. The publication paper, poster, oral-defense deck, and
 QR asset continue to use the same public URL; no scientific result changed.
