@@ -1,0 +1,47 @@
+# Documentation index
+
+Use this page to choose the authoritative document for a question. Detailed
+history is intentionally separated from the short project landing page.
+
+## Start by purpose
+
+| Question | Document |
+|---|---|
+| What was tested and why? | [RESEARCH_PROTOCOL.md](RESEARCH_PROTOCOL.md) |
+| How does data move through the project? | [PIPELINE_DIAGRAM.md](PIPELINE_DIAGRAM.md) |
+| What is the current scientific result? | [PROJECT_STATUS.md](PROJECT_STATUS.md) and [the final report](../reports/FINAL_EVALUATION_REPORT.md) |
+| What should a new contributor do next? | [PROJECT_HANDOFF.md](PROJECT_HANDOFF.md) |
+| Why was a material choice made? | [DECISION_LOG.md](DECISION_LOG.md) |
+| Where did each external dataset come from? | [DATA_MANIFEST.csv](DATA_MANIFEST.csv) |
+| How is the public atlas authenticated? | [RESULTS_WEBSITE.md](RESULTS_WEBSITE.md) |
+| Where are the paper, poster, and deck? | [PUBLICATION_MATERIALS.md](PUBLICATION_MATERIALS.md) |
+
+## Scientific contracts
+
+- [RESEARCH_PROTOCOL.md](RESEARCH_PROTOCOL.md): target, predictors, validation,
+  metrics, success gates, and interpretation limits.
+- [PHASE2_FEATURE_SPEC.md](PHASE2_FEATURE_SPEC.md): legal predictor families,
+  timing cutoffs, units, and assembly gates.
+- [MODEL_SELECTION_SPEC.md](MODEL_SELECTION_SPEC.md): frozen candidates,
+  grouped tuning, objective, and tie-breaking.
+- [LITERATURE_EVIDENCE.md](LITERATURE_EVIDENCE.md): source-to-claim map; not
+  project-result evidence.
+
+## Execution and status
+
+- [PROJECT_PLAN.md](PROJECT_PLAN.md): phase roadmap and completed deliverables.
+- [PROJECT_STATUS.md](PROJECT_STATUS.md): readable scientific status.
+- [PROJECT_HANDOFF.md](PROJECT_HANDOFF.md): mandatory operational state,
+  immutable paths, hashes, and first safe commands.
+- [EXPERIMENT_LOG.csv](EXPERIMENT_LOG.csv): experiment-level record.
+
+## Authority and editing rules
+
+When records disagree, authenticated manifests and generated provenance take
+priority, followed by the evidence package, project handoff, generated reports,
+and narrative summaries.
+
+Do not shorten the handoff by deleting history, move frozen files, or hand-edit
+generated results. Update the decision log, data manifest, and handoff after a
+material scientific or runtime change as required by
+[the repository rules](../AGENTS.md).

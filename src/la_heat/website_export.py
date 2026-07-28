@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 from shapely.geometry import MultiPolygon, Polygon
 
-ALGORITHM_VERSION = "website-display-export-v1"
+ALGORITHM_VERSION = "website-display-export-v2"
 DISPLAY_FILES = ("tracts.json", "evaluation-2025.json", "metrics.json")
 FINAL_RELATIVE = Path("data/processed/final_test_2025/final_evaluation")
 TRACT_RELATIVE = Path("data/interim/targets/primary_tract_manifest.parquet")
@@ -153,6 +153,15 @@ def geometry_svg_path(
     return "".join(parts)
 
 
+def tract_display_name(name: object, namelsad: object) -> str:
+    """Build a useful Census tract label from the authenticated TIGER fields."""
+    tract_number = str(name or "").strip()
+    tract_type = str(namelsad or "").strip() or "Census Tract"
+    if tract_number:
+        return f"{tract_type} {tract_number}"
+    return tract_type
+
+
 def _build_tracts(tract_path: Path) -> tuple[dict[str, object], list[str]]:
     tracts = gpd.read_parquet(tract_path)
     required = {"GEOID", "spatial_block", "geometry"}
@@ -184,7 +193,6 @@ def _build_tracts(tract_path: Path) -> tuple[dict[str, object], list[str]]:
     offset_x = margin + (width - 2 * margin - drawn_width) / 2
     offset_y = margin + (height - 2 * margin - drawn_height) / 2
 
-    name_column = "NAMELSAD" if "NAMELSAD" in tracts.columns else "NAME"
     features: list[dict[str, object]] = []
     for row in tracts.itertuples(index=False):
         geometry = row.geometry
@@ -193,7 +201,10 @@ def _build_tracts(tract_path: Path) -> tuple[dict[str, object], list[str]]:
         features.append(
             {
                 "id": str(row.GEOID),
-                "name": str(getattr(row, name_column, "") or ""),
+                "name": tract_display_name(
+                    getattr(row, "NAME", ""),
+                    getattr(row, "NAMELSAD", ""),
+                ),
                 "block": str(row.spatial_block),
                 "path": geometry_svg_path(
                     geometry,

@@ -1,18 +1,19 @@
 # Project Execution Plan
 
-This table is the working roadmap for the simulated ISEF project. Week numbers
-are relative; scientific gates control progression more than calendar dates.
+This table is the working roadmap for the student research project. Week
+numbers are relative; scientific gates control progression more than calendar
+dates.
 
 | Phase | Target weeks | Work | Main outputs | Exit gate | Primary owner |
 |---|---:|---|---|---|---|
-| 0. Scope and feasibility — complete | 1–2 | Lock question, outcome, unit, leakage rules; run real Landsat pilot | Protocol, decision log, three-date target pilot, QA waterfall and sensitivity table | Absolute-label feasibility passes; June/August relative endpoints pass and October is withheld by locked gates | Codex implements; ChatGPT challenges assumptions; student approves scientific claim |
-| 1. Target dataset — complete | 3–4 | Build and audit all 90 primary 2020–2024 physical overpasses on the corrected fixed grid | Frozen mother/primary tract manifests, pixel-level scene lineage, target table, missingness/coverage report | Unique keys; static pixel-identity denominator; mosaic/QA contract; 65 post-QA usable dates; no 2025 rows | Codex |
-| 2. Predictor dataset — complete | 5–7 | Build and audit static, calendar, 21 Daymet, and `d−60:d−1` Sentinel-2 features; perform a target-blind assembly before the legal target join | Frozen 98,640 × 49 Phase 2 table and 63,403 × 50 development modeling table; 46 model features plus one audit-only field | Every feature has units/version/time window; readiness blockers are empty; forbidden-feature, cutoff, key, and 2025-lock checks pass | Codex with ChatGPT review |
-| 3. Validation design — complete and promoted | 8 | Predeclare 5 km spatial blocks, whole-year folds, Cartesian joint folds, 1 km buffer, nested year tuning, metrics, and the 31-candidate selection rule | Promoted 63,403-key manifest with 5 temporal, 71 spatial, and 355 joint folds; reference metric code and frozen selection configuration | One OOF test assignment per legal row/family; no date/block/buffer overlap; preprocessing isolation tests pass; no values or scores read at promotion | Codex |
-| 4. Baselines and models — development OOF complete | 9–10 | Run the 57,800-task durable plan for B0/B1/B2, Elastic Net, and histogram gradient boosting using nested grouped validation | Authenticated OOF predictions, metrics, tuning log, and initial result analysis | Required development gates pass without split or threshold changes | Codex computes; ChatGPT interprets |
-| 5. Robustness and interpretation — complete with limitations | 11 | Feature-family ablations, strict pixel-level ST_QA sensitivity, QA cohorts, sensor checks, uncertainty intervals, endpoint and residual diagnostics | Authenticated ablation/sensitivity tables, unified evidence table, generated development report, hotspot and spatial diagnostics | Complete: strict 2 K date-support gate failed and spatial clustering remains, so the claim is explicitly narrowed | Codex + ChatGPT |
-| 6. Model lock and one-time final test — complete | 12 | Freeze code/config/features/model/figures, create hashes, then unlock and evaluate 2025 once | `MODEL_LOCK.json`, append-only claim chain, one-way 2025 predictions, metrics, and figures | Evaluator never fits; every hash matches; one authenticated final transaction | Codex executed after student approval |
-| 7. Research communication — in progress | 13–14 | Write paper, abstract, poster, notebook/demo, limitations, and oral-defense questions | Final report, poster figures, reproducibility instructions | Every number traceable to a table or script; claims match estimand | ChatGPT drafts; Codex verifies; student presents |
+| 0. Scope and feasibility — complete | 1–2 | Lock question, outcome, unit, leakage rules; run real Landsat pilot | Protocol, decision log, three-date target pilot, QA waterfall and sensitivity table | Absolute-label feasibility passes; June/August relative endpoints pass and October is withheld by locked gates | Research engineering implements; independent review challenges assumptions; student approves scientific claims |
+| 1. Target dataset — complete | 3–4 | Build and audit all 90 primary 2020–2024 physical overpasses on the corrected fixed grid | Frozen mother/primary tract manifests, pixel-level scene lineage, target table, missingness/coverage report | Unique keys; static pixel-identity denominator; mosaic/QA contract; 65 post-QA usable dates; no 2025 rows | Research engineering |
+| 2. Predictor dataset — complete | 5–7 | Build and audit static, calendar, 21 Daymet, and `d−60:d−1` Sentinel-2 features; perform a target-blind assembly before the legal target join | Frozen 98,640 × 49 Phase 2 table and 63,403 × 50 development modeling table; 46 model features plus one audit-only field | Every feature has units/version/time window; readiness blockers are empty; forbidden-feature, cutoff, key, and 2025-lock checks pass | Research engineering with independent review |
+| 3. Validation design — complete and promoted | 8 | Predeclare 5 km spatial blocks, whole-year folds, Cartesian joint folds, 1 km buffer, nested year tuning, metrics, and the 31-candidate selection rule | Promoted 63,403-key manifest with 5 temporal, 71 spatial, and 355 joint folds; reference metric code and frozen selection configuration | One OOF test assignment per legal row/family; no date/block/buffer overlap; preprocessing isolation tests pass; no values or scores read at promotion | Research team |
+| 4. Baselines and models — development OOF complete | 9–10 | Run the 57,800-task durable plan for B0/B1/B2, Elastic Net, and histogram gradient boosting using nested grouped validation | Authenticated OOF predictions, metrics, tuning log, and initial result analysis | Required development gates pass without split or threshold changes | Pipeline operator computes; research team interprets |
+| 5. Robustness and interpretation — complete with limitations | 11 | Feature-family ablations, strict pixel-level ST_QA sensitivity, QA cohorts, sensor checks, uncertainty intervals, endpoint and residual diagnostics | Authenticated ablation/sensitivity tables, unified evidence table, generated development report, hotspot and spatial diagnostics | Complete: strict 2 K date-support gate failed and spatial clustering remains, so the claim is explicitly narrowed | Research team |
+| 6. Model lock and one-time final test — complete | 12 | Freeze code/config/features/model/figures, create hashes, then unlock and evaluate 2025 once | `MODEL_LOCK.json`, append-only claim chain, one-way 2025 predictions, metrics, and figures | Evaluator never fits; every hash matches; one authenticated final transaction | Authorized operator after student approval |
+| 7. Research communication — complete | 13–14 | Write paper, poster, public result atlas, limitations, and oral-defense materials | Final report, reviewed paper, print poster, defense deck, website, and reproducibility instructions | Every number traceable to a table or script; claims match estimand | Writing and QA team; student presents |
 
 ## Planned result package
 
@@ -30,15 +31,15 @@ criteria. Required artifacts are:
 9. A limitations section that distinguishes LST from air temperature and human
    health risk.
 
-## Codex and ChatGPT division of labor
+## Roles and evidence boundary
 
-| Codex | ChatGPT | Human/student decisions |
+| Research engineering | Scientific review and writing | Human/student decisions |
 |---|---|---|
-| Download/query data, create deterministic pipelines, write tests, fit models, generate exact tables/figures, record hashes and lineage | Refine hypotheses, critique design, interpret outputs, draft explanations, rehearse defense questions | Approve scope and protocol changes, understand and verify the methods, decide what claims to present |
+| Download/query data, create deterministic pipelines, write tests, fit models, generate exact tables/figures, record hashes and lineage | Refine hypotheses, critique design, interpret outputs, draft explanations, and rehearse defense questions | Approve scope and protocol changes, understand and verify the methods, and decide what claims to present |
 
-Chat output is never treated as evidence. Every reported number must be generated
-from code and every scientific claim must be supportable from the frozen data,
-protocol, or cited source.
+Draft discussion and prose are never treated as evidence. Every reported number
+must be generated from code, and every scientific claim must be supportable
+from the frozen data, protocol, or cited source.
 
 ## Current execution checkpoint
 
@@ -122,5 +123,6 @@ must communicate this qualified result and its 15-date uncertainty honestly.
 The 239-file read-only evidence export is complete and externally anchored by
 ZIP SHA-256
 `61a853c3eeea3f1ae92bf7999f0fd057018797f70498fcd017d1394dbd621b51`.
-Remaining Phase 7 work is communication only: paper, abstract, poster, and
-oral-defense preparation.
+Phase 7 is complete: the reviewed paper, 36 × 48 inch poster, ten-slide defense
+deck, public interactive result atlas, and reproducibility documentation all
+preserve the qualified held-out conclusion.

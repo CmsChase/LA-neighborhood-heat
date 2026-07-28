@@ -8,7 +8,11 @@ import pytest
 from shapely.geometry import MultiPolygon, Polygon
 
 import la_heat.website_export as website_export
-from la_heat.website_export import WebsiteExportError, geometry_svg_path
+from la_heat.website_export import (
+    WebsiteExportError,
+    geometry_svg_path,
+    tract_display_name,
+)
 
 
 def test_geometry_svg_path_preserves_polygon_holes_and_multiparts() -> None:
@@ -36,6 +40,12 @@ def test_geometry_svg_path_preserves_polygon_holes_and_multiparts() -> None:
     assert path.count("M") == 3
     assert path.count("Z") == 3
     assert "M0,30L10,30L10,20L0,20L0,30Z" in path
+
+
+def test_tract_display_name_combines_tiger_type_and_number() -> None:
+    assert tract_display_name("1011.10", "Census Tract") == "Census Tract 1011.10"
+    assert tract_display_name("1013", "") == "Census Tract 1013"
+    assert tract_display_name("", "Census Tract") == "Census Tract"
 
 
 def _build_minimal_valid_export(
@@ -80,7 +90,7 @@ def _build_minimal_valid_export(
     display_hash = hashlib.sha256(display.read_bytes()).hexdigest()
     manifest = {
         "state": "verified-display-export",
-        "algorithmVersion": "website-display-export-v1",
+        "algorithmVersion": website_export.ALGORITHM_VERSION,
         "scientificIdentity": identity,
         "displayRules": {"metricsRecomputedFromRoundedDisplayValues": False},
         "counts": {"tracts": 1096, "evaluationRows": 15116, "independentDates": 15},

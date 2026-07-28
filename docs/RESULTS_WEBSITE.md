@@ -12,6 +12,11 @@ final metrics, or authorize a second test-set read.
 
 - synchronized census-tract maps for Landsat-observed LST, M2 or B1
   predictions, and prediction residuals;
+- a larger tract map with wheel/button zoom, drag-to-pan, reset, GEOID search,
+  mouse selection, and keyboard selection;
+- a 15-date timeline and full table for each selected tract, including
+  observed and predicted LST, signed and absolute error, valid-pixel fraction,
+  median ST uncertainty, and Sentinel-2 availability;
 - a selector for all 15 usable held-out dates;
 - observed-versus-predicted scatterplots for one date or the complete held-out
   cohort;
@@ -43,7 +48,7 @@ ignored `website-github-pages/` directory. Its public repository and deployed
 source commit are:
 
 - `https://github.com/CmsChase/LA-surface-heat-atlas`
-- `405990a2cf87c539fed855e035b5d6883e74a732`
+- `128283948c74ad262401a3ced390e452d285e0b1`
 
 The earlier `website/` project is retained locally as the original visual
 source, but it is not the current public deployment.
@@ -64,9 +69,15 @@ hashes are:
 
 | File | SHA-256 |
 |---|---|
-| `tracts.json` | `0aef9a34d06c39d23309b1a18844fc193d0963a28ac8427c2246c77c9fd0c9d1` |
+| `tracts.json` | `c33fefe79d225fc6afababe0f117dda092f5e3f22f3827bd4f58bbf654867196` |
 | `evaluation-2025.json` | `617eac416e348b4a0445a06c2d3627d1fd51421faf6c23f4c513835a06aa7938` |
 | `metrics.json` | `494db653c65ba75ae2d2b312c808e80a376e75d97a177d3b8785342130f80aeb` |
+
+The v2 display manifest SHA-256 is
+`253435604ee2ceece0e820b8df71ab86584e3d4aac39ad7e485e1fe362b2816c`.
+Version 2 changes only the presentation label from the generic Census type to
+the authenticated TIGER tract number (for example, `Census Tract 1011.10`).
+The evaluation and metric files are byte-identical to version 1.
 
 The display manifest binds these products to claim
 `c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f`,
@@ -87,10 +98,11 @@ npm test
 npm run lint
 ```
 
-GitHub Actions run `30340513995` passed installation, linting, static export,
-data/hash tests, artifact upload, and deployment. Public HTTP checks returned
-200 for the page, all four JSON files, and the social image. Browser validation
-confirmed the date selector, B1/M2 switch, synchronized maps, and zero console
-errors. The publication paper, poster, oral-defense deck, and QR asset were
-also refreshed to point at this public URL without changing any scientific
-result.
+GitHub Actions run `30353854439` passed installation, linting, TypeScript,
+static export, exact data/hash tests, artifact upload, and deployment from
+commit `128283948c74ad262401a3ced390e452d285e0b1`. Public HTTP checks returned
+200 and confirmed `website-display-export-v2`, 1,096 unique tract labels, and
+the exact deployed source revision. The earlier migration run and browser
+checks remain recorded in the project handoff. The publication paper, poster,
+oral-defense deck, and QR asset continue to use the same public URL; no
+scientific result changed.

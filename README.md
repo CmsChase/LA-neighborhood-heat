@@ -1,336 +1,157 @@
 # Los Angeles Neighborhood Surface Heat
 
-Reproducible research project testing whether public weather, land-use,
-geographic, and lagged non-thermal satellite features can predict
-neighborhood-scale daytime surface heat in the City of Los Angeles.
+This repository tests whether public weather, land-use, topographic, and
+lagged non-thermal satellite features can predict daytime land-surface
+temperature (LST) across City of Los Angeles census tracts.
 
-## Locked research question
+LST is treated as a **surface-heat hazard proxy**. It is not air temperature,
+personal heat exposure, a health outcome, or evidence of a causal effect.
 
-> How accurately can public weather, land-use, topographic, and lagged
-> non-thermal satellite features predict census-tract daytime land-surface
-> temperature and relative surface-heat hotspots in the City of Los Angeles
-> on unseen warm-season dates and in unseen spatial areas?
+## Final held-out result
 
-The supervised label is QA-filtered Landsat 8/9 Collection 2 Level-2 land
-surface temperature (LST). LST is a **surface-heat hazard proxy**, not air
-temperature, personal exposure, illness, or mortality.
+The primary model (M2) was evaluated once on the predeclared 2025 final test
+after all modeling choices were frozen.
 
-## Current status
+| Held-out 2025 result | B1 baseline | M2 model |
+|---|---:|---:|
+| Equal-date-weighted MAE | 3.1165 °C | 2.1650 °C |
+| Relative MAE change | — | 30.53% lower |
+| Median per-date Spearman | — | 0.8447 |
 
-- [x] Research target and study scope selected
-- [x] Scientific leakage rules written and tested
-- [x] Three-date feasibility pilot completed: absolute labels were usable on all
-      dates; June/August relative labels passed and October was withheld
-- [x] Detailed 2020 TIGER tract geometry acquired and audited
-- [x] Complete target-blind 2020–2024 Landsat overpass inventory built
-- [x] Fixed-grid adjacent-scene mosaic and target builder integration-tested
-- [x] Full 2020–2024 target table built and independently audited
-- [x] Target-blind Sentinel-2 acquisition/window inventory frozen
-- [x] Required SRTM tiles and Census 2019 coastline downloaded and audited
-- [x] Official NLCD 2016 sources downloaded and audited
-- [x] NLCD/SRTM/coast static feature table built and audited
-- [x] Official Daymet V4 R1 development granule inventory frozen
-- [x] All 226 Sentinel-2 acquisition caches, lagged composites, and formal
-      predictor outputs completed and independently promoted
-- [x] Target-blind 90-date × 1,096-tract predictor key universe built
-- [x] Known-at-origin calendar table and 46-feature registry draft built
-- [x] Temporal/spatial/joint validation and absolute-LST metric drafts audited
-- [x] Target- and score-blind Phase 2 readiness audit completed with no blockers
-- [x] All 31 model-selection candidates and the tie-breaking rule frozen before
-      any model score
-- [x] All 30 official Daymet subsets downloaded and 21 lagged weather features built
-- [x] Target-blind 98,640-row Phase 2 table and final registry frozen
-- [x] Formal 63,403-row development modeling table assembled and audited
-- [x] Grouped temporal/spatial/joint validation formally promoted
-- [x] Baselines and main model trained; authenticated development OOF analyzed
-- [x] Hotspot, sensor, and Sentinel-missingness diagnostics complete
-- [x] QA cohort and failure-case diagnostics complete
-- [x] Residual and spatial-autocorrelation diagnostics complete
-- [x] Reproducible development diagnostic figures complete
-- [x] Feature-family ablation complete
-- [x] Pixel-level ST_QA <= 2 K sensitivity complete (15/30 date gate failed)
-- [x] Development robustness reconciled and generated report complete
-- [x] Model lock created
-- [x] One-time 2025 final evaluation completed and authenticated
-- [x] Read-only final-evaluation evidence package built and independently verified
-- [x] Interactive held-out results website built, verified, and deployed
-- [x] Research paper, 36 × 48 inch poster, and ten-slide defense deck generated and reviewed
+The point estimate is promising, but the crossed date/spatial-block 95%
+interval for relative MAE improvement was **−10.13% to 58.46%**. Because that
+interval crosses zero, the prespecified uncertainty gate did not pass and
+`overall_protocol_success` is false. The result must not be presented as a
+confirmed general improvement.
 
-The feasibility pilot created a 1,110-tract mother manifest and froze 1,096
-City-clipped, non-special-use primary tracts. It retained 95.5%, 95.0%, and
-77.8% on three representative dates. The target-blind
-inventory froze 90 unambiguous physical overpasses with complete City coverage.
-The corrected Landsat-aligned target builder has now completed all 90: 65 pass
-the independent ≥50% date-retention gate and 34 also pass the relative-endpoint
-spatial-representativeness gate. The committed QA table has 98,640 rows; the
-legal absolute-LST model table has 63,403 rows across 65 independent dates and
-71 spatial blocks. It contains zero duplicate keys and zero 2025 rows, and each
-tract's static eligible-land count and exact pixel-identity hash are invariant
-across all 90 dates. These remain the frozen development records; the separate
-one-time 2025 evaluation is now complete.
+Explore the 15 usable held-out dates in the
+[interactive result atlas](https://cmschase.github.io/LA-surface-heat-atlas/).
+The atlas includes a zoomable tract map, GEOID search, and a complete
+date-by-date record for each selected tract.
 
-Phase 2 has frozen 226 Sentinel-2 physical acquisitions and 1,045 legal
-`d−60 … d−1` target-window memberships across all 90 development dates. The two
-required SRTM tiles, Census 2019 coastline ZIP, and official MRLC NLCD 2016
-subsets are preserved with exact hashes and content audits. The promoted static
-table has 1,096 unique GEOIDs, 18 legal model predictors, one audit-only NLCD
-reference fraction, no missing values, and 100% observed support coverage for
-all five source layers.
+## Six ways into the project
 
-Official CMR discovery froze 30 Daymet granules (six variables × five
-development years) with zero 2025 entries. All 30 official grid subsets are now
-downloaded and hash-audited. The completed compiler applies the 365-day
-calendar, invariant tract-cell weights, cell-first shortwave energy, and strict
-`d−1` cutoff to produce 21 complete weather predictors on all 98,640
-target-blind tract-date keys.
+| If you want to… | Start here |
+|---|---|
+| 1. See the result | [Final evaluation report](reports/FINAL_EVALUATION_REPORT.md) and [interactive atlas](https://cmschase.github.io/LA-surface-heat-atlas/) |
+| 2. Understand the study | [Research protocol](docs/RESEARCH_PROTOCOL.md) and [pipeline diagram](docs/PIPELINE_DIAGRAM.md) |
+| 3. Verify the final evidence | [Evidence attestation](manifests/final_test_2025/evaluation/EVIDENCE_EXPORT.json) and [manifest guide](manifests/README.md) |
+| 4. Reproduce development work | [Script map](scripts/README.md), [configuration map](configs/README.md), and [test guide](tests/README.md) |
+| 5. Continue the project safely | [Mandatory handoff](docs/PROJECT_HANDOFF.md) and [repository rules](AGENTS.md) |
+| 6. Use the communication materials | [Publication guide](docs/PUBLICATION_MATERIALS.md) and [website guide](docs/RESULTS_WEBSITE.md) |
 
-All 226 Sentinel acquisition caches are complete, totaling 247,696 unique
-acquisition-tract rows. Their formally promoted 60-day predictor table has
-98,640 rows: 97,870 have all five optical predictors and 770 preserve all five
-as missing because they do not meet the frozen three-acquisition rule. The
-1,145,320-row lineage has no duplicate, target-day, future, or 2025 source and
-uses only ages 1–60 days. The canonical processed feature file SHA-256 is
-`aa02df3a00c51076610f442512949ade5ca70ab466b4d2d9c513826184fe82b5`;
-its independent promotion commit is
-`bf3adfffcfe52df7cca7c366fa214d6cb11a5cca4bf1111454c99c87fd48e291`.
+The [documentation index](docs/README.md) provides the complete role-based
+map.
 
-The readiness audit now verifies the key universe and all four predictor
-families with `blockers=[]` and `state=ready_for_feature_assembly`; it read no
-target value, target-QA table, or model score. A separate target-blind assembly
-then froze a 98,640 × 49 Phase 2 table: two keys, 46 model features (18 static,
-2 calendar, 21 Daymet, and 5 Sentinel), and one audit-only static reference.
-Its commit is
-`3f5e4017713f90a47a4a5b1eefdb4e91bb6141bfb1f0458d9a168dd785c2a364`.
+## Locked research design
 
-After that target-blind gate passed, the legal target join produced the formal
-63,403 × 50 development modeling table across 65 independent dates. It contains
-46 model features, one audit-only field, the response, two keys, and zero 2025
-rows. Exactly 63,235 rows have all 46 model features; the remaining 168 preserve
-the frozen all-five-missing Sentinel pattern for training-fold-only imputation.
-The model-table commit is
-`9c2f903993167fc2a228b3cfe60a23fe33f57f252bae6299458338cb8eb967ad`.
+- Unit: 2020 Census tract × Landsat physical-overpass date.
+- Study area: City of Los Angeles.
+- Warm season: May through October.
+- Development period: 2020–2024.
+- One-time held-out final test: 2025.
+- Target: QA-filtered tract-median Landsat 8/9 daytime LST in °C.
+- Predictors: 18 static land-use/geography, 2 calendar, 21 lagged Daymet, and
+  5 lagged Sentinel-2 features.
+- Primary metric: equal-date-weighted MAE.
+- Validation: whole-date, whole-year, contiguous spatial-block, and joint
+  spatiotemporal holdouts—never random tract-date splits.
+- Prediction origin: 00:00 local time on the target date; dynamic observed
+  inputs end on target day minus one.
 
-The grouped validation manifest is now formally promoted over all 63,403 legal
-keys, 65 dates, and 71 spatial blocks. It freezes 5 temporal, 71 spatial, and
-355 joint folds (431 total), with every row assigned to OOF test exactly once
-per family. Promotion read only keys and split metadata—no target value,
-predictor value, or model score—and kept 2025 locked. Its commit is
-`6a72169db012cf8c12aeecde573275e23205363608e60d4cde616a681fa08fcc`.
-The recoverable nested grouped-modeling pipeline completed all 55,645 inner fits
-and 2,155 outer refits. Strict import from the returned ZIP preserved all 2,155
-original fragments and compiled 951,045 authenticated development OOF rows. In
-joint validation, M2 improves date-macro MAE by 16.19% over the strongest legal
-baseline B1; the paired crossed date-by-block 95% interval is 4.21%–27.69%, and
-median per-date Spearman is 0.793. Required development gates pass, while the
-stronger check that the full interval exceed 10% does not. This is not a 2025
-final-test result.
+The development table contains 63,403 legal rows across 65 independent dates,
+1,096 tracts, and 71 spatial blocks. The held-out display contains 15,116
+evaluated tract-date rows across 15 usable 2025 dates.
 
-Legal model factories exist, and the exact 31-candidate nested-selection grid,
-date-macro objective, and deterministic tie rule are frozen under commit
-`4d8c2bd37be67f9f46d89d1dec8d5ed0aab196b24b43f9745ff730f040f2a6cd`.
-The selection contract was frozen before any fit. The completed comparison did
-not change its candidates, folds, metrics, thresholds, or final-test lock after
-scores were observed. Hotspot, sensor, Sentinel-missingness, QA/failure-case,
-residual, and spatial-autocorrelation diagnostics are complete. The frozen
-feature-family ablation and strict pixel-level ST_QA sensitivity are also
-complete and reconciled. The strict build retained only 15 usable dates versus
-the required 30, so it is preserved as a limitation rather than promoted. The
-generated development report is `reports/DEVELOPMENT_REPORT.md`. The
-full-development fit, formal model lock, and one-time 2025 evaluation are now
-complete. The held-out result and its required limitations are summarized in
-`reports/FINAL_EVALUATION_REPORT.md`.
+## Scientific boundaries
 
-The complete audit package is `exports/FINAL_EVALUATION_EVIDENCE.zip`
-(SHA-256
-`61a853c3eeea3f1ae92bf7999f0fd057018797f70498fcd017d1394dbd621b51`).
-Its tracked attestation is
-`manifests/final_test_2025/evaluation/EVIDENCE_EXPORT.json`; verify the
-unpacked directory with
-`scripts/verify_final_evaluation_evidence.py`.
+- Do not describe this historical hindcast as an operational weather forecast.
+- Do not treat tract-date rows as independent samples.
+- Do not interpret feature importance as causation.
+- Never use Landsat thermal values, target-derived statistics, same-scene
+  optical bands, future observations, raw tract IDs, or target-day observed
+  weather as primary-model predictors.
+- Every Sentinel composite ends before its target date.
+- Preprocessing and model selection are fit within the appropriate training
+  folds only.
+- The one-time 2025 evaluation is complete. Do not create another claim,
+  retune after viewing results, or rerun the authorization sequence.
 
-The interactive held-out result explorer is deployed at
-<https://cmschase.github.io/LA-surface-heat-atlas/>. It links
-Landsat-observed LST, model predictions, and residuals across all 15 usable
-2025 dates and exposes the point estimates, crossed-cluster uncertainty,
-hotspot diagnostics, and scientific boundaries. See
-`docs/RESULTS_WEBSITE.md` for display-data provenance and verification.
+## Repository map
 
-The reviewed research paper, print poster, and oral-defense deck are under
-`exports/PUBLICATION_MATERIALS`; see `docs/PUBLICATION_MATERIALS.md` for their
-contents, scientific message, hashes, and rebuild procedure.
+```text
+configs/                 versioned configuration; see configs/README.md
+data/                    ignored raw, interim, and processed data products
+docs/                    protocol, provenance, decisions, and navigation
+manifests/               frozen machine-readable audit and state records
+reports/                 generated scientific reports, figures, and tables
+scripts/                 thin command-line entry points grouped by workflow
+src/la_heat/             reusable Python implementation
+tests/                   leakage, schema, provenance, and engineering tests
+portable_templates/      Windows transfer and remote-run templates
+tools/                   static dashboard front ends
+exports/                 ignored local evidence and publication packages
+website-github-pages/    ignored local clone of the separate public site repo
+```
 
-## Study design
+Bulk data and export packages are intentionally untracked. Their authenticated
+hashes and provenance are recorded in the manifests and documentation.
 
-- Primary unit: 2020 Census tract × Landsat overpass date
-- Warm season: May through October
-- Development period: 2020–2024
-- Frozen final test: 2025
-- Primary target: tract-median daytime LST in °C
-- Neighborhood endpoint: within-date LST anomaly
-- Hotspot endpoint: relative hottest 20% of retained tracts per date
-- Validation: temporal, spatial-block, and joint spatiotemporal holdouts
-- Primary metric: date-macro MAE, so each acquisition date has equal weight
+## Safe verification
 
-See `docs/PROJECT_PLAN.md` for the execution table and
-`docs/RESEARCH_PROTOCOL.md` for the scientific contract. The target-blind
-predictor implementation contract is in `docs/PHASE2_FEATURE_SPEC.md`.
-
-## Quick start
+From the repository root, install the development environment and run:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python -m pip install --upgrade pip
 .\.venv\Scripts\python -m pip install -e ".[dev]"
-.\.venv\Scripts\python -m pytest
+.\.venv\Scripts\python -m pytest -q
+.\.venv\Scripts\python -m ruff check .
 ```
 
-Run the target-data pilot:
+Verify an existing unpacked final-evaluation evidence package without
+recomputing the final result:
 
 ```powershell
-.\.venv\Scripts\python -m la_heat.pilot --config configs/research.toml
+.\.venv\Scripts\python scripts\verify_final_evaluation_evidence.py
 ```
 
-Build the complete target-blind development overpass inventory:
+Verify the existing website display export:
 
 ```powershell
-.\.venv\Scripts\python -m la_heat.inventory --config configs/research.toml
+.\.venv\Scripts\python scripts\build_website_data.py --verify-only `
+  --output-dir website-github-pages\public\data
 ```
 
-Resume the cache-safe full development target build (90 overpasses):
+These commands are checks. The final-evaluation preparation, authorization,
+claim, and value-opening workflow is a completed historical transaction and
+must not be started again.
 
-```powershell
-.\.venv\Scripts\python -m la_heat.target_builder --config configs/research.toml
-```
+## Output authority
 
-For remote-raster builds that must recover automatically from transient COG
-read failures, use the bounded retry supervisor. It preserves validated
-overpass caches and accepts both a promoted build and a scientifically valid
-completed date-gate failure:
+Use this order when records disagree:
 
-```powershell
-.\.venv\Scripts\python scripts/run_target_build_resumable.py `
-  --config configs/research_stqa2_sensitivity.toml `
-  --output-directory data/interim/targets_sensitivity_stqa2 `
-  --max-attempts 20 `
-  --retry-delay-seconds 30
-```
+1. authenticated manifests and generated provenance;
+2. the completed final-evaluation evidence package;
+3. the mandatory project handoff;
+4. generated reports and communication materials;
+5. narrative status summaries.
 
-Rebuild Phase 2 source inventories and features:
+Never hand-edit generated analysis tables, figures, compact website JSON, or
+byte-authenticated manifests. Regenerate only through the documented scripts
+and preserve every frozen path and checksum.
 
-```powershell
-.\.venv\Scripts\python scripts/download_nlcd_2016_sources.py
-.\.venv\Scripts\python scripts/build_static_features.py --config configs/research.toml
-.\.venv\Scripts\python scripts/stage_daymet_grid.py --config configs/research.toml
-.\.venv\Scripts\python scripts/build_sentinel_features.py
-.\.venv\Scripts\python scripts/promote_sentinel_features.py
-.\.venv\Scripts\python scripts/audit_model_selection_freeze.py
-```
+## Main outputs
 
-Build the target-blind predictor support and grouped-validation artifacts:
+- [Final evaluation report](reports/FINAL_EVALUATION_REPORT.md)
+- [Development report](reports/DEVELOPMENT_REPORT.md)
+- [Read-only evidence package documentation](docs/PROJECT_HANDOFF.md)
+- [Interactive results website documentation](docs/RESULTS_WEBSITE.md)
+- [Research paper, poster, and defense-deck documentation](docs/PUBLICATION_MATERIALS.md)
+- [Data-source manifest](docs/DATA_MANIFEST.csv)
+- [Scientific decision log](docs/DECISION_LOG.md)
 
-```powershell
-.\.venv\Scripts\python scripts/build_feature_universe.py
-.\.venv\Scripts\python scripts/build_calendar_features.py
-.\.venv\Scripts\python scripts/build_phase2_registry.py
-.\.venv\Scripts\python scripts/build_validation_splits.py
-.\.venv\Scripts\python scripts/promote_validation_splits.py
-```
-
-These commands create no model result. They write the full feature-only
-tract-date support, deterministic calendar table, metadata-only registry draft,
-and split formulas/audits over legal development keys and fixed tract geometry.
-These development commands do not read or alter the already frozen
-final-evaluation result.
-
-The Daymet inventory command is anonymous. For an interactive authenticated
-download, including Windows PowerShell 5.1, clear any stale credential variables
-and let Python read the token from a hidden terminal prompt:
-
-```powershell
-Remove-Item Env:EARTHDATA_TOKEN,Env:NASA_EARTHDATA_TOKEN,Env:EDL_TOKEN -ErrorAction SilentlyContinue
-.\.venv\Scripts\python scripts\stage_daymet_grid.py --config configs/research.toml --download-subsets --prompt-token
-.\.venv\Scripts\python scripts\build_daymet_features.py --config configs/research.toml
-.\.venv\Scripts\python scripts\audit_phase2_readiness.py
-.\.venv\Scripts\python scripts\build_phase2_features.py
-.\.venv\Scripts\python scripts\build_model_dataset.py
-```
-
-Paste the token only after the Python prompt appears. Its value is neither
-printed nor persisted, and prompt mode fails before networking if any configured
-token environment variable still exists. Noninteractive automation may instead
-set exactly one of `EARTHDATA_TOKEN`, `NASA_EARTHDATA_TOKEN`, or `EDL_TOKEN`.
-The Sentinel build command is cache-safe and now serves as a reproducible
-rebuild/revalidation path for the already completed 226-acquisition stage.
-
-For a future Sentinel rebuild with visible progress, cooperative start/pause
-control, and automatic process recovery, launch the dashboard through its
-watchdog instead of the direct Sentinel command:
-
-```powershell
-.\.venv\Scripts\python scripts/sentinel_dashboard_watchdog.py --workers 2
-```
-
-It opens `http://127.0.0.1:8765/` and reuses strictly validated acquisition
-caches. Safe Pause records a persistent paused intent, stops submitting new
-work, and waits for active acquisitions to commit atomically. Transient network
-and remote-raster failures retry automatically with bounded backoff while other
-acquisitions continue. A retryable runner failure triggers cache revalidation
-and automatic batch reconstruction; a nonzero dashboard-process exit is
-restarted by the watchdog. Configuration, schema, hash, and scientific
-integrity failures remain fail-closed rather than being hidden by an endless
-retry loop. The watchdog restores only a persisted `running` intent, never a
-user-requested `paused` state.
-
-Reproduce the authenticated initial development-result tables from the
-canonical compiled evaluation directory:
-
-```powershell
-.\.venv\Scripts\python scripts/analyze_model_results.py --config configs/result_analysis.toml
-.\.venv\Scripts\python scripts/analyze_model_endpoints.py --config configs/model_endpoint_diagnostics.toml
-.\.venv\Scripts\python scripts/analyze_residual_spatial.py --config configs/residual_spatial_diagnostics.toml
-.\.venv\Scripts\python scripts/analyze_model_qa.py --config configs/model_qa_diagnostics.toml
-.\.venv\Scripts\python scripts/generate_model_diagnostic_figures.py --config configs/model_diagnostic_figures.toml
-.\.venv\Scripts\python scripts/analyze_feature_ablation.py --config configs/feature_ablation_analysis.toml
-.\.venv\Scripts\python scripts/analyze_stqa2_sensitivity.py --config configs/stqa2_sensitivity_analysis.toml
-.\.venv\Scripts\python scripts/reconcile_development_robustness.py --config configs/robustness_reconciliation.toml
-.\.venv\Scripts\python scripts/generate_development_report.py --config configs/development_report.toml
-```
-
-The grouped queue is terminal at 57,800 / 57,800, the full-development B1/M2
-fit is complete, and the formal lock was promoted on 2026-07-23. Do not restart
-the model or final-evaluation controllers. The immutable lock is
-`manifests/model_lock/MODEL_LOCK.json`, with commit SHA-256
-`584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b`.
-It froze the selected B1 and M2 artifacts before any 2025 value was opened.
-
-The one-time 2025 transaction is complete under claim
-`c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f`
-and completion commit
-`4cc8a5536cf1055d42876577f8d9f6300c799176779a7ec89cd1d3ed819d77a0`.
-M2 reduced held-out equal-date MAE from 3.1165 °C to 2.1650 °C, but the
-prespecified 95% relative-improvement interval (-10.13% to 58.46%) crossed
-zero, so the overall protocol success gate did not pass. Re-running the command
-below now performs completion authentication only:
-
-```powershell
-.\.venv\Scripts\python scripts\execute_locked_final_evaluation.py `
-  --config configs\final_evaluation_2025.toml
-```
-
-The pilot queries public STAC metadata, reads only the required remote COG
-windows, applies the locked Landsat QA and temperature scaling, aggregates to
-Los Angeles Census tracts, and writes auditable coverage, mask-waterfall, and
-QA-sensitivity summaries.
-
-## Repository layout
-
-```text
-configs/                 versioned study and pilot configuration
-data/raw/                immutable downloads (untracked)
-data/interim/            reproducible intermediate products (untracked)
-data/processed/          model-ready tables (untracked)
-docs/                    protocol, decisions, provenance, experiment log
-reports/                 generated figures and tables
-src/la_heat/             reusable data and modeling code
-tests/                   scientific and engineering guardrails
-```
+Before changing anything, read [AGENTS.md](AGENTS.md) and the complete
+[project handoff](docs/PROJECT_HANDOFF.md). They contain the current Git
+checkpoint, one-time-evaluation state, immutable paths, and required validation
+steps.

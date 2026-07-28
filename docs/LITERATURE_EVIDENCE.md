@@ -2,9 +2,9 @@
 
 Last reviewed: 2026-07-22
 
-This file records the source-to-claim mapping used in the simulated ISEF
-report. It is not model evidence. Project results must still come from the
-frozen generated tables and figures.
+This file records the source-to-claim mapping used in the research report. It
+is not model evidence. Project results must still come from the frozen
+generated tables and figures.
 
 ## Data and methods
 
@@ -85,4 +85,3 @@ frozen generated tables and figures.
     Supports an observed spatial association between urban vegetation abundance
     and Landsat LST. It does not justify a causal claim about vegetation and Los
     Angeles temperature in this project.
-

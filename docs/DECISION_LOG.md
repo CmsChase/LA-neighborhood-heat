@@ -1300,3 +1300,22 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   were regenerated only to replace the obsolete site address with the public
   GitHub Pages URL. Their scientific values and qualified conclusion are
   unchanged.
+
+## 2026-07-28 — Rebuild navigation and add tract-level inspection
+
+- Decision: keep the existing scientific directory and every frozen path
+  intact. Improve first-read clarity by shortening the root README and adding
+  concise indexes for documentation, scripts, configurations, source modules,
+  tests, data, manifests, and reports. No canonical artifact was moved.
+- The public atlas now retains its three synchronized overview maps and adds a
+  larger map with zoom, pan, reset, GEOID search, mouse/keyboard tract
+  selection, a 15-date observed-versus-predicted timeline, and a complete
+  per-date error and QA table.
+- Display-export version 2 replaces the uninformative repeated tract type with
+  the authenticated TIGER `NAME` number joined to `NAMELSAD`; it does not
+  change geometry, evaluation rows, predictions, residuals, or metrics.
+  `evaluation-2025.json` and `metrics.json` remain byte-identical to version 1.
+- Public website commit
+  `128283948c74ad262401a3ced390e452d285e0b1` deployed successfully in GitHub
+  Actions run `30353854439`. This is a presentation and repository-navigation
+  change only; the one-time final evaluation remains untouched.

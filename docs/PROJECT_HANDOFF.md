@@ -4,6 +4,10 @@ Last material update: 2026-07-28 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
+- repository navigation, display-export v2, and the tract-level website
+  explorer are in the commit with subject
+  `Organize project and add tract detail explorer`; obtain its exact hash with
+  `git log --oneline --grep="Organize project and add tract detail explorer" -1`
 - public GitHub Pages migration and deployment handoff are in the commit with
   subject `Move result atlas to public GitHub Pages`; obtain its exact hash
   with
@@ -139,15 +143,19 @@ The read-only held-out result explorer is deployed at
 `https://cmschase.github.io/LA-surface-heat-atlas/` with public access. It
 shows synchronized Landsat-observed, model-predicted, and residual tract maps
 for all 15 usable 2025 dates, plus scatter, per-date, bootstrap, and hotspot
-diagnostics. It does not train, retune, or rerun the final evaluation.
+diagnostics. A separate larger map supports zoom, pan, reset, GEOID search,
+mouse/keyboard tract selection, and a complete 15-date tract timeline and
+table with observed LST, prediction, signed/absolute error, valid fraction,
+median uncertainty, and Sentinel availability. It does not train, retune, or
+rerun the final evaluation.
 
 The public GitHub Pages source is an independent nested Git project in the
 root-ignored `website-github-pages/` directory:
 
 - repository: `https://github.com/CmsChase/LA-surface-heat-atlas`
 - deployed source commit:
-  `405990a2cf87c539fed855e035b5d6883e74a732`
-- successful GitHub Actions deployment run: `30340513995`
+  `128283948c74ad262401a3ced390e452d285e0b1`
+- successful GitHub Actions deployment run: `30353854439`
 
 The earlier root-ignored `website/` project remains the original visual source
 but is superseded as the public deployment. The root repository owns only the
@@ -158,20 +166,28 @@ deterministic display-data exporter and tests:
 - `tests/test_website_export.py`
 - `docs/RESULTS_WEBSITE.md`
 
-Final migration validation passed all 743 root tests, full-repository Ruff,
-deterministic website-export authentication, public HTTP checks, and browser
-interaction checks.
+Current validation passed all 744 root tests, full-repository Ruff, the
+deterministic website-export authentication, website lint/TypeScript/static
+export tests, GitHub Actions deployment, and public HTTP/data checks. The
+current public manifest reports `website-display-export-v2` and all 1,096
+tract labels are unique.
 
 The display manifest authenticates 1,096 tract geometries, 15,116 held-out
 rows, and 15 dates against the canonical claim, completion commit, and evidence
 ZIP hash. It records:
 
 - `tracts.json`:
-  `0aef9a34d06c39d23309b1a18844fc193d0963a28ac8427c2246c77c9fd0c9d1`
+  `c33fefe79d225fc6afababe0f117dda092f5e3f22f3827bd4f58bbf654867196`
 - `evaluation-2025.json`:
   `617eac416e348b4a0445a06c2d3627d1fd51421faf6c23f4c513835a06aa7938`
 - `metrics.json`:
   `494db653c65ba75ae2d2b312c808e80a376e75d97a177d3b8785342130f80aeb`
+- `display-manifest.json`:
+  `253435604ee2ceece0e820b8df71ab86584e3d4aac39ad7e485e1fe362b2816c`
+
+Display-export v2 changes only the tract presentation label: it combines the
+authenticated TIGER `NAMELSAD` type and `NAME` number. The evaluation and
+metric JSON files are byte-identical to v1.
 
 Safe authentication commands:
 
@@ -190,6 +206,21 @@ Pop-Location
 Do not edit the compact JSON files by hand. Regenerate them only from the
 already frozen canonical outputs, then inspect the manifest and rerun both the
 Python exporter tests and website tests.
+
+## Completed repository navigation refresh
+
+The scientific directory layout was intentionally not rebuilt or moved.
+Frozen configuration, manifests, target caches, final outputs, and evidence
+paths remain unchanged. The public landing layer is now:
+
+- a concise root `README.md` with the result, limitation, six reader paths,
+  repository map, safe verification, and output authority;
+- role-based `README.md` indexes under `docs/`, `scripts/`, `configs/`,
+  `reports/`, `manifests/`, `data/`, `tests/`, and `src/la_heat/`;
+- natural research-team wording in the plan and literature-evidence notes.
+
+This is navigation-only organization. It does not rename a module, change a
+scientific setting, modify a frozen result, or remove audit history.
 
 ## Completed publication materials
 
