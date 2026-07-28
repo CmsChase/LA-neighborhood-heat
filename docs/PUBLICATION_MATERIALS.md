@@ -4,8 +4,8 @@ The complete local publication package is under
 `exports/PUBLICATION_MATERIALS`. A shareable ZIP is written to
 `exports/PUBLICATION_MATERIALS.zip`.
 
-The ZIP contains 17 files and 12,292,163 bytes. Its SHA-256 is
-`dd3729a8c7f0a45efa86f9e14614490c1aa2d1f7d16467ddbc0db4ce1d4a05a5`;
+The ZIP contains 17 files and 12,293,058 bytes. Its SHA-256 is
+`2a91f09e993ebb0438bd987169862d308cb5182b5b8b56293d6b4ca41aae9493`;
 an isolated extraction matched all 17 source-file hashes.
 
 ## Contents
@@ -46,11 +46,11 @@ B1/M2 contrast.
 
 | File | SHA-256 |
 |---|---|
-| `LA_Surface_Heat_Research_Paper.docx` | `6e6d79799abcd2b22eb6f0ad654019b37b9e212286f25b1e71358412dcd840c5` |
-| `LA_Surface_Heat_Research_Paper.pdf` | `6bc9e1fdd9d3302c0abe5a40cb542f9241a093351908a9419a649af980fd80e8` |
-| `LA_Surface_Heat_Poster_36x48.pptx` | `fdc18bc09a45906c2f29ecc71921175fac652125a76aeb757fd696d2e00b2fd8` |
-| `LA_Surface_Heat_Poster_36x48.pdf` | `173728d30fa00499adc4760fd4c5859b80ff8392beb1b30b203baedb36837a19` |
-| `LA_Surface_Heat_Defense_10_Slides.pptx` | `9bf91facee189fdbc133f9ab09c1cd54d2fb372eecf201bbc7725be4d14e1e74` |
+| `LA_Surface_Heat_Research_Paper.docx` | `efdc41f67b9362bcea0c3172e0f9026112b8430bcd15e43bb1531e180289d738` |
+| `LA_Surface_Heat_Research_Paper.pdf` | `24e7d2754ecc559ebd47fc955f51dd739d54b1cc24ee1168c70fb74b994edcaf` |
+| `LA_Surface_Heat_Poster_36x48.pptx` | `9e6f516c8a7bbb1ce8ad61e742a86d5afa1ac3f6b62208a92f0383e63203e47d` |
+| `LA_Surface_Heat_Poster_36x48.pdf` | `1b485aa276d5646a59f620607b29cbfccaa1d97d3b55afdaaef02d7282cbff68` |
+| `LA_Surface_Heat_Defense_10_Slides.pptx` | `02f8ed81b88ad93a5fbd04b06ef5a61025b2c404570056d744a7820279c2f169` |
 
 ## Reproducible paper build
 
@@ -60,10 +60,10 @@ B1/M2 contrast.
 ```
 
 The script uses `python-docx` for the editable document and ReportLab for a
-matching PDF because Microsoft Word COM initialization was unavailable in the
-headless session. The PDF was rendered with Poppler and every page was visually
-reviewed. The DOCX was independently checked for its headings, paragraphs,
-tables, media, section geometry, and fixed-width styles.
+matching deterministic PDF. The PDF was rendered with Poppler and every page
+was visually reviewed. The DOCX was independently exported through Microsoft
+Word as a 15-page review PDF and checked for its headings, paragraphs, tables,
+media, section geometry, and fixed-width styles.
 
 The editable slide-generation source is preserved inside the publication
 package. It uses `@oai/artifact-tool`; the final PPTX files contain
@@ -71,9 +71,10 @@ repository-relative `[Sources]` notes on every slide.
 
 ## QA summary
 
-- full project test suite: passed;
+- full project test suite: 743 tests passed;
 - full-repository Ruff: passed;
 - research paper: 15 pages, no clipped text or figures in the rendered PDF;
+- Word-rendered editable paper: 15 pages with no orphaned final source page;
 - poster: exact 36 × 48 inch PPTX and PDF;
 - defense presentation: ten slides;
 - inspected slide bounding boxes outside canvas: zero;

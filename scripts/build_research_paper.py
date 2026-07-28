@@ -393,7 +393,7 @@ def configure_styles(doc: Document) -> None:
     source_note._element.rPr.rFonts.set(qn("w:hAnsi"), "Calibri")
     source_note.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.LEFT
     source_note.paragraph_format.space_before = Pt(0)
-    source_note.paragraph_format.space_after = Pt(8)
+    source_note.paragraph_format.space_after = Pt(4)
     source_note.paragraph_format.line_spacing = 1.0
     source_note.paragraph_format.keep_together = True
 
@@ -421,7 +421,7 @@ def configure_styles(doc: Document) -> None:
     reference._element.rPr.rFonts.set(qn("w:hAnsi"), "Calibri")
     reference.paragraph_format.left_indent = Inches(0.30)
     reference.paragraph_format.first_line_indent = Inches(-0.30)
-    reference.paragraph_format.space_after = Pt(5)
+    reference.paragraph_format.space_after = Pt(4)
     reference.paragraph_format.line_spacing = 1.08
 
 
@@ -1564,9 +1564,9 @@ def build_document() -> Path:
         doc,
         "A read-only interactive visualization of observed LST, M2 and B1 "
         "predictions, residuals, per-date diagnostics, and uncertainty is available "
-        "at https://la-surface-heat-atlas.zhuzifu485.chatgpt.site. At the time of "
-        "this paper, access is owner-authenticated. The website is a display layer "
-        "over the frozen outputs, not an independent model run."
+        "at https://cmschase.github.io/LA-surface-heat-atlas/. The public GitHub "
+        "Pages site is a display layer over the frozen outputs, not an independent "
+        "model run."
     )
     add_body_paragraph(
         doc,
@@ -1673,11 +1673,6 @@ def build_document() -> Path:
         rows=identity_rows,
         widths_dxa=(2600, 6760),
     )
-    add_source_note(
-        doc,
-        "Source: MODEL_LOCK.json, EVALUATION_COMPLETE.json, "
-        "FINAL_EVALUATION_REPORT.md, and EVIDENCE_EXPORT.json.",
-    )
 
     core = doc.core_properties
     core.title = (
@@ -1783,6 +1778,30 @@ def _pdf_styles() -> dict[str, ParagraphStyle]:
             spaceAfter=8,
             keepWithNext=False,
         ),
+        "CoverResult": ParagraphStyle(
+            "PaperCoverResult",
+            parent=base["BodyText"],
+            fontName="Calibri-Bold",
+            fontSize=25,
+            leading=30,
+            alignment=TA_CENTER,
+            textColor=colors.HexColor("#193C36"),
+            spaceBefore=0,
+            spaceAfter=14,
+            keepTogether=False,
+        ),
+        "CoverQualifier": ParagraphStyle(
+            "PaperCoverQualifier",
+            parent=base["BodyText"],
+            fontName="Calibri-Bold",
+            fontSize=11.5,
+            leading=15,
+            alignment=TA_CENTER,
+            textColor=colors.HexColor("#C9583E"),
+            spaceBefore=8,
+            spaceAfter=40,
+            keepTogether=False,
+        ),
         "Heading 1": ParagraphStyle(
             "PaperH1",
             parent=base["Heading1"],
@@ -1840,7 +1859,7 @@ def _pdf_styles() -> dict[str, ParagraphStyle]:
             alignment=TA_LEFT,
             textColor=colors.HexColor("#5D6563"),
             spaceBefore=0,
-            spaceAfter=8,
+            spaceAfter=4,
             keepTogether=False,
         ),
         "Table Caption": ParagraphStyle(
@@ -1865,7 +1884,7 @@ def _pdf_styles() -> dict[str, ParagraphStyle]:
             textColor=colors.HexColor("#18201F"),
             leftIndent=21.6,
             firstLineIndent=-21.6,
-            spaceAfter=5,
+            spaceAfter=4,
         ),
         "List": ParagraphStyle(
             "PaperList",
@@ -2181,7 +2200,11 @@ def build_pdf_from_docx(docx_path: Path) -> Path:
 
         style_name = paragraph.style.name if paragraph.style is not None else "Normal"
         style = styles.get(style_name, styles["Normal"])
-        if style_name == "Normal":
+        if text.endswith("lower held-out point-estimate MAE for M2 vs. B1"):
+            style = styles["CoverResult"]
+        elif text.startswith("Promising held-out predictive signal;"):
+            style = styles["CoverQualifier"]
+        elif style_name == "Normal":
             if paragraph.alignment == WD_ALIGN_PARAGRAPH.CENTER:
                 style = styles["NormalCenter"]
             elif paragraph.alignment == WD_ALIGN_PARAGRAPH.LEFT:

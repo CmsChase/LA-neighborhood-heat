@@ -2,11 +2,11 @@
 
 The interactive results site is deployed at:
 
-https://la-surface-heat-atlas.zhuzifu485.chatgpt.site
+https://cmschase.github.io/LA-surface-heat-atlas/
 
-The deployment currently uses owner-authenticated access. It is a presentation
-layer over the frozen one-time 2025 evaluation; it does not train a model,
-recalculate the final metrics, or authorize a second test-set read.
+This is a public GitHub Pages deployment. It is a presentation layer over the
+frozen one-time 2025 evaluation; it does not train a model, recalculate the
+final metrics, or authorize a second test-set read.
 
 ## What the site shows
 
@@ -38,20 +38,29 @@ The root repository owns the deterministic export code:
 - `scripts/build_website_data.py`
 - `tests/test_website_export.py`
 
-The website is an independent nested Git project under the ignored `website/`
-directory. Its deployed source commit is
-`abd30c33539e93d49f8674d3b209d07afbb3ce90`.
+The current public website is an independent nested Git project under the
+ignored `website-github-pages/` directory. Its public repository and deployed
+source commit are:
+
+- `https://github.com/CmsChase/LA-surface-heat-atlas`
+- `405990a2cf87c539fed855e035b5d6883e74a732`
+
+The earlier `website/` project is retained locally as the original visual
+source, but it is not the current public deployment.
 
 Build or authenticate the compact display files from the frozen outputs:
 
 ```powershell
-.\.venv\Scripts\python scripts\build_website_data.py
-.\.venv\Scripts\python scripts\build_website_data.py --verify-only
+.\.venv\Scripts\python scripts\build_website_data.py `
+  --output-dir website-github-pages\public\data
+.\.venv\Scripts\python scripts\build_website_data.py --verify-only `
+  --output-dir website-github-pages\public\data
 ```
 
 The verified display export contains 1,096 tract geometries, 15,116
 tract-date rows, and 15 dates. Its manifest is
-`website/public/data/display-manifest.json`. Current display-file hashes are:
+`website-github-pages/public/data/display-manifest.json`. Current display-file
+hashes are:
 
 | File | SHA-256 |
 |---|---|
@@ -68,14 +77,20 @@ and evidence ZIP SHA-256
 
 ## Website validation
 
-From `website/`:
+From `website-github-pages/`, with the repository name as the Pages base path:
 
 ```powershell
+$env:GITHUB_PAGES = "true"
+$env:NEXT_PUBLIC_BASE_PATH = "/LA-surface-heat-atlas"
+$env:NEXT_PUBLIC_SITE_URL = "https://cmschase.github.io/LA-surface-heat-atlas/"
 npm test
 npm run lint
 ```
 
-The committed version passed its production build, rendered-HTML tests,
-linting, desktop visual review at 1440 x 1000, and mobile visual review at
-390 x 844. The date selector, B1/M2 switch, map synchronization, and responsive
-map tabs were exercised before deployment.
+GitHub Actions run `30340513995` passed installation, linting, static export,
+data/hash tests, artifact upload, and deployment. Public HTTP checks returned
+200 for the page, all four JSON files, and the social image. Browser validation
+confirmed the date selector, B1/M2 switch, synchronized maps, and zero console
+errors. The publication paper, poster, oral-defense deck, and QR asset were
+also refreshed to point at this public URL without changing any scientific
+result.

@@ -149,7 +149,7 @@ unpacked directory with
 `scripts/verify_final_evaluation_evidence.py`.
 
 The interactive held-out result explorer is deployed at
-<https://la-surface-heat-atlas.zhuzifu485.chatgpt.site>. It links
+<https://cmschase.github.io/LA-surface-heat-atlas/>. It links
 Landsat-observed LST, model predictions, and residuals across all 15 usable
 2025 dates and exposes the point estimates, crossed-cluster uncertainty,
 hotspot diagnostics, and scientific boundaries. See

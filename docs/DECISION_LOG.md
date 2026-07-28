@@ -1277,6 +1277,26 @@ No unlock has occurred. `unlock_final_test` remains `false`.
 - Publication generation does not train a model, modify a frozen output, open
   a target value, or authorize a second final-test claim.
 - The 17-file shareable archive is
-  `exports/PUBLICATION_MATERIALS.zip` (12,292,163 bytes), SHA-256
-  `dd3729a8c7f0a45efa86f9e14614490c1aa2d1f7d16467ddbc0db4ce1d4a05a5`;
+  `exports/PUBLICATION_MATERIALS.zip` (12,293,058 bytes), SHA-256
+  `2a91f09e993ebb0438bd987169862d308cb5182b5b8b56293d6b4ca41aae9493`;
   isolated extraction reproduced every packaged file hash.
+
+## 2026-07-28 — Move the public atlas to GitHub Pages
+
+- Decision: replace the restricted-access deployment with a public static
+  GitHub Pages site at
+  `https://cmschase.github.io/LA-surface-heat-atlas/`.
+- The Pages source is isolated in the public repository
+  `https://github.com/CmsChase/LA-surface-heat-atlas` at commit
+  `405990a2cf87c539fed855e035b5d6883e74a732`.
+- GitHub Actions run `30340513995` passed lint, static export, exact display
+  data tests, artifact upload, and deployment. Public checks returned HTTP 200
+  for the page, four authenticated JSON files, and social image; browser
+  checks exercised the date and model controls without console errors.
+- The four display files are byte-identical to the prior verified export. This
+  hosting change neither recalculates a metric nor reruns, retunes, or changes
+  the completed one-time evaluation.
+- The paper, poster, oral-defense deck, packaged QR asset, and shareable ZIP
+  were regenerated only to replace the obsolete site address with the public
+  GitHub Pages URL. Their scientific values and qualified conclusion are
+  unchanged.

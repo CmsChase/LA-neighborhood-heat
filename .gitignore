@@ -10,6 +10,7 @@ exports/
 tmp/
 RUN_DISABLED_TRANSFERRED_OUT.txt
 /website/
+/website-github-pages/
 
 # Reproducible data products are generated locally. Keep manifests, not bulk data.
 data/raw/*

@@ -4,6 +4,10 @@ Last material update: 2026-07-28 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
+- public GitHub Pages migration and deployment handoff are in the commit with
+  subject `Move result atlas to public GitHub Pages`; obtain its exact hash
+  with
+  `git log --oneline --grep="Move result atlas to public GitHub Pages" -1`
 - interactive results exporter, publication builders, and final communication
   handoff are in the commit with subject
   `Publish interactive result atlas and communication materials`; obtain its
@@ -132,21 +136,31 @@ repository bundle. Do not rebuild or overwrite this package.
 ## Completed interactive results website
 
 The read-only held-out result explorer is deployed at
-`https://la-surface-heat-atlas.zhuzifu485.chatgpt.site` with
-owner-authenticated access. It shows synchronized Landsat-observed,
-model-predicted, and residual tract maps for all 15 usable 2025 dates, plus
-scatter, per-date, bootstrap, and hotspot diagnostics. It does not train,
-retune, or rerun the final evaluation.
+`https://cmschase.github.io/LA-surface-heat-atlas/` with public access. It
+shows synchronized Landsat-observed, model-predicted, and residual tract maps
+for all 15 usable 2025 dates, plus scatter, per-date, bootstrap, and hotspot
+diagnostics. It does not train, retune, or rerun the final evaluation.
 
-The website is an independent nested Git project in the root-ignored
-`website/` directory. Its deployed source commit is
-`abd30c33539e93d49f8674d3b209d07afbb3ce90`. The root repository owns only the
+The public GitHub Pages source is an independent nested Git project in the
+root-ignored `website-github-pages/` directory:
+
+- repository: `https://github.com/CmsChase/LA-surface-heat-atlas`
+- deployed source commit:
+  `405990a2cf87c539fed855e035b5d6883e74a732`
+- successful GitHub Actions deployment run: `30340513995`
+
+The earlier root-ignored `website/` project remains the original visual source
+but is superseded as the public deployment. The root repository owns only the
 deterministic display-data exporter and tests:
 
 - `src/la_heat/website_export.py`
 - `scripts/build_website_data.py`
 - `tests/test_website_export.py`
 - `docs/RESULTS_WEBSITE.md`
+
+Final migration validation passed all 743 root tests, full-repository Ruff,
+deterministic website-export authentication, public HTTP checks, and browser
+interaction checks.
 
 The display manifest authenticates 1,096 tract geometries, 15,116 held-out
 rows, and 15 dates against the canonical claim, completion commit, and evidence
@@ -162,8 +176,12 @@ ZIP hash. It records:
 Safe authentication commands:
 
 ```powershell
-.\.venv\Scripts\python scripts\build_website_data.py --verify-only
-Push-Location website
+.\.venv\Scripts\python scripts\build_website_data.py --verify-only `
+  --output-dir website-github-pages\public\data
+$env:GITHUB_PAGES = "true"
+$env:NEXT_PUBLIC_BASE_PATH = "/LA-surface-heat-atlas"
+$env:NEXT_PUBLIC_SITE_URL = "https://cmschase.github.io/LA-surface-heat-atlas/"
+Push-Location website-github-pages
 npm test
 npm run lint
 Pop-Location
@@ -192,11 +210,11 @@ isolated dependencies and rebuild with:
 .\.venv\Scripts\python scripts\build_research_paper.py
 ```
 
-The PDF path is rendered directly from the same DOCX content model through
-ReportLab because Word COM initialization was unavailable in the headless
-session. All 15 PDF pages were inspected; the editable DOCX was structurally
-audited for 139 paragraphs, 28 headings, five tables, five figures, one
-section, and fixed page/table styles.
+The deterministic PDF path is rendered directly from the same DOCX content
+model through ReportLab. All 15 PDF pages were inspected. The editable DOCX
+was also exported through Microsoft Word for an independent 15-page render and
+structurally audited for 138 paragraphs, 28 headings, five tables, five
+figures, one section, and fixed page/table styles.
 
 The poster has exact 36 × 48 inch OOXML and PDF dimensions. The defense deck
 has exactly ten slides. Every slide was visually reviewed, all `[Sources]`
@@ -208,8 +226,8 @@ These are communication layers only. They must preserve the frozen conclusion:
 the 30.53% point reduction is promising, the -10.13% to 58.46% interval crosses
 zero, and `overall_protocol_success` remains false.
 
-The archive contains 17 files and 12,292,163 bytes. External ZIP SHA-256:
-`dd3729a8c7f0a45efa86f9e14614490c1aa2d1f7d16467ddbc0db4ce1d4a05a5`.
+The archive contains 17 files and 12,293,058 bytes. External ZIP SHA-256:
+`2a91f09e993ebb0438bd987169862d308cb5182b5b8b56293d6b4ca41aae9493`.
 An isolated extraction matched every source-file hash.
 
 ## Research question and fixed interpretation
