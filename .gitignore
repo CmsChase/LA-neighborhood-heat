@@ -9,6 +9,7 @@ htmlcov/
 exports/
 tmp/
 RUN_DISABLED_TRANSFERRED_OUT.txt
+/website/
 
 # Reproducible data products are generated locally. Keep manifests, not bulk data.
 data/raw/*

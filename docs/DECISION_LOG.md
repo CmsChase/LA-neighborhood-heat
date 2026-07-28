@@ -1241,3 +1241,42 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   `87942c00858d82aaacf3d2c14e86c5c116d6f3b7dd0b815f770a304a6a29525a`.
 - This export copies existing evidence bytes; it does not rerun, refit,
   recalculate, or alter the scientific result.
+
+## 2026-07-28 — Publish a read-only interactive results layer
+
+- Decision: publish a compact, authenticated presentation layer over the
+  already completed one-time evaluation. The site may visualize canonical
+  observed LST, frozen B1/M2 predictions, residuals, and published diagnostics;
+  it may not train, retune, replace a metric, or initiate a second test read.
+- The display export is deterministic and binds its source hashes to claim
+  `c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f`,
+  completion commit
+  `4cc8a5536cf1055d42876577f8d9f6300c799176779a7ec89cd1d3ed819d77a0`,
+  and evidence ZIP SHA-256
+  `61a853c3eeea3f1ae92bf7999f0fd057018797f70498fcd017d1394dbd621b51`.
+- The deployed site source is isolated in its own nested Git project so that
+  deployment metadata and JavaScript dependencies do not change the canonical
+  scientific repository. Deployed website commit:
+  `abd30c33539e93d49f8674d3b209d07afbb3ce90`.
+- The visual conclusion must always pair the 30.53% lower held-out point MAE
+  with the crossed-zero 95% interval and the frozen
+  `overall_protocol_success = false` interpretation.
+
+## 2026-07-28 — Produce one qualified publication package
+
+- Decision: create a paper, large-format poster, and oral-defense presentation
+  from the already frozen evaluation, using one consistent visual and
+  interpretive system.
+- Every format must pair the 30.53% favorable point estimate with the
+  -10.13% to 58.46% crossed-cluster interval and the failed overall protocol
+  flag. No communication artifact may convert the result into a confirmed,
+  causal, exposure, health, or operational-forecast claim.
+- The paper builder reads only authenticated local summaries and figures.
+  Editable documents and print outputs are preserved together; slide sources
+  are repository-relative and each slide has a `[Sources]` notes block.
+- Publication generation does not train a model, modify a frozen output, open
+  a target value, or authorize a second final-test claim.
+- The 17-file shareable archive is
+  `exports/PUBLICATION_MATERIALS.zip` (12,292,163 bytes), SHA-256
+  `dd3729a8c7f0a45efa86f9e14614490c1aa2d1f7d16467ddbc0db4ce1d4a05a5`;
+  isolated extraction reproduced every packaged file hash.

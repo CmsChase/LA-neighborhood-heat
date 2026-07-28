@@ -53,6 +53,8 @@ temperature, personal exposure, illness, or mortality.
 - [x] Model lock created
 - [x] One-time 2025 final evaluation completed and authenticated
 - [x] Read-only final-evaluation evidence package built and independently verified
+- [x] Interactive held-out results website built, verified, and deployed
+- [x] Research paper, 36 × 48 inch poster, and ten-slide defense deck generated and reviewed
 
 The feasibility pilot created a 1,110-tract mother manifest and froze 1,096
 City-clipped, non-special-use primary tracts. It retained 95.5%, 95.0%, and
@@ -145,6 +147,17 @@ Its tracked attestation is
 `manifests/final_test_2025/evaluation/EVIDENCE_EXPORT.json`; verify the
 unpacked directory with
 `scripts/verify_final_evaluation_evidence.py`.
+
+The interactive held-out result explorer is deployed at
+<https://la-surface-heat-atlas.zhuzifu485.chatgpt.site>. It links
+Landsat-observed LST, model predictions, and residuals across all 15 usable
+2025 dates and exposes the point estimates, crossed-cluster uncertainty,
+hotspot diagnostics, and scientific boundaries. See
+`docs/RESULTS_WEBSITE.md` for display-data provenance and verification.
+
+The reviewed research paper, print poster, and oral-defense deck are under
+`exports/PUBLICATION_MATERIALS`; see `docs/PUBLICATION_MATERIALS.md` for their
+contents, scientific message, hashes, and rebuild procedure.
 
 ## Study design
 

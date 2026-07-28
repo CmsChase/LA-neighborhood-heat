@@ -4,6 +4,11 @@ Last material update: 2026-07-28 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
+- interactive results exporter, publication builders, and final communication
+  handoff are in the commit with subject
+  `Publish interactive result atlas and communication materials`; obtain its
+  exact hash with
+  `git log --oneline --grep="Publish interactive result atlas and communication materials" -1`
 - completed final-evaluation records, report, tests, and evidence tooling:
   `e077e520629a287b9e855e00162cc9729852e45f`
 - frozen target-blind predictor baseline:
@@ -123,6 +128,89 @@ The verifier authenticated all 239 files, the six-state transaction chain,
 the exact 21 final outputs, 23 cache commits/93 cache files, 16 recovery files,
 both unlock snapshots, and an independently cloned and `git fsck`-checked
 repository bundle. Do not rebuild or overwrite this package.
+
+## Completed interactive results website
+
+The read-only held-out result explorer is deployed at
+`https://la-surface-heat-atlas.zhuzifu485.chatgpt.site` with
+owner-authenticated access. It shows synchronized Landsat-observed,
+model-predicted, and residual tract maps for all 15 usable 2025 dates, plus
+scatter, per-date, bootstrap, and hotspot diagnostics. It does not train,
+retune, or rerun the final evaluation.
+
+The website is an independent nested Git project in the root-ignored
+`website/` directory. Its deployed source commit is
+`abd30c33539e93d49f8674d3b209d07afbb3ce90`. The root repository owns only the
+deterministic display-data exporter and tests:
+
+- `src/la_heat/website_export.py`
+- `scripts/build_website_data.py`
+- `tests/test_website_export.py`
+- `docs/RESULTS_WEBSITE.md`
+
+The display manifest authenticates 1,096 tract geometries, 15,116 held-out
+rows, and 15 dates against the canonical claim, completion commit, and evidence
+ZIP hash. It records:
+
+- `tracts.json`:
+  `0aef9a34d06c39d23309b1a18844fc193d0963a28ac8427c2246c77c9fd0c9d1`
+- `evaluation-2025.json`:
+  `617eac416e348b4a0445a06c2d3627d1fd51421faf6c23f4c513835a06aa7938`
+- `metrics.json`:
+  `494db653c65ba75ae2d2b312c808e80a376e75d97a177d3b8785342130f80aeb`
+
+Safe authentication commands:
+
+```powershell
+.\.venv\Scripts\python scripts\build_website_data.py --verify-only
+Push-Location website
+npm test
+npm run lint
+Pop-Location
+```
+
+Do not edit the compact JSON files by hand. Regenerate them only from the
+already frozen canonical outputs, then inspect the manifest and rerun both the
+Python exporter tests and website tests.
+
+## Completed publication materials
+
+The reviewed publication package is in `exports/PUBLICATION_MATERIALS` and its
+shareable archive is `exports/PUBLICATION_MATERIALS.zip`. It contains:
+
+- a 15-page research paper as editable DOCX and print-ready PDF;
+- a 36 × 48 inch portrait poster as editable PPTX and print-ready PDF;
+- a ten-slide 16:9 oral-defense PPTX;
+- slide inspection inventories, presentation source, prepared assets, and a
+  package README.
+
+The root-tracked paper builder is `scripts/build_research_paper.py`. Install its
+isolated dependencies and rebuild with:
+
+```powershell
+.\.venv\Scripts\python -m pip install -r requirements-publication.txt
+.\.venv\Scripts\python scripts\build_research_paper.py
+```
+
+The PDF path is rendered directly from the same DOCX content model through
+ReportLab because Word COM initialization was unavailable in the headless
+session. All 15 PDF pages were inspected; the editable DOCX was structurally
+audited for 139 paragraphs, 28 headings, five tables, five figures, one
+section, and fixed page/table styles.
+
+The poster has exact 36 × 48 inch OOXML and PDF dimensions. The defense deck
+has exactly ten slides. Every slide was visually reviewed, all `[Sources]`
+notes use repository-relative paths, and all 204 inspected object bounding
+boxes are within their slide canvases. Exact deliverable hashes are recorded
+in `docs/PUBLICATION_MATERIALS.md` and the package README.
+
+These are communication layers only. They must preserve the frozen conclusion:
+the 30.53% point reduction is promising, the -10.13% to 58.46% interval crosses
+zero, and `overall_protocol_success` remains false.
+
+The archive contains 17 files and 12,292,163 bytes. External ZIP SHA-256:
+`dd3729a8c7f0a45efa86f9e14614490c1aa2d1f7d16467ddbc0db4ce1d4a05a5`.
+An isolated extraction matched every source-file hash.
 
 ## Research question and fixed interpretation
 
