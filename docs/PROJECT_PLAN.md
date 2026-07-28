@@ -11,8 +11,8 @@ are relative; scientific gates control progression more than calendar dates.
 | 3. Validation design — complete and promoted | 8 | Predeclare 5 km spatial blocks, whole-year folds, Cartesian joint folds, 1 km buffer, nested year tuning, metrics, and the 31-candidate selection rule | Promoted 63,403-key manifest with 5 temporal, 71 spatial, and 355 joint folds; reference metric code and frozen selection configuration | One OOF test assignment per legal row/family; no date/block/buffer overlap; preprocessing isolation tests pass; no values or scores read at promotion | Codex |
 | 4. Baselines and models — development OOF complete | 9–10 | Run the 57,800-task durable plan for B0/B1/B2, Elastic Net, and histogram gradient boosting using nested grouped validation | Authenticated OOF predictions, metrics, tuning log, and initial result analysis | Required development gates pass without split or threshold changes | Codex computes; ChatGPT interprets |
 | 5. Robustness and interpretation — complete with limitations | 11 | Feature-family ablations, strict pixel-level ST_QA sensitivity, QA cohorts, sensor checks, uncertainty intervals, endpoint and residual diagnostics | Authenticated ablation/sensitivity tables, unified evidence table, generated development report, hotspot and spatial diagnostics | Complete: strict 2 K date-support gate failed and spatial clustering remains, so the claim is explicitly narrowed | Codex + ChatGPT |
-| 6. Model lock complete; final test pending | 12 | Freeze code/config/features/model/figures, create hashes, then unlock 2025 once | `MODEL_LOCK.json`, one-way 2025 predictions and metrics | Evaluator never fits; every hash matches; one final run only | Codex executes after student approval |
-| 7. Research communication | 13–14 | Write paper, abstract, poster, notebook/demo, limitations, and oral-defense questions | Final report, poster figures, reproducibility instructions | Every number traceable to a table or script; claims match estimand | ChatGPT drafts; Codex verifies; student presents |
+| 6. Model lock and one-time final test — complete | 12 | Freeze code/config/features/model/figures, create hashes, then unlock and evaluate 2025 once | `MODEL_LOCK.json`, append-only claim chain, one-way 2025 predictions, metrics, and figures | Evaluator never fits; every hash matches; one authenticated final transaction | Codex executed after student approval |
+| 7. Research communication — in progress | 13–14 | Write paper, abstract, poster, notebook/demo, limitations, and oral-defense questions | Final report, poster figures, reproducibility instructions | Every number traceable to a table or script; claims match estimand | ChatGPT drafts; Codex verifies; student presents |
 
 ## Planned result package
 
@@ -85,7 +85,8 @@ The grouped-validation manifest is now formally promoted over all 63,403 keys,
 65 dates, and 71 fixed spatial blocks. It freezes 5 temporal, 71 spatial, and
 355 joint outer folds (431 total), plus strict year-grouped inner CV and the
 reference absolute-LST metric code. Promotion read only keys and split metadata,
-not target values, predictor values, or model scores; 2025 remains locked. Its
+not target values, predictor values, or model scores; 2025 remained locked at
+that split-promotion checkpoint. Its
 commit is
 `6a72169db012cf8c12aeecde573275e23205363608e60d4cde616a681fa08fcc`.
 The recoverable nested grouped run is complete: 55,645 inner fits and 2,155
@@ -102,14 +103,19 @@ and deterministic tie-breaking under commit
 `4d8c2bd37be67f9f46d89d1dec8d5ed0aab196b24b43f9745ff730f040f2a6cd`.
 The endpoint, sensor, Sentinel-missingness, QA/failure-case, residual, Moran's I,
 and diagnostic-figure stages are also complete and provenance-locked. They show
-useful hotspot skill and improvement for both Landsat sensors, while identifying
+useful hotspot skill and development-OOF improvement for both Landsat sensors,
+while identifying
 strong remaining residual spatial clustering and weak evidence in the small
 tract-median-ST_QA and Sentinel-missing cohorts. All 1,293 feature-ablation
 refits are complete with zero quarantine. The strict pixel-level ST_QA rebuild
 is also complete, but retained only 15 usable dates versus the required 30 and
 its frozen-OOF improvement interval crosses zero. These limitations are
 preserved in the authenticated reconciliation and generated development report.
-No 2025 target or evaluation has been inspected or reported. Full-development
-final tuning/refitting is complete, and the selected B1/M2 artifacts are frozen
-in the formal immutable model lock. The isolated predict-only 2025 evaluator
-and its separate one-way authorization remain pending.
+The one-time 2025 evaluation is complete and authenticated under claim
+`c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f`.
+M2 reduced held-out equal-date MAE from 3.1165 °C to 2.1650 °C (30.53%), and
+median per-date Spearman was 0.8447. The 95% relative-improvement interval was
+-10.13% to 58.46%, so the required positive lower-bound gate and overall
+protocol success flag did not pass. The result remains frozen; no retuning,
+threshold change, second claim, or repeat evaluation is permitted. Phase 7
+must communicate this qualified result and its 15-date uncertainty honestly.

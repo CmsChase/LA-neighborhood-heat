@@ -143,7 +143,12 @@ def _all_granules(years: tuple[int, ...]) -> list[DaymetGranule]:
 def _locked_inputs(tmp_path: Path, keys: pd.DataFrame) -> dict[str, Path]:
     config = tmp_path / "configs/research.toml"
     config.parent.mkdir(parents=True)
-    config.write_bytes(CONFIG.read_bytes())
+    payload = CONFIG.read_bytes()
+    unlocked_setting = b"unlock_final_test = true"
+    assert payload.count(unlocked_setting) == 1
+    config.write_bytes(
+        payload.replace(unlocked_setting, b"unlock_final_test = false")
+    )
 
     formal_path = tmp_path / "manifests/model_lock/MODEL_LOCK.json"
     formal = _committed(
@@ -439,4 +444,3 @@ def test_download_resume_skips_hash_committed_subsets(tmp_path: Path) -> None:
         ),
     )
     assert cached["state"] == "subsets_complete"
-

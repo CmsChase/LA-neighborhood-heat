@@ -25,6 +25,7 @@ BASE_FEATURES = [
 DAYMET_FEATURES = [f"daymet_test_{index:02d}" for index in range(21)]
 SENTINEL_FEATURES = list(assembler.EXPECTED_SENTINEL_FEATURES)
 MODEL_FEATURES = [*BASE_FEATURES, *DAYMET_FEATURES, *SENTINEL_FEATURES]
+CONFIG = Path(__file__).parents[1] / "configs" / "research.toml"
 
 
 def _keys() -> pd.DataFrame:
@@ -234,11 +235,29 @@ def _patch_small_dimensions(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(assembler, "EXPECTED_TRACT_COUNT", 2)
 
 
+def _locked_config_copy(tmp_path: Path) -> Path:
+    research_config_path = tmp_path / "configs" / "research.toml"
+    research_config_path.parent.mkdir(parents=True)
+    payload = CONFIG.read_bytes()
+    unlocked_setting = b"unlock_final_test = true"
+    assert payload.count(unlocked_setting) == 1
+    research_config_path.write_bytes(
+        payload.replace(unlocked_setting, b"unlock_final_test = false")
+    )
+    return research_config_path
+
+
 def _synthetic_artifacts(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> dict[str, Path]:
     _patch_small_dimensions(monkeypatch)
+    research_config_path = _locked_config_copy(tmp_path)
+    monkeypatch.setattr(
+        assembler,
+        "FINAL_TEST_AUTHORIZATION_PATH",
+        tmp_path / "manifests" / "final_test_2025" / "AUTHORIZATION.json",
+    )
     root = assembler._project_root()
     base_pipeline_sha256, base_pipeline = _mini_pipeline(
         root,
@@ -587,6 +606,7 @@ def _synthetic_artifacts(
         "sentinel_progress": sentinel_progress_path,
         "sentinel_pipeline": sentinel_pipeline_path,
         "sentinel_audit": sentinel_audit_path,
+        "research_config": research_config_path,
         "output": tmp_path / "published" / "predictors",
         "marker": tmp_path / "manifest" / "PREDICTOR_ASSEMBLY.json",
     }
@@ -605,6 +625,7 @@ def _build(paths: dict[str, Path], **kwargs: Any) -> dict[str, Any]:
         "sentinel_audit_path": paths.get(
             "sentinel_audit", assembler.DEFAULT_SENTINEL_AUDIT_PATH
         ),
+        "research_config_path": paths["research_config"],
         "output_directory": paths["output"],
         "provenance_path": paths["marker"],
     }
@@ -709,7 +730,9 @@ def test_missing_daymet_commit_fails_before_any_predictor_parquet_read(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    paths: dict[str, Path] = {}
+    paths: dict[str, Path] = {
+        "research_config": _locked_config_copy(tmp_path),
+    }
     for name in ("formal", "base_provenance", "sentinel_progress", "sentinel_pipeline"):
         path = tmp_path / f"{name}.json"
         _write_json(path, {})

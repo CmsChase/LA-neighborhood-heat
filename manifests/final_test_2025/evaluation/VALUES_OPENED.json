@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "final-target-values-opened-v1",
+  "state": "target_and_qa_values_opened",
+  "generated_at_utc": "2026-07-27T12:08:00.528238+00:00",
+  "final_test_year": 2025,
+  "claim_id": "c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f",
+  "claim_commit_sha256": "fbb9b7a5706620384fee3abf66db2be09c3875edadcdcda8787697a038de8015",
+  "predictions_commit_sha256": "73c6f4ef48262930626f5efc285387bdde9b3ebfe85fc2586008efd02d314df9",
+  "blind_predictions_frozen": true,
+  "values_read": true,
+  "completion_published": false,
+  "commit_sha256": "ae17a1a5b229f2b04cbfb9bbc8ff2ea9afa8f27c136a908a681b288d9d59b54f"
+}

@@ -1,4 +1,4 @@
-# Project Status — 2026-07-22
+# Project Status — 2026-07-27
 
 This file is a historical scientific summary. Before any work, read
 `docs/PROJECT_HANDOFF.md` in full; that document is authoritative for the live
@@ -6,13 +6,21 @@ Git, authorization, runtime, and final-test state.
 
 ## Outcome so far
 
-Phases 0–5 and the frozen development-model run are complete. The robustness
-package is reconciled with explicit limitations. All 57,800 grouped tasks finished: 55,645
-nested inner fits and 2,155 selected-candidate outer
-refits. The authenticated outputs cover 63,403 legal tract-date rows, 65
-independent dates, and 71 spatial blocks. This is the 2020–2024 development OOF
-evaluation, not the 2025 final test; no 2025 target has been accessed and the
-final-test lock remains in force.
+Phases 0–6, the frozen development-model run, the formal model lock, and the
+one-time 2025 final evaluation are complete. The final transaction is
+authenticated under claim
+`c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f`
+and completion commit
+`4cc8a5536cf1055d42876577f8d9f6300c799176779a7ec89cd1d3ed819d77a0`.
+All 57,800 grouped development tasks had already finished: 55,645 nested inner
+fits and 2,155 selected-candidate outer refits.
+
+On the 15-date, 15,116-row held-out cohort, M2 reduced equal-date-weighted MAE
+from 3.1165 °C to 2.1650 °C (30.53%) and reached median per-date Spearman
+0.8447. The crossed date-by-block 95% relative-improvement interval was
+-10.13% to 58.46%. The point and rank gates passed, but the required positive
+lower-bound gate failed; therefore the frozen overall protocol success flag is
+false. This is a qualified result, not permission to retune or rerun.
 
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.
@@ -42,8 +50,8 @@ The required development gates pass, while the stronger claim that the entire
 - Target: median QA-valid Landsat 8/9 Collection 2 L2SP daytime LST in °C.
 - Interpretation: clear-sky surface-heat hazard proxy, not air temperature,
   individual exposure, illness, mortality, or a causal effect.
-- Final test: 2025 remains locked; the complete development table has zero 2025
-  rows.
+- Final test: the separate one-time 2025 transaction is complete; the
+  development table itself still has zero 2025 rows.
 
 ## Verified full-target numbers
 
@@ -343,9 +351,12 @@ selection with the frozen GEOID tie-break. The endpoint/sensor provenance
 commit is
 `2ec9540ca7817dd53802e5849a35a8499b7f0755c7057b3c3b4292183475881a`.
 
-Sensor-stratified joint date-macro MAE is 2.405914 °C for B1 versus 2.053245 °C
-for M2 on Landsat 8 dates, and 2.704447 °C versus 2.203673 °C on Landsat 9
-dates. The direction of improvement is therefore present for both sensors.
+In the development joint-OOF diagnostics, sensor-stratified date-macro MAE is
+2.405914 °C for B1 versus 2.053245 °C for M2 on Landsat 8 dates, and 2.704447 °C
+versus 2.203673 °C on Landsat 9 dates. The development-OOF direction of
+improvement is therefore present for both sensors; the later final-test
+Landsat-9 absolute-MAE result is slightly unfavorable and is reported
+separately.
 The all-five-Sentinel-missing group contains only 168 rows, 12 dates, and 29
 blocks; its uncertainty interval is wide and it is retained only as an
 exploratory descriptive result.
@@ -414,29 +425,25 @@ The generated development report is `reports/DEVELOPMENT_REPORT.md`, report SHA
 
 ## Immediate next work
 
-1. The full-development B1/M2 tuning and refits are complete and authenticated.
-   The formal immutable model lock has been promoted with commit SHA-256
-   `584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b`.
-2. The isolated 2025 target builder and predict-only evaluator are implemented,
-   frozen, independently audited, committed, and pushed. They never call
-   `fit`, freeze predictions before target access, and fail closed on identity,
-   schema, provenance, report, bootstrap, or figure mismatch.
-3. The obsolete evaluator drafts were recoverably relocated outside the
-   repository with SHA-256 records. The user has authorized the frozen
-   one-time sequence; target-blind readiness is the next gate.
-4. Keep 2025 locked until readiness and authorization records exist. Then make
-   the separately documented unlock-only commit and execute the single claim.
-   Never use its values to retune, retrain, alter thresholds, or repeat the
-   final evaluation.
+1. Preserve the completed append-only evidence chain and build the read-only
+   checksum export; never create a second claim or rerun with changed settings.
+2. Use `reports/FINAL_EVALUATION_REPORT.md` and the canonical tables/figures to
+   draft the paper, abstract, poster, and oral-defense materials.
+3. State the qualified result exactly: strong M2 point and ranking performance,
+   but a failed positive-confidence-bound gate and no overall protocol success.
+4. Do not retune, retrain, alter thresholds, replace outputs, or use the 2025
+   result to choose another model.
 
 ## Current verification state
 
 The development report, reconciled robustness evidence, completed final fit,
-formal model lock, and opt-in controller are covered by the complete repository
-test suite: 712 tests passed on 2026-07-27, and `python -m ruff check .` passed.
-The Sentinel scientific pipeline fingerprint remains byte-identical to the
-frozen 226-acquisition build. No 2025 value has been read and no final-test
-evaluation has run.
+formal model lock, and final evaluator were covered by 712 passing tests and a
+clean full-repository Ruff run before authorization. The completed transaction
+contains exactly 21 final files, 23 authenticated overpass-cache commits, no
+remaining staging directory, and a completion commit of
+`4cc8a5536cf1055d42876577f8d9f6300c799176779a7ec89cd1d3ed819d77a0`.
+The original unpatched execution command reauthenticated this completed state
+without reopening targets.
 
 The exact scientific contract is in `docs/RESEARCH_PROTOCOL.md`; the Phase 2
 implementation contract is in `docs/PHASE2_FEATURE_SPEC.md`.

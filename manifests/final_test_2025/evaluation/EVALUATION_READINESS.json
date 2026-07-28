@@ -1,0 +1,627 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "final-evaluation-readiness-v1",
+  "state": "ready_target_blind",
+  "generated_at_utc": "2026-07-27T12:02:32.736474+00:00",
+  "target_blind": true,
+  "values_read": false,
+  "authorized": false,
+  "code_git_commit": "407aefcb4f54ba9fc6265ea5830b1747b7977ba4",
+  "evaluator_module": {
+    "path": "src/la_heat/final_evaluation_protocol.py",
+    "sha256": "a17d9601d84c3fe5b149a96a4cb872d7bbee20cc571e753435fb1c1481c0f8b5",
+    "bytes": 165619,
+    "git_blob_oid": "8b6c816878f325f28ba2a2c9814009abd6cdaae4"
+  },
+  "evaluator_config": {
+    "path": "configs/final_evaluation_2025.toml",
+    "sha256": "3a7f1b298ec714df2a7544eed5ab76f56b26b3f4c010ec80f083201da9cee655",
+    "bytes": 4366,
+    "git_blob_oid": "4cfe091b8ac64e2b8df003a3105029eafeefb219"
+  },
+  "formal_model_lock": {
+    "path": "manifests/model_lock/MODEL_LOCK.json",
+    "bytes": 12162,
+    "git_blob_oid": "380e96875aa6804442edaf756a7c9aaee7174098",
+    "file_sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
+    "commit_sha256": "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b"
+  },
+  "request": {
+    "schema_version": 1,
+    "algorithm_version": "one-time-final-evaluation-v1",
+    "configuration_semantic_sha256": "77ce4709fcf902fa04de07f0de1f371f9933f3e670dbf7aef3fb9da4018e9908",
+    "paths": {
+      "formal_model_lock": "manifests/model_lock/MODEL_LOCK.json",
+      "predictor_table": "data/processed/final_test_2025/predictors/final_predictors.parquet",
+      "predictor_provenance": "manifests/final_test_2025/predictors/PREDICTOR_ASSEMBLY.json",
+      "landsat_inventory": "manifests/final_test_2025/landsat_inventory/LANDSAT_INVENTORY.json",
+      "research_config": "configs/research.toml",
+      "readiness": "manifests/final_test_2025/evaluation/EVALUATION_READINESS.json",
+      "authorization": "manifests/final_test_2025/AUTHORIZATION.json",
+      "claim": "manifests/final_test_2025/evaluation/CONSUMPTION_CLAIM.json",
+      "values_opened": "manifests/final_test_2025/evaluation/VALUES_OPENED.json",
+      "predictions_frozen": "manifests/final_test_2025/evaluation/PREDICTIONS_FROZEN.json",
+      "complete": "manifests/final_test_2025/evaluation/EVALUATION_COMPLETE.json",
+      "staging_root": "data/processed/final_test_2025/.final_evaluation.staging",
+      "target_cache_directory": "data/interim/final_test_2025/evaluation/target_cache",
+      "final_output_directory": "data/processed/final_test_2025/final_evaluation"
+    },
+    "locks": {
+      "formal_model_lock_file_sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
+      "formal_model_lock_commit_sha256": "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b",
+      "predictor_file_sha256": "f02b3428a1070b1d95152bb225652bc063330b3793322aeb364e8a0dd267fa0a",
+      "predictor_schema_sha256": "d3c34680721b3852c0d8fbf1679743befeb619b565d3d35b7822d0cf01aa0a16",
+      "predictor_semantic_sha256": "793af3c05589532887d436bbccaa0e415bc08e5106af447004f6444f766f27d0",
+      "predictor_key_semantic_sha256": "cd6ddcd4800e6d41b7f4b89d6be007be80e509dd6567dfaf416cfb6903e3b870",
+      "predictor_provenance_file_sha256": "4f94bd00ba5e7a6cdbd08abdb14483ea2018a5429406db3bd2f0549470f74541",
+      "predictor_provenance_commit_sha256": "b8ce453ecd2c4c067251d0f84bdf647b59cef9c10cbc57820286b6cb4c838d3f",
+      "landsat_inventory_file_sha256": "348a728e35e32c95bac1d962526106584ba0cdf097037d0a5bdf95cbe8758988",
+      "landsat_inventory_commit_sha256": "46892f9c1fea774dc127e2bafb527907b33d4362c166a442e9557fae42b06f3e",
+      "landsat_key_semantic_sha256": "54b833ea4e074551c3b9293dca24c873efb3ffc692e1fd1bf8b5b0d84213e9bf",
+      "locked_research_config_file_sha256": "77d8badff06aa17f3a22c3cf8669c4143f1bf5847868e77eb3372617cfa570db",
+      "target_config_semantic_sha256": "936a841746580eb94b3350839f73382e68410ec5749e81ead44356ed85cd703c"
+    },
+    "analysis": {
+      "final_test_year": 2025,
+      "expected_key_count": 25208,
+      "expected_tract_count": 1096,
+      "expected_inventory_overpass_count": 23,
+      "expected_inventory_scene_count": 45,
+      "expected_model_feature_count": 46,
+      "model_ids": [
+        "B1",
+        "M2"
+      ],
+      "baseline_model_id": "B1",
+      "primary_model_id": "M2",
+      "primary_metric": "equal_date_weighted_mae_c",
+      "evaluation_cohort": "all_date_usable_and_target_available_rows",
+      "minimum_usable_date_count_for_metrics": 1,
+      "prediction_origin": "00:00 local time on target date",
+      "interpretation": "historical_hindcast_surface_heat_hazard_proxy"
+    },
+    "bootstrap": {
+      "method": "crossed_date_spatial_block",
+      "sampling_unit": "complete_clusters_only",
+      "seed": 20260722,
+      "replicates": 5000,
+      "confidence_level": 0.95
+    },
+    "success_gates": {
+      "minimum_relative_mae_improvement_fraction": 0.1,
+      "minimum_median_per_date_spearman": 0.5,
+      "uncertainty_relative_ci_lower_must_exceed": 0.0
+    },
+    "hotspot": {
+      "gate_column": "relative_endpoint_coverage_pass",
+      "label_column": "relative_hotspot_top20",
+      "positive_fraction": 0.2,
+      "rank_order": "score_desc_geoid_asc",
+      "exact_top_k": true,
+      "average_precision_input": "continuous_y_pred"
+    },
+    "publication": {
+      "protocol": "append_only_claim_then_atomic_directory_promotion",
+      "allow_same_claim_resume": true,
+      "allow_second_claim": false,
+      "print_target_values_or_metrics_before_complete": false,
+      "exact_output_files": [
+        "blind_predictions.parquet",
+        "final_target_qa.parquet",
+        "date_summary.parquet",
+        "scene_contributions.parquet",
+        "evaluation_rows.parquet",
+        "model_metrics.csv",
+        "per_date_metrics.csv",
+        "paired_date_block_errors.csv",
+        "crossed_bootstrap.json",
+        "protocol_gates.csv",
+        "hotspot_per_date.csv",
+        "hotspot_summary.csv",
+        "sensor_per_date_metrics.csv",
+        "sensor_summary.csv",
+        "sentinel_stratum_summary.csv",
+        "qa_missingness_summary.csv",
+        "tract_choropleth_summary.csv",
+        "observed_predicted_residual_maps.pdf",
+        "per_date_error_and_rank.png",
+        "hotspot_precision_recall.png",
+        "EVALUATION_COMMIT.json"
+      ]
+    },
+    "code_git_commit": "407aefcb4f54ba9fc6265ea5830b1747b7977ba4",
+    "pipeline_sha256": "9df92ef7634bd077dfaf0bb65c5ae1ce379d187e2337104212eb923dafee6f6e",
+    "pipeline": {
+      "algorithm_version": "one-time-final-evaluation-v1",
+      "python": "3.14.4",
+      "packages": {
+        "geopandas": "1.1.4",
+        "numpy": "2.5.1",
+        "pandas": "3.0.3",
+        "planetary-computer": "1.0.0",
+        "pyarrow": "25.0.0",
+        "pystac": "1.15.1",
+        "pystac-client": "0.9.0",
+        "rasterio": "1.5.0",
+        "shapely": "2.1.2"
+      },
+      "files": {
+        "pyproject.toml": "ef18ff3d40f0997f9a3f40d12bf76069fd70c99afe50ead457db2230f5a2ba20",
+        "scripts/execute_locked_final_evaluation.py": "cc082242bdbf648def3c0f0e8e94939a3a3178a0ec3b64ad502086f7752ab395",
+        "scripts/prepare_final_evaluation.py": "db4eb0bcf39fbb264339357e1edb361836856e0649b180513299afe54839d003",
+        "src/la_heat/aligned_landsat.py": "3335bf7d0be863a211fe3d6e3359d8e066af3ff67fa254876d14077c37cab894",
+        "src/la_heat/config.py": "921c50b25dd3c7cc52188c11327beaede349b8f18213b5601800df8150092c60",
+        "src/la_heat/final_evaluation_protocol.py": "a17d9601d84c3fe5b149a96a4cb872d7bbee20cc571e753435fb1c1481c0f8b5",
+        "src/la_heat/final_evaluation_reporting.py": "03c05a96ceb06af6ea673e81b4248f4e03e6bc15b5f19e7776e28fb2a5ae16c5",
+        "src/la_heat/final_evaluation_targets.py": "624dc8e8a2a6f9b57968ddd45efe8f21df916942ca99a8b39981685da640591d",
+        "src/la_heat/final_model.py": "88e17176eaf07039471d4a58cdafd8df172dd07aa2184e896a13a5cab42a0a15",
+        "src/la_heat/final_test_authorization.py": "f09c3471a8bd1e82d3d4e88c7d58bc5b25436d594ce46f2b6bfecce0c2531f9b",
+        "src/la_heat/final_test_inventory.py": "ff55914d59b74ab86ebd65e876faca469b9ee59718c8755ccaf3f188c708d3e7",
+        "src/la_heat/final_test_predictor_assembler.py": "348f8146e18d72d48126f822cb9dd421eec32477227de9e1a7a959e74f83d36a",
+        "src/la_heat/final_test_state_lock.py": "4dbcca53bc57a22e7be64593ce63f7325acf10dabcbdbcae298c7774f6ecbe12",
+        "src/la_heat/formal_model_lock.py": "e25d9767c32786ffba48b1ace0e6fa14c4a0fa6a340ddca6ff9073126bc70d48",
+        "src/la_heat/grid.py": "a875c023ac4d981b005f26317a905815f581437b77e6da979d0fcb249f534848",
+        "src/la_heat/guardrails.py": "72d287fde274136973c35feefc2e2ed3fcad8cbaaf9268e7c447829172f9a8bc",
+        "src/la_heat/inventory.py": "466e3f592821c35020e9209222519202478573772a160f422bb3b7947ea82d9b",
+        "src/la_heat/landmask.py": "73f2ddf5c92339a07691f91fec9a33e0108499f66d206cc6c7113f2475b8863e",
+        "src/la_heat/landsat.py": "8357f1851161831fc5b733ab843e26e176e292710786cde8c1a6ee2cfddb4683",
+        "src/la_heat/metrics.py": "b75b9373e27211e83f3dec15df95e9a6ac65dfa97dffb94cf36dd199c375d9e1",
+        "src/la_heat/model_endpoint_diagnostics.py": "390b5dffb952099f0c3b64c9b15d2a4194a8e853f5be650fd983244ca23d53b6",
+        "src/la_heat/model_result_analysis.py": "4ac498b7a242d0dc3784745d31ad8ea01fc3976406ad2d8fccf497155db42adc",
+        "src/la_heat/mosaic.py": "1f7a14941bd7909f801f78fe6dac9998ca530d98ab9059c4407d4d6fd2c44e77",
+        "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+        "src/la_heat/stage_config.py": "2c9783ed972c05d64ff2c5ff1c287d883067cfabd699fec74fb131eff10507f6",
+        "src/la_heat/target_aggregation.py": "3429015352f83b4b54f9f1a3e14e571555f9eb736d71a7f8031b2e84a17b2425",
+        "src/la_heat/target_builder.py": "ef280d4e413ab4fd38de5b99294a89872dd7949c32f316eb72d741ca51685735",
+        "src/la_heat/targets.py": "882efd3cf0ae83175fe3ed9de132df3d4db7adca6ac5ec2b30c6e4b3a7afe125"
+      }
+    },
+    "extended_runtime": {
+      "python": "3.14.4",
+      "packages": {
+        "joblib": "1.5.3",
+        "matplotlib": "3.11.1",
+        "Pillow": "12.3.0",
+        "scikit-learn": "1.9.0",
+        "scipy": "1.18.0"
+      }
+    },
+    "code_files": {
+      "pyproject.toml": {
+        "path": "pyproject.toml",
+        "sha256": "ef18ff3d40f0997f9a3f40d12bf76069fd70c99afe50ead457db2230f5a2ba20",
+        "bytes": 870,
+        "git_blob_oid": "769faf13161dd5a7728005df3286f3a742f8c846"
+      },
+      "src/la_heat/aligned_landsat.py": {
+        "path": "src/la_heat/aligned_landsat.py",
+        "sha256": "3335bf7d0be863a211fe3d6e3359d8e066af3ff67fa254876d14077c37cab894",
+        "bytes": 7787,
+        "git_blob_oid": "71112414cafb1d811ea61763643f3414f25ac3e0"
+      },
+      "src/la_heat/config.py": {
+        "path": "src/la_heat/config.py",
+        "sha256": "921c50b25dd3c7cc52188c11327beaede349b8f18213b5601800df8150092c60",
+        "bytes": 1175,
+        "git_blob_oid": "26619b2c5009a6a97ef0f62ae4f9441f5fd9a1aa"
+      },
+      "src/la_heat/final_evaluation_protocol.py": {
+        "path": "src/la_heat/final_evaluation_protocol.py",
+        "sha256": "a17d9601d84c3fe5b149a96a4cb872d7bbee20cc571e753435fb1c1481c0f8b5",
+        "bytes": 165619,
+        "git_blob_oid": "8b6c816878f325f28ba2a2c9814009abd6cdaae4"
+      },
+      "src/la_heat/final_evaluation_reporting.py": {
+        "path": "src/la_heat/final_evaluation_reporting.py",
+        "sha256": "03c05a96ceb06af6ea673e81b4248f4e03e6bc15b5f19e7776e28fb2a5ae16c5",
+        "bytes": 81430,
+        "git_blob_oid": "2c882e096ee81364a8686086a1d189203b00c9d5"
+      },
+      "src/la_heat/final_evaluation_targets.py": {
+        "path": "src/la_heat/final_evaluation_targets.py",
+        "sha256": "624dc8e8a2a6f9b57968ddd45efe8f21df916942ca99a8b39981685da640591d",
+        "bytes": 72347,
+        "git_blob_oid": "331121764caa380ac83d852dbf8613723362f2a1"
+      },
+      "src/la_heat/final_model.py": {
+        "path": "src/la_heat/final_model.py",
+        "sha256": "88e17176eaf07039471d4a58cdafd8df172dd07aa2184e896a13a5cab42a0a15",
+        "bytes": 51284,
+        "git_blob_oid": "efb42427e88d6e3bd45f693c73762c6e21ca2833"
+      },
+      "src/la_heat/final_test_authorization.py": {
+        "path": "src/la_heat/final_test_authorization.py",
+        "sha256": "f09c3471a8bd1e82d3d4e88c7d58bc5b25436d594ce46f2b6bfecce0c2531f9b",
+        "bytes": 33652,
+        "git_blob_oid": "026f871cfeb40607e271bbd48b5fd3c5e9e80f9e"
+      },
+      "src/la_heat/final_test_inventory.py": {
+        "path": "src/la_heat/final_test_inventory.py",
+        "sha256": "ff55914d59b74ab86ebd65e876faca469b9ee59718c8755ccaf3f188c708d3e7",
+        "bytes": 25055,
+        "git_blob_oid": "429b3e6530791c4b452ba1c67f2bc763ec79ad2c"
+      },
+      "src/la_heat/final_test_predictor_assembler.py": {
+        "path": "src/la_heat/final_test_predictor_assembler.py",
+        "sha256": "348f8146e18d72d48126f822cb9dd421eec32477227de9e1a7a959e74f83d36a",
+        "bytes": 87742,
+        "git_blob_oid": "9076d61256cf49369a54d74bef65e7c303516c4a"
+      },
+      "src/la_heat/final_test_state_lock.py": {
+        "path": "src/la_heat/final_test_state_lock.py",
+        "sha256": "4dbcca53bc57a22e7be64593ce63f7325acf10dabcbdbcae298c7774f6ecbe12",
+        "bytes": 1940,
+        "git_blob_oid": "fb8b7d0ac1938f6861a07aa226f1fec46b54c430"
+      },
+      "src/la_heat/formal_model_lock.py": {
+        "path": "src/la_heat/formal_model_lock.py",
+        "sha256": "e25d9767c32786ffba48b1ace0e6fa14c4a0fa6a340ddca6ff9073126bc70d48",
+        "bytes": 13434,
+        "git_blob_oid": "f9e423387bbd91622a0196b1aeca37ee897fa503"
+      },
+      "src/la_heat/grid.py": {
+        "path": "src/la_heat/grid.py",
+        "sha256": "a875c023ac4d981b005f26317a905815f581437b77e6da979d0fcb249f534848",
+        "bytes": 2739,
+        "git_blob_oid": "a19b632226c2a2fd3ff21588aa74a790d737cd39"
+      },
+      "src/la_heat/guardrails.py": {
+        "path": "src/la_heat/guardrails.py",
+        "sha256": "72d287fde274136973c35feefc2e2ed3fcad8cbaaf9268e7c447829172f9a8bc",
+        "bytes": 4547,
+        "git_blob_oid": "80bbc54a1a88246b5806f3cb051f79397c1b46b3"
+      },
+      "src/la_heat/inventory.py": {
+        "path": "src/la_heat/inventory.py",
+        "sha256": "466e3f592821c35020e9209222519202478573772a160f422bb3b7947ea82d9b",
+        "bytes": 16519,
+        "git_blob_oid": "95c7fa881e57d45bc6d4a84964e28133bc9c29fd"
+      },
+      "src/la_heat/landmask.py": {
+        "path": "src/la_heat/landmask.py",
+        "sha256": "73f2ddf5c92339a07691f91fec9a33e0108499f66d206cc6c7113f2475b8863e",
+        "bytes": 2568,
+        "git_blob_oid": "e4f93488ccefc7992f6c2773b4d2f5e9636afe8b"
+      },
+      "src/la_heat/landsat.py": {
+        "path": "src/la_heat/landsat.py",
+        "sha256": "8357f1851161831fc5b733ab843e26e176e292710786cde8c1a6ee2cfddb4683",
+        "bytes": 2827,
+        "git_blob_oid": "e02e450da4ab458c9fb229653a4655bb5da702b3"
+      },
+      "src/la_heat/metrics.py": {
+        "path": "src/la_heat/metrics.py",
+        "sha256": "b75b9373e27211e83f3dec15df95e9a6ac65dfa97dffb94cf36dd199c375d9e1",
+        "bytes": 10620,
+        "git_blob_oid": "f9db5006e5ba1f8088a48a20a807778b7430473d"
+      },
+      "src/la_heat/model_endpoint_diagnostics.py": {
+        "path": "src/la_heat/model_endpoint_diagnostics.py",
+        "sha256": "390b5dffb952099f0c3b64c9b15d2a4194a8e853f5be650fd983244ca23d53b6",
+        "bytes": 60659,
+        "git_blob_oid": "e648c9684217ba704e40b7dc4e4ba0385a27a65f"
+      },
+      "src/la_heat/model_result_analysis.py": {
+        "path": "src/la_heat/model_result_analysis.py",
+        "sha256": "4ac498b7a242d0dc3784745d31ad8ea01fc3976406ad2d8fccf497155db42adc",
+        "bytes": 51297,
+        "git_blob_oid": "9290c22075c6b902c21d115aed0fd82312d0235e"
+      },
+      "src/la_heat/mosaic.py": {
+        "path": "src/la_heat/mosaic.py",
+        "sha256": "1f7a14941bd7909f801f78fe6dac9998ca530d98ab9059c4407d4d6fd2c44e77",
+        "bytes": 7419,
+        "git_blob_oid": "a5e51f797f8d35e5cdf9625a2d42fe922fc843b2"
+      },
+      "src/la_heat/provenance.py": {
+        "path": "src/la_heat/provenance.py",
+        "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+        "bytes": 4679,
+        "git_blob_oid": "2f67c23cec21725d768c3c273ec68470ea2d3e47"
+      },
+      "src/la_heat/stage_config.py": {
+        "path": "src/la_heat/stage_config.py",
+        "sha256": "2c9783ed972c05d64ff2c5ff1c287d883067cfabd699fec74fb131eff10507f6",
+        "bytes": 5555,
+        "git_blob_oid": "79667e59eb267587981b1a895237b22fa28abf9c"
+      },
+      "src/la_heat/target_aggregation.py": {
+        "path": "src/la_heat/target_aggregation.py",
+        "sha256": "3429015352f83b4b54f9f1a3e14e571555f9eb736d71a7f8031b2e84a17b2425",
+        "bytes": 9884,
+        "git_blob_oid": "c92c470fd502ef94cfa728ba1cec96847e97d6ba"
+      },
+      "src/la_heat/target_builder.py": {
+        "path": "src/la_heat/target_builder.py",
+        "sha256": "ef280d4e413ab4fd38de5b99294a89872dd7949c32f316eb72d741ca51685735",
+        "bytes": 26251,
+        "git_blob_oid": "91558fa38db1df802f405fd9c395aeea007d079b"
+      },
+      "src/la_heat/targets.py": {
+        "path": "src/la_heat/targets.py",
+        "sha256": "882efd3cf0ae83175fe3ed9de132df3d4db7adca6ac5ec2b30c6e4b3a7afe125",
+        "bytes": 4455,
+        "git_blob_oid": "449268b142a37820bfba35fe0dfaef7cebab0214"
+      },
+      "scripts/prepare_final_evaluation.py": {
+        "path": "scripts/prepare_final_evaluation.py",
+        "sha256": "db4eb0bcf39fbb264339357e1edb361836856e0649b180513299afe54839d003",
+        "bytes": 1188,
+        "git_blob_oid": "aa374870aae0f38b544351ea45a3f906f29c1cc6"
+      },
+      "scripts/execute_locked_final_evaluation.py": {
+        "path": "scripts/execute_locked_final_evaluation.py",
+        "sha256": "cc082242bdbf648def3c0f0e8e94939a3a3178a0ec3b64ad502086f7752ab395",
+        "bytes": 1172,
+        "git_blob_oid": "e093b897d13d31d656486f94d01da5e07d1eb8d2"
+      }
+    },
+    "locked_research_config": {
+      "path": "configs/research.toml",
+      "sha256": "77d8badff06aa17f3a22c3cf8669c4143f1bf5847868e77eb3372617cfa570db",
+      "bytes": 5417,
+      "git_blob_oid": "dc857f53382bbb040e3e279008b68d58840b3b6c",
+      "target_config_semantic_sha256": "936a841746580eb94b3350839f73382e68410ec5749e81ead44356ed85cd703c",
+      "unlock_final_test": false
+    },
+    "formal_model_lock": {
+      "path": "manifests/model_lock/MODEL_LOCK.json",
+      "bytes": 12162,
+      "git_blob_oid": "380e96875aa6804442edaf756a7c9aaee7174098",
+      "file_sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
+      "commit_sha256": "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b"
+    },
+    "models": {
+      "B1": {
+        "artifact_path": "B1_full_development.joblib",
+        "fitted_pipeline_sha256": "079e27141745fdc6819aeb1cb4792aeec13f460a50b73748a349257699b05ef7",
+        "fitted_pipeline_bytes": 2795,
+        "selected_candidate_id": "B1-ridge-a10",
+        "selected_parameters": {
+          "ridge_alpha": 10.0
+        },
+        "random_state": 20260719,
+        "feature_names": [
+          "calendar_doy_sin",
+          "calendar_doy_cos",
+          "daymet_dayl_s_mean_prev_1d",
+          "daymet_prcp_mm_sum_prev_1d",
+          "daymet_srad_w_m2_mean_prev_1d",
+          "daymet_tmax_c_mean_prev_1d",
+          "daymet_tmin_c_mean_prev_1d",
+          "daymet_vp_pa_mean_prev_1d",
+          "daymet_srad_energy_mj_m2_sum_prev_1d",
+          "daymet_dayl_s_mean_prev_3d",
+          "daymet_prcp_mm_sum_prev_3d",
+          "daymet_srad_w_m2_mean_prev_3d",
+          "daymet_tmax_c_mean_prev_3d",
+          "daymet_tmin_c_mean_prev_3d",
+          "daymet_vp_pa_mean_prev_3d",
+          "daymet_srad_energy_mj_m2_sum_prev_3d",
+          "daymet_dayl_s_mean_prev_7d",
+          "daymet_prcp_mm_sum_prev_7d",
+          "daymet_srad_w_m2_mean_prev_7d",
+          "daymet_tmax_c_mean_prev_7d",
+          "daymet_tmin_c_mean_prev_7d",
+          "daymet_vp_pa_mean_prev_7d",
+          "daymet_srad_energy_mj_m2_sum_prev_7d"
+        ],
+        "feature_count": 23,
+        "training_row_count": 63403,
+        "training_date_count": 65,
+        "training_spatial_block_count": 71,
+        "training_keys_sha256": "af3618ce2a953d03e3e56f6668b1f434157e44cec9133146d2a8d831af6f7f66"
+      },
+      "M2": {
+        "artifact_path": "M2_full_development.joblib",
+        "fitted_pipeline_sha256": "52d94e992ae8019a301ef74c760c9df1df2ccaace8b321e384eb5ff8169c3de2",
+        "fitted_pipeline_bytes": 558346,
+        "selected_candidate_id": "M2-hgb-leaf31-min50-l2-1",
+        "selected_parameters": {
+          "hgb_learning_rate": 0.05,
+          "hgb_max_iter": 300,
+          "hgb_max_leaf_nodes": 31,
+          "hgb_min_samples_leaf": 50,
+          "hgb_l2_regularization": 1.0
+        },
+        "random_state": 20260719,
+        "feature_names": [
+          "nlcd_open_water_fraction",
+          "nlcd_developed_open_fraction",
+          "nlcd_developed_low_fraction",
+          "nlcd_developed_high_fraction",
+          "nlcd_barren_fraction",
+          "nlcd_forest_fraction",
+          "nlcd_shrub_grass_fraction",
+          "nlcd_agriculture_fraction",
+          "nlcd_wetland_fraction",
+          "impervious_mean_fraction",
+          "impervious_p90_fraction",
+          "impervious_at_least_50_fraction",
+          "elevation_mean_m",
+          "elevation_std_m",
+          "slope_mean_degrees",
+          "slope_p90_degrees",
+          "pacific_coast_distance_mean_km",
+          "pacific_coast_distance_p10_km",
+          "calendar_doy_sin",
+          "calendar_doy_cos",
+          "daymet_dayl_s_mean_prev_1d",
+          "daymet_prcp_mm_sum_prev_1d",
+          "daymet_srad_w_m2_mean_prev_1d",
+          "daymet_tmax_c_mean_prev_1d",
+          "daymet_tmin_c_mean_prev_1d",
+          "daymet_vp_pa_mean_prev_1d",
+          "daymet_srad_energy_mj_m2_sum_prev_1d",
+          "daymet_dayl_s_mean_prev_3d",
+          "daymet_prcp_mm_sum_prev_3d",
+          "daymet_srad_w_m2_mean_prev_3d",
+          "daymet_tmax_c_mean_prev_3d",
+          "daymet_tmin_c_mean_prev_3d",
+          "daymet_vp_pa_mean_prev_3d",
+          "daymet_srad_energy_mj_m2_sum_prev_3d",
+          "daymet_dayl_s_mean_prev_7d",
+          "daymet_prcp_mm_sum_prev_7d",
+          "daymet_srad_w_m2_mean_prev_7d",
+          "daymet_tmax_c_mean_prev_7d",
+          "daymet_tmin_c_mean_prev_7d",
+          "daymet_vp_pa_mean_prev_7d",
+          "daymet_srad_energy_mj_m2_sum_prev_7d",
+          "sentinel_ndvi_lag60",
+          "sentinel_evi_lag60",
+          "sentinel_ndwi_lag60",
+          "sentinel_ndbi_lag60",
+          "sentinel_albedo_proxy_lag60"
+        ],
+        "feature_count": 46,
+        "training_row_count": 63403,
+        "training_date_count": 65,
+        "training_spatial_block_count": 71,
+        "training_keys_sha256": "af3618ce2a953d03e3e56f6668b1f434157e44cec9133146d2a8d831af6f7f66"
+      }
+    },
+    "predictors": {
+      "provenance_path": "manifests/final_test_2025/predictors/PREDICTOR_ASSEMBLY.json",
+      "provenance_file_sha256": "4f94bd00ba5e7a6cdbd08abdb14483ea2018a5429406db3bd2f0549470f74541",
+      "provenance_commit_sha256": "b8ce453ecd2c4c067251d0f84bdf647b59cef9c10cbc57820286b6cb4c838d3f",
+      "file_sha256": "f02b3428a1070b1d95152bb225652bc063330b3793322aeb364e8a0dd267fa0a",
+      "schema_sha256": "d3c34680721b3852c0d8fbf1679743befeb619b565d3d35b7822d0cf01aa0a16",
+      "semantic_sha256": "793af3c05589532887d436bbccaa0e415bc08e5106af447004f6444f766f27d0",
+      "key_semantic_sha256": "cd6ddcd4800e6d41b7f4b89d6be007be80e509dd6567dfaf416cfb6903e3b870",
+      "file_bytes": 4945661,
+      "row_count": 25208,
+      "date_count": 23,
+      "tract_count": 1096,
+      "feature_count": 46,
+      "feature_names": [
+        "nlcd_open_water_fraction",
+        "nlcd_developed_open_fraction",
+        "nlcd_developed_low_fraction",
+        "nlcd_developed_high_fraction",
+        "nlcd_barren_fraction",
+        "nlcd_forest_fraction",
+        "nlcd_shrub_grass_fraction",
+        "nlcd_agriculture_fraction",
+        "nlcd_wetland_fraction",
+        "impervious_mean_fraction",
+        "impervious_p90_fraction",
+        "impervious_at_least_50_fraction",
+        "elevation_mean_m",
+        "elevation_std_m",
+        "slope_mean_degrees",
+        "slope_p90_degrees",
+        "pacific_coast_distance_mean_km",
+        "pacific_coast_distance_p10_km",
+        "calendar_doy_sin",
+        "calendar_doy_cos",
+        "daymet_dayl_s_mean_prev_1d",
+        "daymet_prcp_mm_sum_prev_1d",
+        "daymet_srad_w_m2_mean_prev_1d",
+        "daymet_tmax_c_mean_prev_1d",
+        "daymet_tmin_c_mean_prev_1d",
+        "daymet_vp_pa_mean_prev_1d",
+        "daymet_srad_energy_mj_m2_sum_prev_1d",
+        "daymet_dayl_s_mean_prev_3d",
+        "daymet_prcp_mm_sum_prev_3d",
+        "daymet_srad_w_m2_mean_prev_3d",
+        "daymet_tmax_c_mean_prev_3d",
+        "daymet_tmin_c_mean_prev_3d",
+        "daymet_vp_pa_mean_prev_3d",
+        "daymet_srad_energy_mj_m2_sum_prev_3d",
+        "daymet_dayl_s_mean_prev_7d",
+        "daymet_prcp_mm_sum_prev_7d",
+        "daymet_srad_w_m2_mean_prev_7d",
+        "daymet_tmax_c_mean_prev_7d",
+        "daymet_tmin_c_mean_prev_7d",
+        "daymet_vp_pa_mean_prev_7d",
+        "daymet_srad_energy_mj_m2_sum_prev_7d",
+        "sentinel_ndvi_lag60",
+        "sentinel_evi_lag60",
+        "sentinel_ndwi_lag60",
+        "sentinel_ndbi_lag60",
+        "sentinel_albedo_proxy_lag60"
+      ],
+      "sentinel_missing_row_count": 575,
+      "target_blind": true,
+      "contains_target_or_qa_values": false
+    },
+    "landsat_inventory": {
+      "schema_version": 1,
+      "state": "authenticated_target_blind_final_landsat_inventory",
+      "final_test_year": 2025,
+      "inventory_path": "D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\manifests\\final_test_2025\\landsat_inventory\\LANDSAT_INVENTORY.json",
+      "inventory_file_sha256": "348a728e35e32c95bac1d962526106584ba0cdf097037d0a5bdf95cbe8758988",
+      "inventory_commit_sha256": "46892f9c1fea774dc127e2bafb527907b33d4362c166a442e9557fae42b06f3e",
+      "scene_count": 45,
+      "physical_overpass_count": 23,
+      "tract_count": 1096,
+      "key_count": 25208,
+      "tract_crs": "EPSG:3310",
+      "target_dates": [
+        "2025-05-06",
+        "2025-05-14",
+        "2025-05-22",
+        "2025-05-30",
+        "2025-06-07",
+        "2025-06-15",
+        "2025-06-23",
+        "2025-07-01",
+        "2025-07-09",
+        "2025-07-17",
+        "2025-07-25",
+        "2025-08-02",
+        "2025-08-10",
+        "2025-08-18",
+        "2025-08-26",
+        "2025-09-03",
+        "2025-09-11",
+        "2025-09-19",
+        "2025-09-27",
+        "2025-10-05",
+        "2025-10-13",
+        "2025-10-21",
+        "2025-10-29"
+      ],
+      "target_blind": true,
+      "target_assets_opened": false,
+      "target_or_qa_values_read": false,
+      "locks": {
+        "city_boundary_file_sha256": "e5f9ead4a8240505f94a3d40c951f3e90fb5f1df0c3d321b7eb98e26858ce70c",
+        "city_boundary_geometry_sha256": "4297d7deead6b8627830fc35346ee56f972e1f8d4b9e632fb5ba6c35979d45eb",
+        "inventory_commit_sha256": "46892f9c1fea774dc127e2bafb527907b33d4362c166a442e9557fae42b06f3e",
+        "inventory_file_sha256": "348a728e35e32c95bac1d962526106584ba0cdf097037d0a5bdf95cbe8758988",
+        "key_universe_semantic_sha256": "54b833ea4e074551c3b9293dca24c873efb3ffc692e1fd1bf8b5b0d84213e9bf",
+        "primary_overpass_semantic_sha256": "f21dd8d010826dd973fd0f059f355292957aa242b3b47ab87ae2d22a57f0f7df",
+        "primary_tract_file_sha256": "fbdcd5b6e3a6d5f55d972a1f19178b453d753e3f9b3878c8074c1972eb0f68bd",
+        "scene_inventory_semantic_sha256": "29fda6dd21b780bf30a03df4a10536e0b4113b00f2fd249fffd7bb06ef365683",
+        "tract_manifest_sha256": "5e117dbae993fbcfe0ef8472cc0bfb67d2710a3b2767621dc7e8fa170e7f5680"
+      },
+      "shared_predictor_key_semantic_sha256": "cd6ddcd4800e6d41b7f4b89d6be007be80e509dd6567dfaf416cfb6903e3b870"
+    },
+    "exact_output_files": [
+      "blind_predictions.parquet",
+      "final_target_qa.parquet",
+      "date_summary.parquet",
+      "scene_contributions.parquet",
+      "evaluation_rows.parquet",
+      "model_metrics.csv",
+      "per_date_metrics.csv",
+      "paired_date_block_errors.csv",
+      "crossed_bootstrap.json",
+      "protocol_gates.csv",
+      "hotspot_per_date.csv",
+      "hotspot_summary.csv",
+      "sensor_per_date_metrics.csv",
+      "sensor_summary.csv",
+      "sentinel_stratum_summary.csv",
+      "qa_missingness_summary.csv",
+      "tract_choropleth_summary.csv",
+      "observed_predicted_residual_maps.pdf",
+      "per_date_error_and_rank.png",
+      "hotspot_precision_recall.png",
+      "EVALUATION_COMMIT.json"
+    ]
+  },
+  "request_sha256": "6cde25bcda2f52724b67754432b92b0a3aee84e5bae4aa92a4d4595e9bd434b5",
+  "commit_sha256": "fda4bcab8ec0963ad4824a3e863974be5887d3143c26c502081789a9a878acdb"
+}

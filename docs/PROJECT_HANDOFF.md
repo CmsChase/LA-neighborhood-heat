@@ -47,47 +47,64 @@ Never write a password, bearer token, signed URL, cookie, or other secret here.
 
 Branch: `main`.
 
-The project remains target-blind at the documented unlock transition:
+The one-time 2025 transaction is complete. Do not create another claim, change
+the evaluator, retune a model, alter a threshold, or replace a published file.
+
+Canonical identity:
 
 - `configs/research.toml`: `unlock_final_test = true`
-- MODEL_LOCK: `final_test_locked = true`
-- MODEL_LOCK: `final_test_values_read = false`
-- MODEL_LOCK: `one_time_final_evaluation_authorized = false`
+- claim ID:
+  `c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f`
+- claim commit:
+  `fbb9b7a5706620384fee3abf66db2be09c3875edadcdcda8787697a038de8015`
+- frozen-prediction commit:
+  `73c6f4ef48262930626f5efc285387bdde9b3ebfe85fc2586008efd02d314df9`
+- values-opened commit:
+  `ae17a1a5b229f2b04cbfb9bbc8ff2ea9afa8f27c136a908a681b288d9d59b54f`
+- output commit:
+  `ee6d7bb6df917acf0340b3e91ff3189044ae8e9bec1ae32b888dbf8429a75432`
+- completion commit:
+  `4cc8a5536cf1055d42876577f8d9f6300c799176779a7ec89cd1d3ed819d77a0`
 
-These two canonical, target-blind state markers exist:
+All six canonical state markers exist:
 
 - `manifests/final_test_2025/evaluation/EVALUATION_READINESS.json`
 - `manifests/final_test_2025/AUTHORIZATION.json`
-
-The readiness binds evaluator commit
-`407aefcb4f54ba9fc6265ea5830b1747b7977ba4`, has internal commit
-`fda4bcab8ec0963ad4824a3e863974be5887d3143c26c502081789a9a878acdb`,
-file SHA-256
-`a2676a10d239248906dee6a42f3ecec4224b4c31556f180b682d958e7580a314`,
-and records `target_blind = true` and `values_read = false`. The authorization
-has internal commit
-`3490c71100e1ea063ec8f71f0823b50715963a7cead12f62f5bdffe86c706a9a`,
-file SHA-256
-`fb1174c01da85f8c149c1e286cba9da42de2ea0925d732caaf75b9420b3c6241`,
-and records `authorized = true` and `values_read = false`.
-
-These four later state markers do not exist:
-
 - `manifests/final_test_2025/evaluation/CONSUMPTION_CLAIM.json`
 - `manifests/final_test_2025/evaluation/PREDICTIONS_FROZEN.json`
 - `manifests/final_test_2025/evaluation/VALUES_OPENED.json`
 - `manifests/final_test_2025/evaluation/EVALUATION_COMPLETE.json`
 
-These canonical runtime/output directories also do not exist:
+The target cache contains exactly 23 `CACHE_COMMIT.json` records. The final
+directory `data/processed/final_test_2025/final_evaluation` contains the exact
+committed 21-file set, and
+`data/processed/final_test_2025/.final_evaluation.staging` is absent. After
+publication, the original unpatched command
 
-- `data/processed/final_test_2025/.final_evaluation.staging`
-- `data/interim/final_test_2025/evaluation/target_cache`
-- `data/processed/final_test_2025/final_evaluation`
+```powershell
+.\.venv\Scripts\python scripts\execute_locked_final_evaluation.py `
+  --config configs\final_evaluation_2025.toml
+```
 
-No canonical 2025 Landsat thermal value, QA value, target table, residual,
-score, metric, or final figure has been opened or produced. Synthetic unit
-tests and target-blind in-memory prediction dry runs are not final-test value
-access and do not consume the evaluation.
+returned `complete_one_time_final_evaluation` and the same completion commit.
+Metrics were not inspected before that authentication succeeded.
+
+The held-out point result favors M2: equal-date MAE is 3.1165 °C for B1 and
+2.1650 °C for M2, a 30.53% reduction, and M2 median per-date Spearman is
+0.8447. However, the 95% relative-improvement interval is -10.13% to 58.46%;
+the required positive lower-bound gate failed and the frozen overall protocol
+success flag is false. The authoritative interpretation is in
+`reports/FINAL_EVALUATION_REPORT.md`.
+
+The same-claim recovery evidence is preserved under
+`exports/PC_MIRROR_RESUME`. Keep every failed and successful attempt log. The
+public-mirror audit SHA-256 is
+`f2b1ff73af92321d15c5fe3e68ac3cb1e5406ebdbe78a443ffaa05fcdbeeabe7`
+and the final compatibility helper SHA-256 is
+`503399ed0961a19642fc838967d8b4d4ed11e264be8a087a192af83fc417d4df`.
+The helper accepted only the authorized research unlock, claim-bound predictor
+authentication, and CSV/Parquet representation normalization; all patches were
+restored before the separate original-command completion authentication.
 
 ## Research question and fixed interpretation
 
@@ -140,22 +157,24 @@ Internal canonical `commit_sha256`:
 
 `584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b`
 
-Required state:
+Historical state recorded in the immutable model lock at freeze time (these are
+not the current live evaluation state):
 
 - `final_test_locked = true`
 - `final_test_values_read = false`
 - `one_time_final_evaluation_authorized = false`
 
-The following file must not exist before the deliberately authorized one-time
-evaluation:
+Before the deliberately authorized one-time evaluation, the following file was
+required to be absent:
 
 `manifests/final_test_2025/AUTHORIZATION.json`
 
-As of this handoff it does not exist. No 2025 Landsat target value, QA value,
-residual, score, or metric has been read or produced. A target-blind interface
-dry run produced 25,208 finite B1 predictions and 25,208 finite M2 predictions
-in memory only; it wrote no prediction artifact and did not consume the final
-evaluation.
+That precondition was satisfied. The file now exists as the consumed
+authorization for the single completed claim. The earlier target-blind
+interface dry run produced 25,208 finite B1 predictions and 25,208 finite M2
+predictions in memory only; the canonical frozen prediction artifact was
+created later by the one-time evaluator before it opened any target or QA
+value.
 
 ## Completed development phase
 
@@ -199,7 +218,7 @@ Frozen structure:
 - 23 physical overpasses on 23 dates
 - 1,096 tracts
 - 25,208 exact tract-date keys
-- metadata only; target/QA pixels remain unopened
+- metadata only; at inventory freeze time, target/QA pixels remained unopened
 
 ### Static and calendar predictor base
 
@@ -280,7 +299,10 @@ A PySTAC storage-extension migration warning was audited and is non-material.
 The pipeline does not consume that extension, and the warning changes no
 selected URL, DN value, scale, offset, collection, or calibration contract.
 
-## Live runtime and latest completed computation
+## Historical runtime record: completed 2025 Sentinel computation
+
+This section records the finished 2026-07-26 predictor build. It is not the
+current task and must not be used to restart the old dashboard or engine.
 
 Task: build the valid 2025 C1 Sentinel lagged optical features.
 
@@ -327,28 +349,10 @@ engine. A different computer cannot reach this loopback service; that does not
 mean it should start another process against the canonical output directory.
 The completed build must not be restarted merely to reproduce the UI state.
 
-If the API does not respond, first verify that no process owns port 8768 and
-that no engine is already writing the canonical state directory. Only then
-restart the dashboard:
-
-```powershell
-.\.venv\Scripts\python scripts\run_final_test_predictor_dashboard.py `
-  --workers 6 --host 127.0.0.1 --port 8768 --no-browser
-```
-
-That command is foreground/blocking and should run in a dedicated terminal.
-For a hidden local launch:
-
-```powershell
-Start-Process -FilePath ".\.venv\Scripts\python.exe" `
-  -ArgumentList "scripts\run_final_test_predictor_dashboard.py", `
-    "--workers","6","--host","127.0.0.1","--port","8768","--no-browser" `
-  -WorkingDirectory (Get-Location) -WindowStyle Hidden -PassThru
-```
-
-The dashboard does not automatically start computation after a fresh launch.
-Do not click Start/Continue for this completed build unless a future audited
-code change explicitly invalidates it.
+If the historical loopback API no longer responds, leave it stopped. Do not
+restart the old dashboard or click Start/Continue: the canonical Sentinel build
+is complete and its authenticated outputs are already frozen. The former launch
+commands are intentionally omitted to prevent an accidental duplicate engine.
 
 Pause is cooperative. Active acquisitions may finish before the engine stops.
 The supervisor automatically restarts unexpected process exits with backoff.
@@ -438,7 +442,8 @@ Audited facts:
 - infinite numeric values: `0`
 - target/QA tables or values read: none
 - models/scores/predictions read: none
-- one-time evaluation consumed: `false`
+- one-time evaluation consumed: `false` in this target-blind predictor-assembly
+  provenance record; the later canonical evaluation has now been consumed once
 - predictor file SHA-256:
   `f02b3428a1070b1d95152bb225652bc063330b3793322aeb364e8a0dd267fa0a`
 - predictor schema SHA-256:
@@ -524,7 +529,7 @@ The four source paths no longer exist in the repository and the worktree was
 clean immediately after relocation. Authorization A is satisfied. Never copy
 these drafts back into the repository or use `git add .`.
 
-## Exact next steps
+## Completed protocol implementation and historical execution record
 
 ### Independent final evaluator implemented and audited
 
@@ -549,9 +554,10 @@ New implementation files:
 - `docs/DECISION_LOG.md`
 - `docs/PROJECT_HANDOFF.md`
 
-The authorization module and script now require and bind the readiness marker.
-No readiness, authorization, claim, values-opened, completion, target, QA,
-residual, score, or metric artifact exists. The new protocol freezes:
+The authorization module and script require and bind the readiness marker. At
+the historical pre-evaluation checkpoint no state-chain, target, score, or
+metric artifact existed. The completed canonical chain and result artifacts now
+exist at the paths listed at the top of this handoff. The protocol freezes:
 
 - exact B1/M2, predictor, Landsat inventory, target-grid/QA, and feature locks;
 - a target-blind, no-clobber readiness marker generated while the research
@@ -603,7 +609,7 @@ The implementation is committed under the subject
 to obtain its non-circular hash. The four old drafts are recoverably
 quarantined outside the repository as recorded above.
 
-### 1. Current preparation state
+### 1. Historical preparation and recovery record
 
 Run only these read-only commands first:
 
@@ -612,8 +618,9 @@ git rev-parse HEAD
 git status --short
 ```
 
-The expected status is now completely empty. If it is not empty, fail closed
-and investigate without deleting anything.
+At this historical preparation checkpoint the expected status was completely
+empty. For the current state, use the completion checkpoint at the top of this
+handoff; do not infer current cleanliness from this historical instruction.
 
 The first readiness attempt on 2026-07-27 stopped before creating any marker:
 the copied
@@ -670,10 +677,9 @@ Pillow, and a regression test requires them to remain identical. The current
 readiness and authorization described above bind the repaired committed code;
 never restore the archived invalid marker.
 
-Readiness and one-time authorization are complete. This handoff update is part
-of the only permitted `false -> true` unlock commit. After that commit is
-pushed and the worktree contains only the two allowed untracked markers, the
-first safe command is the execution command in step 4 below.
+Readiness, one-time authorization, the only permitted `false -> true` unlock,
+the single claim, and completion are now all recorded. The preparation failures
+above remain useful provenance but are not current blockers.
 
 ### 2. One-time authorization and final evaluation
 
@@ -681,11 +687,12 @@ On 2026-07-27, after the two distinct authorizations and the irreversible
 one-time boundary were explained, the user instructed the project to perform
 the described sequence. Authorization A (draft relocation) and Authorization
 B (one one-time 2025 evaluation) are therefore explicit for this run. The
-readiness and authorization markers now exist and the research unlock is being
-committed separately. No claim, target read, prediction file, metric, or
-figure exists at this handoff checkpoint.
+readiness and authorization markers were created before target access and the
+research unlock was committed separately. The resulting single claim is now
+complete; its prediction, value-boundary, cache, output, and completion records
+are listed in the current-state section at the top of this document.
 
-Authorization may occur only after:
+Authorization was permitted only after:
 
 - C1 Sentinel outputs and final predictors are frozen and committed;
 - the evaluator/config/tests are committed and independently audited;
@@ -698,7 +705,8 @@ That approval is authorization B and is separate from authorization A. It has
 now been granted once for the frozen protocol. It does not authorize any
 second claim, rerun with changed code/settings, or post-result tuning.
 
-The locked sequence is:
+The following locked sequence was executed exactly once and is preserved only
+as an audit record. Do not rerun its authorization or execution commands:
 
 1. while `configs/research.toml` still has `unlock_final_test = false`, run:
 
@@ -725,8 +733,8 @@ The locked sequence is:
      --config configs\final_evaluation_2025.toml
    ```
 
-The commands above are now the authorized gated sequence. Every gate must
-still pass exactly; a failure must remain fail-closed.
+Those commands formed the authorized gated sequence for the already-consumed
+claim. They no longer authorize a second claim, authorization, or evaluation.
 
 Never retune or change thresholds after target values are opened.
 
@@ -743,13 +751,22 @@ The canonical evidence is not a screenshot. Preserve the append-only chain:
 6. `EVALUATION_COMPLETE.json`, the Git commits, decision log, handoff, and
    final checksums.
 
-After completion, rerun the same execution command once in authentication
-mode. It must authenticate the completed transaction without opening target
-tables. Only after that succeeds may metrics and figures be inspected. Then
-create a separate, read-only export that copies existing evidence bytes and
-writes a SHA-256 manifest; do not recalculate or hand-edit any result. The
-repository has no approved final-evaluation ZIP exporter yet, so the old
-portable development-run packagers must not be reused.
+The same execution command was rerun once after publication and authenticated
+the completed transaction without opening target tables. Metrics and figures
+were inspected only after that succeeded. The remaining task is to create a
+separate, read-only export that copies existing evidence bytes and writes a
+SHA-256 manifest; do not recalculate or hand-edit any result. The approved
+exporter is:
+
+```powershell
+.\.venv\Scripts\python scripts\build_final_evaluation_evidence.py
+```
+
+It requires a clean `main` equal to `origin/main`, refuses overwrite, preserves
+the complete state/cache/output/recovery/Git chain, creates
+`exports/FINAL_EVALUATION_EVIDENCE` and a ZIP, and writes an external ZIP
+SHA-256. Verify the directory independently with
+`scripts/verify_final_evaluation_evidence.py`.
 
 The official science-fair rules do not require a project data book or research
 paper, but strongly recommend them for judging. The official judging criteria

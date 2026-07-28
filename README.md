@@ -51,7 +51,7 @@ temperature, personal exposure, illness, or mortality.
 - [x] Pixel-level ST_QA <= 2 K sensitivity complete (15/30 date gate failed)
 - [x] Development robustness reconciled and generated report complete
 - [x] Model lock created
-- [ ] 2025 final test unlocked and run once
+- [x] One-time 2025 final evaluation completed and authenticated
 
 The feasibility pilot created a 1,110-tract mother manifest and froze 1,096
 City-clipped, non-special-use primary tracts. It retained 95.5%, 95.0%, and
@@ -63,8 +63,8 @@ spatial-representativeness gate. The committed QA table has 98,640 rows; the
 legal absolute-LST model table has 63,403 rows across 65 independent dates and
 71 spatial blocks. It contains zero duplicate keys and zero 2025 rows, and each
 tract's static eligible-land count and exact pixel-identity hash are invariant
-across all 90 dates. Development data only have been opened; final-test labels
-remain locked.
+across all 90 dates. These remain the frozen development records; the separate
+one-time 2025 evaluation is now complete.
 
 Phase 2 has frozen 226 Sentinel-2 physical acquisitions and 1,045 legal
 `d−60 … d−1` target-window memberships across all 90 development dates. The two
@@ -132,9 +132,10 @@ residual, and spatial-autocorrelation diagnostics are complete. The frozen
 feature-family ablation and strict pixel-level ST_QA sensitivity are also
 complete and reconciled. The strict build retained only 15 usable dates versus
 the required 30, so it is preserved as a limitation rather than promoted. The
-generated development report is `reports/DEVELOPMENT_REPORT.md`. The next
-compute stage is the separate, not-yet-started full-development final fit; 2025
-remains locked.
+generated development report is `reports/DEVELOPMENT_REPORT.md`. The
+full-development fit, formal model lock, and one-time 2025 evaluation are now
+complete. The held-out result and its required limitations are summarized in
+`reports/FINAL_EVALUATION_REPORT.md`.
 
 ## Study design
 
@@ -216,7 +217,8 @@ Build the target-blind predictor support and grouped-validation artifacts:
 These commands create no model result. They write the full feature-only
 tract-date support, deterministic calendar table, metadata-only registry draft,
 and split formulas/audits over legal development keys and fixed tract geometry.
-All leave 2025 locked.
+These development commands do not read or alter the already frozen
+final-evaluation result.
 
 The Daymet inventory command is anonymous. For an interactive authenticated
 download, including Windows PowerShell 5.1, clear any stale credential variables
@@ -272,41 +274,26 @@ canonical compiled evaluation directory:
 .\.venv\Scripts\python scripts/generate_development_report.py --config configs/development_report.toml
 ```
 
-The grouped queue is already terminal at 57,800 / 57,800, so do not restart the
-model dashboard as a next step. Hotspot, sensor-stratified, residual, spatial-
-autocorrelation, QA/missingness, failure-case, ablation, and pixel-level ST_QA
-diagnostics are frozen and reconciled. Full-development final tuning/refitting
-is prepared but intentionally not started automatically. Calendar year 2025
-remains locked until the full model lock is approved.
-
-When the computer is available for that separate fit, open the opt-in controller:
-
-```powershell
-.\.venv\Scripts\python scripts\final_model_runner_ui.py
-```
-
-Then visit `http://127.0.0.1:8766/`. Every newly opened controller session
-forces the task into a paused, disarmed state; computation starts only after
-clicking **Start / Continue** in that same session. Completed tuning fragments
-are retained across pauses. A transient exit restarts with bounded backoff, but
-repeated exits without new progress fail closed. The controller never unlocks
-or reads the 2025 final test.
-
-After the staging audit is committed from a clean tree, formal promotion is a
-separate one-way command. It re-authenticates the fitted B1/M2 artifacts and all
-frozen inputs, refuses to overwrite an existing lock, and does not authorize
-final-test access:
-
-```powershell
-.\.venv\Scripts\python scripts\promote_formal_model_lock.py --approve-formal-lock
-```
-
-Formal promotion completed on 2026-07-23. The immutable lock is
+The grouped queue is terminal at 57,800 / 57,800, the full-development B1/M2
+fit is complete, and the formal lock was promoted on 2026-07-23. Do not restart
+the model or final-evaluation controllers. The immutable lock is
 `manifests/model_lock/MODEL_LOCK.json`, with commit SHA-256
 `584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b`.
-It freezes the selected B1 and M2 artifacts while keeping calendar year 2025
-locked and the one-time final evaluation unauthorized until its isolated
-evaluator is frozen.
+It froze the selected B1 and M2 artifacts before any 2025 value was opened.
+
+The one-time 2025 transaction is complete under claim
+`c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f`
+and completion commit
+`4cc8a5536cf1055d42876577f8d9f6300c799176779a7ec89cd1d3ed819d77a0`.
+M2 reduced held-out equal-date MAE from 3.1165 °C to 2.1650 °C, but the
+prespecified 95% relative-improvement interval (-10.13% to 58.46%) crossed
+zero, so the overall protocol success gate did not pass. Re-running the command
+below now performs completion authentication only:
+
+```powershell
+.\.venv\Scripts\python scripts\execute_locked_final_evaluation.py `
+  --config configs\final_evaluation_2025.toml
+```
 
 The pilot queries public STAC metadata, reads only the required remote COG
 windows, applies the locked Landsat QA and temperature scaling, aggregates to

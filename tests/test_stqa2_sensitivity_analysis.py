@@ -13,6 +13,7 @@ from la_heat.model_result_analysis import ModelResultAnalysisError
 from la_heat.provenance import atomic_json, canonical_sha256, parquet_file_record
 from la_heat.stqa2_sensitivity_analysis import (
     PROVENANCE_FILENAME,
+    Stqa2SensitivityConfig,
     Stqa2SensitivityError,
     TargetStage,
     _begin_output_transaction,
@@ -23,6 +24,24 @@ from la_heat.stqa2_sensitivity_analysis import (
     validate_fixed_support,
     validate_research_config_pair,
 )
+
+
+def _with_locked_primary_config(
+    config: Stqa2SensitivityConfig,
+    tmp_path: Path,
+) -> Stqa2SensitivityConfig:
+    locked_primary = tmp_path / "research_locked.toml"
+    source = config.primary_research_config.read_bytes()
+    unlocked_flag = b"unlock_final_test = true"
+    assert source.count(unlocked_flag) == 1
+    locked_primary.write_bytes(
+        source.replace(
+            unlocked_flag,
+            b"unlock_final_test = false",
+            1,
+        )
+    )
+    return replace(config, primary_research_config=locked_primary)
 
 
 def _stage(*, strict: bool = False, denominator: int = 100) -> TargetStage:
@@ -144,8 +163,12 @@ def _write_complete_target_stage(
     return config_sha, config_file_sha
 
 
-def test_production_config_and_research_pair_are_frozen() -> None:
-    config = load_stqa2_sensitivity_config()
+def test_historical_locked_research_pair_is_frozen(tmp_path: Path) -> None:
+    live = load_stqa2_sensitivity_config()
+    assert "unlock_final_test = true" in live.primary_research_config.read_text(
+        encoding="utf-8"
+    )
+    config = _with_locked_primary_config(live, tmp_path)
     locks = validate_research_config_pair(config)
     assert config.final_test_year == 2025
     assert config.strict_threshold_k == 2.0
@@ -153,7 +176,10 @@ def test_production_config_and_research_pair_are_frozen() -> None:
 
 
 def test_research_pair_rejects_any_second_semantic_change(tmp_path: Path) -> None:
-    config = load_stqa2_sensitivity_config()
+    config = _with_locked_primary_config(
+        load_stqa2_sensitivity_config(),
+        tmp_path,
+    )
     changed = tmp_path / "strict.toml"
     text = config.strict_research_config.read_text(encoding="utf-8").replace(
         "minimum_cloud_distance_km = 1.0", "minimum_cloud_distance_km = 2.0"

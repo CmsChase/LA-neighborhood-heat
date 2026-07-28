@@ -24,6 +24,7 @@ from la_heat.daymet_grid import DAYMET_GRID_CRS, DaymetGridAuditError
 from la_heat.phase2_registry import daymet_feature_registry_rows
 from la_heat.provenance import canonical_sha256
 
+CONFIG = Path(__file__).parents[1] / "configs" / "research.toml"
 GEOIDS = ("06037101110", "06037101120")
 UNITS = {
     "dayl": "s/day",
@@ -33,6 +34,18 @@ UNITS = {
     "tmin": "degrees C",
     "vp": "Pa",
 }
+
+
+def _locked_config_copy(tmp_path: Path) -> Path:
+    config_path = tmp_path / "configs" / "research.toml"
+    config_path.parent.mkdir(parents=True)
+    payload = CONFIG.read_bytes()
+    unlocked_setting = b"unlock_final_test = true"
+    assert payload.count(unlocked_setting) == 1
+    config_path.write_bytes(
+        payload.replace(unlocked_setting, b"unlock_final_test = false")
+    )
+    return config_path
 
 
 def _write_variable(path: Path, variable: str, *, year: int = 2023) -> None:
@@ -201,7 +214,7 @@ def test_stage_writes_feature_only_audit_weights_and_provenance(
     )
 
     payload = build_daymet_feature_artifacts(
-        Path(__file__).parents[1] / "configs" / "research.toml",
+        _locked_config_copy(tmp_path),
         universe,
         output,
     )

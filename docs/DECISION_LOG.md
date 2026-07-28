@@ -1173,3 +1173,49 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   safe action after push is:
 
   `.\.venv\Scripts\python scripts\execute_locked_final_evaluation.py --config configs\final_evaluation_2025.toml`
+
+## 2026-07-27 - Complete and freeze the one-time 2025 evaluation
+
+- Created exactly one consumption claim:
+  `c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f`.
+  Blind B1/M2 predictions were committed before the target/QA value boundary.
+  The prediction commit is
+  `73c6f4ef48262930626f5efc285387bdde9b3ebfe85fc2586008efd02d314df9`;
+  the values-opened commit is
+  `ae17a1a5b229f2b04cbfb9bbc8ff2ea9afa8f27c136a908a681b288d9d59b54f`.
+- USGS LandsatLook redirected the frozen asset requests to an interactive
+  EarthExplorer login. The same frozen 45 scenes and 225 exact product
+  assets were therefore read through the anonymous Microsoft Planetary
+  Computer public mirror. A target-blind metadata audit matched all 45 product
+  directories and all 225 asset filenames before any mirror byte was read.
+  The 23 same-claim overpass caches each have a committed provenance record.
+- The post-claim recovery exposed three representation/control-boundary bugs,
+  not scientific-result differences: the authorized `research.toml`
+  `false -> true` bit was still included in a pre-authorization predictor
+  fingerprint, CSV round-tripping represented nullable booleans and blank
+  reasons differently, and Parquet returned `scene_ids` lists as NumPy arrays.
+  A local, ignored recovery wrapper was permitted only for the existing claim.
+  It verified that the research unlock was the sole pipeline difference,
+  authenticated all 198 immutable predictor inputs, bound the exact predictor
+  provenance/table to the claim, and normalized only the identified
+  serialization representations. It did not change a target, prediction,
+  model, threshold, metric, bootstrap draw, or staged output byte.
+- The canonical evaluator then completed its deep reconstruction of targets,
+  predictions, evaluation rows, QA summaries, all reports, safe counts, and
+  figures. It atomically promoted the exact 21-file output set and removed
+  staging. The output commit is
+  `ee6d7bb6df917acf0340b3e91ff3189044ae8e9bec1ae32b888dbf8429a75432`;
+  the completion commit is
+  `4cc8a5536cf1055d42876577f8d9f6300c799176779a7ec89cd1d3ed819d77a0`.
+  A separate process then ran the original unpatched execution command and
+  authenticated the same completed state without reopening targets.
+- The frozen held-out cohort contains 15,116 tract-date rows across 15 usable
+  dates and 71 spatial blocks. M2 equal-date MAE is 2.164951 °C versus
+  3.116514 °C for B1, a 30.5329% point reduction. M2 median per-date Spearman
+  is 0.844693. The 5,000-draw crossed date-by-block relative-improvement 95%
+  interval is -10.1336% to 58.4591%.
+- The point-improvement and rank-correlation gates passed. The required
+  confidence-interval lower-bound-above-zero gate failed, so the frozen
+  overall protocol success flag is false. This qualified result is final:
+  no retuning, retraining, threshold change, second claim, or repeat evaluation
+  is permitted.

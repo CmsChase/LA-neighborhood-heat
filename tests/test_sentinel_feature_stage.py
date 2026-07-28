@@ -44,8 +44,22 @@ REGISTRY_PROVENANCE = REGISTRY.with_name(
 )
 
 
+def _locked_research_config(tmp_path: Path) -> Path:
+    unlocked_flag = b"unlock_final_test = true"
+    locked_flag = b"unlock_final_test = false"
+    payload = RESEARCH_CONFIG.read_bytes()
+    if payload.count(unlocked_flag) != 1:
+        raise AssertionError(
+            "Canonical research config must contain exactly one unlocked final-test flag."
+        )
+    path = tmp_path / "research.locked.toml"
+    path.write_bytes(payload.replace(unlocked_flag, locked_flag, 1))
+    return path
+
+
 @dataclass(frozen=True)
 class FixturePaths:
+    research_config: Path
     source: Path
     output: Path
     universe: Path
@@ -174,6 +188,7 @@ def _synthetic_frames() -> tuple[
 
 
 def _make_fixture(tmp_path: Path) -> FixturePaths:
+    research_config = _locked_research_config(tmp_path)
     source = tmp_path / "source"
     output = tmp_path / "promoted"
     universe_path = tmp_path / "universe" / "feature_key_universe.parquet"
@@ -234,7 +249,7 @@ def _make_fixture(tmp_path: Path) -> FixturePaths:
     fingerprint_path = source / "pipeline_fingerprint.json"
     _write_json(fingerprint, fingerprint_path)
     scientific_sha256 = canonical_sha256(fingerprint)
-    research = load_config(RESEARCH_CONFIG)
+    research = load_config(research_config)
     sentinel = load_sentinel_stage_config(SENTINEL_CONFIG)
     research_dependency = {
         "study": {
@@ -260,7 +275,7 @@ def _make_fixture(tmp_path: Path) -> FixturePaths:
         ),
         "sentinel_stage_config_sha256": sentinel.sha256,
         "sentinel_stage_config_payload": sentinel.raw,
-        "research_config_file_sha256_audit_only": sha256_file(RESEARCH_CONFIG),
+        "research_config_file_sha256_audit_only": sha256_file(research_config),
         "sentinel_research_dependency_payload": research_dependency,
         "sentinel_research_dependency_sha256": canonical_sha256(research_dependency),
         "sentinel_inventory_summary_sha256_audit_only": sha256_file(
@@ -289,6 +304,7 @@ def _make_fixture(tmp_path: Path) -> FixturePaths:
     }
     _write_json(progress, source / "build_progress.json")
     return FixturePaths(
+        research_config=research_config,
         source=source,
         output=output,
         universe=universe_path,
@@ -307,7 +323,7 @@ def _promote(paths: FixturePaths) -> dict[str, object]:
         registry_path=REGISTRY,
         registry_provenance_path=REGISTRY_PROVENANCE,
         inventory_directory=paths.inventory,
-        research_config_path=RESEARCH_CONFIG,
+        research_config_path=paths.research_config,
         sentinel_config_path=SENTINEL_CONFIG,
     )
 
@@ -497,7 +513,7 @@ def test_promotion_rejects_recommitted_registry_metadata_change(
             registry_path=registry_path,
             registry_provenance_path=marker_path,
             inventory_directory=paths.inventory,
-            research_config_path=RESEARCH_CONFIG,
+            research_config_path=paths.research_config,
             sentinel_config_path=SENTINEL_CONFIG,
         )
 

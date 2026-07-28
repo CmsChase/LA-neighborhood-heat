@@ -30,6 +30,19 @@ from la_heat.stage_config import target_config_sha256
 CONFIG_PATH = Path(__file__).parents[1] / "configs" / "research.toml"
 
 
+def _locked_research_config(tmp_path: Path) -> Path:
+    unlocked_flag = b"unlock_final_test = true"
+    locked_flag = b"unlock_final_test = false"
+    payload = CONFIG_PATH.read_bytes()
+    if payload.count(unlocked_flag) != 1:
+        raise AssertionError(
+            "Canonical research config must contain exactly one unlocked final-test flag."
+        )
+    path = tmp_path / "research.locked.toml"
+    path.write_bytes(payload.replace(unlocked_flag, locked_flag, 1))
+    return path
+
+
 def _registry() -> pd.DataFrame:
     rows = [
         (
@@ -138,6 +151,7 @@ def _registry() -> pd.DataFrame:
 
 
 def _write_inputs(tmp_path: Path) -> dict[str, Path]:
+    config = _locked_research_config(tmp_path)
     registry = _registry()
     phase2 = pd.DataFrame(
         {
@@ -165,6 +179,7 @@ def _write_inputs(tmp_path: Path) -> dict[str, Path]:
     phase2_directory = tmp_path / "phase2"
     phase2_directory.mkdir()
     paths = {
+        "config": config,
         "phase2": phase2_directory / PHASE2_FEATURE_FILENAME,
         "phase2_registry": phase2_directory / PHASE2_REGISTRY_FILENAME,
         "phase2_provenance": phase2_directory / PHASE2_PROVENANCE_FILENAME,
@@ -224,7 +239,7 @@ def _write_inputs(tmp_path: Path) -> dict[str, Path]:
         "partial_outputs_only": False,
         "expected_overpass_count": 1,
         "completed_overpass_count": 1,
-        "target_config_sha256": target_config_sha256(load_config(CONFIG_PATH)),
+        "target_config_sha256": target_config_sha256(load_config(paths["config"])),
         "aggregate_outputs": {paths["target"].name: target_record},
     }
     paths["target_progress"].write_text(json.dumps(progress), encoding="utf-8")
@@ -233,7 +248,7 @@ def _write_inputs(tmp_path: Path) -> dict[str, Path]:
 
 def _build(tmp_path: Path, paths: dict[str, Path]) -> dict[str, object]:
     return build_model_dataset_artifacts(
-        CONFIG_PATH,
+        paths["config"],
         tmp_path / "output",
         phase2_path=paths["phase2"],
         phase2_provenance_path=paths["phase2_provenance"],

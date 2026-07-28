@@ -287,6 +287,11 @@ def _unlocked_test_config(tmp_path: Path) -> ResearchConfig:
         ),
     }
     for old, new in replacements.items():
+        if (
+            old == "unlock_final_test = false"
+            and "unlock_final_test = true" in source
+        ):
+            continue
         assert old in source
         source = source.replace(old, new)
     path = tmp_path / "research.toml"

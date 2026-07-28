@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "one-time-final-test-authorization-v1",
+  "state": "authorized_for_one_time_2025_evaluation",
+  "final_test_year": 2025,
+  "authorized": true,
+  "values_read": false,
+  "evaluator_code_git_commit": "407aefcb4f54ba9fc6265ea5830b1747b7977ba4",
+  "working_tree_clean": true,
+  "git_status_entry_count": 1,
+  "allowed_untracked_state_entry_count": 1,
+  "formal_model_lock": {
+    "path": "manifests/model_lock/MODEL_LOCK.json",
+    "bytes": 12162,
+    "git_blob_oid": "380e96875aa6804442edaf756a7c9aaee7174098",
+    "file_sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
+    "commit_sha256": "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b"
+  },
+  "evaluator_module": {
+    "path": "src/la_heat/final_evaluation_protocol.py",
+    "sha256": "a17d9601d84c3fe5b149a96a4cb872d7bbee20cc571e753435fb1c1481c0f8b5",
+    "bytes": 165619,
+    "git_blob_oid": "8b6c816878f325f28ba2a2c9814009abd6cdaae4"
+  },
+  "evaluator_config": {
+    "path": "configs/final_evaluation_2025.toml",
+    "sha256": "3a7f1b298ec714df2a7544eed5ab76f56b26b3f4c010ec80f083201da9cee655",
+    "bytes": 4366,
+    "git_blob_oid": "4cfe091b8ac64e2b8df003a3105029eafeefb219"
+  },
+  "evaluation_readiness": {
+    "path": "manifests/final_test_2025/evaluation/EVALUATION_READINESS.json",
+    "file_sha256": "a2676a10d239248906dee6a42f3ecec4224b4c31556f180b682d958e7580a314",
+    "bytes": 28960,
+    "commit_sha256": "fda4bcab8ec0963ad4824a3e863974be5887d3143c26c502081789a9a878acdb",
+    "request_sha256": "6cde25bcda2f52724b67754432b92b0a3aee84e5bae4aa92a4d4595e9bd434b5"
+  },
+  "generated_at_utc": "2026-07-27T12:03:20.775721+00:00",
+  "authorization_consumed": false,
+  "commit_sha256": "3490c71100e1ea063ec8f71f0823b50715963a7cead12f62f5bdffe86c706a9a"
+}

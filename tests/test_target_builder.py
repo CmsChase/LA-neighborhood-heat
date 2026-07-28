@@ -135,6 +135,7 @@ def test_strict_stqa_config_changes_only_the_prespecified_pixel_mask() -> None:
     primary = load_config(CONFIG)
     strict = load_config(STRICT_STQA_CONFIG)
     expected = deepcopy(primary.raw)
+    expected["study"]["unlock_final_test"] = False
     expected["landsat"]["apply_st_uncertainty_threshold"] = True
 
     assert strict.raw == expected
@@ -142,6 +143,7 @@ def test_strict_stqa_config_changes_only_the_prespecified_pixel_mask() -> None:
     assert strict.raw["landsat"]["apply_st_uncertainty_threshold"] is True
     assert strict.final_test_year == 2025
     assert strict.final_test_unlocked is False
+    assert primary.final_test_unlocked is True
     assert inventory_config_sha256(strict) == inventory_config_sha256(primary)
     assert target_config_sha256(strict) != target_config_sha256(primary)
 

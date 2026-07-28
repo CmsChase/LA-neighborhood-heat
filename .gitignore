@@ -7,6 +7,7 @@ __pycache__/
 .coverage
 htmlcov/
 exports/
+tmp/
 RUN_DISABLED_TRANSFERRED_OUT.txt
 
 # Reproducible data products are generated locally. Keep manifests, not bulk data.
