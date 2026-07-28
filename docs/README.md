@@ -15,6 +15,7 @@ history is intentionally separated from the short project landing page.
 | Where did each external dataset come from? | [DATA_MANIFEST.csv](DATA_MANIFEST.csv) |
 | How is the public atlas authenticated? | [RESULTS_WEBSITE.md](RESULTS_WEBSITE.md) |
 | Where are the paper, poster, and deck? | [PUBLICATION_MATERIALS.md](PUBLICATION_MATERIALS.md) |
+| What is the proposed cross-city continuation? | [MULTICITY_GENERALIZATION_PROTOCOL.md](MULTICITY_GENERALIZATION_PROTOCOL.md) |
 
 ## Scientific contracts
 
@@ -26,6 +27,9 @@ history is intentionally separated from the short project landing page.
   grouped tuning, objective, and tie-breaking.
 - [LITERATURE_EVIDENCE.md](LITERATURE_EVIDENCE.md): source-to-claim map; not
   project-result evidence.
+- [MULTICITY_GENERALIZATION_PROTOCOL.md](MULTICITY_GENERALIZATION_PROTOCOL.md):
+  draft zero-shot transfer and uncertainty study; its external targets remain
+  locked.
 
 ## Execution and status
 

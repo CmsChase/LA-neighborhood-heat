@@ -30,6 +30,24 @@ SHA-256 is
 the tracked attestation is
 `manifests/final_test_2025/evaluation/EVIDENCE_EXPORT.json`.
 
+## Cross-city continuation — draft planning
+
+A scientifically separate continuation now has a target-locked planning
+scaffold. It asks whether a fixed model trained only with Los Angeles
+2020–2023 labels transfers to target-sealed Phoenix, Houston, and Chicago in
+2025, and whether a Los Angeles 2024-calibrated uncertainty rule can identify
+predictions that should be withheld.
+
+The draft protocol is `docs/MULTICITY_GENERALIZATION_PROTOCOL.md`; the
+machine-readable audit is `manifests/multicity/PLAN_READINESS.json`, internal
+commit
+`2eceb4fbc220d3bcffb2e071d3393722e7db0aba8e09c64a97a3dc7a62c97079`.
+It reauthenticated the Phase I claim, model lock, completion marker, 23 cache
+commits, 21 final outputs, and evidence ZIP. It records
+`external_targets_unlocked = false` and permits only boundary/public-metadata
+staging. No external-city LST or target-QA value was opened, and no new model
+or long computation was started.
+
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.
 The earlier extracted directory was missing 2,155 outer fragments because of

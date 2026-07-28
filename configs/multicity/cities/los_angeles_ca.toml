@@ -1,0 +1,9 @@
+[city]
+id = "los_angeles_ca"
+name = "Los Angeles"
+state_fips = "06"
+census_place_geoid = "0644000"
+timezone = "America/Los_Angeles"
+target_grid_crs = "EPSG:32611"
+role = "source_anchor"
+target_values_status = "known_phase1_anchor"

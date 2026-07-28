@@ -17,6 +17,7 @@ many historical stages are already complete.
 | Final-test predictor preparation | files beginning `build_final_test_`, `stage_final_test_`, `run_final_test_`, and `audit_final_test_` |
 | Final evaluation and evidence | `prepare_final_evaluation.py`, `authorize_final_test_2025.py`, `execute_locked_final_evaluation.py`, `build_final_evaluation_evidence.py`, `verify_final_evaluation_evidence.py` |
 | Communication | `stage_mapping_la_neighborhoods.py`, `build_website_data.py`, `build_research_paper.py` |
+| Cross-city continuation planning | `audit_multicity_plan.py` |
 | Transfer and local control | `create_portable_relocation.py`, `verify_portable_relocation.py`, `transfer_queue_snapshot.py`, `*_dashboard.py`, `*_watchdog.py`, `research_runner_ui.py`, and the PowerShell transfer helpers |
 
 ## Website source staging
@@ -60,6 +61,11 @@ The old Sentinel and model dashboards record completed work. Leave them
 stopped unless the handoff explicitly identifies a current resumable task and
 its exact output directory. Never run two controllers against one canonical
 directory.
+
+`audit_multicity_plan.py` authenticates the completed Phase I transaction and
+the draft continuation locks. Its current successful state permits only the
+Phoenix boundary/public-metadata pilot. It never opens a new Landsat thermal or
+target-QA value.
 
 Development rebuild and analysis scripts can overwrite or regenerate local
 products. Run them only for a defined task after checking configuration,

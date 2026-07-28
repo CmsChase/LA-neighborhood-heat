@@ -1,0 +1,9 @@
+[city]
+id = "houston_tx"
+name = "Houston"
+state_fips = "48"
+census_place_geoid = "4835000"
+timezone = "America/Chicago"
+target_grid_crs = "EPSG:32615"
+role = "external_confirmation"
+target_values_status = "sealed"

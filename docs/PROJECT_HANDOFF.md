@@ -4,6 +4,10 @@ Last material update: 2026-07-28 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
+- cross-city continuation planning, isolated configuration, target-lock audit,
+  and this handoff are in the commit with subject
+  `Prepare cross-city continuation`; obtain its exact hash with
+  `git log --oneline --grep="Prepare cross-city continuation" -1`
 - source-backed `website-display-export-v3` is deployed from nested website
   commit `0f360543d85bdd0401cea473d57d5ddd3abcef5a`; GitHub Actions run
   `30362483324` succeeded, the public page plus all four JSON files passed HTTP
@@ -141,6 +145,80 @@ The verifier authenticated all 239 files, the six-state transaction chain,
 the exact 21 final outputs, 23 cache commits/93 cache files, 16 recovery files,
 both unlock snapshots, and an independently cloned and `git fsck`-checked
 repository bundle. Do not rebuild or overwrite this package.
+
+## Cross-city continuation planning state
+
+The continuation is scientifically and operationally separate from the
+completed Los Angeles transaction. Its internal name is
+`la_to_three_city_zero_shot_v1`; do not call its code `phase2`, because
+`phase2_*` already names the original feature-assembly stage.
+
+Current scientific roles:
+
+- Los Angeles: sole source city; fit on 2020–2023 and calibrate uncertainty on
+  2024;
+- Phoenix, Houston, and Chicago: zero-shot external confirmation cities for
+  warm-season 2025;
+- Los Angeles 2025: known Phase I context only and prohibited from the new
+  confirmation.
+
+Authoritative draft files:
+
+- protocol: `docs/MULTICITY_GENERALIZATION_PROTOCOL.md`;
+- experiment: `configs/multicity/experiment.toml`;
+- city specifications: `configs/multicity/cities/*.toml`;
+- planning audit:
+  `manifests/multicity/PLAN_READINESS.json`;
+- planning-audit internal commit:
+  `2eceb4fbc220d3bcffb2e071d3393722e7db0aba8e09c64a97a3dc7a62c97079`.
+
+The audit reauthenticated the original model lock, final completion, exact 23
+target-cache commits, exact 21 final outputs, and the 21,787,327-byte evidence
+ZIP with SHA-256
+`61a853c3eeea3f1ae92bf7999f0fd057018797f70498fcd017d1394dbd621b51`.
+It records all of the following as false:
+
+- `protocol_locked`;
+- `external_targets_unlocked`;
+- `external_target_values_read`;
+- `external_prediction_commit_exists`;
+- predictor construction, model fitting, external target access, one-time
+  external evaluation, and operational forecast claim authorization.
+
+No Phoenix, Houston, or Chicago Landsat thermal or target-QA value has been
+opened. No continuation download, model fit, or long computation has started.
+Only boundary and public source-metadata staging is currently authorized.
+
+Planning-scaffold verification:
+
+- focused continuation tests: 4 passed;
+- complete project suite: 751 passed in 288.7 seconds, with five existing
+  dependency/NumPy deprecation warnings;
+- full-repository Ruff: passed;
+- repeated write/check-only planning audits produced the identical internal
+  commit shown above.
+
+The next safe engineering stage is a generic Census incorporated-place/tract
+adapter followed by a Phoenix metadata-only pilot. It must dynamically discover
+the city bbox, counties, WRS contributors, MGRS tiles, Daymet cells, and
+terrain/source windows, write them under isolated `multicity/` paths, and stop
+before Landsat thermal or target-QA access.
+
+Before predictor construction, freeze a nationwide source and algorithm that
+replaces the Phase I `Pacific coast distance` with distance to a qualifying
+ocean or Great Lakes shoreline. Before model fitting, promote the draft
+protocol through a separate review and lock. Before target access, create a
+new one-time external-evaluation implementation, prediction commitment, and
+explicit authorization; never reuse `final_test_*` or `final_evaluation_*`.
+
+Safe read-only command:
+
+```powershell
+.\.venv\Scripts\python scripts\audit_multicity_plan.py --check-only
+```
+
+First safe implementation task: add the city-independent geography adapter and
+its synthetic tests. Do not run a target builder or old dashboard.
 
 ## Interactive results website
 

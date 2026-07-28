@@ -1366,3 +1366,36 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   GitHub Actions run `30358959707`. Public HTTP checks returned 200 for the
   page and four JSON files, all deployed hashes matched, and the deployed
   JavaScript contained the new interface without `Scroll to zoom`.
+
+## 2026-07-28 — Start a target-locked cross-city continuation
+
+- Decision: preserve the completed Los Angeles study as immutable Phase I
+  evidence and start a scientifically separate continuation under isolated
+  `multicity/` paths. Existing `phase2_*`, `final_test_*`, and
+  `final_evaluation_*` names and workflows are not repurposed.
+- The new question is zero-shot external generalization and reliability, not
+  merely repeating the Los Angeles analysis with more rows. Los Angeles is the
+  only labeled source; Phoenix, Houston, and Chicago are fixed external cities
+  representing hot-arid, hot-humid, and continental/Great-Lakes contrasts.
+- Model fitting is predeclared for Los Angeles 2020–2023; Los Angeles 2024 is
+  reserved for interval calibration and the abstention threshold. The already
+  known Los Angeles 2025 result is excluded from all new confirmation.
+  Phoenix, Houston, and Chicago 2025 target and target-QA values remain sealed.
+- The sole confirmatory comparison is fixed B1-Transfer versus M2-Transfer.
+  The point-model class and parameters retain the Phase I Ridge/HGB settings.
+  Uncertainty uses predeclared 90% conformalized quantile intervals and a
+  Los Angeles 2024 interval-width abstention threshold.
+- The Phase I `Pacific coast distance` variables are not portable. Predictor
+  construction remains locked until a nationwide ocean/Great-Lakes shoreline
+  source and identical target-independent distance algorithm are reviewed and
+  frozen.
+- Daymet cannot support an operational issue-time forecast. The continuation
+  is a target-blind historical external test. A true current/next-day tool
+  requires a separate archived/live HRRR protocol and may not borrow the
+  confirmation result.
+- `manifests/multicity/PLAN_READINESS.json` reauthenticated the Phase I model
+  lock, completed claim, 23 cache commits, 21 final outputs, and evidence ZIP.
+  Its internal commit is
+  `2eceb4fbc220d3bcffb2e071d3393722e7db0aba8e09c64a97a3dc7a62c97079`.
+  It authorizes only boundary and public-metadata staging; no external target,
+  predictor build, model fit, long computation, or new evaluation was started.

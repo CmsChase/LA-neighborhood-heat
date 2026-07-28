@@ -18,6 +18,7 @@ unless their module interface is explicitly documented.
 | Frozen final evaluation | `final_evaluation_protocol.py`, `final_evaluation_targets.py`, `final_evaluation_reporting.py` |
 | Operations and interfaces | `execution_ownership.py`, `portable_relocation.py`, dashboard/watchdog modules, and `research_runner_ui.py` |
 | Public display export | `website_export.py` |
+| Cross-city continuation | `multicity/` planning, path isolation, and target-lock audit |
 
 ## Boundaries
 
@@ -27,6 +28,9 @@ unless their module interface is explicitly documented.
 - Generated values and provenance must never be hand-edited.
 - Final-evaluation and authorization modules are bound to the completed
   one-time transaction. Do not rename, relocate, or repurpose them.
+- New cross-city code must remain under isolated `multicity/` paths and may
+  reuse city-independent calculations without generalizing the frozen
+  `final_test_*` or `final_evaluation_*` transaction code.
 - Every change affecting time cutoffs, QA, splits, units, schemas, or locks
   requires focused regression tests and the full project checks.
 

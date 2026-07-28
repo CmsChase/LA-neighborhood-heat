@@ -29,6 +29,20 @@ Explore the 15 usable held-out dates in the
 The atlas includes a zoomable tract map, GEOID search, and a complete
 date-by-date record for each selected tract.
 
+## Cross-city continuation
+
+A separate continuation is now in draft planning. It asks whether a fixed
+model trained only with Los Angeles labels transfers to Phoenix, Houston, and
+Chicago, and whether calibrated uncertainty can identify predictions that
+should be withheld. The three external cities remain target-sealed; no new LST
+or target-QA value has been opened.
+
+Start with the
+[cross-city protocol](docs/MULTICITY_GENERALIZATION_PROTOCOL.md) and the
+[planning readiness record](manifests/multicity/PLAN_READINESS.json). This
+work uses isolated `multicity/` paths and cannot modify the completed 2025
+transaction.
+
 ## Six ways into the project
 
 | If you want to… | Start here |

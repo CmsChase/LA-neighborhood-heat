@@ -1,0 +1,143 @@
+city_files = [
+  "cities/los_angeles_ca.toml",
+  "cities/phoenix_az.toml",
+  "cities/houston_tx.toml",
+  "cities/chicago_il.toml",
+]
+
+[experiment]
+id = "la_to_three_city_zero_shot_v1"
+title = "Cross-city neighborhood surface-heat generalization"
+status = "draft_pre_registration"
+protocol_version = "0.1"
+research_question = "Can a fixed public-data model trained only with Los Angeles LST labels generalize to an unseen year in three label-unseen cities, and can calibrated uncertainty identify predictions that should be withheld?"
+analysis_unit = "city_x_2020_census_tract_x_physical_overpass_date"
+analysis_crs = "EPSG:5070"
+warm_season_months = [5, 6, 7, 8, 9, 10]
+source_city_id = "los_angeles_ca"
+external_city_ids = ["phoenix_az", "houston_tx", "chicago_il"]
+
+[locks]
+protocol_locked = false
+external_targets_unlocked = false
+external_target_values_read = false
+external_prediction_commit_exists = false
+allow_boundary_metadata_staging = true
+allow_predictor_construction = false
+allow_model_fitting = false
+allow_external_target_access = false
+require_one_time_external_claim = true
+
+[phase1_anchor]
+claim_id = "c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f"
+model_lock_commit_sha256 = "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b"
+evaluation_completion_commit_sha256 = "4cc8a5536cf1055d42876577f8d9f6300c799176779a7ec89cd1d3ed819d77a0"
+evaluation_output_commit_sha256 = "ee6d7bb6df917acf0340b3e91ff3189044ae8e9bec1ae32b888dbf8429a75432"
+evidence_zip_sha256 = "61a853c3eeea3f1ae92bf7999f0fd057018797f70498fcd017d1394dbd621b51"
+la_2025_is_known = true
+la_2025_allowed_in_new_confirmation = false
+
+[design]
+training_years = [2020, 2021, 2022, 2023]
+uncertainty_calibration_year = 2024
+external_confirmation_year = 2025
+sample_weighting = "equal_date_within_source_city"
+external_aggregation = "equal_city_then_equal_date"
+primary_comparison = "M2_transfer_vs_B1_transfer"
+zero_shot_external_labels = true
+external_city_preprocessing_allowed = false
+external_city_climatology_allowed = false
+
+[target]
+name = "qa_filtered_daytime_landsat_lst_c"
+interpretation = "surface_heat_hazard_proxy"
+is_air_temperature = false
+is_human_exposure = false
+is_health_outcome = false
+landsat_collection = "landsat-c2-l2"
+sensors = ["landsat-8", "landsat-9"]
+minimum_place_area_fraction = 0.50
+exclude_special_use_tracts = true
+minimum_valid_pixel_fraction = 0.60
+minimum_valid_pixels_per_tract = 20
+minimum_tract_footprint_fraction = 0.90
+minimum_cloud_distance_km = 1.0
+apply_st_uncertainty_threshold = false
+hotspot_fraction = 0.20
+
+[predictors]
+latest_dynamic_offset_days = -1
+forbid_city_id_as_feature = true
+forbid_tract_geoid_as_feature = true
+forbid_raw_coordinates = true
+forbid_target_city_labeled_statistics = true
+forbid_landsat_thermal_predictors = true
+forbid_same_scene_optical_predictors = true
+portable_water_distance_source_frozen = false
+portable_water_distance_definition = "nearest qualifying ocean_or_great_lakes shoreline"
+
+[models.b1_transfer]
+estimator = "ridge"
+ridge_alpha = 10.0
+feature_contract = "calendar_plus_21_lagged_daymet"
+
+[models.m2_transfer]
+estimator = "histogram_gradient_boosting_regressor"
+loss = "absolute_error"
+learning_rate = 0.05
+max_iter = 300
+max_leaf_nodes = 31
+min_samples_leaf = 50
+l2_regularization = 1.0
+early_stopping = false
+random_state = 20260719
+feature_contract = "portable_static_calendar_daymet_lagged_sentinel"
+
+[uncertainty]
+method = "conformalized_quantile_regression"
+nominal_coverage = 0.90
+lower_quantile = 0.05
+upper_quantile = 0.95
+calibration_city_id = "los_angeles_ca"
+calibration_year = 2024
+abstain_interval_width_quantile = 0.80
+minimum_external_city_retention = 0.60
+coverage_lower_gate = 0.85
+coverage_upper_gate = 0.95
+per_city_coverage_lower_gate = 0.80
+accepted_mae_improvement_gate = 0.10
+
+[evaluation]
+primary_metric = "equal_city_equal_date_mae"
+minimum_relative_mae_improvement = 0.10
+require_relative_improvement_ci_lower_above_zero = true
+require_no_external_city_point_degradation = true
+minimum_total_city_dates = 30
+minimum_dates_per_external_city = 8
+bootstrap_iterations = 10000
+bootstrap_method = "city_stratified_crossed_complete_date_x_5km_spatial_block"
+bootstrap_seed = 20260728
+confidence_level = 0.95
+hotspot_tie_break = "score_desc_tract_geoid_asc"
+
+[prospective]
+operational_forecast_claim_allowed = false
+current_daymet_pipeline_is_realtime = false
+hrrr_protocol_frozen = false
+future_operational_work_is_separate = true
+
+[sources]
+census_tract_layer = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/6"
+census_place_layer = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/26"
+landsat_stac_api = "https://planetarycomputer.microsoft.com/api/stac/v1"
+sentinel_stac_api = "https://planetarycomputer.microsoft.com/api/stac/v1"
+daymet_home = "https://daymet.ornl.gov/"
+portable_water_distance_source = "NOT_YET_FROZEN"
+
+[paths]
+raw_root = "data/raw/multicity"
+interim_root = "data/interim/multicity"
+processed_root = "data/processed/multicity"
+manifest_root = "manifests/multicity"
+report_root = "reports/multicity"
+export_root = "exports/multicity"

@@ -1,0 +1,9 @@
+[city]
+id = "chicago_il"
+name = "Chicago"
+state_fips = "17"
+census_place_geoid = "1714000"
+timezone = "America/Chicago"
+target_grid_crs = "EPSG:32616"
+role = "external_confirmation"
+target_values_status = "sealed"

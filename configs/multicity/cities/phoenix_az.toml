@@ -1,0 +1,9 @@
+[city]
+id = "phoenix_az"
+name = "Phoenix"
+state_fips = "04"
+census_place_geoid = "0455000"
+timezone = "America/Phoenix"
+target_grid_crs = "EPSG:32612"
+role = "external_confirmation"
+target_values_status = "sealed"

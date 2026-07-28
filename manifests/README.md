@@ -32,6 +32,13 @@ canonical state records are:
 package. The single claim is complete; these records do not authorize another
 evaluation.
 
+## Cross-city continuation planning
+
+`multicity/PLAN_READINESS.json` authenticates the draft experiment and the
+unchanged Phase I anchor. Its `planning_ready` state permits only boundary and
+public-metadata staging. It explicitly records that external targets,
+predictor construction, model fitting, and one-time evaluation remain locked.
+
 Generated manifests are marked `-text` in `.gitattributes` because exact bytes
 matter. Do not normalize line endings to silence a cosmetic diff warning. Use
 [`scripts/verify_final_evaluation_evidence.py`](../scripts/verify_final_evaluation_evidence.py)

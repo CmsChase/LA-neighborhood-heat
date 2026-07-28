@@ -15,6 +15,7 @@ setting after inspecting its result.
 | Robustness | `feature_ablation.toml`, `feature_ablation_analysis.toml`, `stqa2_sensitivity_analysis.toml`, `robustness_reconciliation.toml` |
 | Reporting | `development_report.toml` |
 | One-time held-out evaluation | `final_evaluation_2025.toml` |
+| Cross-city continuation planning | `multicity/experiment.toml` and `multicity/cities/*.toml` |
 
 `final_evaluation_2025.toml` binds exact input hashes, state-marker paths,
 target-cache paths, output names, metrics, bootstrap settings, and success
@@ -24,3 +25,8 @@ gates. It is frozen evidence, not a reusable template.
 it, create a second unlock, or change either file to obtain a different final
 result. Consult the [mandatory handoff](../docs/PROJECT_HANDOFF.md) before any
 configuration edit.
+
+The `multicity/` configuration is a separate draft continuation. Its initial
+lock permits only boundary and public-metadata staging. It does not authorize
+predictor construction, model fitting, external-city target access, or a
+real-time forecast claim.
