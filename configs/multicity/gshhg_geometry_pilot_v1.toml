@@ -1,0 +1,196 @@
+[pilot]
+schema_version = 1
+algorithm_version = "gshhg-geometry-pilot-v1"
+pilot_id = "target_blind_gshhg_geometry_comparison_v1"
+pilot_date = "2026-07-29"
+scope = "source-only geometry comparison for the four-city continuation"
+completion_state = "geometry_pilot_complete_source_not_frozen"
+
+[source]
+source_id = "gshhg_2_3_7_full_shapefile"
+publisher = "Generic Mapping Tools maintainers"
+dataset = "Global Self-consistent Hierarchical High-resolution Geography"
+version = "2.3.7"
+release_date = "2017-06-15"
+archive_path = "data/raw/multicity/water_distance/gshhg-shp-2.3.7.zip"
+archive_filename = "gshhg-shp-2.3.7.zip"
+official_url = "https://github.com/GenericMappingTools/gshhg-gmt/releases/download/2.3.7/gshhg-shp-2.3.7.zip"
+maintainer_mirror = "https://ftp.soest.hawaii.edu/gshhg/gshhg-shp-2.3.7.zip"
+release_record = "https://github.com/GenericMappingTools/gshhg-gmt/releases/tag/2.3.7"
+readme = "https://raw.githubusercontent.com/GenericMappingTools/gshhg-gmt/2.3.7/README.md"
+shapefile_documentation = "https://raw.githubusercontent.com/GenericMappingTools/gshhg-gmt/2.3.7/SHAPEFILES.TXT"
+conversion_source = "https://raw.githubusercontent.com/GenericMappingTools/gshhg-gmt/2.3.7/src/polygon_to_shape.c"
+license_reference = "https://raw.githubusercontent.com/GenericMappingTools/gshhg-gmt/2.3.7/LICENSE"
+license = "GNU Lesser General Public License v3"
+expected_bytes = 149157845
+expected_sha256 = "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41"
+published_md5 = "cb82015f8533f9611b4adba2c404ba44"
+expected_member_count = 402
+expected_total_uncompressed_bytes = 416243458
+expected_member_inventory_sha256 = "fa348ee1fd68c9b10251735b60f3afd83b230e660165502e493dcc6605519d05"
+
+[archive_security]
+allowed_compression_methods = [8]
+maximum_member_count = 402
+maximum_total_uncompressed_bytes = 420000000
+maximum_single_member_bytes = 170000000
+maximum_compression_ratio = 40.0
+reject_absolute_paths = true
+reject_parent_segments = true
+reject_backslashes = true
+reject_casefold_collisions = true
+reject_duplicate_members = true
+reject_encrypted_members = true
+reject_symbolic_links = true
+run_full_crc_check = true
+required_members = [
+  "README.TXT",
+  "SHAPEFILES.TXT",
+  "LICENSE.TXT",
+  "COPYING.LESSERv3",
+  "GSHHS_shp/f/GSHHS_f_L1.dbf",
+  "GSHHS_shp/f/GSHHS_f_L1.prj",
+  "GSHHS_shp/f/GSHHS_f_L1.shp",
+  "GSHHS_shp/f/GSHHS_f_L1.shx",
+  "GSHHS_shp/f/GSHHS_f_L2.dbf",
+  "GSHHS_shp/f/GSHHS_f_L2.prj",
+  "GSHHS_shp/f/GSHHS_f_L2.shp",
+  "GSHHS_shp/f/GSHHS_f_L2.shx",
+]
+
+[required_member_sha256]
+"README.TXT" = "8c83b0d9e861c3cf9390ccfcc28d57dd484b192e1767524e094c988ee9f84ac7"
+"SHAPEFILES.TXT" = "5aa063c6bbac1b8046fe05557bfb8ecc74be0bcea298d30101ed2d210da9d38e"
+"LICENSE.TXT" = "dc53a4833bf9121360a5286917683f041439327353ffe0231206c6b746005b81"
+"COPYING.LESSERv3" = "ea7d049c7705dc13afc202dd18e1827f3484f8212fd3fa7b82fc4a0c363432c9"
+"GSHHS_shp/f/GSHHS_f_L1.dbf" = "5f23e1e441810feddf95b59b222c5bba466635644f928150496f872c1aaaf742"
+"GSHHS_shp/f/GSHHS_f_L1.prj" = "98aaf3d1c0ecadf1a424a4536de261c3daf4e373697cb86c40c43b989daf52eb"
+"GSHHS_shp/f/GSHHS_f_L1.shp" = "121435427911ea80624802e0f352d777eaf6ba6966ca5f07e687650e95329fd9"
+"GSHHS_shp/f/GSHHS_f_L1.shx" = "9eeb611d9f7a8de8e647e39130791f96059e3b83a29fc4b9c6b19d1b61c24ac3"
+"GSHHS_shp/f/GSHHS_f_L2.dbf" = "7c18d4a32559dbbfbd16476707e04df31e3dd32e407ef6a648f37dad44d7b604"
+"GSHHS_shp/f/GSHHS_f_L2.prj" = "98aaf3d1c0ecadf1a424a4536de261c3daf4e373697cb86c40c43b989daf52eb"
+"GSHHS_shp/f/GSHHS_f_L2.shp" = "c18f0abb01802f27cd669c2c27b9ecbcd40519bb5295693f03bd3cf2cfd3d5c0"
+"GSHHS_shp/f/GSHHS_f_L2.shx" = "e370552d8d44c3e77947b140fcd1ebfffe40c405747d6b3a8a04c89655d880c4"
+
+[geometry_contract]
+ocean_layer = "GSHHS_shp/f/GSHHS_f_L1.shp"
+lake_layer = "GSHHS_shp/f/GSHHS_f_L2.shp"
+expected_crs = "EPSG:4326"
+expected_attribute_columns = [
+  "id",
+  "level",
+  "source",
+  "parent_id",
+  "sibling_id",
+  "area",
+]
+ocean_level = 1
+lake_level = 2
+ocean_rule = "polygon exteriors only; polygon interior rings are not ocean shoreline"
+great_lakes_rule = "five predeclared interior seeds must select five distinct positive-area L2 polygons"
+great_lakes_shore_rule = "selected L2 polygon exteriors only; L3 island shores are excluded from this four-city pilot"
+river_lake_rule = "exclude every L2 polygon with negative area before seed matching"
+dateline_rule = "remove only consecutive exterior segments whose two endpoints both lie on the same plus-or-minus 180 degree meridian"
+dateline_tolerance_degrees = 0.000000001
+reject_remaining_segment_longitude_jump_degrees = 180.0
+antarctica_rule = "L1 excludes Antarctica; L5 and L6 are outside this four-U.S.-city pilot"
+
+[distance_audit]
+search_radii_km = [64, 128, 256, 512, 1024, 2048]
+line_chunk_vertex_counts = [256, 1024, 4096]
+canonical_line_chunk_vertex_count = 1024
+query_chunk_sizes = [1, 2, 4]
+worker_counts = [1, 2, 4]
+floating_dtype = "float64"
+projected_distance_method = "exact Euclidean point-to-line distance in each predeclared metre-based city UTM CRS"
+native_prefilter_rule = "conservative longitude-latitude envelope before projection; never project the global layer at once"
+radius_acceptance_rule = "accept only when every diagnostic distance is finite and strictly less than the active radius"
+strtree_bruteforce_absolute_tolerance_m = 0.000001
+invariance_absolute_tolerance_m = 0.000001
+geodesic_reference_method = "pyproj.Geod WGS84 densification followed by point-to-vertex geodesic minimum"
+geodesic_densification_max_step_m = 50.0
+geodesic_absolute_tolerance_m = 100.0
+geodesic_relative_tolerance = 0.005
+
+[comparison]
+census_config = "configs/multicity/water_distance_review_v1.toml"
+census_layer = "tl_2019_us_coastline.shp"
+census_filter_field = "MTFCC"
+census_filter_value = "L4150"
+census_name_field_role = "audit-only; never used to include or exclude geometry"
+signed_difference_definition = "GSHHG diagnostic distance minus Census diagnostic distance"
+phoenix_must_be_reported_separately = true
+source_decision_allowed = false
+algorithm_decision_allowed = false
+predictor_construction_allowed = false
+
+[access_contract]
+source_archive_download_requests = 1
+pilot_check_network_requests = 0
+public_source_geometry_read_allowed = true
+fixed_unlabeled_source_geometry_distances_computed = true
+eligible_land_grid_opened = false
+distance_feature_surface_computed = false
+tract_aggregation_performed = false
+predictor_values_computed = false
+predictor_construction_performed = false
+model_fit_performed = false
+model_predictions_computed = false
+landsat_thermal_values_read = false
+landsat_target_qa_values_read = false
+external_lst_values_read = false
+external_target_files_opened = false
+final_evaluation_outputs_opened = false
+
+[[great_lake_seeds]]
+name = "Lake Superior"
+longitude = -87.5
+latitude = 47.5
+
+[[great_lake_seeds]]
+name = "Lake Michigan"
+longitude = -87.0
+latitude = 44.0
+
+[[great_lake_seeds]]
+name = "Lake Huron"
+longitude = -82.5
+latitude = 44.8
+
+[[great_lake_seeds]]
+name = "Lake Erie"
+longitude = -81.8
+latitude = 42.2
+
+[[great_lake_seeds]]
+name = "Lake Ontario"
+longitude = -77.8
+latitude = 43.7
+
+[[diagnostic_points]]
+city_id = "los_angeles_ca"
+label = "fixed unlabeled Los Angeles reference point"
+longitude = -118.2437
+latitude = 34.0522
+projected_crs = "EPSG:32611"
+
+[[diagnostic_points]]
+city_id = "phoenix_az"
+label = "fixed unlabeled Phoenix reference point"
+longitude = -112.0740
+latitude = 33.4484
+projected_crs = "EPSG:32612"
+
+[[diagnostic_points]]
+city_id = "houston_tx"
+label = "fixed unlabeled Houston reference point"
+longitude = -95.3698
+latitude = 29.7604
+projected_crs = "EPSG:32615"
+
+[[diagnostic_points]]
+city_id = "chicago_il"
+label = "fixed unlabeled Chicago reference point"
+longitude = -87.6298
+latitude = 41.8781
+projected_crs = "EPSG:32616"

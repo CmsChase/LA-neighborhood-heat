@@ -16,6 +16,7 @@ dependencies = [
   "planetary-computer>=1.0",
   "pyarrow>=18",
   "pyogrio>=0.10",
+  "pyproj>=3.7",
   "pystac-client>=0.8",
   "rasterio>=1.4",
   "requests>=2.32",
@@ -43,4 +44,3 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
-
