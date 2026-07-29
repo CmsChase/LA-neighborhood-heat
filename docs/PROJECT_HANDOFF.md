@@ -265,6 +265,14 @@ First safe implementation task: add authenticated, target-blind Phoenix source
 footprint discovery and synthetic tests. Do not run a target builder,
 construct predictors, fit a model, or start an old dashboard.
 
+Current local runtime note: port `8768` is closed and no continuation service
+is running. The Windows C drive reported 0 GB free during this checkpoint,
+while D had about 174 GB free. Tests succeeded by setting `TEMP` and `TMP` to
+`D:\HuaweiMoveData\Users\haora\Documents\ISEF\.tmp`, which is now ignored by
+Git. Browser-control and subagent startup may fail until C-drive space is
+restored; do not misdiagnose that host-storage problem as a scientific
+pipeline failure.
+
 ## Interactive results website
 
 The read-only held-out result explorer is deployed at
