@@ -1,0 +1,107 @@
+[amendment]
+schema_version = 2
+algorithm_version = "gshhg-geometry-pilot-v2"
+pilot_id = "target_blind_gshhg_geometry_comparison_v2"
+amendment_date = "2026-07-29"
+completion_state = "geometry_pilot_complete_source_not_frozen"
+base_config = "configs/multicity/gshhg_geometry_pilot_v1.toml"
+base_config_sha256 = "691e42c914ccff4a076097d83bc9a363cd07f508847c224f8268704f308a67f4"
+base_preregistration_commit = "08d69c3b4ba4c2d9e4ffb45e11727840ae3341b3"
+amendment_scope = "source-structure-only correction before any diagnostic distance was computed"
+all_v1_distance_points_thresholds_and_access_locks_unchanged = true
+
+[v1_failure]
+state = "geometry_pilot_v1_failed_before_distance"
+gshhg_geometry_layers_read = true
+diagnostic_distance_values_computed = false
+failure_gate_1 = "L1 contained one invalid source polygon, while v1 required every polygon to be valid without a predeclared repair."
+failure_gate_2 = "The five fixed Great Lakes seeds mapped to three distinct connected-water polygons, while v1 required five distinct polygons."
+l1_row_count = 179837
+l2_row_count = 6660
+l1_invalid_polygon_count = 1
+great_lake_seed_count = 5
+great_lake_distinct_polygon_count = 3
+
+[invalid_geometry_repair]
+allowed_invalid_polygon_count = 1
+source_id = "2380"
+level = 1
+source = "WVS"
+validity_reason = "Ring Self-intersection[-69.748512 43.761547]"
+expected_bounds = [-69.782806, 43.752232, -69.707344, 43.882225]
+original_normalized_wkb_sha256 = "7c9a9200df56e5777d16ac7bb65435b35a7ece7ad2e31d19a8ef3e4660b8a65a"
+repair_method = "shapely.make_valid, recursively retain polygonal components, union them, and discard non-polygonal zero-area remnants"
+expected_make_valid_container_type = "GeometryCollection"
+expected_polygonal_type = "Polygon"
+expected_polygonal_normalized_wkb_sha256 = "73f108f95a746b9ef730a22c732dd3b9dcfad2e6c31d6c6c2da61f6a008966cc"
+maximum_planar_area_delta_square_degrees = 0.000001
+all_other_l1_polygons_must_be_valid = true
+repair_selection_may_not_depend_on_city_or_distance = true
+
+[great_lakes_connected_water_contract]
+identity_rule = "all five unchanged v1 seeds must each match exactly one positive-area L2 polygon; the exact seed-to-source mapping below is required"
+named_lake_count = 5
+expected_distinct_source_polygon_count = 3
+expected_source_ids = ["180507", "180515", "180517"]
+negative_area_river_lakes_excluded_before_matching = true
+l3_island_shores_excluded = true
+source_union_rule = "deduplicate the three selected L2 polygons by source id, then use only their exteriors"
+
+[[great_lakes_connected_water_contract.seed_mapping]]
+name = "Lake Superior"
+source_id = "180507"
+
+[[great_lakes_connected_water_contract.seed_mapping]]
+name = "Lake Michigan"
+source_id = "180507"
+
+[[great_lakes_connected_water_contract.seed_mapping]]
+name = "Lake Huron"
+source_id = "180507"
+
+[[great_lakes_connected_water_contract.seed_mapping]]
+name = "Lake Erie"
+source_id = "180515"
+
+[[great_lakes_connected_water_contract.seed_mapping]]
+name = "Lake Ontario"
+source_id = "180517"
+
+[[great_lakes_connected_water_contract.source_polygons]]
+source_id = "180507"
+reported_area = 208200.247285
+expected_bounds = [-92.11, 41.62056, -79.65972, 49.02222]
+expected_coordinate_count = 10896
+expected_normalized_wkb_sha256 = "83d5ba2f0065ceb7851aaafe1cb6cb11745a205e09509e211a0309409022b39a"
+
+[[great_lakes_connected_water_contract.source_polygons]]
+source_id = "180515"
+reported_area = 27039.4355486
+expected_bounds = [-83.46417, 41.3875, -78.86139, 43.10278]
+expected_coordinate_count = 2585
+expected_normalized_wkb_sha256 = "858c762462d6573e3f2ce25356ba1e193c1ca47a1f1ecc327710a49ff1fe014a"
+
+[[great_lakes_connected_water_contract.source_polygons]]
+source_id = "180517"
+reported_area = 19716.0771535
+expected_bounds = [-79.77583, 43.18806, -75.76306, 44.5025]
+expected_coordinate_count = 2161
+expected_normalized_wkb_sha256 = "b99eceddc5b9edc2fea390e33e008923a877f3b2fbbff3dafb30aea7ca3d23f7"
+
+[amendment_access_record]
+public_source_geometry_read = true
+source_structure_values_read = true
+fixed_unlabeled_source_geometry_distances_computed = false
+census_comparison_distances_computed = false
+eligible_land_grid_opened = false
+distance_feature_surface_computed = false
+tract_aggregation_performed = false
+predictor_values_computed = false
+predictor_construction_performed = false
+model_fit_performed = false
+model_predictions_computed = false
+landsat_thermal_values_read = false
+landsat_target_qa_values_read = false
+external_lst_values_read = false
+external_target_files_opened = false
+final_evaluation_outputs_opened = false
