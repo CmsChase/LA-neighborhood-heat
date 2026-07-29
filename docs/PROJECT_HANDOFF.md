@@ -4,6 +4,10 @@ Last material update: 2026-07-29 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
+- Phoenix target-blind source-footprint discovery, metadata-only access audit,
+  planning-stage advancement, tests, and this handoff are in the commit with
+  subject `Complete Phoenix source footprint pilot`; obtain its exact hash with
+  `git log --oneline --grep="Complete Phoenix source footprint pilot" -1`
 - generic Census geography adapter, corrected Phoenix metadata-only pilot,
   source-response audit, and this handoff are in the commit with subject
   `Stage Phoenix geography pilot`; obtain its exact hash with
@@ -174,11 +178,15 @@ Authoritative draft files:
 - planning audit:
   `manifests/multicity/PLAN_READINESS.json`;
 - planning-audit internal commit:
-  `78cafaa41c4f45f8738e98fb8441e6efcbf0efe19d4a3f1226c874554fc3578d`;
+  `fe62d0ab6505d60879b12ba00b29183e7bff54944496faff2dd7adddd3366559`;
 - Phoenix geography audit:
   `manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json`;
 - Phoenix geography internal commit:
-  `3891c871ab5e5710bf6abdbc8f2a22a5a62db7962ee66bf235e1caee28301fea`.
+  `3891c871ab5e5710bf6abdbc8f2a22a5a62db7962ee66bf235e1caee28301fea`;
+- Phoenix source-footprint audit:
+  `manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json`;
+- Phoenix source-footprint internal commit:
+  `a6f287daa22c41d893519dc751848c426b819dcf4ae00d33012fbf11c6073ed7`.
 
 The audit reauthenticated the original model lock, final completion, exact 23
 target-cache commits, exact 21 final outputs, and the 21,787,327-byte evidence
@@ -228,29 +236,56 @@ recoverable only for failure audit under the ignored path
 The corrected code repairs individual geometries first, and a regression test
 locks that order.
 
+The Phoenix target-blind source-footprint pilot is also complete. It derived
+every footprint from the authenticated Phoenix boundary rather than copying
+Los Angeles constants. The authenticated snapshot records:
+
+- Landsat contributors `WRS2-036037`, `WRS2-037036`, and `WRS2-037037`;
+- Sentinel tiles `12SUB`, `12SUC`, `12SVB`, and `12SVC`;
+- 1,461 positive-intersection Daymet candidate cells, six Daymet granules, and
+  the one-cell halo window `y=5814..5888, x=3453..3500`;
+- terrain tiles `N33W112` and `N33W113`, verified by `HEAD` only; neither
+  content bytes nor raster schema is frozen.
+
+The bounding-box STAC queries returned 67 Landsat and 494 Sentinel metadata
+items; strict positive-intersection filtering retained 65 Landsat and 493
+Sentinel items in the source tables. Item assets and item links were excluded
+from the queries. The pilot returned zero STAC asset objects or asset hrefs,
+made zero signing calls and raster GET/payload requests, read zero raster
+payload bytes, and opened no external LST, target-QA, Sentinel-band, Daymet, or
+terrain values. It made two metadata-only terrain `HEAD` requests and
+constructed no predictor, prediction, score, or model.
+
+The source-footprint state is
+`complete_metadata_only_source_not_protocol_locked` and its source lock status
+is `pilot_snapshot_not_protocol_lock`. It is a reproducible pilot metadata
+snapshot, not a confirmatory source freeze, protocol lock, or target-access
+authorization. Its verifier strictly distinguishes booleans from integer
+counters and replays the saved STAC pagination, CMR response, Daymet grid, and
+terrain HEAD records into all six output tables.
+
 Current continuation verification:
 
-- focused plan/geography tests: 8 passed;
-- complete project suite: 755 passed in 162 seconds, with five existing
-  dependency/NumPy deprecation warnings;
-- full-repository Ruff: passed;
+- source-footprint tests: 12 passed;
+- combined plan/geography/source focused suite: 20 passed;
+- complete project suite: 767 passed in 235.5 seconds, with five existing
+  warnings (one Pydantic deprecation warning and four NumPy deprecation
+  warnings);
+- full-repository Ruff: all checks passed;
 - geography `--check-only` reauthenticated the exact raw/output hashes and
   code/runtime binding;
-- the updated planning audit reauthenticated Phase I plus the Phoenix pilot
-  and produced the internal commit shown above.
+- source-footprint `--check-only` reauthenticated its exact metadata
+  responses, tables, hashes, and code/runtime binding;
+- planning-audit `--check-only` reauthenticated Phase I plus both Phoenix
+  pilots and the internal commits shown above.
 
-The next safe engineering stage is Phoenix target-blind source-footprint
-discovery: derive WRS contributors, Sentinel MGRS tiles, Daymet cells, and
-terrain/source windows from the authenticated boundary, write them under
-isolated `multicity/` paths, and stop before Landsat thermal or target-QA
-access.
-
-Before predictor construction, freeze a nationwide source and algorithm that
-replaces the Phase I `Pacific coast distance` with distance to a qualifying
-ocean or Great Lakes shoreline. Before model fitting, promote the draft
-protocol through a separate review and lock. Before target access, create a
-new one-time external-evaluation implementation, prediction commitment, and
-explicit authorization; never reuse `final_test_*` or `final_evaluation_*`.
+The only safe next task is a read-only scientific review of a nationwide
+source and target-independent algorithm that replaces the Phase I
+`Pacific coast distance` with distance to a qualifying ocean or Great Lakes
+shoreline. Do not build predictors during that review. A source freeze,
+predictor construction, model fitting, protocol promotion, prediction
+commitment, and external target access all require later separate gates;
+never reuse `final_test_*` or `final_evaluation_*`.
 
 Safe read-only command:
 
@@ -259,19 +294,23 @@ Safe read-only command:
 .\.venv\Scripts\python scripts\stage_multicity_geography.py `
   --config configs\multicity\experiment.toml `
   --city phoenix_az --check-only
+.\.venv\Scripts\python scripts\stage_multicity_source_footprints.py `
+  --config configs\multicity\experiment.toml `
+  --source-config configs\multicity\source_footprints_v1.toml `
+  --city phoenix_az --check-only
 ```
 
-First safe implementation task: add authenticated, target-blind Phoenix source
-footprint discovery and synthetic tests. Do not run a target builder,
-construct predictors, fit a model, or start an old dashboard.
+First safe task: review candidate nationwide ocean/Great-Lakes shoreline
+sources and the single target-independent distance algorithm that would be
+used in all four cities. Do not freeze a source in passing, download raster
+assets, run a target builder, construct predictors, fit a model, open target
+or QA values, or start an old dashboard.
 
 Current local runtime note: port `8768` is closed and no continuation service
-is running. The Windows C drive reported 0 GB free during this checkpoint,
-while D had about 174 GB free. Tests succeeded by setting `TEMP` and `TMP` to
-`D:\HuaweiMoveData\Users\haora\Documents\ISEF\.tmp`, which is now ignored by
-Git. Browser-control and subagent startup may fail until C-drive space is
-restored; do not misdiagnose that host-storage problem as a scientific
-pipeline failure.
+is running. The Windows C drive has about 8.98 GB free and D has about
+173.67 GB free at this checkpoint. The ignored D-drive temporary directory
+`D:\HuaweiMoveData\Users\haora\Documents\ISEF\.tmp` remains available when a
+large validation run needs `TEMP` and `TMP` off C.
 
 ## Interactive results website
 

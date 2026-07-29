@@ -10,8 +10,8 @@ from la_heat.multicity.config import MulticityPlan, load_multicity_plan
 from la_heat.multicity.workspace import MulticityWorkspace
 from la_heat.provenance import atomic_json, canonical_sha256, sha256_file
 
-PLAN_AUDIT_SCHEMA_VERSION: Final = 1
-PLAN_AUDIT_ALGORITHM_VERSION: Final = "multicity-planning-readiness-v1"
+PLAN_AUDIT_SCHEMA_VERSION: Final = 2
+PLAN_AUDIT_ALGORITHM_VERSION: Final = "multicity-planning-readiness-v2"
 PLAN_AUDIT_CODE_PATHS: Final = (
     "src/la_heat/multicity/config.py",
     "src/la_heat/multicity/workspace.py",
@@ -185,7 +185,55 @@ def audit_multicity_plan(
             ),
         }
 
+    phoenix_source_footprints: dict[str, Any] | None = None
+    if phoenix_geography is not None:
+        phoenix_workspace = workspace.city("phoenix_az")
+        source_manifest_path = (
+            phoenix_workspace.manifests
+            / "source_footprints"
+            / "SOURCE_FOOTPRINTS.json"
+        )
+        if source_manifest_path.is_file():
+            from la_heat.multicity.source_footprints import (
+                verify_city_source_footprints,
+            )
+
+            verified_sources = verify_city_source_footprints(
+                plan.path,
+                "phoenix_az",
+            )
+            families = verified_sources["source_families"]
+            phoenix_source_footprints = {
+                "state": verified_sources["state"],
+                "path": source_manifest_path.relative_to(
+                    workspace.project_root
+                ).as_posix(),
+                "file_sha256": sha256_file(source_manifest_path),
+                "commit_sha256": verified_sources["commit_sha256"],
+                "source_family_counts": {
+                    name: int(record["member_count"])
+                    for name, record in families.items()
+                },
+                "landsat_wrs": families["landsat_wrs"]["member_ids"],
+                "sentinel_mgrs": families["sentinel_mgrs"]["member_ids"],
+                "terrain_tiles": families["terrain_windows"]["member_ids"],
+                "target_or_asset_values_read": False,
+            }
+        else:
+            partial_roots = (
+                phoenix_workspace.raw / "source_footprints",
+                phoenix_workspace.processed / "source_footprints",
+            )
+            if any(
+                root.exists() and any(path.is_file() for path in root.rglob("*"))
+                for root in partial_roots
+            ):
+                raise MulticityPlanAuditError(
+                    "Phoenix source-footprint files exist without a commit manifest."
+                )
+
     if phoenix_geography is None:
+        planning_stage = "awaiting_phoenix_geography"
         blockers = [
             "freeze_portable_water_distance_source_and_algorithm",
             "implement_and_test_generic_census_place_tract_adapter",
@@ -193,18 +241,28 @@ def audit_multicity_plan(
             "promote_protocol_from_draft_with_separate_lock",
         ]
         next_safe_stage = "phoenix_boundary_and_metadata_only_pilot"
-    else:
+    elif phoenix_source_footprints is None:
+        planning_stage = "ready_for_phoenix_source_footprints"
         blockers = [
             "freeze_portable_water_distance_source_and_algorithm",
             "complete_phoenix_target_blind_source_footprint_discovery",
             "promote_protocol_from_draft_with_separate_lock",
         ]
         next_safe_stage = "phoenix_target_blind_source_footprint_discovery"
+    else:
+        planning_stage = "phoenix_source_footprints_complete_metadata_only"
+        blockers = [
+            "freeze_portable_water_distance_source_and_algorithm",
+            "freeze_exact_portable_predictor_source_and_calibration_contract",
+            "promote_protocol_from_draft_with_separate_lock",
+        ]
+        next_safe_stage = "review_portable_water_distance_source_and_algorithm"
 
     payload: dict[str, Any] = {
         "schema_version": PLAN_AUDIT_SCHEMA_VERSION,
         "algorithm_version": PLAN_AUDIT_ALGORITHM_VERSION,
         "state": "planning_ready",
+        "planning_stage": planning_stage,
         "experiment_id": plan.experiment_id,
         "config_semantic_sha256": plan.semantic_sha256,
         "config_files": plan.file_records,
@@ -260,15 +318,22 @@ def audit_multicity_plan(
             ).as_posix(),
         },
         "phoenix_geography_pilot": phoenix_geography,
+        "phoenix_source_footprint_pilot": phoenix_source_footprints,
         "blockers_before_predictor_build": blockers,
         "next_safe_stage": next_safe_stage,
     }
     payload["commit_sha256"] = canonical_sha256(payload)
+    destination = (
+        Path(output_path)
+        if output_path is not None
+        else workspace.manifest_root / "PLAN_READINESS.json"
+    )
     if write:
-        destination = (
-            Path(output_path)
-            if output_path is not None
-            else workspace.manifest_root / "PLAN_READINESS.json"
-        )
         atomic_json(payload, destination)
+    else:
+        committed, _ = _committed_json(destination)
+        if canonical_sha256(committed) != canonical_sha256(payload):
+            raise MulticityPlanAuditError(
+                f"Readiness record is stale or changed: {destination}"
+            )
     return payload

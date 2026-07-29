@@ -222,7 +222,8 @@ contract blocks. Expected atomic tasks are:
 
 ## Current authorization
 
-At draft version 0.1, only these actions are authorized:
+At draft version 0.1, the following completed metadata-pilot actions were
+authorized:
 
 1. authenticate the completed Phase I evidence;
 2. stage official Census boundary and public source metadata;
@@ -239,9 +240,31 @@ found 603 bbox candidates, 389 with positive city overlap, 376 meeting the
 50% area rule, and one qualifying `98xxxx` special-use tract; the resulting
 primary universe therefore contains 375 tracts, all in county FIPS `013`.
 The manifest state is `pilot_complete_source_not_protocol_locked` and records
-all target/model/predictor access flags as false. The next authorized work is
-target-blind discovery of Phoenix source footprints (for example WRS, MGRS,
-Daymet, and terrain coverage), not predictor construction.
+all target/model/predictor access flags as false.
+
+The Phoenix source-footprint portion of item 4 also completed on 2026-07-29.
+The authenticated metadata snapshot records:
+
+- Landsat contributors `WRS2-036037`, `WRS2-037036`, and `WRS2-037037`;
+- Sentinel tiles `12SUB`, `12SUC`, `12SVB`, and `12SVC`;
+- 1,461 positive-intersection Daymet candidate cells, six granules, and the
+  one-cell halo window `y=5814..5888, x=3453..3500`;
+- terrain tiles `N33W112` and `N33W113`, verified by `HEAD` only.
+
+The STAC queries returned 67 Landsat and 494 Sentinel items before strict
+positive-intersection filtering. Item assets and item links were excluded from
+those responses. No STAC asset object or asset href was returned or read, no
+signing call or raster GET/payload request occurred, and zero raster bytes,
+external target/QA values, predictors, predictions, or models were opened or
+constructed. Two terrain objects were checked by metadata-only `HEAD`
+requests.
+
+This is `complete_metadata_only_source_not_protocol_locked`: a reproducible
+pilot metadata snapshot, not a confirmatory source freeze or protocol lock.
+The only safe next task is review of a nationwide ocean/Great-Lakes
+water-distance source and an identical target-independent algorithm for all
+four cities. That review may not construct predictors. Predictor construction,
+source freeze, model fitting, and target access remain separately locked.
 
 ## Official source anchors
 

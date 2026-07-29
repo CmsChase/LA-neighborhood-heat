@@ -51,6 +51,22 @@ records the exact source responses, geometry hashes, selection audit, and the
 fact that no external LST or target-QA value was read. The source remains a
 pilot snapshot rather than a locked confirmatory input.
 
+The Phoenix source-footprint pilot is also complete at metadata-only scope.
+Its authenticated
+[source-footprint manifest](manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json)
+records three Landsat WRS contributors, four Sentinel MGRS tiles, 1,461
+positive-intersection Daymet candidate cells with a one-cell halo window, six
+Daymet granules, and two terrain tiles verified by `HEAD` only. The STAC
+queries returned 67 Landsat and 494 Sentinel items while excluding item assets
+and item links. No STAC asset href, signed request, raster GET/payload,
+target/QA value, predictor, prediction, or model was opened or constructed.
+This remains a pilot metadata snapshot, not a source or protocol lock.
+
+The only safe next continuation task is to review a nationwide
+ocean/Great-Lakes water-distance source and target-independent algorithm.
+Predictor construction remains prohibited, and any later source freeze
+requires its own gate.
+
 ## Six ways into the project
 
 | If you want to… | Start here |

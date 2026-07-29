@@ -1,0 +1,56 @@
+[stage]
+schema_version = 1
+algorithm_version = "multicity-source-footprints-v1"
+city_id = "phoenix_az"
+status = "pilot_metadata_only_not_protocol_lock"
+analysis_crs = "EPSG:5070"
+confirmation_year = 2025
+warm_season_months = [5, 6, 7, 8, 9, 10]
+
+[landsat]
+provider = "USGS via Microsoft Planetary Computer"
+api = "https://planetarycomputer.microsoft.com/api/stac/v1"
+collection = "landsat-c2-l2"
+local_start_date = "2025-05-01"
+local_end_date = "2025-10-31"
+platforms = ["landsat-8", "landsat-9"]
+collection_category = "T1"
+correction = "L2SP"
+page_limit = 100
+license_note = "U.S. government public data"
+
+[sentinel]
+provider = "ESA Copernicus via Microsoft Planetary Computer"
+api = "https://planetarycomputer.microsoft.com/api/stac/v1"
+collection = "sentinel-2-l2a"
+local_start_date = "2025-03-02"
+local_end_date = "2025-10-30"
+platforms = ["sentinel-2a", "sentinel-2b", "sentinel-2c"]
+page_limit = 100
+license_note = "ESA Copernicus Sentinel data terms"
+
+[daymet]
+provider = "NASA ORNL DAAC"
+doi = "10.3334/ORNLDAAC/2129"
+collection_concept_id = "C2532426483-ORNL_CLOUD"
+cmr_granules_url = "https://cmr.earthdata.nasa.gov/search/granules.json"
+year = 2025
+variables = ["tmax", "tmin", "prcp", "srad", "vp", "dayl"]
+source_start_date = "2025-04-24"
+source_end_date = "2025-10-30"
+window_halo_cells = 1
+license_note = "NASA Earthdata terms"
+
+[terrain]
+provider = "NASA/USGS via OpenTopography"
+dataset = "NASA SRTM Global 1 arc second V003"
+opentopo_id = "OTSRTM.082015.4326.1"
+dataset_doi = "10.5069/G9445JDF"
+base_url = "https://opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm"
+filename_suffix = ".tif"
+nominal_resolution_arc_seconds = 1
+nominal_shape = [3601, 3601]
+vertical_datum = "EGM96 orthometric height"
+slope_halo_m = 30
+probe_method = "HEAD"
+license_note = "Cite NASA LP DAAC and OpenTopography"

@@ -1436,3 +1436,36 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   The updated planning readiness advances the next safe stage to Phoenix
   target-blind source-footprint discovery while leaving all external targets
   and computation locks closed.
+
+## 2026-07-29 - Complete the Phoenix source-footprint metadata pilot
+
+- Decision: complete the authorized Phoenix source-footprint stage as a
+  target-blind metadata snapshot only. The authenticated record is
+  `manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json`;
+  its internal commit is
+  `a6f287daa22c41d893519dc751848c426b819dcf4ae00d33012fbf11c6073ed7`.
+- Boundary-derived discovery found Landsat contributors `WRS2-036037`,
+  `WRS2-037036`, and `WRS2-037037`; Sentinel tiles `12SUB`, `12SUC`,
+  `12SVB`, and `12SVC`; 1,461 positive-intersection Daymet candidate cells
+  within halo window `y=5814..5888, x=3453..3500`; six Daymet granules; and
+  terrain tiles `N33W112` and `N33W113`, verified by `HEAD` only.
+- The STAC queries returned 67 Landsat and 494 Sentinel metadata items. Item
+  assets and item links were excluded. No STAC asset object or asset href was
+  returned or read, no asset signing or raster GET/payload request occurred,
+  and zero raster bytes, Landsat thermal/target-QA values, predictors,
+  predictions, scores, or models were read or constructed. Two terrain
+  objects were checked by metadata-only `HEAD` requests.
+- The final verifier strictly separates booleans from integer counters,
+  reconstructs the STAC POST-pagination chain and item tables, parses the
+  frozen CMR response, rebuilds the Daymet cells, and binds the exact terrain
+  HEAD records to the derived tiles. The planning `--check-only` path also
+  compares the complete recomputed readiness payload with the saved manifest.
+- Verification passed 12 source-footprint tests, 20 combined multicity tests,
+  all 767 project tests in 235.5 seconds, and full-repository Ruff.
+- This result is a pilot metadata snapshot, not a source freeze or protocol
+  lock. The planning audit remains internal and now authenticates commit
+  `fe62d0ab6505d60879b12ba00b29183e7bff54944496faff2dd7adddd3366559`.
+- The only safe next task is to review a nationwide ocean/Great-Lakes
+  water-distance source and a single target-independent distance algorithm.
+  That review does not authorize predictor construction, model fitting, or
+  external target access.

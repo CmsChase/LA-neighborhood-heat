@@ -1,7 +1,8 @@
 {
-  "schema_version": 1,
-  "algorithm_version": "multicity-planning-readiness-v1",
+  "schema_version": 2,
+  "algorithm_version": "multicity-planning-readiness-v2",
   "state": "planning_ready",
+  "planning_stage": "phoenix_source_footprints_complete_metadata_only",
   "experiment_id": "la_to_three_city_zero_shot_v1",
   "config_semantic_sha256": "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c",
   "config_files": {
@@ -36,12 +37,12 @@
       "bytes": 2882
     },
     "src/la_heat/multicity/plan_audit.py": {
-      "sha256": "fc1ef54524db95e69b2f9cc116e197db8f33dfe85afb5525ee0755f3bfa20fea",
-      "bytes": 11421
+      "sha256": "334476d33645f2b95c8f7bb83d41bd2ea226da5ab5e14a6a3f0f18bd01f9ef3c",
+      "bytes": 14313
     },
     "scripts/audit_multicity_plan.py": {
-      "sha256": "23219df86adee929552a2daec0f5851a79ff7680f08af072ad45095d5a85e567",
-      "bytes": 1961
+      "sha256": "7c992fb4fd184113881c9cd463541506928356399a02d7b32d20e1cf52cd5f54",
+      "bytes": 2266
     }
   },
   "phase1_anchor": {
@@ -134,11 +135,39 @@
     "primary_tract_count": 375,
     "target_or_qa_values_read": false
   },
+  "phoenix_source_footprint_pilot": {
+    "state": "complete_metadata_only_source_not_protocol_locked",
+    "path": "manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json",
+    "file_sha256": "76a667f559a98bf6281d7f8af71fab18c2fac8d3701ea91813eef8ff8ef479df",
+    "commit_sha256": "a6f287daa22c41d893519dc751848c426b819dcf4ae00d33012fbf11c6073ed7",
+    "source_family_counts": {
+      "landsat_wrs": 3,
+      "sentinel_mgrs": 4,
+      "daymet_cells": 1461,
+      "terrain_windows": 2
+    },
+    "landsat_wrs": [
+      "WRS2-036037",
+      "WRS2-037036",
+      "WRS2-037037"
+    ],
+    "sentinel_mgrs": [
+      "MGRS-12SUB",
+      "MGRS-12SUC",
+      "MGRS-12SVB",
+      "MGRS-12SVC"
+    ],
+    "terrain_tiles": [
+      "N33W112",
+      "N33W113"
+    ],
+    "target_or_asset_values_read": false
+  },
   "blockers_before_predictor_build": [
     "freeze_portable_water_distance_source_and_algorithm",
-    "complete_phoenix_target_blind_source_footprint_discovery",
+    "freeze_exact_portable_predictor_source_and_calibration_contract",
     "promote_protocol_from_draft_with_separate_lock"
   ],
-  "next_safe_stage": "phoenix_target_blind_source_footprint_discovery",
-  "commit_sha256": "78cafaa41c4f45f8738e98fb8441e6efcbf0efe19d4a3f1226c874554fc3578d"
+  "next_safe_stage": "review_portable_water_distance_source_and_algorithm",
+  "commit_sha256": "fe62d0ab6505d60879b12ba00b29183e7bff54944496faff2dd7adddd3366559"
 }

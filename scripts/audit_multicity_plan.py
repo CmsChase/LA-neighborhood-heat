@@ -36,7 +36,13 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    args = build_parser().parse_args(argv)
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    if args.check_only and args.skip_evidence_zip_hash:
+        parser.error(
+            "--check-only requires the evidence ZIP byte hash so the existing "
+            "readiness record can be compared exactly."
+        )
     payload = audit_multicity_plan(
         args.config,
         output_path=args.output,
@@ -47,6 +53,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         json.dumps(
             {
                 "state": payload["state"],
+                "planning_stage": payload["planning_stage"],
                 "experiment_id": payload["experiment_id"],
                 "cities": [city["id"] for city in payload["cities"]],
                 "external_targets_unlocked": payload["locks"][

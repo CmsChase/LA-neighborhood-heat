@@ -17,6 +17,7 @@ history is intentionally separated from the short project landing page.
 | Where are the paper, poster, and deck? | [PUBLICATION_MATERIALS.md](PUBLICATION_MATERIALS.md) |
 | What is the proposed cross-city continuation? | [MULTICITY_GENERALIZATION_PROTOCOL.md](MULTICITY_GENERALIZATION_PROTOCOL.md) |
 | What did the Phoenix geography pilot produce? | [Phoenix geography manifest](../manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json) |
+| What source footprints did the Phoenix metadata pilot discover? | [Phoenix source-footprint manifest](../manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json) |
 
 ## Scientific contracts
 
@@ -30,7 +31,9 @@ history is intentionally separated from the short project landing page.
   project-result evidence.
 - [MULTICITY_GENERALIZATION_PROTOCOL.md](MULTICITY_GENERALIZATION_PROTOCOL.md):
   draft zero-shot transfer and uncertainty study; its external targets remain
-  locked.
+  locked. The completed Phoenix geography and source-footprint metadata
+  snapshots are pilots, not source or protocol locks, and do not authorize
+  predictor construction.
 
 ## Execution and status
 
