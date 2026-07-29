@@ -20,6 +20,7 @@ history is intentionally separated from the short project landing page.
 | What source footprints did the Phoenix metadata pilot discover? | [Phoenix source-footprint manifest](../manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json) |
 | Why is the portable water-distance source not frozen yet? | [PORTABLE_WATER_DISTANCE_REVIEW.md](PORTABLE_WATER_DISTANCE_REVIEW.md) |
 | What did the global shoreline geometry pilot find? | [GSHHG_GEOMETRY_PILOT_REPORT.md](GSHHG_GEOMETRY_PILOT_REPORT.md) |
+| Why was the portable source-and-algorithm freeze deferred? | [PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md](PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md) |
 
 ## Scientific contracts
 
@@ -43,6 +44,9 @@ history is intentionally separated from the short project landing page.
   immutable V1 preregistration and failure, source-structure-only V2
   amendment, exact GSHHG archive audit, fixed-point Census comparison, and the
   remaining source/algorithm freeze gate.
+- [PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md](PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md):
+  authenticated deferred decision, unresolved L3 hierarchy gap, license and
+  claim boundaries, closed access ledger, and the next preregistration gate.
 
 ## Execution and status
 

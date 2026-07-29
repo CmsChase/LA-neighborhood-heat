@@ -1,8 +1,8 @@
 {
-  "schema_version": 4,
-  "algorithm_version": "multicity-planning-readiness-v4",
+  "schema_version": 5,
+  "algorithm_version": "multicity-planning-readiness-v5",
   "state": "planning_ready",
-  "planning_stage": "gshhg_geometry_pilot_complete_source_not_frozen",
+  "planning_stage": "portable_water_distance_freeze_deferred_pending_l3_hierarchy_audit",
   "experiment_id": "la_to_three_city_zero_shot_v1",
   "config_semantic_sha256": "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c",
   "config_files": {
@@ -36,6 +36,10 @@
       "sha256": "c0f41f77d0c87a5ca09de81c2ec0ca2ae489633ac3f785648fbeb5f9f67e67ff",
       "bytes": 4536
     },
+    "configs/multicity/portable_water_distance_freeze_decision_v1.toml": {
+      "sha256": "31b0bb1d889d1969b24a0dc848ef12a451e1270983d688ae71773573adf24e16",
+      "bytes": 6792
+    },
     "configs/multicity/water_distance_review_v1.toml": {
       "sha256": "1328f087e7a2b44ef67275979726046d4e6ea7be48765fdc9d39dcb783f1d3a1",
       "bytes": 7102
@@ -48,13 +52,17 @@
       "sha256": "54fa2b1b2f8f043e7e91a8160f9d3cce8f939d5ca5450d4f1379cbc76e37b7c2",
       "bytes": 96542
     },
+    "src/la_heat/multicity/portable_water_distance_freeze.py": {
+      "sha256": "62857afe7075e981bb8feccb00cd4d6f3b48625ed2f2aefa43131010a9527f35",
+      "bytes": 30093
+    },
     "src/la_heat/multicity/workspace.py": {
       "sha256": "8afa216929d00543b2397958755cb7f01a4a42489606517c44bc93921d421b7f",
       "bytes": 2882
     },
     "src/la_heat/multicity/plan_audit.py": {
-      "sha256": "00cefd8ff3d06f798953660e6b562409afe06e9e3aea508db837e748bce24a8a",
-      "bytes": 19877
+      "sha256": "c5e91398c6b07f6625716c2e0dcd0eea262172b16b909d62ba2c39b6649808d8",
+      "bytes": 25165
     },
     "src/la_heat/multicity/water_distance_review.py": {
       "sha256": "e3c518e368188e7afa94ea081ca1ace7625b7cb0a00ddd3399126b709f24c334",
@@ -63,6 +71,10 @@
     "scripts/audit_multicity_plan.py": {
       "sha256": "7c992fb4fd184113881c9cd463541506928356399a02d7b32d20e1cf52cd5f54",
       "bytes": 2266
+    },
+    "scripts/audit_multicity_portable_water_distance_freeze.py": {
+      "sha256": "b8c99e41ad273fae1709a8ea683e068d44340f63e92664095302c9ff8c834542",
+      "bytes": 1844
     },
     "scripts/audit_multicity_water_distance_review.py": {
       "sha256": "85ac9e8f8986320e5287cafc4a992beb4bb6036e4d49620f7cbd03049fdf50a8",
@@ -141,6 +153,8 @@
   "authorized_now": {
     "boundary_and_public_metadata_staging": true,
     "target_blind_source_geometry_review": false,
+    "target_blind_gshhg_l3_hierarchy_preregistration": true,
+    "target_blind_gshhg_l3_hierarchy_geometry_read": false,
     "portable_predictor_source_freeze": false,
     "predictor_construction": false,
     "model_fitting": false,
@@ -213,11 +227,53 @@
     "predictor_build_authorized": false,
     "target_or_qa_values_read": false
   },
+  "portable_water_distance_freeze_decision": {
+    "state": "decision_complete_freeze_deferred",
+    "path": "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION.json",
+    "file_sha256": "226788498dfd8c9eb0aa004d60667dfa712926d8bf443fd710e17a7f5f8d5805",
+    "commit_sha256": "00e8ed677035f8f8315b7171fa8c969ca6c50c14b0114eff9e5024bb1c7b99b5",
+    "outcome": "deferred_pending_gshhg_l3_hierarchy_contract",
+    "source_lock_created": false,
+    "algorithm_lock_created": false,
+    "feature_names_frozen": false,
+    "predictor_build_authorized": false,
+    "protocol_lock_created": false,
+    "next_gate": {
+      "stage_id": "preregister_target_blind_gshhg_l3_hierarchy_audit",
+      "preregistration_must_be_committed_before_l3_geometry_read": true,
+      "source_only": true,
+      "selected_l2_source_ids": [
+        180507,
+        180515,
+        180517
+      ],
+      "candidate_algorithm": "L1 ocean exteriors plus the three selected L2 connected-water exteriors plus every directly parented L3 island exterior",
+      "include_direct_l3_descendants": true,
+      "exclude_l4_pond_shores": true,
+      "selection_may_use_city_target_or_distance": false,
+      "require_l3_member_hash_schema_crs_and_semantic_audit": true,
+      "require_direct_parent_id_audit": true,
+      "require_real_l3_component_probe": true,
+      "require_numerical_gate_replay": true,
+      "require_zero_target_or_qa_access": true,
+      "require_zero_eligible_land_grid_access": true,
+      "require_zero_feature_surface_or_tract_aggregation": true,
+      "require_zero_predictor_model_prediction_or_final_evaluation_access": true,
+      "audit_pass_automatically_freezes_source_or_algorithm": false,
+      "next_decision_after_pass": "separate_portable_water_distance_source_and_algorithm_freeze_decision",
+      "provisional_feature_names": [
+        "gshhg_ocean_great_lakes_shoreline_distance_mean_km",
+        "gshhg_ocean_great_lakes_shoreline_distance_p10_km"
+      ]
+    },
+    "target_or_qa_values_read": false
+  },
   "blockers_before_predictor_build": [
+    "resolve_and_audit_gshhg_l3_lake_island_shoreline_contract",
     "freeze_portable_water_distance_source_and_algorithm",
     "freeze_exact_portable_predictor_source_and_calibration_contract",
     "promote_protocol_from_draft_with_separate_lock"
   ],
-  "next_safe_stage": "portable_water_distance_source_and_algorithm_freeze_decision",
-  "commit_sha256": "8444a16998699e39a51b2e0bf8daa62a9bd4365dfdb926cadeb315c6952de472"
+  "next_safe_stage": "preregister_target_blind_gshhg_l3_hierarchy_audit",
+  "commit_sha256": "ebe371cdb8e9dc39c086fc394ce33d4d113abc44d83e2289bef6c74988021001"
 }

@@ -19,7 +19,8 @@ Tests mirror modules under [`src/la_heat`](../src/la_heat/README.md).
   water-distance review; strict GSHHG ZIP safety, V1 structural failure,
   predeclared V2 repair and connected-lake identity, antimeridian seam removal,
   STRtree/brute-force parity, radius/chunk/worker invariance, geodesic
-  comparison, and non-frozen planning-state advancement.
+  comparison, append-only deferred-freeze authentication, strict lock/type
+  checks, and advancement only to L3 audit preregistration.
 
 Run the complete checks from the repository root:
 

@@ -1561,3 +1561,54 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   `8444a16998699e39a51b2e0bf8daa62a9bd4365dfdb926cadeb315c6952de472`
   advances only to the separate freeze decision while leaving every source,
   predictor, model, target, and evaluation permission false.
+
+## 2026-07-29 - Defer portable water-distance freeze for an L3 audit
+
+- Decision: retain the exact GSHHG 2.3.7 archive as the preferred candidate,
+  but reject immediate source-and-algorithm freeze of the current
+  L1/L2-exterior contract. The authenticated append-only decision state is
+  `decision_complete_freeze_deferred`, with outcome
+  `deferred_pending_gshhg_l3_hierarchy_contract`.
+- The blocking scientific gap is narrow and explicit. GSHHG defines L3 as
+  islands in lakes, while the completed V2 pilot excluded L3 shores. The four
+  fixed city points test source semantics and numerical stability but do not
+  prove that no eligible-land cell lies on a Great Lakes island. A natural
+  language feature called ocean-or-Great-Lakes shoreline distance cannot
+  silently omit those shores.
+- The decision binds the completed source review, V1 failure, V2 pilot, every
+  V2 numerical gate, the exact 149,157,845-byte archive under SHA-256
+  `8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41`,
+  and selected L2 source IDs `180507`, `180515`, and `180517`.
+- The source candidate is not rejected, but it is limited to a possible
+  historical cartographic covariate for the four predeclared study cities,
+  conditional on their later authenticated and frozen eligible-land supports.
+  Nationwide/all-city, current-day, real-time, uniform 30 m,
+  physical-ground-truth, or future-city claims are prohibited without new
+  audits.
+- The archive notice, historical README, and GitHub repository UI label use
+  non-identical LGPL-version wording. The record therefore uses the LGPL 3.0
+  common-denominator compliance baseline pending legal review and authorizes
+  no archive or modified-geometry redistribution under current project
+  policy. Future redistribution must preserve the copyright/permission notice
+  and add the official GPLv3 text missing from the archive.
+- The only next safe stage is
+  `preregister_target_blind_gshhg_l3_hierarchy_audit`. That preregistration
+  must be committed before opening L3 geometry. The candidate rule is to add
+  every direct L3 descendant exterior of the three selected L2 polygons,
+  exclude L4, and replay the source-only numerical gates. A passing audit will
+  still require a second freeze decision.
+- The decision program made zero network requests, authenticated the local ZIP
+  bytes without opening an archive member, and opened no L3 geometry,
+  eligible-land grid, target, target-QA, feature surface, predictor, model,
+  prediction, or final-evaluation output. Every portable-water-distance and
+  multicity-continuation source, algorithm, feature-name, predictor, model,
+  protocol, and external-target permission remains closed.
+- The canonical manifest internal commit is
+  `00e8ed677035f8f8315b7171fa8c969ca6c50c14b0114eff9e5024bb1c7b99b5`.
+  Planning schema v5 advances only to the preregistration gate under internal
+  commit
+  `ebe371cdb8e9dc39c086fc394ce33d4d113abc44d83e2289bef6c74988021001`.
+- Verification passed all 16 deferred-decision tests, all 50 focused
+  GSHHG/water-review/decision/planning tests, all 813 project tests in 175.4
+  seconds with the same five existing deprecation warnings, and
+  full-repository Ruff.

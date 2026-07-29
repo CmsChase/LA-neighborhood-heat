@@ -17,7 +17,7 @@ many historical stages are already complete.
 | Final-test predictor preparation | files beginning `build_final_test_`, `stage_final_test_`, `run_final_test_`, and `audit_final_test_` |
 | Final evaluation and evidence | `prepare_final_evaluation.py`, `authorize_final_test_2025.py`, `execute_locked_final_evaluation.py`, `build_final_evaluation_evidence.py`, `verify_final_evaluation_evidence.py` |
 | Communication | `stage_mapping_la_neighborhoods.py`, `build_website_data.py`, `build_research_paper.py` |
-| Cross-city continuation | `audit_multicity_plan.py`, `stage_multicity_geography.py`, `stage_multicity_source_footprints.py`, `audit_multicity_water_distance_review.py`, `stage_multicity_gshhg_geometry_pilot.py` |
+| Cross-city continuation | `audit_multicity_plan.py`, `stage_multicity_geography.py`, `stage_multicity_source_footprints.py`, `audit_multicity_water_distance_review.py`, `stage_multicity_gshhg_geometry_pilot.py`, `audit_multicity_portable_water_distance_freeze.py` |
 | Transfer and local control | `create_portable_relocation.py`, `verify_portable_relocation.py`, `transfer_queue_snapshot.py`, `*_dashboard.py`, `*_watchdog.py`, `research_runner_ui.py`, and the PowerShell transfer helpers |
 
 ## Website source staging
@@ -87,6 +87,12 @@ source-order, line/query chunks, workers, and projected/geodesic agreement.
 `--check-only` performs zero network requests and must reproduce the exact
 manifest, V1 failure record, and diagnostic CSV. It never opens a target grid
 or constructs a predictor.
+
+`audit_multicity_portable_water_distance_freeze.py` authenticates the
+append-only deferred decision, its three prerequisite manifests, and the exact
+GSHHG archive bytes without opening an archive member. It keeps every
+source/algorithm/predictor/model/protocol/target lock closed and advances only
+to writing and committing an L3 hierarchy audit preregistration.
 
 Development rebuild and analysis scripts can overwrite or regenerate local
 products. Run them only for a defined task after checking configuration,

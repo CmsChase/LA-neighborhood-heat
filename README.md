@@ -80,9 +80,16 @@ target-blind Phoenix point, GSHHG gave 262.208 km versus 482.409 km for the
 U.S.-only Census benchmark, a 220.201 km contract difference. These four
 point diagnostics test semantics and numerical stability, not positional
 accuracy or a complete distance surface. No temperature, target-QA,
-predictor, model, prediction, or feature surface was opened or built. The
-source and algorithm remain unfrozen; the next task is a separate freeze
-decision.
+predictor, model, prediction, or feature surface was opened or built.
+
+The separate
+[freeze decision](docs/PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md) is now
+complete and intentionally deferred. GSHHG remains the candidate source, but
+the current L1/L2-only algorithm cannot honestly be frozen as
+ocean-or-Great-Lakes shoreline distance while it excludes L3 lake-island
+shores. Every computation and target lock remains closed. The only next task
+is to preregister a narrow, source-only GSHHG L3 hierarchy audit; that
+preregistration must be committed before L3 geometry is opened.
 
 ## Six ways into the project
 

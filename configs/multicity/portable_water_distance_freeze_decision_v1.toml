@@ -1,0 +1,135 @@
+[decision]
+schema_version = 1
+algorithm_version = "portable-water-distance-freeze-decision-v1"
+decision_id = "portable_water_distance_freeze_decision_v1"
+decision_date = "2026-07-29"
+scope = "target-blind source-and-algorithm freeze decision"
+state = "decision_complete_freeze_deferred"
+outcome = "deferred_pending_gshhg_l3_hierarchy_contract"
+expected_plan_semantic_sha256 = "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c"
+
+[prerequisites.water_review]
+path = "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_REVIEW.json"
+expected_file_sha256 = "56aeb8ced370f4648b5256875223302ee189d3d5fa452fbc346e4d8dd80b7e56"
+expected_commit_sha256 = "1c3b1738b7625a74f446b2c61e8efc84255dbe99fe745a2fa101d4decfcda6a5"
+expected_state = "review_complete_source_not_frozen"
+expected_outcome = "conditional_census_benchmark_pending_global_geometry_pilot"
+
+[prerequisites.gshhg_v1_failure]
+path = "manifests/multicity/reviews/portable_water_distance/GSHHG_GEOMETRY_PILOT_V1_FAILURE.json"
+expected_file_sha256 = "1df7191211a59eaf3144c77646a60bfe7238458417f29cb1c2991af92a4270d0"
+expected_commit_sha256 = "e5d8c85780752bd7f8be46c20c1a34e7f66db7d15ce438b81f8010705861f03c"
+expected_state = "geometry_pilot_v1_failed_before_distance"
+
+[prerequisites.gshhg_v2_pilot]
+path = "manifests/multicity/reviews/portable_water_distance/GSHHG_GEOMETRY_PILOT.json"
+expected_file_sha256 = "71d68e35a67d82d5e8d7746cc9732d9cd1b8d880ed126e1c2af46cc72615bad1"
+expected_commit_sha256 = "e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735"
+expected_state = "geometry_pilot_complete_source_not_frozen"
+
+[source_candidate]
+id = "gshhg_2_3_7_full_shapefile"
+dataset = "Global Self-consistent Hierarchical High-resolution Geography"
+version = "2.3.7"
+dataset_release_date = "2017-06-15"
+tag_commit = "5f0e530165b34904128575a18de0d57a450b2227"
+github_release_published_at = "2020-02-15T18:28:51Z"
+path = "data/raw/multicity/water_distance/gshhg-shp-2.3.7.zip"
+expected_bytes = 149157845
+expected_sha256 = "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41"
+published_md5 = "cb82015f8533f9611b4adba2c404ba44"
+release_url = "https://github.com/GenericMappingTools/gshhg-gmt/releases/tag/2.3.7"
+ncei_accession_url = "https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/accession/details/304143"
+ncei_accession = "0304143"
+ncei_metadata_revision = 7
+ncei_decommissioned = "2025-05"
+ncei_further_updates_expected = false
+hierarchy_reference = "https://raw.githubusercontent.com/GenericMappingTools/gshhg-gmt/2.3.7/SHAPEFILES.TXT"
+readme_reference = "https://raw.githubusercontent.com/GenericMappingTools/gshhg-gmt/2.3.7/README.md"
+status = "candidate_retained_source_not_frozen"
+applicability_if_later_frozen = "historical cartographic covariate for the four predeclared study cities, conditional on their later authenticated and frozen eligible-land supports"
+nationwide_or_all_city_claim_allowed = false
+modern_realtime_or_30m_truth_claim_allowed = false
+future_city_requires_new_applicability_audit = true
+
+[license_record]
+archive_license_member = "LICENSE.TXT"
+archive_license_member_sha256 = "dc53a4833bf9121360a5286917683f041439327353ffe0231206c6b746005b81"
+archive_copying_member = "COPYING.LESSERv3"
+archive_copying_member_sha256 = "ea7d049c7705dc13afc202dd18e1827f3484f8212fd3fa7b82fc4a0c363432c9"
+archive_notice_expression = "LGPL-3.0-or-later"
+historical_readme_statement = "version 3 or any earlier version"
+github_repository_ui_label = "LGPL-3.0"
+compliance_baseline_for_future_redistribution = "LGPL-3.0-only common denominator pending legal review"
+gshhg_name_advertising_without_permission_allowed = false
+copyright_and_permission_notice_must_be_preserved = true
+as_is_no_suitability_or_support_notice_recorded = true
+archive_includes_full_gplv3_text = false
+future_redistribution_requires_official_gplv3_copy = true
+project_policy_authorizes_archive_or_modified_geometry_redistribution = false
+legal_review_completed = false
+license_reference = "https://www.gnu.org/licenses/lgpl-3.0.html"
+
+[scientific_decision]
+current_contract = "GSHHG 2.3.7 full-resolution L1 exteriors plus L2 source IDs 180507, 180515, and 180517 exteriors; L3 island shores excluded"
+current_contract_immediate_freeze = "rejected"
+reason = "The four fixed-point pilot did not test land on Great Lakes islands, so excluding L3 cannot yet support the natural-language ocean-or-Great-Lakes shoreline claim."
+l3_hierarchy_gap_resolved = false
+four_city_eligible_land_support_opened = false
+broad_feature_names_frozen = false
+phase1_feature_alias_allowed = false
+phase1_outputs_immutable = true
+census_fallback_silent_substitution_allowed = false
+candidate_source_rejected = false
+
+[next_gate]
+stage_id = "preregister_target_blind_gshhg_l3_hierarchy_audit"
+preregistration_must_be_committed_before_l3_geometry_read = true
+source_only = true
+selected_l2_source_ids = [180507, 180515, 180517]
+candidate_algorithm = "L1 ocean exteriors plus the three selected L2 connected-water exteriors plus every directly parented L3 island exterior"
+include_direct_l3_descendants = true
+exclude_l4_pond_shores = true
+selection_may_use_city_target_or_distance = false
+require_l3_member_hash_schema_crs_and_semantic_audit = true
+require_direct_parent_id_audit = true
+require_real_l3_component_probe = true
+require_numerical_gate_replay = true
+require_zero_target_or_qa_access = true
+require_zero_eligible_land_grid_access = true
+require_zero_feature_surface_or_tract_aggregation = true
+require_zero_predictor_model_prediction_or_final_evaluation_access = true
+audit_pass_automatically_freezes_source_or_algorithm = false
+next_decision_after_pass = "separate_portable_water_distance_source_and_algorithm_freeze_decision"
+provisional_feature_names = [
+  "gshhg_ocean_great_lakes_shoreline_distance_mean_km",
+  "gshhg_ocean_great_lakes_shoreline_distance_p10_km",
+]
+
+[locks]
+source_lock_created = false
+algorithm_lock_created = false
+feature_names_frozen = false
+predictor_build_authorized = false
+protocol_lock_created = false
+external_targets_unlocked = false
+external_target_values_read = false
+external_prediction_commit_exists = false
+
+[access_contract]
+decision_program_network_requests = 0
+official_documentation_reviewed_separately = true
+prerequisite_manifest_bytes_read = true
+gshhg_archive_bytes_authenticated = true
+gshhg_archive_members_opened_by_decision_program = false
+gshhg_l3_geometry_opened = false
+eligible_land_grid_opened = false
+distance_feature_surface_computed = false
+predictor_construction_performed = false
+model_fit_performed = false
+model_predictions_computed = false
+landsat_thermal_values_read = false
+landsat_target_qa_values_read = false
+external_lst_values_read = false
+external_target_files_opened = false
+final_evaluation_outputs_opened = false

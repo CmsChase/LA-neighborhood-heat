@@ -4,6 +4,11 @@ Last material update: 2026-07-29 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
+- portable water-distance source-and-algorithm freeze decision, append-only
+  deferred manifest, planning-stage advancement, tests, and this handoff are
+  in the commit with subject `Defer water distance freeze for L3 audit`;
+  obtain its exact hash with
+  `git log --oneline --grep="Defer water distance freeze for L3 audit" -1`
 - completed target-blind GSHHG geometry pilot, preserved V1 failure, V2
   source-only comparison, planning-stage advancement, tests, and this handoff
   are in the commit with subject
@@ -192,7 +197,7 @@ Authoritative draft files:
 - planning audit:
   `manifests/multicity/PLAN_READINESS.json`;
 - planning-audit internal commit:
-  `8444a16998699e39a51b2e0bf8daa62a9bd4365dfdb926cadeb315c6952de472`;
+  `ebe371cdb8e9dc39c086fc394ce33d4d113abc44d83e2289bef6c74988021001`;
 - Phoenix geography audit:
   `manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json`;
 - Phoenix geography internal commit:
@@ -214,7 +219,11 @@ Authoritative draft files:
 - completed non-frozen GSHHG geometry pilot:
   `manifests/multicity/reviews/portable_water_distance/GSHHG_GEOMETRY_PILOT.json`;
 - GSHHG pilot internal commit:
-  `e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735`.
+  `e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735`;
+- portable water-distance freeze decision:
+  `manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION.json`;
+- freeze-decision internal commit:
+  `00e8ed677035f8f8315b7171fa8c969ca6c50c14b0114eff9e5024bb1c7b99b5`.
 
 The audit reauthenticated the original model lock, final completion, exact 23
 target-cache commits, exact 21 final outputs, and the 21,787,327-byte evidence
@@ -231,7 +240,9 @@ It records all of the following as false:
 
 No Phoenix, Houston, or Chicago Landsat thermal or target-QA value has been
 opened. No continuation predictor has been constructed and no model has been
-fit. Only boundary and public source-metadata staging is currently authorized.
+fit. Boundary/public source-metadata staging and writing the exact L3 hierarchy
+audit preregistration are currently authorized. L3 geometry reading remains
+false until that preregistration is committed.
 
 The generic Census place/tract adapter and its Phoenix pilot are complete.
 The current draft authorizes metadata writes only for `phoenix_az`; every
@@ -296,8 +307,9 @@ Current continuation verification:
 
 - source-footprint tests: 12 passed;
 - portable water-distance review tests: 7 passed;
-- GSHHG geometry plus water-review/planning focused suite: 30 passed;
-- complete project suite: 797 passed in about 271 seconds, with five existing
+- GSHHG, water-review, deferred-freeze, and planning focused suite: 50 passed;
+- deferred-freeze focused suite: 16 passed;
+- complete project suite: 813 passed in 175.4 seconds, with five existing
   warnings (one Pydantic deprecation warning and four NumPy deprecation
   warnings);
 - full-repository Ruff: all checks passed;
@@ -310,10 +322,12 @@ Current continuation verification:
 - GSHHG geometry-pilot generation and a separate `--check-only` run
   independently reproduced internal commit
   `e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735`;
+- deferred-freeze generation plus `--check-only` reproduced internal commit
+  `00e8ed677035f8f8315b7171fa8c969ca6c50c14b0114eff9e5024bb1c7b99b5`;
 - planning-audit `--check-only` reauthenticated Phase I plus both Phoenix
-  pilots, the water-distance review, the GSHHG pilot, all closed permissions,
-  and planning internal commit
-  `8444a16998699e39a51b2e0bf8daa62a9bd4365dfdb926cadeb315c6952de472`.
+  pilots, the water-distance review, the GSHHG pilot, the deferred decision,
+  all closed computation/target permissions, and planning internal commit
+  `ebe371cdb8e9dc39c086fc394ce33d4d113abc44d83e2289bef6c74988021001`.
 
 The first full-suite run found only a stale test expectation for the current
 Sentinel pipeline fingerprint after `pyproj` became an explicit project
@@ -405,19 +419,28 @@ distance surface.
 GSHHG 2.3.7 is a reproducible fixed 2017 cartographic release based largely on
 older WVS ocean and WDBII lake sources. It does not represent contemporaneous
 shoreline conditions, is not real-time, and is not a uniform 30 m shoreline.
-The pilot therefore creates no source lock, algorithm lock, predictor, or
-protocol authorization. A separate
-`portable_water_distance_source_and_algorithm_freeze_decision` must weigh
-those limitations, LGPL obligations, cross-border coverage, and the exact
-four-city support before predictor construction. Never reuse `final_test_*` or
-`final_evaluation_*` for that continuation.
+The pilot therefore created no source lock, algorithm lock, predictor, or
+protocol authorization. The separate freeze decision is now complete and
+deliberately deferred. It retained the fixed GSHHG archive as the candidate,
+but rejected immediate freeze of the current algorithm because L3
+lake-island shores are excluded and the four fixed points do not establish
+that the exclusion is harmless over every eligible-land support.
 
-One explicit blocker belongs to that next freeze decision, not this pilot:
-because the candidate contract excludes L3 lake-island shores, the decision
-must either prove that the four frozen eligible-land supports contain no land
-whose qualifying-water distance would be changed by that exclusion, or revise
-and preregister the algorithm, feature names, and applicability claim. Do not
-silently promote the current four-point pilot to a nationwide contract.
+The decision also records the non-identical LGPL-version wording in the
+archive notice, historical README, and GitHub repository UI label. Future
+redistribution is not authorized by current project policy; use the LGPL 3.0
+common-denominator compliance baseline pending legal review, retain the
+copyright/permission notice, and add the official GPLv3 text missing from the
+archive.
+
+The only next safe stage is
+`preregister_target_blind_gshhg_l3_hierarchy_audit`. That preregistration must
+be committed before opening any L3 shapefile member. Its candidate rule is to
+add every direct L3 descendant exterior of L2 source IDs `180507`, `180515`,
+and `180517`, keep L4 excluded, and replay the source-only numerical gates.
+Passing that audit will require a second independent freeze decision; it will
+not automatically authorize predictor construction. Never reuse
+`final_test_*` or `final_evaluation_*` for this continuation.
 
 Safe read-only command:
 
@@ -434,17 +457,17 @@ Safe read-only command:
   --check-only
 .\.venv\Scripts\python scripts\stage_multicity_gshhg_geometry_pilot.py `
   --check-only
+.\.venv\Scripts\python scripts\audit_multicity_portable_water_distance_freeze.py `
+  --check-only
 ```
 
-First safe task: conduct the separate portable water-distance
-source-and-algorithm freeze decision using the completed
-[`GSHHG_GEOMETRY_PILOT_REPORT.md`](GSHHG_GEOMETRY_PILOT_REPORT.md), V1 failure
-record, V2 manifest, official source limitations, and license. The decision
-may accept the four-city GSHHG contract, reject it, or preregister a
-source-only sensitivity; it may not construct the distance surface or
-predictor in the same step. Do not download raster assets, run a target
-builder, fit a model, open external target or QA values, or start an old
-dashboard.
+First safe task: write the exact target-blind GSHHG L3 hierarchy audit
+preregistration and commit/push it before reading L3 geometry. Use
+[`PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md`](PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md)
+and its authenticated manifest as the authority. Do not run the L3 audit in
+the same uncommitted step, build a distance surface or predictor, download
+raster assets, run a target builder, fit a model, open external target or QA
+values, or start an old dashboard.
 
 Current local runtime note: port `8768` is closed, no continuation service is
 running, and no GSHHG/pytest worker remains. The Windows C drive has about

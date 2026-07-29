@@ -41,7 +41,7 @@ predictions that should be withheld.
 The draft protocol is `docs/MULTICITY_GENERALIZATION_PROTOCOL.md`; the
 machine-readable audit is `manifests/multicity/PLAN_READINESS.json`, internal
 commit
-`8444a16998699e39a51b2e0bf8daa62a9bd4365dfdb926cadeb315c6952de472`.
+`ebe371cdb8e9dc39c086fc394ce33d4d113abc44d83e2289bef6c74988021001`.
 It reauthenticated the Phase I claim, model lock, completion marker, 23 cache
 commits, 21 final outputs, and evidence ZIP. It records
 `external_targets_unlocked = false`; public source-geometry review is now
@@ -106,9 +106,17 @@ at `(-113.770306, 31.570972)` and Census archive row `3419` at
 10 same-sign `+180`/`-180` seams and found no opposite-sign or remaining
 180-degree jump.
 No target grid, target/QA value, feature surface, predictor, model, prediction,
-or final-evaluation output was opened. The portable source and algorithm are
-still unfrozen. The next safe stage is the separate
-source-and-algorithm freeze decision.
+or final-evaluation output was opened.
+
+The separate source-and-algorithm freeze decision is complete under internal
+commit
+`00e8ed677035f8f8315b7171fa8c969ca6c50c14b0114eff9e5024bb1c7b99b5`
+and was deliberately deferred. GSHHG remains the candidate source, but the
+four fixed points do not show that excluding L3 lake-island shores is harmless
+for every frozen eligible-land cell. The source and algorithm remain
+unfrozen. The only next safe stage is
+`preregister_target_blind_gshhg_l3_hierarchy_audit`; L3 geometry itself is
+still unauthorized.
 
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.

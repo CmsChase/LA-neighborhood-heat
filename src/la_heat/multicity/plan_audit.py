@@ -10,18 +10,21 @@ from la_heat.multicity.config import MulticityPlan, load_multicity_plan
 from la_heat.multicity.workspace import MulticityWorkspace
 from la_heat.provenance import atomic_json, canonical_sha256, sha256_file
 
-PLAN_AUDIT_SCHEMA_VERSION: Final = 4
-PLAN_AUDIT_ALGORITHM_VERSION: Final = "multicity-planning-readiness-v4"
+PLAN_AUDIT_SCHEMA_VERSION: Final = 5
+PLAN_AUDIT_ALGORITHM_VERSION: Final = "multicity-planning-readiness-v5"
 PLAN_AUDIT_CODE_PATHS: Final = (
     "configs/multicity/gshhg_geometry_pilot_v1.toml",
     "configs/multicity/gshhg_geometry_pilot_v2.toml",
+    "configs/multicity/portable_water_distance_freeze_decision_v1.toml",
     "configs/multicity/water_distance_review_v1.toml",
     "src/la_heat/multicity/config.py",
     "src/la_heat/multicity/gshhg_geometry_pilot.py",
+    "src/la_heat/multicity/portable_water_distance_freeze.py",
     "src/la_heat/multicity/workspace.py",
     "src/la_heat/multicity/plan_audit.py",
     "src/la_heat/multicity/water_distance_review.py",
     "scripts/audit_multicity_plan.py",
+    "scripts/audit_multicity_portable_water_distance_freeze.py",
     "scripts/audit_multicity_water_distance_review.py",
     "scripts/stage_multicity_gshhg_geometry_pilot.py",
 )
@@ -157,6 +160,7 @@ def _continuation_planning_state(
     phoenix_source_footprints: dict[str, Any] | None,
     water_distance_review: dict[str, Any] | None,
     gshhg_geometry_pilot: dict[str, Any] | None,
+    water_distance_freeze_decision: dict[str, Any] | None = None,
 ) -> tuple[str, list[str], str, bool]:
     """Return the exact planning stage, blockers, next action, and review grant."""
 
@@ -183,6 +187,27 @@ def _continuation_planning_state(
             "phoenix_target_blind_source_footprint_discovery",
             False,
         )
+    if water_distance_freeze_decision is not None:
+        if water_distance_review is None:
+            raise MulticityPlanAuditError(
+                "Water-distance freeze decision exists without the source review."
+            )
+        if water_distance_review.get("state") != (
+            "review_complete_source_not_frozen"
+        ):
+            raise MulticityPlanAuditError(
+                "Water-distance freeze decision has the wrong source-review state."
+            )
+        if gshhg_geometry_pilot is None:
+            raise MulticityPlanAuditError(
+                "Water-distance freeze decision exists without the GSHHG pilot."
+            )
+        if gshhg_geometry_pilot.get("state") != (
+            "geometry_pilot_complete_source_not_frozen"
+        ):
+            raise MulticityPlanAuditError(
+                "Water-distance freeze decision has the wrong GSHHG pilot state."
+            )
     if water_distance_review is None:
         return (
             "phoenix_source_footprints_complete_metadata_only",
@@ -192,6 +217,43 @@ def _continuation_planning_state(
                 "promote_protocol_from_draft_with_separate_lock",
             ],
             "review_portable_water_distance_source_and_algorithm",
+            False,
+        )
+    if water_distance_freeze_decision is not None:
+        expected_decision = {
+            "state": "decision_complete_freeze_deferred",
+            "outcome": "deferred_pending_gshhg_l3_hierarchy_contract",
+            "source_lock_created": False,
+            "algorithm_lock_created": False,
+            "feature_names_frozen": False,
+            "predictor_build_authorized": False,
+            "protocol_lock_created": False,
+        }
+        for key, expected in expected_decision.items():
+            if (
+                type(water_distance_freeze_decision.get(key)) is not type(expected)
+                or water_distance_freeze_decision.get(key) != expected
+            ):
+                raise MulticityPlanAuditError(
+                    "Water-distance decision may only record the authenticated "
+                    f"deferred state; {key} changed."
+                )
+        next_gate = water_distance_freeze_decision.get("next_gate")
+        if not isinstance(next_gate, dict) or next_gate.get("stage_id") != (
+            "preregister_target_blind_gshhg_l3_hierarchy_audit"
+        ):
+            raise MulticityPlanAuditError(
+                "Water-distance decision next gate changed."
+            )
+        return (
+            "portable_water_distance_freeze_deferred_pending_l3_hierarchy_audit",
+            [
+                "resolve_and_audit_gshhg_l3_lake_island_shoreline_contract",
+                "freeze_portable_water_distance_source_and_algorithm",
+                "freeze_exact_portable_predictor_source_and_calibration_contract",
+                "promote_protocol_from_draft_with_separate_lock",
+            ],
+            "preregister_target_blind_gshhg_l3_hierarchy_audit",
             False,
         )
     if gshhg_geometry_pilot is not None:
@@ -391,6 +453,49 @@ def audit_multicity_plan(
             "target_or_qa_values_read": False,
         }
 
+    water_distance_freeze_decision: dict[str, Any] | None = None
+    freeze_decision_path = (
+        workspace.manifest_root
+        / "reviews"
+        / "portable_water_distance"
+        / "WATER_DISTANCE_FREEZE_DECISION.json"
+    )
+    if freeze_decision_path.is_file():
+        if gshhg_geometry_pilot is None:
+            raise MulticityPlanAuditError(
+                "Water-distance freeze decision exists without the GSHHG pilot."
+            )
+        from la_heat.multicity.portable_water_distance_freeze import (
+            audit_portable_water_distance_freeze_decision,
+        )
+
+        verified_decision = audit_portable_water_distance_freeze_decision(
+            workspace.project_root
+            / "configs"
+            / "multicity"
+            / "portable_water_distance_freeze_decision_v1.toml",
+            output_path=freeze_decision_path,
+            write=False,
+        )
+        water_distance_freeze_decision = {
+            "state": verified_decision["state"],
+            "path": freeze_decision_path.relative_to(
+                workspace.project_root
+            ).as_posix(),
+            "file_sha256": sha256_file(freeze_decision_path),
+            "commit_sha256": verified_decision["commit_sha256"],
+            "outcome": verified_decision["outcome"],
+            "source_lock_created": verified_decision["source_lock_created"],
+            "algorithm_lock_created": verified_decision["algorithm_lock_created"],
+            "feature_names_frozen": verified_decision["feature_names_frozen"],
+            "predictor_build_authorized": verified_decision[
+                "predictor_build_authorized"
+            ],
+            "protocol_lock_created": verified_decision["protocol_lock_created"],
+            "next_gate": verified_decision["next_gate"],
+            "target_or_qa_values_read": False,
+        }
+
     (
         planning_stage,
         blockers,
@@ -401,6 +506,10 @@ def audit_multicity_plan(
         phoenix_source_footprints=phoenix_source_footprints,
         water_distance_review=water_distance_review,
         gshhg_geometry_pilot=gshhg_geometry_pilot,
+        water_distance_freeze_decision=water_distance_freeze_decision,
+    )
+    l3_preregistration_authorized = planning_stage == (
+        "portable_water_distance_freeze_deferred_pending_l3_hierarchy_audit"
     )
 
     payload: dict[str, Any] = {
@@ -440,6 +549,10 @@ def audit_multicity_plan(
             "target_blind_source_geometry_review": (
                 source_geometry_review_authorized
             ),
+            "target_blind_gshhg_l3_hierarchy_preregistration": (
+                l3_preregistration_authorized
+            ),
+            "target_blind_gshhg_l3_hierarchy_geometry_read": False,
             "portable_predictor_source_freeze": False,
             "predictor_construction": False,
             "model_fitting": False,
@@ -469,6 +582,9 @@ def audit_multicity_plan(
         "phoenix_source_footprint_pilot": phoenix_source_footprints,
         "portable_water_distance_review": water_distance_review,
         "gshhg_geometry_pilot": gshhg_geometry_pilot,
+        "portable_water_distance_freeze_decision": (
+            water_distance_freeze_decision
+        ),
         "blockers_before_predictor_build": blockers,
         "next_safe_stage": next_safe_stage,
     }

@@ -305,11 +305,16 @@ or target-QA value or producing a feature surface. Its four fixed points test
 source semantics and numerical stability only; they do not validate
 positional accuracy, neighborhood variation, or a complete distance grid.
 
-The only safe next task is a separate portable water-distance
-source-and-algorithm freeze decision. It may review the authenticated source
-and diagnostic evidence but may not construct the predictor in the same
-stage. Predictor construction, model fitting, protocol promotion, and target
-access remain separately locked.
+The separate portable water-distance freeze decision is now complete under
+state `decision_complete_freeze_deferred`. It retained GSHHG 2.3.7 as the
+candidate source but rejected immediate freeze of the L1/L2-only algorithm
+because the four diagnostic points do not close the L3 lake-island shoreline
+gap.
+
+The only safe next task is to preregister the target-blind GSHHG L3 hierarchy
+audit. That preregistration must be committed before any L3 geometry is
+opened. The audit itself, predictor construction, model fitting, protocol
+promotion, and target access remain separately locked.
 
 ## Official source anchors
 

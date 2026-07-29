@@ -78,9 +78,15 @@ target-blind diagnostic distances, and every numerical invariance gate. Its
 state is `geometry_pilot_complete_source_not_frozen`; source, algorithm,
 predictor, model, protocol, and target permissions remain closed.
 
-The updated planning record now advances only to the separate portable
-water-distance source-and-algorithm freeze decision. It does not authorize
-predictor construction or perform the freeze itself.
+`multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION.json`
+authenticates the completed decision to defer source-and-algorithm freeze. It
+binds the prerequisite manifests, exact GSHHG archive bytes, unresolved L3
+hierarchy gap, license record, all-closed locks, and no-target access ledger.
+
+The updated planning record advances only to
+`preregister_target_blind_gshhg_l3_hierarchy_audit`. It authorizes writing and
+committing that preregistration, but not opening L3 geometry, constructing a
+predictor, fitting a model, or reading a target.
 
 Generated manifests are marked `-text` in `.gitattributes` because exact bytes
 matter. Do not normalize line endings to silence a cosmetic diff warning. Use
