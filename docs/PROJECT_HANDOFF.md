@@ -4,6 +4,11 @@ Last material update: 2026-07-29 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
+- portable water-distance source review, authenticated Census benchmark,
+  target-blind GSHHG comparison gate, tests, and this handoff are in the commit
+  with subject `Review portable water distance sources`; obtain its exact hash
+  with
+  `git log --oneline --grep="Review portable water distance sources" -1`
 - Phoenix target-blind source-footprint discovery, metadata-only access audit,
   planning-stage advancement, tests, and this handoff are in the commit with
   subject `Complete Phoenix source footprint pilot`; obtain its exact hash with
@@ -178,7 +183,7 @@ Authoritative draft files:
 - planning audit:
   `manifests/multicity/PLAN_READINESS.json`;
 - planning-audit internal commit:
-  `fe62d0ab6505d60879b12ba00b29183e7bff54944496faff2dd7adddd3366559`;
+  `5af81da4de409b60e313784ce7453df8bec997849826ad789b2418b937f6c244`;
 - Phoenix geography audit:
   `manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json`;
 - Phoenix geography internal commit:
@@ -186,7 +191,11 @@ Authoritative draft files:
 - Phoenix source-footprint audit:
   `manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json`;
 - Phoenix source-footprint internal commit:
-  `a6f287daa22c41d893519dc751848c426b819dcf4ae00d33012fbf11c6073ed7`.
+  `a6f287daa22c41d893519dc751848c426b819dcf4ae00d33012fbf11c6073ed7`;
+- portable water-distance review:
+  `manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_REVIEW.json`;
+- portable water-distance review internal commit:
+  `1c3b1738b7625a74f446b2c61e8efc84255dbe99fe745a2fa101d4decfcda6a5`.
 
 The audit reauthenticated the original model lock, final completion, exact 23
 target-cache commits, exact 21 final outputs, and the 21,787,327-byte evidence
@@ -267,8 +276,9 @@ terrain HEAD records into all six output tables.
 Current continuation verification:
 
 - source-footprint tests: 12 passed;
-- combined plan/geography/source focused suite: 20 passed;
-- complete project suite: 767 passed in 235.5 seconds, with five existing
+- portable water-distance review tests: 7 passed;
+- combined plan/geography/source/review focused suite: 27 passed;
+- complete project suite: 774 passed in 279.9 seconds, with five existing
   warnings (one Pydantic deprecation warning and four NumPy deprecation
   warnings);
 - full-repository Ruff: all checks passed;
@@ -276,16 +286,40 @@ Current continuation verification:
   code/runtime binding;
 - source-footprint `--check-only` reauthenticated its exact metadata
   responses, tables, hashes, and code/runtime binding;
+- water-distance-review `--check-only` reauthenticated the exact Census bytes,
+  vector inventory, no-target access contract, and non-frozen decision;
 - planning-audit `--check-only` reauthenticated Phase I plus both Phoenix
-  pilots and the internal commits shown above.
+  pilots, the water-distance review, and the internal commits shown above.
 
-The only safe next task is a read-only scientific review of a nationwide
-source and target-independent algorithm that replaces the Phase I
-`Pacific coast distance` with distance to a qualifying ocean or Great Lakes
-shoreline. Do not build predictors during that review. A source freeze,
-predictor construction, model fitting, protocol promotion, prediction
-commitment, and external target access all require later separate gates;
-never reuse `final_test_*` or `final_evaluation_*`.
+The portable water-distance review is complete. Its audit program made zero
+source-data network or download requests and reauthenticated the existing
+Census TIGER/Line 2019 national Coastline:
+16,631,608 bytes, exact SHA-256
+`10c7e252a96a46552bf6045cc46f0605f645feeab70be545fab1bac869723494`,
+seven expected ZIP members, 4,248 valid `L4150` lines, and 377 Great Lakes
+records. It computed no distance values and read no target, target-QA,
+predictor, prediction, or model value.
+
+The scientific candidate review did consult the official online documentation
+linked in `docs/PORTABLE_WATER_DISTANCE_REVIEW.md`; that literature/metadata
+research is explicitly recorded and is not misreported as an offline action.
+
+The review did **not** freeze Census as the portable source. Census is the
+strongest U.S.-only reproducibility benchmark, but it omits the Mexican Gulf
+of California relevant to Phoenix. A Census-only feature would mean distance
+to a U.S. Census qualifying shoreline, not the globally nearest ocean. The
+review therefore advances GSHHG 2.3.7 full resolution to one source-only
+geometry pilot while rejecting Natural Earth as too generalized, NOAA CUSP as
+non-versioned, and the evolving USGS 3DHP as premature for the canonical
+source.
+
+The reviewed common algorithm uses fixed eligible-land cell centers, verified
+metre-based local projected CRSs, float64 exact nearest-line queries, one
+deterministic expanding-radius rule, and fixed mean/linear-p10 aggregation.
+It is a specification only: no implementation or algorithm lock was created.
+A source freeze, predictor construction, model fitting, protocol promotion,
+prediction commitment, and external target access all require later separate
+gates; never reuse `final_test_*` or `final_evaluation_*`.
 
 Safe read-only command:
 
@@ -298,13 +332,17 @@ Safe read-only command:
   --config configs\multicity\experiment.toml `
   --source-config configs\multicity\source_footprints_v1.toml `
   --city phoenix_az --check-only
+.\.venv\Scripts\python scripts\audit_multicity_water_distance_review.py `
+  --check-only
 ```
 
-First safe task: review candidate nationwide ocean/Great-Lakes shoreline
-sources and the single target-independent distance algorithm that would be
-used in all four cities. Do not freeze a source in passing, download raster
-assets, run a target builder, construct predictors, fit a model, open target
-or QA values, or start an old dashboard.
+First safe task: implement the explicitly target-blind GSHHG geometry pilot
+defined in `docs/PORTABLE_WATER_DISTANCE_REVIEW.md`. Before any run, pin and
+audit the official 2.3.7 full-resolution archive and its license, and test the
+global-ocean plus exactly-five-Great-Lakes identity rule only on fixed
+unlabeled geometry. Do not freeze a source in passing, download raster assets,
+run a target builder, construct predictors, fit a model, open target or QA
+values, or start an old dashboard.
 
 Current local runtime note: port `8768` is closed and no continuation service
 is running. The Windows C drive has about 8.98 GB free and D has about

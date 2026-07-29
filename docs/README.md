@@ -18,6 +18,7 @@ history is intentionally separated from the short project landing page.
 | What is the proposed cross-city continuation? | [MULTICITY_GENERALIZATION_PROTOCOL.md](MULTICITY_GENERALIZATION_PROTOCOL.md) |
 | What did the Phoenix geography pilot produce? | [Phoenix geography manifest](../manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json) |
 | What source footprints did the Phoenix metadata pilot discover? | [Phoenix source-footprint manifest](../manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json) |
+| Why is the portable water-distance source not frozen yet? | [PORTABLE_WATER_DISTANCE_REVIEW.md](PORTABLE_WATER_DISTANCE_REVIEW.md) |
 
 ## Scientific contracts
 
@@ -34,6 +35,9 @@ history is intentionally separated from the short project landing page.
   locked. The completed Phoenix geography and source-footprint metadata
   snapshots are pilots, not source or protocol locks, and do not authorize
   predictor construction.
+- [PORTABLE_WATER_DISTANCE_REVIEW.md](PORTABLE_WATER_DISTANCE_REVIEW.md):
+  target-blind source comparison, authenticated Census benchmark, cross-border
+  semantic limitation, reviewed algorithm, and GSHHG geometry-pilot gate.
 
 ## Execution and status
 

@@ -62,10 +62,14 @@ and item links. No STAC asset href, signed request, raster GET/payload,
 target/QA value, predictor, prediction, or model was opened or constructed.
 This remains a pilot metadata snapshot, not a source or protocol lock.
 
-The only safe next continuation task is to review a nationwide
-ocean/Great-Lakes water-distance source and target-independent algorithm.
-Predictor construction remains prohibited, and any later source freeze
-requires its own gate.
+The target-blind
+[portable water-distance review](docs/PORTABLE_WATER_DISTANCE_REVIEW.md) is
+now complete. It reauthenticated the existing Census 2019 coastline as the
+best U.S.-only reproducibility benchmark, but did not freeze it because that
+source omits the Mexican Gulf of California relevant to Phoenix. The next
+safe task is a source-only GSHHG geometry comparison that reads no target/QA
+values and constructs no predictor. Any later source freeze remains a separate
+gate.
 
 ## Six ways into the project
 

@@ -1469,3 +1469,43 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   water-distance source and a single target-independent distance algorithm.
   That review does not authorize predictor construction, model fitting, or
   external target access.
+
+## 2026-07-29 - Complete the portable water-distance source review
+
+- Decision: complete a target-blind source and algorithm review without
+  freezing a source, implementing a distance surface, or authorizing predictor
+  construction. The authenticated record is
+  `manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_REVIEW.json`;
+  its internal commit is
+  `1c3b1738b7625a74f446b2c61e8efc84255dbe99fe745a2fa101d4decfcda6a5`.
+- The existing Census TIGER/Line 2019 national Coastline was reauthenticated as
+  the strongest U.S.-only reproducibility benchmark: 16,631,608 bytes, SHA-256
+  `10c7e252a96a46552bf6045cc46f0605f645feeab70be545fab1bac869723494`,
+  seven expected ZIP members, CRS `EPSG:4269`, and 4,248 valid nonempty
+  `L4150` lines including 377 `Great Lakes` records.
+- Census is not frozen as the final portable source. Its national scope omits
+  the Mexican Gulf of California, so a Census-only value would be distance to
+  a U.S. Census qualifying shoreline rather than the globally nearest ocean.
+  The review keeps those definitions and proposed feature names distinct.
+- Natural Earth 10m was rejected as too generalized for neighborhood-scale
+  distance; NOAA CUSP was rejected as a canonical source because versions are
+  not preserved and coverage is heterogeneous; USGS 3DHP was deferred during
+  its evolving NHD transition. GSHHG 2.3.7 full resolution advances to one
+  source-only geometry pilot because it is global and fixed, but its five
+  Great Lakes need an explicit identity audit and its lake geometry/license
+  require separate review.
+- The reviewed common algorithm uses frozen eligible-land cell centers,
+  verified metre-based projected CRSs, float64 exact nearest-line distances,
+  one fixed expanding-radius ladder, and fixed mean/linear-p10 aggregation.
+  It remains a specification, not an implementation or lock.
+- The audit program made zero source-data network or download requests,
+  computed zero distance values, and opened no target, target-QA, predictor,
+  prediction, score, or model value. The scientific comparison separately
+  consulted the cited official online documentation, which the access record
+  explicitly acknowledges.
+  The updated planning audit has internal commit
+  `5af81da4de409b60e313784ce7453df8bec997849826ad789b2418b937f6c244`
+  and advances only to `target_blind_gshhg_geometry_comparison`.
+- Verification passed all 7 review tests, 27 combined continuation tests, all
+  774 project tests in 279.9 seconds, both review and planning `--check-only`
+  authentication, and full-repository Ruff.

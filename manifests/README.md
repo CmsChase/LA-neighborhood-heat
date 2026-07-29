@@ -58,9 +58,19 @@ target/QA reads, predictors, predictions, or models. Its state is
 `complete_metadata_only_source_not_protocol_locked` and its source lock status
 is `pilot_snapshot_not_protocol_lock`.
 
+`multicity/reviews/portable_water_distance/WATER_DISTANCE_REVIEW.json`
+authenticates the completed target-blind water-distance review. It verifies the
+existing 16,631,608-byte Census 2019 coastline ZIP, all 4,248 `L4150` lines,
+the candidate-source assessment, and the reviewed common algorithm. Its state
+is `review_complete_source_not_frozen`: no source or algorithm lock was
+created, no distance was computed, the audit program made no source-data
+network or download request, and no target, QA, predictor, prediction, or
+model was accessed. The candidate review separately records that official
+online documentation was consulted.
+
 The updated planning record keeps `protocol_locked = false` and advances only
-to review of a nationwide ocean/Great-Lakes water-distance source and
-target-independent algorithm. It does not authorize predictor construction.
+to a source-only GSHHG geometry comparison. It does not authorize predictor
+construction or a source freeze.
 
 Generated manifests are marked `-text` in `.gitattributes` because exact bytes
 matter. Do not normalize line endings to silence a cosmetic diff warning. Use

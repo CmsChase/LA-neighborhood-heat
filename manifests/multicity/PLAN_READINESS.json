@@ -1,8 +1,8 @@
 {
-  "schema_version": 2,
-  "algorithm_version": "multicity-planning-readiness-v2",
+  "schema_version": 3,
+  "algorithm_version": "multicity-planning-readiness-v3",
   "state": "planning_ready",
-  "planning_stage": "phoenix_source_footprints_complete_metadata_only",
+  "planning_stage": "portable_water_distance_review_complete_source_not_frozen",
   "experiment_id": "la_to_three_city_zero_shot_v1",
   "config_semantic_sha256": "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c",
   "config_files": {
@@ -28,6 +28,10 @@
     }
   },
   "code_files": {
+    "configs/multicity/water_distance_review_v1.toml": {
+      "sha256": "1328f087e7a2b44ef67275979726046d4e6ea7be48765fdc9d39dcb783f1d3a1",
+      "bytes": 7102
+    },
     "src/la_heat/multicity/config.py": {
       "sha256": "bebe7ef2c610b55b6b5fe72692ee517241a510785458d87832e0cf58d4e4897b",
       "bytes": 12655
@@ -37,12 +41,20 @@
       "bytes": 2882
     },
     "src/la_heat/multicity/plan_audit.py": {
-      "sha256": "334476d33645f2b95c8f7bb83d41bd2ea226da5ab5e14a6a3f0f18bd01f9ef3c",
-      "bytes": 14313
+      "sha256": "0c6965e4b6074989169f23145f5b31d618337d23624c70472c5043890ae0e2e4",
+      "bytes": 17210
+    },
+    "src/la_heat/multicity/water_distance_review.py": {
+      "sha256": "e3c518e368188e7afa94ea081ca1ace7625b7cb0a00ddd3399126b709f24c334",
+      "bytes": 19911
     },
     "scripts/audit_multicity_plan.py": {
       "sha256": "7c992fb4fd184113881c9cd463541506928356399a02d7b32d20e1cf52cd5f54",
       "bytes": 2266
+    },
+    "scripts/audit_multicity_water_distance_review.py": {
+      "sha256": "85ac9e8f8986320e5287cafc4a992beb4bb6036e4d49620f7cbd03049fdf50a8",
+      "bytes": 2318
     }
   },
   "phase1_anchor": {
@@ -112,6 +124,7 @@
   },
   "authorized_now": {
     "boundary_and_public_metadata_staging": true,
+    "target_blind_source_geometry_review": true,
     "portable_predictor_source_freeze": false,
     "predictor_construction": false,
     "model_fitting": false,
@@ -163,11 +176,23 @@
     ],
     "target_or_asset_values_read": false
   },
+  "portable_water_distance_review": {
+    "state": "review_complete_source_not_frozen",
+    "path": "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_REVIEW.json",
+    "file_sha256": "56aeb8ced370f4648b5256875223302ee189d3d5fa452fbc346e4d8dd80b7e56",
+    "commit_sha256": "1c3b1738b7625a74f446b2c61e8efc84255dbe99fe745a2fa101d4decfcda6a5",
+    "review_outcome": "conditional_census_benchmark_pending_global_geometry_pilot",
+    "source_lock_created": false,
+    "algorithm_lock_created": false,
+    "predictor_build_authorized": false,
+    "target_or_qa_values_read": false
+  },
   "blockers_before_predictor_build": [
+    "complete_target_blind_gshhg_geometry_comparison",
     "freeze_portable_water_distance_source_and_algorithm",
     "freeze_exact_portable_predictor_source_and_calibration_contract",
     "promote_protocol_from_draft_with_separate_lock"
   ],
-  "next_safe_stage": "review_portable_water_distance_source_and_algorithm",
-  "commit_sha256": "fe62d0ab6505d60879b12ba00b29183e7bff54944496faff2dd7adddd3366559"
+  "next_safe_stage": "target_blind_gshhg_geometry_comparison",
+  "commit_sha256": "5af81da4de409b60e313784ce7453df8bec997849826ad789b2418b937f6c244"
 }

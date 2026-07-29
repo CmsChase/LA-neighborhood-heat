@@ -15,7 +15,7 @@ setting after inspecting its result.
 | Robustness | `feature_ablation.toml`, `feature_ablation_analysis.toml`, `stqa2_sensitivity_analysis.toml`, `robustness_reconciliation.toml` |
 | Reporting | `development_report.toml` |
 | One-time held-out evaluation | `final_evaluation_2025.toml` |
-| Cross-city continuation planning | `multicity/experiment.toml` and `multicity/cities/*.toml` |
+| Cross-city continuation planning | `multicity/experiment.toml`, `multicity/cities/*.toml`, and `multicity/water_distance_review_v1.toml` |
 
 `final_evaluation_2025.toml` binds exact input hashes, state-marker paths,
 target-cache paths, output names, metrics, bootstrap settings, and success
@@ -33,3 +33,8 @@ fixed Esri Demographics item IDs provide a vertex-preserving pilot mirror when
 the local route to TIGERweb is unavailable. The mirror is not yet a
 confirmatory source freeze. Nothing here authorizes predictor construction,
 model fitting, external-city target access, or a real-time forecast claim.
+
+`multicity/water_distance_review_v1.toml` records a completed, nonbinding,
+target-blind source review. It authenticates Census 2019 as the U.S.-only
+benchmark and defines the next GSHHG geometry-only gate, while explicitly
+leaving the portable source, algorithm, and feature names unfrozen.

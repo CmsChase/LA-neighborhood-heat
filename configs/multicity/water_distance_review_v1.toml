@@ -1,0 +1,143 @@
+[review]
+schema_version = 1
+algorithm_version = "portable-water-distance-review-v1"
+review_id = "portable_water_distance_source_review_v1"
+status = "review_complete_source_not_frozen"
+review_date = "2026-07-29"
+scope = "target-blind source and algorithm review"
+outcome = "conditional_census_benchmark_pending_global_geometry_pilot"
+
+[semantic_decision]
+scientifically_preferred_definition = "distance to the nearest global ocean shoreline or one of the five Great Lakes"
+census_fallback_definition = "distance to the nearest U.S. Census L4150 Coastal, Territorial, or Great Lakes line"
+census_fallback_interpretation = "statistical U.S. coastline proxy, not a legal or globally complete physical shoreline"
+cross_border_ocean_should_count = true
+source_scope_is_resolved = false
+resolution_blocker = "A target-blind GSHHG geometry pilot must quantify the Phoenix global-versus-U.S.-only difference before the source contract is frozen."
+
+[census_benchmark]
+source_id = "census_2019_coastline"
+path = "data/raw/static/tl_2019_us_coastline.zip"
+layer = "tl_2019_us_coastline.shp"
+publisher = "U.S. Census Bureau"
+dataset = "TIGER/Line 2019 national coastline"
+official_url = "https://www2.census.gov/geo/tiger/TIGER2019/COASTLINE/tl_2019_us_coastline.zip"
+technical_documentation = "https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2019/TGRSHP2019_TechDoc.pdf"
+expected_sha256 = "10c7e252a96a46552bf6045cc46f0605f645feeab70be545fab1bac869723494"
+expected_bytes = 16631608
+expected_crs = "EPSG:4269"
+filter_field = "MTFCC"
+filter_value = "L4150"
+expected_row_count = 4248
+expected_geometry_semantic_sha256 = "7a57e6388d3e702ab2ac6fdee4afb019ee4ee093b5f14984ca235364f6b21f71"
+expected_bounds = [-179.147236, -14.548699, 179.77847, 71.39038]
+
+[census_benchmark.expected_name_counts]
+Pacific = 1895
+Atlantic = 998
+Gulf = 668
+"Great Lakes" = 377
+Caribe = 128
+Caribbean = 74
+"Atlántico" = 69
+Arctic = 39
+
+[algorithm_recommendation]
+status = "reviewed_not_implemented_or_frozen"
+source_filter_rule = "Use the frozen qualifying-water rule for every city; never tune source membership by city or target values."
+census_name_field_role = "audit-only inventory; never select or exclude a line by NAME"
+support_rule = "Compute at every frozen 30 m eligible-land target-grid cell center, never at tract centroids."
+city_crs_rule = "Use each frozen projected target-grid CRS only after verifying metre axes and finite projected geometry."
+distance_rule = "Exact Euclidean nearest-line distance in float64 metres, converted to kilometres only after the query."
+search_rule = "Use one deterministic expanding-radius algorithm with a conservative native-CRS prefilter; accept only when every eligible distance is finite and the maximum is strictly inside the active radius."
+search_radii_km = [64, 128, 256, 512, 1024, 2048]
+aggregation_rule = "Aggregate over the same fixed eligible-land cells using arithmetic mean and NumPy linear p10."
+proposed_global_feature_names = [
+  "ocean_great_lakes_distance_mean_km",
+  "ocean_great_lakes_distance_p10_km",
+]
+proposed_census_fallback_feature_names = [
+  "us_census_qualifying_shoreline_distance_mean_km",
+  "us_census_qualifying_shoreline_distance_p10_km",
+]
+forbid_phase1_alias = true
+phase1_outputs_immutable = true
+
+[next_geometry_pilot]
+candidate_id = "gshhg_2_3_7_full"
+source_values_only = true
+target_or_qa_access_allowed = false
+predictor_construction_allowed = false
+required_global_ocean_level = 1
+required_named_great_lake_count = 5
+exclude_river_lake_flag = true
+require_level1_polygon_to_shoreline_rule = true
+require_antimeridian_normalization_rule = true
+compare_against_census_at_fixed_unlabeled_points = true
+require_search_radius_invariance = true
+require_strtree_bruteforce_parity = true
+require_projected_geodesic_tolerance_audit = true
+
+[access_contract]
+audit_program_network_requests = 0
+official_documentation_web_review_performed = true
+candidate_data_download_requests = 0
+source_geometry_read = true
+distance_values_computed = false
+predictor_construction_performed = false
+model_fit_performed = false
+model_predictions_computed = false
+landsat_thermal_values_read = false
+landsat_target_qa_values_read = false
+external_lst_values_read = false
+external_target_files_opened = false
+
+[[candidates]]
+id = "census_tiger_line_2019"
+scope = "United States, territories, and Great Lakes represented by Census L4150"
+versioning = "fixed annual release with exact audited bytes already present"
+resolution_or_scale = "source accuracy varies; statistical-display coastline"
+license = "U.S. government/public-domain source"
+decision = "provisional reproducibility benchmark; conditional fallback"
+reason = "Single national file and exact qualifying-water semantics, but omits Mexican coastline relevant to Phoenix."
+official_reference = "https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2019/TGRSHP2019_TechDoc.pdf"
+
+[[candidates]]
+id = "gshhg_2_3_7_full"
+scope = "global ocean-land polygons plus global lakes"
+versioning = "fixed archived 2.3.7 release"
+resolution_or_scale = "full-resolution coastline; lake geometry derives from older WDBII"
+license = "LGPL version 3; release notes state version 3 or any earlier version"
+decision = "advance to target-blind geometry pilot"
+reason = "Includes Gulf of California, but the five Great Lakes need an additional fixed identity rule and lake quality is weaker."
+official_reference = "https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/accession/details/304143"
+
+[[candidates]]
+id = "natural_earth_10m"
+scope = "global coastline and named lakes"
+versioning = "versioned public GitHub releases"
+resolution_or_scale = "1:10,000,000 generalized cartographic data"
+license = "public domain"
+decision = "reject as primary; display or coarse sensitivity only"
+reason = "The generalized scale is too coarse for a predictor evaluated on 30 m neighborhood support."
+official_reference = "https://www.naturalearthdata.com/downloads/10m-physical-vectors/"
+
+[[candidates]]
+id = "noaa_cusp"
+scope = "United States shoreline compilation"
+versioning = "updated without maintaining historical versions"
+resolution_or_scale = "approximately 1:1,000 to 1:24,000 with heterogeneous dates and sources"
+license = "public access with attribution and use caveats"
+decision = "reject as canonical source; local sensitivity only"
+reason = "High local detail does not compensate for incomplete, heterogeneous, and non-versioned national coverage."
+official_reference = "https://shoreline.noaa.gov/cusp.html"
+
+[[candidates]]
+id = "usgs_3dhp"
+scope = "United States hydrography with an Ocean or Great Lake class"
+versioning = "evolving quarterly services and annual products during NHD transition"
+resolution_or_scale = "mixed legacy and emerging 3DHP content"
+license = "U.S. government/public-domain source"
+decision = "defer; future migration or sensitivity candidate"
+reason = "Semantics are promising, but the current provisional transition is less stable than the audited Census release."
+official_reference = "https://www.usgs.gov/3d-hydrography-program/access-3dhp-data-products"

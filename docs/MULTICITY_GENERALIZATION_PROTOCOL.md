@@ -94,6 +94,18 @@ construction, the continuation must freeze a nationwide source and algorithm
 for distance to a qualifying ocean or Great Lakes shoreline. The definition
 must be target-independent and identical in all four cities.
 
+The target-blind source review completed on 2026-07-29 without freezing that
+contract. It authenticated the existing Census TIGER/Line 2019 Coastline as
+the reproducibility benchmark, but found that a U.S.-only source omits the
+Mexican Gulf of California relevant to Phoenix. The scientifically preferred
+definition is therefore the nearest global ocean shoreline or one of the five
+Great Lakes. A source-only GSHHG geometry pilot must now test whether that
+definition can be frozen reproducibly. The Census source remains only a
+conditional fallback, in which case the feature must be named and interpreted
+as distance to a U.S. Census qualifying shoreline rather than an unrestricted
+nearest ocean. See
+[`PORTABLE_WATER_DISTANCE_REVIEW.md`](PORTABLE_WATER_DISTANCE_REVIEW.md).
+
 ## Predictors and timing
 
 The portable predictor set contains:
@@ -261,10 +273,21 @@ requests.
 
 This is `complete_metadata_only_source_not_protocol_locked`: a reproducible
 pilot metadata snapshot, not a confirmatory source freeze or protocol lock.
-The only safe next task is review of a nationwide ocean/Great-Lakes
-water-distance source and an identical target-independent algorithm for all
-four cities. That review may not construct predictors. Predictor construction,
-source freeze, model fitting, and target access remain separately locked.
+
+The subsequent portable water-distance review is also complete and records
+state `review_complete_source_not_frozen`. Its audit program made zero
+source-data network or download requests, reauthenticated the existing
+16,631,608-byte Census 2019 coastline ZIP and all 4,248 `L4150` lines, and
+computed no distance values. Candidate documentation was reviewed on the
+official websites cited in the review. Its conclusion is conditional because
+Census is a reproducible U.S. benchmark but does not represent the globally
+nearest ocean for Phoenix.
+
+The only safe next task is the target-blind GSHHG geometry comparison defined
+in the review. It may inspect public source geometry but may not construct a
+predictor, fit a model, open target or target-QA values, or freeze a source in
+passing. Predictor construction, source freeze, model fitting, and target
+access remain separately locked.
 
 ## Official source anchors
 

@@ -17,7 +17,7 @@ many historical stages are already complete.
 | Final-test predictor preparation | files beginning `build_final_test_`, `stage_final_test_`, `run_final_test_`, and `audit_final_test_` |
 | Final evaluation and evidence | `prepare_final_evaluation.py`, `authorize_final_test_2025.py`, `execute_locked_final_evaluation.py`, `build_final_evaluation_evidence.py`, `verify_final_evaluation_evidence.py` |
 | Communication | `stage_mapping_la_neighborhoods.py`, `build_website_data.py`, `build_research_paper.py` |
-| Cross-city continuation | `audit_multicity_plan.py`, `stage_multicity_geography.py` |
+| Cross-city continuation | `audit_multicity_plan.py`, `stage_multicity_geography.py`, `stage_multicity_source_footprints.py`, `audit_multicity_water_distance_review.py` |
 | Transfer and local control | `create_portable_relocation.py`, `verify_portable_relocation.py`, `transfer_queue_snapshot.py`, `*_dashboard.py`, `*_watchdog.py`, `research_runner_ui.py`, and the PowerShell transfer helpers |
 
 ## Website source staging
@@ -63,12 +63,19 @@ its exact output directory. Never run two controllers against one canonical
 directory.
 
 `audit_multicity_plan.py` authenticates the completed Phase I transaction, the
-draft continuation locks, and the completed Phoenix geography pilot when its
-manifest exists. `stage_multicity_geography.py --city phoenix_az` is
+draft continuation locks, the two completed Phoenix metadata pilots, and the
+portable water-distance review. `stage_multicity_geography.py --city
+phoenix_az` is
 idempotent: after staging it reauthenticates the exact source bytes and three
 GeoParquet outputs; `--check-only` performs no network request. The draft
 rejects every other city before networking. Neither command opens Landsat
 thermal or target-QA values.
+
+`audit_multicity_water_distance_review.py` reauthenticates the already present
+Census 2019 coastline and the nonbinding source/algorithm review. It makes no
+source-data network or download request, computes no distance surface, and
+does not authorize a predictor build or source freeze. The manifest separately
+acknowledges that official online documentation informed the candidate review.
 
 Development rebuild and analysis scripts can overwrite or regenerate local
 products. Run them only for a defined task after checking configuration,

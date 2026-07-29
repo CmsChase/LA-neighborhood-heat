@@ -10,13 +10,16 @@ from la_heat.multicity.config import MulticityPlan, load_multicity_plan
 from la_heat.multicity.workspace import MulticityWorkspace
 from la_heat.provenance import atomic_json, canonical_sha256, sha256_file
 
-PLAN_AUDIT_SCHEMA_VERSION: Final = 2
-PLAN_AUDIT_ALGORITHM_VERSION: Final = "multicity-planning-readiness-v2"
+PLAN_AUDIT_SCHEMA_VERSION: Final = 3
+PLAN_AUDIT_ALGORITHM_VERSION: Final = "multicity-planning-readiness-v3"
 PLAN_AUDIT_CODE_PATHS: Final = (
+    "configs/multicity/water_distance_review_v1.toml",
     "src/la_heat/multicity/config.py",
     "src/la_heat/multicity/workspace.py",
     "src/la_heat/multicity/plan_audit.py",
+    "src/la_heat/multicity/water_distance_review.py",
     "scripts/audit_multicity_plan.py",
+    "scripts/audit_multicity_water_distance_review.py",
 )
 
 
@@ -144,6 +147,61 @@ def _phase1_anchor(
     }
 
 
+def _continuation_planning_state(
+    *,
+    phoenix_geography: dict[str, Any] | None,
+    phoenix_source_footprints: dict[str, Any] | None,
+    water_distance_review: dict[str, Any] | None,
+) -> tuple[str, list[str], str, bool]:
+    """Return the exact planning stage, blockers, next action, and review grant."""
+
+    if phoenix_geography is None:
+        return (
+            "awaiting_phoenix_geography",
+            [
+                "freeze_portable_water_distance_source_and_algorithm",
+                "implement_and_test_generic_census_place_tract_adapter",
+                "complete_phoenix_metadata_only_pilot",
+                "promote_protocol_from_draft_with_separate_lock",
+            ],
+            "phoenix_boundary_and_metadata_only_pilot",
+            False,
+        )
+    if phoenix_source_footprints is None:
+        return (
+            "ready_for_phoenix_source_footprints",
+            [
+                "freeze_portable_water_distance_source_and_algorithm",
+                "complete_phoenix_target_blind_source_footprint_discovery",
+                "promote_protocol_from_draft_with_separate_lock",
+            ],
+            "phoenix_target_blind_source_footprint_discovery",
+            False,
+        )
+    if water_distance_review is None:
+        return (
+            "phoenix_source_footprints_complete_metadata_only",
+            [
+                "freeze_portable_water_distance_source_and_algorithm",
+                "freeze_exact_portable_predictor_source_and_calibration_contract",
+                "promote_protocol_from_draft_with_separate_lock",
+            ],
+            "review_portable_water_distance_source_and_algorithm",
+            False,
+        )
+    return (
+        "portable_water_distance_review_complete_source_not_frozen",
+        [
+            "complete_target_blind_gshhg_geometry_comparison",
+            "freeze_portable_water_distance_source_and_algorithm",
+            "freeze_exact_portable_predictor_source_and_calibration_contract",
+            "promote_protocol_from_draft_with_separate_lock",
+        ],
+        "target_blind_gshhg_geometry_comparison",
+        True,
+    )
+
+
 def audit_multicity_plan(
     config_path: str | Path,
     *,
@@ -151,7 +209,7 @@ def audit_multicity_plan(
     verify_evidence_zip: bool = True,
     write: bool = True,
 ) -> dict[str, Any]:
-    """Authenticate Phase I and prove that only metadata staging is authorized."""
+    """Authenticate Phase I and the target-blind continuation planning stages."""
 
     plan = load_multicity_plan(config_path)
     workspace = MulticityWorkspace.from_plan(plan)
@@ -232,31 +290,52 @@ def audit_multicity_plan(
                     "Phoenix source-footprint files exist without a commit manifest."
                 )
 
-    if phoenix_geography is None:
-        planning_stage = "awaiting_phoenix_geography"
-        blockers = [
-            "freeze_portable_water_distance_source_and_algorithm",
-            "implement_and_test_generic_census_place_tract_adapter",
-            "complete_phoenix_metadata_only_pilot",
-            "promote_protocol_from_draft_with_separate_lock",
-        ]
-        next_safe_stage = "phoenix_boundary_and_metadata_only_pilot"
-    elif phoenix_source_footprints is None:
-        planning_stage = "ready_for_phoenix_source_footprints"
-        blockers = [
-            "freeze_portable_water_distance_source_and_algorithm",
-            "complete_phoenix_target_blind_source_footprint_discovery",
-            "promote_protocol_from_draft_with_separate_lock",
-        ]
-        next_safe_stage = "phoenix_target_blind_source_footprint_discovery"
-    else:
-        planning_stage = "phoenix_source_footprints_complete_metadata_only"
-        blockers = [
-            "freeze_portable_water_distance_source_and_algorithm",
-            "freeze_exact_portable_predictor_source_and_calibration_contract",
-            "promote_protocol_from_draft_with_separate_lock",
-        ]
-        next_safe_stage = "review_portable_water_distance_source_and_algorithm"
+    water_distance_review: dict[str, Any] | None = None
+    water_review_path = (
+        workspace.manifest_root
+        / "reviews"
+        / "portable_water_distance"
+        / "WATER_DISTANCE_REVIEW.json"
+    )
+    if water_review_path.is_file():
+        from la_heat.multicity.water_distance_review import (
+            audit_water_distance_review,
+        )
+
+        verified_review = audit_water_distance_review(
+            workspace.project_root
+            / "configs"
+            / "multicity"
+            / "water_distance_review_v1.toml",
+            output_path=water_review_path,
+            write=False,
+        )
+        water_distance_review = {
+            "state": verified_review["state"],
+            "path": water_review_path.relative_to(
+                workspace.project_root
+            ).as_posix(),
+            "file_sha256": sha256_file(water_review_path),
+            "commit_sha256": verified_review["commit_sha256"],
+            "review_outcome": verified_review["review_outcome"],
+            "source_lock_created": verified_review["source_lock_created"],
+            "algorithm_lock_created": verified_review["algorithm_lock_created"],
+            "predictor_build_authorized": verified_review[
+                "predictor_build_authorized"
+            ],
+            "target_or_qa_values_read": False,
+        }
+
+    (
+        planning_stage,
+        blockers,
+        next_safe_stage,
+        source_geometry_review_authorized,
+    ) = _continuation_planning_state(
+        phoenix_geography=phoenix_geography,
+        phoenix_source_footprints=phoenix_source_footprints,
+        water_distance_review=water_distance_review,
+    )
 
     payload: dict[str, Any] = {
         "schema_version": PLAN_AUDIT_SCHEMA_VERSION,
@@ -292,6 +371,9 @@ def audit_multicity_plan(
         },
         "authorized_now": {
             "boundary_and_public_metadata_staging": True,
+            "target_blind_source_geometry_review": (
+                source_geometry_review_authorized
+            ),
             "portable_predictor_source_freeze": False,
             "predictor_construction": False,
             "model_fitting": False,
@@ -319,6 +401,7 @@ def audit_multicity_plan(
         },
         "phoenix_geography_pilot": phoenix_geography,
         "phoenix_source_footprint_pilot": phoenix_source_footprints,
+        "portable_water_distance_review": water_distance_review,
         "blockers_before_predictor_build": blockers,
         "next_safe_stage": next_safe_stage,
     }

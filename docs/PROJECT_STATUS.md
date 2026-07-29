@@ -41,11 +41,11 @@ predictions that should be withheld.
 The draft protocol is `docs/MULTICITY_GENERALIZATION_PROTOCOL.md`; the
 machine-readable audit is `manifests/multicity/PLAN_READINESS.json`, internal
 commit
-`78cafaa41c4f45f8738e98fb8441e6efcbf0efe19d4a3f1226c874554fc3578d`.
+`5af81da4de409b60e313784ce7453df8bec997849826ad789b2418b937f6c244`.
 It reauthenticated the Phase I claim, model lock, completion marker, 23 cache
 commits, 21 final outputs, and evidence ZIP. It records
 `external_targets_unlocked = false` and permits only boundary/public-metadata
-staging.
+staging and target-blind public source-geometry review.
 
 The generic Census place/tract adapter and corrected Phoenix geography pilot
 are complete. The target-independent 50% area rule plus one `98xxxx`
@@ -58,6 +58,22 @@ commit
 The source remains a pilot snapshot rather than a protocol lock. No
 external-city LST or target-QA value was opened, and no predictor or new model
 was built.
+
+The Phoenix source-footprint metadata pilot and portable water-distance review
+are also complete. The former authenticated three Landsat WRS contributors,
+four Sentinel MGRS tiles, 1,461 Daymet cells, six Daymet granules, and two
+terrain tiles while reading zero raster payload bytes. The latter
+reauthenticated the existing Census 2019 coastline benchmark (16,631,608 bytes,
+4,248 `L4150` lines) without a source-data network request or distance
+calculation. Candidate documentation was reviewed separately on official
+websites. Its
+internal commit is
+`1c3b1738b7625a74f446b2c61e8efc84255dbe99fe745a2fa101d4decfcda6a5`.
+
+The review did not freeze Census because its U.S.-only coverage omits the
+Mexican Gulf of California relevant to Phoenix. The next safe stage is a
+target-blind GSHHG geometry comparison. Predictor construction, model fitting,
+and all external target/QA access remain locked.
 
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.
