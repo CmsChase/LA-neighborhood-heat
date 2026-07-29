@@ -1,4 +1,4 @@
-# Project Status — 2026-07-28
+# Project Status — 2026-07-29
 
 This file is a historical scientific summary. Before any work, read
 `docs/PROJECT_HANDOFF.md` in full; that document is authoritative for the live
@@ -41,12 +41,23 @@ predictions that should be withheld.
 The draft protocol is `docs/MULTICITY_GENERALIZATION_PROTOCOL.md`; the
 machine-readable audit is `manifests/multicity/PLAN_READINESS.json`, internal
 commit
-`2eceb4fbc220d3bcffb2e071d3393722e7db0aba8e09c64a97a3dc7a62c97079`.
+`78cafaa41c4f45f8738e98fb8441e6efcbf0efe19d4a3f1226c874554fc3578d`.
 It reauthenticated the Phase I claim, model lock, completion marker, 23 cache
 commits, 21 final outputs, and evidence ZIP. It records
 `external_targets_unlocked = false` and permits only boundary/public-metadata
-staging. No external-city LST or target-QA value was opened, and no new model
-or long computation was started.
+staging.
+
+The generic Census place/tract adapter and corrected Phoenix geography pilot
+are complete. The target-independent 50% area rule plus one `98xxxx`
+special-use exclusion produced 375 primary Phoenix tracts from 603 bbox
+candidates. The exact raw responses, GeoParquet hashes, and all-false
+target/model access flags are authenticated by
+`manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json`, internal
+commit
+`3891c871ab5e5710bf6abdbc8f2a22a5a62db7962ee66bf235e1caee28301fea`.
+The source remains a pilot snapshot rather than a protocol lock. No
+external-city LST or target-QA value was opened, and no predictor or new model
+was built.
 
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.

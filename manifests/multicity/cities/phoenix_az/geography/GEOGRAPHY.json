@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "state": "pilot_complete_source_not_protocol_locked",
+  "stage": "boundary_and_public_metadata_only",
+  "generated_at_utc": "2026-07-29T05:03:58.618311+00:00",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "plan_semantic_sha256": "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c",
+  "city": {
+    "id": "phoenix_az",
+    "name": "Phoenix",
+    "state_fips": "04",
+    "census_place_geoid": "0455000",
+    "role": "external_confirmation",
+    "target_values_status": "sealed"
+  },
+  "source_lock_status": "pilot_snapshot_not_protocol_lock",
+  "mirror_vertex_contract": "2020_TIGER_boundaries_no_vertex_alteration_declared",
+  "sources": {
+    "place": {
+      "selected": {
+        "label": "esri_demographics_census2020_place_pilot_mirror",
+        "url": "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Census_2020_Redistricting_Incorporated_Places/FeatureServer/0",
+        "provider": "Esri Demographics",
+        "source_status": "pilot_mirror_not_protocol_frozen",
+        "item_id": "13ea1fb24ca14842bb265e6ec6ac1d46",
+        "layer_name": "Incorporated_Places",
+        "max_record_count": 2000
+      },
+      "attempts": [
+        {
+          "label": "census_tigerweb_place",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/26",
+          "status": "unavailable",
+          "error_type": "LayerUnavailableError",
+          "error": "census_tigerweb_place place metadata request failed: ConnectionError."
+        },
+        {
+          "label": "esri_demographics_census2020_place_pilot_mirror",
+          "url": "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Census_2020_Redistricting_Incorporated_Places/FeatureServer/0",
+          "status": "selected"
+        }
+      ]
+    },
+    "tract": {
+      "selected": {
+        "label": "esri_demographics_census2020_tract_pilot_mirror",
+        "url": "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Census_2020_Redistricting_Tracts/FeatureServer/0",
+        "provider": "Esri Demographics",
+        "source_status": "pilot_mirror_not_protocol_frozen",
+        "item_id": "e3a7d2d3e5834b7eb6b1c2943141ced6",
+        "layer_name": "Tracts",
+        "max_record_count": 2000
+      },
+      "attempts": [
+        {
+          "label": "census_tigerweb_tract",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/6",
+          "status": "skipped_after_origin_failure"
+        },
+        {
+          "label": "esri_demographics_census2020_tract_pilot_mirror",
+          "url": "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Census_2020_Redistricting_Tracts/FeatureServer/0",
+          "status": "selected"
+        }
+      ]
+    }
+  },
+  "selection_contract": {
+    "analysis_crs": "EPSG:5070",
+    "minimum_place_area_fraction": 0.5,
+    "exclude_special_use_tracts": true,
+    "special_use_prefix": "98",
+    "uses_target_or_demographic_values": false
+  },
+  "geography": {
+    "bbox_wgs84": [
+      -112.3240760724,
+      33.2902650923,
+      -111.9255320035,
+      33.9183961768
+    ],
+    "bbox_analysis_m": [
+      -1499036.918,
+      1259651.256,
+      -1458566.496,
+      1332342.334
+    ],
+    "city_area_m2": 1344527338.527,
+    "source_declared_land_area_m2": 1341601620,
+    "county_fips": [
+      "013"
+    ],
+    "tract_candidates_in_bbox": 603,
+    "tract_candidates_with_positive_overlap": 389,
+    "tracts_meeting_area_threshold": 376,
+    "special_use_candidates_meeting_threshold": 1,
+    "primary_tract_count": 375
+  },
+  "target_access": {
+    "landsat_thermal_values_read": false,
+    "landsat_target_qa_values_read": false,
+    "external_lst_values_read": false,
+    "model_predictions_computed": false,
+    "model_fit_performed": false,
+    "predictor_construction_performed": false
+  },
+  "raw_files": {
+    "data/raw/multicity/phoenix_az/geography/place/arcgis_item_metadata.json": {
+      "sha256": "8887681c389ad05b865cab9d491b45291846f5525fe4a1342002275d196c43a5",
+      "bytes": 10760
+    },
+    "data/raw/multicity/phoenix_az/geography/place/features.geojson": {
+      "sha256": "0dee5e37892d2b6e24318eed3fe782ccbd5267072a0b4ff79a05cadb2284d558",
+      "bytes": 239820
+    },
+    "data/raw/multicity/phoenix_az/geography/place/layer_metadata.json": {
+      "sha256": "01e5d0ce684d02688998c8135b731388dae072763f52f2f328386df3931d1de2",
+      "bytes": 251132
+    },
+    "data/raw/multicity/phoenix_az/geography/place/query_count.json": {
+      "sha256": "d69644a1a9ecbdcfd8118e1e521938e57f852c506462b7e1f0da1e3df0bf0e9d",
+      "bytes": 13
+    },
+    "data/raw/multicity/phoenix_az/geography/tract/arcgis_item_metadata.json": {
+      "sha256": "dd250c545e90510b0a55f0fb226ec229fee3ccdd03a8257394a90aa36eee1a89",
+      "bytes": 11397
+    },
+    "data/raw/multicity/phoenix_az/geography/tract/features_0000.geojson": {
+      "sha256": "391096bf4267f059e311045cb9f2bdff24e4ff664cda487c73aef8e2a09f298a",
+      "bytes": 3257175
+    },
+    "data/raw/multicity/phoenix_az/geography/tract/layer_metadata.json": {
+      "sha256": "9481d69ddf9feb2aa5e357f89e0371a0e14eb3fdc058c3f3d04f27a0914e5a29",
+      "bytes": 279594
+    },
+    "data/raw/multicity/phoenix_az/geography/tract/query_count.json": {
+      "sha256": "a15a36a18808fe0aee80c131f10f16ecaf94e7ff4134e4a0c49eec1af0062ee5",
+      "bytes": 13
+    }
+  },
+  "outputs": {
+    "data/processed/multicity/phoenix_az/geography/city_boundary.parquet": {
+      "sha256": "278073ad9377b431aed8f0a8305f6751e1092af8b07cd2a04b9892eadeb9adff",
+      "bytes": 111796
+    },
+    "data/processed/multicity/phoenix_az/geography/tract_candidates.parquet": {
+      "sha256": "22ecae1afc769fcb481402a825ca0701827d6c4b4e990235b43d62eb68a916c1",
+      "bytes": 1450052
+    },
+    "data/processed/multicity/phoenix_az/geography/primary_tracts.parquet": {
+      "sha256": "01bb492bd10ca7373d14d72a99cb076a76efaf887bbb309022da45d3044abacb",
+      "bytes": 708144
+    }
+  },
+  "output_tables": {
+    "city_boundary": {
+      "sha256": "278073ad9377b431aed8f0a8305f6751e1092af8b07cd2a04b9892eadeb9adff",
+      "bytes": 111796,
+      "rows": 1,
+      "schema_sha256": "a263767165e1033548d4368b03e52a80d798c039670b1f189e99e49e3d134374",
+      "path": "data/processed/multicity/phoenix_az/geography/city_boundary.parquet",
+      "geometry_semantic_sha256": "4cb7d31bcb293f9f640a1f416d9daba5d284756f62fa15b7ce31ae38d16bb2fa"
+    },
+    "tract_candidates": {
+      "sha256": "22ecae1afc769fcb481402a825ca0701827d6c4b4e990235b43d62eb68a916c1",
+      "bytes": 1450052,
+      "rows": 603,
+      "schema_sha256": "37716cf0dadb1b70d72e72f3b1db20cbe90502c0587804200c38193e9c1737b0",
+      "path": "data/processed/multicity/phoenix_az/geography/tract_candidates.parquet",
+      "geometry_semantic_sha256": "d97e7cf9637f71c504d9b06e279cd814cad3b3add1ffa3c3c8d7eaa613d32a4a"
+    },
+    "primary_tracts": {
+      "sha256": "01bb492bd10ca7373d14d72a99cb076a76efaf887bbb309022da45d3044abacb",
+      "bytes": 708144,
+      "rows": 375,
+      "schema_sha256": "ad67cbc21f4d53fe7dbb12abb4554a256b073ba7b3b6fc2b2fa084fd717898a2",
+      "path": "data/processed/multicity/phoenix_az/geography/primary_tracts.parquet",
+      "geometry_semantic_sha256": "4da36560663af8c93d504cc7a2198ecdad5e74250065756b79257aa4a0e5619e"
+    }
+  },
+  "code_runtime": {
+    "algorithm_version": "multicity-census-geography-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "configs/multicity/cities/phoenix_az.toml": "138acdd0b6061044fee098d59a5b8b91ac620e21bf556285cad185e0cc0ec61c",
+      "configs/multicity/experiment.toml": "fd5330d83bf292204f05dc0aa64e0a535e45523060dd926e3a9b42f8969e5349",
+      "scripts/stage_multicity_geography.py": "a56c6a9631c07817c0e1800db8400da89c8e881a7eb75e305371d3b9b3f2ce0f",
+      "src/la_heat/multicity/config.py": "bebe7ef2c610b55b6b5fe72692ee517241a510785458d87832e0cf58d4e4897b",
+      "src/la_heat/multicity/geography.py": "ec6d9d2a57f6ff085a50c1ec5570108c00e5abfeef202d99bcd31c7003656b38",
+      "src/la_heat/multicity/workspace.py": "8afa216929d00543b2397958755cb7f01a4a42489606517c44bc93921d421b7f",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    },
+    "relative_paths": [
+      "configs/multicity/experiment.toml",
+      "configs/multicity/cities/phoenix_az.toml",
+      "scripts/stage_multicity_geography.py",
+      "src/la_heat/multicity/config.py",
+      "src/la_heat/multicity/geography.py",
+      "src/la_heat/multicity/workspace.py",
+      "src/la_heat/provenance.py"
+    ],
+    "sha256": "42722527181b886b6b790023d5f9257cc0cb8967fc5dfcfbb5fe2c9bbc9a085f"
+  },
+  "commit_sha256": "3891c871ab5e5710bf6abdbc8f2a22a5a62db7962ee66bf235e1caee28301fea"
+}

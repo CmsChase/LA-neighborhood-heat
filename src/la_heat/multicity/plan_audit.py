@@ -162,6 +162,45 @@ def audit_multicity_plan(
     if any(city.target_values_status != "sealed" for city in plan.external_cities):
         raise MulticityPlanAuditError("Every external city must remain sealed.")
 
+    phoenix_manifest_path = (
+        workspace.city("phoenix_az").manifests / "geography" / "GEOGRAPHY.json"
+    )
+    phoenix_geography: dict[str, Any] | None = None
+    if phoenix_manifest_path.is_file():
+        from la_heat.multicity.geography import verify_city_geography
+
+        verified_geography = verify_city_geography(plan.path, "phoenix_az")
+        phoenix_geography = {
+            "state": verified_geography["state"],
+            "path": phoenix_manifest_path.relative_to(
+                workspace.project_root
+            ).as_posix(),
+            "file_sha256": sha256_file(phoenix_manifest_path),
+            "commit_sha256": verified_geography["commit_sha256"],
+            "primary_tract_count": verified_geography["geography"][
+                "primary_tract_count"
+            ],
+            "target_or_qa_values_read": any(
+                verified_geography["target_access"].values()
+            ),
+        }
+
+    if phoenix_geography is None:
+        blockers = [
+            "freeze_portable_water_distance_source_and_algorithm",
+            "implement_and_test_generic_census_place_tract_adapter",
+            "complete_phoenix_metadata_only_pilot",
+            "promote_protocol_from_draft_with_separate_lock",
+        ]
+        next_safe_stage = "phoenix_boundary_and_metadata_only_pilot"
+    else:
+        blockers = [
+            "freeze_portable_water_distance_source_and_algorithm",
+            "complete_phoenix_target_blind_source_footprint_discovery",
+            "promote_protocol_from_draft_with_separate_lock",
+        ]
+        next_safe_stage = "phoenix_target_blind_source_footprint_discovery"
+
     payload: dict[str, Any] = {
         "schema_version": PLAN_AUDIT_SCHEMA_VERSION,
         "algorithm_version": PLAN_AUDIT_ALGORITHM_VERSION,
@@ -220,13 +259,9 @@ def audit_multicity_plan(
                 workspace.project_root
             ).as_posix(),
         },
-        "blockers_before_predictor_build": [
-            "freeze_portable_water_distance_source_and_algorithm",
-            "implement_and_test_generic_census_place_tract_adapter",
-            "complete_phoenix_metadata_only_pilot",
-            "promote_protocol_from_draft_with_separate_lock",
-        ],
-        "next_safe_stage": "phoenix_boundary_and_metadata_only_pilot",
+        "phoenix_geography_pilot": phoenix_geography,
+        "blockers_before_predictor_build": blockers,
+        "next_safe_stage": next_safe_stage,
     }
     payload["commit_sha256"] = canonical_sha256(payload)
     if write:

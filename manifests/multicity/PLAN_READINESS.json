@@ -3,11 +3,11 @@
   "algorithm_version": "multicity-planning-readiness-v1",
   "state": "planning_ready",
   "experiment_id": "la_to_three_city_zero_shot_v1",
-  "config_semantic_sha256": "0ae02c2f4505a3164962d0c4b1b6b6705ef4fc0716eeb296a45353ac99b2e1e6",
+  "config_semantic_sha256": "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c",
   "config_files": {
     "configs/multicity/experiment.toml": {
-      "sha256": "0921fbcd07e186bcd3ac521dc315356a7f15aeb79a8e3e35b41c33e39b4cadb5",
-      "bytes": 5168
+      "sha256": "fd5330d83bf292204f05dc0aa64e0a535e45523060dd926e3a9b42f8969e5349",
+      "bytes": 5765
     },
     "configs/multicity/cities/los_angeles_ca.toml": {
       "sha256": "ff580b99e2c6d69cef5241c92c6d709984151ed2091c330f0911609136bb94e0",
@@ -28,16 +28,16 @@
   },
   "code_files": {
     "src/la_heat/multicity/config.py": {
-      "sha256": "32abd36d1078aae883a63716cd649b2e74c68e3c70dc2004caa2068bb818e818",
-      "bytes": 11104
+      "sha256": "bebe7ef2c610b55b6b5fe72692ee517241a510785458d87832e0cf58d4e4897b",
+      "bytes": 12655
     },
     "src/la_heat/multicity/workspace.py": {
       "sha256": "8afa216929d00543b2397958755cb7f01a4a42489606517c44bc93921d421b7f",
       "bytes": 2882
     },
     "src/la_heat/multicity/plan_audit.py": {
-      "sha256": "b8d092c2c1148f6fc52af9c1a4c5092d5cf0be1be09bba832df33d8369660ce6",
-      "bytes": 10007
+      "sha256": "fc1ef54524db95e69b2f9cc116e197db8f33dfe85afb5525ee0755f3bfa20fea",
+      "bytes": 11421
     },
     "scripts/audit_multicity_plan.py": {
       "sha256": "23219df86adee929552a2daec0f5851a79ff7680f08af072ad45095d5a85e567",
@@ -126,12 +126,19 @@
     "report_root": "reports/multicity",
     "export_root": "exports/multicity"
   },
+  "phoenix_geography_pilot": {
+    "state": "pilot_complete_source_not_protocol_locked",
+    "path": "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json",
+    "file_sha256": "5c7be051a40e83d3a83df73dbf3e3ce2ceee744bda5bb7c0c0b2f8d9e9cf6f1c",
+    "commit_sha256": "3891c871ab5e5710bf6abdbc8f2a22a5a62db7962ee66bf235e1caee28301fea",
+    "primary_tract_count": 375,
+    "target_or_qa_values_read": false
+  },
   "blockers_before_predictor_build": [
     "freeze_portable_water_distance_source_and_algorithm",
-    "implement_and_test_generic_census_place_tract_adapter",
-    "complete_phoenix_metadata_only_pilot",
+    "complete_phoenix_target_blind_source_footprint_discovery",
     "promote_protocol_from_draft_with_separate_lock"
   ],
-  "next_safe_stage": "phoenix_boundary_and_metadata_only_pilot",
-  "commit_sha256": "2eceb4fbc220d3bcffb2e071d3393722e7db0aba8e09c64a97a3dc7a62c97079"
+  "next_safe_stage": "phoenix_target_blind_source_footprint_discovery",
+  "commit_sha256": "78cafaa41c4f45f8738e98fb8441e6efcbf0efe19d4a3f1226c874554fc3578d"
 }

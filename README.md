@@ -43,6 +43,14 @@ Start with the
 work uses isolated `multicity/` paths and cannot modify the completed 2025
 transaction.
 
+The first target-blind engineering pilot is complete: the generic Census
+place/tract adapter discovered a 375-tract primary Phoenix universe from the
+fixed 2020 incorporated-place boundary. The authenticated
+[Phoenix geography manifest](manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json)
+records the exact source responses, geometry hashes, selection audit, and the
+fact that no external LST or target-QA value was read. The source remains a
+pilot snapshot rather than a locked confirmatory input.
+
 ## Six ways into the project
 
 | If you want to… | Start here |

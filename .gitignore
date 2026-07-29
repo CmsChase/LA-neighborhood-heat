@@ -8,6 +8,7 @@ __pycache__/
 htmlcov/
 exports/
 tmp/
+.tmp/
 RUN_DISABLED_TRANSFERRED_OUT.txt
 /website/
 /website-github-pages/

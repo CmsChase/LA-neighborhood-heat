@@ -31,6 +31,7 @@ def test_multicity_plan_keeps_targets_and_forecast_claim_locked() -> None:
     assert locks["external_targets_unlocked"] is False
     assert locks["allow_external_target_access"] is False
     assert locks["allow_predictor_construction"] is False
+    assert locks["authorized_metadata_city_ids"] == ["phoenix_az"]
     assert plan.raw["phase1_anchor"]["la_2025_allowed_in_new_confirmation"] is False
     assert plan.raw["prospective"]["operational_forecast_claim_allowed"] is False
 

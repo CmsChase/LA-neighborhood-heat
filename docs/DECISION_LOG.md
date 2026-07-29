@@ -1399,3 +1399,40 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   `2eceb4fbc220d3bcffb2e071d3393722e7db0aba8e09c64a97a3dc7a62c97079`.
   It authorizes only boundary and public-metadata staging; no external target,
   predictor build, model fit, long computation, or new evaluation was started.
+
+## 2026-07-29 — Complete the target-blind Phoenix geography pilot
+
+- Decision: implement one reusable ArcGIS Census place/tract adapter under
+  `src/la_heat/multicity/` and authorize its draft write path only for
+  `phoenix_az`. Houston, Chicago, and Los Angeles continuation staging is
+  rejected before any network request.
+- Census TIGERweb remains the authoritative first source. The current local
+  route could not complete its TLS connection, so the adapter selected the
+  two fixed Esri Demographics 2020 Census items already recorded in
+  configuration. Their item metadata says the boundaries came from the 2020
+  TIGER/Line geodatabases and that vertices were not altered. Raw layer
+  metadata, item metadata, counts, and GeoJSON pages are preserved and hashed.
+  This is explicitly a pilot mirror, not a confirmatory source freeze.
+- Selection is target-independent: exact incorporated-place GEOID `0455000`,
+  common equal-area CRS `EPSG:5070`, at least 50% of original tract area inside
+  the city, then exclusion of `98xxxx` special-use tracts. No population field,
+  Landsat thermal/QA value, predictor, prediction, model fit, or score is read
+  or computed.
+- The first uncommitted run exposed an invalid-geometry ordering bug. The
+  source Phoenix multipolygon contains nested shells; unioning before
+  `make_valid` overstated total geometry area. The implementation now repairs
+  each source geometry before dissolving, and a synthetic nested-shell
+  regression test enforces that order. The superseded uncommitted bytes were
+  moved intact to the ignored recoverable directory
+  `data/interim/multicity/phoenix_az/superseded_geography_union_before_make_valid_20260729`.
+- The corrected audit contains 603 bbox candidates, 389 positive overlaps,
+  376 tracts meeting the area threshold, one qualifying special-use exclusion,
+  and 375 primary tracts in county FIPS `013`. Every primary geometry is valid,
+  nonempty, unique by GEOID, and has an overlap fraction in `[0, 1]`.
+- The primary GeoParquet SHA-256 is
+  `01bb492bd10ca7373d14d72a99cb076a76efaf887bbb309022da45d3044abacb`.
+  The geography manifest internal commit is
+  `3891c871ab5e5710bf6abdbc8f2a22a5a62db7962ee66bf235e1caee28301fea`.
+  The updated planning readiness advances the next safe stage to Phoenix
+  target-blind source-footprint discovery while leaving all external targets
+  and computation locks closed.

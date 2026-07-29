@@ -12,8 +12,9 @@ Tests mirror modules under [`src/la_heat`](../src/la_heat/README.md).
 - One-time authorization, prediction freezing, target opening, atomic
   publication, recovery, and evidence verification.
 - Website display export, dashboards, transfer helpers, and publication code.
-- Cross-city city-spec validation, Phase I path isolation, and external-target
-  lock behavior.
+- Cross-city city-spec validation, Phase I path isolation, external-target
+  locks, Census identity checks, exact 50% area selection, special-use tract
+  exclusion, invalid-geometry repair order, and audited source fallback.
 
 Run the complete checks from the repository root:
 

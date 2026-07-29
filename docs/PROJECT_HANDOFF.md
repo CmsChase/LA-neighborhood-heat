@@ -1,9 +1,13 @@
 # Mandatory project handoff
 
-Last material update: 2026-07-28 Asia/Shanghai
+Last material update: 2026-07-29 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
+- generic Census geography adapter, corrected Phoenix metadata-only pilot,
+  source-response audit, and this handoff are in the commit with subject
+  `Stage Phoenix geography pilot`; obtain its exact hash with
+  `git log --oneline --grep="Stage Phoenix geography pilot" -1`
 - cross-city continuation planning, isolated configuration, target-lock audit,
   and this handoff are in the commit with subject
   `Prepare cross-city continuation`; obtain its exact hash with
@@ -170,7 +174,11 @@ Authoritative draft files:
 - planning audit:
   `manifests/multicity/PLAN_READINESS.json`;
 - planning-audit internal commit:
-  `2eceb4fbc220d3bcffb2e071d3393722e7db0aba8e09c64a97a3dc7a62c97079`.
+  `78cafaa41c4f45f8738e98fb8441e6efcbf0efe19d4a3f1226c874554fc3578d`;
+- Phoenix geography audit:
+  `manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json`;
+- Phoenix geography internal commit:
+  `3891c871ab5e5710bf6abdbc8f2a22a5a62db7962ee66bf235e1caee28301fea`.
 
 The audit reauthenticated the original model lock, final completion, exact 23
 target-cache commits, exact 21 final outputs, and the 21,787,327-byte evidence
@@ -186,23 +194,56 @@ It records all of the following as false:
   external evaluation, and operational forecast claim authorization.
 
 No Phoenix, Houston, or Chicago Landsat thermal or target-QA value has been
-opened. No continuation download, model fit, or long computation has started.
-Only boundary and public source-metadata staging is currently authorized.
+opened. No continuation predictor has been constructed and no model has been
+fit. Only boundary and public source-metadata staging is currently authorized.
 
-Planning-scaffold verification:
+The generic Census place/tract adapter and its Phoenix pilot are complete.
+The current draft authorizes metadata writes only for `phoenix_az`; every
+other city is rejected before networking. Census TIGERweb is still the
+authoritative first source, but the current local route failed before returning
+metadata. The fixed Esri Demographics item IDs in the experiment configuration
+were therefore used for this pilot. Their source notes bind the geometry to
+2020 TIGER/Line and declare that vertices were not altered. This fallback is
+recorded as `pilot_mirror_not_protocol_frozen`; it may not silently become the
+confirmatory source lock.
 
-- focused continuation tests: 4 passed;
-- complete project suite: 751 passed in 288.7 seconds, with five existing
+The adapter preserved raw layer metadata, ArcGIS item metadata, count
+responses, and GeoJSON feature pages. It repaired each geometry before
+dissolving, selected tracts in `EPSG:5070`, retained those with at least 50%
+of original area inside Phoenix, and excluded `98xxxx` special-use tracts.
+The corrected result is:
+
+- 603 tract candidates in the Phoenix bbox;
+- 389 candidates with positive city overlap;
+- 376 meeting the area threshold;
+- one qualifying special-use tract excluded;
+- 375 primary tracts, all in county FIPS `013`;
+- primary GeoParquet SHA-256
+  `01bb492bd10ca7373d14d72a99cb076a76efaf887bbb309022da45d3044abacb`.
+
+An initial uncommitted snapshot unioned a nested-shell multipolygon before
+repair and overstated city area. It was never promoted. Its bytes remain
+recoverable only for failure audit under the ignored path
+`data/interim/multicity/phoenix_az/superseded_geography_union_before_make_valid_20260729`.
+The corrected code repairs individual geometries first, and a regression test
+locks that order.
+
+Current continuation verification:
+
+- focused plan/geography tests: 8 passed;
+- complete project suite: 755 passed in 162 seconds, with five existing
   dependency/NumPy deprecation warnings;
 - full-repository Ruff: passed;
-- repeated write/check-only planning audits produced the identical internal
-  commit shown above.
+- geography `--check-only` reauthenticated the exact raw/output hashes and
+  code/runtime binding;
+- the updated planning audit reauthenticated Phase I plus the Phoenix pilot
+  and produced the internal commit shown above.
 
-The next safe engineering stage is a generic Census incorporated-place/tract
-adapter followed by a Phoenix metadata-only pilot. It must dynamically discover
-the city bbox, counties, WRS contributors, MGRS tiles, Daymet cells, and
-terrain/source windows, write them under isolated `multicity/` paths, and stop
-before Landsat thermal or target-QA access.
+The next safe engineering stage is Phoenix target-blind source-footprint
+discovery: derive WRS contributors, Sentinel MGRS tiles, Daymet cells, and
+terrain/source windows from the authenticated boundary, write them under
+isolated `multicity/` paths, and stop before Landsat thermal or target-QA
+access.
 
 Before predictor construction, freeze a nationwide source and algorithm that
 replaces the Phase I `Pacific coast distance` with distance to a qualifying
@@ -215,10 +256,14 @@ Safe read-only command:
 
 ```powershell
 .\.venv\Scripts\python scripts\audit_multicity_plan.py --check-only
+.\.venv\Scripts\python scripts\stage_multicity_geography.py `
+  --config configs\multicity\experiment.toml `
+  --city phoenix_az --check-only
 ```
 
-First safe implementation task: add the city-independent geography adapter and
-its synthetic tests. Do not run a target builder or old dashboard.
+First safe implementation task: add authenticated, target-blind Phoenix source
+footprint discovery and synthetic tests. Do not run a target builder,
+construct predictors, fit a model, or start an old dashboard.
 
 ## Interactive results website
 

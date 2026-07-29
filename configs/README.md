@@ -27,6 +27,9 @@ result. Consult the [mandatory handoff](../docs/PROJECT_HANDOFF.md) before any
 configuration edit.
 
 The `multicity/` configuration is a separate draft continuation. Its initial
-lock permits only boundary and public-metadata staging. It does not authorize
-predictor construction, model fitting, external-city target access, or a
-real-time forecast claim.
+lock permits only boundary and public-metadata staging and currently limits
+writes to the Phoenix pilot. Census TIGERweb is the authoritative first source;
+fixed Esri Demographics item IDs provide a vertex-preserving pilot mirror when
+the local route to TIGERweb is unavailable. The mirror is not yet a
+confirmatory source freeze. Nothing here authorizes predictor construction,
+model fitting, external-city target access, or a real-time forecast claim.

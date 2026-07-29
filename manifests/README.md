@@ -39,6 +39,12 @@ unchanged Phase I anchor. Its `planning_ready` state permits only boundary and
 public-metadata staging. It explicitly records that external targets,
 predictor construction, model fitting, and one-time evaluation remain locked.
 
+`multicity/cities/phoenix_az/geography/GEOGRAPHY.json` authenticates the first
+metadata-only pilot: exact public source responses, one city boundary, 603
+bbox tract candidates, and the 375-tract primary universe. Its state is
+`pilot_complete_source_not_protocol_locked`; it is evidence of adapter
+behavior, not a source freeze or target-access authorization.
+
 Generated manifests are marked `-text` in `.gitattributes` because exact bytes
 matter. Do not normalize line endings to silence a cosmetic diff warning. Use
 [`scripts/verify_final_evaluation_evidence.py`](../scripts/verify_final_evaluation_evidence.py)

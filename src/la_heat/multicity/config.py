@@ -211,6 +211,10 @@ def _validate_plan(raw: dict[str, Any], cities: tuple[CitySpec, ...]) -> None:
         raise MulticityConfigError("Draft planning may not unlock computation or targets.")
     if locks.get("allow_boundary_metadata_staging") is not True:
         raise MulticityConfigError("Boundary metadata staging should be the only open stage.")
+    if locks.get("authorized_metadata_city_ids") != ["phoenix_az"]:
+        raise MulticityConfigError(
+            "The draft metadata pilot must remain limited to Phoenix."
+        )
 
     if len(cities) != 4 or len({city.id for city in cities}) != 4:
         raise MulticityConfigError("Exactly four unique city specifications are required.")
@@ -249,6 +253,36 @@ def _validate_plan(raw: dict[str, Any], cities: tuple[CitySpec, ...]) -> None:
         raise MulticityConfigError("Portable water-distance source needs a separate freeze.")
     if raw["sources"].get("portable_water_distance_source") != "NOT_YET_FROZEN":
         raise MulticityConfigError("Unfrozen portable water-distance source was populated.")
+    expected_census_sources = {
+        "census_tract_layer": (
+            "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+            "tigerWMS_Census2020/MapServer/6"
+        ),
+        "census_place_layer": (
+            "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+            "tigerWMS_Census2020/MapServer/26"
+        ),
+        "census_tract_pilot_mirror_layer": (
+            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/"
+            "USA_Census_2020_Redistricting_Tracts/FeatureServer/0"
+        ),
+        "census_tract_pilot_mirror_item": "e3a7d2d3e5834b7eb6b1c2943141ced6",
+        "census_place_pilot_mirror_layer": (
+            "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/"
+            "USA_Census_2020_Redistricting_Incorporated_Places/FeatureServer/0"
+        ),
+        "census_place_pilot_mirror_item": "13ea1fb24ca14842bb265e6ec6ac1d46",
+        "census_pilot_mirror_vertex_contract": (
+            "2020_TIGER_boundaries_no_vertex_alteration_declared"
+        ),
+    }
+    observed_census_sources = {
+        key: raw["sources"].get(key) for key in expected_census_sources
+    }
+    if observed_census_sources != expected_census_sources:
+        raise MulticityConfigError(
+            "The Census primary and pilot-mirror source identities changed."
+        )
     if raw["prospective"].get("operational_forecast_claim_allowed") is not False:
         raise MulticityConfigError("The Daymet pipeline cannot support a forecast claim.")
     _require_exact_model_contract(raw)

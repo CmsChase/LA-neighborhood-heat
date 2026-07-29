@@ -16,6 +16,7 @@ history is intentionally separated from the short project landing page.
 | How is the public atlas authenticated? | [RESULTS_WEBSITE.md](RESULTS_WEBSITE.md) |
 | Where are the paper, poster, and deck? | [PUBLICATION_MATERIALS.md](PUBLICATION_MATERIALS.md) |
 | What is the proposed cross-city continuation? | [MULTICITY_GENERALIZATION_PROTOCOL.md](MULTICITY_GENERALIZATION_PROTOCOL.md) |
+| What did the Phoenix geography pilot produce? | [Phoenix geography manifest](../manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json) |
 
 ## Scientific contracts
 

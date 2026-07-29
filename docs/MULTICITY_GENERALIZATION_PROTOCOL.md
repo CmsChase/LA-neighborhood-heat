@@ -79,6 +79,16 @@ grid cells, terrain tiles, and source windows must be discovered from frozen
 city boundaries and written to authenticated manifests. They may not be
 copied from Los Angeles constants.
 
+For the draft Phoenix adapter pilot, Census TIGERweb remains the authoritative
+first request. If that host is operationally unreachable, the adapter may use
+only the two fixed Esri Demographics 2020 Census item IDs recorded in
+`configs/multicity/experiment.toml`. Their published processing notes state
+that the boundaries came from the 2020 TIGER/Line geodatabases and that no
+vertices were altered. Every selected response and item-metadata response must
+be preserved and hashed. This fallback is a pilot snapshot, not the eventual
+confirmatory source freeze; a separate parity/integrity review is required
+before protocol lock.
+
 The Phase I feature `Pacific coast distance` is not portable. Before predictor
 construction, the continuation must freeze a nationwide source and algorithm
 for distance to a qualifying ocean or Great Lakes shoreline. The definition
@@ -224,6 +234,15 @@ Predictor construction, model fitting, external target access, and an
 operational-forecast claim remain locked until their missing source and
 protocol contracts are separately frozen.
 
+The Phoenix geography portion of item 4 completed on 2026-07-29. The adapter
+found 603 bbox candidates, 389 with positive city overlap, 376 meeting the
+50% area rule, and one qualifying `98xxxx` special-use tract; the resulting
+primary universe therefore contains 375 tracts, all in county FIPS `013`.
+The manifest state is `pilot_complete_source_not_protocol_locked` and records
+all target/model/predictor access flags as false. The next authorized work is
+target-blind discovery of Phoenix source footprints (for example WRS, MGRS,
+Daymet, and terrain coverage), not predictor construction.
+
 ## Official source anchors
 
 - U.S. Census Bureau 2020 TIGER/Line:
@@ -232,6 +251,10 @@ protocol contracts are separately frozen.
   https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/6
 - Census 2020 incorporated-place layer:
   https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/26
+- Fixed Phoenix-pilot tract mirror item:
+  https://www.arcgis.com/home/item.html?id=e3a7d2d3e5834b7eb6b1c2943141ced6
+- Fixed Phoenix-pilot incorporated-place mirror item:
+  https://www.arcgis.com/home/item.html?id=13ea1fb24ca14842bb265e6ec6ac1d46
 - Daymet:
   https://daymet.ornl.gov/
 - Landsat acquisition cadence:
