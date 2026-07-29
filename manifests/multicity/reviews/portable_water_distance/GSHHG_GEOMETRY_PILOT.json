@@ -1,0 +1,1221 @@
+{
+  "schema_version": 2,
+  "algorithm_version": "gshhg-geometry-pilot-v2",
+  "state": "geometry_pilot_complete_source_not_frozen",
+  "pilot_id": "target_blind_gshhg_geometry_comparison_v2",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "plan_semantic_sha256": "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c",
+  "source_lock_created": false,
+  "algorithm_lock_created": false,
+  "predictor_build_authorized": false,
+  "protocol_lock_created": false,
+  "prerequisite_water_review": {
+    "path": "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_REVIEW.json",
+    "file_sha256": "56aeb8ced370f4648b5256875223302ee189d3d5fa452fbc346e4d8dd80b7e56",
+    "commit_sha256": "1c3b1738b7625a74f446b2c61e8efc84255dbe99fe745a2fa101d4decfcda6a5",
+    "state": "review_complete_source_not_frozen"
+  },
+  "config": {
+    "base_path": "configs/multicity/gshhg_geometry_pilot_v1.toml",
+    "base_sha256": "691e42c914ccff4a076097d83bc9a363cd07f508847c224f8268704f308a67f4",
+    "amendment_path": "configs/multicity/gshhg_geometry_pilot_v2.toml",
+    "amendment_sha256": "c0f41f77d0c87a5ca09de81c2ec0ca2ae489633ac3f785648fbeb5f9f67e67ff",
+    "base_preregistration_commit": "08d69c3b4ba4c2d9e4ffb45e11727840ae3341b3",
+    "all_numerical_gates_unchanged_after_source_read": true
+  },
+  "source_archive": {
+    "source_id": "gshhg_2_3_7_full_shapefile",
+    "publisher": "Generic Mapping Tools maintainers",
+    "dataset": "Global Self-consistent Hierarchical High-resolution Geography",
+    "version": "2.3.7",
+    "release_date": "2017-06-15",
+    "path": "data/raw/multicity/water_distance/gshhg-shp-2.3.7.zip",
+    "official_url": "https://github.com/GenericMappingTools/gshhg-gmt/releases/download/2.3.7/gshhg-shp-2.3.7.zip",
+    "maintainer_mirror": "https://ftp.soest.hawaii.edu/gshhg/gshhg-shp-2.3.7.zip",
+    "release_record": "https://github.com/GenericMappingTools/gshhg-gmt/releases/tag/2.3.7",
+    "license": "GNU Lesser General Public License v3",
+    "bytes": 149157845,
+    "sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+    "published_md5": "cb82015f8533f9611b4adba2c404ba44",
+    "observed_md5": "cb82015f8533f9611b4adba2c404ba44",
+    "published_md5_matched": true,
+    "member_count": 402,
+    "total_uncompressed_bytes": 416243458,
+    "source_member_inventory_sha256": "fa348ee1fd68c9b10251735b60f3afd83b230e660165502e493dcc6605519d05",
+    "security_inventory_sha256": "be7290092ec2e0241ce1ccf65f0d2d4a410120c6a4e956f95188c30684aad32d",
+    "compression_methods": [
+      8
+    ],
+    "required_member_sha256": {
+      "COPYING.LESSERv3": "ea7d049c7705dc13afc202dd18e1827f3484f8212fd3fa7b82fc4a0c363432c9",
+      "GSHHS_shp/f/GSHHS_f_L1.dbf": "5f23e1e441810feddf95b59b222c5bba466635644f928150496f872c1aaaf742",
+      "GSHHS_shp/f/GSHHS_f_L1.prj": "98aaf3d1c0ecadf1a424a4536de261c3daf4e373697cb86c40c43b989daf52eb",
+      "GSHHS_shp/f/GSHHS_f_L1.shp": "121435427911ea80624802e0f352d777eaf6ba6966ca5f07e687650e95329fd9",
+      "GSHHS_shp/f/GSHHS_f_L1.shx": "9eeb611d9f7a8de8e647e39130791f96059e3b83a29fc4b9c6b19d1b61c24ac3",
+      "GSHHS_shp/f/GSHHS_f_L2.dbf": "7c18d4a32559dbbfbd16476707e04df31e3dd32e407ef6a648f37dad44d7b604",
+      "GSHHS_shp/f/GSHHS_f_L2.prj": "98aaf3d1c0ecadf1a424a4536de261c3daf4e373697cb86c40c43b989daf52eb",
+      "GSHHS_shp/f/GSHHS_f_L2.shp": "c18f0abb01802f27cd669c2c27b9ecbcd40519bb5295693f03bd3cf2cfd3d5c0",
+      "GSHHS_shp/f/GSHHS_f_L2.shx": "e370552d8d44c3e77947b140fcd1ebfffe40c405747d6b3a8a04c89655d880c4",
+      "LICENSE.TXT": "dc53a4833bf9121360a5286917683f041439327353ffe0231206c6b746005b81",
+      "README.TXT": "8c83b0d9e861c3cf9390ccfcc28d57dd484b192e1767524e094c988ee9f84ac7",
+      "SHAPEFILES.TXT": "5aa063c6bbac1b8046fe05557bfb8ecc74be0bcea298d30101ed2d210da9d38e"
+    },
+    "all_member_crc_passed": true,
+    "archive_extracted": false
+  },
+  "source_layers": {
+    "l1_original": {
+      "row_count": 179837,
+      "columns": [
+        "id",
+        "level",
+        "source",
+        "parent_id",
+        "sibling_id",
+        "area",
+        "geometry"
+      ],
+      "dtypes": {
+        "id": "str",
+        "level": "int32",
+        "source": "str",
+        "parent_id": "int32",
+        "sibling_id": "int32",
+        "area": "float64",
+        "geometry": "geometry"
+      },
+      "crs": "EPSG:4326",
+      "bounds": [
+        -180.0,
+        -68.924526,
+        180.0,
+        83.633389
+      ],
+      "geometry_types": {
+        "Polygon": 179837
+      },
+      "source_counts": {
+        "WVS": 179732,
+        "WDBII": 105
+      },
+      "invalid_geometry_count": 1,
+      "negative_area_count": 0,
+      "zero_area_count": 0,
+      "positive_area_count": 179837,
+      "attribute_geometry_semantic_sha256": "6f1fd881aafd8f3af129816a41b4a76096e1706a6e3023b8a3ccb5dfaa1315da"
+    },
+    "l2_original": {
+      "row_count": 6660,
+      "columns": [
+        "id",
+        "level",
+        "source",
+        "parent_id",
+        "sibling_id",
+        "area",
+        "geometry"
+      ],
+      "dtypes": {
+        "id": "str",
+        "level": "int32",
+        "source": "str",
+        "parent_id": "int32",
+        "sibling_id": "int32",
+        "area": "float64",
+        "geometry": "geometry"
+      },
+      "crs": "EPSG:4326",
+      "bounds": [
+        -180.0,
+        -55.143611,
+        180.0,
+        83.327222
+      ],
+      "geometry_types": {
+        "Polygon": 6660
+      },
+      "source_counts": {
+        "WDBII": 6569,
+        "WVS": 91
+      },
+      "invalid_geometry_count": 0,
+      "negative_area_count": 56,
+      "zero_area_count": 0,
+      "positive_area_count": 6604,
+      "attribute_geometry_semantic_sha256": "1b3fec1d26d5a6dc96d8711769451dc010612e62410d7378b53d9d9969bc66ee"
+    },
+    "l1_repair": {
+      "invalid_polygon_count": 1,
+      "source_id": "2380",
+      "validity_reason": "Ring Self-intersection[-69.748512 43.761547]",
+      "bounds": [
+        -69.782806,
+        43.752232,
+        -69.707344,
+        43.882225
+      ],
+      "original_normalized_wkb_sha256": "7c9a9200df56e5777d16ac7bb65435b35a7ece7ad2e31d19a8ef3e4660b8a65a",
+      "make_valid_container_type": "GeometryCollection",
+      "discarded_nonpolygonal_types": [
+        "LineString"
+      ],
+      "repaired_geometry_type": "Polygon",
+      "repaired_normalized_wkb_sha256": "73f108f95a746b9ef730a22c732dd3b9dcfad2e6c31d6c6c2da61f6a008966cc",
+      "planar_area_delta_square_degrees": 5.873999971324484e-09,
+      "all_geometry_valid_after_repair": true,
+      "selection_used_city_or_distance": false
+    },
+    "great_lakes_identity": {
+      "named_seed_count": 5,
+      "distinct_source_polygon_count": 3,
+      "seed_mapping": [
+        {
+          "name": "Lake Superior",
+          "longitude": -87.5,
+          "latitude": 47.5,
+          "source_id": "180507"
+        },
+        {
+          "name": "Lake Michigan",
+          "longitude": -87.0,
+          "latitude": 44.0,
+          "source_id": "180507"
+        },
+        {
+          "name": "Lake Huron",
+          "longitude": -82.5,
+          "latitude": 44.8,
+          "source_id": "180507"
+        },
+        {
+          "name": "Lake Erie",
+          "longitude": -81.8,
+          "latitude": 42.2,
+          "source_id": "180515"
+        },
+        {
+          "name": "Lake Ontario",
+          "longitude": -77.8,
+          "latitude": 43.7,
+          "source_id": "180517"
+        }
+      ],
+      "source_polygons": [
+        {
+          "source_id": "180507",
+          "reported_area": 208200.247285,
+          "bounds": [
+            -92.11,
+            41.62056,
+            -79.65972,
+            49.02222
+          ],
+          "coordinate_count": 10896,
+          "normalized_wkb_sha256": "83d5ba2f0065ceb7851aaafe1cb6cb11745a205e09509e211a0309409022b39a"
+        },
+        {
+          "source_id": "180515",
+          "reported_area": 27039.4355486,
+          "bounds": [
+            -83.46417,
+            41.3875,
+            -78.86139,
+            43.10278
+          ],
+          "coordinate_count": 2585,
+          "normalized_wkb_sha256": "858c762462d6573e3f2ce25356ba1e193c1ca47a1f1ecc327710a49ff1fe014a"
+        },
+        {
+          "source_id": "180517",
+          "reported_area": 19716.0771535,
+          "bounds": [
+            -79.77583,
+            43.18806,
+            -75.76306,
+            44.5025
+          ],
+          "coordinate_count": 2161,
+          "normalized_wkb_sha256": "b99eceddc5b9edc2fea390e33e008923a877f3b2fbbff3dafb30aea7ca3d23f7"
+        }
+      ],
+      "negative_area_river_lake_count_excluded": 56,
+      "zero_area_lake_count": 0,
+      "l3_island_shores_included": false,
+      "selection_used_target_or_distance": false
+    },
+    "linework": {
+      "maximum_search_radius_km": 2048.0,
+      "global_l1_polygon_count": 179837,
+      "regional_l1_polygon_count": 27024,
+      "selected_l2_polygon_count": 3,
+      "chunk_variant_line_counts": {
+        "256": 34242,
+        "1024": 28705,
+        "4096": 27425
+      },
+      "global_layer_projected_at_once": false,
+      "native_crs_prefilter_used": true,
+      "global_antimeridian_source_audit": {
+        "global_source_exteriors_audited": true,
+        "source_polygon_count": 179837,
+        "dateline_candidate_polygon_count": 10,
+        "audited_candidate_segment_count": 1191836,
+        "removed_same_meridian_seam_segment_count": 10,
+        "same_meridian_seam_component_ids": [
+          "0-E",
+          "0-W",
+          "112-E",
+          "112-W",
+          "1730-E",
+          "1730-W",
+          "525-E",
+          "525-W",
+          "97-E",
+          "97-W"
+        ],
+        "opposite_sign_dateline_segment_count": 0,
+        "remaining_rejected_longitude_jump_count": 0,
+        "maximum_retained_longitude_jump_degrees": 0.14972199999999702,
+        "reject_jump_degrees": 180.0,
+        "tolerance_degrees": 1e-09,
+        "all_global_source_exteriors_passed": true
+      }
+    }
+  },
+  "v1_failure": {
+    "path": "manifests/multicity/reviews/portable_water_distance/GSHHG_GEOMETRY_PILOT_V1_FAILURE.json",
+    "file_sha256": "1df7191211a59eaf3144c77646a60bfe7238458417f29cb1c2991af92a4270d0",
+    "commit_sha256": "e5d8c85780752bd7f8be46c20c1a34e7f66db7d15ce438b81f8010705861f03c",
+    "state": "geometry_pilot_v1_failed_before_distance",
+    "distance_values_computed": false
+  },
+  "diagnostic_distances": [
+    {
+      "city_id": "los_angeles_ca",
+      "label": "fixed target-blind Los Angeles reference point",
+      "preregistration_label": "fixed unlabeled Los Angeles reference point",
+      "longitude": -118.2437,
+      "latitude": 34.0522,
+      "projected_crs": "EPSG:32611",
+      "source": "gshhg_l1_plus_three_seed_selected_l2_connected_waters",
+      "distance_m": 20208.299356499057,
+      "distance_km": 20.208299356499058,
+      "accepted_radius_km": 64.0,
+      "accepted_candidate_count": 4,
+      "bruteforce_distance_m": 20208.299356499057,
+      "strtree_bruteforce_absolute_difference_m": 0.0,
+      "source_order_reversed_distance_m": 20208.299356499057,
+      "source_order_absolute_difference_m": 0.0,
+      "radius_audit": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 4,
+          "strtree_distance_m": 20208.299356499057,
+          "bruteforce_distance_m": 20208.299356499057,
+          "absolute_difference_m": 0.0,
+          "accepted": true
+        }
+      ],
+      "radius_invariance": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 4,
+          "distance_m": 20208.299356499057,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 128.0,
+          "candidate_count": 14,
+          "distance_m": 20208.299356499057,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 256.0,
+          "candidate_count": 29,
+          "distance_m": 20208.299356499057,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 512.0,
+          "candidate_count": 138,
+          "distance_m": 20208.299356499057,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 1024.0,
+          "candidate_count": 808,
+          "distance_m": 20208.299356499057,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 2048.0,
+          "candidate_count": 5773,
+          "distance_m": 20208.299356499057,
+          "absolute_difference_from_canonical_m": 0.0
+        }
+      ],
+      "geodesic_distance_m": 20212.536467969443,
+      "projected_minus_geodesic_m": -4.237111470385571,
+      "geodesic_audit": {
+        "maximum_absolute_difference_m": 4.237111470385571,
+        "maximum_relative_difference": 0.00020962789490077454,
+        "absolute_tolerance_m": 100.0,
+        "relative_tolerance": 0.005
+      },
+      "nearest_source_evidence": {
+        "source_id": "2",
+        "component_id": "2",
+        "shoreline_class": "global_ocean_l1",
+        "polygon_index": 0,
+        "run_index": 0,
+        "chunk_index": 115,
+        "nearest_longitude": -118.445472,
+        "nearest_latitude": 33.981666999999995,
+        "projected_distance_m": 20208.299356499057,
+        "equidistant_candidate_count": 1,
+        "tie_tolerance_m": 1e-06
+      }
+    },
+    {
+      "city_id": "los_angeles_ca",
+      "label": "fixed target-blind Los Angeles reference point",
+      "preregistration_label": "fixed unlabeled Los Angeles reference point",
+      "longitude": -118.2437,
+      "latitude": 34.0522,
+      "projected_crs": "EPSG:32611",
+      "source": "census_us_l4150_benchmark",
+      "distance_m": 21988.382947690214,
+      "distance_km": 21.988382947690212,
+      "accepted_radius_km": 64.0,
+      "accepted_candidate_count": 9,
+      "bruteforce_distance_m": 21988.382947690214,
+      "strtree_bruteforce_absolute_difference_m": 0.0,
+      "source_order_reversed_distance_m": 21988.382947690214,
+      "source_order_absolute_difference_m": 0.0,
+      "radius_audit": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 9,
+          "strtree_distance_m": 21988.382947690214,
+          "bruteforce_distance_m": 21988.382947690214,
+          "absolute_difference_m": 0.0,
+          "accepted": true
+        }
+      ],
+      "radius_invariance": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 9,
+          "distance_m": 21988.382947690214,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 128.0,
+          "candidate_count": 94,
+          "distance_m": 21988.382947690214,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 256.0,
+          "candidate_count": 509,
+          "distance_m": 21988.382947690214,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 512.0,
+          "candidate_count": 569,
+          "distance_m": 21988.382947690214,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 1024.0,
+          "candidate_count": 1131,
+          "distance_m": 21988.382947690214,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 2048.0,
+          "candidate_count": 1899,
+          "distance_m": 21988.382947690214,
+          "absolute_difference_from_canonical_m": 0.0
+        }
+      ],
+      "geodesic_distance_m": 21992.969184022637,
+      "projected_minus_geodesic_m": -4.586236332423141,
+      "geodesic_audit": {
+        "maximum_absolute_difference_m": 4.586236332423141,
+        "maximum_relative_difference": 0.00020853193100251927,
+        "absolute_tolerance_m": 100.0,
+        "relative_tolerance": 0.005
+      },
+      "nearest_source_evidence": {
+        "source_id": "census_l4150_archive_row_1793",
+        "component_id": "census_l4150_archive_row_1793",
+        "shoreline_class": "census_us_l4150",
+        "polygon_index": null,
+        "run_index": null,
+        "chunk_index": null,
+        "nearest_longitude": -118.45259800000001,
+        "nearest_latitude": 33.957098,
+        "projected_distance_m": 21988.382947690214,
+        "equidistant_candidate_count": 1,
+        "tie_tolerance_m": 1e-06,
+        "source_name": "Pacific"
+      }
+    },
+    {
+      "city_id": "phoenix_az",
+      "label": "fixed target-blind Phoenix reference point",
+      "preregistration_label": "fixed unlabeled Phoenix reference point",
+      "longitude": -112.074,
+      "latitude": 33.4484,
+      "projected_crs": "EPSG:32612",
+      "source": "gshhg_l1_plus_three_seed_selected_l2_connected_waters",
+      "distance_m": 262207.7560500305,
+      "distance_km": 262.2077560500305,
+      "accepted_radius_km": 512.0,
+      "accepted_candidate_count": 165,
+      "bruteforce_distance_m": 262207.7560500305,
+      "strtree_bruteforce_absolute_difference_m": 0.0,
+      "source_order_reversed_distance_m": 262207.7560500305,
+      "source_order_absolute_difference_m": 0.0,
+      "radius_audit": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 0,
+          "accepted": false
+        },
+        {
+          "radius_km": 128.0,
+          "candidate_count": 0,
+          "accepted": false
+        },
+        {
+          "radius_km": 256.0,
+          "candidate_count": 14,
+          "strtree_distance_m": 262207.7560500305,
+          "bruteforce_distance_m": 262207.7560500305,
+          "absolute_difference_m": 0.0,
+          "accepted": false
+        },
+        {
+          "radius_km": 512.0,
+          "candidate_count": 165,
+          "strtree_distance_m": 262207.7560500305,
+          "bruteforce_distance_m": 262207.7560500305,
+          "absolute_difference_m": 0.0,
+          "accepted": true
+        }
+      ],
+      "radius_invariance": [
+        {
+          "radius_km": 512.0,
+          "candidate_count": 165,
+          "distance_m": 262207.7560500305,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 1024.0,
+          "candidate_count": 824,
+          "distance_m": 262207.7560500305,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 2048.0,
+          "candidate_count": 8157,
+          "distance_m": 262207.7560500305,
+          "absolute_difference_from_canonical_m": 0.0
+        }
+      ],
+      "geodesic_distance_m": 262199.0951998894,
+      "projected_minus_geodesic_m": 8.660850141139235,
+      "geodesic_audit": {
+        "maximum_absolute_difference_m": 8.660850141139235,
+        "maximum_relative_difference": 3.3031579054598083e-05,
+        "absolute_tolerance_m": 100.0,
+        "relative_tolerance": 0.005
+      },
+      "nearest_source_evidence": {
+        "source_id": "2",
+        "component_id": "2",
+        "shoreline_class": "global_ocean_l1",
+        "polygon_index": 0,
+        "run_index": 0,
+        "chunk_index": 77,
+        "nearest_longitude": -113.770306,
+        "nearest_latitude": 31.570971999999998,
+        "projected_distance_m": 262207.7560500305,
+        "equidistant_candidate_count": 1,
+        "tie_tolerance_m": 1e-06
+      }
+    },
+    {
+      "city_id": "phoenix_az",
+      "label": "fixed target-blind Phoenix reference point",
+      "preregistration_label": "fixed unlabeled Phoenix reference point",
+      "longitude": -112.074,
+      "latitude": 33.4484,
+      "projected_crs": "EPSG:32612",
+      "source": "census_us_l4150_benchmark",
+      "distance_m": 482408.7695022754,
+      "distance_km": 482.4087695022754,
+      "accepted_radius_km": 512.0,
+      "accepted_candidate_count": 7,
+      "bruteforce_distance_m": 482408.7695022754,
+      "strtree_bruteforce_absolute_difference_m": 0.0,
+      "source_order_reversed_distance_m": 482408.7695022754,
+      "source_order_absolute_difference_m": 0.0,
+      "radius_audit": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 0,
+          "accepted": false
+        },
+        {
+          "radius_km": 128.0,
+          "candidate_count": 0,
+          "accepted": false
+        },
+        {
+          "radius_km": 256.0,
+          "candidate_count": 0,
+          "accepted": false
+        },
+        {
+          "radius_km": 512.0,
+          "candidate_count": 7,
+          "strtree_distance_m": 482408.7695022754,
+          "bruteforce_distance_m": 482408.7695022754,
+          "absolute_difference_m": 0.0,
+          "accepted": true
+        }
+      ],
+      "radius_invariance": [
+        {
+          "radius_km": 512.0,
+          "candidate_count": 7,
+          "distance_m": 482408.7695022754,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 1024.0,
+          "candidate_count": 1126,
+          "distance_m": 482408.7695022754,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 2048.0,
+          "candidate_count": 2480,
+          "distance_m": 482408.7695022754,
+          "absolute_difference_from_canonical_m": 0.0
+        }
+      ],
+      "geodesic_distance_m": 481810.7719533592,
+      "projected_minus_geodesic_m": 597.9975489162025,
+      "geodesic_audit": {
+        "maximum_absolute_difference_m": 597.9975489162025,
+        "maximum_relative_difference": 0.0012411460758583674,
+        "absolute_tolerance_m": 100.0,
+        "relative_tolerance": 0.005
+      },
+      "nearest_source_evidence": {
+        "source_id": "census_l4150_archive_row_3419",
+        "component_id": "census_l4150_archive_row_3419",
+        "shoreline_class": "census_us_l4150",
+        "polygon_index": null,
+        "run_index": null,
+        "chunk_index": null,
+        "nearest_longitude": -117.136644,
+        "nearest_latitude": 32.61638699999999,
+        "projected_distance_m": 482408.7695022754,
+        "equidistant_candidate_count": 1,
+        "tie_tolerance_m": 1e-06,
+        "source_name": "Pacific"
+      }
+    },
+    {
+      "city_id": "houston_tx",
+      "label": "fixed target-blind Houston reference point",
+      "preregistration_label": "fixed unlabeled Houston reference point",
+      "longitude": -95.3698,
+      "latitude": 29.7604,
+      "projected_crs": "EPSG:32615",
+      "source": "gshhg_l1_plus_three_seed_selected_l2_connected_waters",
+      "distance_m": 36286.50318330564,
+      "distance_km": 36.28650318330564,
+      "accepted_radius_km": 64.0,
+      "accepted_candidate_count": 59,
+      "bruteforce_distance_m": 36286.50318330564,
+      "strtree_bruteforce_absolute_difference_m": 0.0,
+      "source_order_reversed_distance_m": 36286.50318330564,
+      "source_order_absolute_difference_m": 0.0,
+      "radius_audit": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 59,
+          "strtree_distance_m": 36286.50318330564,
+          "bruteforce_distance_m": 36286.50318330564,
+          "absolute_difference_m": 0.0,
+          "accepted": true
+        }
+      ],
+      "radius_invariance": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 59,
+          "distance_m": 36286.50318330564,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 128.0,
+          "candidate_count": 101,
+          "distance_m": 36286.50318330564,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 256.0,
+          "candidate_count": 284,
+          "distance_m": 36286.50318330564,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 512.0,
+          "candidate_count": 1304,
+          "distance_m": 36286.50318330564,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 1024.0,
+          "candidate_count": 2362,
+          "distance_m": 36286.50318330564,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 2048.0,
+          "candidate_count": 12969,
+          "distance_m": 36286.50318330564,
+          "absolute_difference_from_canonical_m": 0.0
+        }
+      ],
+      "geodesic_distance_m": 36280.30946835152,
+      "projected_minus_geodesic_m": 6.193714954119059,
+      "geodesic_audit": {
+        "maximum_absolute_difference_m": 6.193714954119059,
+        "maximum_relative_difference": 0.0001707183605895654,
+        "absolute_tolerance_m": 100.0,
+        "relative_tolerance": 0.005
+      },
+      "nearest_source_evidence": {
+        "source_id": "2",
+        "component_id": "2",
+        "shoreline_class": "global_ocean_l1",
+        "polygon_index": 0,
+        "run_index": 0,
+        "chunk_index": 784,
+        "nearest_longitude": -95.071361,
+        "nearest_latitude": 29.562443999999996,
+        "projected_distance_m": 36286.50318330564,
+        "equidistant_candidate_count": 1,
+        "tie_tolerance_m": 1e-06
+      }
+    },
+    {
+      "city_id": "houston_tx",
+      "label": "fixed target-blind Houston reference point",
+      "preregistration_label": "fixed unlabeled Houston reference point",
+      "longitude": -95.3698,
+      "latitude": 29.7604,
+      "projected_crs": "EPSG:32615",
+      "source": "census_us_l4150_benchmark",
+      "distance_m": 36757.504569002806,
+      "distance_km": 36.757504569002805,
+      "accepted_radius_km": 64.0,
+      "accepted_candidate_count": 32,
+      "bruteforce_distance_m": 36757.504569002806,
+      "strtree_bruteforce_absolute_difference_m": 0.0,
+      "source_order_reversed_distance_m": 36757.504569002806,
+      "source_order_absolute_difference_m": 0.0,
+      "radius_audit": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 32,
+          "strtree_distance_m": 36757.504569002806,
+          "bruteforce_distance_m": 36757.504569002806,
+          "absolute_difference_m": 0.0,
+          "accepted": true
+        }
+      ],
+      "radius_invariance": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 32,
+          "distance_m": 36757.504569002806,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 128.0,
+          "candidate_count": 36,
+          "distance_m": 36757.504569002806,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 256.0,
+          "candidate_count": 42,
+          "distance_m": 36757.504569002806,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 512.0,
+          "candidate_count": 228,
+          "distance_m": 36757.504569002806,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 1024.0,
+          "candidate_count": 457,
+          "distance_m": 36757.504569002806,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 2048.0,
+          "candidate_count": 3477,
+          "distance_m": 36757.504569002806,
+          "absolute_difference_from_canonical_m": 0.0
+        }
+      ],
+      "geodesic_distance_m": 36751.77260915046,
+      "projected_minus_geodesic_m": 5.7319598523463355,
+      "geodesic_audit": {
+        "maximum_absolute_difference_m": 5.7319598523463355,
+        "maximum_relative_difference": 0.00015596417384556826,
+        "absolute_tolerance_m": 100.0,
+        "relative_tolerance": 0.005
+      },
+      "nearest_source_evidence": {
+        "source_id": "census_l4150_archive_row_3676",
+        "component_id": "census_l4150_archive_row_3676",
+        "shoreline_class": "census_us_l4150",
+        "polygon_index": null,
+        "run_index": null,
+        "chunk_index": null,
+        "nearest_longitude": -95.01377399999998,
+        "nearest_latitude": 29.64499399999999,
+        "projected_distance_m": 36757.504569002806,
+        "equidistant_candidate_count": 1,
+        "tie_tolerance_m": 1e-06,
+        "source_name": "Gulf"
+      }
+    },
+    {
+      "city_id": "chicago_il",
+      "label": "fixed target-blind Chicago reference point",
+      "preregistration_label": "fixed unlabeled Chicago reference point",
+      "longitude": -87.6298,
+      "latitude": 41.8781,
+      "projected_crs": "EPSG:32616",
+      "source": "gshhg_l1_plus_three_seed_selected_l2_connected_waters",
+      "distance_m": 1162.3830922086756,
+      "distance_km": 1.1623830922086755,
+      "accepted_radius_km": 64.0,
+      "accepted_candidate_count": 1,
+      "bruteforce_distance_m": 1162.3830922086756,
+      "strtree_bruteforce_absolute_difference_m": 0.0,
+      "source_order_reversed_distance_m": 1162.3830922086756,
+      "source_order_absolute_difference_m": 0.0,
+      "radius_audit": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 1,
+          "strtree_distance_m": 1162.3830922086756,
+          "bruteforce_distance_m": 1162.3830922086756,
+          "absolute_difference_m": 0.0,
+          "accepted": true
+        }
+      ],
+      "radius_invariance": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 1,
+          "distance_m": 1162.3830922086756,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 128.0,
+          "candidate_count": 2,
+          "distance_m": 1162.3830922086756,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 256.0,
+          "candidate_count": 2,
+          "distance_m": 1162.3830922086756,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 512.0,
+          "candidate_count": 12,
+          "distance_m": 1162.3830922086756,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 1024.0,
+          "candidate_count": 1152,
+          "distance_m": 1162.3830922086756,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 2048.0,
+          "candidate_count": 24005,
+          "distance_m": 1162.3830922086756,
+          "absolute_difference_from_canonical_m": 0.0
+        }
+      ],
+      "geodesic_distance_m": 1162.9394024815563,
+      "projected_minus_geodesic_m": -0.5563102728806371,
+      "geodesic_audit": {
+        "maximum_absolute_difference_m": 0.5563102728806371,
+        "maximum_relative_difference": 0.00047836565834259785,
+        "absolute_tolerance_m": 100.0,
+        "relative_tolerance": 0.005
+      },
+      "nearest_source_evidence": {
+        "source_id": "180507",
+        "component_id": "180507",
+        "shoreline_class": "three_seed_selected_l2_connected_waters",
+        "polygon_index": 0,
+        "run_index": 0,
+        "chunk_index": 0,
+        "nearest_longitude": -87.6158173585849,
+        "nearest_latitude": 41.878734097558215,
+        "projected_distance_m": 1162.3830922086756,
+        "equidistant_candidate_count": 1,
+        "tie_tolerance_m": 1e-06
+      }
+    },
+    {
+      "city_id": "chicago_il",
+      "label": "fixed target-blind Chicago reference point",
+      "preregistration_label": "fixed unlabeled Chicago reference point",
+      "longitude": -87.6298,
+      "latitude": 41.8781,
+      "projected_crs": "EPSG:32616",
+      "source": "census_us_l4150_benchmark",
+      "distance_m": 1120.1128693893913,
+      "distance_km": 1.1201128693893914,
+      "accepted_radius_km": 64.0,
+      "accepted_candidate_count": 6,
+      "bruteforce_distance_m": 1120.1128693893913,
+      "strtree_bruteforce_absolute_difference_m": 0.0,
+      "source_order_reversed_distance_m": 1120.1128693893913,
+      "source_order_absolute_difference_m": 0.0,
+      "radius_audit": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 6,
+          "strtree_distance_m": 1120.1128693893913,
+          "bruteforce_distance_m": 1120.1128693893913,
+          "absolute_difference_m": 0.0,
+          "accepted": true
+        }
+      ],
+      "radius_invariance": [
+        {
+          "radius_km": 64.0,
+          "candidate_count": 6,
+          "distance_m": 1120.1128693893913,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 128.0,
+          "candidate_count": 14,
+          "distance_m": 1120.1128693893913,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 256.0,
+          "candidate_count": 22,
+          "distance_m": 1120.1128693893913,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 512.0,
+          "candidate_count": 302,
+          "distance_m": 1120.1128693893913,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 1024.0,
+          "candidate_count": 617,
+          "distance_m": 1120.1128693893913,
+          "absolute_difference_from_canonical_m": 0.0
+        },
+        {
+          "radius_km": 2048.0,
+          "candidate_count": 3333,
+          "distance_m": 1120.1128693893913,
+          "absolute_difference_from_canonical_m": 0.0
+        }
+      ],
+      "geodesic_distance_m": 1120.568969661227,
+      "projected_minus_geodesic_m": -0.4561002718355667,
+      "geodesic_audit": {
+        "maximum_absolute_difference_m": 0.4561002718355667,
+        "maximum_relative_difference": 0.0004070256130450016,
+        "absolute_tolerance_m": 100.0,
+        "relative_tolerance": 0.005
+      },
+      "nearest_source_evidence": {
+        "source_id": "census_l4150_archive_row_1332",
+        "component_id": "census_l4150_archive_row_1332",
+        "shoreline_class": "census_us_l4150",
+        "polygon_index": null,
+        "run_index": null,
+        "chunk_index": null,
+        "nearest_longitude": -87.61630733654151,
+        "nearest_latitude": 41.878406859218295,
+        "projected_distance_m": 1120.1128693893913,
+        "equidistant_candidate_count": 1,
+        "tie_tolerance_m": 1e-06,
+        "source_name": "Great Lakes"
+      }
+    }
+  ],
+  "source_comparisons": [
+    {
+      "city_id": "los_angeles_ca",
+      "gshhg_distance_km": 20.208299356499058,
+      "census_distance_km": 21.988382947690212,
+      "gshhg_minus_census_km": -1.7800835911911563,
+      "absolute_difference_km": 1.7800835911911563
+    },
+    {
+      "city_id": "phoenix_az",
+      "gshhg_distance_km": 262.2077560500305,
+      "census_distance_km": 482.4087695022754,
+      "gshhg_minus_census_km": -220.20101345224487,
+      "absolute_difference_km": 220.20101345224487
+    },
+    {
+      "city_id": "houston_tx",
+      "gshhg_distance_km": 36.28650318330564,
+      "census_distance_km": 36.757504569002805,
+      "gshhg_minus_census_km": -0.47100138569716365,
+      "absolute_difference_km": 0.47100138569716365
+    },
+    {
+      "city_id": "chicago_il",
+      "gshhg_distance_km": 1.1623830922086755,
+      "census_distance_km": 1.1201128693893914,
+      "gshhg_minus_census_km": 0.042270222819284296,
+      "absolute_difference_km": 0.042270222819284296
+    }
+  ],
+  "phoenix_comparison": {
+    "city_id": "phoenix_az",
+    "gshhg_distance_km": 262.2077560500305,
+    "census_distance_km": 482.4087695022754,
+    "gshhg_minus_census_km": -220.20101345224487,
+    "absolute_difference_km": 220.20101345224487
+  },
+  "numerical_gates": {
+    "strtree_bruteforce_all_passed": true,
+    "radius_expansion_all_passed": true,
+    "source_order_all_passed": true,
+    "projected_geodesic_all_passed": true,
+    "line_chunk_invariance": {
+      "canonical_line_chunk_vertex_count": 1024,
+      "runs": [
+        {
+          "line_chunk_vertex_count": 256,
+          "absolute_differences_m": {
+            "los_angeles_ca": 0.0,
+            "phoenix_az": 0.0,
+            "houston_tx": 0.0,
+            "chicago_il": 0.0
+          },
+          "maximum_absolute_difference_m": 0.0
+        },
+        {
+          "line_chunk_vertex_count": 4096,
+          "absolute_differences_m": {
+            "los_angeles_ca": 0.0,
+            "phoenix_az": 0.0,
+            "houston_tx": 0.0,
+            "chicago_il": 0.0
+          },
+          "maximum_absolute_difference_m": 0.0
+        }
+      ],
+      "maximum_absolute_difference_m": 0.0,
+      "tolerance_m": 1e-06,
+      "all_runs_invariant": true
+    },
+    "worker_and_query_chunk_invariance": {
+      "runs": [
+        {
+          "workers": 1,
+          "query_chunk_size": 1,
+          "identical_query_replicates_per_task": 4,
+          "vectorized_query_exercised": false,
+          "maximum_absolute_difference_m": 0.0,
+          "result_sha256": "6c06dbebeb9771f2f86fe95d49b778a869ab4b2164e8ef4859d104fe77144157"
+        },
+        {
+          "workers": 1,
+          "query_chunk_size": 2,
+          "identical_query_replicates_per_task": 4,
+          "vectorized_query_exercised": true,
+          "maximum_absolute_difference_m": 0.0,
+          "result_sha256": "6c06dbebeb9771f2f86fe95d49b778a869ab4b2164e8ef4859d104fe77144157"
+        },
+        {
+          "workers": 1,
+          "query_chunk_size": 4,
+          "identical_query_replicates_per_task": 4,
+          "vectorized_query_exercised": true,
+          "maximum_absolute_difference_m": 0.0,
+          "result_sha256": "6c06dbebeb9771f2f86fe95d49b778a869ab4b2164e8ef4859d104fe77144157"
+        },
+        {
+          "workers": 2,
+          "query_chunk_size": 1,
+          "identical_query_replicates_per_task": 4,
+          "vectorized_query_exercised": false,
+          "maximum_absolute_difference_m": 0.0,
+          "result_sha256": "6c06dbebeb9771f2f86fe95d49b778a869ab4b2164e8ef4859d104fe77144157"
+        },
+        {
+          "workers": 2,
+          "query_chunk_size": 2,
+          "identical_query_replicates_per_task": 4,
+          "vectorized_query_exercised": true,
+          "maximum_absolute_difference_m": 0.0,
+          "result_sha256": "6c06dbebeb9771f2f86fe95d49b778a869ab4b2164e8ef4859d104fe77144157"
+        },
+        {
+          "workers": 2,
+          "query_chunk_size": 4,
+          "identical_query_replicates_per_task": 4,
+          "vectorized_query_exercised": true,
+          "maximum_absolute_difference_m": 0.0,
+          "result_sha256": "6c06dbebeb9771f2f86fe95d49b778a869ab4b2164e8ef4859d104fe77144157"
+        },
+        {
+          "workers": 4,
+          "query_chunk_size": 1,
+          "identical_query_replicates_per_task": 4,
+          "vectorized_query_exercised": false,
+          "maximum_absolute_difference_m": 0.0,
+          "result_sha256": "6c06dbebeb9771f2f86fe95d49b778a869ab4b2164e8ef4859d104fe77144157"
+        },
+        {
+          "workers": 4,
+          "query_chunk_size": 2,
+          "identical_query_replicates_per_task": 4,
+          "vectorized_query_exercised": true,
+          "maximum_absolute_difference_m": 0.0,
+          "result_sha256": "6c06dbebeb9771f2f86fe95d49b778a869ab4b2164e8ef4859d104fe77144157"
+        },
+        {
+          "workers": 4,
+          "query_chunk_size": 4,
+          "identical_query_replicates_per_task": 4,
+          "vectorized_query_exercised": true,
+          "maximum_absolute_difference_m": 0.0,
+          "result_sha256": "6c06dbebeb9771f2f86fe95d49b778a869ab4b2164e8ef4859d104fe77144157"
+        }
+      ],
+      "maximum_absolute_difference_m": 0.0,
+      "tolerance_m": 1e-06,
+      "audit_semantics": "Each fixed point-source task is repeated without spatial alteration; the repeated point vector is evaluated in chunks of the frozen sizes.",
+      "all_runs_invariant": true
+    }
+  },
+  "diagnostic_table": {
+    "path": "data/interim/multicity/water_distance/gshhg_geometry_pilot/diagnostic_distances.csv",
+    "bytes": 1786,
+    "sha256": "90685ee61bff69a4ffa5cdc962ef7736ef43e9bb93366155f930d8898cfc24dc",
+    "rows": 8,
+    "semantic_sha256": "1af93d8fff077804756b3415873c40ea1a11caa3e50fd792fbff88aa09bcfa4a"
+  },
+  "locks": {
+    "protocol_locked": false,
+    "external_targets_unlocked": false,
+    "external_target_values_read": false,
+    "external_prediction_commit_exists": false,
+    "allow_predictor_construction": false,
+    "allow_model_fitting": false,
+    "allow_external_target_access": false
+  },
+  "access_contract": {
+    "operator_recorded_canonical_source_archive_downloads": 1,
+    "operator_recorded_failed_concurrent_download_artifacts_preserved": 1,
+    "operator_download_history_mechanically_authenticated": false,
+    "audit_program_network_requests": 0,
+    "public_source_geometry_read": true,
+    "fixed_target_blind_source_geometry_distances_computed": true,
+    "immutable_v1_access_key_fixed_unlabeled_was_true": true,
+    "eligible_land_grid_opened": false,
+    "distance_feature_surface_computed": false,
+    "tract_aggregation_performed": false,
+    "predictor_values_computed": false,
+    "predictor_construction_performed": false,
+    "model_fit_performed": false,
+    "model_predictions_computed": false,
+    "landsat_thermal_values_read": false,
+    "landsat_target_qa_values_read": false,
+    "external_lst_values_read": false,
+    "external_target_files_opened": false,
+    "final_evaluation_outputs_opened": false
+  },
+  "decision": {
+    "source_frozen": false,
+    "algorithm_frozen": false,
+    "gshhg_pilot_passed_all_v2_gates": true,
+    "next_safe_stage": "portable_water_distance_source_and_algorithm_freeze_decision"
+  },
+  "code_runtime": {
+    "algorithm_version": "gshhg-geometry-pilot-v2",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2",
+      "pyproj": "3.7.2"
+    },
+    "files": {
+      "configs/multicity/experiment.toml": "fd5330d83bf292204f05dc0aa64e0a535e45523060dd926e3a9b42f8969e5349",
+      "configs/multicity/gshhg_geometry_pilot_v1.toml": "691e42c914ccff4a076097d83bc9a363cd07f508847c224f8268704f308a67f4",
+      "configs/multicity/gshhg_geometry_pilot_v2.toml": "c0f41f77d0c87a5ca09de81c2ec0ca2ae489633ac3f785648fbeb5f9f67e67ff",
+      "configs/multicity/water_distance_review_v1.toml": "1328f087e7a2b44ef67275979726046d4e6ea7be48765fdc9d39dcb783f1d3a1",
+      "pyproject.toml": "6e3c1996227eacf9d19e77498cb39eafda66efb9df4d0a58873cda386e4da971",
+      "scripts/stage_multicity_gshhg_geometry_pilot.py": "07fe5dbbe6a02e10f95f45db97b1afc012d069516102822d3d4dafb1f7ac0d8d",
+      "src/la_heat/multicity/config.py": "bebe7ef2c610b55b6b5fe72692ee517241a510785458d87832e0cf58d4e4897b",
+      "src/la_heat/multicity/gshhg_geometry_pilot.py": "54fa2b1b2f8f043e7e91a8160f9d3cce8f939d5ca5450d4f1379cbc76e37b7c2",
+      "src/la_heat/multicity/water_distance_review.py": "e3c518e368188e7afa94ea081ca1ace7625b7cb0a00ddd3399126b709f24c334",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/static_sources.py": "07658c6b588ccc2c3f5cf02fd5c66dc8fd2bdf9d6674219be9bb18c77bc7cee9"
+    },
+    "relative_paths": [
+      "configs/multicity/experiment.toml",
+      "configs/multicity/gshhg_geometry_pilot_v1.toml",
+      "configs/multicity/gshhg_geometry_pilot_v2.toml",
+      "configs/multicity/water_distance_review_v1.toml",
+      "pyproject.toml",
+      "scripts/stage_multicity_gshhg_geometry_pilot.py",
+      "src/la_heat/multicity/config.py",
+      "src/la_heat/multicity/gshhg_geometry_pilot.py",
+      "src/la_heat/multicity/water_distance_review.py",
+      "src/la_heat/provenance.py",
+      "src/la_heat/static_sources.py"
+    ],
+    "sha256": "a8b3898c44eb1d3109e681cf1334783f473cf1953e3fbbe5aca5acc7f309726b"
+  },
+  "commit_sha256": "e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735"
+}

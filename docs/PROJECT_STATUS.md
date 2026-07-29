@@ -41,11 +41,12 @@ predictions that should be withheld.
 The draft protocol is `docs/MULTICITY_GENERALIZATION_PROTOCOL.md`; the
 machine-readable audit is `manifests/multicity/PLAN_READINESS.json`, internal
 commit
-`5af81da4de409b60e313784ce7453df8bec997849826ad789b2418b937f6c244`.
+`8444a16998699e39a51b2e0bf8daa62a9bd4365dfdb926cadeb315c6952de472`.
 It reauthenticated the Phase I claim, model lock, completion marker, 23 cache
 commits, 21 final outputs, and evidence ZIP. It records
-`external_targets_unlocked = false` and permits only boundary/public-metadata
-staging and target-blind public source-geometry review.
+`external_targets_unlocked = false`; public source-geometry review is now
+closed after the completed pilot, and every source-freeze, predictor, model,
+target, and evaluation authorization remains false.
 
 The generic Census place/tract adapter and corrected Phoenix geography pilot
 are complete. The target-independent 50% area rule plus one `98xxxx`
@@ -70,10 +71,44 @@ websites. Its
 internal commit is
 `1c3b1738b7625a74f446b2c61e8efc84255dbe99fe745a2fa101d4decfcda6a5`.
 
-The review did not freeze Census because its U.S.-only coverage omits the
-Mexican Gulf of California relevant to Phoenix. The next safe stage is a
-target-blind GSHHG geometry comparison. Predictor construction, model fitting,
-and all external target/QA access remain locked.
+The review did not freeze Census because its U.S.-only coverage does not
+define unrestricted global-ocean distance for Phoenix. The target-blind GSHHG
+geometry comparison is now complete. Its V1 preregistration failed before
+distance calculation because L1 had one invalid polygon and the five named
+lake seeds mapped to three L2 connected-water polygons. A
+source-structure-only V2 amendment was committed before any distance was
+opened and left all points, thresholds, and access locks unchanged.
+
+V2 authenticated the 149,157,845-byte GSHHG 2.3.7 archive and passed every
+STRtree/brute-force, radius, source-order, line/query-chunk, worker, and
+projected/geodesic gate. The candidate contract uses L1 exteriors plus the
+exteriors of three positive-area L2 connected-water polygons selected by the
+five fixed lake seeds; L3 lake-island shores are excluded. At the fixed
+target-blind Phoenix point, the GSHHG contract measured 262.208 km and the
+Census contract measured 482.409 km, a -220.201 km difference. LA, Houston,
+and Chicago differed by -1.780, -0.471, and +0.042 km respectively. These four
+public-source diagnostics test source semantics and numerical stability, not
+positional accuracy, neighborhood variation, or a complete distance surface.
+They are not predictors or model results.
+
+GSHHG 2.3.7 is a fixed 2017 cartographic release built largely from older WVS
+ocean shoreline and still older, lower-quality WDBII lake geometry. “Full
+resolution” means undecimated source geometry, not modern, real-time, or 30 m
+positional truth. NOAA/NCEI decommissioned its archive of the product in May
+2025 with no further NCEI updates. These limitations must be considered in the
+separate freeze decision.
+
+The pilot internal commit is
+`e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735`.
+The Phoenix nearest-segment evidence identifies GSHHG L1 source/component `2`
+at `(-113.770306, 31.570972)` and Census archive row `3419` at
+`(-117.136644, 32.616387)`. The global L1 antimeridian audit removed exactly
+10 same-sign `+180`/`-180` seams and found no opposite-sign or remaining
+180-degree jump.
+No target grid, target/QA value, feature surface, predictor, model, prediction,
+or final-evaluation output was opened. The portable source and algorithm are
+still unfrozen. The next safe stage is the separate
+source-and-algorithm freeze decision.
 
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.

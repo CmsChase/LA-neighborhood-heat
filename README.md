@@ -66,10 +66,23 @@ The target-blind
 [portable water-distance review](docs/PORTABLE_WATER_DISTANCE_REVIEW.md) is
 now complete. It reauthenticated the existing Census 2019 coastline as the
 best U.S.-only reproducibility benchmark, but did not freeze it because that
-source omits the Mexican Gulf of California relevant to Phoenix. The next
-safe task is a source-only GSHHG geometry comparison that reads no target/QA
-values and constructs no predictor. Any later source freeze remains a separate
-gate.
+national-coverage contract is not equivalent to unrestricted global-ocean
+distance for Phoenix.
+
+The subsequent
+[GSHHG geometry pilot](docs/GSHHG_GEOMETRY_PILOT_REPORT.md) is also complete.
+Its preregistered V1 failed on one invalid L1 polygon and the source's
+five named lake seeds resolving to three L2 connected-water polygons; both
+facts were preserved before a source-structure-only V2 amendment. The amended
+contract uses L1 exteriors plus those three L2 exteriors and excludes L3
+lake-island shores. V2 passed every geometry and numerical gate. At the fixed
+target-blind Phoenix point, GSHHG gave 262.208 km versus 482.409 km for the
+U.S.-only Census benchmark, a 220.201 km contract difference. These four
+point diagnostics test semantics and numerical stability, not positional
+accuracy or a complete distance surface. No temperature, target-QA,
+predictor, model, prediction, or feature surface was opened or built. The
+source and algorithm remain unfrozen; the next task is a separate freeze
+decision.
 
 ## Six ways into the project
 

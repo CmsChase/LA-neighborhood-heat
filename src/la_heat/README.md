@@ -18,7 +18,7 @@ unless their module interface is explicitly documented.
 | Frozen final evaluation | `final_evaluation_protocol.py`, `final_evaluation_targets.py`, `final_evaluation_reporting.py` |
 | Operations and interfaces | `execution_ownership.py`, `portable_relocation.py`, dashboard/watchdog modules, and `research_runner_ui.py` |
 | Public display export | `website_export.py` |
-| Cross-city continuation | `multicity/` planning, path isolation, target locks, Census geography/source staging, and portable water-distance review |
+| Cross-city continuation | `multicity/` planning, path isolation, target locks, Census geography/source staging, portable water-distance review, and target-blind GSHHG geometry audit |
 
 ## Boundaries
 

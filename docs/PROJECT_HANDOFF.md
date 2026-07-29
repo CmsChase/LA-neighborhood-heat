@@ -4,6 +4,15 @@ Last material update: 2026-07-29 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
+- completed target-blind GSHHG geometry pilot, preserved V1 failure, V2
+  source-only comparison, planning-stage advancement, tests, and this handoff
+  are in the commit with subject
+  `Complete target-blind GSHHG geometry pilot`; obtain its exact hash with
+  `git log --oneline --grep="Complete target-blind GSHHG geometry pilot" -1`
+- the immutable before-geometry V1 preregistration is
+  `08d69c3b4ba4c2d9e4ffb45e11727840ae3341b3`; the pre-distance V2
+  source-topology amendment is
+  `544f1870d669e67e655891623e973abc4980999c`
 - portable water-distance source review, authenticated Census benchmark,
   target-blind GSHHG comparison gate, tests, and this handoff are in the commit
   with subject `Review portable water distance sources`; obtain its exact hash
@@ -183,7 +192,7 @@ Authoritative draft files:
 - planning audit:
   `manifests/multicity/PLAN_READINESS.json`;
 - planning-audit internal commit:
-  `5af81da4de409b60e313784ce7453df8bec997849826ad789b2418b937f6c244`;
+  `8444a16998699e39a51b2e0bf8daa62a9bd4365dfdb926cadeb315c6952de472`;
 - Phoenix geography audit:
   `manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json`;
 - Phoenix geography internal commit:
@@ -196,6 +205,16 @@ Authoritative draft files:
   `manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_REVIEW.json`;
 - portable water-distance review internal commit:
   `1c3b1738b7625a74f446b2c61e8efc84255dbe99fe745a2fa101d4decfcda6a5`.
+- GSHHG V1 preregistration:
+  `configs/multicity/gshhg_geometry_pilot_v1.toml`;
+- GSHHG V2 source-topology amendment:
+  `configs/multicity/gshhg_geometry_pilot_v2.toml`;
+- GSHHG V1 failure record:
+  `manifests/multicity/reviews/portable_water_distance/GSHHG_GEOMETRY_PILOT_V1_FAILURE.json`;
+- completed non-frozen GSHHG geometry pilot:
+  `manifests/multicity/reviews/portable_water_distance/GSHHG_GEOMETRY_PILOT.json`;
+- GSHHG pilot internal commit:
+  `e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735`.
 
 The audit reauthenticated the original model lock, final completion, exact 23
 target-cache commits, exact 21 final outputs, and the 21,787,327-byte evidence
@@ -277,8 +296,8 @@ Current continuation verification:
 
 - source-footprint tests: 12 passed;
 - portable water-distance review tests: 7 passed;
-- combined plan/geography/source/review focused suite: 27 passed;
-- complete project suite: 774 passed in 279.9 seconds, with five existing
+- GSHHG geometry plus water-review/planning focused suite: 30 passed;
+- complete project suite: 797 passed in about 271 seconds, with five existing
   warnings (one Pydantic deprecation warning and four NumPy deprecation
   warnings);
 - full-repository Ruff: all checks passed;
@@ -288,8 +307,23 @@ Current continuation verification:
   responses, tables, hashes, and code/runtime binding;
 - water-distance-review `--check-only` reauthenticated the exact Census bytes,
   vector inventory, no-target access contract, and non-frozen decision;
+- GSHHG geometry-pilot generation and a separate `--check-only` run
+  independently reproduced internal commit
+  `e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735`;
 - planning-audit `--check-only` reauthenticated Phase I plus both Phoenix
-  pilots, the water-distance review, and the internal commits shown above.
+  pilots, the water-distance review, the GSHHG pilot, all closed permissions,
+  and planning internal commit
+  `8444a16998699e39a51b2e0bf8daa62a9bd4365dfdb926cadeb315c6952de472`.
+
+The first full-suite run found only a stale test expectation for the current
+Sentinel pipeline fingerprint after `pyproj` became an explicit project
+dependency. The expected current fingerprint was updated from
+`dd0723206eac0acb73fadc718b2f6cf5bc8898489f75eb20e05e46ec72a564c2`
+to
+`5fecf25f6a8217b03f89021ac837132243380ddb81394c42f31364e1d3f4420a`;
+the failing test then passed and the complete suite was rerun successfully.
+No Sentinel cache, feature, target, model, prediction, or frozen result was
+rebuilt or changed.
 
 The portable water-distance review is complete. Its audit program made zero
 source-data network or download requests and reauthenticated the existing
@@ -308,18 +342,82 @@ The review did **not** freeze Census as the portable source. Census is the
 strongest U.S.-only reproducibility benchmark, but it omits the Mexican Gulf
 of California relevant to Phoenix. A Census-only feature would mean distance
 to a U.S. Census qualifying shoreline, not the globally nearest ocean. The
-review therefore advances GSHHG 2.3.7 full resolution to one source-only
-geometry pilot while rejecting Natural Earth as too generalized, NOAA CUSP as
-non-versioned, and the evolving USGS 3DHP as premature for the canonical
-source.
+review advanced GSHHG 2.3.7 full resolution to one source-only geometry pilot
+while rejecting Natural Earth as too generalized, NOAA CUSP as non-versioned,
+and the evolving USGS 3DHP as premature for the canonical source. That
+geometry pilot is now complete.
 
-The reviewed common algorithm uses fixed eligible-land cell centers, verified
-metre-based local projected CRSs, float64 exact nearest-line queries, one
-deterministic expanding-radius rule, and fixed mean/linear-p10 aggregation.
-It is a specification only: no implementation or algorithm lock was created.
-A source freeze, predictor construction, model fitting, protocol promotion,
-prediction commitment, and external target access all require later separate
-gates; never reuse `final_test_*` or `final_evaluation_*`.
+V1 was committed and pushed before source geometry was read. It failed before
+any diagnostic distance was computed because:
+
+- full-resolution L1 contained one invalid source polygon while V1 permitted
+  no repair; and
+- the five fixed named-lake seeds matched three, not five, positive-area L2
+  connected-water polygons.
+
+The V1 failure was retained under internal commit
+`e5d8c85780752bd7f8be46c20c1a34e7f66db7d15ce438b81f8010705861f03c`.
+The separately committed V2 amendment changed only the exact deterministic L1
+repair and exact five-seed-to-three-polygon mapping before distance access. It
+left every point, numerical gate, comparison definition, and access lock
+unchanged.
+
+V2 authenticated:
+
+- the 149,157,845-byte GSHHG 2.3.7 archive under SHA-256
+  `8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41`
+  and published MD5 `cb82015f8533f9611b4adba2c404ba44`;
+- all 402 ZIP members and CRCs, 179,837 L1 polygons, and 6,660 L2 polygons;
+- an exterior-only contract using all relevant L1 ocean polygons plus the
+  exteriors of the three seed-selected L2 connected-water polygons, excluding
+  negative-area river-lakes and L3 lake-island shores;
+- a global L1 antimeridian audit with 10 same-sign dateline seams removed,
+  zero opposite-sign segments, and zero remaining jumps at or above 180
+  degrees; and
+- exact float64 STRtree/brute-force parity, radius, source-order, 256/1024/4096
+  line-chunk, true vector 1/2/4 query-chunk, 1/2/4 worker, and frozen
+  point-to-vertex geodesic gates.
+
+The ignored canonical raw archive required for reauthentication is
+`data/raw/multicity/water_distance/gshhg-shp-2.3.7.zip`; its fixed official URL
+is recorded in both pilot configs and the manifest. A concurrent-download
+failure artifact remains recoverable under
+`.tmp/gshhg-download-failure/gshhg-shp-2.3.7.concurrent-corrupt.zip`. The
+manifest labels the one canonical download and one preserved failure as
+operator-recorded history rather than machine-authenticated counts.
+
+The fixed target-blind distances in kilometres were:
+
+| City | GSHHG contract | Census `L4150` | GSHHG minus Census |
+|---|---:|---:|---:|
+| Los Angeles | 20.208 | 21.988 | -1.780 |
+| Phoenix | 262.208 | 482.409 | -220.201 |
+| Houston | 36.287 | 36.758 | -0.471 |
+| Chicago | 1.162 | 1.120 | +0.042 |
+
+For Phoenix, the nearest GSHHG evidence is L1 source/component `2` at
+`(-113.770306, 31.570972)`; the nearest Census evidence is archive row `3419`
+at `(-117.136644, 32.616387)`. This establishes that the two historical
+cartographic contracts are not interchangeable. It does not establish source
+accuracy, positional truth, neighborhood variation, or a complete 30 m
+distance surface.
+
+GSHHG 2.3.7 is a reproducible fixed 2017 cartographic release based largely on
+older WVS ocean and WDBII lake sources. It does not represent contemporaneous
+shoreline conditions, is not real-time, and is not a uniform 30 m shoreline.
+The pilot therefore creates no source lock, algorithm lock, predictor, or
+protocol authorization. A separate
+`portable_water_distance_source_and_algorithm_freeze_decision` must weigh
+those limitations, LGPL obligations, cross-border coverage, and the exact
+four-city support before predictor construction. Never reuse `final_test_*` or
+`final_evaluation_*` for that continuation.
+
+One explicit blocker belongs to that next freeze decision, not this pilot:
+because the candidate contract excludes L3 lake-island shores, the decision
+must either prove that the four frozen eligible-land supports contain no land
+whose qualifying-water distance would be changed by that exclusion, or revise
+and preregister the algorithm, feature names, and applicability claim. Do not
+silently promote the current four-point pilot to a nationwide contract.
 
 Safe read-only command:
 
@@ -334,19 +432,24 @@ Safe read-only command:
   --city phoenix_az --check-only
 .\.venv\Scripts\python scripts\audit_multicity_water_distance_review.py `
   --check-only
+.\.venv\Scripts\python scripts\stage_multicity_gshhg_geometry_pilot.py `
+  --check-only
 ```
 
-First safe task: implement the explicitly target-blind GSHHG geometry pilot
-defined in `docs/PORTABLE_WATER_DISTANCE_REVIEW.md`. Before any run, pin and
-audit the official 2.3.7 full-resolution archive and its license, and test the
-global-ocean plus exactly-five-Great-Lakes identity rule only on fixed
-unlabeled geometry. Do not freeze a source in passing, download raster assets,
-run a target builder, construct predictors, fit a model, open target or QA
-values, or start an old dashboard.
+First safe task: conduct the separate portable water-distance
+source-and-algorithm freeze decision using the completed
+[`GSHHG_GEOMETRY_PILOT_REPORT.md`](GSHHG_GEOMETRY_PILOT_REPORT.md), V1 failure
+record, V2 manifest, official source limitations, and license. The decision
+may accept the four-city GSHHG contract, reject it, or preregister a
+source-only sensitivity; it may not construct the distance surface or
+predictor in the same step. Do not download raster assets, run a target
+builder, fit a model, open external target or QA values, or start an old
+dashboard.
 
-Current local runtime note: port `8768` is closed and no continuation service
-is running. The Windows C drive has about 8.98 GB free and D has about
-173.67 GB free at this checkpoint. The ignored D-drive temporary directory
+Current local runtime note: port `8768` is closed, no continuation service is
+running, and no GSHHG/pytest worker remains. The Windows C drive has about
+8.16 GB free and D has about 169.60 GB free at this checkpoint. The ignored
+D-drive temporary directory
 `D:\HuaweiMoveData\Users\haora\Documents\ISEF\.tmp` remains available when a
 large validation run needs `TEMP` and `TMP` off C.
 

@@ -7,7 +7,10 @@ from pathlib import Path
 import pytest
 
 from la_heat.multicity.config import load_multicity_plan
-from la_heat.multicity.plan_audit import _continuation_planning_state
+from la_heat.multicity.plan_audit import (
+    MulticityPlanAuditError,
+    _continuation_planning_state,
+)
 from la_heat.multicity.water_distance_review import (
     COMPLETE_STATE,
     EXPECTED_ACCESS_CONTRACT,
@@ -124,14 +127,45 @@ def test_planning_authorizes_source_geometry_only_after_verified_review() -> Non
         phoenix_geography={"state": "complete"},
         phoenix_source_footprints={"state": "complete"},
         water_distance_review=None,
+        gshhg_geometry_pilot=None,
     )
     after_review = _continuation_planning_state(
         phoenix_geography={"state": "complete"},
         phoenix_source_footprints={"state": "complete"},
         water_distance_review={"state": COMPLETE_STATE},
+        gshhg_geometry_pilot=None,
+    )
+    after_pilot = _continuation_planning_state(
+        phoenix_geography={"state": "complete"},
+        phoenix_source_footprints={"state": "complete"},
+        water_distance_review={"state": COMPLETE_STATE},
+        gshhg_geometry_pilot={
+            "state": "geometry_pilot_complete_source_not_frozen"
+        },
     )
 
     assert before_review[2] == "review_portable_water_distance_source_and_algorithm"
     assert before_review[3] is False
     assert after_review[2] == "target_blind_gshhg_geometry_comparison"
     assert after_review[3] is True
+    assert after_pilot[0] == "gshhg_geometry_pilot_complete_source_not_frozen"
+    assert after_pilot[1] == [
+        "freeze_portable_water_distance_source_and_algorithm",
+        "freeze_exact_portable_predictor_source_and_calibration_contract",
+        "promote_protocol_from_draft_with_separate_lock",
+    ]
+    assert (
+        after_pilot[2]
+        == "portable_water_distance_source_and_algorithm_freeze_decision"
+    )
+    assert after_pilot[3] is False
+
+
+def test_planning_rejects_wrong_gshhg_pilot_state() -> None:
+    with pytest.raises(MulticityPlanAuditError, match="non-frozen completion"):
+        _continuation_planning_state(
+            phoenix_geography={"state": "complete"},
+            phoenix_source_footprints={"state": "complete"},
+            water_distance_review={"state": COMPLETE_STATE},
+            gshhg_geometry_pilot={"state": "source_frozen"},
+        )

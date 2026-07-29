@@ -10,16 +10,20 @@ from la_heat.multicity.config import MulticityPlan, load_multicity_plan
 from la_heat.multicity.workspace import MulticityWorkspace
 from la_heat.provenance import atomic_json, canonical_sha256, sha256_file
 
-PLAN_AUDIT_SCHEMA_VERSION: Final = 3
-PLAN_AUDIT_ALGORITHM_VERSION: Final = "multicity-planning-readiness-v3"
+PLAN_AUDIT_SCHEMA_VERSION: Final = 4
+PLAN_AUDIT_ALGORITHM_VERSION: Final = "multicity-planning-readiness-v4"
 PLAN_AUDIT_CODE_PATHS: Final = (
+    "configs/multicity/gshhg_geometry_pilot_v1.toml",
+    "configs/multicity/gshhg_geometry_pilot_v2.toml",
     "configs/multicity/water_distance_review_v1.toml",
     "src/la_heat/multicity/config.py",
+    "src/la_heat/multicity/gshhg_geometry_pilot.py",
     "src/la_heat/multicity/workspace.py",
     "src/la_heat/multicity/plan_audit.py",
     "src/la_heat/multicity/water_distance_review.py",
     "scripts/audit_multicity_plan.py",
     "scripts/audit_multicity_water_distance_review.py",
+    "scripts/stage_multicity_gshhg_geometry_pilot.py",
 )
 
 
@@ -152,6 +156,7 @@ def _continuation_planning_state(
     phoenix_geography: dict[str, Any] | None,
     phoenix_source_footprints: dict[str, Any] | None,
     water_distance_review: dict[str, Any] | None,
+    gshhg_geometry_pilot: dict[str, Any] | None,
 ) -> tuple[str, list[str], str, bool]:
     """Return the exact planning stage, blockers, next action, and review grant."""
 
@@ -187,6 +192,23 @@ def _continuation_planning_state(
                 "promote_protocol_from_draft_with_separate_lock",
             ],
             "review_portable_water_distance_source_and_algorithm",
+            False,
+        )
+    if gshhg_geometry_pilot is not None:
+        if gshhg_geometry_pilot.get("state") != (
+            "geometry_pilot_complete_source_not_frozen"
+        ):
+            raise MulticityPlanAuditError(
+                "GSHHG geometry pilot state is not the expected non-frozen completion."
+            )
+        return (
+            "gshhg_geometry_pilot_complete_source_not_frozen",
+            [
+                "freeze_portable_water_distance_source_and_algorithm",
+                "freeze_exact_portable_predictor_source_and_calibration_contract",
+                "promote_protocol_from_draft_with_separate_lock",
+            ],
+            "portable_water_distance_source_and_algorithm_freeze_decision",
             False,
         )
     return (
@@ -326,6 +348,49 @@ def audit_multicity_plan(
             "target_or_qa_values_read": False,
         }
 
+    gshhg_geometry_pilot: dict[str, Any] | None = None
+    gshhg_pilot_path = (
+        workspace.manifest_root
+        / "reviews"
+        / "portable_water_distance"
+        / "GSHHG_GEOMETRY_PILOT.json"
+    )
+    if gshhg_pilot_path.is_file():
+        if water_distance_review is None:
+            raise MulticityPlanAuditError(
+                "GSHHG geometry pilot exists without the prerequisite water review."
+            )
+        from la_heat.multicity.gshhg_geometry_pilot import (
+            audit_gshhg_geometry_pilot,
+        )
+
+        verified_pilot = audit_gshhg_geometry_pilot(
+            workspace.project_root
+            / "configs"
+            / "multicity"
+            / "gshhg_geometry_pilot_v2.toml",
+            output_path=gshhg_pilot_path,
+            write=False,
+        )
+        if verified_pilot.get("state") != (
+            "geometry_pilot_complete_source_not_frozen"
+        ):
+            raise MulticityPlanAuditError(
+                "GSHHG geometry pilot is not in the expected non-frozen state."
+            )
+        gshhg_geometry_pilot = {
+            "state": verified_pilot["state"],
+            "path": gshhg_pilot_path.relative_to(
+                workspace.project_root
+            ).as_posix(),
+            "file_sha256": sha256_file(gshhg_pilot_path),
+            "commit_sha256": verified_pilot["commit_sha256"],
+            "source_lock_created": False,
+            "algorithm_lock_created": False,
+            "predictor_build_authorized": False,
+            "target_or_qa_values_read": False,
+        }
+
     (
         planning_stage,
         blockers,
@@ -335,6 +400,7 @@ def audit_multicity_plan(
         phoenix_geography=phoenix_geography,
         phoenix_source_footprints=phoenix_source_footprints,
         water_distance_review=water_distance_review,
+        gshhg_geometry_pilot=gshhg_geometry_pilot,
     )
 
     payload: dict[str, Any] = {
@@ -402,6 +468,7 @@ def audit_multicity_plan(
         "phoenix_geography_pilot": phoenix_geography,
         "phoenix_source_footprint_pilot": phoenix_source_footprints,
         "portable_water_distance_review": water_distance_review,
+        "gshhg_geometry_pilot": gshhg_geometry_pilot,
         "blockers_before_predictor_build": blockers,
         "next_safe_stage": next_safe_stage,
     }

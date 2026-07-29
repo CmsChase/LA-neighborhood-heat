@@ -1509,3 +1509,55 @@ No unlock has occurred. `unlock_final_test` remains `false`.
 - Verification passed all 7 review tests, 27 combined continuation tests, all
   774 project tests in 279.9 seconds, both review and planning `--check-only`
   authentication, and full-repository Ruff.
+
+## 2026-07-29 - Complete the target-blind GSHHG geometry pilot
+
+- Decision: preserve the preregistered V1 structural failure, then complete
+  only the separately preregistered V2 public-geometry comparison. V1 was
+  committed and pushed as `08d69c3b4ba4c2d9e4ffb45e11727840ae3341b3`
+  before source geometry was read. After the two source-topology failures
+  were observed—but before any diagnostic distance was computed—the
+  source-structure-only V2 amendment was committed and pushed under subject
+  `Amend GSHHG pilot for source topology`
+  (`544f1870d669e67e655891623e973abc4980999c`). No distance point, numerical
+  threshold, source comparison, or access lock changed.
+- V1 failed because full-resolution L1 contained exactly one invalid polygon
+  and five fixed named-lake seeds resolved to three, not five, positive-area
+  L2 connected-water polygons. The failure remains authenticated separately;
+  it is not relabeled as a V1 pass.
+- V2 authenticates the 149,157,845-byte GSHHG 2.3.7 archive under SHA-256
+  `8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41`
+  and published MD5 `cb82015f8533f9611b4adba2c404ba44`, all 402 ZIP
+  members and CRCs, 179,837 L1 polygons, 6,660 L2 polygons, one exact
+  deterministic L1 repair, and the frozen five-seed-to-three-polygon mapping.
+  The four-city contract uses L1 exteriors plus those three L2 exteriors and
+  excludes negative-area river-lakes and L3 lake-island shores.
+- At the fixed target-blind Phoenix point, GSHHG measured 262.208 km and the
+  U.S.-only Census `L4150` benchmark measured 482.409 km, so the two contracts
+  differ by 220.201 km. The nearest GSHHG evidence is source/component `2` at
+  `(-113.770306, 31.570972)`. This demonstrates a semantic difference between
+  contracts; it does not establish positional truth or source accuracy.
+- Global antimeridian, STRtree/brute-force, radius, source-order, line-chunk,
+  true vector query-chunk, worker-count, and frozen point-to-vertex geodesic
+  audits all passed. The canonical pilot manifest internal commit is
+  `e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735`.
+- The pilot read no target grid, thermal/QA value, feature surface, predictor,
+  model, prediction, score, or final-evaluation artifact. It creates neither a
+  source lock nor an algorithm lock. The only safe next stage is a separate
+  portable water-distance source-and-algorithm freeze decision.
+- The first complete-project regression run exposed one stale test-only
+  Sentinel pipeline fingerprint. Declaring the already used `pyproj` package
+  as a direct project dependency changed the current `pyproject.toml`-bound
+  fingerprint from
+  `dd0723206eac0acb73fadc718b2f6cf5bc8898489f75eb20e05e46ec72a564c2`
+  to
+  `5fecf25f6a8217b03f89021ac837132243380ddb81394c42f31364e1d3f4420a`.
+  The regression expectation was updated to the recomputed value; no Sentinel
+  cache, feature, model, target, or frozen result was rebuilt or changed.
+- Final verification passed 30 focused GSHHG/water-review/planning tests, all
+  797 project tests in about 271 seconds with five existing deprecation
+  warnings, full-repository Ruff, exact GSHHG generation plus `--check-only`,
+  and planning generation plus `--check-only`. Planning internal commit
+  `8444a16998699e39a51b2e0bf8daa62a9bd4365dfdb926cadeb315c6952de472`
+  advances only to the separate freeze decision while leaving every source,
+  predictor, model, target, and evaluation permission false.

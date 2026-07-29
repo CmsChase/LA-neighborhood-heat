@@ -96,22 +96,36 @@ must be target-independent and identical in all four cities.
 
 The target-blind source review completed on 2026-07-29 without freezing that
 contract. It authenticated the existing Census TIGER/Line 2019 Coastline as
-the reproducibility benchmark, but found that a U.S.-only source omits the
-Mexican Gulf of California relevant to Phoenix. The scientifically preferred
-definition is therefore the nearest global ocean shoreline or one of the five
-Great Lakes. A source-only GSHHG geometry pilot must now test whether that
-definition can be frozen reproducibly. The Census source remains only a
-conditional fallback, in which case the feature must be named and interpreted
-as distance to a U.S. Census qualifying shoreline rather than an unrestricted
-nearest ocean. See
-[`PORTABLE_WATER_DISTANCE_REVIEW.md`](PORTABLE_WATER_DISTANCE_REVIEW.md).
+the reproducibility benchmark, but found that its U.S.-only coverage is not
+equivalent to unrestricted global-ocean distance for Phoenix. The
+scientifically preferred definition is therefore the nearest global ocean
+shoreline or one of the five Great Lakes.
+
+The subsequent source-only GSHHG geometry pilot is complete. Its immutable V1
+failed before distance calculation on one invalid L1 polygon and the source's
+five lake seeds resolving to three L2 connected-water polygons. A
+source-structure-only V2 amendment was committed before distance access and
+retained all V1 points, thresholds, and locks. Its candidate contract uses L1
+exteriors plus those three seed-selected L2 exteriors and excludes L3
+lake-island shores. V2 passed every geometry and numerical gate. At the fixed
+target-blind Phoenix point, the GSHHG contract gave 262.208 km and the Census
+contract gave 482.409 km, a -220.201 km difference. This establishes that the
+contracts are not interchangeable, not that either source is positional
+ground truth. The Census source remains only a conditional fallback, in which
+case the feature must be named and interpreted as distance to a U.S. Census
+qualifying shoreline rather than an unrestricted nearest ocean.
+
+Neither the GSHHG source nor the algorithm is frozen. See
+[`PORTABLE_WATER_DISTANCE_REVIEW.md`](PORTABLE_WATER_DISTANCE_REVIEW.md) and
+[`GSHHG_GEOMETRY_PILOT_REPORT.md`](GSHHG_GEOMETRY_PILOT_REPORT.md).
 
 ## Predictors and timing
 
 The portable predictor set contains:
 
 - nationwide land-cover and imperviousness summaries;
-- elevation, slope, and the newly frozen portable water-distance variables;
+- elevation, slope, and portable water-distance variables only after their
+  separate source-and-algorithm freeze;
 - calendar harmonics;
 - 1-, 3-, and 7-day lagged Daymet summaries;
 - 60-day lagged non-thermal Sentinel-2 indices.
@@ -283,10 +297,18 @@ official websites cited in the review. Its conclusion is conditional because
 Census is a reproducible U.S. benchmark but does not represent the globally
 nearest ocean for Phoenix.
 
-The only safe next task is the target-blind GSHHG geometry comparison defined
-in the review. It may inspect public source geometry but may not construct a
-predictor, fit a model, open target or target-QA values, or freeze a source in
-passing. Predictor construction, source freeze, model fitting, and target
+The target-blind GSHHG geometry comparison is now complete under state
+`geometry_pilot_complete_source_not_frozen`. It authenticated GSHHG 2.3.7,
+preserved the V1 structural failure, passed the amended V2 gates, and
+quantified the Phoenix source-contract difference without reading any target
+or target-QA value or producing a feature surface. Its four fixed points test
+source semantics and numerical stability only; they do not validate
+positional accuracy, neighborhood variation, or a complete distance grid.
+
+The only safe next task is a separate portable water-distance
+source-and-algorithm freeze decision. It may review the authenticated source
+and diagnostic evidence but may not construct the predictor in the same
+stage. Predictor construction, model fitting, protocol promotion, and target
 access remain separately locked.
 
 ## Official source anchors

@@ -19,6 +19,7 @@ history is intentionally separated from the short project landing page.
 | What did the Phoenix geography pilot produce? | [Phoenix geography manifest](../manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json) |
 | What source footprints did the Phoenix metadata pilot discover? | [Phoenix source-footprint manifest](../manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json) |
 | Why is the portable water-distance source not frozen yet? | [PORTABLE_WATER_DISTANCE_REVIEW.md](PORTABLE_WATER_DISTANCE_REVIEW.md) |
+| What did the global shoreline geometry pilot find? | [GSHHG_GEOMETRY_PILOT_REPORT.md](GSHHG_GEOMETRY_PILOT_REPORT.md) |
 
 ## Scientific contracts
 
@@ -38,6 +39,10 @@ history is intentionally separated from the short project landing page.
 - [PORTABLE_WATER_DISTANCE_REVIEW.md](PORTABLE_WATER_DISTANCE_REVIEW.md):
   target-blind source comparison, authenticated Census benchmark, cross-border
   semantic limitation, reviewed algorithm, and GSHHG geometry-pilot gate.
+- [GSHHG_GEOMETRY_PILOT_REPORT.md](GSHHG_GEOMETRY_PILOT_REPORT.md):
+  immutable V1 preregistration and failure, source-structure-only V2
+  amendment, exact GSHHG archive audit, fixed-point Census comparison, and the
+  remaining source/algorithm freeze gate.
 
 ## Execution and status
 

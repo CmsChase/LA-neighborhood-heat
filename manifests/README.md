@@ -68,9 +68,19 @@ network or download request, and no target, QA, predictor, prediction, or
 model was accessed. The candidate review separately records that official
 online documentation was consulted.
 
-The updated planning record keeps `protocol_locked = false` and advances only
-to a source-only GSHHG geometry comparison. It does not authorize predictor
-construction or a source freeze.
+`multicity/reviews/portable_water_distance/GSHHG_GEOMETRY_PILOT_V1_FAILURE.json`
+authenticates the preregistered V1 failure before distance calculation.
+`GSHHG_GEOMETRY_PILOT.json` authenticates the amended V2 comparison: exact
+GSHHG archive/member/license hashes, 179,837 L1 and 6,660 L2 polygons, the one
+deterministic L1 repair, five named lake seeds selecting three L2
+connected-water polygons, the exclusion of L3 lake-island shores, eight fixed
+target-blind diagnostic distances, and every numerical invariance gate. Its
+state is `geometry_pilot_complete_source_not_frozen`; source, algorithm,
+predictor, model, protocol, and target permissions remain closed.
+
+The updated planning record now advances only to the separate portable
+water-distance source-and-algorithm freeze decision. It does not authorize
+predictor construction or perform the freeze itself.
 
 Generated manifests are marked `-text` in `.gitattributes` because exact bytes
 matter. Do not normalize line endings to silence a cosmetic diff warning. Use

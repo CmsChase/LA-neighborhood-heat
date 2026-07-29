@@ -1,6 +1,7 @@
 # Portable water-distance source review
 
-Status: **review complete; source and algorithm are not frozen**
+Status: **review and follow-on geometry pilot complete; source and algorithm
+remain unfrozen**
 
 Review record:
 [`WATER_DISTANCE_REVIEW.json`](../manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_REVIEW.json)
@@ -27,8 +28,11 @@ The remaining question is semantic, not computational:
 These are not equivalent for Phoenix because the Census national file does
 not contain the Mexican Gulf of California shoreline. Calling a Census-only
 value “distance to the nearest ocean” would therefore be misleading. The next
-safe stage is a source-only GSHHG geometry comparison conducted before any
-predictor or target access.
+safe stage at the time of this review was a source-only GSHHG geometry
+comparison conducted before any predictor or target access. That pilot is now
+complete: its V1 topology assumptions failed before distance access, and its
+separately preregistered V2 contract passed. The candidate source remains
+unfrozen pending a separate source-and-algorithm decision.
 
 If that comparison does not support a reproducible global contract, the
 Census source remains an acceptable fallback only under the explicit name and
@@ -87,9 +91,11 @@ Official primary-source references:
 
 ## Reviewed common algorithm
 
-The algorithm is reviewed but deliberately not implemented or frozen yet.
-Whichever source contract survives the geometry pilot must use the same rules
-in all four cities:
+The point-level nearest-line diagnostic kernel is now implemented and audited
+by the follow-on geometry pilot. The full eligible-grid calculation, tract
+aggregation, and predictor pipeline remain deliberately unimplemented and
+unfrozen. Whichever source contract survives the separate freeze decision
+must use the same rules in all four cities:
 
 1. Freeze exact source bytes, license, schema, CRS, and qualifying-water
    membership before target access. Do not choose source members by city. For
@@ -123,18 +129,18 @@ names must instead say
 `pacific_coast_distance_*` values and model lock remain immutable and may not
 be silently aliased.
 
-## Next gate: GSHHG source-only geometry pilot
+## Completed follow-on gate: GSHHG source-only geometry pilot
 
-The next stage may read only public shoreline geometry. Before it can support
-a source freeze, it must:
+The completed stage was permitted to read only public shoreline geometry.
+Before it could support a later source freeze, it had to:
 
 1. pin the official GSHHG 2.3.7 full-resolution archive URL, exact bytes,
    members, hashes, CRS, schema, and license;
-2. select global ocean level 1 and exactly five verified Great Lakes, with a
-   fixed identity rule and river-lake records excluded; freeze an unambiguous
-   rule for converting level-1 polygons to shoreline lines and for normalizing
-   antimeridian-crossing geometry;
-3. use fixed unlabeled points to compare global and Census-only geometry,
+2. select global ocean level 1 and use five fixed named-lake seeds to audit the
+   source's actual distinct connected-water topology, with river-lake records
+   excluded; freeze an unambiguous rule for converting level-1 polygons to
+   shoreline lines and for normalizing antimeridian-crossing geometry;
+3. use fixed target-blind points to compare global and Census-only geometry,
    including a separately reported Phoenix difference;
 4. prove STRtree results match brute force on fixed samples;
 5. prove values are invariant to search-radius expansion, chunk size, and
@@ -144,6 +150,12 @@ a source freeze, it must:
 7. record zero target/QA access, zero predictor construction, and zero model
    work.
 
-Only after that pilot may a separate decision freeze one semantic definition,
-one source bundle, one feature name, and one implementation. Predictor
-construction remains prohibited until that later gate.
+The completed pilot found that five named lake seeds resolve to three
+connected-water L2 source polygons, rather than five distinct polygons. Its
+pre-distance V2 amendment froze that exact topology, one deterministic L1
+repair, and the unchanged numerical gates. See
+[`GSHHG_GEOMETRY_PILOT_REPORT.md`](GSHHG_GEOMETRY_PILOT_REPORT.md).
+
+Only a separate decision may now freeze one semantic definition, one source
+bundle, one feature name, and one implementation. Predictor construction
+remains prohibited until that later gate.

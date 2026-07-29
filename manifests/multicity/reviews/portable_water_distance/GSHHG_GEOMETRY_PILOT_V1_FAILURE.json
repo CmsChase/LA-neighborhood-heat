@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "gshhg-geometry-pilot-v1-structural-failure-audit",
+  "state": "geometry_pilot_v1_failed_before_distance",
+  "pilot_id": "target_blind_gshhg_geometry_comparison_v1",
+  "preregistration_config": {
+    "path": "configs/multicity/gshhg_geometry_pilot_v1.toml",
+    "sha256": "691e42c914ccff4a076097d83bc9a363cd07f508847c224f8268704f308a67f4",
+    "git_commit": "08d69c3b4ba4c2d9e4ffb45e11727840ae3341b3"
+  },
+  "source_archive": {
+    "source_id": "gshhg_2_3_7_full_shapefile",
+    "publisher": "Generic Mapping Tools maintainers",
+    "dataset": "Global Self-consistent Hierarchical High-resolution Geography",
+    "version": "2.3.7",
+    "release_date": "2017-06-15",
+    "path": "data/raw/multicity/water_distance/gshhg-shp-2.3.7.zip",
+    "official_url": "https://github.com/GenericMappingTools/gshhg-gmt/releases/download/2.3.7/gshhg-shp-2.3.7.zip",
+    "maintainer_mirror": "https://ftp.soest.hawaii.edu/gshhg/gshhg-shp-2.3.7.zip",
+    "release_record": "https://github.com/GenericMappingTools/gshhg-gmt/releases/tag/2.3.7",
+    "license": "GNU Lesser General Public License v3",
+    "bytes": 149157845,
+    "sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+    "published_md5": "cb82015f8533f9611b4adba2c404ba44",
+    "observed_md5": "cb82015f8533f9611b4adba2c404ba44",
+    "published_md5_matched": true,
+    "member_count": 402,
+    "total_uncompressed_bytes": 416243458,
+    "source_member_inventory_sha256": "fa348ee1fd68c9b10251735b60f3afd83b230e660165502e493dcc6605519d05",
+    "security_inventory_sha256": "be7290092ec2e0241ce1ccf65f0d2d4a410120c6a4e956f95188c30684aad32d",
+    "compression_methods": [
+      8
+    ],
+    "required_member_sha256": {
+      "COPYING.LESSERv3": "ea7d049c7705dc13afc202dd18e1827f3484f8212fd3fa7b82fc4a0c363432c9",
+      "GSHHS_shp/f/GSHHS_f_L1.dbf": "5f23e1e441810feddf95b59b222c5bba466635644f928150496f872c1aaaf742",
+      "GSHHS_shp/f/GSHHS_f_L1.prj": "98aaf3d1c0ecadf1a424a4536de261c3daf4e373697cb86c40c43b989daf52eb",
+      "GSHHS_shp/f/GSHHS_f_L1.shp": "121435427911ea80624802e0f352d777eaf6ba6966ca5f07e687650e95329fd9",
+      "GSHHS_shp/f/GSHHS_f_L1.shx": "9eeb611d9f7a8de8e647e39130791f96059e3b83a29fc4b9c6b19d1b61c24ac3",
+      "GSHHS_shp/f/GSHHS_f_L2.dbf": "7c18d4a32559dbbfbd16476707e04df31e3dd32e407ef6a648f37dad44d7b604",
+      "GSHHS_shp/f/GSHHS_f_L2.prj": "98aaf3d1c0ecadf1a424a4536de261c3daf4e373697cb86c40c43b989daf52eb",
+      "GSHHS_shp/f/GSHHS_f_L2.shp": "c18f0abb01802f27cd669c2c27b9ecbcd40519bb5295693f03bd3cf2cfd3d5c0",
+      "GSHHS_shp/f/GSHHS_f_L2.shx": "e370552d8d44c3e77947b140fcd1ebfffe40c405747d6b3a8a04c89655d880c4",
+      "LICENSE.TXT": "dc53a4833bf9121360a5286917683f041439327353ffe0231206c6b746005b81",
+      "README.TXT": "8c83b0d9e861c3cf9390ccfcc28d57dd484b192e1767524e094c988ee9f84ac7",
+      "SHAPEFILES.TXT": "5aa063c6bbac1b8046fe05557bfb8ecc74be0bcea298d30101ed2d210da9d38e"
+    },
+    "all_member_crc_passed": true,
+    "archive_extracted": false
+  },
+  "source_layers": {
+    "l1": {
+      "row_count": 179837,
+      "columns": [
+        "id",
+        "level",
+        "source",
+        "parent_id",
+        "sibling_id",
+        "area",
+        "geometry"
+      ],
+      "dtypes": {
+        "id": "str",
+        "level": "int32",
+        "source": "str",
+        "parent_id": "int32",
+        "sibling_id": "int32",
+        "area": "float64",
+        "geometry": "geometry"
+      },
+      "crs": "EPSG:4326",
+      "bounds": [
+        -180.0,
+        -68.924526,
+        180.0,
+        83.633389
+      ],
+      "geometry_types": {
+        "Polygon": 179837
+      },
+      "source_counts": {
+        "WVS": 179732,
+        "WDBII": 105
+      },
+      "invalid_geometry_count": 1,
+      "negative_area_count": 0,
+      "zero_area_count": 0,
+      "positive_area_count": 179837,
+      "attribute_geometry_semantic_sha256": "6f1fd881aafd8f3af129816a41b4a76096e1706a6e3023b8a3ccb5dfaa1315da"
+    },
+    "l2": {
+      "row_count": 6660,
+      "columns": [
+        "id",
+        "level",
+        "source",
+        "parent_id",
+        "sibling_id",
+        "area",
+        "geometry"
+      ],
+      "dtypes": {
+        "id": "str",
+        "level": "int32",
+        "source": "str",
+        "parent_id": "int32",
+        "sibling_id": "int32",
+        "area": "float64",
+        "geometry": "geometry"
+      },
+      "crs": "EPSG:4326",
+      "bounds": [
+        -180.0,
+        -55.143611,
+        180.0,
+        83.327222
+      ],
+      "geometry_types": {
+        "Polygon": 6660
+      },
+      "source_counts": {
+        "WDBII": 6569,
+        "WVS": 91
+      },
+      "invalid_geometry_count": 0,
+      "negative_area_count": 56,
+      "zero_area_count": 0,
+      "positive_area_count": 6604,
+      "attribute_geometry_semantic_sha256": "1b3fec1d26d5a6dc96d8711769451dc010612e62410d7378b53d9d9969bc66ee"
+    }
+  },
+  "failed_gates": [
+    {
+      "gate": "all_l1_polygons_valid_without_predeclared_repair",
+      "expected": 0,
+      "observed": 1
+    },
+    {
+      "gate": "five_seeds_identify_five_distinct_l2_polygons",
+      "expected": 5,
+      "observed": 3,
+      "seed_mapping": [
+        {
+          "name": "Lake Superior",
+          "longitude": -87.5,
+          "latitude": 47.5,
+          "source_id": "180507"
+        },
+        {
+          "name": "Lake Michigan",
+          "longitude": -87.0,
+          "latitude": 44.0,
+          "source_id": "180507"
+        },
+        {
+          "name": "Lake Huron",
+          "longitude": -82.5,
+          "latitude": 44.8,
+          "source_id": "180507"
+        },
+        {
+          "name": "Lake Erie",
+          "longitude": -81.8,
+          "latitude": 42.2,
+          "source_id": "180515"
+        },
+        {
+          "name": "Lake Ontario",
+          "longitude": -77.8,
+          "latitude": 43.7,
+          "source_id": "180517"
+        }
+      ]
+    }
+  ],
+  "diagnostic_distance_values_computed": false,
+  "census_comparison_distances_computed": false,
+  "predictor_values_computed": false,
+  "target_or_qa_values_read": false,
+  "model_or_prediction_work_performed": false,
+  "commit_sha256": "e5d8c85780752bd7f8be46c20c1a34e7f66db7d15ce438b81f8010705861f03c"
+}

@@ -16,7 +16,10 @@ Tests mirror modules under [`src/la_heat`](../src/la_heat/README.md).
   locks, Census identity checks, exact 50% area selection, special-use tract
   exclusion, invalid-geometry repair order, audited source fallback,
   source-footprint access controls, and the non-frozen portable
-  water-distance review.
+  water-distance review; strict GSHHG ZIP safety, V1 structural failure,
+  predeclared V2 repair and connected-lake identity, antimeridian seam removal,
+  STRtree/brute-force parity, radius/chunk/worker invariance, geodesic
+  comparison, and non-frozen planning-state advancement.
 
 Run the complete checks from the repository root:
 

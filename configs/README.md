@@ -15,7 +15,7 @@ setting after inspecting its result.
 | Robustness | `feature_ablation.toml`, `feature_ablation_analysis.toml`, `stqa2_sensitivity_analysis.toml`, `robustness_reconciliation.toml` |
 | Reporting | `development_report.toml` |
 | One-time held-out evaluation | `final_evaluation_2025.toml` |
-| Cross-city continuation planning | `multicity/experiment.toml`, `multicity/cities/*.toml`, and `multicity/water_distance_review_v1.toml` |
+| Cross-city continuation planning | `multicity/experiment.toml`, `multicity/cities/*.toml`, `multicity/water_distance_review_v1.toml`, and `multicity/gshhg_geometry_pilot_v{1,2}.toml` |
 
 `final_evaluation_2025.toml` binds exact input hashes, state-marker paths,
 target-cache paths, output names, metrics, bootstrap settings, and success
@@ -36,5 +36,14 @@ model fitting, external-city target access, or a real-time forecast claim.
 
 `multicity/water_distance_review_v1.toml` records a completed, nonbinding,
 target-blind source review. It authenticates Census 2019 as the U.S.-only
-benchmark and defines the next GSHHG geometry-only gate, while explicitly
-leaving the portable source, algorithm, and feature names unfrozen.
+benchmark and historically defined the now-completed GSHHG geometry-only
+gate, while explicitly leaving the portable source, algorithm, and feature
+names unfrozen.
+
+`multicity/gshhg_geometry_pilot_v1.toml` is the immutable before-geometry
+preregistration. V1 failed before distance calculation because one L1 polygon
+was invalid and five named lake seeds mapped to three L2 connected-water
+polygons. `multicity/gshhg_geometry_pilot_v2.toml` records the
+source-structure-only amendment committed before any diagnostic distance was
+opened. It leaves every V1 point, numerical threshold, access lock, and
+source-freeze prohibition unchanged.

@@ -17,7 +17,7 @@ many historical stages are already complete.
 | Final-test predictor preparation | files beginning `build_final_test_`, `stage_final_test_`, `run_final_test_`, and `audit_final_test_` |
 | Final evaluation and evidence | `prepare_final_evaluation.py`, `authorize_final_test_2025.py`, `execute_locked_final_evaluation.py`, `build_final_evaluation_evidence.py`, `verify_final_evaluation_evidence.py` |
 | Communication | `stage_mapping_la_neighborhoods.py`, `build_website_data.py`, `build_research_paper.py` |
-| Cross-city continuation | `audit_multicity_plan.py`, `stage_multicity_geography.py`, `stage_multicity_source_footprints.py`, `audit_multicity_water_distance_review.py` |
+| Cross-city continuation | `audit_multicity_plan.py`, `stage_multicity_geography.py`, `stage_multicity_source_footprints.py`, `audit_multicity_water_distance_review.py`, `stage_multicity_gshhg_geometry_pilot.py` |
 | Transfer and local control | `create_portable_relocation.py`, `verify_portable_relocation.py`, `transfer_queue_snapshot.py`, `*_dashboard.py`, `*_watchdog.py`, `research_runner_ui.py`, and the PowerShell transfer helpers |
 
 ## Website source staging
@@ -76,6 +76,17 @@ Census 2019 coastline and the nonbinding source/algorithm review. It makes no
 source-data network or download request, computes no distance surface, and
 does not authorize a predictor build or source freeze. The manifest separately
 acknowledges that official online documentation informed the candidate review.
+
+`stage_multicity_gshhg_geometry_pilot.py` authenticates the fixed GSHHG 2.3.7
+archive, preserves the V1 structural failure, applies only the preregistered V2
+repair/mapping, and compares GSHHG with Census at four fixed target-blind
+points. The GSHHG contract uses L1 exteriors plus the exteriors of three L2
+connected-water polygons selected by five fixed lake seeds; L3 lake-island
+shores are excluded. It audits STRtree/brute-force parity, radius,
+source-order, line/query chunks, workers, and projected/geodesic agreement.
+`--check-only` performs zero network requests and must reproduce the exact
+manifest, V1 failure record, and diagnostic CSV. It never opens a target grid
+or constructs a predictor.
 
 Development rebuild and analysis scripts can overwrite or regenerate local
 products. Run them only for a defined task after checking configuration,
