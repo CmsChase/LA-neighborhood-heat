@@ -83,10 +83,17 @@ authenticates the completed decision to defer source-and-algorithm freeze. It
 binds the prerequisite manifests, exact GSHHG archive bytes, unresolved L3
 hierarchy gap, license record, all-closed locks, and no-target access ledger.
 
-The updated planning record advances only to
-`preregister_target_blind_gshhg_l3_hierarchy_audit`. It authorizes writing and
-committing that preregistration, but not opening L3 geometry, constructing a
-predictor, fitting a model, or reading a target.
+`GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.json` authenticates the completed
+tracked-input-only audit contract: exact L3 member paths, direct-parent
+inclusion, exterior/L4 semantics, structure-first failure, deterministic
+probes, numerical replay, and all-closed locks. It records that the generator
+opened no archive/member or geometry and computed no distance.
+
+`PLAN_READINESS.json` intentionally remains at the preceding state. It
+authorized writing this preregistration but still forbids L3 geometry,
+predictor construction, model fitting, and target access. A later
+tracked-only, clean-and-pushed transition must authenticate the committed
+preregistration before changing that one narrow permission.
 
 Generated manifests are marked `-text` in `.gitattributes` because exact bytes
 matter. Do not normalize line endings to silence a cosmetic diff warning. Use

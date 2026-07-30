@@ -15,7 +15,7 @@ setting after inspecting its result.
 | Robustness | `feature_ablation.toml`, `feature_ablation_analysis.toml`, `stqa2_sensitivity_analysis.toml`, `robustness_reconciliation.toml` |
 | Reporting | `development_report.toml` |
 | One-time held-out evaluation | `final_evaluation_2025.toml` |
-| Cross-city continuation planning | `multicity/experiment.toml`, `multicity/cities/*.toml`, `multicity/water_distance_review_v1.toml`, `multicity/gshhg_geometry_pilot_v{1,2}.toml`, and `multicity/portable_water_distance_freeze_decision_v1.toml` |
+| Cross-city continuation planning | `multicity/experiment.toml`, `multicity/cities/*.toml`, `multicity/water_distance_review_v1.toml`, `multicity/gshhg_geometry_pilot_v{1,2}.toml`, `multicity/portable_water_distance_freeze_decision_v1.toml`, and `multicity/gshhg_l3_hierarchy_audit_preregistration_v1.toml` |
 
 `final_evaluation_2025.toml` binds exact input hashes, state-marker paths,
 target-cache paths, output names, metrics, bootstrap settings, and success
@@ -53,3 +53,9 @@ completed decision to defer source-and-algorithm freeze until a separately
 committed, target-blind L3 hierarchy audit closes the lake-island shoreline
 gap. It does not change `experiment.toml`, freeze feature names, or authorize
 geometry access, predictor construction, modeling, or targets.
+
+`multicity/gshhg_l3_hierarchy_audit_preregistration_v1.toml` fixes the exact
+L3 members, direct-parent rule, exterior-only contract, deterministic
+source-geometry probes, numerical gates, phase order, and append-only failure
+policy. The preregistration program reads tracked inputs only. L3 geometry
+remains unopened and unauthorized until a later clean, pushed Git transition.

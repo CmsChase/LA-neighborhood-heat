@@ -21,6 +21,7 @@ history is intentionally separated from the short project landing page.
 | Why is the portable water-distance source not frozen yet? | [PORTABLE_WATER_DISTANCE_REVIEW.md](PORTABLE_WATER_DISTANCE_REVIEW.md) |
 | What did the global shoreline geometry pilot find? | [GSHHG_GEOMETRY_PILOT_REPORT.md](GSHHG_GEOMETRY_PILOT_REPORT.md) |
 | Why was the portable source-and-algorithm freeze deferred? | [PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md](PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md) |
+| What exactly is fixed before the L3 hierarchy audit? | [GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md](GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md) |
 
 ## Scientific contracts
 
@@ -47,6 +48,9 @@ history is intentionally separated from the short project landing page.
 - [PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md](PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md):
   authenticated deferred decision, unresolved L3 hierarchy gap, license and
   claim boundaries, closed access ledger, and the next preregistration gate.
+- [GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md](GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md):
+  exact L3 direct-parent/exterior rule, deterministic probes, structural and
+  numerical gates, fail-closed phase order, and still-closed permissions.
 
 ## Execution and status
 

@@ -114,9 +114,15 @@ commit
 and was deliberately deferred. GSHHG remains the candidate source, but the
 four fixed points do not show that excluding L3 lake-island shores is harmless
 for every frozen eligible-land cell. The source and algorithm remain
-unfrozen. The only next safe stage is
-`preregister_target_blind_gshhg_l3_hierarchy_audit`; L3 geometry itself is
-still unauthorized.
+unfrozen.
+
+The exact L3 hierarchy audit is now preregistered under internal commit
+`7be642a7fd099d026c828e018d699f1c6a885de0d180d50ce7eda00e17e694a7`.
+It includes every direct L3 child exterior of the three selected L2 polygons,
+excludes L4, fixes real-component probes and all numerical gates, and requires
+every structure failure to occur before distance. The preregistration program
+opened no archive member or geometry. L3 geometry remains unauthorized until a
+separate clean, pushed, tracked-only planning transition.
 
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.

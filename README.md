@@ -88,8 +88,10 @@ complete and intentionally deferred. GSHHG remains the candidate source, but
 the current L1/L2-only algorithm cannot honestly be frozen as
 ocean-or-Great-Lakes shoreline distance while it excludes L3 lake-island
 shores. Every computation and target lock remains closed. The only next task
-is to preregister a narrow, source-only GSHHG L3 hierarchy audit; that
-preregistration must be committed before L3 geometry is opened.
+was to preregister a narrow, source-only GSHHG L3 hierarchy audit. That
+[preregistration](docs/GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md) is now
+complete without opening the archive or any member. L3 geometry remains
+closed until a separate clean, pushed, tracked-only planning transition.
 
 ## Six ways into the project
 

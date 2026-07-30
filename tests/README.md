@@ -20,7 +20,9 @@ Tests mirror modules under [`src/la_heat`](../src/la_heat/README.md).
   predeclared V2 repair and connected-lake identity, antimeridian seam removal,
   STRtree/brute-force parity, radius/chunk/worker invariance, geodesic
   comparison, append-only deferred-freeze authentication, strict lock/type
-  checks, and advancement only to L3 audit preregistration.
+  checks, advancement only to L3 audit preregistration, tracked-input-only L3
+  preregistration generation without any data/result directory, forbidden
+  reader traps, and append-only preregistration authentication.
 
 Run the complete checks from the repository root:
 

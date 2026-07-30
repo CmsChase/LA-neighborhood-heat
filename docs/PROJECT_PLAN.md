@@ -14,7 +14,7 @@ dates.
 | 5. Robustness and interpretation — complete with limitations | 11 | Feature-family ablations, strict pixel-level ST_QA sensitivity, QA cohorts, sensor checks, uncertainty intervals, endpoint and residual diagnostics | Authenticated ablation/sensitivity tables, unified evidence table, generated development report, hotspot and spatial diagnostics | Complete: strict 2 K date-support gate failed and spatial clustering remains, so the claim is explicitly narrowed | Research team |
 | 6. Model lock and one-time final test — complete | 12 | Freeze code/config/features/model/figures, create hashes, then unlock and evaluate 2025 once | `MODEL_LOCK.json`, append-only claim chain, one-way 2025 predictions, metrics, and figures | Evaluator never fits; every hash matches; one authenticated final transaction | Authorized operator after student approval |
 | 7. Research communication — complete | 13–14 | Write paper, poster, public result atlas, limitations, and oral-defense materials | Final report, reviewed paper, print poster, defense deck, website, and reproducibility instructions | Every number traceable to a table or script; claims match estimand | Writing and QA team; student presents |
-| 8. Cross-city continuation — draft; source/algorithm freeze deferred pending L3 audit | continuation | Test zero-shot transfer from LA to Phoenix, Houston, and Chicago; add calibrated uncertainty and abstention | Separate protocol/config, city manifests, target-blind predictors, frozen predictions, one-time external evidence | External targets stay sealed; next gate is a committed preregistration for the source-only GSHHG L3 hierarchy audit | Research engineering implements; independent review challenges; student approves freeze |
+| 8. Cross-city continuation — draft; L3 audit preregistered, geometry still closed | continuation | Test zero-shot transfer from LA to Phoenix, Houston, and Chicago; add calibrated uncertainty and abstention | Separate protocol/config, city manifests, target-blind predictors, frozen predictions, one-time external evidence | External targets stay sealed; next gate is a clean pushed tracked-only transition before the source-only L3 geometry audit | Research engineering implements; independent review challenges; student approves freeze |
 
 ## Planned result package
 
@@ -140,5 +140,8 @@ numerical stability, not positional accuracy or a complete distance surface.
 The subsequent decision retained GSHHG as the candidate but deferred the
 source-and-algorithm freeze because the current contract excludes L3
 lake-island shores. It authorizes no predictor, model, external target, or
-target-QA value. The next safe task is to preregister a source-only GSHHG L3
-hierarchy audit before opening any L3 geometry.
+target-QA value. The source-only L3 hierarchy audit is now preregistered
+without opening the archive or any member. Its direct-parent rule, structure
+phase, real-component probes, numerical gates, and append-only failure policy
+are fixed. The next safe task is a tracked-only planning transition, committed
+and pushed from a clean synchronized checkout, before opening any L3 member.

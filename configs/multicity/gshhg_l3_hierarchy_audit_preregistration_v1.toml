@@ -1,0 +1,333 @@
+[preregistration]
+schema_version = 1
+algorithm_version = "gshhg-l3-hierarchy-audit-preregistration-v1"
+preregistration_id = "target_blind_gshhg_l3_hierarchy_audit_v1"
+preregistration_date = "2026-07-30"
+scope = "target-blind source-only GSHHG L3 hierarchy audit"
+state = "gshhg_l3_hierarchy_audit_preregistered_geometry_unopened"
+expected_experiment_id = "la_to_three_city_zero_shot_v1"
+expected_experiment_semantic_sha256 = "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c"
+base_repository_commit = "9209ec244319f14be7c2bcb8b56c38bee12256e0"
+
+[prerequisites.plan_readiness]
+path = "manifests/multicity/PLAN_READINESS.json"
+expected_file_sha256 = "1411d6a2ab0cfe3d3c13713194818a901face864172ed5ebde5e8e946a3e5a01"
+expected_commit_sha256 = "ebe371cdb8e9dc39c086fc394ce33d4d113abc44d83e2289bef6c74988021001"
+expected_state = "planning_ready"
+expected_planning_stage = "portable_water_distance_freeze_deferred_pending_l3_hierarchy_audit"
+expected_next_safe_stage = "preregister_target_blind_gshhg_l3_hierarchy_audit"
+preregistration_authorized = true
+l3_geometry_read_authorized = false
+
+[prerequisites.freeze_decision]
+path = "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION.json"
+expected_file_sha256 = "226788498dfd8c9eb0aa004d60667dfa712926d8bf443fd710e17a7f5f8d5805"
+expected_commit_sha256 = "00e8ed677035f8f8315b7171fa8c969ca6c50c14b0114eff9e5024bb1c7b99b5"
+expected_state = "decision_complete_freeze_deferred"
+expected_outcome = "deferred_pending_gshhg_l3_hierarchy_contract"
+expected_gshhg_v2_file_sha256 = "71d68e35a67d82d5e8d7746cc9732d9cd1b8d880ed126e1c2af46cc72615bad1"
+expected_gshhg_v2_commit_sha256 = "e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735"
+
+[source]
+source_id = "gshhg_2_3_7_full_shapefile"
+dataset = "Global Self-consistent Hierarchical High-resolution Geography"
+version = "2.3.7"
+dataset_release_date = "2017-06-15"
+tag_commit = "5f0e530165b34904128575a18de0d57a450b2227"
+archive_path = "data/raw/multicity/water_distance/gshhg-shp-2.3.7.zip"
+expected_archive_bytes = 149157845
+expected_archive_sha256 = "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41"
+published_archive_md5 = "cb82015f8533f9611b4adba2c404ba44"
+expected_archive_member_count_from_v2 = 402
+expected_archive_uncompressed_bytes_from_v2 = 416243458
+expected_member_inventory_sha256_from_v2 = "fa348ee1fd68c9b10251735b60f3afd83b230e660165502e493dcc6605519d05"
+release_url = "https://github.com/GenericMappingTools/gshhg-gmt/releases/tag/2.3.7"
+hierarchy_reference = "https://raw.githubusercontent.com/GenericMappingTools/gshhg-gmt/2.3.7/SHAPEFILES.TXT"
+conversion_source_reference = "https://raw.githubusercontent.com/GenericMappingTools/gshhg-gmt/2.3.7/src/polygon_to_shape.c"
+header_semantics_reference = "https://raw.githubusercontent.com/GenericMappingTools/gshhg-gmt/2.3.7/src/wvs.h"
+readme_reference = "https://raw.githubusercontent.com/GenericMappingTools/gshhg-gmt/2.3.7/README.md"
+member_paths_are_preregistered_not_observed = true
+member_bytes_hashes_crcs_are_unknown_until_audit = true
+required_l3_members = [
+  "GSHHS_shp/f/GSHHS_f_L3.dbf",
+  "GSHHS_shp/f/GSHHS_f_L3.prj",
+  "GSHHS_shp/f/GSHHS_f_L3.shp",
+  "GSHHS_shp/f/GSHHS_f_L3.shx",
+]
+
+[license_record]
+archive_license_member = "LICENSE.TXT"
+archive_license_member_sha256 = "dc53a4833bf9121360a5286917683f041439327353ffe0231206c6b746005b81"
+archive_copying_member = "COPYING.LESSERv3"
+archive_copying_member_sha256 = "ea7d049c7705dc13afc202dd18e1827f3484f8212fd3fa7b82fc4a0c363432c9"
+archive_notice_expression = "LGPL-3.0-or-later"
+historical_readme_statement = "version 3 or any earlier version"
+github_repository_ui_label = "LGPL-3.0"
+compliance_baseline_for_future_redistribution = "LGPL-3.0-only common denominator pending legal review"
+copyright_and_permission_notice_must_be_preserved = true
+gshhg_name_advertising_without_permission_allowed = false
+archive_includes_full_gplv3_text = false
+future_redistribution_requires_official_gplv3_copy = true
+project_policy_authorizes_archive_or_modified_geometry_redistribution = false
+legal_review_completed = false
+
+[unchanged_v2_contract]
+base_config_path = "configs/multicity/gshhg_geometry_pilot_v1.toml"
+base_config_sha256 = "691e42c914ccff4a076097d83bc9a363cd07f508847c224f8268704f308a67f4"
+amendment_config_path = "configs/multicity/gshhg_geometry_pilot_v2.toml"
+amendment_config_sha256 = "c0f41f77d0c87a5ca09de81c2ec0ca2ae489633ac3f785648fbeb5f9f67e67ff"
+l1_source_id_with_repair = "2380"
+l1_original_normalized_wkb_sha256 = "7c9a9200df56e5777d16ac7bb65435b35a7ece7ad2e31d19a8ef3e4660b8a65a"
+l1_repaired_normalized_wkb_sha256 = "73f108f95a746b9ef730a22c732dd3b9dcfad2e6c31d6c6c2da61f6a008966cc"
+l1_repair_method = "shapely.make_valid, recursively retain polygonal components, union them, and discard non-polygonal zero-area remnants"
+selected_l2_source_ids = [180507, 180515, 180517]
+negative_area_l2_river_lakes_excluded = true
+l1_ocean_exteriors_only = true
+selected_l2_exteriors_only = true
+polygon_interior_rings_excluded = true
+
+[unchanged_v2_contract.selected_l2_normalized_wkb_sha256]
+"180507" = "83d5ba2f0065ceb7851aaafe1cb6cb11745a205e09509e211a0309409022b39a"
+"180515" = "858c762462d6573e3f2ce25356ba1e193c1ca47a1f1ecc327710a49ff1fe014c"
+"180517" = "b99eceddc5b9edc2fea390e33e008923a877f3b2fbbff3dafb30aea7ca3d23f7"
+
+[hierarchy_contract]
+l3_level = 3
+l3_meaning = "islands in lakes"
+selection_rule = "select every full-resolution L3 Polygon row whose direct parent_id is exactly one of 180507, 180515, or 180517"
+selected_l2_source_ids = [180507, 180515, 180517]
+include_every_direct_l3_descendant = true
+selected_l3_exteriors_only = true
+selected_l3_interior_rings_excluded = true
+sibling_id_is_audit_only_not_selection = true
+selection_may_use_city = false
+selection_may_use_bbox = false
+selection_may_use_name = false
+hierarchy_inclusion_selection_may_use_area = false
+selection_may_use_distance = false
+selection_may_use_eligible_support = false
+selection_may_use_target_or_qa = false
+selection_may_use_model_prediction_or_result = false
+l4_level = 4
+l4_meaning = "ponds in islands within lakes"
+l4_members_may_be_opened = false
+l4_geometry_included = false
+l4_exclusion_reason = "L4 boundaries are pond shores inside L3 islands and are excluded from the selected Great-Lakes-water shoreline contract. Any L3 interior rings, if observed, are excluded by the exterior-only rule; their semantics are not assumed by this preregistration."
+
+[structural_audit]
+expected_crs = "EPSG:4326"
+expected_attribute_columns = [
+  "id",
+  "level",
+  "source",
+  "parent_id",
+  "sibling_id",
+  "area",
+]
+expected_geometry_column = "geometry"
+expected_geometry_types = ["Polygon"]
+allowed_source_values = ["WDBII", "WVS"]
+require_exact_member_presence_and_case = true
+require_member_bytes_sha256_and_crc_record = true
+require_member_schema_dtype_crs_and_bounds_record = true
+require_full_layer_row_count_and_semantic_sha256 = true
+require_selected_direct_descendant_subset_semantic_sha256 = true
+require_selected_exterior_linework_semantic_sha256 = true
+require_selected_counts_by_parent = true
+require_selected_interior_ring_count_record = true
+require_all_rows_level_3 = true
+require_unique_nonempty_canonical_source_ids = true
+canonical_source_id_pattern = "^(0|[1-9][0-9]*)(?:-[EW])?$"
+require_finite_positive_reported_area = true
+require_nonempty_valid_polygon_geometry = true
+geometry_repair_allowed = false
+geometry_decomposition_allowed = false
+require_at_least_one_selected_direct_descendant = true
+require_selected_child_strictly_within_declared_l2_parent = true
+require_selected_child_boundary_disjoint_from_parent_exterior = true
+require_selected_sibling_interiors_not_overlapping = true
+require_selected_exterior_longitude_jumps_below_180_degrees = true
+longitude_jump_threshold_degrees = 180.0
+semantic_row_order = "ascending base numeric id, then suffix order none, E, W"
+semantic_row_fields = "canonical source id including any official -E or -W dateline suffix, integer level, exact source, integer parent_id, integer sibling_id, float64 area, normalized geometry WKB SHA-256"
+unexpected_structure_fails_before_probe_or_distance = true
+
+[structural_audit.expected_dtypes]
+id = "str"
+level = "int32"
+source = "str"
+parent_id = "int32"
+sibling_id = "int32"
+area = "float64"
+geometry = "geometry"
+
+[probe_rule]
+scope = "one deterministic real L3 component for every selected L2 parent that has at least one direct child"
+child_selection_order = "source-reported area descending, then canonical child source id by base numeric id and suffix order none, E, W"
+probe_ranking_may_use_source_reported_area = true
+child_selection_may_use_distance = false
+child_selection_may_use_city_target_or_result = false
+probe_geometry_operation = "normalize selected Polygon, then shapely representative_point"
+probe_must_be_strictly_contained_and_not_on_boundary = true
+probe_crs_rule = "northern WGS84 UTM; zone=floor((longitude+180)/6)+1; EPSG=32600+zone"
+southern_or_out_of_utm_domain_probe_allowed = false
+minimum_real_probe_count = 1
+require_candidate_nearest_provenance_is_probe_child_id = true
+require_unique_nearest_within_tie_tolerance = true
+nearest_tie_absolute_tolerance_m = 0.000001
+require_candidate_distance_matches_direct_own_exterior = true
+require_l1_l2_only_distance_strictly_greater_than_l3_inclusive = true
+require_finite_positive_probe_distances = true
+distance_equality_absolute_tolerance_m = 0.000001
+strict_improvement_minimum_m = 0.000001
+probe_reselection_after_distance_allowed = false
+required_probe_evidence_fields = [
+  "child_source_id",
+  "parent_id",
+  "source_reported_area",
+  "normalized_child_wkb_sha256",
+  "representative_point_longitude",
+  "representative_point_latitude",
+  "representative_point_sha256",
+  "derived_projected_crs",
+  "nearest_source_level",
+  "nearest_source_id",
+  "nearest_longitude",
+  "nearest_latitude",
+  "nearest_tie_count",
+  "shapely_geos_runtime",
+  "pyproj_runtime",
+]
+
+[numerical_audit]
+floating_dtype = "float64"
+projected_distance_method = "exact Euclidean point-to-line distance in the predeclared metre-based CRS"
+search_radii_km = [64, 128, 256, 512, 1024, 2048]
+radius_acceptance_rule = "accept only when every diagnostic distance is finite and strictly less than the active radius; every larger accepted radius must reproduce the first accepted value"
+line_chunk_vertex_counts = [256, 1024, 4096]
+canonical_line_chunk_vertex_count = 1024
+query_chunk_sizes = [1, 2, 4]
+worker_counts = [1, 2, 4]
+require_strtree_bruteforce_parity = true
+require_source_forward_reverse_invariance = true
+require_line_chunk_invariance = true
+require_true_vector_query_chunk_invariance = true
+require_worker_count_invariance = true
+invariance_absolute_tolerance_m = 0.000001
+geodesic_reference_method = "pyproj.Geod WGS84 densification followed by point-to-vertex geodesic minimum"
+geodesic_densification_max_step_m = 50.0
+geodesic_absolute_tolerance_m = 100.0
+geodesic_relative_tolerance = 0.005
+require_projected_geodesic_gate = true
+projected_geodesic_gate_applies_to = "all four existing fixed points and every real L3 probe"
+projected_geodesic_pass_rule = "absolute(projected distance minus geodesic distance) must be less than or equal to max(100 m, 0.005 times geodesic distance)"
+replay_existing_four_gshhg_points_without_census = true
+existing_four_point_absolute_tolerance_m = 0.000001
+candidate_l3_distances_must_equal_v2_at_existing_four_points = true
+census_layer_may_be_opened = false
+census_distances_may_be_recomputed = false
+
+[numerical_audit.v2_gshhg_baseline_distance_m]
+los_angeles_ca = 20208.299356499057
+phoenix_az = 262207.7560500305
+houston_tx = 36286.50318330564
+chicago_il = 1162.3830922086756
+
+[[diagnostic_points]]
+city_id = "los_angeles_ca"
+label = "fixed unlabeled Los Angeles reference point"
+longitude = -118.2437
+latitude = 34.0522
+projected_crs = "EPSG:32611"
+
+[[diagnostic_points]]
+city_id = "phoenix_az"
+label = "fixed unlabeled Phoenix reference point"
+longitude = -112.0740
+latitude = 33.4484
+projected_crs = "EPSG:32612"
+
+[[diagnostic_points]]
+city_id = "houston_tx"
+label = "fixed unlabeled Houston reference point"
+longitude = -95.3698
+latitude = 29.7604
+projected_crs = "EPSG:32615"
+
+[[diagnostic_points]]
+city_id = "chicago_il"
+label = "fixed unlabeled Chicago reference point"
+longitude = -87.6298
+latitude = 41.8781
+projected_crs = "EPSG:32616"
+
+[phase_order_and_failure]
+phase_1 = "authenticate archive identity and L3 members; audit schema, CRS, attributes, geometry, hierarchy, containment, overlap, antimeridian, and semantic hash"
+phase_2 = "only after every structural gate passes, derive the fixed probes and compute the preregistered source-only distances and numerical replays"
+phase_2_may_start_after_any_phase_1_failure = false
+silent_repair_reselection_or_fallback_allowed = false
+structural_failure_manifest_is_append_only = true
+structural_amendment_must_be_separately_committed_and_pushed_before_probe_or_distance = true
+structural_amendment_scope = "only an exact observed source-structure correction after preserving the V1 failure and before any probe or distance"
+structural_amendment_may_change_source_archive_or_version = false
+structural_amendment_may_change_selected_l2_source_ids = false
+structural_amendment_may_change_direct_parent_all_descendants_rule = false
+structural_amendment_may_change_l4_or_exterior_only_rule = false
+structural_amendment_may_change_existing_points_or_numerical_thresholds = false
+structural_amendment_may_change_access_locks = false
+numerical_failure_may_relax_tolerance_change_probe_or_delete_gate = false
+numerical_failure_requires_preserved_failure_and_independent_scientific_decision = true
+success_manifest_is_append_only = true
+
+[outputs]
+success_manifest = "manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT.json"
+v1_failure_manifest = "manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT_V1_FAILURE.json"
+diagnostic_table = "data/interim/multicity/water_distance/gshhg_l3_hierarchy_audit/diagnostic_distances.csv"
+geometry_export_allowed = false
+archive_or_modified_geometry_redistribution_allowed = false
+
+[locks]
+source_lock_created = false
+algorithm_lock_created = false
+feature_names_frozen = false
+predictor_build_authorized = false
+protocol_lock_created = false
+external_targets_unlocked = false
+external_target_values_read = false
+external_prediction_commit_exists = false
+
+[access_contract]
+preregistration_program_network_requests = 0
+tracked_experiment_configuration_read = true
+prior_plan_readiness_manifest_read = true
+deferred_freeze_decision_manifest_read = true
+gshhg_archive_bytes_opened_by_preregistration_program = false
+gshhg_archive_members_opened_by_preregistration_program = false
+gshhg_l3_member_opened = false
+gshhg_l3_geometry_opened = false
+gshhg_l4_member_opened = false
+other_public_source_geometry_opened = false
+eligible_land_grid_opened = false
+distance_values_computed = false
+distance_feature_surface_computed = false
+tract_aggregation_performed = false
+predictor_values_computed = false
+predictor_construction_performed = false
+model_fit_performed = false
+model_predictions_computed = false
+landsat_thermal_values_read = false
+landsat_target_qa_values_read = false
+external_lst_values_read = false
+external_target_files_opened = false
+final_evaluation_outputs_opened = false
+
+[next_gate]
+stage_id = "authenticate_committed_l3_preregistration_and_authorize_geometry_audit"
+preregistration_config_code_manifest_must_be_in_clean_head = true
+head_must_equal_origin_main = true
+tracked_only_transition_may_open_gshhg_archive_or_member = false
+tracked_only_transition_may_open_geometry_support_target_model_or_result = false
+geometry_audit_stage_after_transition = "target_blind_gshhg_l3_hierarchy_geometry_audit"
+passing_geometry_audit_automatically_freezes_source_or_algorithm = false
+next_decision_after_passing_geometry_audit = "separate_portable_water_distance_source_and_algorithm_freeze_decision"
+eligible_support_predictor_model_target_or_protocol_authorized = false

@@ -311,10 +311,13 @@ candidate source but rejected immediate freeze of the L1/L2-only algorithm
 because the four diagnostic points do not close the L3 lake-island shoreline
 gap.
 
-The only safe next task is to preregister the target-blind GSHHG L3 hierarchy
-audit. That preregistration must be committed before any L3 geometry is
-opened. The audit itself, predictor construction, model fitting, protocol
-promotion, and target access remain separately locked.
+The target-blind GSHHG L3 hierarchy audit is now preregistered without opening
+the archive or any member. Its direct-parent rule, structure-first failure
+policy, real-component probes, and numerical gates are fixed. L3 geometry
+remains unauthorized until a separate tracked-only planning transition is
+committed and pushed from a clean synchronized checkout. The audit itself,
+predictor construction, model fitting, protocol promotion, and target access
+remain separately locked.
 
 ## Official source anchors
 

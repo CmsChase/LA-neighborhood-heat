@@ -1612,3 +1612,56 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   GSHHG/water-review/decision/planning tests, all 813 project tests in 175.4
   seconds with the same five existing deprecation warnings, and
   full-repository Ruff.
+
+## 2026-07-30 - Preregister the target-blind GSHHG L3 hierarchy audit
+
+- Decision: complete only the tracked-input preregistration and stop before
+  any L3-member read. The append-only manifest is
+  `manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.json`;
+  its file SHA-256 is
+  `ecb21bfa31f98dfe275f113ee13909fd30276e049ee0d2a05fca2b2a2bd4b47f`
+  and internal commit is
+  `7be642a7fd099d026c828e018d699f1c6a885de0d180d50ce7eda00e17e694a7`.
+- The exact contract includes every full-resolution L3 exterior whose integer
+  `parent_id` is `180507`, `180515`, or `180517`. It cannot use city, bbox,
+  name, area, distance, eligible support, target, model, prediction, or result
+  values for hierarchy inclusion. L4 remains excluded and unopened.
+- The source audit accepts the official `-E`/`-W` source-ID suffixes created by
+  antimeridian splitting. It does not assume that an observed L3 interior ring
+  has L4 semantics; every such ring is simply counted and excluded by the
+  exterior-only contract.
+- Structure must pass before distance. The audit must record member hashes and
+  CRCs, schema/dtypes/CRS, complete and selected semantic hashes,
+  parent/containment/overlap checks, and selected linework identity. No repair
+  or decomposition is allowed.
+- One deterministic real-component probe is selected for every parent that has
+  direct children by source area descending and canonical ID ascending. The
+  audit also replays the four existing city points and every V2 radius,
+  STRtree/brute-force, source-order, line/query-chunk, worker, and geodesic
+  gate. A numerical failure cannot be converted into a pass by changing a
+  probe or tolerance.
+- Any structure failure is append-only and must retain
+  `distance_values_computed=false`. A source-structure amendment may proceed
+  only after a separate commit and push and cannot change the archive,
+  selected parents, hierarchy rule, L4/exterior semantics, existing points,
+  numerical thresholds, or access locks.
+- The preregistration generator reads only tracked experiment configuration,
+  the prior planning manifest, and the deferred-decision manifest. It does not
+  call the geometry-pilot, deferred-decision, or planning auditors. A minimal
+  project copy with no `data/`, `exports/`, or `reports/` directory generated
+  the same contract, and forbidden ZIP/vector/Parquet/raster/model/network
+  readers were trapped in tests.
+- `PLAN_READINESS.json` remains intentionally unchanged: preregistration is
+  true and L3 geometry read is false. The next safe task is a tracked-only,
+  clean-and-pushed Git transition that removes the planning auditor's deep
+  geometry-pilot call before narrowly authorizing the L3 geometry audit.
+- This stage made zero network requests, opened no GSHHG archive/member or
+  geometry, computed no distance, and opened no support, target, predictor,
+  model, prediction, or result. It creates no source, algorithm, feature-name,
+  predictor, or protocol lock. A passing future L3 audit still requires a
+  second independent freeze decision.
+- Verification passed all 12 new preregistration tests, all 58 focused
+  L3-preregistration/GSHHG/water-review/deferred-decision tests, all 825
+  project tests in about 300.3 seconds with the same five existing
+  deprecation warnings, exact generation plus a separate `--check-only`, and
+  full-repository Ruff.
