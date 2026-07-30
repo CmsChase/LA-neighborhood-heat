@@ -170,6 +170,20 @@ def _install_tracked_input_stubs(
     )
     monkeypatch.setattr(
         l3_audit,
+        "_authenticate_v2_amendment",
+        lambda *_args, **_kwargs: l3_audit.V2Amendment(
+            path=tmp_path / l3_audit.AMENDMENT_PATH,
+            file_sha256=l3_audit.EXPECTED_AMENDMENT_FILE_SHA256,
+            contract={},
+            effective_config=config,
+            v1_failure={},
+            v1_failure_file_sha256=(
+                l3_audit.EXPECTED_V1_FAILURE_FILE_SHA256
+            ),
+        ),
+    )
+    monkeypatch.setattr(
+        l3_audit,
         "_required_git_paths",
         lambda _root: l3_audit.CODE_PATHS,
     )

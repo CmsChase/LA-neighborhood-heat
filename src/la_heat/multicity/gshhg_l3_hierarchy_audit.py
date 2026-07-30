@@ -20,6 +20,7 @@ other archive member; that directory is removed before phase 1 returns.
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import importlib.metadata
 import io
@@ -30,6 +31,7 @@ import re
 import stat
 import subprocess
 import tempfile
+import tomllib
 import unicodedata
 import uuid
 import zipfile
@@ -77,18 +79,26 @@ from la_heat.multicity.plan_audit import (
 from la_heat.provenance import canonical_sha256, code_runtime_fingerprint, sha256_file
 
 SCHEMA_VERSION: Final = 1
-ALGORITHM_VERSION: Final = "gshhg-l3-hierarchy-audit-v1"
-COMPLETE_STATE: Final = "gshhg_l3_hierarchy_audit_complete_source_not_frozen"
-FAILURE_STATE: Final = "gshhg_l3_hierarchy_audit_v1_failed"
+V1_ALGORITHM_VERSION: Final = "gshhg-l3-hierarchy-audit-v1"
+ALGORITHM_VERSION: Final = "gshhg-l3-hierarchy-audit-v2"
+COMPLETE_STATE: Final = "gshhg_l3_hierarchy_audit_v2_complete_source_not_frozen"
+V1_FAILURE_STATE: Final = "gshhg_l3_hierarchy_audit_v1_failed"
+FAILURE_STATE: Final = "gshhg_l3_hierarchy_audit_v2_failed"
 
 DEFAULT_MANIFEST: Final = Path(
     "manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT.json"
 )
-DEFAULT_FAILURE_MANIFEST: Final = Path(
+DEFAULT_V1_FAILURE_MANIFEST: Final = Path(
     "manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT_V1_FAILURE.json"
+)
+DEFAULT_FAILURE_MANIFEST: Final = Path(
+    "manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT_V2_FAILURE.json"
 )
 DEFAULT_DIAGNOSTIC_TABLE: Final = Path(
     "data/interim/multicity/water_distance/gshhg_l3_hierarchy_audit/diagnostic_distances.csv"
+)
+AMENDMENT_PATH: Final = (
+    "configs/multicity/gshhg_l3_hierarchy_audit_amendment_v2.toml"
 )
 PLAN_PATH: Final = "manifests/multicity/PLAN_READINESS.json"
 PREREGISTRATION_PATH: Final = (
@@ -110,6 +120,30 @@ EXPECTED_PLAN_FILE_SHA256: Final = (
 )
 EXPECTED_PLAN_COMMIT_SHA256: Final = (
     "1789d828f212e0cd65f87c9427eb4a7fbd1697cc7170ebb98a80806659afbc86"
+)
+EXPECTED_AMENDMENT_FILE_SHA256: Final = (
+    "c60c2d699e94bca832a78b4959db9a5333b2aa3ae37bfdd72d9c0eb6f37ff127"
+)
+AMENDMENT_PUBLICATION_GIT_COMMIT: Final = (
+    "e07ef369ea3310ec67956b06436f793f01c89942"
+)
+EXPECTED_AMENDMENT_BLOB_SHA1: Final = "e19275b922498a6b72f28341f5bcaf2647e58c7e"
+EXPECTED_V1_FAILURE_FILE_SHA256: Final = (
+    "b5eb32e3de1702250e36a7eb81b2ea0c78551930a7f92abe5278d21c05a0ea9e"
+)
+EXPECTED_V1_FAILURE_COMMIT_SHA256: Final = (
+    "e5b8e1e242276bcb530990ee070739f84e48177c431e556cfebb4819c92ea067"
+)
+V1_FAILURE_PUBLICATION_GIT_COMMIT: Final = (
+    "fbf20ed7a601af8e9f77ad768f1267b8a6503a0d"
+)
+V1_RUN_HEAD: Final = "ab51a9506d77b7ac0efcdfb97e494c665cd80e5b"
+CORRECTED_SOURCE_ID: Final = "180515"
+V1_EXPECTED_SOURCE_HASH: Final = (
+    "858c762462d6573e3f2ce25356ba1e193c1ca47a1f1ecc327710a49ff1fe014c"
+)
+V2_CORRECTED_SOURCE_HASH: Final = (
+    "858c762462d6573e3f2ce25356ba1e193c1ca47a1f1ecc327710a49ff1fe014a"
 )
 
 LAYER_MEMBER_QUARTETS: Final = {
@@ -146,6 +180,7 @@ INVARIANCE_TOLERANCE_M: Final = 0.000001
 
 CODE_PATHS: Final = (
     "configs/multicity/gshhg_l3_hierarchy_audit_preregistration_v1.toml",
+    AMENDMENT_PATH,
     "scripts/audit_multicity_gshhg_l3_hierarchy.py",
     "src/la_heat/multicity/gshhg_l3_hierarchy_audit.py",
     "src/la_heat/multicity/gshhg_l3_hierarchy_preregistration.py",
@@ -213,6 +248,18 @@ class GitGate:
     branch: str
     origin_main: str
     tracked_blob_sha1: dict[str, str]
+
+
+@dataclass(frozen=True, slots=True)
+class V2Amendment:
+    """Authenticated one-leaf correction applied to the immutable V1 contract."""
+
+    path: Path
+    file_sha256: str
+    contract: dict[str, Any]
+    effective_config: dict[str, Any]
+    v1_failure: dict[str, Any]
+    v1_failure_file_sha256: str
 
 
 @dataclass(frozen=True, slots=True)
@@ -435,6 +482,538 @@ def _git_blob_records(
     )
 
 
+def _strict_equal(actual: object, expected: object) -> bool:
+    if type(actual) is not type(expected):
+        return False
+    if isinstance(expected, dict):
+        if not isinstance(actual, dict) or set(actual) != set(expected):
+            return False
+        return all(_strict_equal(actual[key], expected[key]) for key in expected)
+    if isinstance(expected, list):
+        if not isinstance(actual, list) or len(actual) != len(expected):
+            return False
+        return all(
+            _strict_equal(left, right)
+            for left, right in zip(actual, expected, strict=True)
+        )
+    return bool(actual == expected)
+
+
+def _require_exact_object(
+    value: object,
+    *,
+    expected: Mapping[str, object],
+    label: str,
+) -> dict[str, Any]:
+    if not isinstance(value, dict) or not _strict_equal(value, dict(expected)):
+        raise GshhgL3HierarchyAuditError(f"The exact {label} changed.")
+    return value
+
+
+def _git_readonly(project_root: Path, *arguments: str) -> str:
+    completed = subprocess.run(
+        ["git", "-C", str(project_root), *arguments],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if completed.returncode != 0:
+        raise GshhgL3HierarchyAuditError(
+            f"Git amendment evidence command failed: {' '.join(arguments)}: "
+            f"{completed.stderr.strip()}"
+        )
+    return completed.stdout.strip()
+
+
+def _require_git_ancestor(
+    project_root: Path,
+    ancestor: str,
+    descendant: str,
+    *,
+    label: str,
+) -> None:
+    completed = subprocess.run(
+        [
+            "git",
+            "-C",
+            str(project_root),
+            "merge-base",
+            "--is-ancestor",
+            ancestor,
+            descendant,
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if completed.returncode != 0:
+        raise GshhgL3HierarchyAuditError(
+            f"The required {label} Git ancestry is missing."
+        )
+
+
+def _authenticate_v1_failure_history(
+    project_root: Path,
+    failure: Mapping[str, Any],
+) -> None:
+    repository = failure.get("repository")
+    _require_exact_mapping_fields(
+        repository,
+        expected={
+            "branch": "main",
+            "head": V1_RUN_HEAD,
+            "origin_main": V1_RUN_HEAD,
+            "head_equals_origin_main": True,
+        },
+        label="V1 failure historical repository",
+    )
+    if not isinstance(repository, dict):
+        raise GshhgL3HierarchyAuditError(
+            "The V1 failure historical repository evidence is missing."
+        )
+    recorded_blobs = repository.get("tracked_blob_sha1")
+    if not isinstance(recorded_blobs, dict) or not recorded_blobs:
+        raise GshhgL3HierarchyAuditError(
+            "The V1 failure lacks historical executor blob evidence."
+        )
+    mismatches = {
+        path: {
+            "recorded": blob,
+            "historical": _git_readonly(project_root, "rev-parse", f"{V1_RUN_HEAD}:{path}"),
+        }
+        for path, blob in recorded_blobs.items()
+        if not isinstance(path, str)
+        or not isinstance(blob, str)
+        or _git_readonly(project_root, "rev-parse", f"{V1_RUN_HEAD}:{path}") != blob
+    }
+    if mismatches:
+        raise GshhgL3HierarchyAuditError(
+            f"The V1 failure historical executor blobs changed: {mismatches}"
+        )
+    failure_blob = _git_readonly(
+        project_root,
+        "rev-parse",
+        f"{V1_FAILURE_PUBLICATION_GIT_COMMIT}:{DEFAULT_V1_FAILURE_MANIFEST.as_posix()}",
+    )
+    if failure_blob != "aca5a2b7231bd1d0ffb660ce0554034c3dd014ba":
+        raise GshhgL3HierarchyAuditError(
+            "The preserved V1 failure publication blob changed."
+        )
+    _require_git_ancestor(
+        project_root,
+        V1_RUN_HEAD,
+        V1_FAILURE_PUBLICATION_GIT_COMMIT,
+        label="V1 run-to-failure-publication",
+    )
+    _require_git_ancestor(
+        project_root,
+        V1_FAILURE_PUBLICATION_GIT_COMMIT,
+        AMENDMENT_PUBLICATION_GIT_COMMIT,
+        label="V1-failure-to-V2-amendment",
+    )
+
+
+def _authenticate_v2_amendment(
+    project_root: Path,
+    *,
+    base_config_path: Path,
+    base_config: Mapping[str, Any],
+    preregistration: Mapping[str, Any],
+    pilot: Mapping[str, Any],
+) -> V2Amendment:
+    """Authenticate the one-leaf V2 correction without opening source data."""
+
+    amendment_path = (project_root / AMENDMENT_PATH).resolve()
+    if sha256_file(amendment_path) != EXPECTED_AMENDMENT_FILE_SHA256:
+        raise GshhgL3HierarchyAuditError("The exact V2 structural amendment changed.")
+    try:
+        with amendment_path.open("rb") as handle:
+            contract = tomllib.load(handle)
+    except (OSError, tomllib.TOMLDecodeError) as exc:
+        raise GshhgL3HierarchyAuditError(
+            "Cannot parse the exact V2 structural amendment."
+        ) from exc
+
+    amendment = _require_exact_object(
+        contract.get("amendment"),
+        expected={
+            "schema_version": 2,
+            "algorithm_version": "gshhg-l3-hierarchy-audit-structural-amendment-v2",
+            "amendment_id": (
+                "target_blind_gshhg_l3_hierarchy_audit_structural_amendment_v2"
+            ),
+            "amendment_date": "2026-07-30",
+            "state": (
+                "gshhg_l3_hierarchy_audit_v2_structural_amendment_committed_unopened"
+            ),
+            "scope": (
+                "correct exactly one transcribed source-structure hash after preserving "
+                "the authenticated V1 failure and before any probe or distance"
+            ),
+            "correction_count": 1,
+            "base_preregistration_config": (
+                "configs/multicity/gshhg_l3_hierarchy_audit_preregistration_v1.toml"
+            ),
+            "base_preregistration_config_sha256": EXPECTED_CONFIG_SHA256,
+            "base_preregistration_manifest": PREREGISTRATION_PATH,
+            "base_preregistration_manifest_sha256": (
+                EXPECTED_PREREGISTRATION_FILE_SHA256
+            ),
+            "base_preregistration_commit_sha256": (
+                EXPECTED_PREREGISTRATION_COMMIT_SHA256
+            ),
+            "v1_failure_manifest": DEFAULT_V1_FAILURE_MANIFEST.as_posix(),
+            "v1_failure_manifest_sha256": EXPECTED_V1_FAILURE_FILE_SHA256,
+            "v1_failure_commit_sha256": EXPECTED_V1_FAILURE_COMMIT_SHA256,
+            "v1_failure_git_commit": V1_FAILURE_PUBLICATION_GIT_COMMIT,
+            "v1_failure_tracked_blob_sha1": (
+                "aca5a2b7231bd1d0ffb660ce0554034c3dd014ba"
+            ),
+            "v1_run_head": V1_RUN_HEAD,
+            "v1_required_state": V1_FAILURE_STATE,
+            "v1_required_phase": "phase_1_structure",
+            "v1_required_gate": "selected_l2_normalized_wkb_sha256",
+            "all_other_structure_gates_unchanged": True,
+            "all_probe_definitions_unchanged": True,
+            "all_numerical_algorithms_and_thresholds_unchanged": True,
+            "all_access_locks_unchanged": True,
+        },
+        label="V2 amendment identity and lineage",
+    )
+    correction = _require_exact_object(
+        contract.get("correction"),
+        expected={
+            "field_path": (
+                "unchanged_v2_contract.selected_l2_normalized_wkb_sha256.180515"
+            ),
+            "json_pointer": (
+                "/unchanged_v2_contract/selected_l2_normalized_wkb_sha256/180515"
+            ),
+            "source_id": CORRECTED_SOURCE_ID,
+            "preregistered_value": V1_EXPECTED_SOURCE_HASH,
+            "corrected_value": V2_CORRECTED_SOURCE_HASH,
+            "v1_observed_value": V2_CORRECTED_SOURCE_HASH,
+            "correction_reason": (
+                "the base preregistration transcribed the final hexadecimal character "
+                "as c although the previously authenticated V2 pilot and the preserved "
+                "V1 failure both record a"
+            ),
+            "acceptance_rule": (
+                "replace only the exact old value with the exact corrected value; no "
+                "tolerance, fallback, reselection, or additional correction is allowed"
+            ),
+            "pilot_manifest": PILOT_PATH,
+            "pilot_manifest_sha256": (
+                "71d68e35a67d82d5e8d7746cc9732d9cd1b8d880ed126e1c2af46cc72615bad1"
+            ),
+            "pilot_commit_sha256": (
+                "e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735"
+            ),
+            "pilot_record_pointer": (
+                "/source_layers/great_lakes_identity/source_polygons/"
+                "source_id=180515/normalized_wkb_sha256"
+            ),
+        },
+        label="V2 exact source-structure correction",
+    )
+    _require_exact_object(
+        contract.get("unchanged_contract"),
+        expected={
+            "source_archive_or_version_may_change": False,
+            "selected_l2_source_ids_may_change": False,
+            "direct_parent_all_descendants_rule_may_change": False,
+            "l4_or_exterior_only_rule_may_change": False,
+            "existing_points_may_change": False,
+            "numerical_thresholds_may_change": False,
+            "access_locks_may_change": False,
+            "tolerance_may_be_relaxed": False,
+            "fallback_or_reselection_allowed": False,
+            "v1_failure_may_be_deleted_or_rewritten": False,
+        },
+        label="V2 unchanged-contract locks",
+    )
+    _require_exact_object(
+        contract.get("locks"),
+        expected={
+            "source_lock_created": False,
+            "algorithm_lock_created": False,
+            "feature_names_frozen": False,
+            "predictor_build_authorized": False,
+            "protocol_lock_created": False,
+            "external_targets_unlocked": False,
+            "external_target_values_read": False,
+            "external_prediction_commit_exists": False,
+        },
+        label="V2 amendment locks",
+    )
+    _require_exact_object(
+        contract.get("amendment_access_record"),
+        expected={
+            "amendment_program_archive_opened": False,
+            "amendment_program_geometry_opened": False,
+            "public_source_geometry_was_read_in_preserved_v1_run": True,
+            "source_structure_values_were_read_in_preserved_v1_run": True,
+            "v1_probe_derived": False,
+            "v1_distance_values_computed": False,
+            "network_requests": 0,
+            "gshhg_l4_member_opened": False,
+            "census_layer_opened": False,
+            "eligible_land_grid_opened": False,
+            "distance_feature_surface_computed": False,
+            "tract_aggregation_performed": False,
+            "predictor_values_computed": False,
+            "predictor_construction_performed": False,
+            "model_fit_performed": False,
+            "model_predictions_computed": False,
+            "landsat_thermal_values_read": False,
+            "landsat_target_qa_values_read": False,
+            "external_target_files_opened": False,
+            "final_evaluation_outputs_opened": False,
+        },
+        label="V2 amendment access record",
+    )
+    _require_exact_object(
+        contract.get("outputs"),
+        expected={
+            "success_manifest": DEFAULT_MANIFEST.as_posix(),
+            "v2_failure_manifest": DEFAULT_FAILURE_MANIFEST.as_posix(),
+            "diagnostic_table": DEFAULT_DIAGNOSTIC_TABLE.as_posix(),
+        },
+        label="V2 amendment outputs",
+    )
+    if set(contract) != {
+        "amendment",
+        "correction",
+        "unchanged_contract",
+        "locks",
+        "amendment_access_record",
+        "outputs",
+    }:
+        raise GshhgL3HierarchyAuditError("The V2 amendment top-level schema changed.")
+
+    if sha256_file(base_config_path) != amendment["base_preregistration_config_sha256"]:
+        raise GshhgL3HierarchyAuditError("The V1 config bound by the amendment changed.")
+    if (
+        preregistration.get("commit_sha256")
+        != amendment["base_preregistration_commit_sha256"]
+    ):
+        raise GshhgL3HierarchyAuditError(
+            "The V1 preregistration bound by the amendment changed."
+        )
+    for section in (
+        "unchanged_v2_contract",
+        "hierarchy_contract",
+        "probe_rule",
+        "locks",
+        "access_contract",
+    ):
+        if not _strict_equal(base_config.get(section), preregistration.get(section)):
+            raise GshhgL3HierarchyAuditError(
+                f"The parsed V1 config diverges from its committed {section} evidence."
+            )
+    base_numerical = base_config.get("numerical_audit")
+    preregistered_numerical = preregistration.get("numerical_audit")
+    if not isinstance(base_numerical, dict) or not isinstance(
+        preregistered_numerical,
+        dict,
+    ):
+        raise GshhgL3HierarchyAuditError(
+            "The V1 numerical contract evidence is missing."
+        )
+    changed_numerical = {
+        key: {
+            "config": value,
+            "preregistration": preregistered_numerical.get(key),
+        }
+        for key, value in base_numerical.items()
+        if key not in preregistered_numerical
+        or not _strict_equal(value, preregistered_numerical[key])
+    }
+    if changed_numerical:
+        raise GshhgL3HierarchyAuditError(
+            f"The parsed V1 numerical contract diverges from its committed evidence: "
+            f"{changed_numerical}"
+        )
+    if "diagnostic_points" in preregistered_numerical and not _strict_equal(
+        base_config.get("diagnostic_points"),
+        preregistered_numerical["diagnostic_points"],
+    ):
+        raise GshhgL3HierarchyAuditError(
+            "The parsed V1 diagnostic points diverge from committed evidence."
+        )
+    old_hash = (
+        base_config.get("unchanged_v2_contract", {})
+        .get("selected_l2_normalized_wkb_sha256", {})
+        .get(CORRECTED_SOURCE_ID)
+    )
+    if old_hash != V1_EXPECTED_SOURCE_HASH:
+        raise GshhgL3HierarchyAuditError(
+            "The amendment's exact old source-structure hash is absent."
+        )
+    hash_differences = [
+        (index, old, new)
+        for index, (old, new) in enumerate(
+            zip(V1_EXPECTED_SOURCE_HASH, V2_CORRECTED_SOURCE_HASH, strict=True)
+        )
+        if old != new
+    ]
+    if hash_differences != [(63, "c", "a")]:
+        raise GshhgL3HierarchyAuditError(
+            "The V2 amendment is not the exact one-character c-to-a correction."
+        )
+
+    v1_failure_path = (project_root / DEFAULT_V1_FAILURE_MANIFEST).resolve()
+    v1_failure, v1_failure_sha = _read_json_object(
+        v1_failure_path,
+        label="preserved GSHHG L3 V1 failure",
+    )
+    if (
+        v1_failure_sha != EXPECTED_V1_FAILURE_FILE_SHA256
+        or v1_failure.get("commit_sha256") != EXPECTED_V1_FAILURE_COMMIT_SHA256
+    ):
+        raise GshhgL3HierarchyAuditError("The preserved V1 failure bytes changed.")
+    _require_exact_mapping_fields(
+        v1_failure,
+        expected={
+            "schema_version": SCHEMA_VERSION,
+            "algorithm_version": f"{V1_ALGORITHM_VERSION}-failure-record",
+            "state": V1_FAILURE_STATE,
+            "phase": "phase_1_structure",
+            "gate": "selected_l2_normalized_wkb_sha256",
+            "expected": {
+                "source_id": CORRECTED_SOURCE_ID,
+                "sha256": V1_EXPECTED_SOURCE_HASH,
+            },
+            "observed": {"sha256": V2_CORRECTED_SOURCE_HASH},
+        },
+        label="preserved V1 failure identity",
+    )
+    _authenticate_terminal_locks_and_access(v1_failure, label="preserved V1 failure")
+    _require_exact_mapping_fields(
+        v1_failure.get("access_contract"),
+        expected={
+            "network_requests": 0,
+            "gshhg_archive_opened": True,
+            "authorized_l1_l2_l3_members_may_have_been_opened": True,
+            "authorized_member_allowlist": list(AUTHORIZED_MEMBERS),
+            "probe_derived": False,
+            "distance_values_computed": False,
+        },
+        label="preserved V1 failure access evidence",
+    )
+    _authenticate_v1_failure_history(project_root, v1_failure)
+
+    pilot_records = (
+        pilot.get("source_layers", {})
+        .get("great_lakes_identity", {})
+        .get("source_polygons")
+    )
+    if not isinstance(pilot_records, list):
+        raise GshhgL3HierarchyAuditError(
+            "The authenticated pilot lacks Great Lakes source identities."
+        )
+    matching_pilot_records = [
+        record
+        for record in pilot_records
+        if isinstance(record, dict) and record.get("source_id") == CORRECTED_SOURCE_ID
+    ]
+    if (
+        len(matching_pilot_records) != 1
+        or matching_pilot_records[0].get("normalized_wkb_sha256")
+        != V2_CORRECTED_SOURCE_HASH
+        or sha256_file(project_root / PILOT_PATH) != correction["pilot_manifest_sha256"]
+        or pilot.get("commit_sha256") != correction["pilot_commit_sha256"]
+    ):
+        raise GshhgL3HierarchyAuditError(
+            "The exact correction does not reproduce the pre-existing pilot evidence."
+        )
+
+    pilot_v2_path = _resolve_project_path(
+        project_root,
+        str(base_config["unchanged_v2_contract"]["amendment_config_path"]),
+    )
+    try:
+        with pilot_v2_path.open("rb") as handle:
+            pilot_v2 = tomllib.load(handle)
+    except (OSError, tomllib.TOMLDecodeError) as exc:
+        raise GshhgL3HierarchyAuditError(
+            "Cannot authenticate the pre-existing V2 pilot contract."
+        ) from exc
+    pilot_v2_records = pilot_v2.get("great_lakes_connected_water_contract", {}).get(
+        "source_polygons"
+    )
+    matching_pilot_v2 = [
+        record
+        for record in pilot_v2_records
+        if isinstance(record, dict) and record.get("source_id") == CORRECTED_SOURCE_ID
+    ] if isinstance(pilot_v2_records, list) else []
+    if (
+        sha256_file(pilot_v2_path)
+        != str(base_config["unchanged_v2_contract"]["amendment_config_sha256"])
+        or len(matching_pilot_v2) != 1
+        or matching_pilot_v2[0].get("expected_normalized_wkb_sha256")
+        != V2_CORRECTED_SOURCE_HASH
+    ):
+        raise GshhgL3HierarchyAuditError(
+            "The exact correction does not reproduce the frozen V2 pilot config."
+        )
+
+    amendment_blob = _git_readonly(
+        project_root,
+        "rev-parse",
+        f"{AMENDMENT_PUBLICATION_GIT_COMMIT}:{AMENDMENT_PATH}",
+    )
+    if amendment_blob != EXPECTED_AMENDMENT_BLOB_SHA1:
+        raise GshhgL3HierarchyAuditError(
+            "The separately committed V2 amendment blob changed."
+        )
+    _require_git_ancestor(
+        project_root,
+        V1_FAILURE_PUBLICATION_GIT_COMMIT,
+        AMENDMENT_PUBLICATION_GIT_COMMIT,
+        label="V1-failure-to-amendment",
+    )
+
+    effective_config = copy.deepcopy(dict(base_config))
+    effective_hashes = effective_config["unchanged_v2_contract"][
+        "selected_l2_normalized_wkb_sha256"
+    ]
+    effective_hashes[CORRECTED_SOURCE_ID] = V2_CORRECTED_SOURCE_HASH
+    changed_paths: list[tuple[str, ...]] = []
+
+    def collect_changes(
+        left: object,
+        right: object,
+        path: tuple[str, ...] = (),
+    ) -> None:
+        if isinstance(left, dict) and isinstance(right, dict) and set(left) == set(right):
+            for key in sorted(left):
+                collect_changes(left[key], right[key], (*path, str(key)))
+            return
+        if not _strict_equal(left, right):
+            changed_paths.append(path)
+
+    collect_changes(dict(base_config), effective_config)
+    if changed_paths != [
+        (
+            "unchanged_v2_contract",
+            "selected_l2_normalized_wkb_sha256",
+            CORRECTED_SOURCE_ID,
+        )
+    ]:
+        raise GshhgL3HierarchyAuditError(
+            f"The V2 effective contract changed more than one leaf: {changed_paths}"
+        )
+    return V2Amendment(
+        path=amendment_path,
+        file_sha256=EXPECTED_AMENDMENT_FILE_SHA256,
+        contract=contract,
+        effective_config=effective_config,
+        v1_failure=v1_failure,
+        v1_failure_file_sha256=v1_failure_sha,
+    )
+
+
 def _required_git_paths(project_root: Path) -> tuple[str, ...]:
     """Return every tracked byte surface needed by the executor."""
 
@@ -450,6 +1029,7 @@ def _required_git_paths(project_root: Path) -> tuple[str, ...]:
                 PREREGISTRATION_PATH,
                 PILOT_PATH,
                 FREEZE_DECISION_PATH,
+                DEFAULT_V1_FAILURE_MANIFEST.as_posix(),
             )
         )
     )
@@ -466,12 +1046,13 @@ def _authenticate_pre_archive_inputs(
     dict[str, Any],
     dict[str, Any],
     dict[str, Any],
+    V2Amendment,
     GitGate,
     tuple[str, ...],
 ]:
     """Authenticate only tracked bytes; this function has no data reader."""
 
-    project_root, resolved_config, config = _read_config(config_path)
+    project_root, resolved_config, base_config = _read_config(config_path)
     if sha256_file(resolved_config) != EXPECTED_CONFIG_SHA256:
         raise GshhgL3HierarchyAuditError("The exact L3 preregistration config changed.")
     _emit(callback, "preflight.plan_v6.start")
@@ -507,7 +1088,15 @@ def _authenticate_pre_archive_inputs(
         label="GSHHG V2 pilot",
     )
     _, amendment, _, base = _read_exact_configs(
-        project_root / str(config["unchanged_v2_contract"]["amendment_config_path"])
+        project_root
+        / str(base_config["unchanged_v2_contract"]["amendment_config_path"])
+    )
+    v2_amendment = _authenticate_v2_amendment(
+        project_root,
+        base_config_path=resolved_config,
+        base_config=base_config,
+        preregistration=preregistration,
+        pilot=pilot,
     )
 
     required_paths = _required_git_paths(project_root)
@@ -519,13 +1108,29 @@ def _authenticate_pre_archive_inputs(
         head=git_gate.head,
         tracked_blob_count=len(git_gate.tracked_blob_sha1),
     )
+    _require_git_ancestor(
+        project_root,
+        AMENDMENT_PUBLICATION_GIT_COMMIT,
+        git_gate.head,
+        label="V2-amendment-to-run",
+    )
+    if (
+        git_gate.tracked_blob_sha1.get(AMENDMENT_PATH)
+        != EXPECTED_AMENDMENT_BLOB_SHA1
+        or git_gate.tracked_blob_sha1.get(DEFAULT_V1_FAILURE_MANIFEST.as_posix())
+        != "aca5a2b7231bd1d0ffb660ce0554034c3dd014ba"
+    ):
+        raise GshhgL3HierarchyAuditError(
+            "The current clean main branch does not retain the exact amendment lineage."
+        )
     return (
         project_root,
         resolved_config,
-        config,
+        v2_amendment.effective_config,
         preregistration,
         pilot,
         {"amendment": amendment, "base": base},
+        v2_amendment,
         git_gate,
         required_paths,
     )
@@ -2491,19 +3096,59 @@ def _publish_or_authenticate_bytes(content: bytes, destination: Path) -> None:
 def _terminal_paths(
     project_root: Path,
     config: Mapping[str, Any],
-) -> tuple[Path, Path, Path]:
+) -> tuple[Path, Path, Path, Path]:
     outputs = config["outputs"]
     success = _resolve_project_path(project_root, str(outputs["success_manifest"]))
-    failure = _resolve_project_path(project_root, str(outputs["v1_failure_manifest"]))
+    v1_failure = _resolve_project_path(
+        project_root,
+        str(outputs["v1_failure_manifest"]),
+    )
+    v2_failure = (project_root / DEFAULT_FAILURE_MANIFEST).resolve()
     table = _resolve_project_path(project_root, str(outputs["diagnostic_table"]))
     expected = (
         (project_root / DEFAULT_MANIFEST).resolve(),
+        (project_root / DEFAULT_V1_FAILURE_MANIFEST).resolve(),
         (project_root / DEFAULT_FAILURE_MANIFEST).resolve(),
         (project_root / DEFAULT_DIAGNOSTIC_TABLE).resolve(),
     )
-    if (success, failure, table) != expected:
+    if (success, v1_failure, v2_failure, table) != expected:
         raise GshhgL3HierarchyAuditError("The preregistered canonical output paths changed.")
-    return success, failure, table
+    return success, v1_failure, v2_failure, table
+
+
+def _amendment_terminal_evidence(
+    amendment: V2Amendment,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    correction = amendment.contract["correction"]
+    amendment_record = {
+        "path": AMENDMENT_PATH,
+        "file_sha256": amendment.file_sha256,
+        "publication_git_commit": AMENDMENT_PUBLICATION_GIT_COMMIT,
+        "tracked_blob_sha1": EXPECTED_AMENDMENT_BLOB_SHA1,
+        "amendment_id": amendment.contract["amendment"]["amendment_id"],
+        "exact_change_count": 1,
+        "field_path": correction["field_path"],
+        "corrected_source_id": CORRECTED_SOURCE_ID,
+        "old_sha256": V1_EXPECTED_SOURCE_HASH,
+        "new_sha256": V2_CORRECTED_SOURCE_HASH,
+        "all_other_structure_probe_numerical_and_access_rules_unchanged": True,
+        "effective_contract_semantic_sha256": canonical_sha256(
+            amendment.effective_config
+        ),
+    }
+    v1_record = {
+        "path": DEFAULT_V1_FAILURE_MANIFEST.as_posix(),
+        "file_sha256": amendment.v1_failure_file_sha256,
+        "commit_sha256": amendment.v1_failure["commit_sha256"],
+        "publication_git_commit": V1_FAILURE_PUBLICATION_GIT_COMMIT,
+        "run_head": V1_RUN_HEAD,
+        "state": amendment.v1_failure["state"],
+        "phase": amendment.v1_failure["phase"],
+        "gate": amendment.v1_failure["gate"],
+        "probe_derived": False,
+        "distance_values_computed": False,
+    }
+    return amendment_record, v1_record
 
 
 def _failure_payload(
@@ -2514,10 +3159,12 @@ def _failure_payload(
     config_path: Path,
     git_gate: GitGate,
     preregistration: Mapping[str, Any],
+    v2_amendment: V2Amendment,
     phase_evidence: Mapping[str, Any],
     probe_derived: bool,
     distance_values_computed: bool,
 ) -> dict[str, Any]:
+    amendment_record, v1_record = _amendment_terminal_evidence(v2_amendment)
     payload: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
         "algorithm_version": f"{ALGORITHM_VERSION}-failure-record",
@@ -2536,11 +3183,14 @@ def _failure_payload(
             "file_sha256": sha256_file(project_root / PREREGISTRATION_PATH),
             "commit_sha256": preregistration["commit_sha256"],
         },
+        "structural_amendment": amendment_record,
+        "prior_v1_failure": v1_record,
         "repository": {
             "branch": git_gate.branch,
             "head": git_gate.head,
             "origin_main": git_gate.origin_main,
             "head_equals_origin_main": git_gate.head == git_gate.origin_main,
+            "working_tree_clean_at_preflight_archive_open_and_publish": True,
             "tracked_blob_sha1": git_gate.tracked_blob_sha1,
         },
         "phase_evidence": dict(phase_evidence),
@@ -2593,6 +3243,7 @@ def _success_payload(
     config_path: Path,
     config: Mapping[str, Any],
     preregistration: Mapping[str, Any],
+    v2_amendment: V2Amendment,
     git_gate: GitGate,
     bundle: StructuralAuditBundle,
     numerical_audit: Mapping[str, Any],
@@ -2600,6 +3251,7 @@ def _success_payload(
     table_bytes: bytes,
     table: pd.DataFrame,
 ) -> dict[str, Any]:
+    amendment_record, v1_record = _amendment_terminal_evidence(v2_amendment)
     code_sha, code_runtime = code_runtime_fingerprint(
         project_root=project_root,
         relative_paths=CODE_PATHS,
@@ -2619,7 +3271,8 @@ def _success_payload(
         "config": {
             "path": config_path.relative_to(project_root).as_posix(),
             "sha256": sha256_file(config_path),
-            "all_preregistered_structure_probe_and_numerical_gates_unchanged": True,
+            "all_other_preregistered_structure_probe_and_numerical_gates_unchanged": True,
+            "exact_documented_source_identity_correction_count": 1,
         },
         "planning_authorization": {
             "path": PLAN_PATH,
@@ -2633,6 +3286,8 @@ def _success_payload(
             "commit_sha256": preregistration["commit_sha256"],
             "preregistration_id": preregistration["preregistration_id"],
         },
+        "structural_amendment": amendment_record,
+        "prior_v1_failure": v1_record,
         "repository": {
             "branch": git_gate.branch,
             "head": git_gate.head,
@@ -2867,12 +3522,84 @@ def _expected_runtime_fingerprint(project_root: Path) -> dict[str, Any]:
     return expected
 
 
+def _authenticate_v2_terminal_lineage(
+    terminal: Mapping[str, Any],
+    amendment: V2Amendment,
+) -> None:
+    expected_amendment, expected_v1 = _amendment_terminal_evidence(amendment)
+    _require_exact_object(
+        terminal.get("structural_amendment"),
+        expected=expected_amendment,
+        label="V2 terminal structural-amendment lineage",
+    )
+    _require_exact_object(
+        terminal.get("prior_v1_failure"),
+        expected=expected_v1,
+        label="V2 terminal prior-failure lineage",
+    )
+
+
+def _authenticate_failure_phase_evidence(
+    failure: Mapping[str, Any],
+    *,
+    phase: str,
+) -> None:
+    phase_evidence = failure.get("phase_evidence")
+    access = failure.get("access_contract")
+    if not isinstance(phase_evidence, dict) or not isinstance(access, dict):
+        raise GshhgL3HierarchyAuditError(
+            "The failure phase/access evidence must be JSON objects."
+        )
+    fields = ("probe_derived", "distance_values_computed")
+    if phase == "phase_1_structure":
+        if phase_evidence.get("phase_1_started") is not True:
+            raise GshhgL3HierarchyAuditError(
+                "The phase-1 failure evidence does not retain its start gate."
+            )
+        for field in fields:
+            observed = phase_evidence.get(field, False)
+            if type(observed) is not bool or observed is not False:
+                raise GshhgL3HierarchyAuditError(
+                    f"Phase-1 failure phase evidence opened {field}: {observed!r}"
+                )
+            if access.get(field) is not False:
+                raise GshhgL3HierarchyAuditError(
+                    f"Phase-1 failure access evidence opened {field}."
+                )
+        return
+    if phase != "phase_2_numerical":
+        raise GshhgL3HierarchyAuditError(
+            f"The failure terminal phase is not preregistered: {phase!r}"
+        )
+    if phase_evidence.get("phase_1_complete") is not True:
+        raise GshhgL3HierarchyAuditError(
+            "The phase-2 failure lacks completed phase-1 evidence."
+        )
+    values: dict[str, bool] = {}
+    for field in fields:
+        phase_value = phase_evidence.get(field)
+        access_value = access.get(field)
+        if type(phase_value) is not bool or type(access_value) is not bool:
+            raise GshhgL3HierarchyAuditError(
+                f"Phase-2 failure {field} evidence must be a strict boolean."
+            )
+        if phase_value is not access_value:
+            raise GshhgL3HierarchyAuditError(
+                f"Phase-2 failure phase/access evidence disagrees for {field}."
+            )
+        values[field] = phase_value
+    if values["distance_values_computed"] and not values["probe_derived"]:
+        raise GshhgL3HierarchyAuditError(
+            "Phase-2 failure cannot compute distances before deriving probes."
+        )
+
+
 def authenticate_l3_audit_terminal(
     config_path: str | Path = DEFAULT_CONFIG,
 ) -> dict[str, Any]:
     """Authenticate a committed terminal without reopening source data."""
 
-    project_root, resolved_config, config = _read_config(config_path)
+    project_root, resolved_config, base_config = _read_config(config_path)
     if sha256_file(resolved_config) != EXPECTED_CONFIG_SHA256:
         raise GshhgL3HierarchyAuditError("The exact audit config changed.")
     plan = audit_multicity_plan(
@@ -2894,14 +3621,35 @@ def authenticate_l3_audit_terminal(
         or preregistration.get("commit_sha256") != EXPECTED_PREREGISTRATION_COMMIT_SHA256
     ):
         raise GshhgL3HierarchyAuditError("The exact preregistration changed.")
+    pilot, _ = _read_json_object(
+        project_root / PILOT_PATH,
+        label="GSHHG V2 pilot",
+    )
+    v2_amendment = _authenticate_v2_amendment(
+        project_root,
+        base_config_path=resolved_config,
+        base_config=base_config,
+        preregistration=preregistration,
+        pilot=pilot,
+    )
+    config = v2_amendment.effective_config
 
-    success_path, failure_path, table_path = _terminal_paths(project_root, config)
+    success_path, v1_failure_path, failure_path, table_path = _terminal_paths(
+        project_root,
+        config,
+    )
+    if not v1_failure_path.is_file():
+        raise GshhgL3HierarchyAuditError(
+            "The preserved V1 failure is required for every V2 terminal."
+        )
     if success_path.exists() and failure_path.exists():
-        raise GshhgL3HierarchyAuditError("Success and failure terminals cannot both exist.")
+        raise GshhgL3HierarchyAuditError(
+            "V2 success and V2 failure terminals cannot both exist."
+        )
     if failure_path.exists():
         failure, _ = _read_json_object(
             failure_path,
-            label="L3 audit failure manifest",
+            label="L3 audit V2 failure manifest",
         )
         _require_exact_mapping_fields(
             failure,
@@ -2938,6 +3686,7 @@ def authenticate_l3_audit_terminal(
             },
             label="failure terminal input identity: preregistration",
         )
+        _authenticate_v2_terminal_lineage(failure, v2_amendment)
         _authenticate_terminal_locks_and_access(failure, label="failure")
         phase = failure.get("phase")
         if phase == "phase_1_structure":
@@ -2968,9 +3717,14 @@ def authenticate_l3_audit_terminal(
             raise GshhgL3HierarchyAuditError(
                 f"The failure terminal phase is not preregistered: {phase!r}"
             )
+        _authenticate_failure_phase_evidence(failure, phase=str(phase))
         return failure
     if not success_path.exists():
-        raise FileNotFoundError(success_path)
+        if table_path.exists():
+            raise GshhgL3HierarchyAuditError(
+                "The preserved V1 failure cannot coexist with an orphan diagnostic table."
+            )
+        return v2_amendment.v1_failure
 
     success, _ = _read_json_object(
         success_path,
@@ -2995,7 +3749,8 @@ def authenticate_l3_audit_terminal(
         expected={
             "path": resolved_config.relative_to(project_root).as_posix(),
             "sha256": EXPECTED_CONFIG_SHA256,
-            "all_preregistered_structure_probe_and_numerical_gates_unchanged": True,
+            "all_other_preregistered_structure_probe_and_numerical_gates_unchanged": True,
+            "exact_documented_source_identity_correction_count": 1,
         },
         label="success terminal input identity: config",
     )
@@ -3019,6 +3774,7 @@ def authenticate_l3_audit_terminal(
         },
         label="success terminal input identity: preregistration",
     )
+    _authenticate_v2_terminal_lineage(success, v2_amendment)
     if (
         success.get("hierarchy_audit", {}).get("all_structural_gates_passed") is not True
         or success.get("numerical_audit", {}).get("all_numerical_gates_passed") is not True
@@ -3129,13 +3885,21 @@ def audit_gshhg_l3_hierarchy(
         preregistration,
         pilot,
         amendment_and_base,
+        v2_amendment,
         git_gate,
         required_paths,
     ) = _authenticate_pre_archive_inputs(config_path, callback=progress)
-    success_path, failure_path, table_path = _terminal_paths(project_root, config)
+    success_path, v1_failure_path, failure_path, table_path = _terminal_paths(
+        project_root,
+        config,
+    )
+    if not v1_failure_path.is_file():
+        raise GshhgL3HierarchyAuditError(
+            "The preserved V1 failure disappeared after amendment preflight."
+        )
     if success_path.exists() or failure_path.exists():
         raise GshhgL3HierarchyAuditError(
-            "An append-only terminal already exists; use --check-only."
+            "An append-only V2 terminal already exists; use --check-only."
         )
     _emit(progress, "preflight.archive_gate.start")
     _same_git_gate(
@@ -3185,6 +3949,7 @@ def audit_gshhg_l3_hierarchy(
             config_path=resolved_config,
             git_gate=git_gate,
             preregistration=preregistration,
+            v2_amendment=v2_amendment,
             phase_evidence=phase_evidence,
             probe_derived=False,
             distance_values_computed=False,
@@ -3241,6 +4006,7 @@ def audit_gshhg_l3_hierarchy(
             config_path=resolved_config,
             git_gate=git_gate,
             preregistration=preregistration,
+            v2_amendment=v2_amendment,
             phase_evidence=phase_evidence,
             probe_derived=bool(phase_evidence.get("probe_derived", False)),
             distance_values_computed=bool(phase_evidence.get("distance_values_computed", False)),
@@ -3264,6 +4030,7 @@ def audit_gshhg_l3_hierarchy(
         config_path=resolved_config,
         config=config,
         preregistration=preregistration,
+        v2_amendment=v2_amendment,
         git_gate=git_gate,
         bundle=bundle,
         numerical_audit=numerical_audit,

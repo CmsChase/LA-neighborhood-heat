@@ -289,8 +289,10 @@ def test_phase_one_failure_never_starts_probe_or_distance(
         tracked_blob_sha1={},
     )
     success_path = tmp_path / "success.json"
+    v1_failure_path = tmp_path / "v1_failure.json"
     failure_path = tmp_path / "failure.json"
     table_path = tmp_path / "diagnostic.csv"
+    v1_failure_path.write_text("{}\n", encoding="utf-8")
 
     monkeypatch.setattr(
         audit_module,
@@ -302,6 +304,7 @@ def test_phase_one_failure_never_starts_probe_or_distance(
             {},
             {},
             {},
+            object(),
             git_gate,
             (),
         ),
@@ -309,7 +312,12 @@ def test_phase_one_failure_never_starts_probe_or_distance(
     monkeypatch.setattr(
         audit_module,
         "_terminal_paths",
-        lambda *_args, **_kwargs: (success_path, failure_path, table_path),
+        lambda *_args, **_kwargs: (
+            success_path,
+            v1_failure_path,
+            failure_path,
+            table_path,
+        ),
     )
     monkeypatch.setattr(
         audit_module,

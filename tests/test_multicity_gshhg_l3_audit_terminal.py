@@ -51,9 +51,12 @@ class TerminalHarness:
     config_path: Path
     config: dict[str, Any]
     success_path: Path
+    v1_failure_path: Path
     failure_path: Path
     table_path: Path
     preregistration: dict[str, Any]
+    pilot: dict[str, Any]
+    v2_amendment: l3_audit.V2Amendment
     plan: dict[str, Any]
     hash_overrides: dict[Path, str]
     code_hashes: dict[str, str]
@@ -127,7 +130,9 @@ def terminal_harness(
     config_path = (root / l3_audit.CODE_PATHS[0]).resolve()
     plan_path = (root / l3_audit.PLAN_PATH).resolve()
     preregistration_path = (root / l3_audit.PREREGISTRATION_PATH).resolve()
+    pilot_path = (root / l3_audit.PILOT_PATH).resolve()
     success_path = (root / l3_audit.DEFAULT_MANIFEST).resolve()
+    v1_failure_path = (root / l3_audit.DEFAULT_V1_FAILURE_MANIFEST).resolve()
     failure_path = (root / l3_audit.DEFAULT_FAILURE_MANIFEST).resolve()
     table_path = (root / l3_audit.DEFAULT_DIAGNOSTIC_TABLE).resolve()
     config: dict[str, Any] = {
@@ -137,7 +142,9 @@ def terminal_harness(
         },
         "outputs": {
             "success_manifest": l3_audit.DEFAULT_MANIFEST.as_posix(),
-            "v1_failure_manifest": l3_audit.DEFAULT_FAILURE_MANIFEST.as_posix(),
+            "v1_failure_manifest": (
+                l3_audit.DEFAULT_V1_FAILURE_MANIFEST.as_posix()
+            ),
             "diagnostic_table": l3_audit.DEFAULT_DIAGNOSTIC_TABLE.as_posix(),
         },
     }
@@ -145,6 +152,48 @@ def terminal_harness(
         "commit_sha256": l3_audit.EXPECTED_PREREGISTRATION_COMMIT_SHA256,
         "preregistration_id": "target_blind_gshhg_l3_hierarchy_audit_v1",
     }
+    pilot = {
+        "state": "synthetic_authenticated_pilot",
+        "commit_sha256": (
+            "e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735"
+        ),
+    }
+    v1_failure = {
+        "schema_version": 1,
+        "algorithm_version": (
+            f"{l3_audit.V1_ALGORITHM_VERSION}-failure-record"
+        ),
+        "state": l3_audit.V1_FAILURE_STATE,
+        "phase": "phase_1_structure",
+        "gate": "selected_l2_normalized_wkb_sha256",
+        "access_contract": {
+            "probe_derived": False,
+            "distance_values_computed": False,
+        },
+        "commit_sha256": l3_audit.EXPECTED_V1_FAILURE_COMMIT_SHA256,
+    }
+    v2_contract = {
+        "amendment": {
+            "amendment_id": (
+                "target_blind_gshhg_l3_hierarchy_audit_"
+                "structural_amendment_v2"
+            ),
+        },
+        "correction": {
+            "field_path": (
+                "unchanged_v2_contract."
+                "selected_l2_normalized_wkb_sha256.180515"
+            ),
+        },
+    }
+    v2_amendment = l3_audit.V2Amendment(
+        path=(root / l3_audit.AMENDMENT_PATH).resolve(),
+        file_sha256=l3_audit.EXPECTED_AMENDMENT_FILE_SHA256,
+        contract=v2_contract,
+        effective_config=config,
+        v1_failure=v1_failure,
+        v1_failure_file_sha256=l3_audit.EXPECTED_V1_FAILURE_FILE_SHA256,
+    )
     plan = {
         "schema_version": 6,
         "commit_sha256": l3_audit.EXPECTED_PLAN_COMMIT_SHA256,
@@ -157,6 +206,7 @@ def terminal_harness(
         config_path: l3_audit.EXPECTED_CONFIG_SHA256,
         plan_path: l3_audit.EXPECTED_PLAN_FILE_SHA256,
         preregistration_path: l3_audit.EXPECTED_PREREGISTRATION_FILE_SHA256,
+        pilot_path: _digest_text("synthetic authenticated pilot"),
     }
     code_hashes = {
         relative: (
@@ -188,6 +238,8 @@ def terminal_harness(
         raise AssertionError(f"Unexpected hash request in synthetic terminal test: {resolved}")
 
     monkeypatch.setattr(l3_audit, "sha256_file", fake_sha256)
+    v1_failure_path.parent.mkdir(parents=True, exist_ok=True)
+    _write_json(v1_failure_path, v1_failure)
     original_json_reader = l3_audit._read_json_object
 
     def fake_json_reader(
@@ -198,9 +250,16 @@ def terminal_harness(
         resolved = path.resolve()
         if resolved == preregistration_path:
             return copy.deepcopy(preregistration), hash_overrides[preregistration_path]
+        if resolved == pilot_path:
+            return copy.deepcopy(pilot), hash_overrides[pilot_path]
         return original_json_reader(resolved, label=label)
 
     monkeypatch.setattr(l3_audit, "_read_json_object", fake_json_reader)
+    monkeypatch.setattr(
+        l3_audit,
+        "_authenticate_v2_amendment",
+        lambda *_args, **_kwargs: v2_amendment,
+    )
     plan_mock = Mock(side_effect=lambda *_args, **_kwargs: copy.deepcopy(plan))
     monkeypatch.setattr(l3_audit, "audit_multicity_plan", plan_mock)
     monkeypatch.setattr(
@@ -269,9 +328,12 @@ def terminal_harness(
         config_path=config_path,
         config=config,
         success_path=success_path,
+        v1_failure_path=v1_failure_path,
         failure_path=failure_path,
         table_path=table_path,
         preregistration=preregistration,
+        pilot=pilot,
+        v2_amendment=v2_amendment,
         plan=plan,
         hash_overrides=hash_overrides,
         code_hashes=code_hashes,
@@ -333,6 +395,7 @@ def _success_payload(harness: TerminalHarness) -> dict[str, Any]:
         config_path=harness.config_path,
         config=harness.config,
         preregistration=harness.preregistration,
+        v2_amendment=harness.v2_amendment,
         git_gate=_run_gate(harness),
         bundle=bundle,
         numerical_audit={"all_numerical_gates_passed": True},
@@ -354,6 +417,7 @@ def _failure_payload(harness: TerminalHarness) -> dict[str, Any]:
         config_path=harness.config_path,
         git_gate=_run_gate(harness),
         preregistration=harness.preregistration,
+        v2_amendment=harness.v2_amendment,
         phase_evidence={
             "archive_path": (
                 "data/raw/multicity/water_distance/gshhg-shp-2.3.7.zip"
@@ -362,6 +426,38 @@ def _failure_payload(harness: TerminalHarness) -> dict[str, Any]:
         },
         probe_derived=False,
         distance_values_computed=False,
+    )
+
+
+def _phase_two_failure_payload(
+    harness: TerminalHarness,
+    *,
+    probe_derived: bool,
+    distance_values_computed: bool,
+) -> dict[str, Any]:
+    return l3_audit._failure_payload(
+        l3_audit.NumericalAuditError(
+            "synthetic_numerical_gate",
+            expected="synthetic expected numerical result",
+            observed="synthetic observed numerical result",
+        ),
+        phase="phase_2_numerical",
+        project_root=harness.root,
+        config_path=harness.config_path,
+        git_gate=_run_gate(harness),
+        preregistration=harness.preregistration,
+        v2_amendment=harness.v2_amendment,
+        phase_evidence={
+            "archive_path": (
+                "data/raw/multicity/water_distance/gshhg-shp-2.3.7.zip"
+            ),
+            "phase_1_started": True,
+            "phase_1_complete": True,
+            "probe_derived": probe_derived,
+            "distance_values_computed": distance_values_computed,
+        },
+        probe_derived=probe_derived,
+        distance_values_computed=distance_values_computed,
     )
 
 
@@ -388,6 +484,7 @@ def test_authenticate_accepts_exact_success_and_calls_repository_gate(
     )
 
     assert authenticated == payload
+    assert terminal_harness.v1_failure_path.is_file()
     assert terminal_harness.plan_mock.call_count == 1
     assert terminal_harness.plan_mock.call_args.kwargs == {
         "output_path": terminal_harness.root / l3_audit.PLAN_PATH,
@@ -410,6 +507,7 @@ def test_authenticate_accepts_exact_failure_and_calls_repository_gate(
     )
 
     assert authenticated == payload
+    assert terminal_harness.v1_failure_path.is_file()
     assert terminal_harness.git_gate_mock.call_count == 1
     required_paths = terminal_harness.git_gate_mock.call_args.kwargs["required_paths"]
     assert terminal_harness.failure_path.relative_to(
@@ -430,6 +528,19 @@ def test_authenticate_rejects_success_and_failure_dual_terminal(
         l3_audit.authenticate_l3_audit_terminal(terminal_harness.config_path)
 
     assert terminal_harness.git_gate_mock.call_count == 0
+
+
+def test_authenticate_rejects_v2_terminal_without_preserved_v1_failure(
+    terminal_harness: TerminalHarness,
+) -> None:
+    _publish_success(terminal_harness)
+    terminal_harness.v1_failure_path.unlink()
+
+    with pytest.raises(
+        l3_audit.GshhgL3HierarchyAuditError,
+        match="preserved V1 failure is required",
+    ):
+        l3_audit.authenticate_l3_audit_terminal(terminal_harness.config_path)
 
 
 def test_authenticate_rejects_failure_terminal_beside_diagnostic_table(
@@ -498,6 +609,68 @@ def test_failure_rejects_recommitted_input_identity_tampering(
     _write_json(terminal_harness.failure_path, changed)
 
     with pytest.raises(l3_audit.GshhgL3HierarchyAuditError, match="identit|input"):
+        l3_audit.authenticate_l3_audit_terminal(terminal_harness.config_path)
+
+
+@pytest.mark.parametrize("terminal_kind", ["success", "failure"])
+@pytest.mark.parametrize(
+    ("lineage_path", "replacement"),
+    [
+        ("structural_amendment.path", "configs/not-the-amendment.toml"),
+        ("structural_amendment.file_sha256", "0" * 64),
+        ("structural_amendment.publication_git_commit", "0" * 40),
+        ("structural_amendment.tracked_blob_sha1", "0" * 40),
+        ("structural_amendment.amendment_id", "different-amendment"),
+        ("structural_amendment.exact_change_count", 2),
+        (
+            "structural_amendment.field_path",
+            "numerical_audit.invariance_absolute_tolerance_m",
+        ),
+        ("structural_amendment.corrected_source_id", "180517"),
+        ("structural_amendment.old_sha256", "0" * 64),
+        ("structural_amendment.new_sha256", "f" * 64),
+        (
+            "structural_amendment."
+            "all_other_structure_probe_numerical_and_access_rules_unchanged",
+            False,
+        ),
+        (
+            "structural_amendment.effective_contract_semantic_sha256",
+            "0" * 64,
+        ),
+        ("prior_v1_failure.path", "manifests/not-the-v1-failure.json"),
+        ("prior_v1_failure.file_sha256", "0" * 64),
+        ("prior_v1_failure.commit_sha256", "0" * 64),
+        ("prior_v1_failure.publication_git_commit", "0" * 40),
+        ("prior_v1_failure.run_head", "0" * 40),
+        ("prior_v1_failure.state", "different-v1-state"),
+        ("prior_v1_failure.phase", "phase_2_numerical"),
+        ("prior_v1_failure.gate", "different-v1-gate"),
+        ("prior_v1_failure.probe_derived", True),
+        ("prior_v1_failure.distance_values_computed", True),
+    ],
+)
+def test_v2_terminal_rejects_recommitted_lineage_tampering(
+    terminal_harness: TerminalHarness,
+    terminal_kind: str,
+    lineage_path: str,
+    replacement: object,
+) -> None:
+    payload = (
+        _success_payload(terminal_harness)
+        if terminal_kind == "success"
+        else _failure_payload(terminal_harness)
+    )
+    changed = _mutated_terminal(payload, lineage_path, replacement)
+    assert _terminal_commit_is_valid(changed)
+    destination = (
+        terminal_harness.success_path
+        if terminal_kind == "success"
+        else terminal_harness.failure_path
+    )
+    _write_json(destination, changed)
+
+    with pytest.raises(l3_audit.GshhgL3HierarchyAuditError, match="lineage"):
         l3_audit.authenticate_l3_audit_terminal(terminal_harness.config_path)
 
 
@@ -745,6 +918,137 @@ def test_phase_one_failure_rejects_recommitted_access_evidence_tampering(
     _write_json(terminal_harness.failure_path, changed)
 
     with pytest.raises(l3_audit.GshhgL3HierarchyAuditError, match="access|phase"):
+        l3_audit.authenticate_l3_audit_terminal(terminal_harness.config_path)
+
+
+@pytest.mark.parametrize(
+    ("probe_derived", "distance_values_computed"),
+    [(False, False), (True, False), (True, True)],
+)
+def test_phase_two_failure_accepts_only_valid_progress_states(
+    terminal_harness: TerminalHarness,
+    probe_derived: bool,
+    distance_values_computed: bool,
+) -> None:
+    payload = _phase_two_failure_payload(
+        terminal_harness,
+        probe_derived=probe_derived,
+        distance_values_computed=distance_values_computed,
+    )
+    _write_json(terminal_harness.failure_path, payload)
+
+    authenticated = l3_audit.authenticate_l3_audit_terminal(
+        terminal_harness.config_path
+    )
+
+    assert authenticated == payload
+
+
+@pytest.mark.parametrize(
+    ("evidence_path", "replacement"),
+    [
+        ("access_contract.probe_derived", 1),
+        ("access_contract.probe_derived", "true"),
+        ("access_contract.distance_values_computed", 0),
+        ("access_contract.distance_values_computed", None),
+        ("phase_evidence.probe_derived", 1),
+        ("phase_evidence.probe_derived", "false"),
+        ("phase_evidence.distance_values_computed", 0),
+        ("phase_evidence.distance_values_computed", None),
+    ],
+)
+def test_phase_two_failure_rejects_recommitted_non_boolean_progress_evidence(
+    terminal_harness: TerminalHarness,
+    evidence_path: str,
+    replacement: object,
+) -> None:
+    payload = _phase_two_failure_payload(
+        terminal_harness,
+        probe_derived=True,
+        distance_values_computed=True,
+    )
+    changed = _mutated_terminal(payload, evidence_path, replacement)
+    assert _terminal_commit_is_valid(changed)
+    _write_json(terminal_harness.failure_path, changed)
+
+    with pytest.raises(
+        l3_audit.GshhgL3HierarchyAuditError,
+        match="phase-2|progress|boolean|evidence",
+    ):
+        l3_audit.authenticate_l3_audit_terminal(terminal_harness.config_path)
+
+
+@pytest.mark.parametrize(
+    ("evidence_path", "replacement"),
+    [
+        ("access_contract.probe_derived", False),
+        ("phase_evidence.probe_derived", False),
+        ("access_contract.distance_values_computed", True),
+        ("phase_evidence.distance_values_computed", True),
+    ],
+)
+def test_phase_two_failure_rejects_recommitted_access_phase_mismatch(
+    terminal_harness: TerminalHarness,
+    evidence_path: str,
+    replacement: bool,
+) -> None:
+    payload = _phase_two_failure_payload(
+        terminal_harness,
+        probe_derived=True,
+        distance_values_computed=False,
+    )
+    changed = _mutated_terminal(payload, evidence_path, replacement)
+    assert _terminal_commit_is_valid(changed)
+    _write_json(terminal_harness.failure_path, changed)
+
+    with pytest.raises(
+        l3_audit.GshhgL3HierarchyAuditError,
+        match="phase-2|progress|match|evidence",
+    ):
+        l3_audit.authenticate_l3_audit_terminal(terminal_harness.config_path)
+
+
+def test_phase_two_failure_rejects_recommitted_consistent_distance_without_probe(
+    terminal_harness: TerminalHarness,
+) -> None:
+    payload = _phase_two_failure_payload(
+        terminal_harness,
+        probe_derived=True,
+        distance_values_computed=True,
+    )
+    changed = copy.deepcopy(payload)
+    changed["access_contract"]["probe_derived"] = False
+    changed["phase_evidence"]["probe_derived"] = False
+    _internal_commit(changed)
+    assert _terminal_commit_is_valid(changed)
+    _write_json(terminal_harness.failure_path, changed)
+
+    with pytest.raises(
+        l3_audit.GshhgL3HierarchyAuditError,
+        match="phase-2|distance|probe|progress",
+    ):
+        l3_audit.authenticate_l3_audit_terminal(terminal_harness.config_path)
+
+
+def test_phase_two_failure_rejects_recommitted_consistent_non_boolean_progress(
+    terminal_harness: TerminalHarness,
+) -> None:
+    payload = _phase_two_failure_payload(
+        terminal_harness,
+        probe_derived=False,
+        distance_values_computed=False,
+    )
+    changed = copy.deepcopy(payload)
+    changed["access_contract"]["probe_derived"] = 0
+    changed["phase_evidence"]["probe_derived"] = 0
+    _internal_commit(changed)
+    assert _terminal_commit_is_valid(changed)
+    _write_json(terminal_harness.failure_path, changed)
+
+    with pytest.raises(
+        l3_audit.GshhgL3HierarchyAuditError,
+        match="phase-2|boolean|progress",
+    ):
         l3_audit.authenticate_l3_audit_terminal(terminal_harness.config_path)
 
 
