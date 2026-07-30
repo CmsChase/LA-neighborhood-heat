@@ -1,0 +1,89 @@
+[amendment]
+schema_version = 2
+algorithm_version = "gshhg-l3-hierarchy-audit-structural-amendment-v2"
+amendment_id = "target_blind_gshhg_l3_hierarchy_audit_structural_amendment_v2"
+amendment_date = "2026-07-30"
+state = "gshhg_l3_hierarchy_audit_v2_structural_amendment_committed_unopened"
+scope = "correct exactly one transcribed source-structure hash after preserving the authenticated V1 failure and before any probe or distance"
+correction_count = 1
+base_preregistration_config = "configs/multicity/gshhg_l3_hierarchy_audit_preregistration_v1.toml"
+base_preregistration_config_sha256 = "6fcac13640a8914543d7d057e19cd18ec7ddea74a8d3f50406f4c5dd81e2c1cd"
+base_preregistration_manifest = "manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.json"
+base_preregistration_manifest_sha256 = "ecb21bfa31f98dfe275f113ee13909fd30276e049ee0d2a05fca2b2a2bd4b47f"
+base_preregistration_commit_sha256 = "7be642a7fd099d026c828e018d699f1c6a885de0d180d50ce7eda00e17e694a7"
+v1_failure_manifest = "manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT_V1_FAILURE.json"
+v1_failure_manifest_sha256 = "b5eb32e3de1702250e36a7eb81b2ea0c78551930a7f92abe5278d21c05a0ea9e"
+v1_failure_commit_sha256 = "e5b8e1e242276bcb530990ee070739f84e48177c431e556cfebb4819c92ea067"
+v1_failure_git_commit = "fbf20ed7a601af8e9f77ad768f1267b8a6503a0d"
+v1_failure_tracked_blob_sha1 = "aca5a2b7231bd1d0ffb660ce0554034c3dd014ba"
+v1_run_head = "ab51a9506d77b7ac0efcdfb97e494c665cd80e5b"
+v1_required_state = "gshhg_l3_hierarchy_audit_v1_failed"
+v1_required_phase = "phase_1_structure"
+v1_required_gate = "selected_l2_normalized_wkb_sha256"
+all_other_structure_gates_unchanged = true
+all_probe_definitions_unchanged = true
+all_numerical_algorithms_and_thresholds_unchanged = true
+all_access_locks_unchanged = true
+
+[correction]
+field_path = "unchanged_v2_contract.selected_l2_normalized_wkb_sha256.180515"
+json_pointer = "/unchanged_v2_contract/selected_l2_normalized_wkb_sha256/180515"
+source_id = "180515"
+preregistered_value = "858c762462d6573e3f2ce25356ba1e193c1ca47a1f1ecc327710a49ff1fe014c"
+corrected_value = "858c762462d6573e3f2ce25356ba1e193c1ca47a1f1ecc327710a49ff1fe014a"
+v1_observed_value = "858c762462d6573e3f2ce25356ba1e193c1ca47a1f1ecc327710a49ff1fe014a"
+correction_reason = "the base preregistration transcribed the final hexadecimal character as c although the previously authenticated V2 pilot and the preserved V1 failure both record a"
+acceptance_rule = "replace only the exact old value with the exact corrected value; no tolerance, fallback, reselection, or additional correction is allowed"
+pilot_manifest = "manifests/multicity/reviews/portable_water_distance/GSHHG_GEOMETRY_PILOT.json"
+pilot_manifest_sha256 = "71d68e35a67d82d5e8d7746cc9732d9cd1b8d880ed126e1c2af46cc72615bad1"
+pilot_commit_sha256 = "e14cbd4763489fbacdec3ac45348226e2ae677073aa592aabf9bc0e3d8256735"
+pilot_record_pointer = "/source_layers/great_lakes_identity/source_polygons/source_id=180515/normalized_wkb_sha256"
+
+[unchanged_contract]
+source_archive_or_version_may_change = false
+selected_l2_source_ids_may_change = false
+direct_parent_all_descendants_rule_may_change = false
+l4_or_exterior_only_rule_may_change = false
+existing_points_may_change = false
+numerical_thresholds_may_change = false
+access_locks_may_change = false
+tolerance_may_be_relaxed = false
+fallback_or_reselection_allowed = false
+v1_failure_may_be_deleted_or_rewritten = false
+
+[locks]
+source_lock_created = false
+algorithm_lock_created = false
+feature_names_frozen = false
+predictor_build_authorized = false
+protocol_lock_created = false
+external_targets_unlocked = false
+external_target_values_read = false
+external_prediction_commit_exists = false
+
+[amendment_access_record]
+amendment_program_archive_opened = false
+amendment_program_geometry_opened = false
+public_source_geometry_was_read_in_preserved_v1_run = true
+source_structure_values_were_read_in_preserved_v1_run = true
+v1_probe_derived = false
+v1_distance_values_computed = false
+network_requests = 0
+gshhg_l4_member_opened = false
+census_layer_opened = false
+eligible_land_grid_opened = false
+distance_feature_surface_computed = false
+tract_aggregation_performed = false
+predictor_values_computed = false
+predictor_construction_performed = false
+model_fit_performed = false
+model_predictions_computed = false
+landsat_thermal_values_read = false
+landsat_target_qa_values_read = false
+external_target_files_opened = false
+final_evaluation_outputs_opened = false
+
+[outputs]
+success_manifest = "manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT.json"
+v2_failure_manifest = "manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT_V2_FAILURE.json"
+diagnostic_table = "data/interim/multicity/water_distance/gshhg_l3_hierarchy_audit/diagnostic_distances.csv"
