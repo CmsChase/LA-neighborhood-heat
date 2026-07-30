@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "gshhg-l3-hierarchy-audit-v1-failure-record",
+  "state": "gshhg_l3_hierarchy_audit_v1_failed",
+  "phase": "phase_1_structure",
+  "gate": "selected_l2_normalized_wkb_sha256",
+  "expected": {
+    "source_id": "180515",
+    "sha256": "858c762462d6573e3f2ce25356ba1e193c1ca47a1f1ecc327710a49ff1fe014c"
+  },
+  "observed": {
+    "sha256": "858c762462d6573e3f2ce25356ba1e193c1ca47a1f1ecc327710a49ff1fe014a"
+  },
+  "detail": null,
+  "config": {
+    "path": "configs/multicity/gshhg_l3_hierarchy_audit_preregistration_v1.toml",
+    "sha256": "6fcac13640a8914543d7d057e19cd18ec7ddea74a8d3f50406f4c5dd81e2c1cd"
+  },
+  "preregistration": {
+    "path": "manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.json",
+    "file_sha256": "ecb21bfa31f98dfe275f113ee13909fd30276e049ee0d2a05fca2b2a2bd4b47f",
+    "commit_sha256": "7be642a7fd099d026c828e018d699f1c6a885de0d180d50ce7eda00e17e694a7"
+  },
+  "repository": {
+    "branch": "main",
+    "head": "ab51a9506d77b7ac0efcdfb97e494c665cd80e5b",
+    "origin_main": "ab51a9506d77b7ac0efcdfb97e494c665cd80e5b",
+    "head_equals_origin_main": true,
+    "tracked_blob_sha1": {
+      "configs/multicity/experiment.toml": "5aed83196b02c1d865ac266591107ee0575eff50",
+      "configs/multicity/cities/los_angeles_ca.toml": "ca942949c0f59d788f85f7e044c629575bc0fa6c",
+      "configs/multicity/cities/phoenix_az.toml": "4eae07370139693c69e5c4157e297fe400ade808",
+      "configs/multicity/cities/houston_tx.toml": "ab380d0d70bdb6be3a54e6b1817a4b59d43ed753",
+      "configs/multicity/cities/chicago_il.toml": "387418f8d0a4ed90687c86420063982f5ad6b5dd",
+      "configs/multicity/gshhg_l3_hierarchy_audit_preregistration_v1.toml": "af58070b889b00b5cf4a39fb6435e0bfcdaf461d",
+      "scripts/audit_multicity_gshhg_l3_hierarchy.py": "d87e0c77a4430b853930a7e70b6efd31eff1f86d",
+      "src/la_heat/multicity/gshhg_l3_hierarchy_audit.py": "94c4d472610da2102db652086c6b9b988535aeec",
+      "src/la_heat/multicity/gshhg_l3_hierarchy_preregistration.py": "d72534961711800c1357c58d96ffc90b9a77e69a",
+      "src/la_heat/multicity/gshhg_geometry_pilot.py": "a1c68ae5b6419cc9c4f7f2d70640fa2f22c210c0",
+      "src/la_heat/multicity/plan_audit.py": "b5a546f46474f959a795d35e184d46036367644f",
+      "src/la_heat/multicity/config.py": "1a51be9874b5a569712050991ca6c98951974c3b",
+      "src/la_heat/provenance.py": "2f67c23cec21725d768c3c273ec68470ea2d3e47",
+      "manifests/multicity/PLAN_READINESS.json": "7ee93d5ca8782243f13e515c799fa88b53afe799",
+      "manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.json": "16b9c9862a92125f4e6515838c24481c87cbeae5",
+      "manifests/multicity/reviews/portable_water_distance/GSHHG_GEOMETRY_PILOT.json": "e16ce544c38fcb1e2ac063bf4b8fec3cd4669d42",
+      "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION.json": "10e8bb58363be4f8e28f7f3d46fa0d0eed945843"
+    }
+  },
+  "phase_evidence": {
+    "archive_path": "data/raw/multicity/water_distance/gshhg-shp-2.3.7.zip",
+    "phase_1_started": true,
+    "archive_opened": true,
+    "archive_bytes": 149157845,
+    "archive_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+    "archive_md5": "cb82015f8533f9611b4adba2c404ba44",
+    "member_open_log": [
+      "GSHHS_shp/f/GSHHS_f_L1.dbf",
+      "GSHHS_shp/f/GSHHS_f_L1.prj",
+      "GSHHS_shp/f/GSHHS_f_L1.shp",
+      "GSHHS_shp/f/GSHHS_f_L1.shx",
+      "GSHHS_shp/f/GSHHS_f_L2.dbf",
+      "GSHHS_shp/f/GSHHS_f_L2.prj",
+      "GSHHS_shp/f/GSHHS_f_L2.shp",
+      "GSHHS_shp/f/GSHHS_f_L2.shx",
+      "GSHHS_shp/f/GSHHS_f_L3.dbf",
+      "GSHHS_shp/f/GSHHS_f_L3.prj",
+      "GSHHS_shp/f/GSHHS_f_L3.shp",
+      "GSHHS_shp/f/GSHHS_f_L3.shx"
+    ],
+    "central_directory_audit": {
+      "member_count": 402,
+      "file_member_count": 402,
+      "total_uncompressed_bytes": 416243458,
+      "member_inventory_sha256": "fa348ee1fd68c9b10251735b60f3afd83b230e660165502e493dcc6605519d05",
+      "compression_methods": [
+        8
+      ],
+      "central_directory_only_before_authorized_member_streams": true
+    },
+    "authorized_member_records": {
+      "GSHHS_shp/f/GSHHS_f_L1.dbf": {
+        "bytes": 38125670,
+        "compressed_bytes": 1738645,
+        "sha256": "5f23e1e441810feddf95b59b222c5bba466635644f928150496f872c1aaaf742",
+        "crc32": "1e396de0",
+        "compression_method": 8,
+        "opened_once_by_allowlisted_python_stream": true
+      },
+      "GSHHS_shp/f/GSHHS_f_L1.prj": {
+        "bytes": 143,
+        "compressed_bytes": 121,
+        "sha256": "98aaf3d1c0ecadf1a424a4536de261c3daf4e373697cb86c40c43b989daf52eb",
+        "crc32": "6a51c1e3",
+        "compression_method": 8,
+        "opened_once_by_allowlisted_python_stream": true
+      },
+      "GSHHS_shp/f/GSHHS_f_L1.shp": {
+        "bytes": 161320396,
+        "compressed_bytes": 65455288,
+        "sha256": "121435427911ea80624802e0f352d777eaf6ba6966ca5f07e687650e95329fd9",
+        "crc32": "4e749c73",
+        "compression_method": 8,
+        "opened_once_by_allowlisted_python_stream": true
+      },
+      "GSHHS_shp/f/GSHHS_f_L1.shx": {
+        "bytes": 1438796,
+        "compressed_bytes": 641690,
+        "sha256": "9eeb611d9f7a8de8e647e39130791f96059e3b83a29fc4b9c6b19d1b61c24ac3",
+        "crc32": "7f5608cd",
+        "compression_method": 8,
+        "opened_once_by_allowlisted_python_stream": true
+      },
+      "GSHHS_shp/f/GSHHS_f_L2.dbf": {
+        "bytes": 1412146,
+        "compressed_bytes": 78835,
+        "sha256": "7c18d4a32559dbbfbd16476707e04df31e3dd32e407ef6a648f37dad44d7b604",
+        "crc32": "a73ed536",
+        "compression_method": 8,
+        "opened_once_by_allowlisted_python_stream": true
+      },
+      "GSHHS_shp/f/GSHHS_f_L2.prj": {
+        "bytes": 143,
+        "compressed_bytes": 121,
+        "sha256": "98aaf3d1c0ecadf1a424a4536de261c3daf4e373697cb86c40c43b989daf52eb",
+        "crc32": "6a51c1e3",
+        "compression_method": 8,
+        "opened_once_by_allowlisted_python_stream": true
+      },
+      "GSHHS_shp/f/GSHHS_f_L2.shp": {
+        "bytes": 13733812,
+        "compressed_bytes": 5849136,
+        "sha256": "c18f0abb01802f27cd669c2c27b9ecbcd40519bb5295693f03bd3cf2cfd3d5c0",
+        "crc32": "3111f873",
+        "compression_method": 8,
+        "opened_once_by_allowlisted_python_stream": true
+      },
+      "GSHHS_shp/f/GSHHS_f_L2.shx": {
+        "bytes": 53380,
+        "compressed_bytes": 30270,
+        "sha256": "e370552d8d44c3e77947b140fcd1ebfffe40c405747d6b3a8a04c89655d880c4",
+        "crc32": "6600b80a",
+        "compression_method": 8,
+        "opened_once_by_allowlisted_python_stream": true
+      },
+      "GSHHS_shp/f/GSHHS_f_L3.dbf": {
+        "bytes": 304870,
+        "compressed_bytes": 19702,
+        "sha256": "c5d6d99d7a4233853dbd2d8553de2dc71dfcff9a0abddacc3ec8f30868a6425e",
+        "crc32": "3126f71b",
+        "compression_method": 8,
+        "opened_once_by_allowlisted_python_stream": true
+      },
+      "GSHHS_shp/f/GSHHS_f_L3.prj": {
+        "bytes": 143,
+        "compressed_bytes": 121,
+        "sha256": "98aaf3d1c0ecadf1a424a4536de261c3daf4e373697cb86c40c43b989daf52eb",
+        "crc32": "6a51c1e3",
+        "compression_method": 8,
+        "opened_once_by_allowlisted_python_stream": true
+      },
+      "GSHHS_shp/f/GSHHS_f_L3.shp": {
+        "bytes": 973708,
+        "compressed_bytes": 435738,
+        "sha256": "7cd17a786f67ec715bc896ee83918fee80ed18adf51acc0908eeeadea799c9e9",
+        "crc32": "1068ec84",
+        "compression_method": 8,
+        "opened_once_by_allowlisted_python_stream": true
+      },
+      "GSHHS_shp/f/GSHHS_f_L3.shx": {
+        "bytes": 11596,
+        "compressed_bytes": 5596,
+        "sha256": "3bd99e369ba91e4a71695702bb80341238b7bce66a148cf4a8f7a2564e58b598",
+        "crc32": "eb6b8d8d",
+        "compression_method": 8,
+        "opened_once_by_allowlisted_python_stream": true
+      }
+    },
+    "parsed_layer_rows": {
+      "1": 179837,
+      "2": 6660,
+      "3": 1437
+    }
+  },
+  "access_contract": {
+    "network_requests": 0,
+    "gshhg_archive_opened": true,
+    "authorized_l1_l2_l3_members_may_have_been_opened": true,
+    "authorized_member_allowlist": [
+      "GSHHS_shp/f/GSHHS_f_L1.dbf",
+      "GSHHS_shp/f/GSHHS_f_L1.prj",
+      "GSHHS_shp/f/GSHHS_f_L1.shp",
+      "GSHHS_shp/f/GSHHS_f_L1.shx",
+      "GSHHS_shp/f/GSHHS_f_L2.dbf",
+      "GSHHS_shp/f/GSHHS_f_L2.prj",
+      "GSHHS_shp/f/GSHHS_f_L2.shp",
+      "GSHHS_shp/f/GSHHS_f_L2.shx",
+      "GSHHS_shp/f/GSHHS_f_L3.dbf",
+      "GSHHS_shp/f/GSHHS_f_L3.prj",
+      "GSHHS_shp/f/GSHHS_f_L3.shp",
+      "GSHHS_shp/f/GSHHS_f_L3.shx"
+    ],
+    "gshhg_l4_member_opened": false,
+    "census_layer_opened": false,
+    "other_public_source_geometry_opened": false,
+    "eligible_land_grid_opened": false,
+    "probe_derived": false,
+    "distance_values_computed": false,
+    "distance_feature_surface_computed": false,
+    "tract_aggregation_performed": false,
+    "predictor_values_computed": false,
+    "predictor_construction_performed": false,
+    "model_fit_performed": false,
+    "model_predictions_computed": false,
+    "landsat_thermal_values_read": false,
+    "landsat_target_qa_values_read": false,
+    "external_target_files_opened": false,
+    "final_evaluation_outputs_opened": false,
+    "geometry_exported_or_redistributed": false
+  },
+  "locks": {
+    "source_lock_created": false,
+    "algorithm_lock_created": false,
+    "feature_names_frozen": false,
+    "predictor_build_authorized": false,
+    "protocol_lock_created": false,
+    "external_targets_unlocked": false,
+    "external_target_values_read": false,
+    "external_prediction_commit_exists": false
+  },
+  "amendment_policy": {
+    "failure_record_is_append_only": true,
+    "tolerance_probe_or_gate_may_be_relaxed_after_failure": false,
+    "separate_committed_and_pushed_amendment_required": true
+  },
+  "commit_sha256": "e5b8e1e242276bcb530990ee070739f84e48177c431e556cfebb4819c92ea067"
+}
