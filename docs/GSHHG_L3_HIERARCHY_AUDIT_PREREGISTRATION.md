@@ -154,17 +154,21 @@ The canonical run:
 - fit no model and computed no prediction; and
 - opened no target, target-QA, LST, or final-evaluation output.
 
-`PLAN_READINESS.json` intentionally remains at the prior state: it permits
-writing this preregistration and still sets L3 geometry read to false. The next
-safe task is a tracked-input-only transition that:
+Planning schema v6 has now completed the separate tracked-input-only
+transition. It authenticated the exact committed preregistration, historical
+v5 planning blob, pilot and deferred-decision manifests, configuration, code,
+and local Git blobs without opening the GSHHG ZIP, a member, geometry, support,
+target, model, or result. Its internal commit is
+`1789d828f212e0cd65f87c9427eb4a7fbd1697cc7170ebb98a80806659afbc86`.
 
-1. proves the config, code, and manifest above are in a clean `main` checkout
-   with `HEAD == origin/main`;
-2. removes the planning verifier's dependency on the old deep geometry-pilot
-   auditor, which reads ZIP members;
-3. narrowly authorizes the target-blind L3 geometry audit while leaving every
-   support, feature, predictor, model, target, and result permission false; and
-4. is itself committed and pushed before the first L3-member read.
+The transition closes the completed preregistration permission and narrowly
+sets `target_blind_gshhg_l3_hierarchy_geometry_read=true`. That grant is
+limited to the exact local archive and the 12 listed full-resolution
+L1/L2/L3 shapefile members, with no network/download, L4, Census, eligible
+support, predictor/model/target/result, geometry-export, or redistribution
+permission. Before opening the first member, the future executor must itself
+be committed and pushed and v6 `--check-only` must pass from clean `main` with
+`HEAD == origin/main`.
 
 Even a passing L3 audit will authorize only a second, separate
 portable-water-distance source-and-algorithm freeze decision.

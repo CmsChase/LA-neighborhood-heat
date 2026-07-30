@@ -41,12 +41,12 @@ predictions that should be withheld.
 The draft protocol is `docs/MULTICITY_GENERALIZATION_PROTOCOL.md`; the
 machine-readable audit is `manifests/multicity/PLAN_READINESS.json`, internal
 commit
-`ebe371cdb8e9dc39c086fc394ce33d4d113abc44d83e2289bef6c74988021001`.
-It reauthenticated the Phase I claim, model lock, completion marker, 23 cache
-commits, 21 final outputs, and evidence ZIP. It records
-`external_targets_unlocked = false`; public source-geometry review is now
-closed after the completed pilot, and every source-freeze, predictor, model,
-target, and evaluation authorization remains false.
+`1789d828f212e0cd65f87c9427eb4a7fbd1697cc7170ebb98a80806659afbc86`.
+Schema v6 authenticates the exact historical v5 planning blob, committed L3
+preregistration, pilot, deferred decision, configuration, code, and local Git
+blobs without reopening data or geometry. It records
+`external_targets_unlocked = false`; every source/algorithm freeze, predictor,
+model, target, and evaluation authorization remains false.
 
 The generic Census place/tract adapter and corrected Phoenix geography pilot
 are complete. The target-independent 50% area rule plus one `98xxxx`
@@ -121,8 +121,11 @@ The exact L3 hierarchy audit is now preregistered under internal commit
 It includes every direct L3 child exterior of the three selected L2 polygons,
 excludes L4, fixes real-component probes and all numerical gates, and requires
 every structure failure to occur before distance. The preregistration program
-opened no archive member or geometry. L3 geometry remains unauthorized until a
-separate clean, pushed, tracked-only planning transition.
+opened no archive member or geometry. The separate clean, pushed, tracked-only
+transition is complete and authorizes only that exact L3 source audit. It does
+not authorize network/download, L4 or Census geometry, eligible support,
+predictor construction, models, targets, results, geometry export, or
+redistribution. The L3 audit itself has not yet run.
 
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.

@@ -1665,3 +1665,49 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   project tests in about 300.3 seconds with the same five existing
   deprecation warnings, exact generation plus a separate `--check-only`, and
   full-repository Ruff.
+
+## 2026-07-30 - Authorize only the preregistered GSHHG L3 geometry audit
+
+- Decision: replace planning schema v5's deep data reauthentication with
+  schema v6's tracked-manifest-and-local-Git transition. The implementation
+  and eight regression tests were committed and pushed first in
+  `5515b1042ddda7d77cb71d5a6ee80370afc87d36`. Only after the repository was
+  again clean `main` with `HEAD == origin/main` was the v6 planning manifest
+  generated.
+- v6 authenticates the exact historical v5 `PLAN_READINESS.json` blob from
+  Git commit `997e86d9ab06d22c04faad6fe714eacde53c9921`, the exact append-only L3
+  preregistration, exact pilot and deferred-decision manifests, current
+  configuration/code hashes, and regular tracked worktree blobs. Two Git
+  preflights require the same HEAD and compare every required worktree file
+  to its HEAD blob, including files hidden by `skip-worktree` or
+  `assume-unchanged`.
+- The new state is
+  `gshhg_l3_hierarchy_audit_preregistered_geometry_authorized_unopened`; the
+  next safe stage is `target_blind_gshhg_l3_hierarchy_geometry_audit`.
+  Preregistration authorization changes true to false, and the only false to
+  true change is
+  `target_blind_gshhg_l3_hierarchy_geometry_read=true`.
+- The grant is not a generic geometry or feature-construction permission. It
+  binds the exact local 149,157,845-byte GSHHG archive under SHA-256
+  `8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41`
+  and exactly 12 full-resolution L1/L2/L3 shapefile members. Network/download,
+  all other members, L4, Census/other geometry, eligible support, distance
+  surfaces, tract aggregation, predictors, models, predictions, targets,
+  results, geometry export, and redistribution remain prohibited.
+- The next executor may write only one exact append-only success/failure
+  manifest and the ignored preregistered diagnostic table. Even a passing
+  audit creates no source, algorithm, feature-name, predictor, or protocol
+  lock; it permits only a second independent freeze decision.
+- The transition itself requested Git's untracked path names only to prove a
+  clean worktree; it opened no untracked file content or ignored path, made
+  zero network requests, and opened no GSHHG archive/member, geometry,
+  eligible support, predictor, model, target, or result bytes.
+- Canonical `PLAN_READINESS.json` is 13,327 bytes, file SHA-256
+  `9a8f8b93ccfa89bf43354cb09d6d92fee1b436eb5edbd227b75d794dd49cac6c`,
+  and internal commit
+  `1789d828f212e0cd65f87c9427eb4a7fbd1697cc7170ebb98a80806659afbc86`.
+- Verification before the implementation commit passed 44 focused tests, all
+  833 project tests with the same five existing deprecation warnings, and
+  full-repository Ruff. Final v6 `--check-only` is required after this
+  manifest and documentation are committed and pushed and before any
+  archive/member read.

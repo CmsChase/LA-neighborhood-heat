@@ -90,8 +90,12 @@ ocean-or-Great-Lakes shoreline distance while it excludes L3 lake-island
 shores. Every computation and target lock remains closed. The only next task
 was to preregister a narrow, source-only GSHHG L3 hierarchy audit. That
 [preregistration](docs/GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md) is now
-complete without opening the archive or any member. L3 geometry remains
-closed until a separate clean, pushed, tracked-only planning transition.
+complete without opening the archive or any member. The separate clean,
+pushed, tracked-only transition is also complete. It authorizes only the
+preregistered source-only L3 hierarchy audit against 12 exact local
+L1/L2/L3 shapefile members; it still forbids downloads, L4/Census geometry,
+eligible support, predictors, models, targets, results, geometry export, and
+redistribution. The L3 audit itself has not yet run.
 
 ## Six ways into the project
 

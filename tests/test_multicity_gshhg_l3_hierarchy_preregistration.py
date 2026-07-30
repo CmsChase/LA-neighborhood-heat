@@ -4,6 +4,7 @@ import ast
 import json
 import shutil
 import socket
+import subprocess
 import tomllib
 import urllib.request
 import zipfile
@@ -50,12 +51,12 @@ MODULE = (
     / "multicity"
     / "gshhg_l3_hierarchy_preregistration.py"
 )
+PREREGISTRATION_GIT_COMMIT = "997e86d9ab06d22c04faad6fe714eacde53c9921"
 
 
 def _copy_minimal_project(destination: Path) -> Path:
     required = {
         Path("configs/multicity/experiment.toml"),
-        Path("manifests/multicity/PLAN_READINESS.json"),
         Path(
             "manifests/multicity/reviews/portable_water_distance/"
             "WATER_DISTANCE_FREEZE_DECISION.json"
@@ -71,6 +72,21 @@ def _copy_minimal_project(destination: Path) -> Path:
         target = destination / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
+    predecessor_plan = destination / PLAN.relative_to(ROOT)
+    predecessor_plan.parent.mkdir(parents=True, exist_ok=True)
+    predecessor_plan.write_bytes(
+        subprocess.run(
+            [
+                "git",
+                "-C",
+                str(ROOT),
+                "show",
+                f"{PREREGISTRATION_GIT_COMMIT}:{PLAN.relative_to(ROOT).as_posix()}",
+            ],
+            check=True,
+            capture_output=True,
+        ).stdout
+    )
     return (
         destination
         / "configs"
@@ -84,10 +100,12 @@ def _fail(*_args: object, **_kwargs: object) -> None:
 
 
 def test_preregistration_generates_and_reauthenticates(tmp_path: Path) -> None:
-    destination = tmp_path / "GSHHG_L3_PREREGISTRATION.json"
+    project = tmp_path / "minimal"
+    config = _copy_minimal_project(project)
+    destination = project / "GSHHG_L3_PREREGISTRATION.json"
 
     payload = preregister_gshhg_l3_hierarchy_audit(
-        CONFIG,
+        config,
         output_path=destination,
     )
 
@@ -110,7 +128,7 @@ def test_preregistration_generates_and_reauthenticates(tmp_path: Path) -> None:
     )
 
     verified = preregister_gshhg_l3_hierarchy_audit(
-        CONFIG,
+        config,
         output_path=destination,
         write=False,
     )
@@ -184,6 +202,8 @@ def test_preregistration_calls_no_forbidden_reader(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    project = tmp_path / "minimal"
+    config = _copy_minimal_project(project)
     monkeypatch.setattr(zipfile, "ZipFile", _fail)
     monkeypatch.setattr(geopandas, "read_file", _fail)
     monkeypatch.setattr(pandas, "read_parquet", _fail)
@@ -205,7 +225,7 @@ def test_preregistration_calls_no_forbidden_reader(
     )
 
     payload = preregister_gshhg_l3_hierarchy_audit(
-        CONFIG,
+        config,
         output_path=tmp_path / "PREREGISTRATION.json",
     )
     assert payload["access_contract"]["preregistration_program_network_requests"] == 0
@@ -241,8 +261,10 @@ def test_generator_imports_and_fingerprint_paths_are_tracked_only() -> None:
 
 
 def test_preregistration_manifest_tampering_fails_closed(tmp_path: Path) -> None:
-    destination = tmp_path / "PREREGISTRATION.json"
-    preregister_gshhg_l3_hierarchy_audit(CONFIG, output_path=destination)
+    project = tmp_path / "minimal"
+    config = _copy_minimal_project(project)
+    destination = project / "PREREGISTRATION.json"
+    preregister_gshhg_l3_hierarchy_audit(config, output_path=destination)
     payload = json.loads(destination.read_text(encoding="utf-8"))
     payload["source_lock_created"] = True
     destination.write_text(json.dumps(payload), encoding="utf-8")
@@ -252,7 +274,7 @@ def test_preregistration_manifest_tampering_fails_closed(tmp_path: Path) -> None
         match="invalid internal commit",
     ):
         preregister_gshhg_l3_hierarchy_audit(
-            CONFIG,
+            config,
             output_path=destination,
             write=False,
         )
@@ -261,9 +283,11 @@ def test_preregistration_manifest_tampering_fails_closed(tmp_path: Path) -> None
 def test_preregistration_refuses_different_valid_existing_manifest(
     tmp_path: Path,
 ) -> None:
-    destination = tmp_path / "PREREGISTRATION.json"
+    project = tmp_path / "minimal"
+    config = _copy_minimal_project(project)
+    destination = project / "PREREGISTRATION.json"
     payload = preregister_gshhg_l3_hierarchy_audit(
-        CONFIG,
+        config,
         output_path=destination,
     )
     changed = deepcopy(payload)
@@ -277,7 +301,7 @@ def test_preregistration_refuses_different_valid_existing_manifest(
         match="already exists with different bytes",
     ):
         preregister_gshhg_l3_hierarchy_audit(
-            CONFIG,
+            config,
             output_path=destination,
         )
 
@@ -337,9 +361,11 @@ def test_prerequisite_substitution_fails_closed(
 
 
 def test_manifest_commit_hash_is_canonical(tmp_path: Path) -> None:
-    destination = tmp_path / "PREREGISTRATION.json"
+    project = tmp_path / "minimal"
+    config = _copy_minimal_project(project)
+    destination = project / "PREREGISTRATION.json"
     payload = preregister_gshhg_l3_hierarchy_audit(
-        CONFIG,
+        config,
         output_path=destination,
     )
     body = {key: value for key, value in payload.items() if key != "commit_sha256"}

@@ -34,10 +34,12 @@ evaluation.
 
 ## Cross-city continuation planning
 
-`multicity/PLAN_READINESS.json` authenticates the draft experiment and the
-unchanged Phase I anchor. Its `planning_ready` state permits only boundary and
-public-metadata staging. It explicitly records that external targets,
-predictor construction, model fitting, and one-time evaluation remain locked.
+`multicity/PLAN_READINESS.json` authenticates the draft experiment through the
+exact historical v5 planning blob and the current tracked-only L3 transition.
+Its `planning_ready` state permits boundary/public-metadata staging plus only
+the preregistered source-only L3 hierarchy audit. External targets, predictor
+construction, model fitting, source/algorithm freeze, and one-time evaluation
+remain locked.
 
 `multicity/cities/phoenix_az/geography/GEOGRAPHY.json` authenticates the first
 metadata-only pilot: exact public source responses, one city boundary, 603
@@ -89,11 +91,13 @@ inclusion, exterior/L4 semantics, structure-first failure, deterministic
 probes, numerical replay, and all-closed locks. It records that the generator
 opened no archive/member or geometry and computed no distance.
 
-`PLAN_READINESS.json` intentionally remains at the preceding state. It
-authorized writing this preregistration but still forbids L3 geometry,
-predictor construction, model fitting, and target access. A later
-tracked-only, clean-and-pushed transition must authenticate the committed
-preregistration before changing that one narrow permission.
+Planning schema v6 authenticated the exact committed preregistration and
+changed only the narrow L3 hierarchy-audit permission. The transition itself
+opened no archive/member, geometry, support, target, model, or result. The
+grant is bound to one exact local archive, 12 exact full-resolution L1/L2/L3
+members, zero network/download, and exact append-only outputs; L4, Census,
+eligible support, feature construction, model fitting, target access,
+geometry export, and redistribution remain prohibited.
 
 Generated manifests are marked `-text` in `.gitattributes` because exact bytes
 matter. Do not normalize line endings to silence a cosmetic diff warning. Use
