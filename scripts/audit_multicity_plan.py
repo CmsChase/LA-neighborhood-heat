@@ -1,4 +1,4 @@
-"""Authenticate the cross-city draft plan without opening any new target values."""
+"""Authenticate the tracked-only L3 planning transition."""
 
 from __future__ import annotations
 
@@ -27,26 +27,15 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Authenticate without writing or replacing the readiness record.",
     )
-    parser.add_argument(
-        "--skip-evidence-zip-hash",
-        action="store_true",
-        help="Skip only the untracked ZIP byte hash; tracked attestations are still checked.",
-    )
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
-    if args.check_only and args.skip_evidence_zip_hash:
-        parser.error(
-            "--check-only requires the evidence ZIP byte hash so the existing "
-            "readiness record can be compared exactly."
-        )
     payload = audit_multicity_plan(
         args.config,
         output_path=args.output,
-        verify_evidence_zip=not args.skip_evidence_zip_hash,
         write=not args.check_only,
     )
     print(
