@@ -4,6 +4,25 @@ Last material update: 2026-07-30 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
 
+- completed L3 hierarchy-audit report, current status, decision log, and this
+  handoff are in the commit with subject
+  `Document completed GSHHG L3 audit`; obtain its exact hash with
+  `git log --oneline --grep="Document completed GSHHG L3 audit" -1`
+- the authenticated canonical V2 audit terminal is in commit
+  `0afb1f9868378f12e8fe8b66f5772fde6685ed1f`, subject
+  `Record GSHHG L3 audit v2 terminal`
+- the V2 executor, authenticator, and complete test hardening are in commit
+  `7b7c804293057458c82353f705c1d9cf28375301`, subject
+  `Apply GSHHG L3 structural amendment v2`
+- the independently committed single-character V2 structural amendment is in
+  commit `e07ef369ea3310ec67956b06436f793f01c89942`, subject
+  `Record GSHHG L3 structural amendment v2`
+- the preserved append-only V1 failure is in commit
+  `fbf20ed7a601af8e9f77ad768f1267b8a6503a0d`, subject
+  `Record GSHHG L3 audit v1 failure terminal`
+- the initial V1 executor and tests are in commit
+  `ab51a9506d77b7ac0efcdfb97e494c665cd80e5b`, subject
+  `Add preregistered GSHHG L3 audit executor`
 - tracked-only planning schema v6, the exact L3-audit permission transition,
   documentation, and this handoff are in the commit with subject
   `Authorize preregistered L3 geometry audit`; obtain its exact hash with
@@ -247,14 +266,39 @@ Authoritative draft files:
   `ecb21bfa31f98dfe275f113ee13909fd30276e049ee0d2a05fca2b2a2bd4b47f`;
 - L3 preregistration internal commit:
   `7be642a7fd099d026c828e018d699f1c6a885de0d180d50ce7eda00e17e694a7`.
+- GSHHG L3 V2 structural amendment:
+  `configs/multicity/gshhg_l3_hierarchy_audit_amendment_v2.toml`;
+- amendment file SHA-256:
+  `c60c2d699e94bca832a78b4959db9a5333b2aa3ae37bfdd72d9c0eb6f37ff127`;
+- amendment publication commit:
+  `e07ef369ea3310ec67956b06436f793f01c89942`;
+- preserved L3 V1 failure:
+  `manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT_V1_FAILURE.json`;
+- V1 failure file SHA-256:
+  `b5eb32e3de1702250e36a7eb81b2ea0c78551930a7f92abe5278d21c05a0ea9e`;
+- V1 failure internal commit:
+  `e5b8e1e242276bcb530990ee070739f84e48177c431e556cfebb4819c92ea067`;
+- completed non-frozen L3 hierarchy audit:
+  `manifests/multicity/reviews/portable_water_distance/GSHHG_L3_HIERARCHY_AUDIT.json`;
+- L3 success file SHA-256:
+  `9b206f449d71f23ff0f13d0adca436a2d433140560fef92646d48a7e5c522070`;
+- L3 success internal commit:
+  `9b7f6c814bda4e97120a6768b88feae37ee73044883b2ec8cad10db8d4af0f0b`;
+- L3 success publication commit:
+  `0afb1f9868378f12e8fe8b66f5772fde6685ed1f`;
+- seven-row diagnostic table:
+  `data/interim/multicity/water_distance/gshhg_l3_hierarchy_audit/diagnostic_distances.csv`;
+- diagnostic table SHA-256:
+  `ab3be04995c70359ed7b65a59d63aec84202f7319f5484dc038e172e76949a8c`.
 
-Planning schema v6 does not reopen the Phase I output tree, evidence ZIP,
-GSHHG ZIP, or geometry. It authenticates the exact historical v5 planning
-blob from Git commit
-`997e86d9ab06d22c04faad6fe714eacde53c9921`, then authenticates the exact
+Planning schema v6 is now a consumed historical authorization. It did not
+reopen the Phase I output tree or evidence ZIP. It authenticated the exact
+historical v5 planning blob from Git commit
+`997e86d9ab06d22c04faad6fe714eacde53c9921`, then authenticated the exact
 tracked preregistration, GSHHG pilot, deferred decision, configuration, code,
-and local Git blobs. The historical v5 record remains the authenticated
-container for the earlier Phase I deep audit.
+and local Git blobs before authorizing the narrow L3 read. Do not hand-edit
+`PLAN_READINESS.json` to represent the later audit result; the next permission
+change must be a new tracked-only planning transition.
 
 The v6 transition records all of the following as false:
 
@@ -268,14 +312,13 @@ The v6 transition records all of the following as false:
 
 No Phoenix, Houston, or Chicago Landsat thermal or target-QA value has been
 opened. No continuation predictor has been constructed and no model has been
-fit. The exact L3 hierarchy-audit preregistration and tracked-only permission
-transition are complete. The one newly opened permission is
-`target_blind_gshhg_l3_hierarchy_geometry_read=true`; the completed
-preregistration permission is now false. This is not a generic source review:
-it permits only the exact local GSHHG archive and 12 preregistered
-full-resolution L1/L2/L3 shapefile members, with zero network/download,
-L4/Census/eligible-support/feature/predictor/model/target/result, geometry
-export, or redistribution authorization.
+fit. Planning schema v6 set
+`target_blind_gshhg_l3_hierarchy_geometry_read=true` only for the completed
+audit; that grant has been consumed and must be closed by the next tracked-only
+transition. The audit opened only the exact local GSHHG archive and 12
+preregistered full-resolution L1/L2/L3 shapefile members, with zero
+network/download, L4/Census/eligible-support/feature/predictor/model/target/
+result, geometry export, or redistribution authorization.
 
 The generic Census place/tract adapter and its Phoenix pilot are complete.
 The current draft authorizes metadata writes only for `phoenix_az`; every
@@ -338,6 +381,13 @@ terrain HEAD records into all six output tables.
 
 Current continuation verification:
 
+- L3 audit amendment, preflight, terminal, numerical, security, structural,
+  and roundtrip focused suite: 316 passed;
+- complete repository suite after the V2 terminal: passed twice; the current
+  repository collects 1,149 tests;
+- canonical L3 terminal `--check-only`: passed from clean synchronized `main`,
+  before metrics were inspected;
+- full-repository Ruff after the V2 terminal: all checks passed;
 - tracked-only planning-transition tests: 8 passed;
 - transition plus L3-preregistration, GSHHG, water-review, and deferred-freeze
   focused suite: 44 passed;
@@ -482,42 +532,67 @@ common-denominator compliance baseline pending legal review, retain the
 copyright/permission notice, and add the official GPLv3 text missing from the
 archive.
 
-The target-blind L3 hierarchy audit preregistration is now complete. It fixes
-the four L3 member paths, direct-parent/all-descendants rule, exterior-only
-linework, L4 exclusion, exact schema and structural evidence, deterministic
-real-component probes, the four existing source-only points, every numerical
-gate, and an append-only failure/amendment policy. See
-[`GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md`](GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md).
+The target-blind L3 hierarchy audit is complete. Its immutable preregistration
+fixed the four L3 member paths, direct-parent/all-descendants rule,
+exterior-only linework, L4 exclusion, exact schema and structural evidence,
+deterministic real-component probes, the four existing source-only points,
+every numerical gate, and an append-only failure/amendment policy. See
+[`GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md`](GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md)
+for the prior contract and
+[`GSHHG_L3_HIERARCHY_AUDIT_REPORT.md`](GSHHG_L3_HIERARCHY_AUDIT_REPORT.md)
+for the authenticated result.
 
-It was generated without opening the GSHHG archive, an archive member,
-geometry, eligible support, target, predictor, model, prediction, or result.
-Planning schema v6 then authenticated the exact committed preregistration and
-changed only the next-stage permission: preregistration is now false and the
-narrow L3 hierarchy geometry audit is authorized. The transition itself made
-zero network requests, opened no archive/member or geometry, enumerated no
-ignored path contents, and read no support, target, predictor, model,
-prediction, or result bytes.
+V1 failed closed in the structure phase before any probe or distance. Its
+selected L2 source ID `180515` hash had one preregistered final character
+`c`, while the authenticated source and prior pilot both ended in `a`. The
+append-only failure remains at
+`GSHHG_L3_HIERARCHY_AUDIT_V1_FAILURE.json`; no V1 probe or distance exists.
+The separately committed V2 amendment changed only that final character and
+left every hierarchy, probe, numerical, and access rule unchanged.
+
+The V2 audit then authenticated:
+
+- the 149,157,845-byte GSHHG 2.3.7 archive under SHA-256
+  `8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41`;
+- the 402-member inventory and exactly 12 opened allowlisted L1/L2/L3 members,
+  each with passing individual CRC and hash checks;
+- 1,437 valid positive-area L3 polygons and exactly 139 direct descendants of
+  parents `180507`, `180515`, and `180517`, distributed as 118 / 8 / 13;
+- strict containment, parent-boundary disjointness, zero positive sibling
+  overlap over all 7,009 pairs, and safe longitude continuity over 6,068
+  exterior segments; and
+- exact STRtree/brute-force, source-order, radius, line/query-chunk, worker,
+  replay, and projected/geodesic numerical gates.
+
+The four fixed city points were unchanged by L3. The three deterministic
+real-island probes were shortened by 30.948681 km, 1.143027 km, and
+4.895846 km, showing that L3 is materially relevant without changing the
+previous four-point replay. This is source/algorithm evidence, not prediction
+performance or modern positional truth.
+
+The canonical state is
+`gshhg_l3_hierarchy_audit_v2_complete_source_not_frozen`. All source,
+algorithm, feature-name, predictor, model, protocol, and external-target locks
+remain false. A passing audit is not a freeze.
 
 Safe current authentication command:
 
 ```powershell
 .\.venv\Scripts\python `
-  scripts\audit_multicity_plan.py --check-only
+  scripts\audit_multicity_gshhg_l3_hierarchy.py --check-only
 ```
 
-First safe task: implement and test the preregistered L3 hierarchy-audit
-executor without opening the archive. Commit and push that implementation
-from clean `main`, then rerun the v6 command above from a clean checkout with
-`HEAD == origin/main` immediately before the first archive/member read. The
-executor may authenticate only
-`data/raw/multicity/water_distance/gshhg-shp-2.3.7.zip` and open only the 12
-exact L1/L2/L3 member paths listed in `PLAN_READINESS.json`. It may write only
-one append-only success/failure manifest and the ignored preregistered
-diagnostic table. Do not read L4, Census or other geometry, eligible support,
-build a distance surface or predictor, fit a model, open target/QA/result
-data, export geometry, redistribute source bytes, or start an old dashboard.
-Even a passing audit authorizes only a separate source-and-algorithm freeze
-decision.
+First safe task: implement and test a separate portable water-distance
+source-and-algorithm freeze decision. It must bind only the already
+authenticated preregistration, V1 failure, V2 amendment, success manifest,
+diagnostic table, Git evidence, and tracked contract. It must not reopen the
+ZIP, geometry, eligible support, target, target-QA, predictor, model,
+prediction, or result. Preserve the historical deferred
+`WATER_DISTANCE_FREEZE_DECISION.json`; any new decision must use an append-only
+V2 path. After the decision is implemented and committed, use a new
+tracked-only planning transition to close the consumed geometry-read
+permission and authorize only the decision. Predictor construction requires a
+later, separate transition even if the decision passes.
 
 Current local runtime note: port `8768` is closed, no continuation service is
 running, and no GSHHG/pytest worker remains. The Windows C drive has about

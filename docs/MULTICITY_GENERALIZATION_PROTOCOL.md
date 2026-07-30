@@ -311,13 +311,16 @@ candidate source but rejected immediate freeze of the L1/L2-only algorithm
 because the four diagnostic points do not close the L3 lake-island shoreline
 gap.
 
-The target-blind GSHHG L3 hierarchy audit is now preregistered without opening
-the archive or any member. Its direct-parent rule, structure-first failure
-policy, real-component probes, and numerical gates are fixed. L3 geometry
-remains unauthorized until a separate tracked-only planning transition is
-committed and pushed from a clean synchronized checkout. The audit itself,
-predictor construction, model fitting, protocol promotion, and target access
-remain separately locked.
+The target-blind GSHHG L3 hierarchy audit is now complete. It preserved a V1
+structure-phase failure before distance, applied one separately committed
+single-character V2 source-identity amendment, selected all 139 direct L3
+descendants of the three fixed L2 parents, and passed every structural and
+numerical gate. The four fixed city points replayed exactly, while all three
+deterministic real-island probes showed material L3 distance reductions. This
+closes the narrow hierarchy question but creates no source or algorithm lock.
+The only next safe stage is a separate portable water-distance
+source-and-algorithm freeze decision; predictor construction, model fitting,
+protocol promotion, and target access remain separately locked.
 
 ## Official source anchors
 

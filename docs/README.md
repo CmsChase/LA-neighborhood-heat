@@ -22,6 +22,7 @@ history is intentionally separated from the short project landing page.
 | What did the global shoreline geometry pilot find? | [GSHHG_GEOMETRY_PILOT_REPORT.md](GSHHG_GEOMETRY_PILOT_REPORT.md) |
 | Why was the portable source-and-algorithm freeze deferred? | [PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md](PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md) |
 | What exactly is fixed before the L3 hierarchy audit? | [GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md](GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md) |
+| What did the completed L3 hierarchy audit find? | [GSHHG_L3_HIERARCHY_AUDIT_REPORT.md](GSHHG_L3_HIERARCHY_AUDIT_REPORT.md) |
 
 ## Scientific contracts
 
@@ -46,11 +47,16 @@ history is intentionally separated from the short project landing page.
   amendment, exact GSHHG archive audit, fixed-point Census comparison, and the
   remaining source/algorithm freeze gate.
 - [PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md](PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md):
-  authenticated deferred decision, unresolved L3 hierarchy gap, license and
-  claim boundaries, closed access ledger, and the next preregistration gate.
+  authenticated deferred decision, the then-unresolved L3 hierarchy gap,
+  license and claim boundaries, closed access ledger, and its next
+  preregistration gate.
 - [GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md](GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md):
   exact L3 direct-parent/exterior rule, deterministic probes, structural and
   numerical gates, fail-closed phase order, and still-closed permissions.
+- [GSHHG_L3_HIERARCHY_AUDIT_REPORT.md](GSHHG_L3_HIERARCHY_AUDIT_REPORT.md):
+  preserved V1 structural failure, one-character V2 amendment, authenticated
+  structure and numerical results, scientific interpretation, and remaining
+  source/algorithm freeze boundary.
 
 ## Execution and status
 

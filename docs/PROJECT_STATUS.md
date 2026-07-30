@@ -116,16 +116,29 @@ four fixed points do not show that excluding L3 lake-island shores is harmless
 for every frozen eligible-land cell. The source and algorithm remain
 unfrozen.
 
-The exact L3 hierarchy audit is now preregistered under internal commit
-`7be642a7fd099d026c828e018d699f1c6a885de0d180d50ce7eda00e17e694a7`.
-It includes every direct L3 child exterior of the three selected L2 polygons,
-excludes L4, fixes real-component probes and all numerical gates, and requires
-every structure failure to occur before distance. The preregistration program
-opened no archive member or geometry. The separate clean, pushed, tracked-only
-transition is complete and authorizes only that exact L3 source audit. It does
-not authorize network/download, L4 or Census geometry, eligible support,
-predictor construction, models, targets, results, geometry export, or
-redistribution. The L3 audit itself has not yet run.
+The exact L3 hierarchy audit is now complete. V1 failed closed in the
+structure phase, before any probe or distance, because source ID `180515` had
+one preregistered normalized-WKB hash character transcribed as final `c`
+instead of the authenticated final `a`. The append-only failure was published
+in commit `fbf20ed7a601af8e9f77ad768f1267b8a6503a0d`. A separately committed V2
+amendment changed only that character in
+`e07ef369ea3310ec67956b06436f793f01c89942`.
+
+V2 authenticated all 1,437 L3 polygons and selected every direct child of the
+three fixed L2 parents: 139 descendants distributed as 118, 8, and 13. Every
+structural and numerical gate passed. The four fixed city points were
+unchanged by L3, while the three deterministic real-island probes were
+shortened by 30,948.681 m, 1,143.027 m, and 4,895.846 m. The canonical
+terminal was published in commit
+`0afb1f9868378f12e8fe8b66f5772fde6685ed1f`; its file SHA-256 is
+`9b206f449d71f23ff0f13d0adca436a2d433140560fef92646d48a7e5c522070`
+and internal commit is
+`9b7f6c814bda4e97120a6768b88feae37ee73044883b2ec8cad10db8d4af0f0b`.
+
+The audit created no source, algorithm, feature-name, predictor, model, target,
+or protocol lock. `source_frozen`, `algorithm_frozen`, and
+`predictor_build_authorized` remain false. The next safe stage is the separate
+portable water-distance source-and-algorithm freeze decision.
 
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.
@@ -530,14 +543,16 @@ The generated development report is `reports/DEVELOPMENT_REPORT.md`, report SHA
 
 ## Immediate next work
 
-1. Preserve the completed append-only evidence chain and build the read-only
-   checksum export; never create a second claim or rerun with changed settings.
-2. Use `reports/FINAL_EVALUATION_REPORT.md` and the canonical tables/figures to
-   draft the paper, abstract, poster, and oral-defense materials.
-3. State the qualified result exactly: strong M2 point and ranking performance,
-   but a failed positive-confidence-bound gate and no overall protocol success.
-4. Do not retune, retrain, alter thresholds, replace outputs, or use the 2025
-   result to choose another model.
+1. Preserve the completed Los Angeles evidence chain; never create a second
+   claim or rerun it with changed settings.
+2. For the separate target-locked continuation, make one independent
+   portable water-distance source-and-algorithm freeze decision using only the
+   authenticated L3 audit evidence.
+3. Keep predictor construction, model fitting, and Phoenix/Houston/Chicago
+   target or target-QA access closed until their later explicit transitions.
+4. Continue to state the Los Angeles result exactly: strong M2 point and
+   ranking performance, but a failed positive-confidence-bound gate and no
+   overall protocol success.
 
 ## Current verification state
 
@@ -549,6 +564,12 @@ remaining staging directory, and a completion commit of
 `4cc8a5536cf1055d42876577f8d9f6300c799176779a7ec89cd1d3ed819d77a0`.
 The original unpatched execution command reauthenticated this completed state
 without reopening targets.
+
+The completed GSHHG L3 audit is covered by 316 passing focused tests, two
+successful full-repository test runs, and a clean full-repository Ruff run.
+The current repository collects 1,149 tests. A terminal `--check-only`
+authenticated the committed success manifest from synchronized `main` before
+its metrics were inspected.
 
 The exact scientific contract is in `docs/RESEARCH_PROTOCOL.md`; the Phase 2
 implementation contract is in `docs/PHASE2_FEATURE_SPEC.md`.

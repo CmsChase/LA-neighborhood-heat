@@ -1711,3 +1711,49 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   full-repository Ruff. Final v6 `--check-only` is required after this
   manifest and documentation are committed and pushed and before any
   archive/member read.
+
+## 2026-07-30 - Complete the amended GSHHG L3 hierarchy audit
+
+- Decision: preserve the V1 failure, accept one exact source-identity
+  transcription amendment, and publish the passing V2 audit without creating
+  a source, algorithm, feature-name, predictor, model, protocol, or target
+  lock.
+- The V1 executor was committed in
+  `ab51a9506d77b7ac0efcdfb97e494c665cd80e5b`. It failed in the structure
+  phase before any probe or distance because the preregistered normalized-WKB
+  hash for source ID `180515` ended in `c`, while the authenticated source and
+  prior pilot evidence ended in `a`. The append-only failure was published in
+  `fbf20ed7a601af8e9f77ad768f1267b8a6503a0d`.
+- The V2 amendment was independently committed and pushed in
+  `e07ef369ea3310ec67956b06436f793f01c89942`. Its only semantic change is the
+  final `c -> a` character for source ID `180515`; all archive, hierarchy,
+  probe, numerical, and access rules remain unchanged.
+- The V2 executor, verifier, and tests were committed in
+  `7b7c804293057458c82353f705c1d9cf28375301`. The canonical terminal was
+  blindly published before result inspection in
+  `0afb1f9868378f12e8fe8b66f5772fde6685ed1f` and then authenticated by
+  `--check-only`.
+- The audit authenticated the 149,157,845-byte GSHHG 2.3.7 archive, opened
+  only the 12 allowlisted L1/L2/L3 members, and selected 139 direct L3
+  descendants across parents `180507`, `180515`, and `180517` as
+  118 / 8 / 13. All containment, parent-boundary, sibling-overlap, longitude,
+  replay, STRtree/brute-force, radius, source-order, chunk, worker, and
+  projected/geodesic gates passed.
+- L3 changed none of the four fixed Los Angeles, Phoenix, Houston, and Chicago
+  distances. It shortened the three deterministic real-island probe distances
+  by 30,948.681 m, 1,143.027 m, and 4,895.846 m. This supports including the
+  directly parented L3 exteriors in the candidate algorithm without claiming
+  predictive performance or modern positional truth.
+- The success manifest file SHA-256 is
+  `9b206f449d71f23ff0f13d0adca436a2d433140560fef92646d48a7e5c522070`
+  and its internal commit is
+  `9b7f6c814bda4e97120a6768b88feae37ee73044883b2ec8cad10db8d4af0f0b`.
+  The seven-row diagnostic table SHA-256 is
+  `ab3be04995c70359ed7b65a59d63aec84202f7319f5484dc038e172e76949a8c`.
+- `source_frozen`, `algorithm_frozen`, and
+  `predictor_build_authorized` remain false. The exact next safe stage is
+  `separate_portable_water_distance_source_and_algorithm_freeze_decision`.
+- Verification passed 316 focused tests, two complete repository test runs,
+  full-repository Ruff, and terminal authentication from clean synchronized
+  `main`. Metrics were inspected only after the committed terminal
+  authenticated.
