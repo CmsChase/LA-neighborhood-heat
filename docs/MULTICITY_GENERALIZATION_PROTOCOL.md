@@ -322,18 +322,21 @@ The only next safe stage is a separate portable water-distance
 source-and-algorithm freeze decision; predictor construction, model fitting,
 protocol promotion, and target access remain separately locked.
 
-The staged planning-v7 transition only closes the consumed L3 geometry-read
-permission and authorizes the evidence-only V2 freeze decision. V2 extracts
-the seven source-only rows from the exact tracked L3 success manifest; it does
-not request or open the ignored diagnostic CSV and reopens no ZIP, archive
-member, geometry, eligible support, predictor/model, external target/QA, or
-result. If V2 passes, its terminal freezes only the exact source and audited
-point-distance algorithm. It does not freeze tract aggregation or feature
-names and does not authorize predictor construction. A separate tracked-only
-planning v8 must authenticate and consume the V2 terminal, update the
-canonical plan locks, close the consumed decision permission, and authorize
-only the predictor-source/calibration-contract freeze. Staged implementation
-files grant no permission by themselves.
+Canonical planning v7 only closes the consumed L3 geometry-read permission
+and authorizes the evidence-only V2 freeze decision. Its 20,809-byte plan has
+file SHA-256
+`88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3`
+and internal commit
+`4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
+V2 extracts the seven source-only rows from the exact tracked L3 success
+manifest; it does not request or open the ignored diagnostic CSV and reopens
+no ZIP, archive member, geometry, eligible support, predictor/model, external
+target/QA, or result. If V2 passes, its terminal freezes only the exact source
+and audited point-distance algorithm. It does not freeze tract aggregation or
+feature names and does not authorize predictor construction. A separate
+tracked-only planning v8 must authenticate and consume the V2 terminal, update
+the canonical plan locks, close the consumed decision permission, and
+authorize only the predictor-source/calibration-contract freeze.
 
 ## Official source anchors
 

@@ -147,12 +147,16 @@ source, algorithm, feature-name, predictor, model, external-target, or
 target-QA authorization. The next safe task is the separate portable
 water-distance source-and-algorithm freeze decision.
 
-The staged v7 changes exactly two authorization leaves: it closes the consumed
+Canonical v7 changes exactly two authorization leaves: it closes the consumed
 L3 geometry-read permission and opens only the evidence-only V2 freeze
-decision. The V2 program reads seven source-only rows from the tracked L3
-success manifest, not the ignored CSV, and opens no ZIP, geometry, eligible
-support, predictor, model, target, or result. If it passes, only the exact
-source and audited point-distance algorithm are frozen in the decision
-terminal; predictor construction remains closed. A separate tracked-only v8
-must then consume that terminal, update the canonical plan locks, close the
-decision permission, and authorize only predictor-contract freezing.
+decision. Its 20,809-byte plan has file SHA-256
+`88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3`
+and internal commit
+`4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
+The V2 program reads seven source-only rows from the tracked L3 success
+manifest, not the ignored CSV, and opens no ZIP, geometry, eligible support,
+predictor, model, target, or result. If it passes, only the exact source and
+audited point-distance algorithm are frozen in the decision terminal;
+predictor construction remains closed. A separate tracked-only v8 must then
+consume that terminal, update the canonical plan locks, close the decision
+permission, and authorize only predictor-contract freezing.

@@ -1786,3 +1786,22 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   this implementation checkpoint canonical planning is still v6 and the V2
   terminal does not yet exist; later entries must record actual publication
   hashes and authenticated states without rewriting this decision.
+
+## 2026-08-01 - Publish canonical planning v7
+
+- The reviewed transition implementation was committed and pushed as
+  `eefb531e99d95e8dd7069e821ff941abd68de622`, subject
+  `Add water distance freeze transition`.
+- The sole canonical v6-to-v7 transition is published with subject
+  `Authorize water distance freeze decision`. The rendered plan is 20,809
+  bytes, file SHA-256
+  `88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3`,
+  and internal commit
+  `4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
+- Recursive authorization comparison found exactly two changes:
+  `target_blind_gshhg_l3_hierarchy_geometry_read` true to false and
+  `portable_predictor_source_freeze` false to true. Every lock and
+  `predictor_construction` remain false.
+- The V2 decision terminal does not exist at this checkpoint. It may be
+  generated only after the v7 publication is committed, pushed, and passes
+  `--check-only` authentication from clean synchronized `main`.

@@ -6,9 +6,13 @@ Latest required scientific checkpoints on `main`:
 
 - tracked-only planning v7 transition, append-only portable water-distance V2
   freeze-decision implementation, exact configuration, security regression
-  tests, and this handoff are in the commit with subject
-  `Add water distance freeze transition`; obtain its exact hash with
-  `git log --oneline --grep="Add water distance freeze transition" -1`
+  tests, and the prerequisite documentation are in commit
+  `eefb531e99d95e8dd7069e821ff941abd68de622`, subject
+  `Add water distance freeze transition`
+- canonical planning v7 and its publication documentation are in the commit
+  with subject `Authorize water distance freeze decision`; obtain its exact
+  hash with
+  `git log --oneline --grep="Authorize water distance freeze decision" -1`
 - completed L3 hierarchy-audit report, current status, decision log, and this
   handoff are in the commit with subject
   `Document completed GSHHG L3 audit`; obtain its exact hash with
@@ -600,14 +604,16 @@ Safe current authentication command:
   scripts\audit_multicity_gshhg_l3_hierarchy.py --check-only
 ```
 
-First safe sequence: (1) commit and push the tested v7/V2 code,
-configuration, tests, and documentation without changing either canonical
-manifest; (2) from clean synchronized `main`, run the tracked-only v7
-transition, commit and push `PLAN_READINESS.json`, then require v7
-`--check-only`; and only then (3) run the append-only V2 freeze decision,
-commit and push its terminal, then require V2 `--check-only`. V7 closes the
-consumed L3 geometry-read grant and authorizes only
-`portable_predictor_source_freeze`; predictor construction remains false.
+The tested v7/V2 implementation is committed and pushed, and canonical
+planning v7 is now 20,809 bytes, file SHA-256
+`88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3`,
+with internal commit
+`4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
+V7 closes the consumed L3 geometry-read grant and authorizes only
+`portable_predictor_source_freeze`; predictor construction and every formal
+lock remain false. After committing, pushing, and authenticating this sole
+v6-to-v7 plan change, the next safe action is to run the append-only V2 freeze
+decision, commit and push its terminal, then require V2 `--check-only`.
 
 The V2 decision extracts the seven source-only diagnostic rows directly from
 the tracked L3 success manifest. It does not request or open the ignored

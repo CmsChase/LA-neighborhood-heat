@@ -140,15 +140,19 @@ or protocol lock. `source_frozen`, `algorithm_frozen`, and
 `predictor_build_authorized` remain false. The next safe stage is the separate
 portable water-distance source-and-algorithm freeze decision.
 
-The staged schema-v7 transition changes exactly two authorization paths: it
-closes `target_blind_gshhg_l3_hierarchy_geometry_read` and opens only
-`portable_predictor_source_freeze`. All locks and
-`predictor_construction` remain false. After that tracked-only transition is
-committed, pushed, and authenticated, the append-only V2 decision may bind the
-exact GSHHG 2.3.7 source and audited point-distance algorithm; it may not
-freeze feature names or authorize predictor construction. Its seven
-source-only rows come from the tracked L3 success JSON, not the ignored CSV,
-and it opens no ZIP/member/geometry/eligible-support/target/result data.
+Canonical schema v7 is now rendered as a 20,809-byte plan with file SHA-256
+`88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3`
+and internal commit
+`4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
+It changes exactly two authorization paths: it closes
+`target_blind_gshhg_l3_hierarchy_geometry_read` and opens only
+`portable_predictor_source_freeze`. All locks and `predictor_construction`
+remain false. After this tracked-only transition is committed, pushed, and
+authenticated, the append-only V2 decision may bind the exact GSHHG 2.3.7
+source and audited point-distance algorithm; it may not freeze feature names
+or authorize predictor construction. Its seven source-only rows come from the
+tracked L3 success JSON, not the ignored CSV, and it opens no
+ZIP/member/geometry/eligible-support/target/result data.
 
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.
@@ -555,11 +559,12 @@ The generated development report is `reports/DEVELOPMENT_REPORT.md`, report SHA
 
 1. Preserve the completed Los Angeles evidence chain; never create a second
    claim or rerun it with changed settings.
-2. Commit and push the tested v7/V2 code, exact configuration, tests, and
-   documentation while canonical planning remains v6 and no V2 terminal
-   exists.
-3. From clean synchronized `main`, publish and authenticate v7; then publish
-   and authenticate the append-only V2 source-and-algorithm decision.
+2. Preserve implementation commit
+   `eefb531e99d95e8dd7069e821ff941abd68de622` and the sole canonical v6-to-v7
+   plan transition published under subject
+   `Authorize water distance freeze decision`.
+3. Authenticate v7 from clean synchronized `main`; then publish and
+   authenticate the append-only V2 source-and-algorithm decision.
 4. After V2, publish a separate tracked-only v8 that authenticates and
    consumes the terminal, updates the canonical plan locks, closes the
    decision permission, and authorizes only predictor-contract freezing.
