@@ -115,9 +115,13 @@ ground truth. The Census source remains only a conditional fallback, in which
 case the feature must be named and interpreted as distance to a U.S. Census
 qualifying shoreline rather than an unrestricted nearest ocean.
 
-Neither the GSHHG source nor the algorithm is frozen. See
+At that historical geometry-pilot checkpoint, neither the GSHHG source nor
+the algorithm was frozen. See
 [`PORTABLE_WATER_DISTANCE_REVIEW.md`](PORTABLE_WATER_DISTANCE_REVIEW.md) and
-[`GSHHG_GEOMETRY_PILOT_REPORT.md`](GSHHG_GEOMETRY_PILOT_REPORT.md).
+[`GSHHG_GEOMETRY_PILOT_REPORT.md`](GSHHG_GEOMETRY_PILOT_REPORT.md). The later
+L3 audit and V2 decision now freeze the exact source and audited algorithm as
+documented in
+[`WATER_DISTANCE_FREEZE_DECISION_V2.md`](WATER_DISTANCE_FREEZE_DECISION_V2.md).
 
 ## Predictors and timing
 
@@ -305,10 +309,10 @@ or target-QA value or producing a feature surface. Its four fixed points test
 source semantics and numerical stability only; they do not validate
 positional accuracy, neighborhood variation, or a complete distance grid.
 
-The separate portable water-distance freeze decision is now complete under
+The historical first portable water-distance freeze decision completed under
 state `decision_complete_freeze_deferred`. It retained GSHHG 2.3.7 as the
 candidate source but rejected immediate freeze of the L1/L2-only algorithm
-because the four diagnostic points do not close the L3 lake-island shoreline
+because the four diagnostic points did not close the L3 lake-island shoreline
 gap.
 
 The target-blind GSHHG L3 hierarchy audit is now complete. It preserved a V1
@@ -316,27 +320,31 @@ structure-phase failure before distance, applied one separately committed
 single-character V2 source-identity amendment, selected all 139 direct L3
 descendants of the three fixed L2 parents, and passed every structural and
 numerical gate. The four fixed city points replayed exactly, while all three
-deterministic real-island probes showed material L3 distance reductions. This
-closes the narrow hierarchy question but creates no source or algorithm lock.
-The only next safe stage is a separate portable water-distance
-source-and-algorithm freeze decision; predictor construction, model fitting,
-protocol promotion, and target access remain separately locked.
+deterministic real-island probes showed material L3 distance reductions. At
+that audit checkpoint, this closed the narrow hierarchy question but
+created no source or algorithm lock. Its only next safe stage was a separate
+portable water-distance source-and-algorithm freeze decision; predictor
+construction, model fitting, protocol promotion, and target access remained
+separately locked.
 
-Canonical planning v7 only closes the consumed L3 geometry-read permission
-and authorizes the evidence-only V2 freeze decision. Its 20,809-byte plan has
-file SHA-256
+Canonical planning v7, published in commit
+`252c01d015110336c65bb602d4c5b608708fb092`, only closes the consumed L3
+geometry-read permission and authorizes the evidence-only V2 freeze decision.
+Its 20,809-byte plan has file SHA-256
 `88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3`
 and internal commit
 `4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
-V2 extracts the seven source-only rows from the exact tracked L3 success
+Completed V2 extracts the seven source-only rows from the exact tracked L3 success
 manifest; it does not request or open the ignored diagnostic CSV and reopens
 no ZIP, archive member, geometry, eligible support, predictor/model, external
-target/QA, or result. If V2 passes, its terminal freezes only the exact source
-and audited point-distance algorithm. It does not freeze tract aggregation or
-feature names and does not authorize predictor construction. A separate
-tracked-only planning v8 must authenticate and consume the V2 terminal, update
-the canonical plan locks, close the consumed decision permission, and
-authorize only the predictor-source/calibration-contract freeze.
+target/QA, or result. Its 18,541-byte terminal, file SHA-256
+`a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b`,
+freezes only the exact source and audited point-distance algorithm. It does
+not freeze tract aggregation or feature names and does not authorize predictor
+construction. A separate tracked-only planning v8 must authenticate and
+consume the exact V2 terminal, update the canonical plan locks, close the
+consumed decision permission, and authorize only the
+predictor-source/calibration-contract freeze.
 
 ## Official source anchors
 

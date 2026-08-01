@@ -1805,3 +1805,29 @@ No unlock has occurred. `unlock_final_test` remains `false`.
 - The V2 decision terminal does not exist at this checkpoint. It may be
   generated only after the v7 publication is committed, pushed, and passes
   `--check-only` authentication from clean synchronized `main`.
+
+## 2026-08-01 - Freeze the portable water source and point-distance algorithm
+
+- Canonical planning v7 was published in commit
+  `252c01d015110336c65bb602d4c5b608708fb092` and passed its publication-aware
+  `--check-only` authentication from clean synchronized `main`.
+- The V2 decision completed with state
+  `decision_complete_source_and_algorithm_frozen_predictor_closed` and outcome
+  `freeze_gshhg_2_3_7_l1_l2_l3_source_and_point_distance_algorithm`.
+- The append-only terminal is 18,541 bytes, file SHA-256
+  `a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b`,
+  and internal commit
+  `2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51`.
+  It is published under subject `Record water distance freeze v2 terminal`.
+- The decision program read seven source-only rows from the exact tracked L3
+  success manifest. It made zero network requests and opened no ignored CSV,
+  archive/member, geometry, eligible support, target/QA, model, prediction, or
+  final-result data.
+- The terminal freezes the exact GSHHG 2.3.7 archive and the audited repaired
+  L1 plus selected L2 and direct-L3-descendant point-distance algorithm. It
+  leaves tract aggregation, feature names, predictor construction, model
+  fitting, protocol promotion, and target access closed.
+- The mandatory next gate is tracked-only planning v8. V8 must authenticate
+  and consume this exact terminal, set the canonical source and algorithm
+  locks true, close the consumed decision permission, and authorize only the
+  separate predictor-source/calibration-contract freeze.

@@ -14,7 +14,7 @@ dates.
 | 5. Robustness and interpretation — complete with limitations | 11 | Feature-family ablations, strict pixel-level ST_QA sensitivity, QA cohorts, sensor checks, uncertainty intervals, endpoint and residual diagnostics | Authenticated ablation/sensitivity tables, unified evidence table, generated development report, hotspot and spatial diagnostics | Complete: strict 2 K date-support gate failed and spatial clustering remains, so the claim is explicitly narrowed | Research team |
 | 6. Model lock and one-time final test — complete | 12 | Freeze code/config/features/model/figures, create hashes, then unlock and evaluate 2025 once | `MODEL_LOCK.json`, append-only claim chain, one-way 2025 predictions, metrics, and figures | Evaluator never fits; every hash matches; one authenticated final transaction | Authorized operator after student approval |
 | 7. Research communication — complete | 13–14 | Write paper, poster, public result atlas, limitations, and oral-defense materials | Final report, reviewed paper, print poster, defense deck, website, and reproducibility instructions | Every number traceable to a table or script; claims match estimand | Writing and QA team; student presents |
-| 8. Cross-city continuation — draft; L3 hierarchy audit complete; v7/V2 freeze-decision implementation staged | continuation | Test zero-shot transfer from LA to Phoenix, Houston, and Chicago; add calibrated uncertainty and abstention | Separate protocol/config, city manifests, target-blind predictors, frozen predictions, one-time external evidence | Commit implementation; authenticate tracked-only v7; publish append-only V2 source/point-distance-algorithm decision; then publish v8; predictors and targets stay sealed | Research engineering implements; independent review challenges; student approves freeze |
+| 8. Cross-city continuation — draft; water-distance V2 freeze complete; v8 pending | continuation | Test zero-shot transfer from LA to Phoenix, Houston, and Chicago; add calibrated uncertainty and abstention | Separate protocol/config, city manifests, target-blind predictors, frozen predictions, one-time external evidence | Publish and authenticate V2 terminal; then publish v8; predictors and targets stay sealed | Research engineering implements; independent review challenges; student approves freeze |
 
 ## Planned result package
 
@@ -142,21 +142,24 @@ source-and-algorithm freeze because the then-current contract excluded L3
 lake-island shores. The source-only L3 hierarchy audit has now completed. It
 preserved a V1 structure-phase failure before distance, applied one separately
 committed single-character V2 amendment, then authenticated 139 direct L3
-descendants and passed every structural and numerical gate. It created no
-source, algorithm, feature-name, predictor, model, external-target, or
-target-QA authorization. The next safe task is the separate portable
-water-distance source-and-algorithm freeze decision.
+descendants and passed every structural and numerical gate. At that L3-audit
+checkpoint it created no source, algorithm, feature-name, predictor, model,
+external-target, or target-QA authorization, and the next safe task was the
+separate portable water-distance source-and-algorithm freeze decision.
 
-Canonical v7 changes exactly two authorization leaves: it closes the consumed
-L3 geometry-read permission and opens only the evidence-only V2 freeze
-decision. Its 20,809-byte plan has file SHA-256
+Canonical v7, published in commit
+`252c01d015110336c65bb602d4c5b608708fb092`, changes exactly two authorization
+leaves: it closes the consumed L3 geometry-read permission and opens only the
+evidence-only V2 freeze decision. Its 20,809-byte plan has file SHA-256
 `88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3`
 and internal commit
 `4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
-The V2 program reads seven source-only rows from the tracked L3 success
+The completed V2 program reads seven source-only rows from the tracked L3 success
 manifest, not the ignored CSV, and opens no ZIP, geometry, eligible support,
-predictor, model, target, or result. If it passes, only the exact source and
-audited point-distance algorithm are frozen in the decision terminal;
+predictor, model, target, or result. Only the exact source and audited
+point-distance algorithm are frozen in its 18,541-byte decision terminal,
+whose file SHA-256 is
+`a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b`;
 predictor construction remains closed. A separate tracked-only v8 must then
 consume that terminal, update the canonical plan locks, close the decision
 permission, and authorize only predictor-contract freezing.

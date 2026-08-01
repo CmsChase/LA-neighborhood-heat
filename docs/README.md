@@ -23,6 +23,7 @@ history is intentionally separated from the short project landing page.
 | Why was the portable source-and-algorithm freeze deferred? | [PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md](PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md) |
 | What exactly is fixed before the L3 hierarchy audit? | [GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md](GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md) |
 | What did the completed L3 hierarchy audit find? | [GSHHG_L3_HIERARCHY_AUDIT_REPORT.md](GSHHG_L3_HIERARCHY_AUDIT_REPORT.md) |
+| What source and water-distance algorithm are now frozen? | [WATER_DISTANCE_FREEZE_DECISION_V2.md](WATER_DISTANCE_FREEZE_DECISION_V2.md) |
 
 ## Scientific contracts
 
@@ -57,6 +58,9 @@ history is intentionally separated from the short project landing page.
   preserved V1 structural failure, one-character V2 amendment, authenticated
   structure and numerical results, scientific interpretation, and remaining
   source/algorithm freeze boundary.
+- [WATER_DISTANCE_FREEZE_DECISION_V2.md](WATER_DISTANCE_FREEZE_DECISION_V2.md):
+  authenticated GSHHG 2.3.7 source and point-distance-algorithm freeze,
+  closed-data ledger, applicability limits, and mandatory planning-v8 gate.
 
 ## Execution and status
 

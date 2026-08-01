@@ -9,10 +9,13 @@ Latest required scientific checkpoints on `main`:
   tests, and the prerequisite documentation are in commit
   `eefb531e99d95e8dd7069e821ff941abd68de622`, subject
   `Add water distance freeze transition`
-- canonical planning v7 and its publication documentation are in the commit
-  with subject `Authorize water distance freeze decision`; obtain its exact
-  hash with
-  `git log --oneline --grep="Authorize water distance freeze decision" -1`
+- canonical planning v7 and its publication documentation are in commit
+  `252c01d015110336c65bb602d4c5b608708fb092`, subject
+  `Authorize water distance freeze decision`
+- the append-only portable water-distance V2 terminal and its report are in
+  the commit with subject `Record water distance freeze v2 terminal`; obtain
+  its exact hash with
+  `git log --oneline --grep="Record water distance freeze v2 terminal" -1`
 - completed L3 hierarchy-audit report, current status, decision log, and this
   handoff are in the commit with subject
   `Document completed GSHHG L3 audit`; obtain its exact hash with
@@ -228,7 +231,7 @@ Current scientific roles:
 - Los Angeles 2025: known Phase I context only and prohibited from the new
   confirmation.
 
-Authoritative draft files:
+Authoritative continuation files (historical artifact identities are labeled):
 
 - protocol: `docs/MULTICITY_GENERALIZATION_PROTOCOL.md`;
 - experiment: `configs/multicity/experiment.toml`;
@@ -236,9 +239,11 @@ Authoritative draft files:
 - planning audit:
   `manifests/multicity/PLAN_READINESS.json`;
 - planning-audit file SHA-256:
-  `9a8f8b93ccfa89bf43354cb09d6d92fee1b436eb5edbd227b75d794dd49cac6c`;
+  `88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3`;
 - planning-audit internal commit:
-  `1789d828f212e0cd65f87c9427eb4a7fbd1697cc7170ebb98a80806659afbc86`;
+  `4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`;
+- planning-v7 publication commit:
+  `252c01d015110336c65bb602d4c5b608708fb092`;
 - Phoenix geography audit:
   `manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json`;
 - Phoenix geography internal commit:
@@ -299,25 +304,29 @@ Authoritative draft files:
   `data/interim/multicity/water_distance/gshhg_l3_hierarchy_audit/diagnostic_distances.csv`;
 - diagnostic table SHA-256:
   `ab3be04995c70359ed7b65a59d63aec84202f7319f5484dc038e172e76949a8c`.
-- staged V2 decision config:
+- committed V2 decision config:
   `configs/multicity/portable_water_distance_freeze_decision_v2.toml`;
-- staged planning transition:
+- committed planning-v7 transition:
   `src/la_heat/multicity/plan_freeze_transition_v7.py` and
   `scripts/authorize_multicity_water_distance_freeze.py`;
-- staged V2 decision program:
+- committed V2 decision program:
   `src/la_heat/multicity/portable_water_distance_freeze_v2.py` and
   `scripts/audit_multicity_portable_water_distance_freeze_v2.py`;
-- planned append-only terminal, not yet generated at this checkpoint:
-  `manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION_V2.json`.
+- current append-only V2 terminal:
+  `manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION_V2.json`;
+- V2 terminal file SHA-256:
+  `a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b`;
+- V2 terminal internal commit:
+  `2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51`.
 
 Planning schema v6 is now a consumed historical authorization. It did not
 reopen the Phase I output tree or evidence ZIP. It authenticated the exact
 historical v5 planning blob from Git commit
 `997e86d9ab06d22c04faad6fe714eacde53c9921`, then authenticated the exact
 tracked preregistration, GSHHG pilot, deferred decision, configuration, code,
-and local Git blobs before authorizing the narrow L3 read. Do not hand-edit
-`PLAN_READINESS.json` to represent the later audit result; the next permission
-change must be a new tracked-only planning transition.
+and local Git blobs before authorizing the narrow L3 read. It was superseded
+only by the authenticated tracked-only v7 transition; neither plan may be
+hand-edited.
 
 The v6 transition records all of the following as false:
 
@@ -331,10 +340,10 @@ The v6 transition records all of the following as false:
 
 No Phoenix, Houston, or Chicago Landsat thermal or target-QA value has been
 opened. No continuation predictor has been constructed and no model has been
-fit. Planning schema v6 set
+fit. Historical planning schema v6 set
 `target_blind_gshhg_l3_hierarchy_geometry_read=true` only for the completed
-audit; that grant has been consumed and must be closed by the next tracked-only
-transition. The audit opened only the exact local GSHHG archive and 12
+audit; that consumed grant was closed by planning v7 in commit
+`252c01d015110336c65bb602d4c5b608708fb092`. The audit opened only the exact local GSHHG archive and 12
 preregistered full-resolution L1/L2/L3 shapefile members, with zero
 network/download, L4/Census/eligible-support/feature/predictor/model/target/
 result, geometry export, or redistribution authorization.
@@ -404,9 +413,15 @@ Current continuation verification:
   and roundtrip focused suite: 316 passed;
 - complete repository suite after the V2 terminal: passed twice; the current
   repository now collects 1,180 tests;
-- staged planning-v7 plus portable-freeze-V2 security suite: 31 passed;
+- planning-v7 plus portable-freeze-V2 security suite: 31 passed;
 - complete repository suite with the staged v7/V2 implementation: reached
   100% with no failures and the same five existing deprecation warnings;
+- canonical planning-v7 publication `--check-only`: passed from clean
+  synchronized `main`;
+- portable water-distance V2 terminal focused suite: 31 passed;
+- complete repository suite after rendering the portable water-distance V2
+  terminal: reached 100% with no failures and the same five existing
+  deprecation warnings;
 - canonical L3 terminal `--check-only`: passed from clean synchronized `main`,
   before metrics were inspected;
 - full-repository Ruff after the V2 terminal: all checks passed;
@@ -447,8 +462,9 @@ Current continuation verification:
   the GSHHG pilot, the deferred decision, all closed computation/target
   permissions, and planning internal commit
   `ebe371cdb8e9dc39c086fc394ce33d4d113abc44d83e2289bef6c74988021001`.
-  That deep implementation has been replaced. The current v6 `--check-only`
-  path reads tracked manifests and local Git evidence only.
+  That deep implementation was replaced. The historical v6 `--check-only`
+  path read tracked manifests and local Git evidence only; current authority
+  is the authenticated v7 plan plus the append-only V2 decision terminal.
 
 The first full-suite run found only a stale test expectation for the current
 Sentinel pipeline fingerprint after `pyproj` became an explicit project
@@ -540,12 +556,15 @@ distance surface.
 GSHHG 2.3.7 is a reproducible fixed 2017 cartographic release based largely on
 older WVS ocean and WDBII lake sources. It does not represent contemporaneous
 shoreline conditions, is not real-time, and is not a uniform 30 m shoreline.
-The pilot therefore created no source lock, algorithm lock, predictor, or
-protocol authorization. The separate freeze decision is now complete and
-deliberately deferred. It retained the fixed GSHHG archive as the candidate,
-but rejected immediate freeze of the current algorithm because L3
-lake-island shores are excluded and the four fixed points do not establish
-that the exclusion is harmless over every eligible-land support.
+At that geometry-pilot checkpoint, the pilot created no source lock,
+algorithm lock, predictor, or protocol authorization. The historical V1
+freeze decision then completed as deliberately deferred. It retained the
+fixed GSHHG archive as the candidate, but rejected immediate freeze of the
+then-current algorithm because L3
+lake-island shores were excluded and the four fixed points did not establish
+that the exclusion is harmless over every eligible-land support. The later L3
+audit and current V2 decision resolved that narrow gap and created the source
+and algorithm locks recorded in the append-only V2 terminal.
 
 The decision also records the non-identical LGPL-version wording in the
 archive notice, historical README, and GitHub repository UI label. Future
@@ -592,42 +611,52 @@ real-island probes were shortened by 30.948681 km, 1.143027 km, and
 previous four-point replay. This is source/algorithm evidence, not prediction
 performance or modern positional truth.
 
-The canonical state is
-`gshhg_l3_hierarchy_audit_v2_complete_source_not_frozen`. All source,
-algorithm, feature-name, predictor, model, protocol, and external-target locks
-remain false. A passing audit is not a freeze.
+The current append-only decision state is
+`decision_complete_source_and_algorithm_frozen_predictor_closed`, with outcome
+`freeze_gshhg_2_3_7_l1_l2_l3_source_and_point_distance_algorithm`. The
+18,541-byte terminal has file SHA-256
+`a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b`
+and internal commit
+`2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51`.
+It creates the source and algorithm locks in the decision terminal only.
+Feature names, tract aggregation, predictor construction, model fitting,
+protocol promotion, and external target access remain closed; the canonical
+plan's matching locks remain false until v8 consumes this terminal.
 
-Safe current authentication command:
+Safe current authentication commands:
 
 ```powershell
 .\.venv\Scripts\python `
-  scripts\audit_multicity_gshhg_l3_hierarchy.py --check-only
+  scripts\authorize_multicity_water_distance_freeze.py --check-only
+.\.venv\Scripts\python `
+  scripts\audit_multicity_portable_water_distance_freeze_v2.py --check-only
 ```
 
-The tested v7/V2 implementation is committed and pushed, and canonical
-planning v7 is now 20,809 bytes, file SHA-256
+The tested v7/V2 implementation and canonical v7 are committed, pushed, and
+authenticated. Planning v7 is 20,809 bytes, file SHA-256
 `88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3`,
 with internal commit
 `4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
 V7 closes the consumed L3 geometry-read grant and authorizes only
 `portable_predictor_source_freeze`; predictor construction and every formal
-lock remain false. After committing, pushing, and authenticating this sole
-v6-to-v7 plan change, the next safe action is to run the append-only V2 freeze
-decision, commit and push its terminal, then require V2 `--check-only`.
+lock remain false. The append-only V2 decision is now rendered and may be
+published only as the direct child of the v7 publication; after push it must
+pass V2 `--check-only`.
 
-The V2 decision extracts the seven source-only diagnostic rows directly from
+The completed V2 decision extracts the seven source-only diagnostic rows directly from
 the tracked L3 success manifest. It does not request or open the ignored
 diagnostic CSV and does not reopen the GSHHG ZIP, an archive member or
 geometry, eligible support, predictor/model/prediction bytes, external
-target/QA values, or final results. A passing V2 decision freezes only the
+target/QA values, or final results. The V2 decision freezes only the
 exact GSHHG 2.3.7 source and the audited L1/L2/L3 point-distance algorithm in
 its decision terminal. Tract aggregation, feature names, predictor
 construction, model fitting, protocol promotion, and target access remain
 closed. Preserve `WATER_DISTANCE_FREEZE_DECISION.json`; V2 may write only the
 append-only `WATER_DISTANCE_FREEZE_DECISION_V2.json`.
 
-After V2, do not jump directly to predictor-contract work. First publish and
-authenticate tracked-only planning schema v8. V8 must consume the exact V2
+After publishing and authenticating V2, do not jump directly to
+predictor-contract work. First publish and authenticate tracked-only planning
+schema v8. V8 must consume the exact V2
 terminal, set the canonical plan's source and algorithm locks true, close the
 consumed decision permission, and authorize only the separate
 predictor-source/calibration-contract freeze. Staged code alone grants no

@@ -108,13 +108,14 @@ at `(-113.770306, 31.570972)` and Census archive row `3419` at
 No target grid, target/QA value, feature surface, predictor, model, prediction,
 or final-evaluation output was opened.
 
-The separate source-and-algorithm freeze decision is complete under internal
+The historical V1 source-and-algorithm freeze decision completed under internal
 commit
 `00e8ed677035f8f8315b7171fa8c969ca6c50c14b0114eff9e5024bb1c7b99b5`
-and was deliberately deferred. GSHHG remains the candidate source, but the
+and was deliberately deferred. GSHHG remained the candidate source, but the
 four fixed points do not show that excluding L3 lake-island shores is harmless
-for every frozen eligible-land cell. The source and algorithm remain
-unfrozen.
+for every frozen eligible-land cell. At that checkpoint, the source and
+algorithm remained unfrozen; the later L3 audit and current V2 decision
+resolved that narrow gap.
 
 The exact L3 hierarchy audit is now complete. V1 failed closed in the
 structure phase, before any probe or distance, because source ID `180515` had
@@ -135,24 +136,30 @@ terminal was published in commit
 and internal commit is
 `9b7f6c814bda4e97120a6768b88feae37ee73044883b2ec8cad10db8d4af0f0b`.
 
-The audit created no source, algorithm, feature-name, predictor, model, target,
-or protocol lock. `source_frozen`, `algorithm_frozen`, and
-`predictor_build_authorized` remain false. The next safe stage is the separate
-portable water-distance source-and-algorithm freeze decision.
+At the L3-audit checkpoint, the audit created no source, algorithm,
+feature-name, predictor, model, target, or protocol lock. `source_frozen`,
+`algorithm_frozen`, and `predictor_build_authorized` were false, and the next
+safe stage was the separate portable water-distance source-and-algorithm
+freeze decision.
 
-Canonical schema v7 is now rendered as a 20,809-byte plan with file SHA-256
+Canonical schema v7 was published in commit
+`252c01d015110336c65bb602d4c5b608708fb092` and passed `--check-only` from
+clean synchronized `main`. It is a 20,809-byte plan with file SHA-256
 `88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3`
 and internal commit
 `4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
 It changes exactly two authorization paths: it closes
 `target_blind_gshhg_l3_hierarchy_geometry_read` and opens only
 `portable_predictor_source_freeze`. All locks and `predictor_construction`
-remain false. After this tracked-only transition is committed, pushed, and
-authenticated, the append-only V2 decision may bind the exact GSHHG 2.3.7
-source and audited point-distance algorithm; it may not freeze feature names
-or authorize predictor construction. Its seven source-only rows come from the
-tracked L3 success JSON, not the ignored CSV, and it opens no
-ZIP/member/geometry/eligible-support/target/result data.
+remain false. The append-only V2 decision has now bound the exact GSHHG 2.3.7
+source and audited point-distance algorithm. Its 18,541-byte terminal has file
+SHA-256
+`a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b`
+and internal commit
+`2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51`.
+It does not freeze feature names or authorize predictor construction. Its
+seven source-only rows come from the tracked L3 success JSON, not the ignored
+CSV, and it opens no ZIP/member/geometry/eligible-support/target/result data.
 
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.
@@ -561,11 +568,11 @@ The generated development report is `reports/DEVELOPMENT_REPORT.md`, report SHA
    claim or rerun it with changed settings.
 2. Preserve implementation commit
    `eefb531e99d95e8dd7069e821ff941abd68de622` and the sole canonical v6-to-v7
-   plan transition published under subject
-   `Authorize water distance freeze decision`.
-3. Authenticate v7 from clean synchronized `main`; then publish and
-   authenticate the append-only V2 source-and-algorithm decision.
-4. After V2, publish a separate tracked-only v8 that authenticates and
+   plan transition in commit
+   `252c01d015110336c65bb602d4c5b608708fb092`.
+3. Publish and authenticate the append-only V2 source-and-algorithm terminal
+   under subject `Record water distance freeze v2 terminal`.
+4. Publish a separate tracked-only v8 that authenticates and
    consumes the terminal, updates the canonical plan locks, closes the
    decision permission, and authorizes only predictor-contract freezing.
 5. Keep predictor construction, model fitting, and Phoenix/Houston/Chicago
