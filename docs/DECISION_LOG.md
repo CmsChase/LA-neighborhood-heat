@@ -1757,3 +1757,32 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   full-repository Ruff, and terminal authentication from clean synchronized
   `main`. Metrics were inspected only after the committed terminal
   authenticated.
+
+## 2026-08-01 - Implement the separate water-distance freeze transition
+
+- Decision: use three append-safe publications before any predictor-contract
+  work: first code/config/tests/docs, then canonical planning v7, then the V2
+  decision terminal. Every publication requires clean synchronized `main` and
+  a post-publication `--check-only` authentication.
+- Planning v7 changes exactly two authorization leaves:
+  `target_blind_gshhg_l3_hierarchy_geometry_read` changes true to false and
+  `portable_predictor_source_freeze` changes false to true. All canonical
+  locks and `predictor_construction` remain false.
+- V2 extracts all seven source-only diagnostics directly from the exact
+  tracked `GSHHG_L3_HIERARCHY_AUDIT.json`. It does not request or open the
+  ignored CSV and makes no network request or ZIP/member/geometry/
+  eligible-support/predictor/model/target/result read.
+- A passing V2 terminal creates only the exact GSHHG 2.3.7 source lock and
+  audited L1/L2/L3 point-distance-algorithm lock. Tract aggregation, feature
+  names, predictor construction, model fitting, protocol promotion, and target
+  access remain closed.
+- V2 cannot directly authorize predictor-contract work. Its next gate is a
+  separate tracked-only planning v8 that authenticates and consumes the exact
+  terminal, sets the canonical plan's source and algorithm locks true, closes
+  the consumed decision permission, and authorizes only the separate
+  predictor-source/calibration-contract freeze.
+- The historical deferred `WATER_DISTANCE_FREEZE_DECISION.json` is immutable;
+  V2 may write only append-only `WATER_DISTANCE_FREEZE_DECISION_V2.json`. At
+  this implementation checkpoint canonical planning is still v6 and the V2
+  terminal does not yet exist; later entries must record actual publication
+  hashes and authenticated states without rewriting this decision.

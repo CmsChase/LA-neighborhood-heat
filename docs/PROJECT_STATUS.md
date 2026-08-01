@@ -1,4 +1,4 @@
-# Project Status — 2026-07-29
+# Project Status - 2026-08-01
 
 This file is a historical scientific summary. Before any work, read
 `docs/PROJECT_HANDOFF.md` in full; that document is authoritative for the live
@@ -139,6 +139,16 @@ The audit created no source, algorithm, feature-name, predictor, model, target,
 or protocol lock. `source_frozen`, `algorithm_frozen`, and
 `predictor_build_authorized` remain false. The next safe stage is the separate
 portable water-distance source-and-algorithm freeze decision.
+
+The staged schema-v7 transition changes exactly two authorization paths: it
+closes `target_blind_gshhg_l3_hierarchy_geometry_read` and opens only
+`portable_predictor_source_freeze`. All locks and
+`predictor_construction` remain false. After that tracked-only transition is
+committed, pushed, and authenticated, the append-only V2 decision may bind the
+exact GSHHG 2.3.7 source and audited point-distance algorithm; it may not
+freeze feature names or authorize predictor construction. Its seven
+source-only rows come from the tracked L3 success JSON, not the ignored CSV,
+and it opens no ZIP/member/geometry/eligible-support/target/result data.
 
 The returned archive is `D:\Downloads\FINAL _VER.zip`, SHA-256
 `0a07e9e3f016b0ed67a5f00085b0ab74ebd0f5273b58f9cbadbb07aa6ac0a335`.
@@ -545,12 +555,17 @@ The generated development report is `reports/DEVELOPMENT_REPORT.md`, report SHA
 
 1. Preserve the completed Los Angeles evidence chain; never create a second
    claim or rerun it with changed settings.
-2. For the separate target-locked continuation, make one independent
-   portable water-distance source-and-algorithm freeze decision using only the
-   authenticated L3 audit evidence.
-3. Keep predictor construction, model fitting, and Phoenix/Houston/Chicago
+2. Commit and push the tested v7/V2 code, exact configuration, tests, and
+   documentation while canonical planning remains v6 and no V2 terminal
+   exists.
+3. From clean synchronized `main`, publish and authenticate v7; then publish
+   and authenticate the append-only V2 source-and-algorithm decision.
+4. After V2, publish a separate tracked-only v8 that authenticates and
+   consumes the terminal, updates the canonical plan locks, closes the
+   decision permission, and authorizes only predictor-contract freezing.
+5. Keep predictor construction, model fitting, and Phoenix/Houston/Chicago
    target or target-QA access closed until their later explicit transitions.
-4. Continue to state the Los Angeles result exactly: strong M2 point and
+6. Continue to state the Los Angeles result exactly: strong M2 point and
    ranking performance, but a failed positive-confidence-bound gate and no
    overall protocol success.
 
@@ -567,7 +582,7 @@ without reopening targets.
 
 The completed GSHHG L3 audit is covered by 316 passing focused tests, two
 successful full-repository test runs, and a clean full-repository Ruff run.
-The current repository collects 1,149 tests. A terminal `--check-only`
+The current repository collects 1,180 tests. A terminal `--check-only`
 authenticated the committed success manifest from synchronized `main` before
 its metrics were inspected.
 

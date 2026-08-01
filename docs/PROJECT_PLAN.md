@@ -14,7 +14,7 @@ dates.
 | 5. Robustness and interpretation — complete with limitations | 11 | Feature-family ablations, strict pixel-level ST_QA sensitivity, QA cohorts, sensor checks, uncertainty intervals, endpoint and residual diagnostics | Authenticated ablation/sensitivity tables, unified evidence table, generated development report, hotspot and spatial diagnostics | Complete: strict 2 K date-support gate failed and spatial clustering remains, so the claim is explicitly narrowed | Research team |
 | 6. Model lock and one-time final test — complete | 12 | Freeze code/config/features/model/figures, create hashes, then unlock and evaluate 2025 once | `MODEL_LOCK.json`, append-only claim chain, one-way 2025 predictions, metrics, and figures | Evaluator never fits; every hash matches; one authenticated final transaction | Authorized operator after student approval |
 | 7. Research communication — complete | 13–14 | Write paper, poster, public result atlas, limitations, and oral-defense materials | Final report, reviewed paper, print poster, defense deck, website, and reproducibility instructions | Every number traceable to a table or script; claims match estimand | Writing and QA team; student presents |
-| 8. Cross-city continuation — draft; L3 hierarchy audit complete; source/algorithm freeze pending | continuation | Test zero-shot transfer from LA to Phoenix, Houston, and Chicago; add calibrated uncertainty and abstention | Separate protocol/config, city manifests, target-blind predictors, frozen predictions, one-time external evidence | External targets stay sealed; next gate is a separate portable water-distance source-and-algorithm freeze decision | Research engineering implements; independent review challenges; student approves freeze |
+| 8. Cross-city continuation — draft; L3 hierarchy audit complete; v7/V2 freeze-decision implementation staged | continuation | Test zero-shot transfer from LA to Phoenix, Houston, and Chicago; add calibrated uncertainty and abstention | Separate protocol/config, city manifests, target-blind predictors, frozen predictions, one-time external evidence | Commit implementation; authenticate tracked-only v7; publish append-only V2 source/point-distance-algorithm decision; then publish v8; predictors and targets stay sealed | Research engineering implements; independent review challenges; student approves freeze |
 
 ## Planned result package
 
@@ -146,3 +146,13 @@ descendants and passed every structural and numerical gate. It created no
 source, algorithm, feature-name, predictor, model, external-target, or
 target-QA authorization. The next safe task is the separate portable
 water-distance source-and-algorithm freeze decision.
+
+The staged v7 changes exactly two authorization leaves: it closes the consumed
+L3 geometry-read permission and opens only the evidence-only V2 freeze
+decision. The V2 program reads seven source-only rows from the tracked L3
+success manifest, not the ignored CSV, and opens no ZIP, geometry, eligible
+support, predictor, model, target, or result. If it passes, only the exact
+source and audited point-distance algorithm are frozen in the decision
+terminal; predictor construction remains closed. A separate tracked-only v8
+must then consume that terminal, update the canonical plan locks, close the
+decision permission, and authorize only predictor-contract freezing.
