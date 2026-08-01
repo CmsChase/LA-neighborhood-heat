@@ -62,6 +62,12 @@ only the separately preregistered predictor-source and calibration-contract
 freeze. Its exact config, executor, script, input set, and unique output path
 must be committed before v8 is published.
 
+That mandatory transition is now complete in canonical planning-v8 commit
+`35b6015a3a9a410b42752d2e50a7599e18bf2563`. The separately authenticated
+contract V1 decision was deferred; see
+`docs/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.md`. The V2 source and algorithm
+locks remain valid, but predictor construction is still closed.
+
 ## Authentication
 
 After the publication commit is pushed from clean synchronized `main`, run:

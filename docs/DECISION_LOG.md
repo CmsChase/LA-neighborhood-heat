@@ -1862,3 +1862,32 @@ No unlock has occurred. `unlock_final_test` remains `false`.
 - Publication order is implementation first, canonical v8 second as its
   direct child, and the separately authenticated contract-decision terminal
   only after v8 passes `--check-only`. Staged files alone grant no authority.
+
+## 2026-08-01 - Publish v8 and defer predictor-contract freeze V1
+
+- The reviewed implementation was published in
+  `622b03cadbc94af0ecf667ce4602913b36fb0d74`. Canonical planning v8 was then
+  published as its single-file direct child
+  `35b6015a3a9a410b42752d2e50a7599e18bf2563` and passed publication-aware
+  authentication.
+- V8 is 27,837 bytes, file SHA-256
+  `8ad87ecdfd7d6e232d574662187dc91977bef0c177fd673cb96305469f44d948`,
+  and internal commit
+  `d2a3d95bc4935b3aa1c46861abd2420d67959db0de18c3689b6d5994e64800dd`.
+  It canonicalizes only the V2 source/algorithm locks and opens only the exact
+  V1 contract-decision permission.
+- The direct-child V1 terminal publication
+  `47a626f6fc0a6577148cc731bb00d21f5387f20a` added only
+  `PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.json` and passed `--check-only`.
+  The terminal is 12,934 bytes, file SHA-256
+  `794e85c2ea5ad76b84c5e6e7be0999bc5939ab85d9dc7df773406f9802fe6127`,
+  and internal commit
+  `75b368d7f71c7af5af10317f996595f629e4dacdbbf62b3dc79c3ac0c5eb3e3d`.
+- The freeze is deferred because exactly four preregistered gaps were found:
+  absent Houston and Chicago source-footprint manifests, absent Phoenix NLCD
+  source family, and unfrozen Phoenix terrain content hash/schema. Predictor
+  construction and every downstream permission remain closed.
+- The next safe stage is
+  `stage_missing_portable_predictor_source_evidence_before_v2_freeze`.
+  No external data were added or opened, so `docs/DATA_MANIFEST.csv` is
+  unchanged.

@@ -16,9 +16,15 @@ Latest required scientific checkpoints on `main`:
   commit `91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c`, subject
   `Record water distance freeze v2 terminal`
 - the tracked-only planning-v8 transition and the exact future
-  predictor-contract audit implementation are in the commit with subject
-  `Stage planning v8 and predictor contract audit`; obtain its exact hash with
-  `git log --oneline --grep="Stage planning v8 and predictor contract audit" -1`
+  predictor-contract audit implementation are in commit
+  `622b03cadbc94af0ecf667ce4602913b36fb0d74`, subject
+  `Stage planning v8 and predictor contract audit`
+- canonical planning v8 is in commit
+  `35b6015a3a9a410b42752d2e50a7599e18bf2563`, subject
+  `Authorize portable predictor contract freeze`
+- the append-only portable-predictor-contract V1 terminal is in commit
+  `47a626f6fc0a6577148cc731bb00d21f5387f20a`, subject
+  `Record predictor contract freeze v1 terminal`
 - completed L3 hierarchy-audit report, current status, decision log, and this
   handoff are in the commit with subject
   `Document completed GSHHG L3 audit`; obtain its exact hash with
@@ -626,20 +632,21 @@ and internal commit
 `2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51`.
 It creates the source and algorithm locks in the decision terminal only.
 Feature names, tract aggregation, predictor construction, model fitting,
-protocol promotion, and external target access remain closed; the canonical
-plan's matching locks remain false until v8 consumes this terminal.
+protocol promotion, and external target access remain closed. Canonical v8
+has now consumed this terminal and copied only its source and algorithm locks
+into the plan.
 
 Safe current authentication commands:
 
 ```powershell
 .\.venv\Scripts\python `
-  scripts\authorize_multicity_water_distance_freeze.py --check-only
+  scripts\authorize_multicity_predictor_contract_freeze.py --check-only
 .\.venv\Scripts\python `
-  scripts\audit_multicity_portable_water_distance_freeze_v2.py --check-only
+  scripts\audit_multicity_portable_predictor_contract_freeze_v1.py --check-only
 ```
 
-The tested v7/V2 implementation and canonical v7 are committed, pushed, and
-authenticated. Planning v7 is 20,809 bytes, file SHA-256
+The historical v7/V2 implementation and canonical v7 were committed, pushed,
+and authenticated before v8. Planning v7 is 20,809 bytes, file SHA-256
 `88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3`,
 with internal commit
 `4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
@@ -650,8 +657,8 @@ child of v7 in commit `91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c` and
 passed both V2 and v7 publication-aware authentication.
 
 The completed V2 decision extracts the seven source-only diagnostic rows
-directly from the tracked L3 success manifest. It does not request or open the ignored
-diagnostic CSV and does not reopen the GSHHG ZIP, an archive member or
+directly from the tracked L3 success manifest. It does not request or open the
+ignored diagnostic CSV and does not reopen the GSHHG ZIP, an archive member or
 geometry, eligible support, predictor/model/prediction bytes, external
 target/QA values, or final results. The V2 decision freezes only the
 exact GSHHG 2.3.7 source and the audited L1/L2/L3 point-distance algorithm in
@@ -660,16 +667,13 @@ construction, model fitting, protocol promotion, and target access remain
 closed. Preserve `WATER_DISTANCE_FREEZE_DECISION.json`; V2 may write only the
 append-only `WATER_DISTANCE_FREEZE_DECISION_V2.json`.
 
-Do not jump directly to predictor construction. First commit and push the
-reviewed v8 transition together with the exact future contract-audit config,
-executor, script, and tests while canonical planning remains v7. Then publish
-and authenticate tracked-only planning schema v8 as the direct child of that
-implementation commit. V8 must consume the exact V2 terminal, set the
-canonical plan's source and algorithm locks true, close the consumed decision
-permission, and authorize only the separately bound
-predictor-source/calibration-contract freeze. Staged code alone grants no
-permission until its matching canonical transition is committed, pushed, and
-authenticated.
+Do not jump directly to predictor construction. Canonical planning v8 has
+consumed V2, set only the water source/algorithm locks true, closed the old
+decision permission, and authorized only the exact V1 contract audit. V8 is
+27,837 bytes, file SHA-256
+`8ad87ecdfd7d6e232d574662187dc91977bef0c177fd673cb96305469f44d948`,
+with internal commit
+`d2a3d95bc4935b3aa1c46861abd2420d67959db0de18c3689b6d5994e64800dd`.
 
 The bound contract-decision configuration is
 `configs/multicity/portable_predictor_contract_freeze_v1.toml`: 5,794 bytes,
@@ -677,12 +681,22 @@ SHA-256
 `536364a9a44b0fbf04a7880f2053cb2b5ae6d9badbe12861236773d239362c62`.
 It authorizes one tracked-only V1 decision at
 `manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.json`.
-The preregistered outcome is deferred, with exactly four expected evidence
+The authenticated V1 outcome is deferred, with exactly four observed evidence
 gaps: Houston and Chicago source-footprint manifests are absent; the Phoenix
 manifest lacks the NLCD family; and its terrain content hash/schema are not
-frozen. That terminal must keep feature names, predictor construction,
-protocol, model, target, evaluation, and operational claims closed. Do not
-run the V1 decision until canonical v8 has been published and authenticated.
+frozen. The terminal is 12,934 bytes, file SHA-256
+`794e85c2ea5ad76b84c5e6e7be0999bc5939ab85d9dc7df773406f9802fe6127`,
+with internal commit
+`75b368d7f71c7af5af10317f996595f629e4dacdbbf62b3dc79c3ac0c5eb3e3d`.
+It keeps feature names, predictor construction, protocol, model, target,
+evaluation, and operational claims closed. Its report is
+`docs/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.md`.
+
+The next safe stage is exactly
+`stage_missing_portable_predictor_source_evidence_before_v2_freeze`. A new
+tracked-only transition must bind any metadata requests or downloads before
+they occur. No external data were added by v8 or V1, so
+`docs/DATA_MANIFEST.csv` did not change.
 
 The v8 and V1 focused suites contain 33 passing tests. They cover
 exact scope/config/runtime binding, bounded Git history, tamper-and-restore,

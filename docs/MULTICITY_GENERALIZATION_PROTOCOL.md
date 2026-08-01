@@ -270,6 +270,15 @@ authorize the exact preregistered predictor-source/calibration-contract audit.
 The staged implementation has no authority before v8 is committed, pushed,
 and authenticated.
 
+Canonical planning v8 is now published and authenticated. Its bound V1
+contract decision is also complete and append-only, but the contract freeze
+was deferred: Houston and Chicago lack metadata-only source-footprint
+manifests, while the Phoenix pilot lacks an NLCD family and a frozen terrain
+content/schema contract. This preserves the source/algorithm locks from V2
+while leaving feature names, predictor construction, protocol, model, target,
+and evaluation permissions closed. The next stage may stage only those
+missing target-blind source facts under a separate exact authorization.
+
 Predictor construction, model fitting, external target access, and an
 operational-forecast claim remain locked until their missing source and
 protocol contracts are separately frozen.

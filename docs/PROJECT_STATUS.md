@@ -40,14 +40,19 @@ predictions that should be withheld.
 
 The draft protocol is `docs/MULTICITY_GENERALIZATION_PROTOCOL.md`; the
 machine-readable audit is `manifests/multicity/PLAN_READINESS.json`. Current
-canonical planning is schema v7, published in commit
-`252c01d015110336c65bb602d4c5b608708fb092`, with internal commit
-`4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
-The append-only V2 decision terminal was published in its direct child
-`91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c` and authenticated the exact
-GSHHG source and point-distance algorithm. Those locks exist in the terminal;
-canonical plan fields remain false until v8 consumes it. Predictor, model,
-protocol, external target, and evaluation authorization remain closed.
+canonical planning is schema v8, published in commit
+`35b6015a3a9a410b42752d2e50a7599e18bf2563`, with internal commit
+`d2a3d95bc4935b3aa1c46861abd2420d67959db0de18c3689b6d5994e64800dd`.
+It consumes the append-only V2 decision and makes the GSHHG source and audited
+point-distance algorithm locks canonical. It closes the consumed decision
+permission and authorizes only the exact V1 predictor-contract audit.
+
+That V1 terminal is published in commit
+`47a626f6fc0a6577148cc731bb00d21f5387f20a` and is deferred with four exact
+evidence gaps: missing Houston and Chicago source-footprint manifests,
+missing Phoenix NLCD source family, and unfrozen Phoenix terrain content
+hash/schema. Predictor, model, protocol, external target, and evaluation
+authorization remain closed.
 
 The generic Census place/tract adapter and corrected Phoenix geography pilot
 are complete. The target-independent 50% area rule plus one `98xxxx`
@@ -573,12 +578,12 @@ The generated development report is `reports/DEVELOPMENT_REPORT.md`, report SHA
    `252c01d015110336c65bb602d4c5b608708fb092`.
 3. Preserve authenticated V2 publication
    `91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c` and its append-only terminal.
-4. Commit and push the reviewed v8 transition plus the exact future
-   predictor-contract audit config/code/tests without changing canonical v7.
-5. Publish and authenticate v8 as the direct child of that implementation
-   commit. It must consume V2, canonicalize only the water source/algorithm
-   locks, close the old decision permission, and authorize only the bound
-   predictor-contract freeze.
+4. Preserve canonical v8 publication
+   `35b6015a3a9a410b42752d2e50a7599e18bf2563` and authenticated V1 terminal
+   publication `47a626f6fc0a6577148cc731bb00d21f5387f20a`.
+5. Preregister and stage only the missing Houston/Chicago/Phoenix source
+   evidence required by V1. Any network or download must be explicitly bound
+   before it occurs.
 6. Keep predictor construction, model fitting, and Phoenix/Houston/Chicago
    target or target-QA access closed until their later explicit transitions.
 7. Continue to state the Los Angeles result exactly: strong M2 point and
@@ -608,16 +613,14 @@ The V2-stage 31-test security suite, two complete 1,180-test repository runs,
 and full-repository Ruff all passed with only the same five existing
 deprecation warnings.
 
-The staged v8 plus portable-predictor-contract V1 implementation has 33
+The published v8 plus portable-predictor-contract V1 implementation has 33
 focused passing tests; the complete 1,213-test suite and full-repository Ruff
 also pass. Its V1 configuration is 5,794 bytes
 with SHA-256
 `536364a9a44b0fbf04a7880f2053cb2b5ae6d9badbe12861236773d239362c62`.
-It is expected to produce a deferred, predictor-closed terminal documenting
-four missing source-contract facts; it performs no predictor construction or
-target access. Canonical authority remains v7 until the reviewed
-implementation and subsequent v8 plan publication are separately committed,
-pushed, and authenticated.
+It produced the authenticated deferred, predictor-closed terminal described
+above and performed no predictor construction or target access. Both v8 and
+V1 passed publication-aware authentication from synchronized `main`.
 
 The exact scientific contract is in `docs/RESEARCH_PROTOCOL.md`; the Phase 2
 implementation contract is in `docs/PHASE2_FEATURE_SPEC.md`.

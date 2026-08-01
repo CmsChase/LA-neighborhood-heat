@@ -24,6 +24,7 @@ history is intentionally separated from the short project landing page.
 | What exactly is fixed before the L3 hierarchy audit? | [GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md](GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md) |
 | What did the completed L3 hierarchy audit find? | [GSHHG_L3_HIERARCHY_AUDIT_REPORT.md](GSHHG_L3_HIERARCHY_AUDIT_REPORT.md) |
 | What source and water-distance algorithm are now frozen? | [WATER_DISTANCE_FREEZE_DECISION_V2.md](WATER_DISTANCE_FREEZE_DECISION_V2.md) |
+| Why is the portable predictor contract still deferred? | [PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.md](PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.md) |
 
 ## Scientific contracts
 
@@ -61,6 +62,9 @@ history is intentionally separated from the short project landing page.
 - [WATER_DISTANCE_FREEZE_DECISION_V2.md](WATER_DISTANCE_FREEZE_DECISION_V2.md):
   authenticated GSHHG 2.3.7 source and point-distance-algorithm freeze,
   closed-data ledger, applicability limits, and mandatory planning-v8 gate.
+- [PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.md](PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.md):
+  authenticated deferred predictor-contract decision, four exact missing
+  source-evidence facts, closed permissions, and the next safe staging gate.
 
 ## Execution and status
 
