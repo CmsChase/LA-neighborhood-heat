@@ -1,0 +1,132 @@
+[decision]
+schema_version = 1
+algorithm_version = "portable-predictor-contract-freeze-v1"
+decision_id = "portable_predictor_contract_freeze_v1"
+decision_date = "2026-08-01"
+scope = "target-blind portable predictor source and calibration contract freeze decision"
+state = "decision_complete_contract_freeze_deferred_predictor_closed"
+outcome = "defer_until_cross_city_source_footprints_and_static_source_contracts_complete"
+expected_experiment_id = "la_to_three_city_zero_shot_v1"
+expected_experiment_semantic_sha256 = "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c"
+
+[planning_authorization]
+path = "manifests/multicity/PLAN_READINESS.json"
+expected_schema_version = 8
+expected_algorithm_version = "multicity-planning-readiness-v8"
+expected_state = "planning_ready"
+expected_planning_stage = "portable_water_distance_source_and_algorithm_frozen_predictor_contract_freeze_authorized"
+expected_next_safe_stage = "freeze_exact_portable_predictor_source_and_calibration_contract"
+required_authorization = "portable_predictor_source_and_calibration_contract_freeze"
+
+[prerequisites.water_distance_v2]
+path = "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION_V2.json"
+expected_bytes = 18541
+expected_file_sha256 = "a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b"
+expected_commit_sha256 = "2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51"
+expected_state = "decision_complete_source_and_algorithm_frozen_predictor_closed"
+expected_outcome = "freeze_gshhg_2_3_7_l1_l2_l3_source_and_point_distance_algorithm"
+publication_git_commit = "91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c"
+
+[prerequisites.phoenix_source_footprint]
+path = "manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json"
+expected_bytes = 18861
+expected_file_sha256 = "76a667f559a98bf6281d7f8af71fab18c2fac8d3701ea91813eef8ff8ef479df"
+expected_commit_sha256 = "a6f287daa22c41d893519dc751848c426b819dcf4ae00d33012fbf11c6073ed7"
+expected_state = "complete_metadata_only_source_not_protocol_locked"
+expected_source_lock_status = "pilot_snapshot_not_protocol_lock"
+publication_git_commit = "44ecdcd2e48c68fa1c67a7ff0c2d1a54d5d3a785"
+
+[expected_absent_source_footprints]
+city_ids = ["houston_tx", "chicago_il"]
+paths = [
+  "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json",
+  "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json",
+]
+required_status = "never_tracked_at_v8_publication"
+
+[required_contract]
+families = [
+  "nationwide_land_cover_and_imperviousness",
+  "elevation_and_slope",
+  "portable_water_distance_aggregation_and_feature_names",
+  "calendar_harmonics",
+  "lagged_daymet",
+  "lagged_nonthermal_sentinel_2",
+]
+must_freeze = [
+  "source_identity_and_version",
+  "calibration_and_units",
+  "timing_and_lag_windows",
+  "spatial_support_and_aggregation",
+  "feature_names_and_missingness_rules",
+]
+water_distance_source_and_point_algorithm_must_remain_exact = true
+
+[defer_rules]
+required_blockers = [
+  "houston_source_footprint_manifest_absent",
+  "chicago_source_footprint_manifest_absent",
+  "phoenix_nlcd_source_family_absent",
+  "phoenix_terrain_content_and_schema_unfrozen",
+]
+phoenix_required_nlcd_family_key = "nlcd_land_cover_and_imperviousness"
+phoenix_required_terrain_family_key = "terrain_windows"
+phoenix_terrain_content_sha256_must_be_frozen = true
+phoenix_terrain_raster_schema_must_be_verified = true
+all_required_blockers_must_be_observed = true
+freeze_when_a_required_blocker_is_observed = false
+
+[locks]
+portable_water_distance_source_locked = true
+portable_water_distance_algorithm_locked = true
+portable_predictor_source_and_calibration_contract_locked = false
+portable_water_distance_feature_names_frozen = false
+predictor_build_authorized = false
+protocol_lock_created = false
+external_targets_unlocked = false
+external_target_values_read = false
+external_prediction_commit_exists = false
+
+[access_contract]
+decision_program_network_requests = 0
+planning_manifest_read = true
+tracked_decision_config_bytes_read = true
+tracked_code_file_bytes_hashed = true
+tracked_json_manifest_bytes_read = true
+historical_git_blob_bytes_read = true
+local_git_metadata_read = true
+untracked_path_names_checked_by_git_status = true
+untracked_file_contents_opened = false
+ignored_path_names_requested_from_git = false
+source_archive_or_payload_opened = false
+geometry_opened = false
+eligible_land_grid_opened = false
+raster_or_vector_values_opened = false
+distance_feature_surface_opened_or_computed = false
+predictor_values_opened_or_computed = false
+predictor_construction_performed = false
+model_fit_performed = false
+model_predictions_computed = false
+landsat_thermal_values_read = false
+landsat_target_qa_values_read = false
+external_lst_values_read = false
+external_target_files_opened = false
+final_evaluation_outputs_opened = false
+
+[next_gate]
+stage_id = "stage_missing_portable_predictor_source_evidence_before_v2_freeze"
+v1_terminal_is_append_only_and_may_not_be_overwritten = true
+houston_and_chicago_metadata_only_source_footprints_required = true
+phoenix_nlcd_source_identity_version_calibration_units_and_support_required = true
+phoenix_terrain_content_hash_schema_calibration_units_and_support_required = true
+new_network_or_download_requires_exact_preregistration = true
+separate_v2_contract_decision_required = true
+separate_tracked_only_transition_required_before_predictor_construction = true
+portable_predictor_contract_remains_unfrozen = true
+predictor_construction_remains_closed = true
+model_target_protocol_and_operational_claim_authorization_remain_closed = true
+
+[outputs]
+manifest = "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.json"
+append_only = true
+overwrite_allowed = false

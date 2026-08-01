@@ -13,9 +13,12 @@ Latest required scientific checkpoints on `main`:
   `252c01d015110336c65bb602d4c5b608708fb092`, subject
   `Authorize water distance freeze decision`
 - the append-only portable water-distance V2 terminal and its report are in
-  the commit with subject `Record water distance freeze v2 terminal`; obtain
-  its exact hash with
-  `git log --oneline --grep="Record water distance freeze v2 terminal" -1`
+  commit `91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c`, subject
+  `Record water distance freeze v2 terminal`
+- the tracked-only planning-v8 transition and the exact future
+  predictor-contract audit implementation are in the commit with subject
+  `Stage planning v8 and predictor contract audit`; obtain its exact hash with
+  `git log --oneline --grep="Stage planning v8 and predictor contract audit" -1`
 - completed L3 hierarchy-audit report, current status, decision log, and this
   handoff are in the commit with subject
   `Document completed GSHHG L3 audit`; obtain its exact hash with
@@ -422,6 +425,9 @@ Current continuation verification:
 - complete repository suite after rendering the portable water-distance V2
   terminal: reached 100% with no failures and the same five existing
   deprecation warnings;
+- staged planning-v8 plus predictor-contract-V1 focused suite: 33 passed;
+- complete repository suite with the reviewed v8/V1 implementation: 1,213
+  passed in 187.3 seconds with the same five existing deprecation warnings;
 - canonical L3 terminal `--check-only`: passed from clean synchronized `main`,
   before metrics were inspected;
 - full-repository Ruff after the V2 terminal: all checks passed;
@@ -639,12 +645,12 @@ with internal commit
 `4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
 V7 closes the consumed L3 geometry-read grant and authorizes only
 `portable_predictor_source_freeze`; predictor construction and every formal
-lock remain false. The append-only V2 decision is now rendered and may be
-published only as the direct child of the v7 publication; after push it must
-pass V2 `--check-only`.
+lock remain false. The append-only V2 decision was published as the direct
+child of v7 in commit `91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c` and
+passed both V2 and v7 publication-aware authentication.
 
-The completed V2 decision extracts the seven source-only diagnostic rows directly from
-the tracked L3 success manifest. It does not request or open the ignored
+The completed V2 decision extracts the seven source-only diagnostic rows
+directly from the tracked L3 success manifest. It does not request or open the ignored
 diagnostic CSV and does not reopen the GSHHG ZIP, an archive member or
 geometry, eligible support, predictor/model/prediction bytes, external
 target/QA values, or final results. The V2 decision freezes only the
@@ -654,14 +660,34 @@ construction, model fitting, protocol promotion, and target access remain
 closed. Preserve `WATER_DISTANCE_FREEZE_DECISION.json`; V2 may write only the
 append-only `WATER_DISTANCE_FREEZE_DECISION_V2.json`.
 
-After publishing and authenticating V2, do not jump directly to
-predictor-contract work. First publish and authenticate tracked-only planning
-schema v8. V8 must consume the exact V2
-terminal, set the canonical plan's source and algorithm locks true, close the
-consumed decision permission, and authorize only the separate
+Do not jump directly to predictor construction. First commit and push the
+reviewed v8 transition together with the exact future contract-audit config,
+executor, script, and tests while canonical planning remains v7. Then publish
+and authenticate tracked-only planning schema v8 as the direct child of that
+implementation commit. V8 must consume the exact V2 terminal, set the
+canonical plan's source and algorithm locks true, close the consumed decision
+permission, and authorize only the separately bound
 predictor-source/calibration-contract freeze. Staged code alone grants no
 permission until its matching canonical transition is committed, pushed, and
 authenticated.
+
+The bound contract-decision configuration is
+`configs/multicity/portable_predictor_contract_freeze_v1.toml`: 5,794 bytes,
+SHA-256
+`536364a9a44b0fbf04a7880f2053cb2b5ae6d9badbe12861236773d239362c62`.
+It authorizes one tracked-only V1 decision at
+`manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.json`.
+The preregistered outcome is deferred, with exactly four expected evidence
+gaps: Houston and Chicago source-footprint manifests are absent; the Phoenix
+manifest lacks the NLCD family; and its terrain content hash/schema are not
+frozen. That terminal must keep feature names, predictor construction,
+protocol, model, target, evaluation, and operational claims closed. Do not
+run the V1 decision until canonical v8 has been published and authenticated.
+
+The v8 and V1 focused suites contain 33 passing tests. They cover
+exact scope/config/runtime binding, bounded Git history, tamper-and-restore,
+hidden worktree modifications, unique direct-child publications, the four
+deferred blockers, and the data-blind import boundary.
 
 Current local runtime note: port `8768` is closed, no continuation service is
 running, and no GSHHG/pytest worker remains. The Windows C drive has about

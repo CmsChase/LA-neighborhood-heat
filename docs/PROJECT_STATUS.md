@@ -39,14 +39,15 @@ scaffold. It asks whether a fixed model trained only with Los Angeles
 predictions that should be withheld.
 
 The draft protocol is `docs/MULTICITY_GENERALIZATION_PROTOCOL.md`; the
-machine-readable audit is `manifests/multicity/PLAN_READINESS.json`, internal
-commit
-`1789d828f212e0cd65f87c9427eb4a7fbd1697cc7170ebb98a80806659afbc86`.
-Schema v6 authenticates the exact historical v5 planning blob, committed L3
-preregistration, pilot, deferred decision, configuration, code, and local Git
-blobs without reopening data or geometry. It records
-`external_targets_unlocked = false`; every source/algorithm freeze, predictor,
-model, target, and evaluation authorization remains false.
+machine-readable audit is `manifests/multicity/PLAN_READINESS.json`. Current
+canonical planning is schema v7, published in commit
+`252c01d015110336c65bb602d4c5b608708fb092`, with internal commit
+`4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`.
+The append-only V2 decision terminal was published in its direct child
+`91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c` and authenticated the exact
+GSHHG source and point-distance algorithm. Those locks exist in the terminal;
+canonical plan fields remain false until v8 consumes it. Predictor, model,
+protocol, external target, and evaluation authorization remain closed.
 
 The generic Census place/tract adapter and corrected Phoenix geography pilot
 are complete. The target-independent 50% area rule plus one `98xxxx`
@@ -570,14 +571,17 @@ The generated development report is `reports/DEVELOPMENT_REPORT.md`, report SHA
    `eefb531e99d95e8dd7069e821ff941abd68de622` and the sole canonical v6-to-v7
    plan transition in commit
    `252c01d015110336c65bb602d4c5b608708fb092`.
-3. Publish and authenticate the append-only V2 source-and-algorithm terminal
-   under subject `Record water distance freeze v2 terminal`.
-4. Publish a separate tracked-only v8 that authenticates and
-   consumes the terminal, updates the canonical plan locks, closes the
-   decision permission, and authorizes only predictor-contract freezing.
-5. Keep predictor construction, model fitting, and Phoenix/Houston/Chicago
+3. Preserve authenticated V2 publication
+   `91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c` and its append-only terminal.
+4. Commit and push the reviewed v8 transition plus the exact future
+   predictor-contract audit config/code/tests without changing canonical v7.
+5. Publish and authenticate v8 as the direct child of that implementation
+   commit. It must consume V2, canonicalize only the water source/algorithm
+   locks, close the old decision permission, and authorize only the bound
+   predictor-contract freeze.
+6. Keep predictor construction, model fitting, and Phoenix/Houston/Chicago
    target or target-QA access closed until their later explicit transitions.
-6. Continue to state the Los Angeles result exactly: strong M2 point and
+7. Continue to state the Los Angeles result exactly: strong M2 point and
    ranking performance, but a failed positive-confidence-bound gate and no
    overall protocol success.
 
@@ -594,9 +598,26 @@ without reopening targets.
 
 The completed GSHHG L3 audit is covered by 316 passing focused tests, two
 successful full-repository test runs, and a clean full-repository Ruff run.
-The current repository collects 1,180 tests. A terminal `--check-only`
+The current repository collects 1,213 tests. A terminal `--check-only`
 authenticated the committed success manifest from synchronized `main` before
 its metrics were inspected.
+
+Planning v7 and the append-only water-distance V2 terminal both passed their
+publication-aware `--check-only` authentication from synchronized `main`.
+The V2-stage 31-test security suite, two complete 1,180-test repository runs,
+and full-repository Ruff all passed with only the same five existing
+deprecation warnings.
+
+The staged v8 plus portable-predictor-contract V1 implementation has 33
+focused passing tests; the complete 1,213-test suite and full-repository Ruff
+also pass. Its V1 configuration is 5,794 bytes
+with SHA-256
+`536364a9a44b0fbf04a7880f2053cb2b5ae6d9badbe12861236773d239362c62`.
+It is expected to produce a deferred, predictor-closed terminal documenting
+four missing source-contract facts; it performs no predictor construction or
+target access. Canonical authority remains v7 until the reviewed
+implementation and subsequent v8 plan publication are separately committed,
+pushed, and authenticated.
 
 The exact scientific contract is in `docs/RESEARCH_PROTOCOL.md`; the Phase 2
 implementation contract is in `docs/PHASE2_FEATURE_SPEC.md`.

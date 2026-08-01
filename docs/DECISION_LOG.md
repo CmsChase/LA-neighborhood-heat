@@ -1818,7 +1818,8 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   `a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b`,
   and internal commit
   `2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51`.
-  It is published under subject `Record water distance freeze v2 terminal`.
+  It is published in commit `91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c`,
+  subject `Record water distance freeze v2 terminal`.
 - The decision program read seven source-only rows from the exact tracked L3
   success manifest. It made zero network requests and opened no ignored CSV,
   archive/member, geometry, eligible support, target/QA, model, prediction, or
@@ -1831,3 +1832,33 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   and consume this exact terminal, set the canonical source and algorithm
   locks true, close the consumed decision permission, and authorize only the
   separate predictor-source/calibration-contract freeze.
+
+## 2026-08-01 - Stage planning v8 and bind its only authorized audit
+
+- V8 is a tracked-only transition. Before writing canonical planning it must
+  authenticate the exact v7 plan, the append-only V2 terminal, their bounded
+  Git histories, unchanged frozen V2 runtimes, clean `main`, and
+  `HEAD == origin/main` without opening source data, geometry, eligible
+  support, predictors, models, targets, or results.
+- The only canonical lock changes are
+  `portable_water_distance_source_locked` false to true and
+  `portable_water_distance_algorithm_locked` false to true. Water-distance
+  feature names, predictor construction, protocol, model, target, evaluation,
+  and operational permissions remain false.
+- The consumed `portable_predictor_source_freeze` permission changes true to
+  false. The only new permission is
+  `portable_predictor_source_and_calibration_contract_freeze=true`.
+- That permission is not open-ended. The exact future contract-audit config,
+  executor, script, tracked input set, and unique append-only output path are
+  committed with the v8 transition and fingerprinted by the v8 plan. New
+  networking or downloads require an exact preregistration; predictor values,
+  model fitting, and target access remain prohibited.
+- The V1 config is 5,794 bytes with SHA-256
+  `536364a9a44b0fbf04a7880f2053cb2b5ae6d9badbe12861236773d239362c62`.
+  It preregisters a deferred outcome only if all four exact gaps are observed:
+  absent Houston and Chicago source-footprint manifests, absent Phoenix NLCD
+  source family, and unfrozen Phoenix terrain content hash/schema. A deferred
+  terminal cannot freeze feature names or authorize predictor construction.
+- Publication order is implementation first, canonical v8 second as its
+  direct child, and the separately authenticated contract-decision terminal
+  only after v8 passes `--check-only`. Staged files alone grant no authority.

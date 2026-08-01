@@ -18,6 +18,7 @@ The machine-readable authority is
   `a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b`;
 - internal commit:
   `2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51`;
+- publication commit: `91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c`;
 - publication subject: `Record water distance freeze v2 terminal`.
 
 ## What is frozen
@@ -57,7 +58,9 @@ the terminal.
 
 The next stage is therefore exactly
 `publish_tracked_only_plan_v8_after_water_distance_freeze`. V8 may authorize
-only the separate predictor-source and calibration-contract freeze.
+only the separately preregistered predictor-source and calibration-contract
+freeze. Its exact config, executor, script, input set, and unique output path
+must be committed before v8 is published.
 
 ## Authentication
 

@@ -14,7 +14,7 @@ dates.
 | 5. Robustness and interpretation — complete with limitations | 11 | Feature-family ablations, strict pixel-level ST_QA sensitivity, QA cohorts, sensor checks, uncertainty intervals, endpoint and residual diagnostics | Authenticated ablation/sensitivity tables, unified evidence table, generated development report, hotspot and spatial diagnostics | Complete: strict 2 K date-support gate failed and spatial clustering remains, so the claim is explicitly narrowed | Research team |
 | 6. Model lock and one-time final test — complete | 12 | Freeze code/config/features/model/figures, create hashes, then unlock and evaluate 2025 once | `MODEL_LOCK.json`, append-only claim chain, one-way 2025 predictions, metrics, and figures | Evaluator never fits; every hash matches; one authenticated final transaction | Authorized operator after student approval |
 | 7. Research communication — complete | 13–14 | Write paper, poster, public result atlas, limitations, and oral-defense materials | Final report, reviewed paper, print poster, defense deck, website, and reproducibility instructions | Every number traceable to a table or script; claims match estimand | Writing and QA team; student presents |
-| 8. Cross-city continuation — draft; water-distance V2 freeze complete; v8 pending | continuation | Test zero-shot transfer from LA to Phoenix, Houston, and Chicago; add calibrated uncertainty and abstention | Separate protocol/config, city manifests, target-blind predictors, frozen predictions, one-time external evidence | Publish and authenticate V2 terminal; then publish v8; predictors and targets stay sealed | Research engineering implements; independent review challenges; student approves freeze |
+| 8. Cross-city continuation — draft; water-distance V2 authenticated; v8 implementation in review | continuation | Test zero-shot transfer from LA to Phoenix, Houston, and Chicago; add calibrated uncertainty and abstention | Separate protocol/config, city manifests, target-blind predictors, frozen predictions, one-time external evidence | Bind exact predictor-contract audit code; publish/authenticate v8; predictors and targets stay sealed | Research engineering implements; independent review challenges; student approves freeze |
 
 ## Planned result package
 
@@ -162,4 +162,6 @@ whose file SHA-256 is
 `a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b`;
 predictor construction remains closed. A separate tracked-only v8 must then
 consume that terminal, update the canonical plan locks, close the decision
-permission, and authorize only predictor-contract freezing.
+permission, and authorize only the exact preregistered predictor-contract
+freeze program. That program is staged together with v8 so the permission
+cannot later be widened by substituting different code or inputs.

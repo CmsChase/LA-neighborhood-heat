@@ -261,6 +261,15 @@ authorized:
 4. run a Phoenix metadata-only pilot that reads no Landsat thermal or target-QA
    value.
 
+Canonical planning v7 then authorized only the completed water-distance V2
+decision. Its append-only terminal is published in commit
+`91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c` and freezes the exact GSHHG
+source and point-distance algorithm. A staged v8 transition may copy only
+those two locks into canonical planning, close the consumed permission, and
+authorize the exact preregistered predictor-source/calibration-contract audit.
+The staged implementation has no authority before v8 is committed, pushed,
+and authenticated.
+
 Predictor construction, model fitting, external target access, and an
 operational-forecast claim remain locked until their missing source and
 protocol contracts are separately frozen.
@@ -343,8 +352,10 @@ freezes only the exact source and audited point-distance algorithm. It does
 not freeze tract aggregation or feature names and does not authorize predictor
 construction. A separate tracked-only planning v8 must authenticate and
 consume the exact V2 terminal, update the canonical plan locks, close the
-consumed decision permission, and authorize only the
-predictor-source/calibration-contract freeze.
+consumed decision permission, and authorize only the exact preregistered
+predictor-source/calibration-contract freeze. Its configuration, runtime
+paths, tracked read set, and unique append-only output must be bound by v8
+before that audit runs.
 
 ## Official source anchors
 
