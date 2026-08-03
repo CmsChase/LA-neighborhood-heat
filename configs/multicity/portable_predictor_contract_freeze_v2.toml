@@ -1,0 +1,457 @@
+[decision]
+schema_version = 2
+algorithm_version = "portable-predictor-contract-freeze-v2"
+decision_id = "portable_predictor_contract_freeze_v2"
+decision_date = "2026-08-03"
+scope = "target-blind four-city portable predictor source calibration aggregation timing feature and missingness contract freeze"
+state = "decision_complete_candidate_rules_frozen_contract_deferred_predictor_closed"
+outcome = "defer_for_geography_worldcover_support_and_sentinel_calibration_evidence"
+experiment_id = "la_to_three_city_zero_shot_v1"
+
+[planning_authorization]
+path = "manifests/multicity/PLAN_READINESS.json"
+expected_schema_version = 11
+expected_algorithm_version = "multicity-planning-readiness-v11"
+expected_state = "planning_ready"
+expected_planning_stage = "portable_predictor_source_evidence_complete_contract_freeze_v2_authorized"
+expected_next_safe_stage = "freeze_exact_portable_predictor_contract_v2"
+required_authorization = "portable_predictor_source_and_calibration_contract_freeze_v2"
+
+[prerequisites.v10_plan]
+path = "manifests/multicity/PLAN_READINESS.json"
+bytes = 45470
+file_sha256 = "bdd2a1c75d397116f2c9e9f00e7e673dc83581e5b3b707b9bf5318e815cb3c28"
+commit_sha256 = "61359cbec70f2f4f549ed177abdca8b06b3459e3bb21d3f3d46e75d99001ec26"
+publication_git_commit = "975c155d625de4c9912b9cbf1b5ec710e945bc07"
+
+[prerequisites.source_evidence_v1]
+path = "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json"
+bytes = 23042
+file_sha256 = "31efb7464abf8b44d4f27ebf632299d3d5bcfe121940d429c6abeff040ae64ba"
+commit_sha256 = "961764d4d512cd0e706f743f7fc2a2a99858d7f8618f4e87129e8490089c14f1"
+publication_git_commit = "d41cc58078b23b3b4e7295c38c16d86ff02f5974"
+expected_state = "complete_target_blind_portable_predictor_source_evidence"
+
+[prerequisites.contract_v1]
+path = "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.json"
+bytes = 12934
+file_sha256 = "794e85c2ea5ad76b84c5e6e7be0999bc5939ab85d9dc7df773406f9802fe6127"
+commit_sha256 = "75b368d7f71c7af5af10317f996595f629e4dacdbbf62b3dc79c3ac0c5eb3e3d"
+publication_git_commit = "47a626f6fc0a6577148cc731bb00d21f5387f20a"
+expected_state = "decision_complete_contract_freeze_deferred_predictor_closed"
+
+[prerequisites.water_distance_v2]
+path = "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION_V2.json"
+bytes = 18541
+file_sha256 = "a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b"
+commit_sha256 = "2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51"
+publication_git_commit = "91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c"
+expected_state = "decision_complete_source_and_algorithm_frozen_predictor_closed"
+
+[prerequisites.phase1_model_lock]
+path = "manifests/model_lock/MODEL_LOCK.json"
+bytes = 12162
+file_sha256 = "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245"
+commit_sha256 = "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b"
+publication_git_commit = "8e6a0e7546fb54d9b8fa976b35ad3a4084f6ceb8"
+use = "feature_order_and_fixed_model_class_settings_only"
+
+[cities]
+source_city_id = "los_angeles_ca"
+external_city_ids = ["phoenix_az", "houston_tx", "chicago_il"]
+all_city_ids = ["los_angeles_ca", "phoenix_az", "houston_tx", "chicago_il"]
+analysis_crs = "EPSG:5070"
+target_grid_resolution_m = 30.0
+target_grid_edge_anchor_x_m = 15.0
+target_grid_edge_anchor_y_m = 15.0
+minimum_place_area_fraction = 0.50
+exclude_special_use_tract_prefix = "98"
+
+[cities.target_grid_crs]
+los_angeles_ca = "EPSG:32611"
+phoenix_az = "EPSG:32612"
+houston_tx = "EPSG:32615"
+chicago_il = "EPSG:32616"
+
+[geography_contract]
+provider = "U.S. Census Bureau"
+vintage = 2020
+unit = "incorporated_place_clipped_2020_census_tract"
+minimum_original_tract_area_inside_place_fraction = 0.50
+exclude_special_use_tract_prefix = "98"
+analysis_crs = "EPSG:5070"
+repair_order = "make_each_geometry_valid_before_place_dissolve_or_tract_intersection"
+authoritative_first_route = "TIGERweb_Census2020"
+mirror_route_requires_vertex_and_parity_audit = true
+los_angeles_must_use_same_adapter_or_pass_formal_parity_audit = true
+current_snapshot_is_protocol_lock = false
+
+[eligible_support]
+provider = "European Space Agency via Microsoft Planetary Computer"
+dataset = "ESA WorldCover 10 m 2020 v100"
+stac_collection = "esa-worldcover"
+year = 2020
+asset = "map"
+source_nodata_class = 0
+excluded_water_classes = [80]
+categorical_resampling = "mode"
+target_rasterization_all_touched = false
+definition = "tract_zone_and_worldcover_valid_and_not_class_80"
+denominator_invariant_across_dates = true
+same_support_required_for_static_daymet_sentinel_and_landsat_target = true
+item_selection = "all_year_2020_v100_map_assets_with_positive_intersection_to_frozen_city_grid"
+raw_stac_and_asset_hash_commit_required_during_build = true
+exact_item_mosaic_and_eligible_cell_identity_evidence_required_before_build = true
+
+[static_contract]
+minimum_valid_coverage_fraction = 0.98
+quantile_method = "linear"
+continuous_std_ddof = 0
+complete_features_may_not_be_imputed = true
+nlcd_remainder_fraction_must_equal_zero = true
+land_cover_group_fraction_sum_must_equal_land_cover_coverage_fraction = true
+
+[static_contract.nlcd]
+provider = "U.S. Geological Survey / MRLC Consortium"
+dataset = "National Land Cover Database 2016 original release"
+release_date = "2019-04-30"
+doi = "10.5066/P937PN4Z"
+native_crs = "EPSG:5070"
+native_resolution_m = 30
+land_cover_coverage_id = "mrlc_download__NLCD_2016_Land_Cover_L48"
+impervious_coverage_id = "mrlc_download__NLCD_2016_Impervious_L48"
+land_cover_dtype = "uint8"
+land_cover_nodata = 0
+land_cover_scale = 1.0
+land_cover_offset = 0.0
+land_cover_resampling = "nearest"
+impervious_dtype = "uint8"
+impervious_nodata = 127
+impervious_valid_minimum = 0
+impervious_valid_maximum = 100
+impervious_scale_divisor = 100.0
+impervious_resampling = "bilinear"
+source_halo_pixels = 2
+
+[static_contract.nlcd.groups]
+open_water = [11]
+developed_open = [21]
+developed_low = [22]
+developed_medium = [23]
+developed_high = [24]
+barren = [31]
+forest = [41, 42, 43]
+shrub_grass = [52, 71]
+agriculture = [81, 82]
+wetland = [90, 95]
+
+[static_contract.terrain]
+provider = "NASA/USGS via OpenTopography"
+dataset = "NASA SRTM Global 1 arc second V003"
+opentopo_id = "OTSRTM.082015.4326.1"
+dataset_doi = "10.5069/G9445JDF"
+native_crs = "EPSG:4326"
+native_shape = [3601, 3601]
+native_dtype = "int16"
+native_area_or_point = "Point"
+native_nodata = -32768
+native_scale = 1.0
+native_offset = 0.0
+vertical_unit = "metre"
+vertical_datum = "EGM96 orthometric height"
+tile_merge_method = "first_on_shared_native_grid_before_reprojection"
+elevation_resampling = "bilinear"
+slope_algorithm = "Horn 3x3"
+slope_source_halo_cells = 1
+slope_pixel_size_m = 30.0
+
+[static_contract.water_distance]
+definition = "nearest qualifying ocean-or-Great-Lakes shoreline point distance"
+source_id = "gshhg_2_3_7_full_shapefile"
+source_version = "2.3.7"
+source_and_point_algorithm_locked = true
+source_linework = "all qualifying repaired full-resolution L1 ocean exteriors plus selected L2 180507 180515 180517 exteriors plus every directly parented L3 island exterior"
+distance_kernel = "exact projected point-to-line distance under the locked adaptive-radius algorithm"
+cell_locations = "centers_of_every_fixed_eligible_30m_cell"
+distance_unit = "km"
+aggregation_statistics = ["mean", "p10"]
+quantile_method = "linear"
+require_finite_distance_for_every_eligible_cell = true
+phase1_pacific_feature_alias_allowed = false
+census_fallback_allowed = false
+
+[calendar_contract]
+formula = "theta=2*pi*(dayofyear-1)/(365+is_leap_year)"
+features = ["calendar_doy_sin", "calendar_doy_cos"]
+units = "unitless"
+known_at_prediction_origin = true
+
+[daymet_contract]
+provider = "NASA ORNL DAAC"
+dataset = "Daymet V4 R1 daily North America"
+doi = "10.3334/ORNLDAAC/2129"
+collection_concept_id = "C2532426483-ORNL_CLOUD"
+native_resolution_m = 1000
+native_calendar = "365_records_with_leap_Feb29_and_leap_Dec31_omitted"
+variables = ["dayl", "prcp", "srad", "tmax", "tmin", "vp"]
+windows_days = [1, 3, 7]
+latest_source_offset_days = -1
+window_calendar_days_must_be_complete = true
+spatial_assignment = "map_each_fixed_eligible_30m_cell_center_to_one_native_Daymet_cell"
+spatial_aggregation = "fixed_eligible_cell_count_weighted_tract_daily_mean"
+weight_denominator = "same_invariant_eligible_land_pixel_count"
+missing_source_days_are_never_filled = true
+
+[daymet_contract.variable_rules]
+dayl = "mean_seconds_per_day"
+prcp = "sum_millimetres"
+srad = "mean_watts_per_square_metre"
+tmax = "mean_degrees_C"
+tmin = "mean_degrees_C"
+vp = "mean_pascals"
+srad_energy = "sum_of_srad_w_m2_times_dayl_s_divided_by_1000000_in_MJ_m2"
+
+[sentinel_contract]
+provider = "ESA Copernicus via Microsoft Planetary Computer"
+stac_collection = "sentinel-2-l2a"
+prohibited_provider_collection = "Element84_EarthSearch_sentinel-2-l2a_legacy_harmonized_COG"
+required_assets = ["B02", "B03", "B04", "B08", "B8A", "B11", "B12", "SCL", "product-metadata"]
+window_start_days_before_target = 60
+window_end_days_before_target = 1
+local_timezone_source = "per_city_frozen_IANA_timezone"
+physical_acquisition_key = "platform_acquired_utc_relative_orbit_normalized_datatake_id"
+reprocessing_selection_order = "coverage_desc_processing_baseline_desc_generation_time_desc_item_id_asc"
+global_scene_cloud_filter = false
+optical_grid_resolution_m = 20.0
+optical_grid_edge_anchor_x_m = 0.0
+optical_grid_edge_anchor_y_m = 0.0
+reflectance_resampling = "average"
+scl_resampling = "nearest"
+processing_order = "validate_phase_then_area_average_DN_and_max_saturation_mask_to_20m_then_decode_BOA_once_then_SCL_4_5_gate"
+boa_formula = "reflectance=(DN+BOA_ADD_OFFSET)/BOA_QUANTIFICATION_VALUE"
+boa_offset_applied_exactly_once = true
+require_all_seven_band_offsets_for_processing_baseline_04_or_later = true
+nodata_dn = 0
+saturated_dn = 65535
+accepted_scl_classes = [4, 5]
+index_denominator_epsilon = 0.000001
+minimum_acquisition_coverage_fraction = 0.80
+minimum_physical_acquisitions = 3
+acquisition_tract_statistic = "valid_area_average_to_30m_then_eligible_cell_valid_area_weighted_median"
+temporal_composite_statistic = "median_across_qualifying_physical_acquisitions"
+all_five_missing_when_fewer_than_three_qualifying_acquisitions = true
+partial_five_feature_missingness_allowed = false
+
+[sentinel_contract.albedo_proxy]
+intercept = 0.0
+B02 = 0.2266
+B03 = 0.1236
+B04 = 0.1573
+B08 = 0.3417
+B11 = 0.1170
+B12 = 0.0338
+
+[feature_registry]
+key_columns = ["city_id", "tract_geoid", "target_date"]
+city_id_is_predictor = false
+tract_geoid_is_predictor = false
+target_date_is_predictor = false
+total_model_feature_count = 46
+complete_feature_count = 20
+dynamic_imputed_feature_count = 26
+b1_feature_count = 23
+m2_feature_count = 46
+audit_only_features = ["nlcd_developed_medium_fraction", "nlcd_remainder_fraction"]
+
+[feature_registry.static]
+names = [
+  "nlcd_open_water_fraction",
+  "nlcd_developed_open_fraction",
+  "nlcd_developed_low_fraction",
+  "nlcd_developed_high_fraction",
+  "nlcd_barren_fraction",
+  "nlcd_forest_fraction",
+  "nlcd_shrub_grass_fraction",
+  "nlcd_agriculture_fraction",
+  "nlcd_wetland_fraction",
+  "impervious_mean_fraction",
+  "impervious_p90_fraction",
+  "impervious_at_least_50_fraction",
+  "elevation_mean_m",
+  "elevation_std_m",
+  "slope_mean_degrees",
+  "slope_p90_degrees",
+  "gshhg_ocean_great_lakes_shore_distance_mean_km",
+  "gshhg_ocean_great_lakes_shore_distance_p10_km",
+]
+
+[feature_registry.calendar]
+names = ["calendar_doy_sin", "calendar_doy_cos"]
+
+[feature_registry.daymet]
+names = [
+  "daymet_dayl_s_mean_prev_1d",
+  "daymet_prcp_mm_sum_prev_1d",
+  "daymet_srad_w_m2_mean_prev_1d",
+  "daymet_tmax_c_mean_prev_1d",
+  "daymet_tmin_c_mean_prev_1d",
+  "daymet_vp_pa_mean_prev_1d",
+  "daymet_srad_energy_mj_m2_sum_prev_1d",
+  "daymet_dayl_s_mean_prev_3d",
+  "daymet_prcp_mm_sum_prev_3d",
+  "daymet_srad_w_m2_mean_prev_3d",
+  "daymet_tmax_c_mean_prev_3d",
+  "daymet_tmin_c_mean_prev_3d",
+  "daymet_vp_pa_mean_prev_3d",
+  "daymet_srad_energy_mj_m2_sum_prev_3d",
+  "daymet_dayl_s_mean_prev_7d",
+  "daymet_prcp_mm_sum_prev_7d",
+  "daymet_srad_w_m2_mean_prev_7d",
+  "daymet_tmax_c_mean_prev_7d",
+  "daymet_tmin_c_mean_prev_7d",
+  "daymet_vp_pa_mean_prev_7d",
+  "daymet_srad_energy_mj_m2_sum_prev_7d",
+]
+
+[feature_registry.sentinel]
+names = [
+  "sentinel_ndvi_lag60",
+  "sentinel_evi_lag60",
+  "sentinel_ndwi_lag60",
+  "sentinel_ndbi_lag60",
+  "sentinel_albedo_proxy_lag60",
+]
+
+[feature_registry.units]
+nlcd = "fraction"
+impervious = "fraction"
+elevation = "metre"
+slope = "degree"
+water_distance = "km"
+calendar = "unitless"
+dayl = "second_per_day"
+prcp = "mm"
+srad = "W_m-2"
+temperature = "degree_C"
+vapor_pressure = "Pa"
+srad_energy = "MJ_m-2"
+sentinel_indices = "unitless"
+
+[model_contract]
+training_city_id = "los_angeles_ca"
+training_years = [2020, 2021, 2022, 2023]
+calibration_city_id = "los_angeles_ca"
+calibration_year = 2024
+external_confirmation_year = 2025
+training_row_weights = "each_training_date_total_weight_one_then_normalize"
+dynamic_imputation = "per_feature_median_fit_on_Los_Angeles_2020_2023_only"
+complete_static_and_calendar_imputation_allowed = false
+external_city_fit_or_preprocessing_allowed = false
+external_city_climatology_allowed = false
+
+[model_contract.b1_transfer]
+estimator = "Ridge"
+features = "calendar_plus_21_daymet"
+alpha = 10.0
+fit_intercept = true
+solver = "lsqr"
+tolerance = 0.0001
+standardize_after_train_only_dynamic_median_imputation = true
+
+[model_contract.m2_transfer]
+estimator = "HistGradientBoostingRegressor"
+features = "all_46_portable_features"
+loss = "absolute_error"
+learning_rate = 0.05
+max_iter = 300
+max_leaf_nodes = 31
+min_samples_leaf = 50
+l2_regularization = 1.0
+early_stopping = false
+random_state = 20260719
+standardize = false
+
+[uncertainty_contract]
+method = "equal_date_weighted_conformalized_quantile_regression"
+lower_quantile = 0.05
+upper_quantile = 0.95
+nominal_coverage = 0.90
+quantile_model_structure = "same_as_m2_transfer_except_quantile_loss"
+nonconformity_score = "max(lower_prediction_minus_y,y_minus_upper_prediction,0)"
+calibration_distribution = "Los_Angeles_2024_rows_each_date_total_weight_one"
+weighted_quantile_method = "sort_value_then_target_date_then_tract_geoid_and_select_first_cumulative_weight_at_or_above_probability"
+conformal_probability = 0.90
+corrected_lower = "lower_quantile_prediction_minus_weighted_nonconformity_quantile"
+corrected_upper = "upper_quantile_prediction_plus_weighted_nonconformity_quantile"
+abstention_width_quantile = 0.80
+abstention_distribution = "Los_Angeles_2024_corrected_interval_widths_each_date_total_weight_one"
+abstain_rule = "corrected_interval_width_strictly_greater_than_frozen_80th_percentile"
+external_recalibration_allowed = false
+
+[unresolved_evidence]
+required_blockers = [
+  "four_city_geography_contract_and_los_angeles_parity_evidence_absent",
+  "four_city_worldcover_item_mosaic_and_eligible_support_evidence_absent",
+  "external_city_sentinel_asset_calibration_smoke_evidence_absent",
+]
+all_blockers_must_remain_target_blind = true
+worldcover_evidence_must_bind_exact_item_assets_and_30m_support_hashes = true
+sentinel_smoke_must_read_no_landsat_thermal_or_target_qa_value = true
+sentinel_smoke_must_test_real_product_metadata_and_small_native_dn_windows = true
+geography_review_must_not_use_target_or_predictor_performance = true
+
+[missingness_contract]
+infinite_values_allowed = false
+static_or_calendar_missing_allowed = false
+daymet_incomplete_window_action = "row_not_prediction_eligible_and_record_before_target_access"
+sentinel_missing_pattern = "all_five_or_none"
+sentinel_imputation_source = "Los_Angeles_2020_2023_train_only_feature_medians"
+predictor_row_eligibility_frozen_before_external_target_access = true
+
+[access_contract]
+network_requests = 0
+tracked_json_toml_and_code_bytes_read = true
+historical_git_blob_and_metadata_read = true
+untracked_path_names_checked_by_git_status = true
+untracked_file_contents_opened = false
+ignored_paths_requested = false
+source_raster_or_archive_payload_opened = false
+geometry_opened = false
+eligible_land_grid_opened = false
+predictor_values_opened_or_computed = false
+predictor_construction_performed = false
+model_fit_performed = false
+model_predictions_computed = false
+external_target_or_qa_values_read = false
+landsat_thermal_values_read = false
+final_evaluation_outputs_opened = false
+
+[locks]
+portable_water_distance_source_locked = true
+portable_water_distance_algorithm_locked = true
+portable_predictor_source_and_calibration_contract_locked = false
+portable_feature_names_frozen = false
+portable_water_distance_feature_names_frozen = false
+candidate_46_feature_registry_bound_for_evidence_stage = true
+predictor_build_authorized = false
+model_fit_authorized = false
+protocol_lock_created = false
+external_targets_unlocked = false
+external_target_values_read = false
+external_prediction_commit_exists = false
+
+[next_gate]
+stage_id = "publish_tracked_only_plan_v12_for_missing_support_and_calibration_evidence"
+v2_terminal_is_append_only_and_may_not_be_overwritten = true
+separate_tracked_only_transition_required = true
+v12_may_authorize_only_target_blind_geography_worldcover_and_sentinel_calibration_evidence = true
+v12_may_not_authorize_predictor_construction_model_fit_or_target_access = true
+source_city_labels_may_not_be_opened_by_predictor_builder = true
+external_target_and_qa_values_remain_sealed = true
+successful_evidence_requires_a_separate_v3_contract_decision = true
+predictor_build_model_fit_protocol_promotion_prediction_commit_and_evaluation_require_later_gates = true
+
+[outputs]
+manifest = "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V2.json"
+append_only = true
+overwrite_allowed = false
