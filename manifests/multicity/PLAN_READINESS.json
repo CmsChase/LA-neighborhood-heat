@@ -1,8 +1,8 @@
 {
-  "schema_version": 11,
-  "algorithm_version": "multicity-planning-readiness-v11",
+  "schema_version": 12,
+  "algorithm_version": "multicity-planning-readiness-v12",
   "state": "planning_ready",
-  "planning_stage": "portable_predictor_source_evidence_complete_contract_freeze_v2_authorized",
+  "planning_stage": "portable_predictor_contract_v2_deferred_missing_support_and_calibration_evidence_authorized",
   "experiment_id": "la_to_three_city_zero_shot_v1",
   "config_semantic_sha256": "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c",
   "config_files": {
@@ -28,10 +28,10 @@
     }
   },
   "code_files": {
-    "configs/multicity/portable_predictor_contract_freeze_v2.toml": {
-      "sha256": "0992eff4fdcf45005dcb1c8d237dc28a4205966527572e06be4e875cae0ee2f4",
-      "bytes": 17681,
-      "git_blob_oid": "9b6e75f4188659a03cbd8e615114a4728f0022ba",
+    "configs/multicity/missing_support_calibration_evidence_v1.toml": {
+      "sha256": "7d99eabe524532c4c5fa0ef8eaa42236b0b635e835bfa5b1a80c53ed99c304ff",
+      "bytes": 10821,
+      "git_blob_oid": "12afb94c7ec9cca02e82c5157e63aeee5da19b5d",
       "git_mode": "100644"
     },
     "configs/multicity/experiment.toml": {
@@ -40,16 +40,10 @@
       "git_blob_oid": "5aed83196b02c1d865ac266591107ee0575eff50",
       "git_mode": "100644"
     },
-    "configs/research.toml": {
-      "sha256": "a2d4f7300d8a264c77c3ddc15a730546945a2d7f6ed253ff2f49e352102c60b9",
-      "bytes": 5416,
-      "git_blob_oid": "2c71ad10f0cb777ba9fc01d8300b48144edb5413",
-      "git_mode": "100644"
-    },
-    "configs/sentinel_features.toml": {
-      "sha256": "8e0052bf7cca109a33e9a351a4dedbe87758b12113d5f4414208b9c1b1f4ed93",
-      "bytes": 1171,
-      "git_blob_oid": "035793f871ebcc1a5503b6772609e3feb9b8ef8e",
+    "configs/multicity/portable_predictor_contract_freeze_v2.toml": {
+      "sha256": "0992eff4fdcf45005dcb1c8d237dc28a4205966527572e06be4e875cae0ee2f4",
+      "bytes": 17681,
+      "git_blob_oid": "9b6e75f4188659a03cbd8e615114a4728f0022ba",
       "git_mode": "100644"
     },
     "configs/multicity/cities/los_angeles_ca.toml": {
@@ -76,28 +70,64 @@
       "git_blob_oid": "387418f8d0a4ed90687c86420063982f5ad6b5dd",
       "git_mode": "100644"
     },
-    "src/la_heat/multicity/plan_predictor_contract_transition_v11.py": {
-      "sha256": "f2a7af943245a14f896ebc9a004fdb04b6bae6fb90d2d39325e4a7cf19f5d9f0",
-      "bytes": 51919,
-      "git_blob_oid": "ee5216a88e32a4ae0bfd7efc7f692df09641b95a",
+    "scripts/stage_multicity_missing_support_calibration_evidence_v1.py": {
+      "sha256": "86bd8b80af48a96efa3c73515cef26704dfb6eb2655bdc5dc0d7abfedd1f1ae8",
+      "bytes": 1914,
+      "git_blob_oid": "55d9669a2cd316189614925f350e708722a99474",
       "git_mode": "100644"
     },
-    "scripts/authorize_multicity_predictor_contract_freeze_v2.py": {
-      "sha256": "6b14edad57ec10ea45a30262de999ab740ca5718b34c09c0ac2839c30422d2db",
-      "bytes": 1646,
-      "git_blob_oid": "71e2f917245bfb5e22a23f433f86bd563d194f3f",
+    "src/la_heat/grid.py": {
+      "sha256": "a875c023ac4d981b005f26317a905815f581437b77e6da979d0fcb249f534848",
+      "bytes": 2739,
+      "git_blob_oid": "a19b632226c2a2fd3ff21588aa74a790d737cd39",
       "git_mode": "100644"
     },
-    "src/la_heat/multicity/portable_predictor_contract_freeze_v2.py": {
-      "sha256": "e089b436816b92b10ad473c5d01c4fdd449c07bfc57443474126daac1374ad82",
-      "bytes": 56006,
-      "git_blob_oid": "539f4a9ab0789443a1c140944f2f4a7c6f5dd00a",
+    "src/la_heat/multicity/config.py": {
+      "sha256": "bebe7ef2c610b55b6b5fe72692ee517241a510785458d87832e0cf58d4e4897b",
+      "bytes": 12655,
+      "git_blob_oid": "1a51be9874b5a569712050991ca6c98951974c3b",
       "git_mode": "100644"
     },
-    "scripts/audit_multicity_portable_predictor_contract_freeze_v2.py": {
-      "sha256": "64a16679d59c152c89fa54faadc9fc41a72084b5e8f7f8a190e5d38760c7409f",
-      "bytes": 1628,
-      "git_blob_oid": "a940255bd8d1a016e6444fbf3e57c7dd8acbc815",
+    "src/la_heat/multicity/four_city_geography_contract_v1.py": {
+      "sha256": "f808e0d12da2ed794d7273ce6378ccd167edd3f0cbc6f6412e0b08d27ebf526f",
+      "bytes": 35148,
+      "git_blob_oid": "12c88ff1af14001a8c18860a2c732184b334ae04",
+      "git_mode": "100644"
+    },
+    "src/la_heat/multicity/geography.py": {
+      "sha256": "ec6d9d2a57f6ff085a50c1ec5570108c00e5abfeef202d99bcd31c7003656b38",
+      "bytes": 33879,
+      "git_blob_oid": "28e0094fff581fab35963f018654fd9277f39616",
+      "git_mode": "100644"
+    },
+    "src/la_heat/multicity/missing_support_calibration_evidence_v1.py": {
+      "sha256": "9c4d61fe6321579c8424dcaa4a25ecfd1f7932fa3750b69c880f189baad8d348",
+      "bytes": 36615,
+      "git_blob_oid": "cf40dda1c358a50cfb82f45dc9caab77e341336e",
+      "git_mode": "100644"
+    },
+    "src/la_heat/multicity/portable_predictor_source_evidence_v1.py": {
+      "sha256": "7e2b4eaeb6a44b1f3198a21354ac59b5a5d2d4d3943461cac5bb313a59c96a82",
+      "bytes": 93087,
+      "git_blob_oid": "df3fb02b81e128990a2a806fab6c76d99f1c2986",
+      "git_mode": "100644"
+    },
+    "src/la_heat/multicity/sentinel_calibration_smoke_v1.py": {
+      "sha256": "62c2203d73313faf3892d5693933ded2835657743f0943f14c35fe61d75779d1",
+      "bytes": 52005,
+      "git_blob_oid": "89e1a174e33f7dce38e034513f420a940d6229c9",
+      "git_mode": "100644"
+    },
+    "src/la_heat/multicity/source_footprints.py": {
+      "sha256": "208710c307c69b78cd1dd2205297fdb66718534644cd83e56798b34347ccab41",
+      "bytes": 91900,
+      "git_blob_oid": "bdf7b8e04d57cf31ab7289105c7324f9ed44e2d7",
+      "git_mode": "100644"
+    },
+    "src/la_heat/multicity/worldcover_eligible_support_evidence_v1.py": {
+      "sha256": "8d9ce9978496fc5c821b17ba3b2eb2ef1b1750e81266ec06b90362cc76fcfa89",
+      "bytes": 39520,
+      "git_blob_oid": "b21435a80806b4f41865baac2641f99289f5fa83",
       "git_mode": "100644"
     },
     "src/la_heat/provenance.py": {
@@ -105,329 +135,18 @@
       "bytes": 4679,
       "git_blob_oid": "2f67c23cec21725d768c3c273ec68470ea2d3e47",
       "git_mode": "100644"
-    }
-  },
-  "transition": {
-    "id": "consume_portable_predictor_source_evidence_v1_and_authorize_contract_freeze_v2",
-    "mode": "tracked_manifests_toml_code_and_local_git_only",
-    "predecessor_plan_readiness": {
-      "path": "manifests/multicity/PLAN_READINESS.json",
-      "source_git_commit": "975c155d625de4c9912b9cbf1b5ec710e945bc07",
-      "file_sha256": "bdd2a1c75d397116f2c9e9f00e7e673dc83581e5b3b707b9bf5318e815cb3c28",
-      "bytes": 45470,
-      "commit_sha256": "61359cbec70f2f4f549ed177abdca8b06b3459e3bb21d3f3d46e75d99001ec26",
-      "state": "planning_ready",
-      "planning_stage": "portable_predictor_source_evidence_v1_runtime_hotfix_resume_authorized",
-      "next_safe_stage": "resume_missing_portable_predictor_source_evidence_v1"
     },
-    "source_evidence_v1_publication": {
-      "path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
-      "source_git_commit": "d41cc58078b23b3b4e7295c38c16d86ff02f5974",
-      "bytes": 23042,
-      "file_sha256": "31efb7464abf8b44d4f27ebf632299d3d5bcfe121940d429c6abeff040ae64ba",
-      "commit_sha256": "961764d4d512cd0e706f743f7fc2a2a99858d7f8618f4e87129e8490089c14f1",
-      "state": "complete_target_blind_portable_predictor_source_evidence",
-      "exact_added_paths": [
-        "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY.json",
-        "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY.json",
-        "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json",
-        "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json",
-        "manifests/multicity/cities/phoenix_az/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
-        "manifests/multicity/cities/houston_tx/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
-        "manifests/multicity/cities/chicago_il/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
-        "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json"
-      ],
-      "all_eight_outputs_append_only": true
+    "src/la_heat/sentinel_features.py": {
+      "sha256": "96610e4c3b805b49fd742f533b53f6957f8a9eee55f6253ef185ab82f5946160",
+      "bytes": 31379,
+      "git_blob_oid": "434592ff623061d3a271bb9e3478a9107122b346",
+      "git_mode": "100644"
     },
-    "implementation": {
-      "base_git_commit": "6b12c6035c913ee6c410b4d890052b539f294b05",
-      "implementation_git_commit": "4fe9c628a6502290086767b81fca9e693124ed9c",
-      "delta": [
-        {
-          "status": "A",
-          "path": "configs/multicity/portable_predictor_contract_freeze_v2.toml"
-        },
-        {
-          "status": "A",
-          "path": "scripts/audit_multicity_portable_predictor_contract_freeze_v2.py"
-        },
-        {
-          "status": "A",
-          "path": "scripts/authorize_multicity_predictor_contract_freeze_v2.py"
-        },
-        {
-          "status": "A",
-          "path": "src/la_heat/multicity/plan_predictor_contract_transition_v11.py"
-        },
-        {
-          "status": "A",
-          "path": "src/la_heat/multicity/portable_predictor_contract_freeze_v2.py"
-        },
-        {
-          "status": "A",
-          "path": "tests/test_multicity_plan_predictor_contract_transition_v11.py"
-        },
-        {
-          "status": "A",
-          "path": "tests/test_multicity_portable_predictor_contract_freeze_v2.py"
-        }
-      ]
-    },
-    "consumed_v10_transition": {
-      "from_schema_version": 9,
-      "to_schema_version": 10,
-      "scope": "runtime_hotfix_only_permissions_and_locks_unchanged",
-      "consumed_v9_transition": {
-        "id": "consume_predictor_contract_v1_and_authorize_missing_source_evidence_stage",
-        "mode": "tracked_manifests_and_local_git_only",
-        "predecessor_plan_readiness": {
-          "path": "manifests/multicity/PLAN_READINESS.json",
-          "source_git_commit": "35b6015a3a9a410b42752d2e50a7599e18bf2563",
-          "file_sha256": "8ad87ecdfd7d6e232d574662187dc91977bef0c177fd673cb96305469f44d948",
-          "bytes": 27837,
-          "commit_sha256": "d2a3d95bc4935b3aa1c46861abd2420d67959db0de18c3689b6d5994e64800dd",
-          "state": "planning_ready",
-          "planning_stage": "portable_water_distance_source_and_algorithm_frozen_predictor_contract_freeze_authorized",
-          "next_safe_stage": "freeze_exact_portable_predictor_source_and_calibration_contract"
-        },
-        "predictor_contract_v1_terminal": {
-          "path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.json",
-          "source_git_commit": "47a626f6fc0a6577148cc731bb00d21f5387f20a",
-          "file_sha256": "794e85c2ea5ad76b84c5e6e7be0999bc5939ab85d9dc7df773406f9802fe6127",
-          "bytes": 12934,
-          "commit_sha256": "75b368d7f71c7af5af10317f996595f629e4dacdbbf62b3dc79c3ac0c5eb3e3d",
-          "state": "decision_complete_contract_freeze_deferred_predictor_closed",
-          "outcome": "defer_until_cross_city_source_footprints_and_static_source_contracts_complete",
-          "observed_blockers": [
-            "houston_source_footprint_manifest_absent",
-            "chicago_source_footprint_manifest_absent",
-            "phoenix_nlcd_source_family_absent",
-            "phoenix_terrain_content_and_schema_unfrozen"
-          ]
-        },
-        "writer_precondition": {
-          "branch": "main",
-          "git_head": "ad81b404e85c5b84308cb41eea980694756e9125",
-          "origin_main": "ad81b404e85c5b84308cb41eea980694756e9125",
-          "worktree_clean": true,
-          "head_equals_local_origin_main": true,
-          "all_transition_inputs_regular_git_tracked_blobs": true
-        },
-        "authorization_effective_only_when": {
-          "this_exact_plan_readiness_is_git_tracked": true,
-          "branch_is_main": true,
-          "worktree_is_clean": true,
-          "head_equals_local_origin_main": true,
-          "v9_check_only_passes_before_source_evidence_staging": true
-        }
-      },
-      "failure_evidence": {
-        "exception_type": "TypeError",
-        "failing_operation": "canonical_frame_sha256_for_non_geometry_source_footprint_parquet",
-        "failure_boundary": "before_source_footprint_manifest_and_before_static_raster_download",
-        "root_cause": "required_explicit_sort_by_argument_omitted"
-      },
-      "authorized_fix": {
-        "use_explicit_sort_by": [
-          "variable",
-          "year",
-          "concept_id"
-        ],
-        "apply_to_non_geometry_record_commit_and_verification": true,
-        "source_products_changed": false,
-        "candidate_feature_rules_changed": false,
-        "tracked_output_paths_changed": false,
-        "permissions_changed": false,
-        "locks_changed": false
-      },
-      "resume_checkpoints": [
-        {
-          "path": "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY.json",
-          "bytes": 5523,
-          "file_sha256": "f89fd246854baa670ecc7a32c20672922be5327e1b89abce8caa07a9ccb14906",
-          "commit_sha256": "1c00bb64c1eaa6ce83fe44b377fd40235dfe4108ce8535839cb94a7caf43711f",
-          "state": "complete_target_blind_public_geography"
-        },
-        {
-          "path": "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY.json",
-          "bytes": 5520,
-          "file_sha256": "6fadf3355dda0ca70a5ef0f6201f84d38f8df29a588bdddc6fac076238e50b25",
-          "commit_sha256": "10a2f41134becd5e45697fa0e95c43e58665155c39a8ec02391c7003e0b01c15",
-          "state": "complete_target_blind_public_geography"
-        }
-      ],
-      "implementation_delta": [
-        {
-          "status": "A",
-          "path": "scripts/authorize_multicity_source_evidence_hotfix_resume.py"
-        },
-        {
-          "status": "A",
-          "path": "src/la_heat/multicity/plan_source_evidence_hotfix_transition_v10.py"
-        },
-        {
-          "status": "A",
-          "path": "tests/test_multicity_plan_source_evidence_hotfix_transition_v10.py"
-        },
-        {
-          "status": "M",
-          "path": "src/la_heat/multicity/portable_predictor_source_evidence_v1.py"
-        },
-        {
-          "status": "M",
-          "path": "tests/test_multicity_plan_source_evidence_transition_v9.py"
-        },
-        {
-          "status": "M",
-          "path": "tests/test_multicity_portable_predictor_source_evidence_v1.py"
-        }
-      ],
-      "writer_precondition": {
-        "branch": "main",
-        "git_head": "6c03b7d7fb2d4ec1b9cc99d52302ee129a700b2d",
-        "origin_main_equal": true,
-        "allowed_untracked_paths": [
-          "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY.json",
-          "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY.json"
-        ]
-      },
-      "code_files": {
-        "configs/multicity/portable_predictor_source_evidence_v1.toml": {
-          "sha256": "d352ba7ad86c0a231e631ada1f95fd72a3a2e47b9e4185dc7687ad462b736f27",
-          "bytes": 3885,
-          "git_blob_oid": "08e674605a89562cb5c86e8e75a92efbe5319a90",
-          "git_mode": "100644"
-        },
-        "configs/multicity/experiment.toml": {
-          "sha256": "fd5330d83bf292204f05dc0aa64e0a535e45523060dd926e3a9b42f8969e5349",
-          "bytes": 5765,
-          "git_blob_oid": "5aed83196b02c1d865ac266591107ee0575eff50",
-          "git_mode": "100644"
-        },
-        "configs/multicity/cities/phoenix_az.toml": {
-          "sha256": "138acdd0b6061044fee098d59a5b8b91ac620e21bf556285cad185e0cc0ec61c",
-          "bytes": 214,
-          "git_blob_oid": "4eae07370139693c69e5c4157e297fe400ade808",
-          "git_mode": "100644"
-        },
-        "configs/multicity/cities/houston_tx.toml": {
-          "sha256": "fcc2da008bbce8f0be37913eb3e0f55f56dd8a4aa9baab22c29376cfdf13c4d3",
-          "bytes": 214,
-          "git_blob_oid": "ab380d0d70bdb6be3a54e6b1817a4b59d43ed753",
-          "git_mode": "100644"
-        },
-        "configs/multicity/cities/chicago_il.toml": {
-          "sha256": "3d4bccc557d2e1d5b2d4854329137f2ff05ca817d18d2c9e5f81267305d2b229",
-          "bytes": 214,
-          "git_blob_oid": "387418f8d0a4ed90687c86420063982f5ad6b5dd",
-          "git_mode": "100644"
-        },
-        "scripts/stage_multicity_portable_predictor_source_evidence_v1.py": {
-          "sha256": "f482629558d6b1ae2dbd4bed5fb75d303786c99c5e56f71ceeb63678f038d309",
-          "bytes": 869,
-          "git_blob_oid": "b267d529253edcfb69bb12c064388bfcfb87c93c",
-          "git_mode": "100644"
-        },
-        "src/la_heat/daymet_grid.py": {
-          "sha256": "31e95189360d39d2a90cf88f2637a470ff6f04e5e952b122fc342f68c29ef7a1",
-          "bytes": 58936,
-          "git_blob_oid": "88d93ac2d3d514ef941839d64b11e53ee73c98f4",
-          "git_mode": "100644"
-        },
-        "src/la_heat/multicity/config.py": {
-          "sha256": "bebe7ef2c610b55b6b5fe72692ee517241a510785458d87832e0cf58d4e4897b",
-          "bytes": 12655,
-          "git_blob_oid": "1a51be9874b5a569712050991ca6c98951974c3b",
-          "git_mode": "100644"
-        },
-        "src/la_heat/multicity/geography.py": {
-          "sha256": "ec6d9d2a57f6ff085a50c1ec5570108c00e5abfeef202d99bcd31c7003656b38",
-          "bytes": 33879,
-          "git_blob_oid": "28e0094fff581fab35963f018654fd9277f39616",
-          "git_mode": "100644"
-        },
-        "src/la_heat/multicity/portable_predictor_source_evidence_v1.py": {
-          "sha256": "7e2b4eaeb6a44b1f3198a21354ac59b5a5d2d4d3943461cac5bb313a59c96a82",
-          "bytes": 93087,
-          "git_blob_oid": "df3fb02b81e128990a2a806fab6c76d99f1c2986",
-          "git_mode": "100644"
-        },
-        "src/la_heat/multicity/source_footprints.py": {
-          "sha256": "208710c307c69b78cd1dd2205297fdb66718534644cd83e56798b34347ccab41",
-          "bytes": 91900,
-          "git_blob_oid": "bdf7b8e04d57cf31ab7289105c7324f9ed44e2d7",
-          "git_mode": "100644"
-        },
-        "src/la_heat/multicity/workspace.py": {
-          "sha256": "8afa216929d00543b2397958755cb7f01a4a42489606517c44bc93921d421b7f",
-          "bytes": 2882,
-          "git_blob_oid": "6056e5336c1fabfb6439b4396a4f7db5665e99a3",
-          "git_mode": "100644"
-        },
-        "src/la_heat/provenance.py": {
-          "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
-          "bytes": 4679,
-          "git_blob_oid": "2f67c23cec21725d768c3c273ec68470ea2d3e47",
-          "git_mode": "100644"
-        },
-        "src/la_heat/static_sources.py": {
-          "sha256": "07658c6b588ccc2c3f5cf02fd5c66dc8fd2bdf9d6674219be9bb18c77bc7cee9",
-          "bytes": 31068,
-          "git_blob_oid": "4f3018db0679f82d8ef67ecbbd9334a8e472c3b3",
-          "git_mode": "100644"
-        },
-        "src/la_heat/multicity/plan_source_evidence_transition_v9.py": {
-          "sha256": "cf115ef9a8437cd3a4ae236f07a08a3447e5624459ad3b04b809b8ccbae04ef6",
-          "bytes": 46549,
-          "git_blob_oid": "e593ac63b0a5ac6de85298974580b461f74eeac0",
-          "git_mode": "100644"
-        },
-        "scripts/authorize_multicity_source_evidence_stage.py": {
-          "sha256": "986ef10659366c15300043a450eddad1af20398b8f77650a22054d5fbf973331",
-          "bytes": 1787,
-          "git_blob_oid": "0b354f2a44dec21ff05b700db5f0aea7671d9195",
-          "git_mode": "100644"
-        },
-        "src/la_heat/multicity/plan_source_evidence_hotfix_transition_v10.py": {
-          "sha256": "d24b326a4107ed024286efef0d79c461fe47ec03e5a6b69eb5dcb630a5e94eba",
-          "bytes": 30164,
-          "git_blob_oid": "eedbe7da8d87cd4e36e3100176ed4db57ba944d7",
-          "git_mode": "100644"
-        },
-        "scripts/authorize_multicity_source_evidence_hotfix_resume.py": {
-          "sha256": "d0d47a5a74959ab06e7d18f9c83d6c2a4e27725e74fbf8b25ee0c21d88344069",
-          "bytes": 1336,
-          "git_blob_oid": "6863633acdf4f7ba3416e123fefb955ae854827d",
-          "git_mode": "100644"
-        }
-      },
-      "access_contract": {
-        "network_requests": 0,
-        "local_git_metadata_and_historical_blobs_read": true,
-        "tracked_configuration_and_code_files_hashed": true,
-        "exact_untracked_geography_checkpoint_manifests_read": true,
-        "raw_public_source_payloads_opened": false,
-        "static_raster_payloads_opened": false,
-        "predictor_values_opened_or_computed": false,
-        "model_fit_or_prediction_performed": false,
-        "external_target_or_qa_values_opened": false,
-        "final_evaluation_outputs_opened": false
-      }
-    },
-    "writer_precondition": {
-      "branch": "main",
-      "git_head": "4fe9c628a6502290086767b81fca9e693124ed9c",
-      "origin_main": "4fe9c628a6502290086767b81fca9e693124ed9c",
-      "worktree_clean": true,
-      "head_equals_local_origin_main": true,
-      "all_transition_inputs_regular_git_tracked_blobs": true
-    },
-    "authorization_effective_only_when": {
-      "this_exact_plan_readiness_is_git_tracked": true,
-      "branch_is_main": true,
-      "worktree_is_clean": true,
-      "head_equals_local_origin_main": true,
-      "v11_check_only_passes_before_contract_freeze_v2": true
+    "src/la_heat/sentinel_inventory.py": {
+      "sha256": "907fad7499dbaf4131f60dc7b65cade11d971081086aba779f18a63eb3229b5a",
+      "bytes": 44198,
+      "git_blob_oid": "f12ee07a8352cf4e81dd06af043a2877e893636b",
+      "git_mode": "100644"
     }
   },
   "transition_access_contract": {
@@ -440,6 +159,7 @@
     "source_raster_or_archive_payload_opened": false,
     "geometry_opened": false,
     "eligible_land_grid_opened": false,
+    "sentinel_asset_or_product_metadata_opened": false,
     "predictor_values_opened_or_computed": false,
     "predictor_construction_performed": false,
     "model_fit_performed": false,
@@ -502,7 +222,8 @@
     "one_time_external_evaluation": false,
     "operational_forecast_claim": false,
     "portable_predictor_missing_source_evidence_staging": false,
-    "portable_predictor_source_and_calibration_contract_freeze_v2": true
+    "portable_predictor_source_and_calibration_contract_freeze_v2": false,
+    "portable_predictor_missing_support_and_calibration_evidence_staging": true
   },
   "consumed_geometry_audit_authorization": {
     "status": "consumed_and_closed",
@@ -785,7 +506,6 @@
     "archive_member_geometry_predictor_model_target_or_result_reopened": false
   },
   "blockers_before_predictor_build": [
-    "complete_deferred_portable_predictor_contract_v2_decision",
     "complete_four_city_geography_contract_and_los_angeles_parity_evidence",
     "complete_four_city_worldcover_item_mosaic_and_eligible_support_evidence",
     "complete_external_city_sentinel_asset_calibration_smoke_evidence",
@@ -793,7 +513,7 @@
     "authorize_predictor_construction_with_separate_tracked_only_transition",
     "promote_protocol_from_draft_with_separate_lock"
   ],
-  "next_safe_stage": "freeze_exact_portable_predictor_contract_v2",
+  "next_safe_stage": "stage_target_blind_missing_support_and_calibration_evidence_v1",
   "consumed_predictor_contract_freeze_v1_authorization": {
     "status": "consumed_and_closed_after_deferred_v1",
     "predecessor_schema_version": 8,
@@ -1099,128 +819,216 @@
     "predictor_values_computed": false,
     "authentication_mode": "exact_eight_file_direct_child_publication_and_historical_git_lineage"
   },
-  "portable_predictor_contract_freeze_v2_authorization_scope": {
+  "transition": {
+    "id": "consume_deferred_predictor_contract_v2_and_authorize_missing_support_calibration_evidence_v1",
+    "mode": "tracked_json_toml_code_and_local_git_only",
+    "predecessor_plan_readiness": {
+      "path": "manifests/multicity/PLAN_READINESS.json",
+      "source_git_commit": "162aee78ab692192a4b86fa7fcb9d709c2531c46",
+      "bytes": 61661,
+      "file_sha256": "e156fe6dce713deffa244e51fc30991be132be898041e89553e2997e74263421",
+      "commit_sha256": "eb79d28d58d1a914f0f08100a5dd84611b11da75303de6277496b80f6b5d73aa",
+      "state": "planning_ready",
+      "planning_stage": "portable_predictor_source_evidence_complete_contract_freeze_v2_authorized",
+      "next_safe_stage": "freeze_exact_portable_predictor_contract_v2"
+    },
+    "predictor_contract_v2_terminal": {
+      "path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V2.json",
+      "source_git_commit": "570238b42aff1ecf7d8f6043a04f33b3efef01bd",
+      "bytes": 54290,
+      "file_sha256": "0a851312b135c7c955ac238f84b7dad3a64609cf1d2f54fc343174c912bb8e34",
+      "commit_sha256": "425562de6b11254485fe14b00735d8b5da5c4de0485e789201d07e969ba49100",
+      "state": "decision_complete_candidate_rules_frozen_contract_deferred_predictor_closed",
+      "outcome": "defer_for_geography_worldcover_support_and_sentinel_calibration_evidence",
+      "observed_blockers": [
+        "four_city_geography_contract_and_los_angeles_parity_evidence_absent",
+        "four_city_worldcover_item_mosaic_and_eligible_support_evidence_absent",
+        "external_city_sentinel_asset_calibration_smoke_evidence_absent"
+      ]
+    },
+    "implementation": {
+      "base_git_commit": "9365e737f950beb513b9477f8005cbf60600dfdf",
+      "implementation_git_commit": "59de258a1e07c8693defa2e7dbdf34385e479ae7",
+      "delta": [
+        {
+          "status": "A",
+          "path": "configs/multicity/missing_support_calibration_evidence_v1.toml"
+        },
+        {
+          "status": "A",
+          "path": "scripts/authorize_multicity_missing_support_calibration_evidence_v12.py"
+        },
+        {
+          "status": "A",
+          "path": "scripts/stage_multicity_missing_support_calibration_evidence_v1.py"
+        },
+        {
+          "status": "A",
+          "path": "src/la_heat/multicity/four_city_geography_contract_v1.py"
+        },
+        {
+          "status": "A",
+          "path": "src/la_heat/multicity/missing_support_calibration_evidence_v1.py"
+        },
+        {
+          "status": "A",
+          "path": "src/la_heat/multicity/plan_missing_support_calibration_transition_v12.py"
+        },
+        {
+          "status": "A",
+          "path": "src/la_heat/multicity/sentinel_calibration_smoke_v1.py"
+        },
+        {
+          "status": "A",
+          "path": "src/la_heat/multicity/worldcover_eligible_support_evidence_v1.py"
+        },
+        {
+          "status": "A",
+          "path": "tests/test_multicity_four_city_geography_contract_v1.py"
+        },
+        {
+          "status": "A",
+          "path": "tests/test_multicity_missing_support_calibration_evidence_v1.py"
+        },
+        {
+          "status": "A",
+          "path": "tests/test_multicity_plan_missing_support_calibration_transition_v12.py"
+        },
+        {
+          "status": "A",
+          "path": "tests/test_multicity_sentinel_calibration_smoke_v1.py"
+        },
+        {
+          "status": "A",
+          "path": "tests/test_multicity_worldcover_eligible_support_evidence_v1.py"
+        }
+      ]
+    },
+    "consumed_v11_transition_sha256": "f943f4ecaccaca2a1e243468ed7cf8cc8d3bc38bcb887b7ce667b202fc9a1b59",
+    "consumed_v2_authorization_scope_sha256": "c084e2074892347879c988b62f75cd77ec5ac7b8dd4b1fa680760e3547de5abc",
+    "writer_precondition": {
+      "branch": "main",
+      "git_head": "59de258a1e07c8693defa2e7dbdf34385e479ae7",
+      "origin_main_equal": true,
+      "worktree_clean": true
+    },
+    "authorization_effective_only_when": {
+      "this_exact_plan_readiness_is_git_tracked": true,
+      "publication_is_implementation_direct_child": true,
+      "branch_is_main": true,
+      "worktree_is_clean": true,
+      "head_equals_local_origin_main": true,
+      "v12_check_only_passes_before_evidence_staging": true
+    }
+  },
+  "consumed_predictor_contract_freeze_v2_authorization": {
     "decision_id": "portable_predictor_contract_freeze_v2",
-    "decision_runtime_paths": [
-      "configs/multicity/portable_predictor_contract_freeze_v2.toml",
+    "terminal_path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V2.json",
+    "terminal_file_sha256": "0a851312b135c7c955ac238f84b7dad3a64609cf1d2f54fc343174c912bb8e34",
+    "terminal_commit_sha256": "425562de6b11254485fe14b00735d8b5da5c4de0485e789201d07e969ba49100",
+    "terminal_publication_git_commit": "570238b42aff1ecf7d8f6043a04f33b3efef01bd",
+    "outcome": "defer_for_geography_worldcover_support_and_sentinel_calibration_evidence",
+    "old_decision_permission_now": false,
+    "predictor_model_target_or_result_access": false
+  },
+  "missing_support_calibration_evidence_v1_authorization_scope": {
+    "stage_id": "target_blind_missing_support_and_calibration_evidence_v1",
+    "experiment_id": "la_to_three_city_zero_shot_v1",
+    "configuration": {
+      "path": "configs/multicity/missing_support_calibration_evidence_v1.toml",
+      "sha256": "7d99eabe524532c4c5fa0ef8eaa42236b0b635e835bfa5b1a80c53ed99c304ff"
+    },
+    "predecessor_terminal_path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V2.json",
+    "cities": [
+      "los_angeles_ca",
+      "phoenix_az",
+      "houston_tx",
+      "chicago_il"
+    ],
+    "external_sentinel_cities": [
+      "phoenix_az",
+      "houston_tx",
+      "chicago_il"
+    ],
+    "code_paths": [
+      "configs/multicity/missing_support_calibration_evidence_v1.toml",
       "configs/multicity/experiment.toml",
-      "configs/research.toml",
-      "configs/sentinel_features.toml",
+      "configs/multicity/portable_predictor_contract_freeze_v2.toml",
       "configs/multicity/cities/los_angeles_ca.toml",
       "configs/multicity/cities/phoenix_az.toml",
       "configs/multicity/cities/houston_tx.toml",
       "configs/multicity/cities/chicago_il.toml",
-      "src/la_heat/multicity/plan_predictor_contract_transition_v11.py",
-      "scripts/authorize_multicity_predictor_contract_freeze_v2.py",
-      "src/la_heat/multicity/portable_predictor_contract_freeze_v2.py",
-      "scripts/audit_multicity_portable_predictor_contract_freeze_v2.py",
-      "src/la_heat/provenance.py"
+      "scripts/stage_multicity_missing_support_calibration_evidence_v1.py",
+      "src/la_heat/grid.py",
+      "src/la_heat/multicity/config.py",
+      "src/la_heat/multicity/four_city_geography_contract_v1.py",
+      "src/la_heat/multicity/geography.py",
+      "src/la_heat/multicity/missing_support_calibration_evidence_v1.py",
+      "src/la_heat/multicity/portable_predictor_source_evidence_v1.py",
+      "src/la_heat/multicity/sentinel_calibration_smoke_v1.py",
+      "src/la_heat/multicity/source_footprints.py",
+      "src/la_heat/multicity/worldcover_eligible_support_evidence_v1.py",
+      "src/la_heat/provenance.py",
+      "src/la_heat/sentinel_features.py",
+      "src/la_heat/sentinel_inventory.py"
     ],
-    "tracked_read_set": {
-      "v10_plan": {
-        "path": "manifests/multicity/PLAN_READINESS.json",
-        "bytes": 45470,
-        "file_sha256": "bdd2a1c75d397116f2c9e9f00e7e673dc83581e5b3b707b9bf5318e815cb3c28",
-        "commit_sha256": "61359cbec70f2f4f549ed177abdca8b06b3459e3bb21d3f3d46e75d99001ec26",
-        "publication_git_commit": "975c155d625de4c9912b9cbf1b5ec710e945bc07"
-      },
-      "source_evidence_v1": {
-        "path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
-        "bytes": 23042,
-        "file_sha256": "31efb7464abf8b44d4f27ebf632299d3d5bcfe121940d429c6abeff040ae64ba",
-        "commit_sha256": "961764d4d512cd0e706f743f7fc2a2a99858d7f8618f4e87129e8490089c14f1",
-        "publication_git_commit": "d41cc58078b23b3b4e7295c38c16d86ff02f5974"
-      },
-      "contract_v1": {
-        "path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.json",
-        "bytes": 12934,
-        "file_sha256": "794e85c2ea5ad76b84c5e6e7be0999bc5939ab85d9dc7df773406f9802fe6127",
-        "commit_sha256": "75b368d7f71c7af5af10317f996595f629e4dacdbbf62b3dc79c3ac0c5eb3e3d",
-        "publication_git_commit": "47a626f6fc0a6577148cc731bb00d21f5387f20a"
-      },
-      "water_distance_v2": {
-        "path": "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION_V2.json",
-        "bytes": 18541,
-        "file_sha256": "a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b",
-        "commit_sha256": "2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51",
-        "publication_git_commit": "91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c"
-      },
-      "phase1_model_lock": {
-        "path": "manifests/model_lock/MODEL_LOCK.json",
-        "bytes": 12162,
-        "file_sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
-        "commit_sha256": "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b",
-        "publication_git_commit": "8e6a0e7546fb54d9b8fa976b35ad3a4084f6ceb8",
-        "read_scope": "feature_names_and_fixed_model_settings_only"
-      }
+    "evidence_tasks": {
+      "geography": "four-city Census-2020 same-adapter rebuild/replay plus Los Angeles and Phoenix compatibility evidence",
+      "worldcover": "exact 2020-v100 item/assets, local mosaic, and invariant 30 m eligible-cell identities",
+      "sentinel": "one real product-metadata and seven-band/SCL native-DN probe per contributing external native UTM zone"
     },
-    "source_output_records": {
-      "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY.json": {
-        "bytes": 5523,
-        "file_sha256": "f89fd246854baa670ecc7a32c20672922be5327e1b89abce8caa07a9ccb14906",
-        "commit_sha256": "1c00bb64c1eaa6ce83fe44b377fd40235dfe4108ce8535839cb94a7caf43711f",
-        "state": "complete_target_blind_public_geography"
-      },
-      "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY.json": {
-        "bytes": 5520,
-        "file_sha256": "6fadf3355dda0ca70a5ef0f6201f84d38f8df29a588bdddc6fac076238e50b25",
-        "commit_sha256": "10a2f41134becd5e45697fa0e95c43e58665155c39a8ec02391c7003e0b01c15",
-        "state": "complete_target_blind_public_geography"
-      },
-      "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json": {
-        "bytes": 14379,
-        "file_sha256": "af2dd226caf4df1dd14a6ed583ab331c9d791736c47ee35c3fde0332d1172798",
-        "commit_sha256": "c1a47ad3ad5cfadb6e0f83ca05e913154383b181e0b2213ee86598597e59f27c",
-        "state": "complete_metadata_only_source_not_protocol_locked"
-      },
-      "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json": {
-        "bytes": 12740,
-        "file_sha256": "d99e8e320c4c1bb3703cdda0bf98ded183369f41cc0feaee8a568ebfcffdb55c",
-        "commit_sha256": "1227a9f9030905c31ab420cdd72b0794984dcfc461acc8e0ab075c8ebac9fb82",
-        "state": "complete_metadata_only_source_not_protocol_locked"
-      },
-      "manifests/multicity/cities/phoenix_az/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json": {
-        "bytes": 12730,
-        "file_sha256": "9de8b68e68808d237e24273f1e6e940af5c08d86f3b839ba2102696c796442bc",
-        "commit_sha256": "6ee4ddb67bbaa2df545ad13b25f29607647ef84dfff69897ddc2e34ab0f95ae8",
-        "state": "complete_city_static_source_evidence"
-      },
-      "manifests/multicity/cities/houston_tx/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json": {
-        "bytes": 12685,
-        "file_sha256": "4a824184d5c75732905bf028836557975d7f3b877cd98d4e37c4d0369164c58d",
-        "commit_sha256": "6d0333fa50d93d6bf69a3d5f2a5619ac53d0ae7a4a5526cc4c5a670bdf11e538",
-        "state": "complete_city_static_source_evidence"
-      },
-      "manifests/multicity/cities/chicago_il/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json": {
-        "bytes": 12704,
-        "file_sha256": "902e38cee6ddd433b2c17cc8fbf7bcf8aa8ce5dfd140f9a733ae61a6e192a4ad",
-        "commit_sha256": "0a16c855648182d72d25cecfbf22da8dcb60aa9cd5f7f4774ee6a7a7941875e8",
-        "state": "complete_city_static_source_evidence"
-      },
-      "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json": {
-        "bytes": 23042,
-        "file_sha256": "31efb7464abf8b44d4f27ebf632299d3d5bcfe121940d429c6abeff040ae64ba",
-        "commit_sha256": "961764d4d512cd0e706f743f7fc2a2a99858d7f8618f4e87129e8490089c14f1",
-        "state": "complete_target_blind_portable_predictor_source_evidence"
-      }
+    "allowed_reads": {
+      "authenticated_predecessor_and_source_manifests": true,
+      "public_census_geometry": true,
+      "los_angeles_pilot_geography_for_compatibility_only": true,
+      "saved_source_metadata_for_geometry_and_probe_selection": true,
+      "worldcover_static_land_class_assets": true,
+      "sentinel_product_metadata_and_small_native_dn_windows": true
     },
-    "configuration": {
-      "path": "configs/multicity/portable_predictor_contract_freeze_v2.toml",
-      "bytes": 17681,
-      "sha256": "0992eff4fdcf45005dcb1c8d237dc28a4205966527572e06be4e875cae0ee2f4"
+    "prohibited_reads_and_actions": {
+      "landsat_thermal_or_target_qa_values": true,
+      "external_target_or_lst_values": true,
+      "final_evaluation_or_feature_ablation_outputs": true,
+      "predictor_values_or_predictor_construction": true,
+      "sentinel_indices_or_tract_features": true,
+      "model_fit_prediction_or_scoring": true,
+      "protocol_promotion_or_external_target_unlock": true
     },
-    "network_requests": 0,
-    "tracked_files_and_historical_git_blobs_only": true,
-    "untracked_file_contents_allowed": false,
-    "source_payload_or_geometry_allowed": false,
-    "predictor_or_model_value_allowed": false,
-    "external_target_or_qa_value_allowed": false,
-    "final_evaluation_output_allowed": false,
-    "decision_output_path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V2.json",
-    "append_only_output": true,
-    "predictor_construction_allowed": false,
-    "model_fitting_allowed": false,
-    "protocol_promotion_allowed": false
+    "network": {
+      "only_configured_https_hosts_and_paths": true,
+      "redirects_allowed": false,
+      "maximum_geography_requests": 64,
+      "maximum_worldcover_requests": 64,
+      "maximum_sentinel_requests": 1024,
+      "maximum_worldcover_asset_bytes": 12884901888,
+      "maximum_sentinel_probe_bytes": 1073741824,
+      "signed_urls_persisted": false
+    },
+    "tracked_output_paths": [
+      "manifests/multicity/cities/los_angeles_ca/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_GEOGRAPHY_CONTRACT_V1.json",
+      "manifests/multicity/cities/los_angeles_ca/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "manifests/multicity/cities/phoenix_az/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "manifests/multicity/cities/houston_tx/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "manifests/multicity/cities/chicago_il/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "manifests/multicity/cities/phoenix_az/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "manifests/multicity/cities/houston_tx/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "manifests/multicity/cities/chicago_il/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "manifests/multicity/reviews/portable_predictor_contract/SENTINEL_CALIBRATION_SMOKE_EVIDENCE_V1.json",
+      "manifests/multicity/reviews/portable_predictor_contract/MISSING_SUPPORT_CALIBRATION_EVIDENCE_V1.json"
+    ],
+    "write_contract": {
+      "append_only": true,
+      "expected_output_count": 15,
+      "overall_terminal_written_last": true,
+      "check_only_network_requests": 0,
+      "single_direct_child_publication_required": true
+    },
+    "next_gate": "publish_tracked_only_plan_v13_for_portable_predictor_contract_v3_decision"
   },
-  "commit_sha256": "eb79d28d58d1a914f0f08100a5dd84611b11da75303de6277496b80f6b5d73aa"
+  "commit_sha256": "09d464d52485e1318927a6b820aff26610d6143356609b882f8ed4fe56be59b3"
 }
