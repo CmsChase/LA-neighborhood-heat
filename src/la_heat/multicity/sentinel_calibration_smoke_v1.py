@@ -51,6 +51,9 @@ from la_heat.sentinel_inventory import (
 
 ALGORITHM_VERSION: Final = "external-city-sentinel-calibration-smoke-v1"
 COMPLETE_STATE: Final = "complete_target_blind_sentinel_calibration_smoke"
+NEXT_GATE: Final = (
+    "publish_tracked_only_plan_v18_for_portable_predictor_contract_v3_decision"
+)
 MGRS = re.compile(r"^(?P<zone>\d{2})(?P<band>[C-HJ-NP-X])(?P<square>[A-Z]{2})$")
 REFLECTANCE_ASSETS: Final = ("B02", "B03", "B04", "B08", "B8A", "B11", "B12")
 ALL_ASSETS: Final = (*REFLECTANCE_ASSETS, "SCL", "product-metadata")
@@ -74,9 +77,7 @@ class _SentinelClient:
     def _count(self) -> None:
         self.request_count += 1
         if self.request_count > self.maximum_requests:
-            raise MissingSupportCalibrationEvidenceV1Error(
-                "Sentinel smoke request limit exceeded."
-            )
+            raise MissingSupportCalibrationEvidenceV1Error("Sentinel smoke request limit exceeded.")
 
     def _read_bounded_body(
         self,
@@ -88,14 +89,10 @@ class _SentinelClient:
         length_text = response.headers.get("Content-Length")
         declared = int(length_text) if length_text is not None else None
         encoding_text = str(response.headers.get("Content-Encoding", "")).lower()
-        encodings = {
-            value.strip() for value in encoding_text.split(",") if value.strip()
-        }
+        encodings = {value.strip() for value in encoding_text.split(",") if value.strip()}
         if not encodings:
             encodings = {"identity"}
-        allowed_encodings = set(
-            self.config.raw["sentinel"]["allowed_http_content_encodings"]
-        )
+        allowed_encodings = set(self.config.raw["sentinel"]["allowed_http_content_encodings"])
         if not encodings.issubset(allowed_encodings):
             response.close()
             raise MissingSupportCalibrationEvidenceV1Error(
@@ -150,13 +147,9 @@ class _SentinelClient:
                 "Sentinel Planetary Computer URL is outside the allowlist."
             )
         if stac and parsed.path != limits["allowed_stac_path"]:
-            raise MissingSupportCalibrationEvidenceV1Error(
-                "Sentinel STAC path changed."
-            )
+            raise MissingSupportCalibrationEvidenceV1Error("Sentinel STAC path changed.")
         if sas and not parsed.path.startswith(limits["allowed_sas_path_prefix"]):
-            raise MissingSupportCalibrationEvidenceV1Error(
-                "Sentinel SAS path changed."
-            )
+            raise MissingSupportCalibrationEvidenceV1Error("Sentinel SAS path changed.")
 
     def post_stac(self, query: Mapping[str, Any]) -> tuple[list[dict[str, Any]], bytes]:
         url = str(self.config.raw["sentinel"]["stac_api"]).rstrip("/") + "/search"
@@ -171,9 +164,7 @@ class _SentinelClient:
         )
         if 300 <= int(response.status_code) < 400:
             response.close()
-            raise MissingSupportCalibrationEvidenceV1Error(
-                "Sentinel STAC redirect is prohibited."
-            )
+            raise MissingSupportCalibrationEvidenceV1Error("Sentinel STAC redirect is prohibited.")
         response.raise_for_status()
         content = self._read_bounded_body(
             response,
@@ -184,9 +175,7 @@ class _SentinelClient:
         assert_no_secrets(payload, label="Sentinel STAC response")
         features = payload.get("features") if isinstance(payload, dict) else None
         if not isinstance(features, list) or not features:
-            raise MissingSupportCalibrationEvidenceV1Error(
-                "Sentinel STAC query returned no items."
-            )
+            raise MissingSupportCalibrationEvidenceV1Error("Sentinel STAC query returned no items.")
         if any(
             isinstance(link, dict) and link.get("rel") == "next"
             for link in payload.get("links", [])
@@ -200,25 +189,21 @@ class _SentinelClient:
         canonical = canonical_unsigned_url(unsigned_url)
         parsed = urlsplit(canonical)
         limits = self.config.raw["sentinel"]["limits"]
-        if (
-            parsed.hostname != "sentinel2l2a01.blob.core.windows.net"
-            or not parsed.path.startswith(limits["allowed_asset_path_prefix"])
+        if parsed.hostname != "sentinel2l2a01.blob.core.windows.net" or not parsed.path.startswith(
+            limits["allowed_asset_path_prefix"]
         ):
             raise MissingSupportCalibrationEvidenceV1Error(
                 "Sentinel asset URL is outside the frozen PC container."
             )
         parts = parsed.path.lstrip("/").split("/", 1)
         if len(parts) != 2:
-            raise MissingSupportCalibrationEvidenceV1Error(
-                "Sentinel asset URL lacks a container."
-            )
+            raise MissingSupportCalibrationEvidenceV1Error("Sentinel asset URL lacks a container.")
         account = parsed.hostname.split(".", 1)[0]
         container = parts[0]
         key = account, container
         if key not in self._sas_tokens:
             sas_url = (
-                "https://planetarycomputer.microsoft.com/api/sas/v1/token/"
-                f"{account}/{container}"
+                f"https://planetarycomputer.microsoft.com/api/sas/v1/token/{account}/{container}"
             )
             self._validate_pc(sas_url, sas=True)
             self._count()
@@ -272,9 +257,7 @@ class _SentinelClient:
         )
         if 300 <= int(response.status_code) < 400:
             response.close()
-            raise MissingSupportCalibrationEvidenceV1Error(
-                "Sentinel XML redirect is prohibited."
-            )
+            raise MissingSupportCalibrationEvidenceV1Error("Sentinel XML redirect is prohibited.")
         response.raise_for_status()
         content = self._read_bounded_body(
             response,
@@ -329,9 +312,7 @@ class _SentinelClient:
             or int(match.group(3)) <= end
         ):
             response.close()
-            raise MissingSupportCalibrationEvidenceV1Error(
-                "Sentinel COG Content-Range changed."
-            )
+            raise MissingSupportCalibrationEvidenceV1Error("Sentinel COG Content-Range changed.")
         expected_length = end - start + 1
         if int(response.headers.get("Content-Length", -1)) != expected_length:
             response.close()
@@ -340,9 +321,7 @@ class _SentinelClient:
             )
         if self.downloaded_bytes + expected_length > self.maximum_total:
             response.close()
-            raise MissingSupportCalibrationEvidenceV1Error(
-                "Sentinel smoke byte limit exceeded."
-            )
+            raise MissingSupportCalibrationEvidenceV1Error("Sentinel smoke byte limit exceeded.")
         content = bytearray()
         try:
             for chunk in response.iter_content(chunk_size=1024 * 1024):
@@ -362,13 +341,9 @@ class _SentinelClient:
         self.downloaded_bytes += len(content)
         return bytes(content), int(match.group(3))
 
-    def open_asset(
-        self, path: str, mode: str = "rb"
-    ) -> io.BytesIO | _BoundedRangeReader:
+    def open_asset(self, path: str, mode: str = "rb") -> io.BytesIO | _BoundedRangeReader:
         if mode not in {"r", "rb"}:
-            raise MissingSupportCalibrationEvidenceV1Error(
-                "Sentinel COG opener is read-only."
-            )
+            raise MissingSupportCalibrationEvidenceV1Error("Sentinel COG opener is read-only.")
         # Rasterio validates callable openers with this fixed local sentinel.
         if str(path) == "test":
             return io.BytesIO(b"test")
@@ -533,15 +508,11 @@ def _load_eligible(
     config: EvidenceConfig, support: Mapping[str, Any]
 ) -> tuple[np.ndarray, np.ndarray, rasterio.Affine, str]:
     outputs = support["outputs"]
-    with rasterio.open(
-        config.project_path(str(outputs["eligible_mask_30m"]["path"]))
-    ) as source:
+    with rasterio.open(config.project_path(str(outputs["eligible_mask_30m"]["path"]))) as source:
         eligible = source.read(1).astype(bool)
         transform_value = source.transform
         crs = source.crs.to_string()
-    with rasterio.open(
-        config.project_path(str(outputs["tract_zones_30m"]["path"]))
-    ) as source:
+    with rasterio.open(config.project_path(str(outputs["tract_zones_30m"]["path"]))) as source:
         zones = source.read(1)
         if source.transform != transform_value or source.crs.to_string() != crs:
             raise MissingSupportCalibrationEvidenceV1Error(
@@ -595,9 +566,7 @@ def _probe_candidates(
             "Sentinel source metadata contains invalid MGRS."
         )
     candidates["native_utm_zone"] = parsed.map(lambda value: int(value.group("zone")))
-    candidates["eligible_cell_overlap"] = candidates["mgrs_tile"].map(
-        overlap_counts
-    )
+    candidates["eligible_cell_overlap"] = candidates["mgrs_tile"].map(overlap_counts)
     candidates = candidates.loc[candidates["eligible_cell_overlap"] > 0].copy()
     if candidates.empty:
         raise MissingSupportCalibrationEvidenceV1Error(
@@ -628,9 +597,7 @@ def _probe_candidates(
     return selected
 
 
-def _stac_snapshot_path(
-    config: EvidenceConfig, city_id: str, label: str
-) -> Path:
+def _stac_snapshot_path(config: EvidenceConfig, city_id: str, label: str) -> Path:
     root = config.project_path(str(config.raw["sentinel"]["limits"]["working_directory"]))
     safe = re.sub(r"[^A-Za-z0-9_.-]+", "_", label)
     return root / city_id / "stac" / f"{safe}.json"
@@ -670,8 +637,7 @@ def _query_cohort(
     query = {
         "collections": ["sentinel-2-l2a"],
         "datetime": (
-            f"{start.isoformat().replace('+00:00', 'Z')}/"
-            f"{end.isoformat().replace('+00:00', 'Z')}"
+            f"{start.isoformat().replace('+00:00', 'Z')}/{end.isoformat().replace('+00:00', 'Z')}"
         ),
         "intersects": mapping(boundary.to_crs("EPSG:4326").geometry.union_all()),
         "limit": 100,
@@ -683,9 +649,7 @@ def _query_cohort(
             raise MissingSupportCalibrationEvidenceV1Error(
                 "Sentinel cohort query crossed collections."
             )
-        record = sentinel_record_from_item(
-            pystac.Item.from_dict(feature, preserve_dict=False)
-        )
+        record = sentinel_record_from_item(pystac.Item.from_dict(feature, preserve_dict=False))
         if physical_acquisition_key(record) == key:
             records.append(record)
     if not records:
@@ -705,9 +669,7 @@ def _query_cohort(
 def _mgrs_epsg(mgrs_tile: str) -> str:
     match = MGRS.fullmatch(mgrs_tile.upper())
     if match is None:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            f"Invalid MGRS tile: {mgrs_tile}"
-        )
+        raise MissingSupportCalibrationEvidenceV1Error(f"Invalid MGRS tile: {mgrs_tile}")
     zone = int(match.group("zone"))
     north = match.group("band") >= "N"
     return f"EPSG:{32600 + zone if north else 32700 + zone}"
@@ -779,6 +741,17 @@ def _validate_grid(
         raise MissingSupportCalibrationEvidenceV1Error(
             f"Sentinel {asset} dtype or band count changed."
         )
+    scales = tuple(float(value) for value in source.scales)
+    offsets = tuple(float(value) for value in source.offsets)
+    if (
+        source.nodata is None
+        or not math.isclose(float(source.nodata), 0.0, rel_tol=0.0, abs_tol=0.0)
+        or scales != (1.0,)
+        or offsets != (0.0,)
+    ):
+        raise MissingSupportCalibrationEvidenceV1Error(
+            f"Sentinel {asset} is not identity-encoded native DN storage."
+        )
     return {
         "crs": source.crs.to_string(),
         "shape": [source.height, source.width],
@@ -786,8 +759,9 @@ def _validate_grid(
         "resolution_m": expected_resolution,
         "dtype": source.dtypes[0],
         "nodata": source.nodata,
-        "scales": [float(value) for value in source.scales],
-        "offsets": [float(value) for value in source.offsets],
+        "scales": list(scales),
+        "offsets": list(offsets),
+        "native_dn_identity_storage": True,
     }
 
 
@@ -800,9 +774,7 @@ def _probe_cell(
     full_window_margin_m: float,
 ) -> tuple[float, float, int]:
     xs, ys, flat = _eligible_centers(eligible, transform_value)
-    geometry = gpd.GeoSeries([item.geometry_wgs84], crs="EPSG:4326").to_crs(
-        support_crs
-    ).iloc[0]
+    geometry = gpd.GeoSeries([item.geometry_wgs84], crs="EPSG:4326").to_crs(support_crs).iloc[0]
     if full_window_margin_m < 0:
         raise MissingSupportCalibrationEvidenceV1Error(
             "Sentinel full-window margin cannot be negative."
@@ -829,15 +801,99 @@ def _asset_extra_calibration(feature: Mapping[str, Any], asset: str) -> dict[str
         raise MissingSupportCalibrationEvidenceV1Error(
             f"Sentinel STAC item lost asset metadata: {asset}"
         )
+    if "raster:bands" not in value:
+        return {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": None,
+            "offset": None,
+            "nodata": None,
+        }
     bands = value.get("raster:bands")
     if not isinstance(bands, list) or len(bands) != 1 or not isinstance(bands[0], Mapping):
         raise MissingSupportCalibrationEvidenceV1Error(
-            f"Sentinel {asset} lacks one raster:bands record."
+            f"Sentinel {asset} has ambiguous raster:bands metadata."
         )
     band = bands[0]
-    scale = band.get("scale")
-    offset = band.get("offset")
-    return {"scale": scale, "offset": offset, "nodata": band.get("nodata")}
+    try:
+        scale = float(band["scale"])
+        offset = float(band["offset"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise MissingSupportCalibrationEvidenceV1Error(
+            f"Sentinel {asset} raster:bands lacks finite scale and offset."
+        ) from exc
+    if not math.isfinite(scale) or not math.isfinite(offset):
+        raise MissingSupportCalibrationEvidenceV1Error(
+            f"Sentinel {asset} raster:bands lacks finite scale and offset."
+        )
+    return {
+        "availability": "published_by_provider_stac_item",
+        "scale": scale,
+        "offset": offset,
+        "nodata": band.get("nodata"),
+    }
+
+
+def _provider_encoding_evidence(
+    asset_records: Mapping[str, Mapping[str, Any]], calibration: Any
+) -> dict[str, Any]:
+    expected_scale = 1.0 / calibration.quantification_value
+    declarations: dict[str, bool] = {}
+    matches: dict[str, bool | None] = {}
+    for asset in REFLECTANCE_ASSETS:
+        raster_band = asset_records[asset]["stac_raster_band"]
+        availability = raster_band.get("availability")
+        if availability == "not_published_by_provider_stac_item":
+            declarations[asset] = False
+            matches[asset] = None
+            continue
+        if availability != "published_by_provider_stac_item":
+            raise MissingSupportCalibrationEvidenceV1Error(
+                f"Sentinel {asset} STAC calibration availability changed."
+            )
+        declarations[asset] = True
+        try:
+            observed_scale = float(raster_band["scale"])
+            observed_offset = float(raster_band["offset"])
+        except (KeyError, TypeError, ValueError) as exc:
+            raise MissingSupportCalibrationEvidenceV1Error(
+                f"Sentinel {asset} STAC calibration is incomplete."
+            ) from exc
+        if not math.isfinite(observed_scale) or not math.isfinite(observed_offset):
+            raise MissingSupportCalibrationEvidenceV1Error(
+                f"Sentinel {asset} STAC calibration is incomplete."
+            )
+        expected_offset = calibration.offset_by_band[asset] / calibration.quantification_value
+        matches[asset] = math.isclose(
+            observed_scale, expected_scale, rel_tol=0.0, abs_tol=1e-12
+        ) and math.isclose(observed_offset, expected_offset, rel_tol=0.0, abs_tol=1e-12)
+    if any(declarations.values()) and not all(declarations.values()):
+        raise MissingSupportCalibrationEvidenceV1Error(
+            "Sentinel STAC publishes calibration for only part of the seven-band set."
+        )
+    all_declared = all(declarations.values())
+    all_match = all_declared and all(value is True for value in matches.values())
+    if not any(declarations.values()):
+        comparison_status = "provider_stac_raster_calibration_not_published"
+    elif all_match:
+        comparison_status = "all_provider_stac_calibrations_match_product_xml"
+    else:
+        comparison_status = "provider_stac_calibration_mismatch"
+    return {
+        "decode_calibration_authority": "official_product_metadata_xml",
+        "stac_values_synthesized_from_xml": False,
+        "expected_stac_scale": expected_scale,
+        "expected_stac_offset_by_band": {
+            asset: (calibration.offset_by_band[asset] / calibration.quantification_value)
+            for asset in REFLECTANCE_ASSETS
+        },
+        "stac_raster_band_declared_by_asset": declarations,
+        "stac_raster_band_matches_xml_formula": matches,
+        "all_seven_assets_declare_stac_calibration": all_declared,
+        "all_seven_assets_match_xml_formula": all_match,
+        "comparison_status": comparison_status,
+        "native_dn_storage_header_identity_required": True,
+        "interpretation_deferred_to_v3": True,
+    }
 
 
 def _stage_probe(
@@ -858,9 +914,7 @@ def _stage_probe(
         item_id=str(candidate["source_item_id"]),
     )
     if item.collection_id != "sentinel-2-l2a":
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "Sentinel exact item crossed collections."
-        )
+        raise MissingSupportCalibrationEvidenceV1Error("Sentinel exact item crossed collections.")
     initial = sentinel_record_from_item(item)
     cohort, cohort_query = _query_cohort(
         client,
@@ -892,15 +946,11 @@ def _stage_probe(
         eligible=eligible,
         transform_value=transform_value,
         support_crs=support_crs,
-        full_window_margin_m=float(
-            config.raw["sentinel"]["probe_cell_full_window_margin_m"]
-        ),
+        full_window_margin_m=float(config.raw["sentinel"]["probe_cell_full_window_margin_m"]),
     )
     hrefs = dict(selected.asset_hrefs)
     xml = client.get_xml(hrefs["product-metadata"])
-    calibration = parse_boa_calibration(
-        xml, processing_baseline=selected.processing_baseline
-    )
+    calibration = parse_boa_calibration(xml, processing_baseline=selected.processing_baseline)
     root = config.project_path(str(config.raw["sentinel"]["limits"]["working_directory"]))
     probe_id = canonical_sha256(
         {
@@ -919,15 +969,11 @@ def _stage_probe(
     scl_histogram: dict[str, int] = {}
     window_size = int(config.raw["sentinel"]["native_window_shape"][0])
     if config.raw["sentinel"]["native_window_shape"] != [window_size, window_size]:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "Sentinel window is not square."
-        )
+        raise MissingSupportCalibrationEvidenceV1Error("Sentinel window is not square.")
     feature_dict = selected_feature.to_dict()
     for asset in (*REFLECTANCE_ASSETS, "SCL"):
         unsigned = hrefs[asset]
-        with rasterio.open(
-            canonical_unsigned_url(unsigned), opener=client.open_asset
-        ) as source:
+        with rasterio.open(canonical_unsigned_url(unsigned), opener=client.open_asset) as source:
             schema = _validate_grid(source, asset=asset, mgrs_tile=selected.mgrs_tile)
             window = _window_for_probe(
                 source,
@@ -953,15 +999,12 @@ def _stage_probe(
                 int(window.height),
             ],
             "raw_window": file_record(config, raw_path),
-            "raw_array_sha256": hashlib.sha256(
-                canonical_raw.tobytes(order="C")
-            ).hexdigest(),
+            "raw_array_sha256": hashlib.sha256(canonical_raw.tobytes(order="C")).hexdigest(),
         }
         if asset == "SCL":
             values, counts = np.unique(canonical_raw, return_counts=True)
             scl_histogram = {
-                str(int(value)): int(count)
-                for value, count in zip(values, counts, strict=True)
+                str(int(value)): int(count) for value, count in zip(values, counts, strict=True)
             }
             continue
         decoded = decode_boa_reflectance(
@@ -979,28 +1022,10 @@ def _stage_probe(
         canonical_decoded = np.asarray(decoded, dtype="<f8", order="C")
         finite_mask = np.packbits(finite.ravel(order="C"), bitorder="big")
         decoded_hashes[asset] = hashlib.sha256(
-            finite_mask.tobytes()
-            + canonical_decoded[finite].astype("<f8").tobytes()
+            finite_mask.tobytes() + canonical_decoded[finite].astype("<f8").tobytes()
         ).hexdigest()
         finite_counts[asset] = int(finite.sum())
-    expected_scale = 1.0 / calibration.quantification_value
-    provider_matches: dict[str, bool] = {}
-    for asset in REFLECTANCE_ASSETS:
-        raster_band = asset_records[asset]["stac_raster_band"]
-        try:
-            observed_scale = float(raster_band["scale"])
-            observed_offset = float(raster_band["offset"])
-        except (TypeError, ValueError):
-            provider_matches[asset] = False
-            continue
-        expected_offset = (
-            calibration.offset_by_band[asset] / calibration.quantification_value
-        )
-        provider_matches[asset] = math.isclose(
-            observed_scale, expected_scale, rel_tol=0.0, abs_tol=1e-12
-        ) and math.isclose(
-            observed_offset, expected_offset, rel_tol=0.0, abs_tol=1e-12
-        )
+    provider_encoding = _provider_encoding_evidence(asset_records, calibration)
     return {
         "probe_id": probe_id,
         "native_utm_zone": int(candidate["native_utm_zone"]),
@@ -1040,19 +1065,7 @@ def _stage_probe(
             "value_hashes": decoded_hashes,
             "indices_or_albedo_computed": False,
         },
-        "provider_encoding_evidence": {
-            "expected_stac_scale": expected_scale,
-            "expected_stac_offset_by_band": {
-                asset: (
-                    calibration.offset_by_band[asset]
-                    / calibration.quantification_value
-                )
-                for asset in REFLECTANCE_ASSETS
-            },
-            "stac_raster_band_matches_xml_formula": provider_matches,
-            "all_seven_assets_match_xml_formula": all(provider_matches.values()),
-            "interpretation_deferred_to_v3": True,
-        },
+        "provider_encoding_evidence": provider_encoding,
         "scl_histogram_audit_only": scl_histogram,
         "data_driven_candidate_fallback_used": False,
     }
@@ -1085,9 +1098,7 @@ def _city_manifest(
         "worldcover_support": {
             "path": _city_worldcover_path(city_id),
             "commit_sha256": support["commit_sha256"],
-            "city_support_identity_sha256": support["support"][
-                "city_support_identity_sha256"
-            ],
+            "city_support_identity_sha256": support["support"]["city_support_identity_sha256"],
         },
         "selection_contract": {
             "group": "each_native_utm_zone_with_positive_eligible_cell_overlap",
@@ -1095,8 +1106,7 @@ def _city_manifest(
                 "eligible_cell_overlap_desc_acquired_utc_asc_mgrs_tile_asc_item_id_asc"
             ),
             "probe_cell_order": (
-                "eligible_flat_index_ascending_inside_item_after_fixed_"
-                "full_window_margin"
+                "eligible_flat_index_ascending_inside_item_after_fixed_full_window_margin"
             ),
             "cloud_scl_or_dn_used_for_selection": False,
             "data_driven_fallback_allowed": False,
@@ -1123,8 +1133,7 @@ def _verify_city(config: EvidenceConfig, city_id: str) -> dict[str, Any]:
     payload = read_json_with_commit(path, label=f"{city_id} Sentinel smoke")
     if (
         payload.get("algorithm_version") != ALGORITHM_VERSION
-        or payload.get("state")
-        != "complete_target_blind_city_sentinel_calibration_smoke"
+        or payload.get("state") != "complete_target_blind_city_sentinel_calibration_smoke"
         or payload.get("city_id") != city_id
         or payload.get("probe_count") != len(payload.get("probes", []))
     ):
@@ -1167,9 +1176,7 @@ def _verify_city(config: EvidenceConfig, city_id: str) -> dict[str, Any]:
         if file_record(config, metadata_path) != {
             key: metadata[key] for key in ("path", "bytes", "sha256")
         }:
-            raise MissingSupportCalibrationEvidenceV1Error(
-                f"Sentinel XML changed: {city_id}"
-            )
+            raise MissingSupportCalibrationEvidenceV1Error(f"Sentinel XML changed: {city_id}")
         for asset in (*REFLECTANCE_ASSETS, "SCL"):
             record = probe["assets"][asset]["raw_window"]
             raw_path = config.project_path(str(record["path"]))
@@ -1188,9 +1195,7 @@ def _verify_global(config: EvidenceConfig) -> dict[str, Any]:
         or payload.get("state") != COMPLETE_STATE
         or set(payload.get("cities", {})) != set(EXTERNAL_CITY_IDS)
     ):
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "Sentinel smoke terminal changed."
-        )
+        raise MissingSupportCalibrationEvidenceV1Error("Sentinel smoke terminal changed.")
     total = 0
     requests_total = 0
     bytes_total = 0
@@ -1206,9 +1211,7 @@ def _verify_global(config: EvidenceConfig) -> dict[str, Any]:
                 f"Sentinel smoke terminal lost {city_id}."
             )
     if total != int(payload["total_probe_groups"]):
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "Sentinel smoke total probe count changed."
-        )
+        raise MissingSupportCalibrationEvidenceV1Error("Sentinel smoke total probe count changed.")
     expected_audit = {
         "explicit_request_count": requests_total,
         "bounded_response_bytes": bytes_total,
@@ -1246,9 +1249,7 @@ def stage_sentinel_calibration_smoke_v1(
             audit = city_payloads[city_id]["network_audit"]
             client.request_count += int(audit["explicit_request_count"])
             client.downloaded_bytes += int(audit["bounded_response_bytes"])
-            client.gdal_asset_open_count += int(
-                audit["python_range_asset_open_count"]
-            )
+            client.gdal_asset_open_count += int(audit["python_range_asset_open_count"])
             if (
                 client.request_count > client.maximum_requests
                 or client.downloaded_bytes > client.maximum_total
@@ -1292,9 +1293,7 @@ def stage_sentinel_calibration_smoke_v1(
             network_audit={
                 "explicit_request_count": client.request_count - request_start,
                 "bounded_response_bytes": client.downloaded_bytes - byte_start,
-                "python_range_asset_open_count": (
-                    client.gdal_asset_open_count - asset_open_start
-                ),
+                "python_range_asset_open_count": (client.gdal_asset_open_count - asset_open_start),
                 "all_cog_range_requests_counted": True,
                 "redirect_fallback_allowed": False,
                 "signed_urls_persisted": False,
@@ -1304,8 +1303,10 @@ def stage_sentinel_calibration_smoke_v1(
         city_payloads[city_id] = _verify_city(config, city_id)
     total = sum(int(payload["probe_count"]) for payload in city_payloads.values())
     limits = config.raw["sentinel"]["limits"]
-    if not int(limits["expected_minimum_probe_groups"]) <= total <= int(
-        limits["maximum_probe_groups"]
+    if (
+        not int(limits["expected_minimum_probe_groups"])
+        <= total
+        <= int(limits["maximum_probe_groups"])
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
             "Sentinel contributing native-zone count left its preregistered range."
@@ -1339,9 +1340,7 @@ def stage_sentinel_calibration_smoke_v1(
         "generated_at_utc": datetime.now(UTC).isoformat(),
         "plan_authorization": dict(plan_record),
         "cities": {
-            city_id: checkpoint_record(
-                config, config.project_path(_city_sentinel_path(city_id))
-            )
+            city_id: checkpoint_record(config, config.project_path(_city_sentinel_path(city_id)))
             for city_id in EXTERNAL_CITY_IDS
         },
         "total_probe_groups": total,
@@ -1356,9 +1355,7 @@ def stage_sentinel_calibration_smoke_v1(
         "sentinel_indices_or_tract_features_computed": False,
         "predictor_build_authorized": False,
         "external_target_or_qa_values_read": False,
-        "next_gate": (
-            "publish_tracked_only_plan_v17_for_portable_predictor_contract_v3_decision"
-        ),
+        "next_gate": NEXT_GATE,
     }
     write_manifest_no_clobber(global_payload, global_path)
     return _verify_global(config)

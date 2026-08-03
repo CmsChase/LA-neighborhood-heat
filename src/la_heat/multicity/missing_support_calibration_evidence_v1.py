@@ -27,15 +27,9 @@ from la_heat.provenance import canonical_sha256, sha256_file
 SCHEMA_VERSION: Final = 1
 ALGORITHM_VERSION: Final = "multicity-missing-support-calibration-evidence-v1"
 STAGE_ID: Final = "target_blind_missing_support_and_calibration_evidence_v1"
-COMPLETE_STATE: Final = (
-    "complete_target_blind_missing_support_and_calibration_evidence"
-)
-CONFIG_PATH: Final = (
-    "configs/multicity/missing_support_calibration_evidence_v1.toml"
-)
-CONFIG_SHA256: Final = (
-    "d703f216eb80b187c390ae8efdf49c68615bf16614657706249c2f052ea50dba"
-)
+COMPLETE_STATE: Final = "complete_target_blind_missing_support_and_calibration_evidence"
+CONFIG_PATH: Final = "configs/multicity/missing_support_calibration_evidence_v1.toml"
+CONFIG_SHA256: Final = "a3bc3611afa50933fa05ace3413b3bc328a9357341d64d59ca14bd3cac1c74cc"
 PLAN_PATH: Final = "manifests/multicity/PLAN_READINESS.json"
 PREDECESSOR_TERMINAL_PATH: Final = (
     "manifests/multicity/reviews/portable_predictor_contract/"
@@ -55,8 +49,7 @@ CITY_IDS: Final = (
 EXTERNAL_CITY_IDS: Final = ("phoenix_az", "houston_tx", "chicago_il")
 
 GEOGRAPHY_GLOBAL_PATH: Final = (
-    "manifests/multicity/reviews/portable_predictor_contract/"
-    "FOUR_CITY_GEOGRAPHY_CONTRACT_V1.json"
+    "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_GEOGRAPHY_CONTRACT_V1.json"
 )
 WORLDCOVER_GLOBAL_PATH: Final = (
     "manifests/multicity/reviews/portable_predictor_contract/"
@@ -69,16 +62,12 @@ SENTINEL_GLOBAL_PATH: Final = (
 
 
 def _city_geography_path(city_id: str) -> str:
-    return (
-        f"manifests/multicity/cities/{city_id}/geography/"
-        "GEOGRAPHY_CONTRACT_V1.json"
-    )
+    return f"manifests/multicity/cities/{city_id}/geography/GEOGRAPHY_CONTRACT_V1.json"
 
 
 def _city_worldcover_path(city_id: str) -> str:
     return (
-        f"manifests/multicity/cities/{city_id}/eligible_support/"
-        "WORLDCOVER_ELIGIBLE_SUPPORT_V1.json"
+        f"manifests/multicity/cities/{city_id}/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json"
     )
 
 
@@ -264,15 +253,11 @@ def expected_plan_authorization_scope() -> dict[str, Any]:
             "check_only_network_requests": 0,
             "single_direct_child_publication_required": True,
         },
-        "next_gate": (
-            "publish_tracked_only_plan_v17_for_portable_predictor_contract_v3_decision"
-        ),
+        "next_gate": ("publish_tracked_only_plan_v18_for_portable_predictor_contract_v3_decision"),
     }
 
 
-def _require_exact_keys(
-    value: Mapping[str, Any], expected: set[str], *, label: str
-) -> None:
+def _require_exact_keys(value: Mapping[str, Any], expected: set[str], *, label: str) -> None:
     if set(value) != expected:
         raise MissingSupportCalibrationEvidenceV1Error(
             f"{label} keys changed; missing={sorted(expected - set(value))}, "
@@ -338,8 +323,7 @@ def read_evidence_config(path: str | Path = CONFIG_PATH) -> EvidenceConfig:
             "data/processed/multicity/missing_support_calibration_evidence_v1"
         ),
         "progress_path": (
-            "data/interim/multicity/missing_support_calibration_evidence_v1/"
-            "status.json"
+            "data/interim/multicity/missing_support_calibration_evidence_v1/status.json"
         ),
         "overall_terminal": OVERALL_TERMINAL_PATH,
         "geography_terminal": GEOGRAPHY_GLOBAL_PATH,
@@ -362,9 +346,7 @@ def read_evidence_config(path: str | Path = CONFIG_PATH) -> EvidenceConfig:
         "each_output_must_be_one_git_addition": True,
         "tracked_output_may_not_change_after_publication": True,
     }:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "V12 publication contract changed."
-        )
+        raise MissingSupportCalibrationEvidenceV1Error("V12 publication contract changed.")
     if len(TRACKED_OUTPUT_PATHS) != 15 or len(set(TRACKED_OUTPUT_PATHS)) != 15:
         raise MissingSupportCalibrationEvidenceV1Error(
             "The V12 tracked output set is not the exact fifteen-file set."
@@ -390,8 +372,7 @@ def assert_no_secrets(value: object, *, label: str = "manifest") -> None:
         for key, child in value.items():
             lowered = str(key).casefold()
             if lowered in _SECRET_QUERY_KEYS or any(
-                marker in lowered
-                for marker in ("bearer", "password", "secret", "credential")
+                marker in lowered for marker in ("bearer", "password", "secret", "credential")
             ):
                 raise MissingSupportCalibrationEvidenceV1Error(
                     f"{label} contains a secret-like field: {key}"
@@ -411,9 +392,7 @@ def assert_no_secrets(value: object, *, label: str = "manifest") -> None:
                     f"{label} contains a signed or credential-bearing URL."
                 )
         if value.casefold().startswith("bearer "):
-            raise MissingSupportCalibrationEvidenceV1Error(
-                f"{label} contains a bearer credential."
-            )
+            raise MissingSupportCalibrationEvidenceV1Error(f"{label} contains a bearer credential.")
 
 
 def _expected_json_bytes(payload: Mapping[str, Any]) -> bytes:
@@ -435,29 +414,21 @@ def json_with_commit(payload: Mapping[str, Any]) -> dict[str, Any]:
 
 def read_json_with_commit(path: Path, *, label: str) -> dict[str, Any]:
     if not path.is_file() or path.is_symlink():
-        raise MissingSupportCalibrationEvidenceV1Error(
-            f"{label} is not one regular file: {path}"
-        )
+        raise MissingSupportCalibrationEvidenceV1Error(f"{label} is not one regular file: {path}")
     before = path.read_bytes()
     after = path.read_bytes()
     if before != after:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            f"{label} changed while it was read."
-        )
+        raise MissingSupportCalibrationEvidenceV1Error(f"{label} changed while it was read.")
     try:
         payload = json.loads(before.decode("utf-8"))
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            f"Cannot parse {label}."
-        ) from exc
+        raise MissingSupportCalibrationEvidenceV1Error(f"Cannot parse {label}.") from exc
     if not isinstance(payload, dict):
         raise MissingSupportCalibrationEvidenceV1Error(f"{label} is not an object.")
     recorded = payload.get("commit_sha256")
     body = {key: value for key, value in payload.items() if key != "commit_sha256"}
     if not isinstance(recorded, str) or canonical_sha256(body) != recorded:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            f"{label} has an invalid internal commit."
-        )
+        raise MissingSupportCalibrationEvidenceV1Error(f"{label} has an invalid internal commit.")
     assert_no_secrets(payload, label=label)
     return payload
 
@@ -469,11 +440,7 @@ def atomic_bytes_no_clobber(
 
     destination.parent.mkdir(parents=True, exist_ok=True)
     if destination.exists():
-        if (
-            not accept_identical
-            or not destination.is_file()
-            or destination.read_bytes() != content
-        ):
+        if not accept_identical or not destination.is_file() or destination.read_bytes() != content:
             raise MissingSupportCalibrationEvidenceV1Error(
                 f"Existing append-only artifact differs: {destination}"
             )
@@ -496,17 +463,13 @@ def atomic_bytes_no_clobber(
 
 def write_manifest_no_clobber(payload: Mapping[str, Any], destination: Path) -> None:
     committed = json_with_commit(payload)
-    atomic_bytes_no_clobber(
-        _expected_json_bytes(committed), destination, accept_identical=True
-    )
+    atomic_bytes_no_clobber(_expected_json_bytes(committed), destination, accept_identical=True)
 
 
 def file_record(config: EvidenceConfig, path: Path) -> dict[str, Any]:
     resolved = path.resolve()
     if not resolved.is_relative_to(config.project_root):
-        raise MissingSupportCalibrationEvidenceV1Error(
-            f"Artifact escapes project root: {path}"
-        )
+        raise MissingSupportCalibrationEvidenceV1Error(f"Artifact escapes project root: {path}")
     relative = resolved.relative_to(config.project_root).as_posix()
     return {
         "path": relative,
@@ -552,9 +515,7 @@ def update_progress(
     os.replace(temporary, path)
 
 
-def _run_git(
-    project_root: Path, *arguments: str, binary: bool = False
-) -> str | bytes:
+def _run_git(project_root: Path, *arguments: str, binary: bool = False) -> str | bytes:
     completed = subprocess.run(
         ["git", "-C", str(project_root), *arguments],
         check=False,
@@ -562,11 +523,7 @@ def _run_git(
         text=not binary,
     )
     if completed.returncode:
-        stderr = (
-            completed.stderr.decode("utf-8", errors="replace")
-            if binary
-            else completed.stderr
-        )
+        stderr = completed.stderr.decode("utf-8", errors="replace") if binary else completed.stderr
         raise MissingSupportCalibrationEvidenceV1Error(
             f"Git authentication failed for {' '.join(arguments)}: {stderr.strip()}"
         )
@@ -623,15 +580,15 @@ def authenticate_plan(
             "Evidence execution requires synchronized main and exact resumable outputs."
         )
     plan_path = config.project_path(PLAN_PATH)
-    plan = read_json_with_commit(plan_path, label="canonical planning V16")
+    plan = read_json_with_commit(plan_path, label="canonical planning V17")
     if (
-        plan.get("schema_version") != 16
-        or plan.get("algorithm_version") != "multicity-planning-readiness-v16"
+        plan.get("schema_version") != 17
+        or plan.get("algorithm_version") != "multicity-planning-readiness-v17"
         or plan.get("state") != "planning_ready"
         or plan.get("planning_stage")
         != (
-            "missing_support_calibration_evidence_v1_sentinel_content_encoding_"
-            "hotfix_resume_authorized"
+            "missing_support_calibration_evidence_v1_sentinel_stac_calibration_"
+            "metadata_hotfix_resume_authorized"
         )
         or plan.get("next_safe_stage")
         != "stage_target_blind_missing_support_and_calibration_evidence_v1"
@@ -641,51 +598,20 @@ def authenticate_plan(
         != expected_plan_authorization_scope()
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical planning does not grant the exact V16 evidence scope."
+            "Canonical planning does not grant the exact V17 evidence scope."
         )
+    from la_heat.multicity.plan_sentinel_stac_calibration_metadata_hotfix_transition_v17 import (
+        AUTHORIZED_FIX as expected_fix,
+    )
+
     transition = plan.get("transition")
-    expected_fix = {
-        "sentinel_http_body_check_before": (
-            "decoded_body_length_equals_encoded_content_length"
-        ),
-        "sentinel_http_body_check_after": (
-            "identity_requires_exact_length_encoded_bounds_both_representations"
-        ),
-        "allowed_content_encodings": [
-            "identity",
-            "gzip",
-            "deflate",
-            "br",
-            "zstd",
-        ],
-        "declared_encoded_byte_limit_preserved": True,
-        "decoded_byte_limit_enforced": True,
-        "total_byte_accounting": "maximum_of_declared_encoded_and_decoded_bytes",
-        "failing_stage": "external_city_sentinel_calibration_smoke_v1",
-        "repeated_identical_failures_observed": 8,
-        "completed_worldcover_terminal_preserved": True,
-        "completed_checkpoint_count": 10,
-        "sentinel_probe_selection_changed": False,
-        "sentinel_band_or_window_contract_changed": False,
-        "collection_or_asset_changed": False,
-        "tracked_output_paths_changed": False,
-        "permissions_changed": False,
-        "locks_changed": False,
-        "conflicting_next_plan_version_replaced": "v16",
-        "successful_evidence_next_plan_version": "v17",
-    }
-    if (
-        not isinstance(transition, Mapping)
-        or transition.get("authorized_fix") != expected_fix
-    ):
+    if not isinstance(transition, Mapping) or transition.get("authorized_fix") != expected_fix:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical planning lost the exact Sentinel encoding hotfix."
+            "Canonical planning lost the exact Sentinel STAC metadata hotfix."
         )
     resume = transition.get("resume_checkpoints")
-    if (
-        not isinstance(resume, list)
-        or [record.get("path") for record in resume]
-        != list(TRACKED_OUTPUT_PATHS[:10])
+    if not isinstance(resume, list) or [record.get("path") for record in resume] != list(
+        TRACKED_OUTPUT_PATHS[:10]
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
             "Canonical planning lost the exact geography resume checkpoints."
@@ -715,12 +641,12 @@ def authenticate_plan(
     ).splitlines()
     if not additions:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V16 planning publication cannot be located."
+            "Canonical V17 planning publication cannot be located."
         )
     publication = additions[0]
     if not _is_ancestor(config.project_root, publication, head):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V16 planning is not on current main."
+            "Canonical V17 planning is not on current main."
         )
     later = str(
         _run_git(
@@ -734,7 +660,7 @@ def authenticate_plan(
     )
     if later.strip():
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V16 planning changed after publication."
+            "Canonical V17 planning changed after publication."
         )
     return {
         "path": PLAN_PATH,
@@ -748,9 +674,7 @@ def authenticate_plan(
 def _parse_name_status(raw: bytes) -> frozenset[tuple[str, str]]:
     fields = raw.split(b"\0")
     if fields[-1:] != [b""] or len(fields[:-1]) % 2:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "Git name-status output is malformed."
-        )
+        raise MissingSupportCalibrationEvidenceV1Error("Git name-status output is malformed.")
     return frozenset(
         (
             fields[index].decode("ascii"),
@@ -805,7 +729,7 @@ def authenticate_publication(config: EvidenceConfig) -> str:
     plan_record = authenticate_plan(config)
     if parent_line[1] != plan_record["publication_git_commit"]:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "The evidence publication is not the planning-V16 direct child."
+            "The evidence publication is not the planning-V17 direct child."
         )
     raw = _run_git(
         config.project_root,
@@ -841,9 +765,7 @@ def authenticate_publication(config: EvidenceConfig) -> str:
                 f"Tracked evidence changed after publication: {relative}"
             )
         worktree = config.project_path(relative)
-        head_bytes = _run_git(
-            config.project_root, "show", f"{head}:{relative}", binary=True
-        )
+        head_bytes = _run_git(config.project_root, "show", f"{head}:{relative}", binary=True)
         assert isinstance(head_bytes, bytes)
         if not worktree.is_file() or worktree.read_bytes() != head_bytes:
             raise MissingSupportCalibrationEvidenceV1Error(
@@ -854,15 +776,11 @@ def authenticate_publication(config: EvidenceConfig) -> str:
 
 def _tracked_outputs_present(config: EvidenceConfig) -> tuple[str, ...]:
     return tuple(
-        relative
-        for relative in TRACKED_OUTPUT_PATHS
-        if config.project_path(relative).exists()
+        relative for relative in TRACKED_OUTPUT_PATHS if config.project_path(relative).exists()
     )
 
 
-def verify_terminal(
-    config: EvidenceConfig, *, require_publication: bool = True
-) -> dict[str, Any]:
+def verify_terminal(config: EvidenceConfig, *, require_publication: bool = True) -> dict[str, Any]:
     """Authenticate every checkpoint without networking or scientific recompute."""
 
     terminal_path = config.project_path(OVERALL_TERMINAL_PATH)
@@ -881,9 +799,7 @@ def verify_terminal(
     checkpoints = terminal.get("tracked_checkpoints")
     expected_checkpoint_paths = set(TRACKED_OUTPUT_PATHS[:-1])
     if not isinstance(checkpoints, dict) or set(checkpoints) != expected_checkpoint_paths:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "The terminal checkpoint set is not exact."
-        )
+        raise MissingSupportCalibrationEvidenceV1Error("The terminal checkpoint set is not exact.")
     for relative, record in checkpoints.items():
         path = config.project_path(relative)
         payload = read_json_with_commit(path, label=relative)
@@ -933,18 +849,21 @@ def stage_missing_support_calibration_evidence_v1(
     if check_only:
         return verify_terminal(config, require_publication=True)
     if overall.is_file():
-        tracked_at_head = subprocess.run(
-            [
-                "git",
-                "-C",
-                str(config.project_root),
-                "cat-file",
-                "-e",
-                f"HEAD:{OVERALL_TERMINAL_PATH}",
-            ],
-            check=False,
-            capture_output=True,
-        ).returncode == 0
+        tracked_at_head = (
+            subprocess.run(
+                [
+                    "git",
+                    "-C",
+                    str(config.project_root),
+                    "cat-file",
+                    "-e",
+                    f"HEAD:{OVERALL_TERMINAL_PATH}",
+                ],
+                check=False,
+                capture_output=True,
+            ).returncode
+            == 0
+        )
         return verify_terminal(config, require_publication=tracked_at_head)
 
     partial = _tracked_outputs_present(config)
