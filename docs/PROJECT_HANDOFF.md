@@ -22,6 +22,21 @@ Latest required scientific checkpoints on `main`:
 - post-publication historical-test compatibility fix:
   `ba174b43ad3f06709d0c4698182e4e92ad5e01d2`, subject
   `Fix historical source evidence regression tests`
+- completed source-evidence documentation checkpoint:
+  `6b12c6035c913ee6c410b4d890052b539f294b05`, subject
+  `Document completed multicity source evidence`
+- deferred predictor-contract V2 implementation, exact candidate contract,
+  tracked-only planning-v11 transition, and regression tests:
+  `4fe9c628a6502290086767b81fca9e693124ed9c`, subject
+  `Add deferred multicity predictor contract audit`
+- canonical planning v11, published as the implementation commit's
+  single-file direct child:
+  `162aee78ab692192a4b86fa7fcb9d709c2531c46`, subject
+  `Authorize multicity predictor contract V2 decision`
+- append-only deferred predictor-contract V2 terminal, published as the
+  planning-v11 commit's terminal-only direct child:
+  `570238b42aff1ecf7d8f6043a04f33b3efef01bd`, subject
+  `Record deferred multicity predictor contract V2`
 
 - tracked-only planning v7 transition, append-only portable water-distance V2
   freeze-decision implementation, exact configuration, security regression
@@ -267,11 +282,22 @@ Authoritative continuation files (historical artifact identities are labeled):
 - planning audit:
   `manifests/multicity/PLAN_READINESS.json`;
 - planning-audit file SHA-256:
-  `bdd2a1c75d397116f2c9e9f00e7e673dc83581e5b3b707b9bf5318e815cb3c28`;
+  `e156fe6dce713deffa244e51fc30991be132be898041e89553e2997e74263421`;
+- planning-audit bytes: `61,661`;
 - planning-audit internal commit:
-  `61359cbec70f2f4f549ed177abdca8b06b3459e3bb21d3f3d46e75d99001ec26`;
+  `eb79d28d58d1a914f0f08100a5dd84611b11da75303de6277496b80f6b5d73aa`;
 - current planning schema and publication commit:
-  `v10`, `975c155d625de4c9912b9cbf1b5ec710e945bc07`;
+  `v11`, `162aee78ab692192a4b86fa7fcb9d709c2531c46`;
+- predictor-contract V2 config:
+  `configs/multicity/portable_predictor_contract_freeze_v2.toml`, 17,681
+  bytes, SHA-256
+  `0992eff4fdcf45005dcb1c8d237dc28a4205966527572e06be4e875cae0ee2f4`;
+- append-only predictor-contract V2 terminal:
+  `manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V2.json`;
+- predictor-contract V2 terminal file SHA-256:
+  `0a851312b135c7c955ac238f84b7dad3a64609cf1d2f54fc343174c912bb8e34`;
+- predictor-contract V2 terminal internal commit:
+  `425562de6b11254485fe14b00735d8b5da5c4de0485e789201d07e969ba49100`;
 - Phoenix geography audit:
   `manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json`;
 - Phoenix geography internal commit:
@@ -437,10 +463,16 @@ terrain HEAD records into all six output tables.
 
 Current continuation verification:
 
+- current planning-v11 and predictor-contract-V2 contract suite: 19 passed;
+- current complete repository suite: 1,262 passed in 359.1 seconds, with six
+  existing dependency deprecation warnings;
+- current full-repository Ruff: all checks passed;
+- canonical planning-v11 and append-only predictor-contract-V2 publication
+  `--check-only` authentication: both passed from clean synchronized `main`;
 - L3 audit amendment, preflight, terminal, numerical, security, structural,
   and roundtrip focused suite: 316 passed;
-- complete repository suite after the V2 terminal: passed twice; the current
-  repository now collects 1,180 tests;
+- complete repository suite after the historical water-distance V2 terminal:
+  passed twice; that checkpoint collected 1,180 tests;
 - planning-v7 plus portable-freeze-V2 security suite: 31 passed;
 - complete repository suite with the staged v7/V2 implementation: reached
   100% with no failures and the same five existing deprecation warnings;
@@ -758,12 +790,60 @@ representation. Read-only comparison found identical Houston Daymet rows,
 attributes, geometries, and bounds. These quarantined files are not canonical
 inputs or tracked checkpoints.
 
-The next safe stage is a new tracked-only planning transition that authorizes
-only a separate portable predictor contract-freeze V2 decision. V2 must
-authenticate planning v10 and the exact source-evidence publication, then
-decide feature names, calibrations, aggregation/resampling rules, coverage
-gates, and whether predictor construction may open. Do not construct any
-continuation predictor or access any external target before that decision.
+That historical V2-decision stage is now complete. Canonical planning v11 is
+61,661 bytes with file SHA-256
+`e156fe6dce713deffa244e51fc30991be132be898041e89553e2997e74263421`
+and internal commit
+`eb79d28d58d1a914f0f08100a5dd84611b11da75303de6277496b80f6b5d73aa`.
+It consumes and closes the old source-evidence staging permission and opens
+only
+`portable_predictor_source_and_calibration_contract_freeze_v2=true`.
+Predictor construction, model fitting, protocol promotion, target access,
+one-time evaluation, and operational forecasting all remain false.
+
+The append-only V2 decision is 54,290 bytes with file SHA-256
+`0a851312b135c7c955ac238f84b7dad3a64609cf1d2f54fc343174c912bb8e34`
+and internal commit
+`425562de6b11254485fe14b00735d8b5da5c4de0485e789201d07e969ba49100`.
+Its state is
+`decision_complete_candidate_rules_frozen_contract_deferred_predictor_closed`.
+The decision binds a candidate 46-feature M2 registry (18 static, 2 calendar,
+21 Daymet, and 5 Sentinel features) and the 23-feature B1 registry for the
+next evidence stage. This is not a formal feature-name or predictor-contract
+lock. The two Phase I Pacific-specific names are historical and disabled;
+the candidates use exact GSHHG ocean/Great-Lakes shoreline mean and P10
+distance names and require recomputation rather than aliasing old values.
+
+Formal contract freeze is deferred for exactly three target-blind blockers:
+
+1. a four-city geography contract plus Los Angeles same-adapter rebuild or
+   formal parity evidence is absent;
+2. exact four-city WorldCover item/mosaic and shared 30 m eligible-support
+   evidence is absent;
+3. external-city real Sentinel asset/product-metadata calibration-smoke
+   evidence is absent.
+
+The next safe stage is
+`publish_tracked_only_plan_v12_for_missing_support_and_calibration_evidence`.
+V12 may authorize only those three source/support/calibration evidence tasks.
+It may not construct predictors, fit models, promote the protocol, create
+predictions, or open any external target/QA value. Successful evidence must
+be followed by a separate V3 contract decision and another separate planning
+gate before predictor construction.
+
+First safe commands for a new account, after reading this entire file:
+
+```powershell
+git status --short
+git rev-parse HEAD
+git rev-parse origin/main
+.\.venv\Scripts\python scripts\authorize_multicity_predictor_contract_freeze_v2.py --check-only
+.\.venv\Scripts\python scripts\audit_multicity_portable_predictor_contract_freeze_v2.py --check-only
+```
+
+Expected before new work: empty status; `HEAD == origin/main`; both commands
+authenticate the published v11/V2 records. Then design and review tracked-only
+planning v12. Do not run a predictor builder or inspect external targets.
 
 The historical v8 and V1 focused suites contain 33 passing tests. They cover
 exact scope/config/runtime binding, bounded Git history, tamper-and-restore,

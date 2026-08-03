@@ -1951,3 +1951,55 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   v10 plan and source-evidence terminal before deciding exact feature names,
   calibrations, aggregation rules, coverage gates, and whether predictor
   construction can be authorized. Do not build predictors before that gate.
+
+## 2026-08-03 - Publish planning v11 and defer the portable predictor contract
+
+- The reviewed seven-file implementation was published in
+  `4fe9c628a6502290086767b81fca9e693124ed9c`, subject
+  `Add deferred multicity predictor contract audit`. It is the direct child of
+  `6b12c6035c913ee6c410b4d890052b539f294b05` and adds exactly the V2 config,
+  V11/V2 modules, two thin scripts, and two regression-test files.
+- Canonical planning v11 was published as the implementation commit's
+  single-file direct child
+  `162aee78ab692192a4b86fa7fcb9d709c2531c46`, subject
+  `Authorize multicity predictor contract V2 decision`. It is 61,661 bytes,
+  file SHA-256
+  `e156fe6dce713deffa244e51fc30991be132be898041e89553e2997e74263421`,
+  and internal commit
+  `eb79d28d58d1a914f0f08100a5dd84611b11da75303de6277496b80f6b5d73aa`.
+  It closes the consumed missing-source staging permission and opens only the
+  exact target-blind V2 decision permission. Predictor, model, protocol,
+  target, evaluation, and operational permissions remain false.
+- The append-only V2 terminal was published as v11's terminal-only direct
+  child `570238b42aff1ecf7d8f6043a04f33b3efef01bd`, subject
+  `Record deferred multicity predictor contract V2`. It is 54,290 bytes, file
+  SHA-256
+  `0a851312b135c7c955ac238f84b7dad3a64609cf1d2f54fc343174c912bb8e34`,
+  internal commit
+  `425562de6b11254485fe14b00735d8b5da5c4de0485e789201d07e969ba49100`,
+  and state
+  `decision_complete_candidate_rules_frozen_contract_deferred_predictor_closed`.
+- V2 binds candidate rules and a unique 46-feature M2 registry plus 23-feature
+  B1 registry for evidence collection, but deliberately leaves the formal
+  contract and feature-name locks false. Phase I Pacific-specific water names
+  are disabled and replaced only as candidates by GSHHG ocean/Great-Lakes
+  shoreline mean/P10 names; old values may not be renamed or reused.
+- Formal freeze is deferred for exactly three new target-blind gaps: the
+  four-city geography contract/Los Angeles parity evidence, exact four-city
+  WorldCover item-mosaic/shared-support evidence, and external-city real
+  Sentinel asset/product-metadata calibration-smoke evidence.
+- Review found and fixed four audit-integrity defects before publication:
+  incomplete reconstruction of an existing terminal, missing exact-v11 HEAD
+  generation precondition, dynamic V2 import before clean/tracked preflight,
+  and a possible no-clobber race in append-only publication. Regression tests
+  cover each boundary.
+- The current focused contract suite passed 19 tests. The complete repository
+  suite passed all 1,262 collected tests in 359.1 seconds with six existing
+  dependency deprecation warnings, and full-repository Ruff passed.
+  Publication-aware `--check-only` authentication passed for both v11 and V2
+  from synchronized `main`.
+- The mandatory next stage is a new tracked-only planning v12 that may
+  authorize only the three missing source/support/calibration evidence tasks.
+  Predictor construction, model fitting, protocol promotion, prediction, and
+  external target/QA access remain prohibited. Successful evidence still
+  requires a separate V3 contract decision and later build authorization.
