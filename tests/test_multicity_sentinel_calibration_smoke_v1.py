@@ -8,11 +8,13 @@ from typing import Any
 
 import geopandas as gpd
 import numpy as np
+import pytest
 import rasterio
 from rasterio.io import MemoryFile
 from rasterio.transform import from_origin
 from shapely.geometry import box
 
+from la_heat.multicity import missing_support_calibration_evidence_v1 as evidence
 from la_heat.multicity import sentinel_calibration_smoke_v1 as smoke
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -167,6 +169,87 @@ class _RangeSession:
         )
 
 
+def _bounded_body_client(*, maximum_total: int = 1024) -> smoke._SentinelClient:
+    config = SimpleNamespace(
+        raw={
+            "sentinel": {
+                "allowed_http_content_encodings": [
+                    "identity",
+                    "gzip",
+                    "deflate",
+                    "br",
+                    "zstd",
+                ],
+                "limits": {
+                    "maximum_requests": 16,
+                    "maximum_total_download_bytes": maximum_total,
+                    "maximum_product_metadata_bytes": maximum_total,
+                    "maximum_range_response_bytes": maximum_total,
+                    "allowed_hosts": [],
+                    "allowed_stac_path": "/api/stac/v1/search",
+                    "allowed_sas_path_prefix": "/api/sas/v1/token/",
+                    "allowed_asset_path_prefix": "/sentinel2-l2/",
+                },
+            }
+        }
+    )
+    return smoke._SentinelClient(object(), config)  # type: ignore[arg-type]
+
+
+def test_compressed_http_body_bounds_encoded_and_decoded_sizes() -> None:
+    content = b"x" * 100
+    response = _RangeResponse(
+        content=content,
+        status_code=200,
+        url="https://planetarycomputer.microsoft.com/api/stac/v1/search",
+        headers={"Content-Length": "20", "Content-Encoding": "gzip"},
+    )
+    client = _bounded_body_client()
+
+    observed = client._read_bounded_body(
+        response, maximum_bytes=200, label="compressed response"
+    )
+
+    assert observed == content
+    assert client.downloaded_bytes == 100
+
+
+def test_identity_http_body_still_requires_exact_content_length() -> None:
+    response = _RangeResponse(
+        content=b"decoded",
+        status_code=200,
+        url="https://planetarycomputer.microsoft.com/api/stac/v1/search",
+        headers={"Content-Length": "2"},
+    )
+    client = _bounded_body_client()
+
+    with pytest.raises(
+        evidence.MissingSupportCalibrationEvidenceV1Error,
+        match="disagrees with Content-Length",
+    ):
+        client._read_bounded_body(
+            response, maximum_bytes=200, label="identity response"
+        )
+
+
+def test_compressed_http_body_cannot_exceed_decoded_limit() -> None:
+    response = _RangeResponse(
+        content=b"x" * 100,
+        status_code=200,
+        url="https://planetarycomputer.microsoft.com/api/stac/v1/search",
+        headers={"Content-Length": "20", "Content-Encoding": "gzip"},
+    )
+    client = _bounded_body_client()
+
+    with pytest.raises(
+        evidence.MissingSupportCalibrationEvidenceV1Error,
+        match="streamed bytes exceed",
+    ):
+        client._read_bounded_body(
+            response, maximum_bytes=50, label="compressed response"
+        )
+
+
 def test_rasterio_python_opener_counts_and_bounds_every_cog_range() -> None:
     array = np.arange(64 * 64, dtype=np.uint16).reshape(64, 64)
     with MemoryFile() as memory:
@@ -187,6 +270,13 @@ def test_rasterio_python_opener_counts_and_bounds_every_cog_range() -> None:
     config = SimpleNamespace(
         raw={
             "sentinel": {
+                "allowed_http_content_encodings": [
+                    "identity",
+                    "gzip",
+                    "deflate",
+                    "br",
+                    "zstd",
+                ],
                 "limits": {
                     "allowed_hosts": [
                         "planetarycomputer.microsoft.com",

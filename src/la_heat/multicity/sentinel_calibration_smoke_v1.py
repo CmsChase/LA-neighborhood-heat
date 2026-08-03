@@ -87,6 +87,21 @@ class _SentinelClient:
     ) -> bytes:
         length_text = response.headers.get("Content-Length")
         declared = int(length_text) if length_text is not None else None
+        encoding_text = str(response.headers.get("Content-Encoding", "")).lower()
+        encodings = {
+            value.strip() for value in encoding_text.split(",") if value.strip()
+        }
+        if not encodings:
+            encodings = {"identity"}
+        allowed_encodings = set(
+            self.config.raw["sentinel"]["allowed_http_content_encodings"]
+        )
+        if not encodings.issubset(allowed_encodings):
+            response.close()
+            raise MissingSupportCalibrationEvidenceV1Error(
+                f"{label} uses an unsupported Content-Encoding."
+            )
+        encoded = encodings != {"identity"}
         if declared is not None and (
             declared < 0
             or declared > maximum_bytes
@@ -111,11 +126,16 @@ class _SentinelClient:
                     )
         finally:
             response.close()
-        if declared is not None and len(content) != declared:
+        if declared is not None and not encoded and len(content) != declared:
             raise MissingSupportCalibrationEvidenceV1Error(
                 f"{label} body disagrees with Content-Length."
             )
-        self.downloaded_bytes += len(content)
+        accounted = max(len(content), declared or 0)
+        if self.downloaded_bytes + accounted > self.maximum_total:
+            raise MissingSupportCalibrationEvidenceV1Error(
+                f"{label} accounted bytes exceed the evidence limit."
+            )
+        self.downloaded_bytes += accounted
         return bytes(content)
 
     def _validate_pc(self, url: str, *, stac: bool = False, sas: bool = False) -> None:
@@ -1337,7 +1357,7 @@ def stage_sentinel_calibration_smoke_v1(
         "predictor_build_authorized": False,
         "external_target_or_qa_values_read": False,
         "next_gate": (
-            "publish_tracked_only_plan_v16_for_portable_predictor_contract_v3_decision"
+            "publish_tracked_only_plan_v17_for_portable_predictor_contract_v3_decision"
         ),
     }
     write_manifest_no_clobber(global_payload, global_path)

@@ -34,7 +34,7 @@ CONFIG_PATH: Final = (
     "configs/multicity/missing_support_calibration_evidence_v1.toml"
 )
 CONFIG_SHA256: Final = (
-    "37f522c374a95b78de8f7e7c4bc28dd7d9005eeac9a599d073444c964d8be9dd"
+    "d703f216eb80b187c390ae8efdf49c68615bf16614657706249c2f052ea50dba"
 )
 PLAN_PATH: Final = "manifests/multicity/PLAN_READINESS.json"
 PREDECESSOR_TERMINAL_PATH: Final = (
@@ -265,7 +265,7 @@ def expected_plan_authorization_scope() -> dict[str, Any]:
             "single_direct_child_publication_required": True,
         },
         "next_gate": (
-            "publish_tracked_only_plan_v16_for_portable_predictor_contract_v3_decision"
+            "publish_tracked_only_plan_v17_for_portable_predictor_contract_v3_decision"
         ),
     }
 
@@ -623,15 +623,15 @@ def authenticate_plan(
             "Evidence execution requires synchronized main and exact resumable outputs."
         )
     plan_path = config.project_path(PLAN_PATH)
-    plan = read_json_with_commit(plan_path, label="canonical planning V15")
+    plan = read_json_with_commit(plan_path, label="canonical planning V16")
     if (
-        plan.get("schema_version") != 15
-        or plan.get("algorithm_version") != "multicity-planning-readiness-v15"
+        plan.get("schema_version") != 16
+        or plan.get("algorithm_version") != "multicity-planning-readiness-v16"
         or plan.get("state") != "planning_ready"
         or plan.get("planning_stage")
         != (
-            "missing_support_calibration_evidence_v1_worldcover_native_mosaic_"
-            "alignment_hotfix_resume_authorized"
+            "missing_support_calibration_evidence_v1_sentinel_content_encoding_"
+            "hotfix_resume_authorized"
         )
         or plan.get("next_safe_stage")
         != "stage_target_blind_missing_support_and_calibration_evidence_v1"
@@ -641,46 +641,51 @@ def authenticate_plan(
         != expected_plan_authorization_scope()
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical planning does not grant the exact V15 evidence scope."
+            "Canonical planning does not grant the exact V16 evidence scope."
         )
     transition = plan.get("transition")
     expected_fix = {
-        "worldcover_native_mosaic_bounds_before": (
-            "clipped_not_native_pixel_aligned"
+        "sentinel_http_body_check_before": (
+            "decoded_body_length_equals_encoded_content_length"
         ),
-        "worldcover_native_mosaic_bounds_after": "target_aligned_pixels",
-        "failing_city": "houston_tx",
-        "adjacent_native_tile_seam_latitude_degrees": 30.0,
-        "adjacent_native_tile_count": 2,
-        "pre_fix_forward_reverse_30m_difference_count": 130,
-        "post_fix_forward_reverse_30m_difference_count": 0,
-        "native_mosaic_before_reprojection_preserved": True,
-        "resampling_mode_changed": False,
-        "class_definition_changed": False,
-        "completed_worldcover_city_checkpoints_preserved": [
-            "los_angeles_ca",
-            "phoenix_az",
+        "sentinel_http_body_check_after": (
+            "identity_requires_exact_length_encoded_bounds_both_representations"
+        ),
+        "allowed_content_encodings": [
+            "identity",
+            "gzip",
+            "deflate",
+            "br",
+            "zstd",
         ],
-        "completed_asset_cache_objects_preserved": 4,
-        "collection_year_version_or_asset_changed": False,
+        "declared_encoded_byte_limit_preserved": True,
+        "decoded_byte_limit_enforced": True,
+        "total_byte_accounting": "maximum_of_declared_encoded_and_decoded_bytes",
+        "failing_stage": "external_city_sentinel_calibration_smoke_v1",
+        "repeated_identical_failures_observed": 8,
+        "completed_worldcover_terminal_preserved": True,
+        "completed_checkpoint_count": 10,
+        "sentinel_probe_selection_changed": False,
+        "sentinel_band_or_window_contract_changed": False,
+        "collection_or_asset_changed": False,
         "tracked_output_paths_changed": False,
         "permissions_changed": False,
         "locks_changed": False,
-        "conflicting_next_plan_version_replaced": "v15",
-        "successful_evidence_next_plan_version": "v16",
+        "conflicting_next_plan_version_replaced": "v16",
+        "successful_evidence_next_plan_version": "v17",
     }
     if (
         not isinstance(transition, Mapping)
         or transition.get("authorized_fix") != expected_fix
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical planning lost the exact WorldCover mosaic hotfix."
+            "Canonical planning lost the exact Sentinel encoding hotfix."
         )
     resume = transition.get("resume_checkpoints")
     if (
         not isinstance(resume, list)
         or [record.get("path") for record in resume]
-        != list(TRACKED_OUTPUT_PATHS[:7])
+        != list(TRACKED_OUTPUT_PATHS[:10])
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
             "Canonical planning lost the exact geography resume checkpoints."
@@ -710,12 +715,12 @@ def authenticate_plan(
     ).splitlines()
     if not additions:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V15 planning publication cannot be located."
+            "Canonical V16 planning publication cannot be located."
         )
     publication = additions[0]
     if not _is_ancestor(config.project_root, publication, head):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V15 planning is not on current main."
+            "Canonical V16 planning is not on current main."
         )
     later = str(
         _run_git(
@@ -729,7 +734,7 @@ def authenticate_plan(
     )
     if later.strip():
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V15 planning changed after publication."
+            "Canonical V16 planning changed after publication."
         )
     return {
         "path": PLAN_PATH,
@@ -800,7 +805,7 @@ def authenticate_publication(config: EvidenceConfig) -> str:
     plan_record = authenticate_plan(config)
     if parent_line[1] != plan_record["publication_git_commit"]:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "The evidence publication is not the planning-V15 direct child."
+            "The evidence publication is not the planning-V16 direct child."
         )
     raw = _run_git(
         config.project_root,
