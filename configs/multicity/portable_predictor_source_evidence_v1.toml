@@ -1,0 +1,113 @@
+[stage]
+schema_version = 1
+algorithm_version = "portable-predictor-source-evidence-v1"
+stage_id = "portable_predictor_missing_source_evidence_staging"
+experiment_id = "la_to_three_city_zero_shot_v1"
+experiment_config = "configs/multicity/experiment.toml"
+plan_path = "manifests/multicity/PLAN_READINESS.json"
+authorized_city_ids = ["phoenix_az", "houston_tx", "chicago_il"]
+new_geography_city_ids = ["houston_tx", "chicago_il"]
+new_source_footprint_city_ids = ["houston_tx", "chicago_il"]
+confirmation_year = 2025
+analysis_crs = "EPSG:5070"
+
+[dates]
+landsat_local_start = "2025-05-01"
+landsat_local_end = "2025-10-31"
+sentinel_local_start = "2025-03-02"
+sentinel_local_end = "2025-10-30"
+
+[landsat]
+provider = "USGS via Microsoft Planetary Computer"
+api = "https://planetarycomputer.microsoft.com/api/stac/v1"
+collection = "landsat-c2-l2"
+platforms = ["landsat-8", "landsat-9"]
+collection_category = "T1"
+correction = "L2SP"
+page_limit = 100
+license_note = "U.S. government public data"
+
+[sentinel]
+provider = "ESA Copernicus via Microsoft Planetary Computer"
+api = "https://planetarycomputer.microsoft.com/api/stac/v1"
+collection = "sentinel-2-l2a"
+platforms = ["sentinel-2a", "sentinel-2b", "sentinel-2c"]
+page_limit = 100
+license_note = "ESA Copernicus Sentinel data terms"
+
+[daymet]
+provider = "NASA ORNL DAAC"
+doi = "10.3334/ORNLDAAC/2129"
+collection_concept_id = "C2532426483-ORNL_CLOUD"
+cmr_granules_url = "https://cmr.earthdata.nasa.gov/search/granules.json"
+year = 2025
+variables = ["tmax", "tmin", "prcp", "srad", "vp", "dayl"]
+window_halo_cells = 1
+license_note = "NASA Earthdata terms"
+
+[nlcd]
+provider = "U.S. Geological Survey / MRLC Consortium"
+dataset = "National Land Cover Database 2016 original release"
+release_date = "2019-04-30"
+doi = "10.5066/P937PN4Z"
+wcs_endpoint = "https://www.mrlc.gov/geoserver/ows"
+land_cover_coverage_id = "mrlc_download__NLCD_2016_Land_Cover_L48"
+impervious_coverage_id = "mrlc_download__NLCD_2016_Impervious_L48"
+native_crs = "EPSG:5070"
+native_resolution_m = 30
+native_grid_edge_offset_m = 15
+subset_halo_pixels = 2
+license_note = "CC0 1.0 Universal / U.S. public domain"
+
+[terrain]
+provider = "NASA/USGS via OpenTopography"
+dataset = "NASA SRTM Global 1 arc second V003"
+opentopo_id = "OTSRTM.082015.4326.1"
+dataset_doi = "10.5069/G9445JDF"
+base_url = "https://opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm"
+filename_suffix = ".tif"
+nominal_resolution_arc_seconds = 1
+nominal_shape = [3601, 3601]
+dtype = "int16"
+nodata = -32768
+area_or_point = "Point"
+vertical_datum = "EGM96 orthometric height"
+unit = "metre"
+scale = 1.0
+offset = 0.0
+slope_halo_m = 30
+license_note = "Cite NASA LP DAAC and OpenTopography"
+
+[outputs]
+terminal = "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json"
+city_evidence_manifest_name = "PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json"
+raw_stage_directory = "portable_predictor_source_evidence_v1"
+
+[limits]
+maximum_network_requests = 1000
+maximum_single_download_bytes = 268435456
+maximum_total_download_bytes = 1073741824
+maximum_stac_pages_per_query = 100
+
+[candidate_downstream_rules]
+status = "recorded_for_v2_review_not_executed_or_frozen"
+land_cover_resampling = "nearest"
+impervious_resampling = "bilinear"
+impervious_scale_divisor = 100.0
+impervious_scientific_nodata = 127
+elevation_resampling = "bilinear"
+slope_algorithm = "Horn 3x3"
+slope_source_halo_cells = 1
+minimum_valid_coverage_fraction = 0.98
+eligible_land_denominator_invariant_across_dates = true
+
+[access_contract]
+external_target_or_qa_values_read = false
+landsat_thermal_values_read = false
+landsat_target_qa_values_read = false
+external_lst_values_read = false
+predictor_construction_performed = false
+model_fit_performed = false
+model_predictions_computed = false
+final_evaluation_outputs_opened = false
+only_public_source_metadata_and_static_predictor_sources_opened = true
