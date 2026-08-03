@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "portable-predictor-source-evidence-v1-geography",
+  "state": "complete_target_blind_public_geography",
+  "generated_at_utc": "2026-08-03T05:28:47.020135+00:00",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "city": {
+    "id": "chicago_il",
+    "name": "Chicago",
+    "state_fips": "17",
+    "census_place_geoid": "1714000",
+    "role": "external_confirmation",
+    "target_values_status": "sealed"
+  },
+  "sources": {
+    "place": {
+      "selected": {
+        "label": "census_tigerweb_place",
+        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/26",
+        "provider": "U.S. Census Bureau",
+        "source_status": "authoritative_primary",
+        "item_id": null,
+        "layer_name": "Incorporated Places",
+        "max_record_count": 100000
+      },
+      "attempts": [
+        {
+          "label": "census_tigerweb_place",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/26",
+          "status": "selected"
+        }
+      ]
+    },
+    "tract": {
+      "selected": {
+        "label": "census_tigerweb_tract",
+        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/6",
+        "provider": "U.S. Census Bureau",
+        "source_status": "authoritative_primary",
+        "item_id": null,
+        "layer_name": "Census Tracts",
+        "max_record_count": 100000
+      },
+      "attempts": [
+        {
+          "label": "census_tigerweb_tract",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/6",
+          "status": "selected"
+        }
+      ]
+    }
+  },
+  "selection_contract": {
+    "analysis_crs": "EPSG:5070",
+    "minimum_place_area_fraction": 0.5,
+    "exclude_special_use_tracts": true,
+    "candidate_query_uses_place_bbox_then_exact_polygon_intersection": true,
+    "bbox_only_tract_selection": false
+  },
+  "geography": {
+    "bbox_wgs84": [
+      -87.9400970004,
+      41.6442859998,
+      -87.5236610002,
+      42.0231350002
+    ],
+    "tract_candidates_in_bbox": 1044,
+    "tract_candidates_with_positive_overlap": 801,
+    "primary_tract_count": 780
+  },
+  "access_contract": {
+    "public_boundary_and_tract_geometry_read": true,
+    "tract_selection_uses_positive_intersection_and_area_fraction": true,
+    "demographic_values_read": false,
+    "target_or_qa_values_read": false,
+    "predictor_values_computed": false,
+    "model_or_result_values_read": false
+  },
+  "raw_files": {
+    "place/layer_metadata.json": {
+      "path": "data/raw/multicity/chicago_il/geography/place/layer_metadata.json",
+      "bytes": 6033,
+      "sha256": "f3c32d196e581350881c28817090d84e64bbbc9542983a4af737e4f6eb98cf0e"
+    },
+    "place/query_count.json": {
+      "path": "data/raw/multicity/chicago_il/geography/place/query_count.json",
+      "bytes": 11,
+      "sha256": "6aea6dfe6561984cdc5c54ead84d47d2cf29e48253ae282aef237404adad4661"
+    },
+    "place/features.geojson": {
+      "path": "data/raw/multicity/chicago_il/geography/place/features.geojson",
+      "bytes": 263855,
+      "sha256": "bf3e3f2fb3c174e86d164e0d7d89ded10528d32dfc1aab0abe73b5703710a27d"
+    },
+    "tract/layer_metadata.json": {
+      "path": "data/raw/multicity/chicago_il/geography/tract/layer_metadata.json",
+      "bytes": 5659,
+      "sha256": "cd8c8136a6e9ea16debc05724edacbc76573cba18266e0f4fff33ae32a623219"
+    },
+    "tract/query_count.json": {
+      "path": "data/raw/multicity/chicago_il/geography/tract/query_count.json",
+      "bytes": 14,
+      "sha256": "9797601aa5cda6c3c68aa7542e8edf26fed73dae031555d3729f5c5dcbc6af0e"
+    },
+    "tract/features_0000.geojson": {
+      "path": "data/raw/multicity/chicago_il/geography/tract/features_0000.geojson",
+      "bytes": 6538245,
+      "sha256": "bafbf6226266646173158424e4f81f6ae04cefb3643d6ff3311f4f573cbec299"
+    }
+  },
+  "output_tables": {
+    "city_boundary": {
+      "sha256": "4f98f44a0c80181c59cab76d0d39282dfd74fd3f43ae8d0b197419d6ce5856a2",
+      "bytes": 114229,
+      "rows": 1,
+      "schema_sha256": "a263767165e1033548d4368b03e52a80d798c039670b1f189e99e49e3d134374",
+      "path": "data/processed/multicity/chicago_il/geography/city_boundary.parquet",
+      "geometry_semantic_sha256": "0f53023bbd48b30369d946f34cbccf8feef451579fd7ae0e4dee0cc2d15a0199"
+    },
+    "tract_candidates": {
+      "sha256": "a1491927cc0506c0984f51d7cf46bafb2e051197a0d98bfddccc8e2d8f38f9dc",
+      "bytes": 2568455,
+      "rows": 1044,
+      "schema_sha256": "37716cf0dadb1b70d72e72f3b1db20cbe90502c0587804200c38193e9c1737b0",
+      "path": "data/processed/multicity/chicago_il/geography/tract_candidates.parquet",
+      "geometry_semantic_sha256": "0f8afb82edfc69415adf18578617a307761a7fc8b1ed85c09ca5bbb525219191"
+    },
+    "primary_tracts": {
+      "sha256": "a1c8a271ff70190042346c6f4c690f3493775d892fe7b00de04e6c1d7391132b",
+      "bytes": 1588718,
+      "rows": 780,
+      "schema_sha256": "ad67cbc21f4d53fe7dbb12abb4554a256b073ba7b3b6fc2b2fa084fd717898a2",
+      "path": "data/processed/multicity/chicago_il/geography/primary_tracts.parquet",
+      "geometry_semantic_sha256": "82f4cae27e475f699fede5565110889097bbfd37581d023e53e1c4313a4b203b"
+    }
+  },
+  "commit_sha256": "10a2f41134becd5e45697fa0e95c43e58665155c39a8ec02391c7003e0b01c15"
+}

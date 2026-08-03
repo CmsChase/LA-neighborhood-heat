@@ -1,0 +1,349 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "portable-predictor-source-evidence-v1",
+  "state": "complete_city_static_source_evidence",
+  "generated_at_utc": "2026-08-03T06:02:29.971690+00:00",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "city_id": "phoenix_az",
+  "target_values_status": "sealed",
+  "inputs": {
+    "geography_manifest": {
+      "path": "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json",
+      "bytes": 9271,
+      "sha256": "5c7be051a40e83d3a83df73dbf3e3ce2ceee744bda5bb7c0c0b2f8d9e9cf6f1c"
+    },
+    "geography_commit_sha256": "3891c871ab5e5710bf6abdbc8f2a22a5a62db7962ee66bf235e1caee28301fea",
+    "source_footprint_manifest": {
+      "path": "manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json",
+      "bytes": 18861,
+      "sha256": "76a667f559a98bf6281d7f8af71fab18c2fac8d3701ea91813eef8ff8ef479df"
+    },
+    "source_footprint_commit_sha256": "a6f287daa22c41d893519dc751848c426b819dcf4ae00d33012fbf11c6073ed7"
+  },
+  "source_families": {
+    "nlcd_land_cover_and_imperviousness": {
+      "evidence_complete_for_v2_contract_review": true,
+      "contract_frozen": false,
+      "native_subset_bounds_epsg5070": [
+        -1499115.0,
+        1259565.0,
+        -1458495.0,
+        1332405.0
+      ],
+      "native_resolution_m": 30,
+      "grid_edge_offset_m": 15,
+      "subset_halo_pixels": 2,
+      "aggregation_or_feature_values_computed": false,
+      "sources": [
+        {
+          "source_id": "nlcd_2016_land_cover_phoenix_az",
+          "product": "land_cover",
+          "provider": "U.S. Geological Survey / MRLC Consortium",
+          "dataset": "National Land Cover Database 2016 original release",
+          "release_date": "2019-04-30",
+          "doi": "10.5066/P937PN4Z",
+          "license_note": "CC0 1.0 Universal / U.S. public domain",
+          "request_method": "GET",
+          "request_url": "https://www.mrlc.gov/geoserver/ows",
+          "request_parameters": [
+            [
+              "service",
+              "WCS"
+            ],
+            [
+              "version",
+              "2.0.1"
+            ],
+            [
+              "request",
+              "GetCoverage"
+            ],
+            [
+              "coverageId",
+              "mrlc_download__NLCD_2016_Land_Cover_L48"
+            ],
+            [
+              "format",
+              "image/tiff"
+            ],
+            [
+              "subset",
+              "X(-1499115,-1458495)"
+            ],
+            [
+              "subset",
+              "Y(1259565,1332405)"
+            ]
+          ],
+          "response": {
+            "cache_hit_before_city_commit": false,
+            "response_headers": {
+              "content-type": "image/tiff"
+            },
+            "network_bytes": 3934212
+          },
+          "file": {
+            "path": "data/raw/multicity/phoenix_az/portable_predictor_source_evidence_v1/nlcd/nlcd_2016_land_cover.tif",
+            "bytes": 3934212,
+            "sha256": "2ab228b981c643e80dec27b6ff30e817e26ebd690befd661557290a32b8171f1"
+          },
+          "content_sha256": "2ab228b981c643e80dec27b6ff30e817e26ebd690befd661557290a32b8171f1",
+          "raster_schema_verified": true,
+          "schema": {
+            "bytes": 3934212,
+            "sha256": "2ab228b981c643e80dec27b6ff30e817e26ebd690befd661557290a32b8171f1",
+            "shape": [
+              2428,
+              1354
+            ],
+            "crs": "EPSG:5070",
+            "transform": [
+              30.0,
+              0.0,
+              -1499115.0,
+              0.0,
+              -30.0,
+              1332405.0
+            ],
+            "dtype": "uint8",
+            "scale": 1.0,
+            "offset": 0.0,
+            "raster_band_unit_metadata": null,
+            "area_or_point": "Area",
+            "wcs_tiff_nodata_metadata": 0,
+            "scientific_nodata": 0,
+            "minimum_value": 11,
+            "maximum_value": 95,
+            "unique_value_count": 14,
+            "value_domain_verified": true
+          }
+        },
+        {
+          "source_id": "nlcd_2016_impervious_phoenix_az",
+          "product": "impervious",
+          "provider": "U.S. Geological Survey / MRLC Consortium",
+          "dataset": "National Land Cover Database 2016 original release",
+          "release_date": "2019-04-30",
+          "doi": "10.5066/P937PN4Z",
+          "license_note": "CC0 1.0 Universal / U.S. public domain",
+          "request_method": "GET",
+          "request_url": "https://www.mrlc.gov/geoserver/ows",
+          "request_parameters": [
+            [
+              "service",
+              "WCS"
+            ],
+            [
+              "version",
+              "2.0.1"
+            ],
+            [
+              "request",
+              "GetCoverage"
+            ],
+            [
+              "coverageId",
+              "mrlc_download__NLCD_2016_Impervious_L48"
+            ],
+            [
+              "format",
+              "image/tiff"
+            ],
+            [
+              "subset",
+              "X(-1499115,-1458495)"
+            ],
+            [
+              "subset",
+              "Y(1259565,1332405)"
+            ]
+          ],
+          "response": {
+            "cache_hit_before_city_commit": false,
+            "response_headers": {
+              "content-type": "image/tiff"
+            },
+            "network_bytes": 3934212
+          },
+          "file": {
+            "path": "data/raw/multicity/phoenix_az/portable_predictor_source_evidence_v1/nlcd/nlcd_2016_impervious.tif",
+            "bytes": 3934212,
+            "sha256": "7c372b900f7b7576e9f8d7c1935b06a1121404c2659de6c03a15ce6b35479484"
+          },
+          "content_sha256": "7c372b900f7b7576e9f8d7c1935b06a1121404c2659de6c03a15ce6b35479484",
+          "raster_schema_verified": true,
+          "schema": {
+            "bytes": 3934212,
+            "sha256": "7c372b900f7b7576e9f8d7c1935b06a1121404c2659de6c03a15ce6b35479484",
+            "shape": [
+              2428,
+              1354
+            ],
+            "crs": "EPSG:5070",
+            "transform": [
+              30.0,
+              0.0,
+              -1499115.0,
+              0.0,
+              -30.0,
+              1332405.0
+            ],
+            "dtype": "uint8",
+            "scale": 1.0,
+            "offset": 0.0,
+            "raster_band_unit_metadata": null,
+            "area_or_point": "Area",
+            "wcs_tiff_nodata_metadata": 0,
+            "scientific_nodata": 127,
+            "minimum_value": 0,
+            "maximum_value": 100,
+            "unique_value_count": 101,
+            "value_domain_verified": true
+          }
+        }
+      ]
+    },
+    "terrain_windows": {
+      "evidence_complete_for_v2_contract_review": true,
+      "contract_frozen": false,
+      "content_sha256_frozen": true,
+      "raster_schema_verified": true,
+      "slope_halo_m": 30,
+      "aggregation_slope_or_feature_values_computed": false,
+      "sources": [
+        {
+          "source_id": "srtm_gl1_v3_n33w112",
+          "tile_id": "N33W112",
+          "provider": "NASA/USGS via OpenTopography",
+          "dataset": "NASA SRTM Global 1 arc second V003",
+          "opentopo_id": "OTSRTM.082015.4326.1",
+          "dataset_doi": "10.5069/G9445JDF",
+          "license_note": "Cite NASA LP DAAC and OpenTopography",
+          "request_method": "GET",
+          "request_url": "https://opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm/N33W112.tif",
+          "response": {
+            "cache_hit_before_city_commit": false,
+            "response_headers": {
+              "content-length": "14834917",
+              "content-type": "image/tiff",
+              "etag": "\"00000000000000000000000000000000-1\"",
+              "last-modified": "Wed, 13 Jan 2021 03:05:50 GMT"
+            },
+            "network_bytes": 14834917
+          },
+          "file": {
+            "path": "data/raw/multicity/phoenix_az/portable_predictor_source_evidence_v1/terrain/N33W112.tif",
+            "bytes": 14834917,
+            "sha256": "5deaa29c8d04ba920e33395bea1daf0b783f10663168dc95b50c7c196e149435"
+          },
+          "content_sha256": "5deaa29c8d04ba920e33395bea1daf0b783f10663168dc95b50c7c196e149435",
+          "raster_schema_verified": true,
+          "schema": {
+            "bytes": 14834917,
+            "sha256": "5deaa29c8d04ba920e33395bea1daf0b783f10663168dc95b50c7c196e149435",
+            "shape": [
+              3601,
+              3601
+            ],
+            "crs": "EPSG:4326",
+            "transform": [
+              0.0002777777777777778,
+              0.0,
+              -112.00013888888888,
+              0.0,
+              -0.0002777777777777778,
+              34.00013888888889
+            ],
+            "dtype": "int16",
+            "nodata": -32768,
+            "area_or_point": "Point",
+            "scale": 1.0,
+            "offset": 0.0,
+            "raster_band_unit_metadata": null,
+            "documented_unit": "metre",
+            "documented_vertical_datum": "EGM96 orthometric height",
+            "unit_and_vertical_datum_source": "pinned_dataset_documentation_not_tiff_claim"
+          }
+        },
+        {
+          "source_id": "srtm_gl1_v3_n33w113",
+          "tile_id": "N33W113",
+          "provider": "NASA/USGS via OpenTopography",
+          "dataset": "NASA SRTM Global 1 arc second V003",
+          "opentopo_id": "OTSRTM.082015.4326.1",
+          "dataset_doi": "10.5069/G9445JDF",
+          "license_note": "Cite NASA LP DAAC and OpenTopography",
+          "request_method": "GET",
+          "request_url": "https://opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm/N33W113.tif",
+          "response": {
+            "cache_hit_before_city_commit": false,
+            "response_headers": {
+              "content-length": "11313968",
+              "content-type": "image/tiff",
+              "etag": "\"00000000000000000000000000000000-1\"",
+              "last-modified": "Wed, 13 Jan 2021 02:45:34 GMT"
+            },
+            "network_bytes": 11313968
+          },
+          "file": {
+            "path": "data/raw/multicity/phoenix_az/portable_predictor_source_evidence_v1/terrain/N33W113.tif",
+            "bytes": 11313968,
+            "sha256": "a52314fb76dbf5a8095b4bc250b84a0c573e6de0ef9506b55ea04b7ef6c1702a"
+          },
+          "content_sha256": "a52314fb76dbf5a8095b4bc250b84a0c573e6de0ef9506b55ea04b7ef6c1702a",
+          "raster_schema_verified": true,
+          "schema": {
+            "bytes": 11313968,
+            "sha256": "a52314fb76dbf5a8095b4bc250b84a0c573e6de0ef9506b55ea04b7ef6c1702a",
+            "shape": [
+              3601,
+              3601
+            ],
+            "crs": "EPSG:4326",
+            "transform": [
+              0.0002777777777777778,
+              0.0,
+              -113.00013888888888,
+              0.0,
+              -0.0002777777777777778,
+              34.00013888888889
+            ],
+            "dtype": "int16",
+            "nodata": -32768,
+            "area_or_point": "Point",
+            "scale": 1.0,
+            "offset": 0.0,
+            "raster_band_unit_metadata": null,
+            "documented_unit": "metre",
+            "documented_vertical_datum": "EGM96 orthometric height",
+            "unit_and_vertical_datum_source": "pinned_dataset_documentation_not_tiff_claim"
+          }
+        }
+      ]
+    }
+  },
+  "candidate_downstream_rules_not_executed": {
+    "status": "recorded_for_v2_review_not_executed_or_frozen",
+    "land_cover_resampling": "nearest",
+    "impervious_resampling": "bilinear",
+    "impervious_scale_divisor": 100.0,
+    "impervious_scientific_nodata": 127,
+    "elevation_resampling": "bilinear",
+    "slope_algorithm": "Horn 3x3",
+    "slope_source_halo_cells": 1,
+    "minimum_valid_coverage_fraction": 0.98,
+    "eligible_land_denominator_invariant_across_dates": true
+  },
+  "access_contract": {
+    "external_target_or_qa_values_read": false,
+    "landsat_thermal_values_read": false,
+    "landsat_target_qa_values_read": false,
+    "external_lst_values_read": false,
+    "predictor_construction_performed": false,
+    "model_fit_performed": false,
+    "model_predictions_computed": false,
+    "final_evaluation_outputs_opened": false,
+    "only_public_source_metadata_and_static_predictor_sources_opened": true
+  },
+  "commit_sha256": "6ee4ddb67bbaa2df545ad13b25f29607647ef84dfff69897ddc2e34ab0f95ae8"
+}

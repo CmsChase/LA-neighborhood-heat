@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "portable-predictor-source-evidence-v1-source-footprints",
+  "state": "complete_metadata_only_source_not_protocol_locked",
+  "stage": "target_blind_source_footprint_discovery",
+  "generated_at_utc": "2026-08-03T06:01:49.404011+00:00",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "city": {
+    "id": "chicago_il",
+    "name": "Chicago",
+    "role": "external_confirmation",
+    "target_values_status": "sealed",
+    "timezone": "America/Chicago"
+  },
+  "source_lock_status": "evidence_snapshot_not_contract_lock",
+  "geography_input": {
+    "manifest": {
+      "path": "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY.json",
+      "bytes": 5520,
+      "sha256": "6fadf3355dda0ca70a5ef0f6201f84d38f8df29a588bdddc6fac076238e50b25"
+    },
+    "manifest_commit_sha256": "10a2f41134becd5e45697fa0e95c43e58665155c39a8ec02391c7003e0b01c15",
+    "city_boundary": {
+      "sha256": "4f98f44a0c80181c59cab76d0d39282dfd74fd3f43ae8d0b197419d6ce5856a2",
+      "bytes": 114229,
+      "rows": 1,
+      "schema_sha256": "a263767165e1033548d4368b03e52a80d798c039670b1f189e99e49e3d134374",
+      "path": "data/processed/multicity/chicago_il/geography/city_boundary.parquet",
+      "geometry_semantic_sha256": "0f53023bbd48b30369d946f34cbccf8feef451579fd7ae0e4dee0cc2d15a0199"
+    },
+    "bbox_wgs84": [
+      -87.9400970004,
+      41.6442859998,
+      -87.5236610002,
+      42.0231350002
+    ]
+  },
+  "queries": {
+    "landsat": {
+      "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "query": {
+        "collections": [
+          "landsat-c2-l2"
+        ],
+        "bbox": [
+          -87.9400970004,
+          41.6442859998,
+          -87.5236610002,
+          42.0231350002
+        ],
+        "datetime": "2025-05-01T05:00:00Z/2025-11-01T05:00:00Z",
+        "limit": 100,
+        "fields": {
+          "include": [
+            "id",
+            "collection",
+            "geometry",
+            "bbox",
+            "properties.datetime",
+            "properties.platform",
+            "properties.landsat:wrs_path",
+            "properties.landsat:wrs_row",
+            "properties.landsat:collection_category",
+            "properties.landsat:correction"
+          ],
+          "exclude": [
+            "assets",
+            "links"
+          ]
+        },
+        "query": {
+          "platform": {
+            "in": [
+              "landsat-8",
+              "landsat-9"
+            ]
+          },
+          "landsat:collection_category": {
+            "eq": "T1"
+          },
+          "landsat:correction": {
+            "eq": "L2SP"
+          }
+        }
+      },
+      "query_sha256": "4e91cfb5718d1e685ce57f0ed1ffc76c8f0ce36e8214c8365a4db3baae6552df",
+      "page_count": 1,
+      "query_response_items": 39,
+      "unique_items": 39,
+      "duplicate_items": 0,
+      "pagination_exhausted": true,
+      "assets_excluded": true
+    },
+    "sentinel": {
+      "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "query": {
+        "collections": [
+          "sentinel-2-l2a"
+        ],
+        "bbox": [
+          -87.9400970004,
+          41.6442859998,
+          -87.5236610002,
+          42.0231350002
+        ],
+        "datetime": "2025-03-02T06:00:00Z/2025-10-31T05:00:00Z",
+        "limit": 100,
+        "fields": {
+          "include": [
+            "id",
+            "collection",
+            "geometry",
+            "bbox",
+            "properties.datetime",
+            "properties.platform",
+            "properties.s2:mgrs_tile"
+          ],
+          "exclude": [
+            "assets",
+            "links"
+          ]
+        }
+      },
+      "query_sha256": "d92a9fd4d4c99aaf2d9e2ddbd0cb6b142e6ab7b00aeab9879dbf2523bb8740bb",
+      "page_count": 1,
+      "query_response_items": 57,
+      "unique_items": 57,
+      "duplicate_items": 0,
+      "pagination_exhausted": true,
+      "assets_excluded": true
+    },
+    "daymet": {
+      "endpoint": "https://cmr.earthdata.nasa.gov/search/granules.json",
+      "params": {
+        "collection_concept_id": "C2532426483-ORNL_CLOUD",
+        "temporal": "2025-01-01T00:00:00Z,2025-12-31T23:59:59Z",
+        "bounding_box": "-87.9400970004,41.6442859998,-87.5236610002,42.0231350002",
+        "page_size": 2000
+      },
+      "query_sha256": "3534c2ef5b4ca387d75b2a9e1882cd04e88f2578e4419b9ca22f662cffe18364",
+      "http_status": 200,
+      "response_headers": {
+        "Content-Type": "application/json;charset=utf-8",
+        "CMR-Request-Id": "267303aa-12c7-4015-b3c2-2105a90403fa",
+        "CMR-Hits": "7"
+      },
+      "returned_feed_entries": 7,
+      "selected_granules": 6
+    },
+    "terrain": {
+      "method": "HEAD",
+      "object_count": 2,
+      "payload_bytes_read": 0
+    }
+  },
+  "source_families": {
+    "landsat_wrs": {
+      "member_count": 2,
+      "member_ids": [
+        "WRS2-022031",
+        "WRS2-023031"
+      ],
+      "item_count": 39,
+      "platforms": [
+        "landsat-8",
+        "landsat-9"
+      ],
+      "item_metadata_semantic_sha256": "5004b78ce040dc772e2050af874bb26ef51478b2edb74a3be78364750714d403",
+      "unit_semantic_sha256": "797bf9159880894438a73ecf676682c7313077ac860ca0d14b65cd9995b302d4"
+    },
+    "sentinel_mgrs": {
+      "member_count": 1,
+      "member_ids": [
+        "MGRS-16TDM"
+      ],
+      "item_count": 57,
+      "platforms": [
+        "sentinel-2a",
+        "sentinel-2b",
+        "sentinel-2c"
+      ],
+      "item_metadata_semantic_sha256": "6dacf6d6f9e5480e5168879913fd81a2d73b3a01badb8015092ba4dcf1a62fe6",
+      "unit_semantic_sha256": "7a9c1eb9b9aa7d276aa9f12e3225f1d8cbe72455522a52ed992ed622c7b80c58"
+    },
+    "daymet_cells": {
+      "member_count": 667,
+      "member_id_set_sha256": "bfe164465c634fb8a9185146e8804cd5ff34523b133bf2f3df2c81594b5ddbbe",
+      "granule_count": 6,
+      "granule_concept_ids": [
+        "G4194395888-ORNL_CLOUD",
+        "G4194396069-ORNL_CLOUD",
+        "G4194396402-ORNL_CLOUD",
+        "G4194396426-ORNL_CLOUD",
+        "G4194396868-ORNL_CLOUD",
+        "G4194397011-ORNL_CLOUD"
+      ],
+      "granule_semantic_sha256": "79a1a923db2447d0fe9a9f9a8e47cc147ee4feb9ae7d2bc85c9859e5008f807f",
+      "cell_semantic_sha256": "ecab11a4258694cfe11364086c8d2e90df5be258ff24ce3c5d339dc0289f4bc7",
+      "window": {
+        "full_grid_shape": [
+          8075,
+          7814
+        ],
+        "full_grid_transform": [
+          1000.0,
+          0.0,
+          -4560750.0,
+          0.0,
+          -1000.0,
+          4984500.0
+        ],
+        "grid_crs": "+proj=lcc +lat_1=25 +lat_2=60 +lat_0=42.5 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs",
+        "resolution_m": 1000,
+        "projected_bbox_m": [
+          949262.675,
+          -21487.659,
+          987781.225,
+          23048.377
+        ],
+        "minimal_y_indices_inclusive": [
+          4961,
+          5005
+        ],
+        "minimal_x_indices_inclusive": [
+          5510,
+          5548
+        ],
+        "halo_cells": 1,
+        "y_indices_inclusive": [
+          4960,
+          5006
+        ],
+        "x_indices_inclusive": [
+          5509,
+          5549
+        ],
+        "window_shape": [
+          47,
+          41
+        ],
+        "window_cell_count": 1927,
+        "candidate_grid_cells_only": true
+      }
+    },
+    "terrain_windows": {
+      "member_count": 2,
+      "member_ids": [
+        "N41W088",
+        "N42W088"
+      ],
+      "tile_semantic_sha256": "b44854948279e603ee1d5e287280f621015bf071e282931a2f5de55de3f08667",
+      "all_objects_head_verified": true,
+      "content_sha256_frozen": false,
+      "raster_schema_verified": false
+    }
+  },
+  "access_contract": {
+    "metadata_responses_only": true,
+    "stac_fields_excluded_assets": true,
+    "stac_asset_objects_returned": false,
+    "stac_asset_hrefs_read": false,
+    "asset_sign_calls": 0,
+    "landsat_asset_http_requests": 0,
+    "landsat_thermal_values_read": false,
+    "landsat_target_qa_values_read": false,
+    "sentinel_asset_http_requests": 0,
+    "sentinel_band_values_read": false,
+    "daymet_data_download_requests": 0,
+    "daymet_values_read": false,
+    "terrain_get_requests": 0,
+    "terrain_values_read": false,
+    "raster_payload_bytes_read": 0,
+    "external_lst_values_read": false,
+    "predictor_construction_performed": false,
+    "model_fit_performed": false,
+    "model_predictions_computed": false
+  },
+  "raw_files": {
+    "landsat/stac_page_001.json": {
+      "path": "data/raw/multicity/chicago_il/source_footprints/landsat/stac_page_001.json",
+      "bytes": 42723,
+      "sha256": "ebe508869ce02a9bae6a0250e50dc5c696ae5b41d2e890da919e600601d3b61a"
+    },
+    "sentinel/stac_page_001.json": {
+      "path": "data/raw/multicity/chicago_il/source_footprints/sentinel/stac_page_001.json",
+      "bytes": 51333,
+      "sha256": "9b811b9f096dd1f4ad93d78c9e2e7a8cc01cc09b77d0bb8094e8726080c4f497"
+    },
+    "daymet/cmr_granules_2025.json": {
+      "path": "data/raw/multicity/chicago_il/source_footprints/daymet/cmr_granules_2025.json",
+      "bytes": 31477,
+      "sha256": "83cb1b41263d70dea5c5bba409f20a2b3673678c21cd58e2c97d378c47f1c386"
+    },
+    "terrain/N41W088_head.json": {
+      "path": "data/raw/multicity/chicago_il/source_footprints/terrain/N41W088_head.json",
+      "bytes": 524,
+      "sha256": "5a88878a0703a44253b4659610b9b1ad7c12890f0e6442ce6b8a0679adb4666e"
+    },
+    "terrain/N42W088_head.json": {
+      "path": "data/raw/multicity/chicago_il/source_footprints/terrain/N42W088_head.json",
+      "bytes": 524,
+      "sha256": "7f53d2800754e04b108322a821c595740df49eb4ffa22ce680f5379bc7057c52"
+    }
+  },
+  "output_tables": {
+    "landsat_items": {
+      "sha256": "c847332dd25a00c057c90951b56fa9f72303d4bcee0462913b9b3d15a464f806",
+      "bytes": 20008,
+      "rows": 39,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/chicago_il/source_footprints/landsat_metadata_items.parquet",
+      "geometry_semantic_sha256": "07db3984e7c4c66bb740ab2a30d963028bf16271eb624c1662f72bc40504d9d9"
+    },
+    "sentinel_items": {
+      "sha256": "1c7d11d7a0258f745773e4a58d340dca7b6b3983d91a4de171fe61e360b7d3c4",
+      "bytes": 15070,
+      "rows": 57,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/chicago_il/source_footprints/sentinel_metadata_items.parquet",
+      "geometry_semantic_sha256": "e77a23d0efa21d9d614f7afabdb3b35d361b936e1860cc61824ccf15cf56b5b5"
+    },
+    "optical_units": {
+      "sha256": "ee3f1955d5a796ff7292527d0690d9b4d8c4327979796cd884519022978101d2",
+      "bytes": 14346,
+      "rows": 3,
+      "schema_sha256": "0ca7f481c45996c15a79804fa9d7f07c71a048b31792794b0a1d95fd5363e365",
+      "path": "data/processed/multicity/chicago_il/source_footprints/optical_source_units.parquet",
+      "geometry_semantic_sha256": "9a4f1ae41bac27caf13462c48190db95989e37bcf6c427d04656d80fea9cdcd9"
+    },
+    "daymet_granules": {
+      "sha256": "37d28262c7bdeff82f259eb1aef52e6f611e35e5f4051515d0b9427f805d0957",
+      "bytes": 6686,
+      "rows": 6,
+      "schema_sha256": "ef120b77a9d505f60d384f7b004e2fde2a26f9315443ca213e63ffa9f4cb5ed1",
+      "path": "data/processed/multicity/chicago_il/source_footprints/daymet_granules.parquet",
+      "frame_semantic_sha256": "79a1a923db2447d0fe9a9f9a8e47cc147ee4feb9ae7d2bc85c9859e5008f807f"
+    },
+    "daymet_cells": {
+      "sha256": "a8d2234cf20b12fa5b11da91a97e36e6a5f977b510b7069720e632a5237d8a3a",
+      "bytes": 38247,
+      "rows": 667,
+      "schema_sha256": "3c7c59a4d863fd8522309c8eb9fe6aad09fb277c8978ee25d1b980d50cc2ce13",
+      "path": "data/processed/multicity/chicago_il/source_footprints/daymet_intersecting_cells.parquet",
+      "geometry_semantic_sha256": "e554f7f2132d3c3bd9b76c2b729182b417b8fd054c71ac993dba0ef338f011f0"
+    },
+    "terrain_tiles": {
+      "sha256": "32234feb3ca429dff701c376b8ad309aebed8fa27c8872a6eadca2901478ad3d",
+      "bytes": 14422,
+      "rows": 2,
+      "schema_sha256": "19e0b079235ddc5071be7509574af356752328029aaf72f5f8b83cdd63adc2e9",
+      "path": "data/processed/multicity/chicago_il/source_footprints/terrain_tiles.parquet",
+      "geometry_semantic_sha256": "47f605e29d83b2aaf2ce6c42cc7e62209f52c080a7f8fbdb88330907001fc69f"
+    }
+  },
+  "commit_sha256": "1227a9f9030905c31ab420cdd72b0794984dcfc461acc8e0ab075c8ebac9fb82"
+}

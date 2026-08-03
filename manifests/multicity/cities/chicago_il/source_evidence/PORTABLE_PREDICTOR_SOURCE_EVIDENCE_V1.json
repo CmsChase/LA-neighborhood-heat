@@ -1,0 +1,349 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "portable-predictor-source-evidence-v1",
+  "state": "complete_city_static_source_evidence",
+  "generated_at_utc": "2026-08-03T06:03:05.959560+00:00",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "city_id": "chicago_il",
+  "target_values_status": "sealed",
+  "inputs": {
+    "geography_manifest": {
+      "path": "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY.json",
+      "bytes": 5520,
+      "sha256": "6fadf3355dda0ca70a5ef0f6201f84d38f8df29a588bdddc6fac076238e50b25"
+    },
+    "geography_commit_sha256": "10a2f41134becd5e45697fa0e95c43e58665155c39a8ec02391c7003e0b01c15",
+    "source_footprint_manifest": {
+      "path": "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json",
+      "bytes": 12740,
+      "sha256": "d99e8e320c4c1bb3703cdda0bf98ded183369f41cc0feaee8a568ebfcffdb55c"
+    },
+    "source_footprint_commit_sha256": "1227a9f9030905c31ab420cdd72b0794984dcfc461acc8e0ab075c8ebac9fb82"
+  },
+  "source_families": {
+    "nlcd_land_cover_and_imperviousness": {
+      "evidence_complete_for_v2_contract_review": true,
+      "contract_frozen": false,
+      "native_subset_bounds_epsg5070": [
+        662175.0,
+        2101635.0,
+        699885.0,
+        2143605.0
+      ],
+      "native_resolution_m": 30,
+      "grid_edge_offset_m": 15,
+      "subset_halo_pixels": 2,
+      "aggregation_or_feature_values_computed": false,
+      "sources": [
+        {
+          "source_id": "nlcd_2016_land_cover_chicago_il",
+          "product": "land_cover",
+          "provider": "U.S. Geological Survey / MRLC Consortium",
+          "dataset": "National Land Cover Database 2016 original release",
+          "release_date": "2019-04-30",
+          "doi": "10.5066/P937PN4Z",
+          "license_note": "CC0 1.0 Universal / U.S. public domain",
+          "request_method": "GET",
+          "request_url": "https://www.mrlc.gov/geoserver/ows",
+          "request_parameters": [
+            [
+              "service",
+              "WCS"
+            ],
+            [
+              "version",
+              "2.0.1"
+            ],
+            [
+              "request",
+              "GetCoverage"
+            ],
+            [
+              "coverageId",
+              "mrlc_download__NLCD_2016_Land_Cover_L48"
+            ],
+            [
+              "format",
+              "image/tiff"
+            ],
+            [
+              "subset",
+              "X(662175,699885)"
+            ],
+            [
+              "subset",
+              "Y(2101635,2143605)"
+            ]
+          ],
+          "response": {
+            "cache_hit_before_city_commit": false,
+            "response_headers": {
+              "content-type": "image/tiff"
+            },
+            "network_bytes": 2361300
+          },
+          "file": {
+            "path": "data/raw/multicity/chicago_il/portable_predictor_source_evidence_v1/nlcd/nlcd_2016_land_cover.tif",
+            "bytes": 2361300,
+            "sha256": "47c75139f5eebc5ccb6812d064bc529c743b9ecaf377b310b7df01294a34391c"
+          },
+          "content_sha256": "47c75139f5eebc5ccb6812d064bc529c743b9ecaf377b310b7df01294a34391c",
+          "raster_schema_verified": true,
+          "schema": {
+            "bytes": 2361300,
+            "sha256": "47c75139f5eebc5ccb6812d064bc529c743b9ecaf377b310b7df01294a34391c",
+            "shape": [
+              1399,
+              1257
+            ],
+            "crs": "EPSG:5070",
+            "transform": [
+              30.0,
+              0.0,
+              662175.0,
+              0.0,
+              -30.0,
+              2143605.0
+            ],
+            "dtype": "uint8",
+            "scale": 1.0,
+            "offset": 0.0,
+            "raster_band_unit_metadata": null,
+            "area_or_point": "Area",
+            "wcs_tiff_nodata_metadata": 0,
+            "scientific_nodata": 0,
+            "minimum_value": 11,
+            "maximum_value": 95,
+            "unique_value_count": 15,
+            "value_domain_verified": true
+          }
+        },
+        {
+          "source_id": "nlcd_2016_impervious_chicago_il",
+          "product": "impervious",
+          "provider": "U.S. Geological Survey / MRLC Consortium",
+          "dataset": "National Land Cover Database 2016 original release",
+          "release_date": "2019-04-30",
+          "doi": "10.5066/P937PN4Z",
+          "license_note": "CC0 1.0 Universal / U.S. public domain",
+          "request_method": "GET",
+          "request_url": "https://www.mrlc.gov/geoserver/ows",
+          "request_parameters": [
+            [
+              "service",
+              "WCS"
+            ],
+            [
+              "version",
+              "2.0.1"
+            ],
+            [
+              "request",
+              "GetCoverage"
+            ],
+            [
+              "coverageId",
+              "mrlc_download__NLCD_2016_Impervious_L48"
+            ],
+            [
+              "format",
+              "image/tiff"
+            ],
+            [
+              "subset",
+              "X(662175,699885)"
+            ],
+            [
+              "subset",
+              "Y(2101635,2143605)"
+            ]
+          ],
+          "response": {
+            "cache_hit_before_city_commit": false,
+            "response_headers": {
+              "content-type": "image/tiff"
+            },
+            "network_bytes": 2361300
+          },
+          "file": {
+            "path": "data/raw/multicity/chicago_il/portable_predictor_source_evidence_v1/nlcd/nlcd_2016_impervious.tif",
+            "bytes": 2361300,
+            "sha256": "af1bba1347af02f485afcd9d00e9df7fce37e5da41bdb9d628149f65313c5529"
+          },
+          "content_sha256": "af1bba1347af02f485afcd9d00e9df7fce37e5da41bdb9d628149f65313c5529",
+          "raster_schema_verified": true,
+          "schema": {
+            "bytes": 2361300,
+            "sha256": "af1bba1347af02f485afcd9d00e9df7fce37e5da41bdb9d628149f65313c5529",
+            "shape": [
+              1399,
+              1257
+            ],
+            "crs": "EPSG:5070",
+            "transform": [
+              30.0,
+              0.0,
+              662175.0,
+              0.0,
+              -30.0,
+              2143605.0
+            ],
+            "dtype": "uint8",
+            "scale": 1.0,
+            "offset": 0.0,
+            "raster_band_unit_metadata": null,
+            "area_or_point": "Area",
+            "wcs_tiff_nodata_metadata": 0,
+            "scientific_nodata": 127,
+            "minimum_value": 0,
+            "maximum_value": 100,
+            "unique_value_count": 101,
+            "value_domain_verified": true
+          }
+        }
+      ]
+    },
+    "terrain_windows": {
+      "evidence_complete_for_v2_contract_review": true,
+      "contract_frozen": false,
+      "content_sha256_frozen": true,
+      "raster_schema_verified": true,
+      "slope_halo_m": 30,
+      "aggregation_slope_or_feature_values_computed": false,
+      "sources": [
+        {
+          "source_id": "srtm_gl1_v3_n41w088",
+          "tile_id": "N41W088",
+          "provider": "NASA/USGS via OpenTopography",
+          "dataset": "NASA SRTM Global 1 arc second V003",
+          "opentopo_id": "OTSRTM.082015.4326.1",
+          "dataset_doi": "10.5069/G9445JDF",
+          "license_note": "Cite NASA LP DAAC and OpenTopography",
+          "request_method": "GET",
+          "request_url": "https://opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm/N41W088.tif",
+          "response": {
+            "cache_hit_before_city_commit": false,
+            "response_headers": {
+              "content-length": "6117515",
+              "content-type": "image/tiff",
+              "etag": "\"00000000000000000000000000000000-1\"",
+              "last-modified": "Wed, 13 Jan 2021 02:57:05 GMT"
+            },
+            "network_bytes": 6117515
+          },
+          "file": {
+            "path": "data/raw/multicity/chicago_il/portable_predictor_source_evidence_v1/terrain/N41W088.tif",
+            "bytes": 6117515,
+            "sha256": "4ab16d702300005af8e2333a93cc2eb1032e8edf1b1dce138449b398fc54c0ed"
+          },
+          "content_sha256": "4ab16d702300005af8e2333a93cc2eb1032e8edf1b1dce138449b398fc54c0ed",
+          "raster_schema_verified": true,
+          "schema": {
+            "bytes": 6117515,
+            "sha256": "4ab16d702300005af8e2333a93cc2eb1032e8edf1b1dce138449b398fc54c0ed",
+            "shape": [
+              3601,
+              3601
+            ],
+            "crs": "EPSG:4326",
+            "transform": [
+              0.0002777777777777778,
+              0.0,
+              -88.00013888888888,
+              0.0,
+              -0.0002777777777777778,
+              42.00013888888889
+            ],
+            "dtype": "int16",
+            "nodata": -32768,
+            "area_or_point": "Point",
+            "scale": 1.0,
+            "offset": 0.0,
+            "raster_band_unit_metadata": null,
+            "documented_unit": "metre",
+            "documented_vertical_datum": "EGM96 orthometric height",
+            "unit_and_vertical_datum_source": "pinned_dataset_documentation_not_tiff_claim"
+          }
+        },
+        {
+          "source_id": "srtm_gl1_v3_n42w088",
+          "tile_id": "N42W088",
+          "provider": "NASA/USGS via OpenTopography",
+          "dataset": "NASA SRTM Global 1 arc second V003",
+          "opentopo_id": "OTSRTM.082015.4326.1",
+          "dataset_doi": "10.5069/G9445JDF",
+          "license_note": "Cite NASA LP DAAC and OpenTopography",
+          "request_method": "GET",
+          "request_url": "https://opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm/N42W088.tif",
+          "response": {
+            "cache_hit_before_city_commit": false,
+            "response_headers": {
+              "content-length": "1800726",
+              "content-type": "image/tiff",
+              "etag": "\"00000000000000000000000000000000-1\"",
+              "last-modified": "Wed, 13 Jan 2021 03:03:04 GMT"
+            },
+            "network_bytes": 1800726
+          },
+          "file": {
+            "path": "data/raw/multicity/chicago_il/portable_predictor_source_evidence_v1/terrain/N42W088.tif",
+            "bytes": 1800726,
+            "sha256": "58002933670c43ad3b335950e6eceeda71ad25d86937a6649b6e1f08d338a2c0"
+          },
+          "content_sha256": "58002933670c43ad3b335950e6eceeda71ad25d86937a6649b6e1f08d338a2c0",
+          "raster_schema_verified": true,
+          "schema": {
+            "bytes": 1800726,
+            "sha256": "58002933670c43ad3b335950e6eceeda71ad25d86937a6649b6e1f08d338a2c0",
+            "shape": [
+              3601,
+              3601
+            ],
+            "crs": "EPSG:4326",
+            "transform": [
+              0.0002777777777777778,
+              0.0,
+              -88.00013888888888,
+              0.0,
+              -0.0002777777777777778,
+              43.00013888888889
+            ],
+            "dtype": "int16",
+            "nodata": -32768,
+            "area_or_point": "Point",
+            "scale": 1.0,
+            "offset": 0.0,
+            "raster_band_unit_metadata": null,
+            "documented_unit": "metre",
+            "documented_vertical_datum": "EGM96 orthometric height",
+            "unit_and_vertical_datum_source": "pinned_dataset_documentation_not_tiff_claim"
+          }
+        }
+      ]
+    }
+  },
+  "candidate_downstream_rules_not_executed": {
+    "status": "recorded_for_v2_review_not_executed_or_frozen",
+    "land_cover_resampling": "nearest",
+    "impervious_resampling": "bilinear",
+    "impervious_scale_divisor": 100.0,
+    "impervious_scientific_nodata": 127,
+    "elevation_resampling": "bilinear",
+    "slope_algorithm": "Horn 3x3",
+    "slope_source_halo_cells": 1,
+    "minimum_valid_coverage_fraction": 0.98,
+    "eligible_land_denominator_invariant_across_dates": true
+  },
+  "access_contract": {
+    "external_target_or_qa_values_read": false,
+    "landsat_thermal_values_read": false,
+    "landsat_target_qa_values_read": false,
+    "external_lst_values_read": false,
+    "predictor_construction_performed": false,
+    "model_fit_performed": false,
+    "model_predictions_computed": false,
+    "final_evaluation_outputs_opened": false,
+    "only_public_source_metadata_and_static_predictor_sources_opened": true
+  },
+  "commit_sha256": "0a16c855648182d72d25cecfbf22da8dcb60aa9cd5f7f4774ee6a7a7941875e8"
+}

@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "portable-predictor-source-evidence-v1-source-footprints",
+  "state": "complete_metadata_only_source_not_protocol_locked",
+  "stage": "target_blind_source_footprint_discovery",
+  "generated_at_utc": "2026-08-03T06:01:42.309389+00:00",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "city": {
+    "id": "houston_tx",
+    "name": "Houston",
+    "role": "external_confirmation",
+    "target_values_status": "sealed",
+    "timezone": "America/Chicago"
+  },
+  "source_lock_status": "evidence_snapshot_not_contract_lock",
+  "geography_input": {
+    "manifest": {
+      "path": "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY.json",
+      "bytes": 5523,
+      "sha256": "f89fd246854baa670ecc7a32c20672922be5327e1b89abce8caa07a9ccb14906"
+    },
+    "manifest_commit_sha256": "1c00bb64c1eaa6ce83fe44b377fd40235dfe4108ce8535839cb94a7caf43711f",
+    "city_boundary": {
+      "sha256": "49316bcccacfbbe076c03ac942f8819e9afd493f23119ad2c96fab2191a2dd07",
+      "bytes": 1107220,
+      "rows": 1,
+      "schema_sha256": "a263767165e1033548d4368b03e52a80d798c039670b1f189e99e49e3d134374",
+      "path": "data/processed/multicity/houston_tx/geography/city_boundary.parquet",
+      "geometry_semantic_sha256": "375020af5513d5f65f19095ee313757e94839217b261ffc2ca0c42001a78717a"
+    },
+    "bbox_wgs84": [
+      -95.9097430002,
+      29.5162819997,
+      -95.0126370003,
+      30.1559080004
+    ]
+  },
+  "queries": {
+    "landsat": {
+      "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "query": {
+        "collections": [
+          "landsat-c2-l2"
+        ],
+        "bbox": [
+          -95.9097430002,
+          29.5162819997,
+          -95.0126370003,
+          30.1559080004
+        ],
+        "datetime": "2025-05-01T05:00:00Z/2025-11-01T05:00:00Z",
+        "limit": 100,
+        "fields": {
+          "include": [
+            "id",
+            "collection",
+            "geometry",
+            "bbox",
+            "properties.datetime",
+            "properties.platform",
+            "properties.landsat:wrs_path",
+            "properties.landsat:wrs_row",
+            "properties.landsat:collection_category",
+            "properties.landsat:correction"
+          ],
+          "exclude": [
+            "assets",
+            "links"
+          ]
+        },
+        "query": {
+          "platform": {
+            "in": [
+              "landsat-8",
+              "landsat-9"
+            ]
+          },
+          "landsat:collection_category": {
+            "eq": "T1"
+          },
+          "landsat:correction": {
+            "eq": "L2SP"
+          }
+        }
+      },
+      "query_sha256": "2904b98c799b09e7532ee7ebffa5beb2eca7ad5283987a1e35131e3dffa8526b",
+      "page_count": 1,
+      "query_response_items": 86,
+      "unique_items": 86,
+      "duplicate_items": 0,
+      "pagination_exhausted": true,
+      "assets_excluded": true
+    },
+    "sentinel": {
+      "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "query": {
+        "collections": [
+          "sentinel-2-l2a"
+        ],
+        "bbox": [
+          -95.9097430002,
+          29.5162819997,
+          -95.0126370003,
+          30.1559080004
+        ],
+        "datetime": "2025-03-02T06:00:00Z/2025-10-31T05:00:00Z",
+        "limit": 100,
+        "fields": {
+          "include": [
+            "id",
+            "collection",
+            "geometry",
+            "bbox",
+            "properties.datetime",
+            "properties.platform",
+            "properties.s2:mgrs_tile"
+          ],
+          "exclude": [
+            "assets",
+            "links"
+          ]
+        }
+      },
+      "query_sha256": "84426e341104aa45cd800223994e3500dc906ca4005fe1b5a5269484053fb3dc",
+      "page_count": 7,
+      "query_response_items": 610,
+      "unique_items": 610,
+      "duplicate_items": 0,
+      "pagination_exhausted": true,
+      "assets_excluded": true
+    },
+    "daymet": {
+      "endpoint": "https://cmr.earthdata.nasa.gov/search/granules.json",
+      "params": {
+        "collection_concept_id": "C2532426483-ORNL_CLOUD",
+        "temporal": "2025-01-01T00:00:00Z,2025-12-31T23:59:59Z",
+        "bounding_box": "-95.9097430002,29.5162819997,-95.0126370003,30.1559080004",
+        "page_size": 2000
+      },
+      "query_sha256": "c383c98a646e3a096713800cd5c55b02778c3ca49dd61a46a112861499a4659d",
+      "http_status": 200,
+      "response_headers": {
+        "Content-Type": "application/json;charset=utf-8",
+        "CMR-Request-Id": "945015bf-d442-4499-ba2a-d9377d096ac1",
+        "CMR-Hits": "7"
+      },
+      "returned_feed_entries": 7,
+      "selected_granules": 6
+    },
+    "terrain": {
+      "method": "HEAD",
+      "object_count": 2,
+      "payload_bytes_read": 0
+    }
+  },
+  "source_families": {
+    "landsat_wrs": {
+      "member_count": 3,
+      "member_ids": [
+        "WRS2-025039",
+        "WRS2-025040",
+        "WRS2-026039"
+      ],
+      "item_count": 65,
+      "platforms": [
+        "landsat-8",
+        "landsat-9"
+      ],
+      "item_metadata_semantic_sha256": "5ec34ecb60ad070eb48b051c90486e27c60ca40714d217b2fc94bd185623f558",
+      "unit_semantic_sha256": "299e6d5e8154677ac11dddaa7fe507562f66682c83e89423e4d59acf2f18c01c"
+    },
+    "sentinel_mgrs": {
+      "member_count": 6,
+      "member_ids": [
+        "MGRS-14RQT",
+        "MGRS-14RQU",
+        "MGRS-15RTN",
+        "MGRS-15RTP",
+        "MGRS-15RUN",
+        "MGRS-15RUP"
+      ],
+      "item_count": 606,
+      "platforms": [
+        "sentinel-2a",
+        "sentinel-2b",
+        "sentinel-2c"
+      ],
+      "item_metadata_semantic_sha256": "44a01771f9c99d8f86190972e021c6e12dcf174b08d1ad71e702037a9653dd92",
+      "unit_semantic_sha256": "c3a8015b592bfafde2c0732c5ab9319c1c8afedac781b986db2222795b36bfad"
+    },
+    "daymet_cells": {
+      "member_count": 2705,
+      "member_id_set_sha256": "0b89a5e61052fc5d92480a211b849d8f091d15a89b2e57d224497d50cac783b6",
+      "granule_count": 6,
+      "granule_concept_ids": [
+        "G4194395888-ORNL_CLOUD",
+        "G4194396069-ORNL_CLOUD",
+        "G4194396402-ORNL_CLOUD",
+        "G4194396426-ORNL_CLOUD",
+        "G4194396868-ORNL_CLOUD",
+        "G4194397011-ORNL_CLOUD"
+      ],
+      "granule_semantic_sha256": "79a1a923db2447d0fe9a9f9a8e47cc147ee4feb9ae7d2bc85c9859e5008f807f",
+      "cell_semantic_sha256": "fd6690da7195d3a52a1fe8a9b8a4fbf9893da4df8b5cad1843bdc9361482dcfd",
+      "window": {
+        "full_grid_shape": [
+          8075,
+          7814
+        ],
+        "full_grid_transform": [
+          1000.0,
+          0.0,
+          -4560750.0,
+          0.0,
+          -1000.0,
+          4984500.0
+        ],
+        "grid_crs": "+proj=lcc +lat_1=25 +lat_2=60 +lat_0=42.5 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs",
+        "resolution_m": 1000,
+        "projected_bbox_m": [
+          385071.906,
+          -1377803.494,
+          473584.2,
+          -1303891.091
+        ],
+        "minimal_y_indices_inclusive": [
+          6288,
+          6362
+        ],
+        "minimal_x_indices_inclusive": [
+          4945,
+          5034
+        ],
+        "halo_cells": 1,
+        "y_indices_inclusive": [
+          6287,
+          6363
+        ],
+        "x_indices_inclusive": [
+          4944,
+          5035
+        ],
+        "window_shape": [
+          77,
+          92
+        ],
+        "window_cell_count": 7084,
+        "candidate_grid_cells_only": true
+      }
+    },
+    "terrain_windows": {
+      "member_count": 2,
+      "member_ids": [
+        "N29W096",
+        "N30W096"
+      ],
+      "tile_semantic_sha256": "3b55caaad10e32d34a121acb1b65fb3e035a8fa1c0e1dddbbc963d45c5dd174a",
+      "all_objects_head_verified": true,
+      "content_sha256_frozen": false,
+      "raster_schema_verified": false
+    }
+  },
+  "access_contract": {
+    "metadata_responses_only": true,
+    "stac_fields_excluded_assets": true,
+    "stac_asset_objects_returned": false,
+    "stac_asset_hrefs_read": false,
+    "asset_sign_calls": 0,
+    "landsat_asset_http_requests": 0,
+    "landsat_thermal_values_read": false,
+    "landsat_target_qa_values_read": false,
+    "sentinel_asset_http_requests": 0,
+    "sentinel_band_values_read": false,
+    "daymet_data_download_requests": 0,
+    "daymet_values_read": false,
+    "terrain_get_requests": 0,
+    "terrain_values_read": false,
+    "raster_payload_bytes_read": 0,
+    "external_lst_values_read": false,
+    "predictor_construction_performed": false,
+    "model_fit_performed": false,
+    "model_predictions_computed": false
+  },
+  "raw_files": {
+    "landsat/stac_page_001.json": {
+      "path": "data/raw/multicity/houston_tx/source_footprints/landsat/stac_page_001.json",
+      "bytes": 93941,
+      "sha256": "415f5eddde9e11f5b3234d625753ce647f7a6b8f6915195b1336377e9cb0940a"
+    },
+    "sentinel/stac_page_001.json": {
+      "path": "data/raw/multicity/houston_tx/source_footprints/sentinel/stac_page_001.json",
+      "bytes": 133378,
+      "sha256": "978554d4be6a0f91b8aa42da6090b2a519d71215620264ccf9f3af7abcac3c5b"
+    },
+    "sentinel/stac_page_002.json": {
+      "path": "data/raw/multicity/houston_tx/source_footprints/sentinel/stac_page_002.json",
+      "bytes": 115751,
+      "sha256": "2ffd38191fdaa7060e16ddb4c243564dbb809671542809325f5e833c0f96ff64"
+    },
+    "sentinel/stac_page_003.json": {
+      "path": "data/raw/multicity/houston_tx/source_footprints/sentinel/stac_page_003.json",
+      "bytes": 114759,
+      "sha256": "200a83336be56935dcb244cd77f806e616885a94301c282d7996a922814eade9"
+    },
+    "sentinel/stac_page_004.json": {
+      "path": "data/raw/multicity/houston_tx/source_footprints/sentinel/stac_page_004.json",
+      "bytes": 127911,
+      "sha256": "a016a375a83ebe125d779e702a18339ee3dc998171252c34566517f872c1d194"
+    },
+    "sentinel/stac_page_005.json": {
+      "path": "data/raw/multicity/houston_tx/source_footprints/sentinel/stac_page_005.json",
+      "bytes": 127941,
+      "sha256": "2af7999a127a45342cd02c2a02a0de33b77dfc231e0955d2d3af7e5eed6d0643"
+    },
+    "sentinel/stac_page_006.json": {
+      "path": "data/raw/multicity/houston_tx/source_footprints/sentinel/stac_page_006.json",
+      "bytes": 116287,
+      "sha256": "9b690cb89d20fbd918f10691a060eccdabfec8f4e5c84cb06c756758cb90f8ab"
+    },
+    "sentinel/stac_page_007.json": {
+      "path": "data/raw/multicity/houston_tx/source_footprints/sentinel/stac_page_007.json",
+      "bytes": 12888,
+      "sha256": "1faa6f2c5c9f95506bad8616f10b34d30f61d5e0be7885d41b68738438295ae3"
+    },
+    "daymet/cmr_granules_2025.json": {
+      "path": "data/raw/multicity/houston_tx/source_footprints/daymet/cmr_granules_2025.json",
+      "bytes": 31477,
+      "sha256": "a29803203e8a2599d0f14979e43c474ded5c6e0f66703d5ec78e40221c99ea6d"
+    },
+    "terrain/N29W096_head.json": {
+      "path": "data/raw/multicity/houston_tx/source_footprints/terrain/N29W096_head.json",
+      "bytes": 524,
+      "sha256": "866f63f47cde7942b2c03048f50decd1887dd200e5f4fd7fb7fbfeb6f9639371"
+    },
+    "terrain/N30W096_head.json": {
+      "path": "data/raw/multicity/houston_tx/source_footprints/terrain/N30W096_head.json",
+      "bytes": 524,
+      "sha256": "1649862463b883f41ac8f51c4fcaf24ee7fe011f364ed35665c62e7a061970c0"
+    }
+  },
+  "output_tables": {
+    "landsat_items": {
+      "sha256": "cc469e18ea81d0272e321bcd205106eb4593e0d79af4092a47b829021b2996c1",
+      "bytes": 27407,
+      "rows": 65,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/houston_tx/source_footprints/landsat_metadata_items.parquet",
+      "geometry_semantic_sha256": "f1629e329cf4a9d57cd1b32117722c551ecfb9ccb367f087cf72e3673727bf32"
+    },
+    "sentinel_items": {
+      "sha256": "8f3a1de4557af786187a0fec8cc6b5d804a7fd317c754d83fe2f5b1edb21177c",
+      "bytes": 100822,
+      "rows": 606,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/houston_tx/source_footprints/sentinel_metadata_items.parquet",
+      "geometry_semantic_sha256": "2f58a3c767085a79b05d727037c7aff56845e42d490616eed7a5bd832c873a0b"
+    },
+    "optical_units": {
+      "sha256": "1a44b71c54009a8b3dbf0f8aa333888ab6f04b9e00d5500ead490ec46004d611",
+      "bytes": 20615,
+      "rows": 9,
+      "schema_sha256": "0ca7f481c45996c15a79804fa9d7f07c71a048b31792794b0a1d95fd5363e365",
+      "path": "data/processed/multicity/houston_tx/source_footprints/optical_source_units.parquet",
+      "geometry_semantic_sha256": "e2408797dd4b65ecff1228eb0dc082c5388a1b4707776e1e06f1ecca2ef216ef"
+    },
+    "daymet_granules": {
+      "sha256": "37d28262c7bdeff82f259eb1aef52e6f611e35e5f4051515d0b9427f805d0957",
+      "bytes": 6686,
+      "rows": 6,
+      "schema_sha256": "ef120b77a9d505f60d384f7b004e2fde2a26f9315443ca213e63ffa9f4cb5ed1",
+      "path": "data/processed/multicity/houston_tx/source_footprints/daymet_granules.parquet",
+      "frame_semantic_sha256": "79a1a923db2447d0fe9a9f9a8e47cc147ee4feb9ae7d2bc85c9859e5008f807f"
+    },
+    "daymet_cells": {
+      "sha256": "db27c84920803e2df4c65ffa0b193d361e23bcbe15ace37918a0cfae8d469ecb",
+      "bytes": 136079,
+      "rows": 2705,
+      "schema_sha256": "3c7c59a4d863fd8522309c8eb9fe6aad09fb277c8978ee25d1b980d50cc2ce13",
+      "path": "data/processed/multicity/houston_tx/source_footprints/daymet_intersecting_cells.parquet",
+      "geometry_semantic_sha256": "bce51d9049ee47e3151f0233de89b5fd7de589cc1c99eaa62aeb3760e9f9e0f4"
+    },
+    "terrain_tiles": {
+      "sha256": "d74dc7ef58627beab20d80c3eb04a8b8a1af6206504558881aa0b1b084fdb605",
+      "bytes": 16508,
+      "rows": 2,
+      "schema_sha256": "19e0b079235ddc5071be7509574af356752328029aaf72f5f8b83cdd63adc2e9",
+      "path": "data/processed/multicity/houston_tx/source_footprints/terrain_tiles.parquet",
+      "geometry_semantic_sha256": "e339987fed76261dcd0a2d896a5e3832cbe854efbbfd19ef9cf856b24d653ab4"
+    }
+  },
+  "commit_sha256": "c1a47ad3ad5cfadb6e0f83ca05e913154383b181e0b2213ee86598597e59f27c"
+}

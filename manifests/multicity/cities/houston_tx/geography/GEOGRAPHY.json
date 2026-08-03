@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "portable-predictor-source-evidence-v1-geography",
+  "state": "complete_target_blind_public_geography",
+  "generated_at_utc": "2026-08-03T05:28:04.741494+00:00",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "city": {
+    "id": "houston_tx",
+    "name": "Houston",
+    "state_fips": "48",
+    "census_place_geoid": "4835000",
+    "role": "external_confirmation",
+    "target_values_status": "sealed"
+  },
+  "sources": {
+    "place": {
+      "selected": {
+        "label": "census_tigerweb_place",
+        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/26",
+        "provider": "U.S. Census Bureau",
+        "source_status": "authoritative_primary",
+        "item_id": null,
+        "layer_name": "Incorporated Places",
+        "max_record_count": 100000
+      },
+      "attempts": [
+        {
+          "label": "census_tigerweb_place",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/26",
+          "status": "selected"
+        }
+      ]
+    },
+    "tract": {
+      "selected": {
+        "label": "census_tigerweb_tract",
+        "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/6",
+        "provider": "U.S. Census Bureau",
+        "source_status": "authoritative_primary",
+        "item_id": null,
+        "layer_name": "Census Tracts",
+        "max_record_count": 100000
+      },
+      "attempts": [
+        {
+          "label": "census_tigerweb_tract",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/6",
+          "status": "selected"
+        }
+      ]
+    }
+  },
+  "selection_contract": {
+    "analysis_crs": "EPSG:5070",
+    "minimum_place_area_fraction": 0.5,
+    "exclude_special_use_tracts": true,
+    "candidate_query_uses_place_bbox_then_exact_polygon_intersection": true,
+    "bbox_only_tract_selection": false
+  },
+  "geography": {
+    "bbox_wgs84": [
+      -95.9097430002,
+      29.5162819997,
+      -95.0126370003,
+      30.1559080004
+    ],
+    "tract_candidates_in_bbox": 1341,
+    "tract_candidates_with_positive_overlap": 1068,
+    "primary_tract_count": 651
+  },
+  "access_contract": {
+    "public_boundary_and_tract_geometry_read": true,
+    "tract_selection_uses_positive_intersection_and_area_fraction": true,
+    "demographic_values_read": false,
+    "target_or_qa_values_read": false,
+    "predictor_values_computed": false,
+    "model_or_result_values_read": false
+  },
+  "raw_files": {
+    "place/layer_metadata.json": {
+      "path": "data/raw/multicity/houston_tx/geography/place/layer_metadata.json",
+      "bytes": 6033,
+      "sha256": "f3c32d196e581350881c28817090d84e64bbbc9542983a4af737e4f6eb98cf0e"
+    },
+    "place/query_count.json": {
+      "path": "data/raw/multicity/houston_tx/geography/place/query_count.json",
+      "bytes": 11,
+      "sha256": "6aea6dfe6561984cdc5c54ead84d47d2cf29e48253ae282aef237404adad4661"
+    },
+    "place/features.geojson": {
+      "path": "data/raw/multicity/houston_tx/geography/place/features.geojson",
+      "bytes": 2858536,
+      "sha256": "37766010517f41f3f8867ce28800ee04fcc1c676fc03a99de831918c681a6c4c"
+    },
+    "tract/layer_metadata.json": {
+      "path": "data/raw/multicity/houston_tx/geography/tract/layer_metadata.json",
+      "bytes": 5659,
+      "sha256": "cd8c8136a6e9ea16debc05724edacbc76573cba18266e0f4fff33ae32a623219"
+    },
+    "tract/query_count.json": {
+      "path": "data/raw/multicity/houston_tx/geography/tract/query_count.json",
+      "bytes": 14,
+      "sha256": "f7810a3324771bc26f5b0595731ef4767f602efa9614f5a3c233e6b038fe4794"
+    },
+    "tract/features_0000.geojson": {
+      "path": "data/raw/multicity/houston_tx/geography/tract/features_0000.geojson",
+      "bytes": 9663839,
+      "sha256": "e2d484deb511415d51461f2bb4a66131bde459904e6193fcda3b2f8f90df77c7"
+    }
+  },
+  "output_tables": {
+    "city_boundary": {
+      "sha256": "49316bcccacfbbe076c03ac942f8819e9afd493f23119ad2c96fab2191a2dd07",
+      "bytes": 1107220,
+      "rows": 1,
+      "schema_sha256": "a263767165e1033548d4368b03e52a80d798c039670b1f189e99e49e3d134374",
+      "path": "data/processed/multicity/houston_tx/geography/city_boundary.parquet",
+      "geometry_semantic_sha256": "375020af5513d5f65f19095ee313757e94839217b261ffc2ca0c42001a78717a"
+    },
+    "tract_candidates": {
+      "sha256": "2acca8e30b0350d6eace13aec053a158e36ac28bfa49d5c48ab217a6b8f7aced",
+      "bytes": 3847795,
+      "rows": 1341,
+      "schema_sha256": "37716cf0dadb1b70d72e72f3b1db20cbe90502c0587804200c38193e9c1737b0",
+      "path": "data/processed/multicity/houston_tx/geography/tract_candidates.parquet",
+      "geometry_semantic_sha256": "11c9bfe2006348dde93f4bab928f7e4e57bb4fbd96a69e38b2bee5536641ad40"
+    },
+    "primary_tracts": {
+      "sha256": "b3d85eac91960a07f9e5800e4bee1cb66c65be287fd99e823e7c43e27e8ca165",
+      "bytes": 1116686,
+      "rows": 651,
+      "schema_sha256": "ad67cbc21f4d53fe7dbb12abb4554a256b073ba7b3b6fc2b2fa084fd717898a2",
+      "path": "data/processed/multicity/houston_tx/geography/primary_tracts.parquet",
+      "geometry_semantic_sha256": "c7bf2c5b7cfb5b370fa5daeadf7bc476f3473725912876c7adb3eb77fd6204e0"
+    }
+  },
+  "commit_sha256": "1c00bb64c1eaa6ce83fe44b377fd40235dfe4108ce8535839cb94a7caf43711f"
+}

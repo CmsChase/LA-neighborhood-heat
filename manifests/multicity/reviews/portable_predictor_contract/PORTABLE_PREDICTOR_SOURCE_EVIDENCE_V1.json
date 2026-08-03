@@ -1,0 +1,471 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "portable-predictor-source-evidence-v1",
+  "state": "complete_target_blind_portable_predictor_source_evidence",
+  "stage_id": "portable_predictor_missing_source_evidence_staging",
+  "generated_at_utc": "2026-08-03T06:03:07.546634+00:00",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "plan_authorization": {
+    "path": "manifests/multicity/PLAN_READINESS.json",
+    "bytes": 45470,
+    "file_sha256": "bdd2a1c75d397116f2c9e9f00e7e673dc83581e5b3b707b9bf5318e815cb3c28",
+    "commit_sha256": "61359cbec70f2f4f549ed177abdca8b06b3459e3bb21d3f3d46e75d99001ec26",
+    "schema_version": 10,
+    "state": "planning_ready",
+    "authorized_now": {
+      "boundary_and_public_metadata_staging": false,
+      "target_blind_source_geometry_review": false,
+      "target_blind_gshhg_l3_hierarchy_preregistration": false,
+      "target_blind_gshhg_l3_hierarchy_geometry_read": false,
+      "portable_predictor_source_freeze": false,
+      "portable_predictor_source_and_calibration_contract_freeze": false,
+      "portable_predictor_missing_source_evidence_staging": true,
+      "predictor_construction": false,
+      "model_fitting": false,
+      "external_target_or_qa_value_access": false,
+      "one_time_external_evaluation": false,
+      "operational_forecast_claim": false
+    },
+    "portable_predictor_source_evidence_stage_authorization_scope": {
+      "stage_id": "portable_predictor_missing_source_evidence_staging",
+      "experiment_id": "la_to_three_city_zero_shot_v1",
+      "configuration": {
+        "path": "configs/multicity/portable_predictor_source_evidence_v1.toml",
+        "sha256": "d352ba7ad86c0a231e631ada1f95fd72a3a2e47b9e4185dc7687ad462b736f27"
+      },
+      "code_paths": [
+        "configs/multicity/portable_predictor_source_evidence_v1.toml",
+        "configs/multicity/experiment.toml",
+        "configs/multicity/cities/phoenix_az.toml",
+        "configs/multicity/cities/houston_tx.toml",
+        "configs/multicity/cities/chicago_il.toml",
+        "scripts/stage_multicity_portable_predictor_source_evidence_v1.py",
+        "src/la_heat/daymet_grid.py",
+        "src/la_heat/multicity/config.py",
+        "src/la_heat/multicity/geography.py",
+        "src/la_heat/multicity/portable_predictor_source_evidence_v1.py",
+        "src/la_heat/multicity/source_footprints.py",
+        "src/la_heat/multicity/workspace.py",
+        "src/la_heat/provenance.py",
+        "src/la_heat/static_sources.py"
+      ],
+      "cities": [
+        {
+          "id": "phoenix_az",
+          "census_place_geoid": "0455000",
+          "geography_action": "authenticate_existing",
+          "source_footprint_action": "authenticate_existing",
+          "static_source_action": "create_append_only_supplement"
+        },
+        {
+          "id": "houston_tx",
+          "census_place_geoid": "4835000",
+          "geography_action": "create_first_target_blind_snapshot",
+          "source_footprint_action": "create_first_metadata_snapshot",
+          "static_source_action": "create_append_only_supplement"
+        },
+        {
+          "id": "chicago_il",
+          "census_place_geoid": "1714000",
+          "geography_action": "create_first_target_blind_snapshot",
+          "source_footprint_action": "create_first_metadata_snapshot",
+          "static_source_action": "create_append_only_supplement"
+        }
+      ],
+      "network": {
+        "GET": [
+          "tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/{6,26}[,/query]",
+          "services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Census_2020_Redistricting_{Tracts,Incorporated_Places}/FeatureServer/0[,/query]",
+          "www.arcgis.com/sharing/rest/content/items/{e3a7d2d3e5834b7eb6b1c2943141ced6,13ea1fb24ca14842bb265e6ec6ac1d46}",
+          "cmr.earthdata.nasa.gov/search/granules.json",
+          "www.mrlc.gov/geoserver/ows",
+          "opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm/[NS][0-9]{2}[EW][0-9]{3}.tif"
+        ],
+        "POST": [
+          "planetarycomputer.microsoft.com/api/stac/v1/search"
+        ],
+        "HEAD": [
+          "opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm/[NS][0-9]{2}[EW][0-9]{3}.tif"
+        ],
+        "cross_origin_redirects_allowed": false,
+        "maximum_network_requests": 1000,
+        "maximum_single_download_bytes": 268435456,
+        "maximum_total_download_bytes": 1073741824,
+        "maximum_stac_pages_per_query": 100
+      },
+      "source_products": {
+        "nlcd": {
+          "release": "NLCD 2016 original release",
+          "coverage_ids": [
+            "mrlc_download__NLCD_2016_Land_Cover_L48",
+            "mrlc_download__NLCD_2016_Impervious_L48"
+          ],
+          "native_grid": "EPSG:5070 30 m"
+        },
+        "terrain": {
+          "release": "NASA SRTM GL1 v3 via OpenTopography",
+          "opentopo_id": "OTSRTM.082015.4326.1",
+          "schema": "EPSG:4326 int16 3601x3601 Point EGM96 metre"
+        },
+        "metadata": [
+          "Census 2020",
+          "Landsat C2 L2",
+          "Sentinel-2 L2A",
+          "Daymet V4R1"
+        ]
+      },
+      "candidate_downstream_rules": {
+        "status": "recorded_for_v2_review_not_executed_or_frozen",
+        "land_cover_resampling": "nearest",
+        "impervious_resampling": "bilinear",
+        "impervious_scale_divisor": 100.0,
+        "impervious_scientific_nodata": 127,
+        "elevation_resampling": "bilinear",
+        "slope_algorithm": "Horn 3x3",
+        "slope_source_halo_cells": 1,
+        "minimum_valid_coverage_fraction": 0.98,
+        "eligible_land_denominator_invariant_across_dates": true
+      },
+      "reads": {
+        "authenticated_phoenix_geography_and_source_footprint": true,
+        "public_houston_and_chicago_place_and_tract_geometry": true,
+        "public_source_metadata": true,
+        "nlcd_and_srtm_static_source_payloads": true
+      },
+      "tracked_output_paths": [
+        "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY.json",
+        "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY.json",
+        "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json",
+        "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json",
+        "manifests/multicity/cities/phoenix_az/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+        "manifests/multicity/cities/houston_tx/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+        "manifests/multicity/cities/chicago_il/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+        "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json"
+      ],
+      "write_contract": {
+        "append_only": true,
+        "terminal_written_last": true,
+        "terminal_requires_all_city_checkpoints": true,
+        "check_only_network_requests": 0,
+        "tracked_output_set_must_be_exact": true
+      },
+      "prohibitions": {
+        "target_or_qa_values": true,
+        "thermal_values": true,
+        "predictor_construction": true,
+        "model_fit_or_prediction": true,
+        "final_evaluation_outputs": true,
+        "protocol_or_feature_name_freeze": true,
+        "operational_forecast_claim": true
+      }
+    }
+  },
+  "authorization_scope": {
+    "stage_id": "portable_predictor_missing_source_evidence_staging",
+    "experiment_id": "la_to_three_city_zero_shot_v1",
+    "configuration": {
+      "path": "configs/multicity/portable_predictor_source_evidence_v1.toml",
+      "sha256": "d352ba7ad86c0a231e631ada1f95fd72a3a2e47b9e4185dc7687ad462b736f27"
+    },
+    "code_paths": [
+      "configs/multicity/portable_predictor_source_evidence_v1.toml",
+      "configs/multicity/experiment.toml",
+      "configs/multicity/cities/phoenix_az.toml",
+      "configs/multicity/cities/houston_tx.toml",
+      "configs/multicity/cities/chicago_il.toml",
+      "scripts/stage_multicity_portable_predictor_source_evidence_v1.py",
+      "src/la_heat/daymet_grid.py",
+      "src/la_heat/multicity/config.py",
+      "src/la_heat/multicity/geography.py",
+      "src/la_heat/multicity/portable_predictor_source_evidence_v1.py",
+      "src/la_heat/multicity/source_footprints.py",
+      "src/la_heat/multicity/workspace.py",
+      "src/la_heat/provenance.py",
+      "src/la_heat/static_sources.py"
+    ],
+    "cities": [
+      {
+        "id": "phoenix_az",
+        "census_place_geoid": "0455000",
+        "geography_action": "authenticate_existing",
+        "source_footprint_action": "authenticate_existing",
+        "static_source_action": "create_append_only_supplement"
+      },
+      {
+        "id": "houston_tx",
+        "census_place_geoid": "4835000",
+        "geography_action": "create_first_target_blind_snapshot",
+        "source_footprint_action": "create_first_metadata_snapshot",
+        "static_source_action": "create_append_only_supplement"
+      },
+      {
+        "id": "chicago_il",
+        "census_place_geoid": "1714000",
+        "geography_action": "create_first_target_blind_snapshot",
+        "source_footprint_action": "create_first_metadata_snapshot",
+        "static_source_action": "create_append_only_supplement"
+      }
+    ],
+    "network": {
+      "GET": [
+        "tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/{6,26}[,/query]",
+        "services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Census_2020_Redistricting_{Tracts,Incorporated_Places}/FeatureServer/0[,/query]",
+        "www.arcgis.com/sharing/rest/content/items/{e3a7d2d3e5834b7eb6b1c2943141ced6,13ea1fb24ca14842bb265e6ec6ac1d46}",
+        "cmr.earthdata.nasa.gov/search/granules.json",
+        "www.mrlc.gov/geoserver/ows",
+        "opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm/[NS][0-9]{2}[EW][0-9]{3}.tif"
+      ],
+      "POST": [
+        "planetarycomputer.microsoft.com/api/stac/v1/search"
+      ],
+      "HEAD": [
+        "opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm/[NS][0-9]{2}[EW][0-9]{3}.tif"
+      ],
+      "cross_origin_redirects_allowed": false,
+      "maximum_network_requests": 1000,
+      "maximum_single_download_bytes": 268435456,
+      "maximum_total_download_bytes": 1073741824,
+      "maximum_stac_pages_per_query": 100
+    },
+    "source_products": {
+      "nlcd": {
+        "release": "NLCD 2016 original release",
+        "coverage_ids": [
+          "mrlc_download__NLCD_2016_Land_Cover_L48",
+          "mrlc_download__NLCD_2016_Impervious_L48"
+        ],
+        "native_grid": "EPSG:5070 30 m"
+      },
+      "terrain": {
+        "release": "NASA SRTM GL1 v3 via OpenTopography",
+        "opentopo_id": "OTSRTM.082015.4326.1",
+        "schema": "EPSG:4326 int16 3601x3601 Point EGM96 metre"
+      },
+      "metadata": [
+        "Census 2020",
+        "Landsat C2 L2",
+        "Sentinel-2 L2A",
+        "Daymet V4R1"
+      ]
+    },
+    "candidate_downstream_rules": {
+      "status": "recorded_for_v2_review_not_executed_or_frozen",
+      "land_cover_resampling": "nearest",
+      "impervious_resampling": "bilinear",
+      "impervious_scale_divisor": 100.0,
+      "impervious_scientific_nodata": 127,
+      "elevation_resampling": "bilinear",
+      "slope_algorithm": "Horn 3x3",
+      "slope_source_halo_cells": 1,
+      "minimum_valid_coverage_fraction": 0.98,
+      "eligible_land_denominator_invariant_across_dates": true
+    },
+    "reads": {
+      "authenticated_phoenix_geography_and_source_footprint": true,
+      "public_houston_and_chicago_place_and_tract_geometry": true,
+      "public_source_metadata": true,
+      "nlcd_and_srtm_static_source_payloads": true
+    },
+    "tracked_output_paths": [
+      "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY.json",
+      "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY.json",
+      "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json",
+      "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json",
+      "manifests/multicity/cities/phoenix_az/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+      "manifests/multicity/cities/houston_tx/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+      "manifests/multicity/cities/chicago_il/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+      "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json"
+    ],
+    "write_contract": {
+      "append_only": true,
+      "terminal_written_last": true,
+      "terminal_requires_all_city_checkpoints": true,
+      "check_only_network_requests": 0,
+      "tracked_output_set_must_be_exact": true
+    },
+    "prohibitions": {
+      "target_or_qa_values": true,
+      "thermal_values": true,
+      "predictor_construction": true,
+      "model_fit_or_prediction": true,
+      "final_evaluation_outputs": true,
+      "protocol_or_feature_name_freeze": true,
+      "operational_forecast_claim": true
+    }
+  },
+  "config": {
+    "path": "configs/multicity/portable_predictor_source_evidence_v1.toml",
+    "bytes": 3885,
+    "sha256": "d352ba7ad86c0a231e631ada1f95fd72a3a2e47b9e4185dc7687ad462b736f27",
+    "semantic_sha256": "a2b2c6e56fbdfd6480f1d22ea6e0355e2a28b8c4e8be77ae19a0dfe5e50a7e8b"
+  },
+  "cities": {
+    "phoenix_az": {
+      "source_evidence_commit_sha256": "6ee4ddb67bbaa2df545ad13b25f29607647ef84dfff69897ddc2e34ab0f95ae8",
+      "nlcd_content_and_schema_evidence_complete": true,
+      "terrain_content_and_schema_evidence_complete": true,
+      "portable_predictor_contract_frozen": false,
+      "predictor_values_computed": false
+    },
+    "houston_tx": {
+      "source_evidence_commit_sha256": "6d0333fa50d93d6bf69a3d5f2a5619ac53d0ae7a4a5526cc4c5a670bdf11e538",
+      "nlcd_content_and_schema_evidence_complete": true,
+      "terrain_content_and_schema_evidence_complete": true,
+      "portable_predictor_contract_frozen": false,
+      "predictor_values_computed": false
+    },
+    "chicago_il": {
+      "source_evidence_commit_sha256": "0a16c855648182d72d25cecfbf22da8dcb60aa9cd5f7f4774ee6a7a7941875e8",
+      "nlcd_content_and_schema_evidence_complete": true,
+      "terrain_content_and_schema_evidence_complete": true,
+      "portable_predictor_contract_frozen": false,
+      "predictor_values_computed": false
+    }
+  },
+  "tracked_output_paths": [
+    "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY.json",
+    "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY.json",
+    "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json",
+    "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json",
+    "manifests/multicity/cities/phoenix_az/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+    "manifests/multicity/cities/houston_tx/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+    "manifests/multicity/cities/chicago_il/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+    "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json"
+  ],
+  "tracked_checkpoints": {
+    "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY.json": {
+      "path": "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY.json",
+      "bytes": 5523,
+      "sha256": "f89fd246854baa670ecc7a32c20672922be5327e1b89abce8caa07a9ccb14906",
+      "commit_sha256": "1c00bb64c1eaa6ce83fe44b377fd40235dfe4108ce8535839cb94a7caf43711f",
+      "state": "complete_target_blind_public_geography"
+    },
+    "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY.json": {
+      "path": "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY.json",
+      "bytes": 5520,
+      "sha256": "6fadf3355dda0ca70a5ef0f6201f84d38f8df29a588bdddc6fac076238e50b25",
+      "commit_sha256": "10a2f41134becd5e45697fa0e95c43e58665155c39a8ec02391c7003e0b01c15",
+      "state": "complete_target_blind_public_geography"
+    },
+    "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json": {
+      "path": "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json",
+      "bytes": 14379,
+      "sha256": "af2dd226caf4df1dd14a6ed583ab331c9d791736c47ee35c3fde0332d1172798",
+      "commit_sha256": "c1a47ad3ad5cfadb6e0f83ca05e913154383b181e0b2213ee86598597e59f27c",
+      "state": "complete_metadata_only_source_not_protocol_locked"
+    },
+    "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json": {
+      "path": "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json",
+      "bytes": 12740,
+      "sha256": "d99e8e320c4c1bb3703cdda0bf98ded183369f41cc0feaee8a568ebfcffdb55c",
+      "commit_sha256": "1227a9f9030905c31ab420cdd72b0794984dcfc461acc8e0ab075c8ebac9fb82",
+      "state": "complete_metadata_only_source_not_protocol_locked"
+    },
+    "manifests/multicity/cities/phoenix_az/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json": {
+      "path": "manifests/multicity/cities/phoenix_az/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+      "bytes": 12730,
+      "sha256": "9de8b68e68808d237e24273f1e6e940af5c08d86f3b839ba2102696c796442bc",
+      "commit_sha256": "6ee4ddb67bbaa2df545ad13b25f29607647ef84dfff69897ddc2e34ab0f95ae8",
+      "state": "complete_city_static_source_evidence"
+    },
+    "manifests/multicity/cities/houston_tx/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json": {
+      "path": "manifests/multicity/cities/houston_tx/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+      "bytes": 12685,
+      "sha256": "4a824184d5c75732905bf028836557975d7f3b877cd98d4e37c4d0369164c58d",
+      "commit_sha256": "6d0333fa50d93d6bf69a3d5f2a5619ac53d0ae7a4a5526cc4c5a670bdf11e538",
+      "state": "complete_city_static_source_evidence"
+    },
+    "manifests/multicity/cities/chicago_il/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json": {
+      "path": "manifests/multicity/cities/chicago_il/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+      "bytes": 12704,
+      "sha256": "902e38cee6ddd433b2c17cc8fbf7bcf8aa8ce5dfd140f9a733ae61a6e192a4ad",
+      "commit_sha256": "0a16c855648182d72d25cecfbf22da8dcb60aa9cd5f7f4774ee6a7a7941875e8",
+      "state": "complete_city_static_source_evidence"
+    }
+  },
+  "tracked_output_set_exact": true,
+  "terminal_written_last": true,
+  "network_audit": {
+    "request_count": 28,
+    "downloaded_payload_bytes": 78969131,
+    "request_limit": 1000,
+    "single_download_byte_limit": 268435456,
+    "total_download_byte_limit": 1073741824,
+    "redirects_followed": 0
+  },
+  "access_contract": {
+    "external_target_or_qa_values_read": false,
+    "landsat_thermal_values_read": false,
+    "landsat_target_qa_values_read": false,
+    "external_lst_values_read": false,
+    "predictor_construction_performed": false,
+    "model_fit_performed": false,
+    "model_predictions_computed": false,
+    "final_evaluation_outputs_opened": false,
+    "only_public_source_metadata_and_static_predictor_sources_opened": true
+  },
+  "locks": {
+    "portable_predictor_contract_frozen": false,
+    "portable_water_distance_feature_names_frozen": false,
+    "predictor_build_authorized": false,
+    "protocol_lock_created": false,
+    "external_targets_unlocked": false,
+    "external_target_values_read": false,
+    "external_prediction_commit_exists": false
+  },
+  "next_gate": {
+    "stage_id": "separate_portable_predictor_contract_freeze_v2_decision",
+    "tracked_only_transition_required_before_v2": true,
+    "predictor_construction_remains_closed": true,
+    "model_target_protocol_and_operational_claims_remain_closed": true
+  },
+  "code_runtime": {
+    "algorithm_version": "portable-predictor-source-evidence-v1",
+    "python": "3.14.4",
+    "packages": {
+      "geopandas": "1.1.4",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "planetary-computer": "1.0.0",
+      "pyarrow": "25.0.0",
+      "pystac": "1.15.1",
+      "pystac-client": "0.9.0",
+      "rasterio": "1.5.0",
+      "shapely": "2.1.2"
+    },
+    "files": {
+      "configs/multicity/cities/chicago_il.toml": "3d4bccc557d2e1d5b2d4854329137f2ff05ca817d18d2c9e5f81267305d2b229",
+      "configs/multicity/cities/houston_tx.toml": "fcc2da008bbce8f0be37913eb3e0f55f56dd8a4aa9baab22c29376cfdf13c4d3",
+      "configs/multicity/cities/phoenix_az.toml": "138acdd0b6061044fee098d59a5b8b91ac620e21bf556285cad185e0cc0ec61c",
+      "configs/multicity/experiment.toml": "fd5330d83bf292204f05dc0aa64e0a535e45523060dd926e3a9b42f8969e5349",
+      "configs/multicity/portable_predictor_source_evidence_v1.toml": "d352ba7ad86c0a231e631ada1f95fd72a3a2e47b9e4185dc7687ad462b736f27",
+      "scripts/stage_multicity_portable_predictor_source_evidence_v1.py": "f482629558d6b1ae2dbd4bed5fb75d303786c99c5e56f71ceeb63678f038d309",
+      "src/la_heat/daymet_grid.py": "31e95189360d39d2a90cf88f2637a470ff6f04e5e952b122fc342f68c29ef7a1",
+      "src/la_heat/multicity/config.py": "bebe7ef2c610b55b6b5fe72692ee517241a510785458d87832e0cf58d4e4897b",
+      "src/la_heat/multicity/geography.py": "ec6d9d2a57f6ff085a50c1ec5570108c00e5abfeef202d99bcd31c7003656b38",
+      "src/la_heat/multicity/portable_predictor_source_evidence_v1.py": "7e2b4eaeb6a44b1f3198a21354ac59b5a5d2d4d3943461cac5bb313a59c96a82",
+      "src/la_heat/multicity/source_footprints.py": "208710c307c69b78cd1dd2205297fdb66718534644cd83e56798b34347ccab41",
+      "src/la_heat/multicity/workspace.py": "8afa216929d00543b2397958755cb7f01a4a42489606517c44bc93921d421b7f",
+      "src/la_heat/provenance.py": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7",
+      "src/la_heat/static_sources.py": "07658c6b588ccc2c3f5cf02fd5c66dc8fd2bdf9d6674219be9bb18c77bc7cee9"
+    },
+    "relative_paths": [
+      "configs/multicity/portable_predictor_source_evidence_v1.toml",
+      "configs/multicity/experiment.toml",
+      "configs/multicity/cities/phoenix_az.toml",
+      "configs/multicity/cities/houston_tx.toml",
+      "configs/multicity/cities/chicago_il.toml",
+      "scripts/stage_multicity_portable_predictor_source_evidence_v1.py",
+      "src/la_heat/daymet_grid.py",
+      "src/la_heat/multicity/config.py",
+      "src/la_heat/multicity/geography.py",
+      "src/la_heat/multicity/portable_predictor_source_evidence_v1.py",
+      "src/la_heat/multicity/source_footprints.py",
+      "src/la_heat/multicity/workspace.py",
+      "src/la_heat/provenance.py",
+      "src/la_heat/static_sources.py"
+    ],
+    "sha256": "59b7fcedbcda4039ea82007e456590f7fad8a41eb76d9284b3c2f8f069bac12d"
+  },
+  "commit_sha256": "961764d4d512cd0e706f743f7fc2a2a99858d7f8618f4e87129e8490089c14f1"
+}
