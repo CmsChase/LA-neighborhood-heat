@@ -14,8 +14,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def _v9_payload() -> dict[str, Any]:
-    path = ROOT / transition.PLAN_PATH
-    raw = path.read_bytes()
+    raw, _, _ = transition._git_regular_blob(
+        ROOT,
+        commit=transition.V9_PUBLICATION_COMMIT,
+        relative_path=transition.PLAN_PATH,
+    )
     payload = json.loads(raw)
     transition._validate_v9(payload, raw)
     return payload

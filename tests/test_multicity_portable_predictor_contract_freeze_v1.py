@@ -50,6 +50,8 @@ ROOT = Path(__file__).parents[1]
 CONFIG = ROOT / CONFIG_PATH
 MODULE = ROOT / MODULE_PATH
 SCRIPT = ROOT / SCRIPT_PATH
+V1_DECISION_PUBLICATION_COMMIT = "47a626f6fc0a6577148cc731bb00d21f5387f20a"
+V1_DECISION_PRECONDITION_COMMIT = "35b6015a3a9a410b42752d2e50a7599e18bf2563"
 
 
 def _historical_json(
@@ -192,10 +194,25 @@ def test_v1_authenticates_prerequisites_and_observes_exact_four_blockers() -> No
 
     _validate_v2(v2, v2_raw)
     phoenix_blockers = _validate_phoenix(phoenix, phoenix_raw)
-    head = contract_v1._run_git(ROOT, "rev-parse", "HEAD")
-    assert isinstance(head, str)
+    ancestry = contract_v1._run_git(
+        ROOT,
+        "rev-list",
+        "--parents",
+        "-n",
+        "1",
+        V1_DECISION_PUBLICATION_COMMIT,
+    )
+    assert isinstance(ancestry, str)
+    assert ancestry.split() == [
+        V1_DECISION_PUBLICATION_COMMIT,
+        V1_DECISION_PRECONDITION_COMMIT,
+    ]
     assert all(
-        _path_never_tracked(ROOT, path=path, head=head.strip())
+        _path_never_tracked(
+            ROOT,
+            path=path,
+            head=V1_DECISION_PRECONDITION_COMMIT,
+        )
         for path in ABSENT_SOURCE_PATHS
     )
     observed = (
