@@ -206,6 +206,52 @@ def test_native_mosaic_is_invariant_to_nonoverlapping_tile_order(tmp_path: Path)
     assert forward.tolist() == [[10, 10, 20, 20], [10, 10, 20, 20]]
 
 
+def test_adjacent_tile_seam_is_invariant_for_unaligned_city_bounds(
+    tmp_path: Path,
+) -> None:
+    north = tmp_path / "north.tif"
+    south = tmp_path / "south.tif"
+    for path, top, values in (
+        (north, 40.0, np.array([[10, 10], [20, 20]], dtype=np.uint8)),
+        (south, 20.0, np.array([[30, 30], [40, 40]], dtype=np.uint8)),
+    ):
+        with rasterio.open(
+            path,
+            "w",
+            driver="GTiff",
+            width=2,
+            height=2,
+            count=1,
+            crs="EPSG:32611",
+            transform=from_origin(0, top, 10, 10),
+            dtype="uint8",
+            nodata=0,
+        ) as destination:
+            destination.write(values, 1)
+    boundary = gpd.GeoDataFrame(
+        {"name": ["city"]},
+        geometry=[box(1, 5, 19, 35)],
+        crs="EPSG:32611",
+    )
+    grid = build_fixed_grid(
+        boundary,
+        target_crs="EPSG:32611",
+        resolution_m=5,
+        anchor_x_m=0,
+        anchor_y_m=0,
+    )
+
+    forward = worldcover._mosaic_to_grid(
+        [north, south], boundary=boundary, grid=grid
+    )
+    reverse = worldcover._mosaic_to_grid(
+        [south, north], boundary=boundary, grid=grid
+    )
+
+    assert np.array_equal(forward, reverse)
+    assert set(np.unique(forward)).issubset({10, 20, 30, 40})
+
+
 def test_existing_worldcover_raster_must_keep_exact_grid(tmp_path: Path) -> None:
     boundary = gpd.GeoDataFrame(
         {"name": ["city"]}, geometry=[box(0, 0, 60, 60)], crs="EPSG:32611"

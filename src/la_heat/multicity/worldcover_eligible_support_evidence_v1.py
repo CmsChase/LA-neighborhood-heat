@@ -551,6 +551,7 @@ def _mosaic_to_grid(
             nodata=0,
             dtype="uint8",
             method="first",
+            target_aligned_pixels=True,
         )
         if native.shape[0] != 1:
             raise MissingSupportCalibrationEvidenceV1Error(
