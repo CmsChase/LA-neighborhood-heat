@@ -1,8 +1,8 @@
 {
-  "schema_version": 8,
-  "algorithm_version": "multicity-planning-readiness-v8",
+  "schema_version": 9,
+  "algorithm_version": "multicity-planning-readiness-v9",
   "state": "planning_ready",
-  "planning_stage": "portable_water_distance_source_and_algorithm_frozen_predictor_contract_freeze_authorized",
+  "planning_stage": "portable_predictor_contract_v1_deferred_missing_source_evidence_stage_authorized",
   "experiment_id": "la_to_three_city_zero_shot_v1",
   "config_semantic_sha256": "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c",
   "config_files": {
@@ -28,34 +28,76 @@
     }
   },
   "code_files": {
-    "configs/multicity/portable_water_distance_freeze_decision_v2.toml": {
-      "sha256": "7399abf755ee2323077be1299dc44b92c7972a60fcc30a5497e5e4fb9a9a0dde",
-      "bytes": 12522,
-      "git_blob_oid": "bad19fdcdc30269e9096f78f049ce07a9dd1346b",
+    "configs/multicity/portable_predictor_source_evidence_v1.toml": {
+      "sha256": "d352ba7ad86c0a231e631ada1f95fd72a3a2e47b9e4185dc7687ad462b736f27",
+      "bytes": 3885,
+      "git_blob_oid": "08e674605a89562cb5c86e8e75a92efbe5319a90",
       "git_mode": "100644"
     },
-    "scripts/audit_multicity_portable_water_distance_freeze_v2.py": {
-      "sha256": "de29effccd61f8ac84a16b58274bfa510a96c90da428e43a770aaf9d53ea1179",
-      "bytes": 1685,
-      "git_blob_oid": "f66e62c686ba2c025076a1bb47f1976640c02cca",
+    "configs/multicity/experiment.toml": {
+      "sha256": "fd5330d83bf292204f05dc0aa64e0a535e45523060dd926e3a9b42f8969e5349",
+      "bytes": 5765,
+      "git_blob_oid": "5aed83196b02c1d865ac266591107ee0575eff50",
       "git_mode": "100644"
     },
-    "scripts/authorize_multicity_water_distance_freeze.py": {
-      "sha256": "271975488e91bf96a10a2a879e9faa409776f967e66169b14738b71d47b88b7e",
-      "bytes": 1600,
-      "git_blob_oid": "033ac816c8ab1697f4bb39e61e53c06dc8bf9df8",
+    "configs/multicity/cities/phoenix_az.toml": {
+      "sha256": "138acdd0b6061044fee098d59a5b8b91ac620e21bf556285cad185e0cc0ec61c",
+      "bytes": 214,
+      "git_blob_oid": "4eae07370139693c69e5c4157e297fe400ade808",
       "git_mode": "100644"
     },
-    "src/la_heat/multicity/plan_freeze_transition_v7.py": {
-      "sha256": "dee5e05dde5cc9e3eaaacb0b9cf83b155de44083c9a4210b584b16daffaca902",
-      "bytes": 42244,
-      "git_blob_oid": "b36e070ee420cdf1ff4402fc4265055b2a91e885",
+    "configs/multicity/cities/houston_tx.toml": {
+      "sha256": "fcc2da008bbce8f0be37913eb3e0f55f56dd8a4aa9baab22c29376cfdf13c4d3",
+      "bytes": 214,
+      "git_blob_oid": "ab380d0d70bdb6be3a54e6b1817a4b59d43ed753",
       "git_mode": "100644"
     },
-    "src/la_heat/multicity/portable_water_distance_freeze_v2.py": {
-      "sha256": "4da1732e6cd71b082e86c791be81ad93adc70e7a44402e629b448d278ecff77c",
-      "bytes": 48945,
-      "git_blob_oid": "f00988bd4ac3b0d2d2b82a07c5951551c5538697",
+    "configs/multicity/cities/chicago_il.toml": {
+      "sha256": "3d4bccc557d2e1d5b2d4854329137f2ff05ca817d18d2c9e5f81267305d2b229",
+      "bytes": 214,
+      "git_blob_oid": "387418f8d0a4ed90687c86420063982f5ad6b5dd",
+      "git_mode": "100644"
+    },
+    "scripts/stage_multicity_portable_predictor_source_evidence_v1.py": {
+      "sha256": "f482629558d6b1ae2dbd4bed5fb75d303786c99c5e56f71ceeb63678f038d309",
+      "bytes": 869,
+      "git_blob_oid": "b267d529253edcfb69bb12c064388bfcfb87c93c",
+      "git_mode": "100644"
+    },
+    "src/la_heat/daymet_grid.py": {
+      "sha256": "31e95189360d39d2a90cf88f2637a470ff6f04e5e952b122fc342f68c29ef7a1",
+      "bytes": 58936,
+      "git_blob_oid": "88d93ac2d3d514ef941839d64b11e53ee73c98f4",
+      "git_mode": "100644"
+    },
+    "src/la_heat/multicity/config.py": {
+      "sha256": "bebe7ef2c610b55b6b5fe72692ee517241a510785458d87832e0cf58d4e4897b",
+      "bytes": 12655,
+      "git_blob_oid": "1a51be9874b5a569712050991ca6c98951974c3b",
+      "git_mode": "100644"
+    },
+    "src/la_heat/multicity/geography.py": {
+      "sha256": "ec6d9d2a57f6ff085a50c1ec5570108c00e5abfeef202d99bcd31c7003656b38",
+      "bytes": 33879,
+      "git_blob_oid": "28e0094fff581fab35963f018654fd9277f39616",
+      "git_mode": "100644"
+    },
+    "src/la_heat/multicity/portable_predictor_source_evidence_v1.py": {
+      "sha256": "aad7271609854196adc82c1bbe7a63d5e96362ba4156ffecee687cf1954afa1f",
+      "bytes": 92517,
+      "git_blob_oid": "a8ab8992834d83a1987ffdeb927bb2978778f933",
+      "git_mode": "100644"
+    },
+    "src/la_heat/multicity/source_footprints.py": {
+      "sha256": "208710c307c69b78cd1dd2205297fdb66718534644cd83e56798b34347ccab41",
+      "bytes": 91900,
+      "git_blob_oid": "bdf7b8e04d57cf31ab7289105c7324f9ed44e2d7",
+      "git_mode": "100644"
+    },
+    "src/la_heat/multicity/workspace.py": {
+      "sha256": "8afa216929d00543b2397958755cb7f01a4a42489606517c44bc93921d421b7f",
+      "bytes": 2882,
+      "git_blob_oid": "6056e5336c1fabfb6439b4396a4f7db5665e99a3",
       "git_mode": "100644"
     },
     "src/la_heat/provenance.py": {
@@ -64,64 +106,57 @@
       "git_blob_oid": "2f67c23cec21725d768c3c273ec68470ea2d3e47",
       "git_mode": "100644"
     },
-    "configs/multicity/portable_predictor_contract_freeze_v1.toml": {
-      "sha256": "536364a9a44b0fbf04a7880f2053cb2b5ae6d9badbe12861236773d239362c62",
-      "bytes": 5794,
-      "git_blob_oid": "bb50a50b234dd194982954365f2a17ef038335c3",
+    "src/la_heat/static_sources.py": {
+      "sha256": "07658c6b588ccc2c3f5cf02fd5c66dc8fd2bdf9d6674219be9bb18c77bc7cee9",
+      "bytes": 31068,
+      "git_blob_oid": "4f3018db0679f82d8ef67ecbbd9334a8e472c3b3",
       "git_mode": "100644"
     },
-    "src/la_heat/multicity/plan_predictor_contract_transition_v8.py": {
-      "sha256": "f38d31943011e6d66d548c424c03532a78e41823615ce1d3aaca932b81332ef6",
-      "bytes": 52468,
-      "git_blob_oid": "ed6dd063780aef7122a9ac681da046866e1d42be",
+    "src/la_heat/multicity/plan_source_evidence_transition_v9.py": {
+      "sha256": "cf115ef9a8437cd3a4ae236f07a08a3447e5624459ad3b04b809b8ccbae04ef6",
+      "bytes": 46549,
+      "git_blob_oid": "e593ac63b0a5ac6de85298974580b461f74eeac0",
       "git_mode": "100644"
     },
-    "scripts/authorize_multicity_predictor_contract_freeze.py": {
-      "sha256": "ac3b5a71bb48b66e03d0b81785b44b7ba77997e0fdd1c7c17e184697c67b47a4",
-      "bytes": 1937,
-      "git_blob_oid": "c631c32116e17fb8aa9a9e07fbcd2cd4aed4a73b",
-      "git_mode": "100644"
-    },
-    "src/la_heat/multicity/portable_predictor_contract_freeze_v1.py": {
-      "sha256": "e7852904be35a71b2ad55363e193dc436c181c6fa88356a671d436d2a5fe16a1",
-      "bytes": 40733,
-      "git_blob_oid": "9648cc905024860039f4e86dd39875c27b71e459",
-      "git_mode": "100644"
-    },
-    "scripts/audit_multicity_portable_predictor_contract_freeze_v1.py": {
-      "sha256": "75fd199a773c99f2bd7e34e70d5055968045675a3e570ec5797b68da90b28fd1",
-      "bytes": 1512,
-      "git_blob_oid": "4ea1f58ef27abc01779d49967881b43aea5871ee",
+    "scripts/authorize_multicity_source_evidence_stage.py": {
+      "sha256": "986ef10659366c15300043a450eddad1af20398b8f77650a22054d5fbf973331",
+      "bytes": 1787,
+      "git_blob_oid": "0b354f2a44dec21ff05b700db5f0aea7671d9195",
       "git_mode": "100644"
     }
   },
   "transition": {
-    "id": "consume_water_distance_v2_and_authorize_predictor_source_calibration_contract_freeze",
+    "id": "consume_predictor_contract_v1_and_authorize_missing_source_evidence_stage",
     "mode": "tracked_manifests_and_local_git_only",
     "predecessor_plan_readiness": {
       "path": "manifests/multicity/PLAN_READINESS.json",
-      "source_git_commit": "252c01d015110336c65bb602d4c5b608708fb092",
-      "file_sha256": "88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3",
-      "bytes": 20809,
-      "commit_sha256": "4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f",
+      "source_git_commit": "35b6015a3a9a410b42752d2e50a7599e18bf2563",
+      "file_sha256": "8ad87ecdfd7d6e232d574662187dc91977bef0c177fd673cb96305469f44d948",
+      "bytes": 27837,
+      "commit_sha256": "d2a3d95bc4935b3aa1c46861abd2420d67959db0de18c3689b6d5994e64800dd",
       "state": "planning_ready",
-      "planning_stage": "gshhg_l3_hierarchy_audit_complete_freeze_decision_authorized",
-      "next_safe_stage": "separate_portable_water_distance_source_and_algorithm_freeze_decision"
+      "planning_stage": "portable_water_distance_source_and_algorithm_frozen_predictor_contract_freeze_authorized",
+      "next_safe_stage": "freeze_exact_portable_predictor_source_and_calibration_contract"
     },
-    "water_distance_freeze_terminal": {
-      "path": "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION_V2.json",
-      "source_git_commit": "91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c",
-      "file_sha256": "a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b",
-      "bytes": 18541,
-      "commit_sha256": "2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51",
-      "state": "decision_complete_source_and_algorithm_frozen_predictor_closed",
-      "outcome": "freeze_gshhg_2_3_7_l1_l2_l3_source_and_point_distance_algorithm",
-      "next_safe_stage": "publish_tracked_only_plan_v8_after_water_distance_freeze"
+    "predictor_contract_v1_terminal": {
+      "path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.json",
+      "source_git_commit": "47a626f6fc0a6577148cc731bb00d21f5387f20a",
+      "file_sha256": "794e85c2ea5ad76b84c5e6e7be0999bc5939ab85d9dc7df773406f9802fe6127",
+      "bytes": 12934,
+      "commit_sha256": "75b368d7f71c7af5af10317f996595f629e4dacdbbf62b3dc79c3ac0c5eb3e3d",
+      "state": "decision_complete_contract_freeze_deferred_predictor_closed",
+      "outcome": "defer_until_cross_city_source_footprints_and_static_source_contracts_complete",
+      "observed_blockers": [
+        "houston_source_footprint_manifest_absent",
+        "chicago_source_footprint_manifest_absent",
+        "phoenix_nlcd_source_family_absent",
+        "phoenix_terrain_content_and_schema_unfrozen"
+      ]
     },
     "writer_precondition": {
       "branch": "main",
-      "git_head": "622b03cadbc94af0ecf667ce4602913b36fb0d74",
-      "origin_main": "622b03cadbc94af0ecf667ce4602913b36fb0d74",
+      "git_head": "ad81b404e85c5b84308cb41eea980694756e9125",
+      "origin_main": "ad81b404e85c5b84308cb41eea980694756e9125",
       "worktree_clean": true,
       "head_equals_local_origin_main": true,
       "all_transition_inputs_regular_git_tracked_blobs": true
@@ -131,7 +166,7 @@
       "branch_is_main": true,
       "worktree_is_clean": true,
       "head_equals_local_origin_main": true,
-      "v8_check_only_passes_before_contract_freeze": true
+      "v9_check_only_passes_before_source_evidence_staging": true
     }
   },
   "transition_access_contract": {
@@ -143,21 +178,14 @@
     "untracked_path_names_checked_by_git_status": true,
     "untracked_file_contents_opened": false,
     "ignored_path_names_requested_from_git": false,
-    "archive_geometry_data_or_result_bytes_opened": false,
-    "gshhg_archive_bytes_opened": false,
-    "gshhg_archive_members_opened": false,
-    "geometry_opened": false,
+    "source_payload_or_geometry_opened": false,
     "eligible_land_grid_opened": false,
-    "distance_values_computed": false,
-    "distance_feature_surface_computed": false,
-    "tract_aggregation_performed": false,
-    "predictor_values_computed": false,
+    "predictor_values_opened_or_computed": false,
     "predictor_construction_performed": false,
     "model_fit_performed": false,
     "model_predictions_computed": false,
     "landsat_thermal_values_read": false,
     "landsat_target_qa_values_read": false,
-    "external_lst_values_read": false,
     "external_target_files_opened": false,
     "final_evaluation_outputs_opened": false
   },
@@ -203,17 +231,18 @@
     "protocol_lock_created": false
   },
   "authorized_now": {
-    "boundary_and_public_metadata_staging": true,
+    "boundary_and_public_metadata_staging": false,
     "target_blind_source_geometry_review": false,
     "target_blind_gshhg_l3_hierarchy_preregistration": false,
     "target_blind_gshhg_l3_hierarchy_geometry_read": false,
     "portable_predictor_source_freeze": false,
-    "portable_predictor_source_and_calibration_contract_freeze": true,
+    "portable_predictor_source_and_calibration_contract_freeze": false,
     "predictor_construction": false,
     "model_fitting": false,
     "external_target_or_qa_value_access": false,
     "one_time_external_evaluation": false,
-    "operational_forecast_claim": false
+    "operational_forecast_claim": false,
+    "portable_predictor_missing_source_evidence_staging": true
   },
   "consumed_geometry_audit_authorization": {
     "status": "consumed_and_closed",
@@ -396,54 +425,6 @@
     "feature_names_frozen": false,
     "predictor_construction_authorized": false
   },
-  "predictor_contract_freeze_authorization_scope": {
-    "decision_id": "portable_predictor_contract_freeze_v1",
-    "experiment_id": "la_to_three_city_zero_shot_v1",
-    "experiment_semantic_sha256": "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c",
-    "decision_config_path": "configs/multicity/portable_predictor_contract_freeze_v1.toml",
-    "decision_config_sha256": "536364a9a44b0fbf04a7880f2053cb2b5ae6d9badbe12861236773d239362c62",
-    "decision_runtime_paths": [
-      "configs/multicity/portable_water_distance_freeze_decision_v2.toml",
-      "scripts/audit_multicity_portable_water_distance_freeze_v2.py",
-      "scripts/authorize_multicity_water_distance_freeze.py",
-      "src/la_heat/multicity/plan_freeze_transition_v7.py",
-      "src/la_heat/multicity/portable_water_distance_freeze_v2.py",
-      "src/la_heat/provenance.py",
-      "configs/multicity/portable_predictor_contract_freeze_v1.toml",
-      "src/la_heat/multicity/plan_predictor_contract_transition_v8.py",
-      "scripts/authorize_multicity_predictor_contract_freeze.py",
-      "src/la_heat/multicity/portable_predictor_contract_freeze_v1.py",
-      "scripts/audit_multicity_portable_predictor_contract_freeze_v1.py"
-    ],
-    "tracked_read_set": {
-      "water_distance_v2": {
-        "path": "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION_V2.json",
-        "bytes": 18541,
-        "file_sha256": "a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b",
-        "commit_sha256": "2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51",
-        "publication_git_commit": "91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c"
-      },
-      "phoenix_source_footprint": {
-        "path": "manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json",
-        "bytes": 18861,
-        "file_sha256": "76a667f559a98bf6281d7f8af71fab18c2fac8d3701ea91813eef8ff8ef479df",
-        "commit_sha256": "a6f287daa22c41d893519dc751848c426b819dcf4ae00d33012fbf11c6073ed7",
-        "publication_git_commit": "44ecdcd2e48c68fa1c67a7ff0c2d1a54d5d3a785"
-      }
-    },
-    "required_absent_paths": [
-      "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json",
-      "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json"
-    ],
-    "decision_output_path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.json",
-    "append_only_output": true,
-    "network_or_download_allowed": false,
-    "source_archive_payload_or_geometry_read_allowed": false,
-    "eligible_land_or_predictor_value_read_allowed": false,
-    "predictor_construction_allowed": false,
-    "model_target_or_result_read_allowed": false,
-    "protocol_promotion_allowed": false
-  },
   "workspace": {
     "raw_root": "data/raw/multicity",
     "interim_root": "data/interim/multicity",
@@ -544,9 +525,226 @@
     "archive_member_geometry_predictor_model_target_or_result_reopened": false
   },
   "blockers_before_predictor_build": [
-    "freeze_exact_portable_predictor_source_and_calibration_contract",
+    "complete_missing_portable_predictor_source_evidence_stage_v1",
+    "freeze_exact_portable_predictor_source_and_calibration_contract_v2",
     "promote_protocol_from_draft_with_separate_lock"
   ],
-  "next_safe_stage": "freeze_exact_portable_predictor_source_and_calibration_contract",
-  "commit_sha256": "d2a3d95bc4935b3aa1c46861abd2420d67959db0de18c3689b6d5994e64800dd"
+  "next_safe_stage": "stage_missing_portable_predictor_source_evidence_v1",
+  "consumed_predictor_contract_freeze_v1_authorization": {
+    "status": "consumed_and_closed_after_deferred_v1",
+    "predecessor_schema_version": 8,
+    "predecessor_scope": {
+      "decision_id": "portable_predictor_contract_freeze_v1",
+      "experiment_id": "la_to_three_city_zero_shot_v1",
+      "experiment_semantic_sha256": "6a52eb39486dc9e992927e5506b4071aaba6ec31dd910eeb0f9bcc51dea1736c",
+      "decision_config_path": "configs/multicity/portable_predictor_contract_freeze_v1.toml",
+      "decision_config_sha256": "536364a9a44b0fbf04a7880f2053cb2b5ae6d9badbe12861236773d239362c62",
+      "decision_runtime_paths": [
+        "configs/multicity/portable_water_distance_freeze_decision_v2.toml",
+        "scripts/audit_multicity_portable_water_distance_freeze_v2.py",
+        "scripts/authorize_multicity_water_distance_freeze.py",
+        "src/la_heat/multicity/plan_freeze_transition_v7.py",
+        "src/la_heat/multicity/portable_water_distance_freeze_v2.py",
+        "src/la_heat/provenance.py",
+        "configs/multicity/portable_predictor_contract_freeze_v1.toml",
+        "src/la_heat/multicity/plan_predictor_contract_transition_v8.py",
+        "scripts/authorize_multicity_predictor_contract_freeze.py",
+        "src/la_heat/multicity/portable_predictor_contract_freeze_v1.py",
+        "scripts/audit_multicity_portable_predictor_contract_freeze_v1.py"
+      ],
+      "tracked_read_set": {
+        "water_distance_v2": {
+          "path": "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION_V2.json",
+          "bytes": 18541,
+          "file_sha256": "a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b",
+          "commit_sha256": "2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51",
+          "publication_git_commit": "91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c"
+        },
+        "phoenix_source_footprint": {
+          "path": "manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json",
+          "bytes": 18861,
+          "file_sha256": "76a667f559a98bf6281d7f8af71fab18c2fac8d3701ea91813eef8ff8ef479df",
+          "commit_sha256": "a6f287daa22c41d893519dc751848c426b819dcf4ae00d33012fbf11c6073ed7",
+          "publication_git_commit": "44ecdcd2e48c68fa1c67a7ff0c2d1a54d5d3a785"
+        }
+      },
+      "required_absent_paths": [
+        "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json",
+        "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json"
+      ],
+      "decision_output_path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.json",
+      "append_only_output": true,
+      "network_or_download_allowed": false,
+      "source_archive_payload_or_geometry_read_allowed": false,
+      "eligible_land_or_predictor_value_read_allowed": false,
+      "predictor_construction_allowed": false,
+      "model_target_or_result_read_allowed": false,
+      "protocol_promotion_allowed": false
+    },
+    "completion_manifest_path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.json",
+    "completion_manifest_file_sha256": "794e85c2ea5ad76b84c5e6e7be0999bc5939ab85d9dc7df773406f9802fe6127",
+    "completion_manifest_commit_sha256": "75b368d7f71c7af5af10317f996595f629e4dacdbbf62b3dc79c3ac0c5eb3e3d",
+    "completion_manifest_publication_git_commit": "47a626f6fc0a6577148cc731bb00d21f5387f20a",
+    "observed_blockers": [
+      "houston_source_footprint_manifest_absent",
+      "chicago_source_footprint_manifest_absent",
+      "phoenix_nlcd_source_family_absent",
+      "phoenix_terrain_content_and_schema_unfrozen"
+    ],
+    "contract_freeze_permission_now": false,
+    "boundary_and_public_metadata_staging_permission_now": false,
+    "predictor_model_target_or_result_access": false
+  },
+  "portable_predictor_contract_freeze_v1": {
+    "path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.json",
+    "file_sha256": "794e85c2ea5ad76b84c5e6e7be0999bc5939ab85d9dc7df773406f9802fe6127",
+    "bytes": 12934,
+    "commit_sha256": "75b368d7f71c7af5af10317f996595f629e4dacdbbf62b3dc79c3ac0c5eb3e3d",
+    "publication_git_commit": "47a626f6fc0a6577148cc731bb00d21f5387f20a",
+    "state": "decision_complete_contract_freeze_deferred_predictor_closed",
+    "outcome": "defer_until_cross_city_source_footprints_and_static_source_contracts_complete",
+    "observed_blockers": [
+      "houston_source_footprint_manifest_absent",
+      "chicago_source_footprint_manifest_absent",
+      "phoenix_nlcd_source_family_absent",
+      "phoenix_terrain_content_and_schema_unfrozen"
+    ],
+    "contract_locked": false,
+    "predictor_build_authorized": false,
+    "authentication_mode": "exact_append_only_terminal_and_historical_git_lineage"
+  },
+  "portable_predictor_source_evidence_stage_authorization_scope": {
+    "stage_id": "portable_predictor_missing_source_evidence_staging",
+    "experiment_id": "la_to_three_city_zero_shot_v1",
+    "configuration": {
+      "path": "configs/multicity/portable_predictor_source_evidence_v1.toml",
+      "sha256": "d352ba7ad86c0a231e631ada1f95fd72a3a2e47b9e4185dc7687ad462b736f27"
+    },
+    "code_paths": [
+      "configs/multicity/portable_predictor_source_evidence_v1.toml",
+      "configs/multicity/experiment.toml",
+      "configs/multicity/cities/phoenix_az.toml",
+      "configs/multicity/cities/houston_tx.toml",
+      "configs/multicity/cities/chicago_il.toml",
+      "scripts/stage_multicity_portable_predictor_source_evidence_v1.py",
+      "src/la_heat/daymet_grid.py",
+      "src/la_heat/multicity/config.py",
+      "src/la_heat/multicity/geography.py",
+      "src/la_heat/multicity/portable_predictor_source_evidence_v1.py",
+      "src/la_heat/multicity/source_footprints.py",
+      "src/la_heat/multicity/workspace.py",
+      "src/la_heat/provenance.py",
+      "src/la_heat/static_sources.py"
+    ],
+    "cities": [
+      {
+        "id": "phoenix_az",
+        "census_place_geoid": "0455000",
+        "geography_action": "authenticate_existing",
+        "source_footprint_action": "authenticate_existing",
+        "static_source_action": "create_append_only_supplement"
+      },
+      {
+        "id": "houston_tx",
+        "census_place_geoid": "4835000",
+        "geography_action": "create_first_target_blind_snapshot",
+        "source_footprint_action": "create_first_metadata_snapshot",
+        "static_source_action": "create_append_only_supplement"
+      },
+      {
+        "id": "chicago_il",
+        "census_place_geoid": "1714000",
+        "geography_action": "create_first_target_blind_snapshot",
+        "source_footprint_action": "create_first_metadata_snapshot",
+        "static_source_action": "create_append_only_supplement"
+      }
+    ],
+    "network": {
+      "GET": [
+        "tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/{6,26}[,/query]",
+        "services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Census_2020_Redistricting_{Tracts,Incorporated_Places}/FeatureServer/0[,/query]",
+        "www.arcgis.com/sharing/rest/content/items/{e3a7d2d3e5834b7eb6b1c2943141ced6,13ea1fb24ca14842bb265e6ec6ac1d46}",
+        "cmr.earthdata.nasa.gov/search/granules.json",
+        "www.mrlc.gov/geoserver/ows",
+        "opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm/[NS][0-9]{2}[EW][0-9]{3}.tif"
+      ],
+      "POST": [
+        "planetarycomputer.microsoft.com/api/stac/v1/search"
+      ],
+      "HEAD": [
+        "opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm/[NS][0-9]{2}[EW][0-9]{3}.tif"
+      ],
+      "cross_origin_redirects_allowed": false,
+      "maximum_network_requests": 1000,
+      "maximum_single_download_bytes": 268435456,
+      "maximum_total_download_bytes": 1073741824,
+      "maximum_stac_pages_per_query": 100
+    },
+    "source_products": {
+      "nlcd": {
+        "release": "NLCD 2016 original release",
+        "coverage_ids": [
+          "mrlc_download__NLCD_2016_Land_Cover_L48",
+          "mrlc_download__NLCD_2016_Impervious_L48"
+        ],
+        "native_grid": "EPSG:5070 30 m"
+      },
+      "terrain": {
+        "release": "NASA SRTM GL1 v3 via OpenTopography",
+        "opentopo_id": "OTSRTM.082015.4326.1",
+        "schema": "EPSG:4326 int16 3601x3601 Point EGM96 metre"
+      },
+      "metadata": [
+        "Census 2020",
+        "Landsat C2 L2",
+        "Sentinel-2 L2A",
+        "Daymet V4R1"
+      ]
+    },
+    "candidate_downstream_rules": {
+      "status": "recorded_for_v2_review_not_executed_or_frozen",
+      "land_cover_resampling": "nearest",
+      "impervious_resampling": "bilinear",
+      "impervious_scale_divisor": 100.0,
+      "impervious_scientific_nodata": 127,
+      "elevation_resampling": "bilinear",
+      "slope_algorithm": "Horn 3x3",
+      "slope_source_halo_cells": 1,
+      "minimum_valid_coverage_fraction": 0.98,
+      "eligible_land_denominator_invariant_across_dates": true
+    },
+    "reads": {
+      "authenticated_phoenix_geography_and_source_footprint": true,
+      "public_houston_and_chicago_place_and_tract_geometry": true,
+      "public_source_metadata": true,
+      "nlcd_and_srtm_static_source_payloads": true
+    },
+    "tracked_output_paths": [
+      "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY.json",
+      "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY.json",
+      "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json",
+      "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json",
+      "manifests/multicity/cities/phoenix_az/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+      "manifests/multicity/cities/houston_tx/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+      "manifests/multicity/cities/chicago_il/source_evidence/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json",
+      "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json"
+    ],
+    "write_contract": {
+      "append_only": true,
+      "terminal_written_last": true,
+      "terminal_requires_all_city_checkpoints": true,
+      "check_only_network_requests": 0,
+      "tracked_output_set_must_be_exact": true
+    },
+    "prohibitions": {
+      "target_or_qa_values": true,
+      "thermal_values": true,
+      "predictor_construction": true,
+      "model_fit_or_prediction": true,
+      "final_evaluation_outputs": true,
+      "protocol_or_feature_name_freeze": true,
+      "operational_forecast_claim": true
+    }
+  },
+  "commit_sha256": "40984be17b59c1ace7481bf5e34f64bd567a42f9004970bdaa1111bb0a52cf68"
 }
