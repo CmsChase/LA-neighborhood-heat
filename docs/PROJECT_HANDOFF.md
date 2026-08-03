@@ -1,8 +1,27 @@
 # Mandatory project handoff
 
-Last material update: 2026-08-01 Asia/Shanghai
+Last material update: 2026-08-03 Asia/Shanghai
 
 Latest required scientific checkpoints on `main`:
+
+- source-evidence V1 implementation and planning-v9 transition:
+  `ad81b404e85c5b84308cb41eea980694756e9125`, subject
+  `Add multicity source evidence stage`
+- canonical planning v9:
+  `85bef193c0f1d5fdf8f7333b1f763d80dda56741`, subject
+  `Authorize multicity source evidence stage`
+- exact runtime hotfix and planning-v10 transition:
+  `6c03b7d4d2f7109934324f57140158ddbbbf7527`, subject
+  `Fix source evidence checkpoint hashing`
+- canonical planning v10:
+  `975c155d625de4c9912b9cbf1b5ec710e945bc07`, subject
+  `Authorize source evidence hotfix resume`
+- authenticated eight-file source-evidence publication:
+  `d41cc58078b23b3b4e7295c38c16d86ff02f5974`, subject
+  `Record multicity source evidence`
+- post-publication historical-test compatibility fix:
+  `ba174b43ad3f06709d0c4698182e4e92ad5e01d2`, subject
+  `Fix historical source evidence regression tests`
 
 - tracked-only planning v7 transition, append-only portable water-distance V2
   freeze-decision implementation, exact configuration, security regression
@@ -248,11 +267,11 @@ Authoritative continuation files (historical artifact identities are labeled):
 - planning audit:
   `manifests/multicity/PLAN_READINESS.json`;
 - planning-audit file SHA-256:
-  `88c153b7c1da9f2f159ac550fd3156a4ffe3fd1f56c269c057288d938a2047f3`;
+  `bdd2a1c75d397116f2c9e9f00e7e673dc83581e5b3b707b9bf5318e815cb3c28`;
 - planning-audit internal commit:
-  `4f6ed97b64d3a1601da6af83779ec96bef87c77de72d5294475ac029f666110f`;
-- planning-v7 publication commit:
-  `252c01d015110336c65bb602d4c5b608708fb092`;
+  `61359cbec70f2f4f549ed177abdca8b06b3459e3bb21d3f3d46e75d99001ec26`;
+- current planning schema and publication commit:
+  `v10`, `975c155d625de4c9912b9cbf1b5ec710e945bc07`;
 - Phoenix geography audit:
   `manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json`;
 - Phoenix geography internal commit:
@@ -640,9 +659,9 @@ Safe current authentication commands:
 
 ```powershell
 .\.venv\Scripts\python `
-  scripts\authorize_multicity_predictor_contract_freeze.py --check-only
+  scripts\authorize_multicity_source_evidence_hotfix_resume.py --check-only
 .\.venv\Scripts\python `
-  scripts\audit_multicity_portable_predictor_contract_freeze_v1.py --check-only
+  scripts\stage_multicity_portable_predictor_source_evidence_v1.py --check-only
 ```
 
 The historical v7/V2 implementation and canonical v7 were committed, pushed,
@@ -692,13 +711,61 @@ It keeps feature names, predictor construction, protocol, model, target,
 evaluation, and operational claims closed. Its report is
 `docs/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.md`.
 
-The next safe stage is exactly
-`stage_missing_portable_predictor_source_evidence_before_v2_freeze`. A new
-tracked-only transition must bind any metadata requests or downloads before
-they occur. No external data were added by v8 or V1, so
-`docs/DATA_MANIFEST.csv` did not change.
+That historical next stage is now complete. Canonical planning v9 authorized
+the exact source-only run; the first run exposed one missing explicit sort key,
+so the separately authenticated v10 transition bound only that runtime hotfix
+without changing any permission or lock. V10 is 45,470 bytes with file
+SHA-256
+`bdd2a1c75d397116f2c9e9f00e7e673dc83581e5b3b707b9bf5318e815cb3c28`
+and internal commit
+`61359cbec70f2f4f549ed177abdca8b06b3459e3bb21d3f3d46e75d99001ec26`.
 
-The v8 and V1 focused suites contain 33 passing tests. They cover
+The append-only source-evidence terminal is
+`manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_SOURCE_EVIDENCE_V1.json`.
+It is 23,042 bytes with file SHA-256
+`31efb7464abf8b44d4f27ebf632299d3d5bcfe121940d429c6abeff040ae64ba`
+and internal commit
+`961764d4d512cd0e706f743f7fc2a2a99858d7f8618f4e87129e8490089c14f1`.
+The exact eight-file direct-child publication is
+`d41cc58078b23b3b4e7295c38c16d86ff02f5974`, and post-publication
+`--check-only` authentication passed.
+
+New authenticated continuation evidence:
+
+- Houston: 651 primary tracts; 65 Landsat metadata items across three WRS
+  units; 606 Sentinel metadata items across six MGRS units; 2,705 Daymet
+  cells; NLCD 2016 land-cover/imperviousness bytes and SRTM tiles
+  `N29W096`/`N30W096` frozen and schema-audited.
+- Chicago: 780 primary tracts; 39 Landsat metadata items across two WRS
+  units; 57 Sentinel metadata items in `16TDM`; 667 Daymet cells; NLCD 2016
+  land-cover/imperviousness bytes and SRTM tiles `N41W088`/`N42W088` frozen
+  and schema-audited.
+- Phoenix: its historical geography/source-footprint manifests were
+  reauthenticated; new supplements freeze and schema-audit both NLCD layers
+  and SRTM tiles `N33W112`/`N33W113`.
+
+The successful run records 28 logical network requests, 78,969,131 downloaded
+static-source bytes, and zero redirects. It opened only public source metadata
+and static predictor-source payloads. It did not compute predictor values,
+freeze feature names, fit a model, create predictions, promote a protocol, or
+open external target/QA/final-evaluation outputs. The portable predictor
+contract remains unfrozen and `predictor_build_authorized=false`.
+
+Two ignored incomplete-run cache records were moved, not deleted, to
+`tmp/source_evidence_v9_failed_run`: CMR changes `feed.updated` on each query,
+and a custom Daymet CRS roundtrips through Parquet under an equivalent PROJJSON
+representation. Read-only comparison found identical Houston Daymet rows,
+attributes, geometries, and bounds. These quarantined files are not canonical
+inputs or tracked checkpoints.
+
+The next safe stage is a new tracked-only planning transition that authorizes
+only a separate portable predictor contract-freeze V2 decision. V2 must
+authenticate planning v10 and the exact source-evidence publication, then
+decide feature names, calibrations, aggregation/resampling rules, coverage
+gates, and whether predictor construction may open. Do not construct any
+continuation predictor or access any external target before that decision.
+
+The historical v8 and V1 focused suites contain 33 passing tests. They cover
 exact scope/config/runtime binding, bounded Git history, tamper-and-restore,
 hidden worktree modifications, unique direct-child publications, the four
 deferred blockers, and the data-blind import boundary.
@@ -1587,6 +1654,15 @@ Before completing any code change:
 ```
 
 Latest verified results during evaluator implementation:
+
+- source-evidence v9/v10/V1 focused suite before publication:
+  `63 passed`, zero failures
+- post-publication historical-compatibility focused suite:
+  `22 passed`, zero failures
+- current full project suite: `1,243 passed`, zero failures (`245.1 s`)
+- current full-repository Ruff: passed
+
+Historical evaluator checkpoint results:
 
 - evaluator/target/reporting focused suite:
   `44 passed`, zero failures

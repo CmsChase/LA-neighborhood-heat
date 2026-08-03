@@ -1891,3 +1891,63 @@ No unlock has occurred. `unlock_final_test` remains `false`.
   `stage_missing_portable_predictor_source_evidence_before_v2_freeze`.
   No external data were added or opened, so `docs/DATA_MANIFEST.csv` is
   unchanged.
+
+## 2026-08-03 - Authorize and complete missing portable source evidence
+
+- The source-evidence implementation, exact config, security tests, and safe
+  resume logic were published in
+  `ad81b404e85c5b84308cb41eea980694756e9125`. Canonical planning v9 was its
+  single-file direct child `85bef193c0f1d5fdf8f7333b1f763d80dda56741`.
+- V9 closed the consumed boundary-metadata and V1 contract-freeze grants and
+  opened only `portable_predictor_missing_source_evidence_staging`. Every
+  predictor, model, protocol, target, evaluation, and operational permission
+  remained false; the water source and point-distance algorithm locks stayed
+  true.
+- The first live run completed the exact Houston and Chicago geography
+  checkpoints, then failed before any source-footprint checkpoint or static
+  raster download because the non-geometry Parquet semantic hash omitted its
+  mandatory explicit `sort_by` argument.
+- The failure was repaired transparently rather than rewriting v9. The exact
+  six-path hotfix implementation is
+  `6c03b7d4d2f7109934324f57140158ddbbbf7527`; planning v10 is its
+  single-file direct child `975c155d625de4c9912b9cbf1b5ec710e945bc07`.
+  V10 is 45,470 bytes, file SHA-256
+  `bdd2a1c75d397116f2c9e9f00e7e673dc83581e5b3b707b9bf5318e815cb3c28`,
+  and internal commit
+  `61359cbec70f2f4f549ed177abdca8b06b3459e3bb21d3f3d46e75d99001ec26`.
+  It changes no permission, lock, source product, candidate downstream rule,
+  or tracked output path.
+- Two later retries stopped safely on ignored incomplete cache differences:
+  CMR `feed.updated` changes on every query, and the custom Daymet CRS has two
+  equivalent serializations before and after Parquet roundtrip. Read-only
+  comparison showed the Daymet table had the same 2,705 rows, attributes,
+  geometries, and bounds. Only the incomplete cache files were moved to the
+  recoverable ignored directory `tmp/source_evidence_v9_failed_run`; no
+  tracked checkpoint was deleted or rewritten.
+- The completed terminal is 23,042 bytes, file SHA-256
+  `31efb7464abf8b44d4f27ebf632299d3d5bcfe121940d429c6abeff040ae64ba`,
+  internal commit
+  `961764d4d512cd0e706f743f7fc2a2a99858d7f8618f4e87129e8490089c14f1`,
+  and state `complete_target_blind_portable_predictor_source_evidence`.
+  Commit `d41cc58078b23b3b4e7295c38c16d86ff02f5974` adds exactly its eight
+  preregistered outputs as the direct child of v10; publication-aware
+  `--check-only` authentication passed from synchronized `main`.
+- The four V1 gaps are now filled: Houston and Chicago have authenticated
+  geography/source-footprint snapshots, and Phoenix/Houston/Chicago have
+  exact NLCD 2016 and SRTM GL1 content hashes plus audited raster schemas.
+  This is source evidence only. Predictor values were not constructed, the
+  portable predictor contract and feature names remain unfrozen, and no
+  external target/QA or final-evaluation output was opened.
+- The first full-suite run after publication exposed three historical-test
+  assumptions, not a scientific or runtime failure: two v10 tests read the
+  current v10 planning file while validating v9, and one V1 test checked its
+  historical absent paths against the current post-evidence `HEAD`. Commit
+  `ba174b43ad3f06709d0c4698182e4e92ad5e01d2` changes only those two test
+  files so each assertion reads the exact historical Git commit it describes.
+  The resulting full suite passed all 1,243 collected tests in 245.1 seconds,
+  and full-repository Ruff passed.
+- The next safe gate is a new tracked-only planning transition for a separate
+  portable predictor contract-freeze V2 decision. It must authenticate the
+  v10 plan and source-evidence terminal before deciding exact feature names,
+  calibrations, aggregation rules, coverage gates, and whether predictor
+  construction can be authorized. Do not build predictors before that gate.
