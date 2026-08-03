@@ -88,9 +88,11 @@ class _BoundedClient:
                 limits["allowed_sas_path_prefix"]
             )
         else:
-            allowed = asset and any(
-                path.startswith(prefix)
-                for prefix in limits["allowed_asset_path_prefixes"]
+            prefix_by_host = limits["allowed_asset_path_prefix_by_host"]
+            allowed = (
+                asset
+                and host in prefix_by_host
+                and path.startswith(str(prefix_by_host[host]))
             )
         if not allowed:
             raise MissingSupportCalibrationEvidenceV1Error(

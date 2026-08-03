@@ -34,7 +34,7 @@ CONFIG_PATH: Final = (
     "configs/multicity/missing_support_calibration_evidence_v1.toml"
 )
 CONFIG_SHA256: Final = (
-    "7d99eabe524532c4c5fa0ef8eaa42236b0b635e835bfa5b1a80c53ed99c304ff"
+    "11f298c9f3020154286af475c5c336fadde9519cb75e9a553d5c10bc7b761350"
 )
 PLAN_PATH: Final = "manifests/multicity/PLAN_READINESS.json"
 PREDECESSOR_TERMINAL_PATH: Final = (
@@ -265,7 +265,7 @@ def expected_plan_authorization_scope() -> dict[str, Any]:
             "single_direct_child_publication_required": True,
         },
         "next_gate": (
-            "publish_tracked_only_plan_v13_for_portable_predictor_contract_v3_decision"
+            "publish_tracked_only_plan_v14_for_portable_predictor_contract_v3_decision"
         ),
     }
 
@@ -625,13 +625,13 @@ def authenticate_plan(
     plan_path = config.project_path(PLAN_PATH)
     plan = read_json_with_commit(plan_path, label="canonical planning V12")
     if (
-        plan.get("schema_version") != 12
-        or plan.get("algorithm_version") != "multicity-planning-readiness-v12"
+        plan.get("schema_version") != 13
+        or plan.get("algorithm_version") != "multicity-planning-readiness-v13"
         or plan.get("state") != "planning_ready"
         or plan.get("planning_stage")
         != (
-            "portable_predictor_contract_v2_deferred_missing_support_and_"
-            "calibration_evidence_authorized"
+            "missing_support_calibration_evidence_v1_worldcover_asset_path_"
+            "hotfix_resume_authorized"
         )
         or plan.get("next_safe_stage")
         != "stage_target_blind_missing_support_and_calibration_evidence_v1"
@@ -643,6 +643,53 @@ def authenticate_plan(
         raise MissingSupportCalibrationEvidenceV1Error(
             "Canonical planning does not grant the exact V12 evidence scope."
         )
+    transition = plan.get("transition")
+    expected_fix = {
+        "worldcover_provider_host": "ai4edataeuwest.blob.core.windows.net",
+        "rejected_path_prefix": "/esa-worldcover/",
+        "authorized_exact_path_prefix": "/esa-worldcover/v100/2020/map/",
+        "asset_path_prefix_by_host": {
+            "esa-worldcover.s3.eu-central-1.amazonaws.com": "/v100/2020/map/",
+            "ai4edataeuwest.blob.core.windows.net": (
+                "/esa-worldcover/v100/2020/map/"
+            ),
+        },
+        "cross_host_prefix_reuse_allowed": False,
+        "conflicting_next_plan_version_replaced": "v13",
+        "successful_evidence_next_plan_version": "v14",
+        "collection_year_version_or_asset_changed": False,
+        "tracked_output_paths_changed": False,
+        "permissions_changed": False,
+        "locks_changed": False,
+    }
+    if (
+        not isinstance(transition, Mapping)
+        or transition.get("authorized_fix") != expected_fix
+    ):
+        raise MissingSupportCalibrationEvidenceV1Error(
+            "Canonical planning lost the exact WorldCover path hotfix."
+        )
+    resume = transition.get("resume_checkpoints")
+    if (
+        not isinstance(resume, list)
+        or [record.get("path") for record in resume]
+        != list(TRACKED_OUTPUT_PATHS[:5])
+    ):
+        raise MissingSupportCalibrationEvidenceV1Error(
+            "Canonical planning lost the exact geography resume checkpoints."
+        )
+    for record in resume:
+        path = config.project_path(str(record["path"]))
+        payload = read_json_with_commit(path, label=str(record["path"]))
+        if (
+            path.stat().st_size != int(record["bytes"])
+            or sha256_file(path) != record["file_sha256"]
+            or payload["commit_sha256"] != record["commit_sha256"]
+            or payload.get("state") != record["state"]
+        ):
+            raise MissingSupportCalibrationEvidenceV1Error(
+                f"Geography resume checkpoint changed: {record['path']}"
+            )
     additions = str(
         _run_git(
             config.project_root,

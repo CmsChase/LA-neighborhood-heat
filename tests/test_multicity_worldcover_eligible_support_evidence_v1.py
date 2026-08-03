@@ -11,6 +11,7 @@ from rasterio.transform import from_origin
 from shapely.geometry import box, mapping
 
 from la_heat.grid import build_fixed_grid
+from la_heat.multicity import missing_support_calibration_evidence_v1 as evidence
 from la_heat.multicity import worldcover_eligible_support_evidence_v1 as worldcover
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -82,6 +83,46 @@ def test_worldcover_item_requires_v100_tile_asset_and_positive_intersection() ->
     )
     assert selected[0]["tile_id"] == "N33W120"
     assert selected[0]["stac_asset_keys"] == ["map", "rendered_preview"]
+
+
+def test_frozen_worldcover_blob_prefix_accepts_saved_official_stac_href() -> None:
+    config = evidence.read_evidence_config(ROOT / evidence.CONFIG_PATH)
+    client = worldcover._BoundedClient(object(), config)
+    client._authorize(
+        "GET",
+        (
+            "https://ai4edataeuwest.blob.core.windows.net/esa-worldcover/"
+            "v100/2020/map/ESA_WorldCover_10m_2020_v100_N33W120_Map.tif"
+        ),
+        asset=True,
+    )
+    assert client.request_count == 1
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        (
+            "https://esa-worldcover.s3.eu-central-1.amazonaws.com/"
+            "esa-worldcover/v100/2020/map/"
+            "ESA_WorldCover_10m_2020_v100_N33W120_Map.tif"
+        ),
+        (
+            "https://ai4edataeuwest.blob.core.windows.net/"
+            "v100/2020/map/ESA_WorldCover_10m_2020_v100_N33W120_Map.tif"
+        ),
+    ],
+)
+def test_worldcover_asset_prefix_cannot_be_reused_across_hosts(url: str) -> None:
+    config = evidence.read_evidence_config(ROOT / evidence.CONFIG_PATH)
+    client = worldcover._BoundedClient(object(), config)
+
+    with pytest.raises(
+        evidence.MissingSupportCalibrationEvidenceV1Error,
+        match="path is outside the allowlist",
+    ):
+        client._authorize("GET", url, asset=True)
+    assert client.request_count == 0
 
 
 def _write_tile(path: Path, *, left: float, value: int) -> None:
