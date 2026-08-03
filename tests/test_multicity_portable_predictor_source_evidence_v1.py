@@ -9,13 +9,14 @@ from typing import Any
 
 import geopandas as gpd
 import numpy as np
+import pandas as pd
 import pytest
 import rasterio
 from rasterio.crs import CRS
 from shapely.geometry import box
 
 from la_heat.multicity import portable_predictor_source_evidence_v1 as evidence
-from la_heat.provenance import canonical_sha256, sha256_file
+from la_heat.provenance import canonical_frame_sha256, canonical_sha256, sha256_file
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / evidence.CONFIG_PATH
@@ -105,7 +106,7 @@ def _planning_payload() -> dict[str, Any]:
     locks["portable_water_distance_source_locked"] = True
     locks["portable_water_distance_algorithm_locked"] = True
     body: dict[str, Any] = {
-        "schema_version": 9,
+        "schema_version": 10,
         "state": "planning_ready",
         "experiment_id": "la_to_three_city_zero_shot_v1",
         "authorized_now": evidence.expected_authorized_now(),
@@ -118,7 +119,7 @@ def _planning_payload() -> dict[str, Any]:
     return body
 
 
-def test_plan_authentication_calls_publication_aware_v9_authenticator(tmp_path: Path) -> None:
+def test_plan_authentication_calls_publication_aware_v10_authenticator(tmp_path: Path) -> None:
     raw = evidence._read_config(CONFIG).raw
     plan_path = tmp_path / raw["stage"]["plan_path"]
     plan_path.parent.mkdir(parents=True)
@@ -229,6 +230,33 @@ def test_nlcd_bounds_are_native_grid_aligned_with_exact_halo() -> None:
         edge_offset=15,
         halo_pixels=2,
     ) == (-15.0, 15.0, 165.0, 225.0)
+
+
+def test_non_geometry_checkpoint_hash_has_an_explicit_stable_sort_order(
+    tmp_path: Path,
+) -> None:
+    frame = pd.DataFrame(
+        {
+            "concept_id": ["G2-ORNL_CLOUD", "G1-ORNL_CLOUD"],
+            "variable": ["tmin", "tmax"],
+            "year": [2025, 2025],
+            "title": ["second", "first"],
+        }
+    )
+    path = tmp_path / "daymet_granules.parquet"
+    frame.to_parquet(path, index=False)
+    config = evidence.SourceEvidenceConfig(
+        CONFIG,
+        tmp_path,
+        deepcopy(evidence._read_config(CONFIG).raw),
+    )
+    observed = evidence._parquet_record(config, path, frame, geometry=False)
+    expected = canonical_frame_sha256(
+        frame,
+        sort_by=["variable", "year", "concept_id"],
+    )
+    assert observed["frame_semantic_sha256"] == expected
+    assert evidence._non_geometry_frame_sha256(frame.iloc[::-1]) == expected
 
 
 def _write_nlcd(path: Path, *, scale: float = 1.0) -> None:
@@ -416,7 +444,7 @@ def test_initial_terminal_verification_reuses_plan_override_and_awaits_publicati
     assert observed["publication_status"] == "awaiting_git_publication"
 
 
-def test_publication_requires_exact_eight_additions_and_direct_v9_parent(
+def test_publication_requires_exact_eight_additions_and_direct_v10_parent(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     raw = evidence._read_config(CONFIG).raw
@@ -431,15 +459,15 @@ def test_publication_requires_exact_eight_additions_and_direct_v9_parent(
         path.write_bytes(relative.encode("utf-8"))
     head = "1" * 40
     publication = "2" * 40
-    v9 = "3" * 40
+    v10 = "3" * 40
     mode = {"extra": False, "wrong_parent": False}
 
-    from la_heat.multicity import plan_source_evidence_transition_v9 as transition
+    from la_heat.multicity import plan_source_evidence_hotfix_transition_v10 as transition
 
     monkeypatch.setattr(
         transition,
-        "_locate_v9_publication_commit",
-        lambda *_args, **_kwargs: v9,
+        "_locate_v10_publication_commit",
+        lambda *_args, **_kwargs: v10,
     )
     monkeypatch.setattr(evidence, "_is_ancestor", lambda *_: True)
     monkeypatch.setattr(
@@ -455,7 +483,7 @@ def test_publication_requires_exact_eight_additions_and_direct_v9_parent(
         if args[:3] == ("log", "--all", "--diff-filter=A"):
             return publication + "\n"
         if args[:3] == ("rev-list", "--parents", "-n"):
-            parent = "4" * 40 if mode["wrong_parent"] else v9
+            parent = "4" * 40 if mode["wrong_parent"] else v10
             return f"{publication} {parent}\n"
         if args and args[0] == "diff-tree":
             pairs = [("A", path) for path in evidence.TRACKED_OUTPUT_PATHS]

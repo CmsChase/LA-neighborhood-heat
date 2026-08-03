@@ -351,6 +351,5 @@ def test_v9_transition_module_has_no_network_or_data_reader_imports() -> None:
     assert "read_file(" not in source
 
 
-ROOT_HEAD = (
-    plan_v9._run_git(ROOT, "rev-parse", "HEAD").strip()  # type: ignore[union-attr]
-)
+# Historical v8 authentication must stop before the later v9 PLAN mutation.
+ROOT_HEAD = V1_PUBLICATION_COMMIT

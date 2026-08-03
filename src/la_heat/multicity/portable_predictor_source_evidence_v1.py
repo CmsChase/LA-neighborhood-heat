@@ -175,13 +175,13 @@ class SourceEvidenceConfig:
 
 
 def expected_authorized_now() -> dict[str, bool]:
-    """Return the exact canonical planning-v9 permission map."""
+    """Return the exact canonical source-evidence permission map."""
 
     return deepcopy(EXPECTED_AUTHORIZED_NOW)
 
 
 def expected_plan_authorization_scope() -> dict[str, Any]:
-    """Return the detailed, hashable stage scope that planning v9 must bind."""
+    """Return the detailed, hashable stage scope that canonical planning must bind."""
 
     return {
         "stage_id": STAGE_ID,
@@ -419,14 +419,14 @@ def _authenticate_plan(
     publication_authenticator: Any | None = None,
 ) -> dict[str, Any]:
     path = config.project_path(config.raw["stage"]["plan_path"])
-    payload, raw = _json_with_commit(path, label="canonical planning v9")
+    payload, raw = _json_with_commit(path, label="canonical planning v10")
     if publication_authenticator is None:
-        # Lazy import avoids the intentional v9 -> scope-provider import cycle.
-        from la_heat.multicity.plan_source_evidence_transition_v9 import (
-            authorize_multicity_source_evidence_stage,
+        # Lazy import avoids the intentional planning -> scope-provider cycle.
+        from la_heat.multicity.plan_source_evidence_hotfix_transition_v10 import (
+            authorize_multicity_source_evidence_hotfix_resume,
         )
 
-        publication_authenticator = authorize_multicity_source_evidence_stage
+        publication_authenticator = authorize_multicity_source_evidence_hotfix_resume
     authenticated = publication_authenticator(
         project_root=config.project_root,
         output_path=path,
@@ -434,7 +434,7 @@ def _authenticate_plan(
     )
     if authenticated != payload:
         raise PortablePredictorSourceEvidenceV1Error(
-            "Publication-aware v9 authentication disagrees with canonical planning bytes."
+            "Publication-aware v10 authentication disagrees with canonical planning bytes."
         )
     return _plan_authorization_record(config, payload, raw)
 
@@ -449,7 +449,7 @@ def _plan_authorization_record(
     path = config.project_path(config.raw["stage"]["plan_path"])
     if (
         type(payload.get("schema_version")) is not int
-        or payload["schema_version"] != 9
+        or payload["schema_version"] != 10
         or payload.get("state") != "planning_ready"
         or payload.get("experiment_id") != config.raw["stage"]["experiment_id"]
         or payload.get("authorized_now") != expected_authorized_now()
@@ -475,7 +475,7 @@ def _plan_authorization_record(
         "bytes": len(raw),
         "file_sha256": hashlib.sha256(raw).hexdigest(),
         "commit_sha256": payload["commit_sha256"],
-        "schema_version": 9,
+        "schema_version": 10,
         "state": "planning_ready",
         "authorized_now": expected_authorized_now(),
         "portable_predictor_source_evidence_stage_authorization_scope": (
@@ -560,24 +560,24 @@ def _authenticate_plan_for_resume(
     historical_authenticator: Any | None = None,
     publication_locator: Any | None = None,
 ) -> dict[str, Any]:
-    """Authenticate published v9 without rejecting exact partial checkpoints."""
+    """Authenticate published v10 without rejecting exact partial checkpoints."""
 
     head = _resume_git_preflight(
         config,
         allowed_untracked_paths=allowed_untracked_paths,
     )
     path = config.project_path(config.raw["stage"]["plan_path"])
-    payload, raw = _json_with_commit(path, label="canonical planning v9")
+    payload, raw = _json_with_commit(path, label="canonical planning v10")
     if historical_authenticator is None or publication_locator is None:
-        from la_heat.multicity.plan_source_evidence_transition_v9 import (
-            _locate_v9_publication_commit,
-            authenticate_historical_v9_payload,
+        from la_heat.multicity.plan_source_evidence_hotfix_transition_v10 import (
+            _locate_v10_publication_commit,
+            authenticate_historical_v10_payload,
         )
 
         if historical_authenticator is None:
-            historical_authenticator = authenticate_historical_v9_payload
+            historical_authenticator = authenticate_historical_v10_payload
         if publication_locator is None:
-            publication_locator = _locate_v9_publication_commit
+            publication_locator = _locate_v10_publication_commit
     publication = publication_locator(
         config.project_root,
         payload,
@@ -591,7 +591,7 @@ def _authenticate_plan_for_resume(
     )
     if authenticated != payload:
         raise PortablePredictorSourceEvidenceV1Error(
-            "Historical v9 resume authentication disagrees with canonical planning bytes."
+            "Historical v10 resume authentication disagrees with canonical planning bytes."
         )
     return _plan_authorization_record(config, payload, raw)
 
@@ -801,8 +801,21 @@ def _parquet_record(
     if geometry:
         record["geometry_semantic_sha256"] = geometry_semantic_sha256(frame)
     else:
-        record["frame_semantic_sha256"] = canonical_frame_sha256(frame)
+        record["frame_semantic_sha256"] = _non_geometry_frame_sha256(frame)
     return record
+
+
+def _non_geometry_frame_sha256(
+    frame: pd.DataFrame | gpd.GeoDataFrame,
+) -> str:
+    """Hash the sole non-geometry checkpoint with its frozen identity order."""
+
+    sort_by = ["variable", "year", "concept_id"]
+    if not set(sort_by).issubset(frame.columns) or "geometry" in frame.columns:
+        raise PortablePredictorSourceEvidenceV1Error(
+            "Non-geometry source-footprint table schema changed."
+        )
+    return canonical_frame_sha256(frame, sort_by=sort_by)
 
 
 def _commit_parquet_no_clobber(
@@ -818,12 +831,12 @@ def _commit_parquet_no_clobber(
         expected_sha = (
             geometry_semantic_sha256(frame)
             if geometry
-            else canonical_frame_sha256(frame)
+            else _non_geometry_frame_sha256(frame)
         )
         observed_sha = (
             geometry_semantic_sha256(observed)
             if geometry
-            else canonical_frame_sha256(observed)
+            else _non_geometry_frame_sha256(observed)
         )
         if expected_sha != observed_sha:
             raise PortablePredictorSourceEvidenceV1Error(
@@ -1053,7 +1066,7 @@ def _verify_new_source_footprint(
         observed_sha = (
             geometry_semantic_sha256(frame)
             if geometry
-            else canonical_frame_sha256(frame)
+            else _non_geometry_frame_sha256(frame)
         )
         if len(frame) != record["rows"] or observed_sha != record[semantic_key]:
             raise PortablePredictorSourceEvidenceV1Error(
@@ -1898,16 +1911,16 @@ def _authenticate_output_publication(
 ) -> str:
     """Require one direct append-only Git publication of all eight outputs."""
 
-    from la_heat.multicity.plan_source_evidence_transition_v9 import (
-        _locate_v9_publication_commit,
+    from la_heat.multicity.plan_source_evidence_hotfix_transition_v10 import (
+        _locate_v10_publication_commit,
     )
 
     head_raw = _run_git(config.project_root, "rev-parse", "HEAD")
     assert isinstance(head_raw, str)
     head = head_raw.strip()
     plan_path = config.project_path(config.raw["stage"]["plan_path"])
-    plan_payload, _ = _json_with_commit(plan_path, label="canonical planning v9")
-    v9_publication = _locate_v9_publication_commit(
+    plan_payload, _ = _json_with_commit(plan_path, label="canonical planning v10")
+    v10_publication = _locate_v10_publication_commit(
         config.project_root,
         plan_payload,
         current_head=head,
@@ -1937,9 +1950,9 @@ def _authenticate_output_publication(
         publication,
     )
     assert isinstance(ancestry_raw, str)
-    if ancestry_raw.split() != [publication, v9_publication]:
+    if ancestry_raw.split() != [publication, v10_publication]:
         raise PortablePredictorSourceEvidenceV1Error(
-            "The source-evidence publication must be the direct child of canonical v9."
+            "The source-evidence publication must be the direct child of canonical v10."
         )
     delta_raw = _run_git(
         config.project_root,
@@ -1949,7 +1962,7 @@ def _authenticate_output_publication(
         "-r",
         "-z",
         "--no-renames",
-        v9_publication,
+        v10_publication,
         publication,
         binary=True,
     )
