@@ -215,7 +215,7 @@ model_predictions_computed = false
 protocol_lock_created = false
 
 [next_gate]
-successful_evidence_next_stage = "publish_tracked_only_plan_v14_for_portable_predictor_contract_v3_decision"
+successful_evidence_next_stage = "publish_tracked_only_plan_v15_for_portable_predictor_contract_v3_decision"
 portable_predictor_contract_v3_decision_required = true
 predictor_build_requires_later_separate_authorization = true
 protocol_promotion_requires_later_separate_lock = true

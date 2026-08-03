@@ -34,7 +34,7 @@ CONFIG_PATH: Final = (
     "configs/multicity/missing_support_calibration_evidence_v1.toml"
 )
 CONFIG_SHA256: Final = (
-    "11f298c9f3020154286af475c5c336fadde9519cb75e9a553d5c10bc7b761350"
+    "b9faa332a8f946ba4d07721c19c3eb95dc9e1307171fc3876f18c43c2076d85a"
 )
 PLAN_PATH: Final = "manifests/multicity/PLAN_READINESS.json"
 PREDECESSOR_TERMINAL_PATH: Final = (
@@ -265,7 +265,7 @@ def expected_plan_authorization_scope() -> dict[str, Any]:
             "single_direct_child_publication_required": True,
         },
         "next_gate": (
-            "publish_tracked_only_plan_v14_for_portable_predictor_contract_v3_decision"
+            "publish_tracked_only_plan_v15_for_portable_predictor_contract_v3_decision"
         ),
     }
 
@@ -597,7 +597,7 @@ def _status_paths(raw: bytes) -> tuple[str, ...]:
 def authenticate_plan(
     config: EvidenceConfig, *, allowed_untracked_outputs: Sequence[str] = ()
 ) -> dict[str, Any]:
-    """Authenticate canonical V12 before any scientific reader or network call."""
+    """Authenticate the current canonical plan before any scientific reader."""
 
     branch = str(_run_git(config.project_root, "branch", "--show-current")).strip()
     head = str(_run_git(config.project_root, "rev-parse", "HEAD")).strip()
@@ -620,17 +620,17 @@ def authenticate_plan(
         or not observed_paths.issubset(TRACKED_OUTPUT_PATHS)
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "V12 execution requires synchronized main and only exact resumable outputs."
+            "Evidence execution requires synchronized main and exact resumable outputs."
         )
     plan_path = config.project_path(PLAN_PATH)
-    plan = read_json_with_commit(plan_path, label="canonical planning V12")
+    plan = read_json_with_commit(plan_path, label="canonical planning V14")
     if (
-        plan.get("schema_version") != 13
-        or plan.get("algorithm_version") != "multicity-planning-readiness-v13"
+        plan.get("schema_version") != 14
+        or plan.get("algorithm_version") != "multicity-planning-readiness-v14"
         or plan.get("state") != "planning_ready"
         or plan.get("planning_stage")
         != (
-            "missing_support_calibration_evidence_v1_worldcover_asset_path_"
+            "missing_support_calibration_evidence_v1_worldcover_bbox_query_"
             "hotfix_resume_authorized"
         )
         or plan.get("next_safe_stage")
@@ -641,26 +641,30 @@ def authenticate_plan(
         != expected_plan_authorization_scope()
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical planning does not grant the exact V12 evidence scope."
+            "Canonical planning does not grant the exact V14 evidence scope."
         )
     transition = plan.get("transition")
     expected_fix = {
-        "worldcover_provider_host": "ai4edataeuwest.blob.core.windows.net",
-        "rejected_path_prefix": "/esa-worldcover/",
-        "authorized_exact_path_prefix": "/esa-worldcover/v100/2020/map/",
-        "asset_path_prefix_by_host": {
-            "esa-worldcover.s3.eu-central-1.amazonaws.com": "/v100/2020/map/",
-            "ai4edataeuwest.blob.core.windows.net": (
-                "/esa-worldcover/v100/2020/map/"
-            ),
-        },
-        "cross_host_prefix_reuse_allowed": False,
-        "conflicting_next_plan_version_replaced": "v13",
-        "successful_evidence_next_plan_version": "v14",
+        "worldcover_stac_candidate_query_before": "full_city_polygon_intersects",
+        "worldcover_stac_candidate_query_after": "bbox_only",
+        "preregistered_candidate_query": (
+            "bbox_only_then_exact_positive_polygon_intersection"
+        ),
+        "exact_positive_polygon_item_selection_after_query": True,
+        "selected_item_rule_changed": False,
+        "server_failure_status": 413,
+        "completed_worldcover_city_checkpoints_preserved": [
+            "los_angeles_ca",
+            "phoenix_az",
+        ],
+        "completed_asset_cache_objects_preserved": 2,
+        "worldcover_asset_path_authorization_changed": False,
         "collection_year_version_or_asset_changed": False,
         "tracked_output_paths_changed": False,
         "permissions_changed": False,
         "locks_changed": False,
+        "conflicting_next_plan_version_replaced": "v14",
+        "successful_evidence_next_plan_version": "v15",
     }
     if (
         not isinstance(transition, Mapping)
@@ -673,7 +677,7 @@ def authenticate_plan(
     if (
         not isinstance(resume, list)
         or [record.get("path") for record in resume]
-        != list(TRACKED_OUTPUT_PATHS[:5])
+        != list(TRACKED_OUTPUT_PATHS[:7])
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
             "Canonical planning lost the exact geography resume checkpoints."
@@ -703,12 +707,12 @@ def authenticate_plan(
     ).splitlines()
     if not additions:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V12 planning publication cannot be located."
+            "Canonical V14 planning publication cannot be located."
         )
     publication = additions[0]
     if not _is_ancestor(config.project_root, publication, head):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V12 planning is not on current main."
+            "Canonical V14 planning is not on current main."
         )
     later = str(
         _run_git(
@@ -722,7 +726,7 @@ def authenticate_plan(
     )
     if later.strip():
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V12 planning changed after publication."
+            "Canonical V14 planning changed after publication."
         )
     return {
         "path": PLAN_PATH,
@@ -793,7 +797,7 @@ def authenticate_publication(config: EvidenceConfig) -> str:
     plan_record = authenticate_plan(config)
     if parent_line[1] != plan_record["publication_git_commit"]:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "The evidence publication is not the planning-V12 direct child."
+            "The evidence publication is not the planning-V14 direct child."
         )
     raw = _run_git(
         config.project_root,

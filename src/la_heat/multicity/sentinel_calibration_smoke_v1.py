@@ -1337,7 +1337,7 @@ def stage_sentinel_calibration_smoke_v1(
         "predictor_build_authorized": False,
         "external_target_or_qa_values_read": False,
         "next_gate": (
-            "publish_tracked_only_plan_v14_for_portable_predictor_contract_v3_decision"
+            "publish_tracked_only_plan_v15_for_portable_predictor_contract_v3_decision"
         ),
     }
     write_manifest_no_clobber(global_payload, global_path)

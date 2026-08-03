@@ -22,7 +22,7 @@ import shapely
 from rasterio.features import rasterize
 from rasterio.merge import merge
 from rasterio.warp import Resampling, reproject, transform_bounds
-from shapely.geometry import box, mapping, shape
+from shapely.geometry import box, shape
 
 from la_heat.grid import FixedGrid, build_fixed_grid
 from la_heat.multicity.missing_support_calibration_evidence_v1 import (
@@ -353,7 +353,7 @@ def _search_items(
     query = {
         "collections": [config.raw["worldcover"]["stac_collection"]],
         "datetime": "2020-01-01T00:00:00Z/2020-12-31T23:59:59Z",
-        "intersects": mapping(geometry),
+        "bbox": [float(value) for value in geometry.bounds],
         "limit": 100,
     }
     url = str(config.raw["worldcover"]["stac_api"]).rstrip("/") + "/search"

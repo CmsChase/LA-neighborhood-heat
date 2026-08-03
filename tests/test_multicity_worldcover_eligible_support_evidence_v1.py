@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import ast
+from copy import deepcopy
 from pathlib import Path
+from typing import Any
 
 import geopandas as gpd
 import numpy as np
@@ -15,6 +17,44 @@ from la_heat.multicity import missing_support_calibration_evidence_v1 as evidenc
 from la_heat.multicity import worldcover_eligible_support_evidence_v1 as worldcover
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_worldcover_stac_candidate_query_uses_bbox_not_full_geometry(
+    tmp_path: Path,
+) -> None:
+    canonical = evidence.read_evidence_config(ROOT / evidence.CONFIG_PATH)
+    config = evidence.EvidenceConfig(
+        path=canonical.path,
+        project_root=tmp_path,
+        raw=deepcopy(canonical.raw),
+    )
+    boundary = gpd.GeoDataFrame(
+        {"name": ["city"]},
+        geometry=[box(-96.0, 29.0, -95.0, 30.0).difference(box(-95.9, 29.1, -95.1, 29.9))],
+        crs="EPSG:4326",
+    )
+
+    class FakeClient:
+        query: dict[str, Any] | None = None
+
+        def post_json(
+            self, _url: str, payload: dict[str, Any]
+        ) -> tuple[dict[str, Any], bytes]:
+            self.query = dict(payload)
+            return {"features": [{"id": "candidate"}], "links": []}, b"{}"
+
+    client = FakeClient()
+    features, _ = worldcover._search_items(
+        config,
+        client=client,  # type: ignore[arg-type]
+        city_id="houston_tx",
+        boundary=boundary,
+    )
+
+    assert features == [{"id": "candidate"}]
+    assert client.query is not None
+    assert client.query["bbox"] == [-96.0, 29.0, -95.0, 30.0]
+    assert "intersects" not in client.query
 
 
 def test_canonical_hash_contract_is_endian_and_bitorder_explicit() -> None:
