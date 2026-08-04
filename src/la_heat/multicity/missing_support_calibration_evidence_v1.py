@@ -29,7 +29,7 @@ ALGORITHM_VERSION: Final = "multicity-missing-support-calibration-evidence-v1"
 STAGE_ID: Final = "target_blind_missing_support_and_calibration_evidence_v1"
 COMPLETE_STATE: Final = "complete_target_blind_missing_support_and_calibration_evidence"
 CONFIG_PATH: Final = "configs/multicity/missing_support_calibration_evidence_v1.toml"
-CONFIG_SHA256: Final = "a3bc3611afa50933fa05ace3413b3bc328a9357341d64d59ca14bd3cac1c74cc"
+CONFIG_SHA256: Final = "0f8aa21047dc64b9a9baf1210dd4fad5aa965fa18d29743ffb8cc320de91a341"
 PLAN_PATH: Final = "manifests/multicity/PLAN_READINESS.json"
 PREDECESSOR_TERMINAL_PATH: Final = (
     "manifests/multicity/reviews/portable_predictor_contract/"
@@ -91,6 +91,7 @@ TRACKED_OUTPUT_PATHS: Final = (
 CODE_PATHS: Final = (
     CONFIG_PATH,
     "configs/multicity/experiment.toml",
+    "configs/multicity/portable_predictor_source_evidence_v1.toml",
     "configs/multicity/portable_predictor_contract_freeze_v2.toml",
     *(f"configs/multicity/cities/{city_id}.toml" for city_id in CITY_IDS),
     "scripts/stage_multicity_missing_support_calibration_evidence_v1.py",
@@ -253,7 +254,7 @@ def expected_plan_authorization_scope() -> dict[str, Any]:
             "check_only_network_requests": 0,
             "single_direct_child_publication_required": True,
         },
-        "next_gate": ("publish_tracked_only_plan_v18_for_portable_predictor_contract_v3_decision"),
+        "next_gate": ("publish_tracked_only_plan_v19_for_portable_predictor_contract_v3_decision"),
     }
 
 
@@ -580,15 +581,15 @@ def authenticate_plan(
             "Evidence execution requires synchronized main and exact resumable outputs."
         )
     plan_path = config.project_path(PLAN_PATH)
-    plan = read_json_with_commit(plan_path, label="canonical planning V17")
+    plan = read_json_with_commit(plan_path, label="canonical planning V18")
     if (
-        plan.get("schema_version") != 17
-        or plan.get("algorithm_version") != "multicity-planning-readiness-v17"
+        plan.get("schema_version") != 18
+        or plan.get("algorithm_version") != "multicity-planning-readiness-v18"
         or plan.get("state") != "planning_ready"
         or plan.get("planning_stage")
         != (
-            "missing_support_calibration_evidence_v1_sentinel_stac_calibration_"
-            "metadata_hotfix_resume_authorized"
+            "missing_support_calibration_evidence_v1_source_footprint_verifier_"
+            "hotfix_resume_authorized"
         )
         or plan.get("next_safe_stage")
         != "stage_target_blind_missing_support_and_calibration_evidence_v1"
@@ -598,23 +599,23 @@ def authenticate_plan(
         != expected_plan_authorization_scope()
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical planning does not grant the exact V17 evidence scope."
+            "Canonical planning does not grant the exact V18 evidence scope."
         )
-    from la_heat.multicity.plan_sentinel_stac_calibration_metadata_hotfix_transition_v17 import (
+    from la_heat.multicity.plan_sentinel_source_footprint_verifier_hotfix_transition_v18 import (
         AUTHORIZED_FIX as expected_fix,
     )
 
     transition = plan.get("transition")
     if not isinstance(transition, Mapping) or transition.get("authorized_fix") != expected_fix:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical planning lost the exact Sentinel STAC metadata hotfix."
+            "Canonical planning lost the exact source-footprint verifier hotfix."
         )
     resume = transition.get("resume_checkpoints")
     if not isinstance(resume, list) or [record.get("path") for record in resume] != list(
-        TRACKED_OUTPUT_PATHS[:10]
+        TRACKED_OUTPUT_PATHS[:11]
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical planning lost the exact geography resume checkpoints."
+            "Canonical planning lost the exact eleven resume checkpoints."
         )
     for record in resume:
         path = config.project_path(str(record["path"]))
@@ -626,7 +627,7 @@ def authenticate_plan(
             or payload.get("state") != record["state"]
         ):
             raise MissingSupportCalibrationEvidenceV1Error(
-                f"Geography resume checkpoint changed: {record['path']}"
+                f"Resume checkpoint changed: {record['path']}"
             )
     additions = str(
         _run_git(
@@ -641,12 +642,12 @@ def authenticate_plan(
     ).splitlines()
     if not additions:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V17 planning publication cannot be located."
+            "Canonical V18 planning publication cannot be located."
         )
     publication = additions[0]
     if not _is_ancestor(config.project_root, publication, head):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V17 planning is not on current main."
+            "Canonical V18 planning is not on current main."
         )
     later = str(
         _run_git(
@@ -660,7 +661,7 @@ def authenticate_plan(
     )
     if later.strip():
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V17 planning changed after publication."
+            "Canonical V18 planning changed after publication."
         )
     return {
         "path": PLAN_PATH,
@@ -729,7 +730,7 @@ def authenticate_publication(config: EvidenceConfig) -> str:
     plan_record = authenticate_plan(config)
     if parent_line[1] != plan_record["publication_git_commit"]:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "The evidence publication is not the planning-V17 direct child."
+            "The evidence publication is not the planning-V18 direct child."
         )
     raw = _run_git(
         config.project_root,

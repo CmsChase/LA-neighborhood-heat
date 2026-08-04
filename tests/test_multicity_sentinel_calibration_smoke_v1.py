@@ -230,10 +230,77 @@ def test_partial_stac_calibration_availability_fails_closed() -> None:
         smoke._provider_encoding_evidence(records, _calibration())
 
 
-def test_sentinel_terminal_uses_the_v18_decision_gate() -> None:
+def test_sentinel_terminal_uses_the_v19_decision_gate() -> None:
     assert smoke.NEXT_GATE == (
-        "publish_tracked_only_plan_v18_for_portable_predictor_contract_v3_decision"
+        "publish_tracked_only_plan_v19_for_portable_predictor_contract_v3_decision"
     )
+
+
+def _source_config() -> SimpleNamespace:
+    return SimpleNamespace(
+        raw={"stage": {"experiment_config": "configs/multicity/experiment.toml"}},
+        project_path=lambda value: ROOT / value,
+    )
+
+
+def test_phoenix_uses_legacy_published_source_footprint_verifier(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    expected = {"city": "phoenix_az"}
+    monkeypatch.setattr(
+        smoke._footprints,
+        "verify_city_source_footprints",
+        lambda _path, city_id: expected if city_id == "phoenix_az" else None,
+    )
+    monkeypatch.setattr(
+        smoke._source_evidence,
+        "_verify_new_source_footprint",
+        lambda *_args: pytest.fail("new-source verifier used for Phoenix"),
+    )
+
+    assert smoke._verified_source_footprint(_source_config(), "phoenix_az") is expected
+
+
+@pytest.mark.parametrize("city_id", ["houston_tx", "chicago_il"])
+def test_new_external_cities_use_source_evidence_read_only_verifier(
+    monkeypatch: pytest.MonkeyPatch, city_id: str
+) -> None:
+    plan = object()
+    workspace = object()
+    expected = {"city": city_id}
+    source_config = _source_config()
+    monkeypatch.setattr(
+        smoke._source_evidence, "_read_config", lambda _path: source_config
+    )
+    monkeypatch.setattr(smoke, "load_multicity_plan", lambda _path: plan)
+    monkeypatch.setattr(
+        smoke, "MulticityWorkspace", SimpleNamespace(from_plan=lambda value: workspace)
+    )
+    monkeypatch.setattr(
+        smoke._footprints,
+        "verify_city_source_footprints",
+        lambda *_args: pytest.fail("metadata-discovery verifier used for a frozen city"),
+    )
+
+    def verify(
+        config: object, observed_workspace: object, observed_city: str
+    ) -> dict[str, str]:
+        assert config is source_config
+        assert observed_workspace is workspace
+        assert observed_city == city_id
+        return expected
+
+    monkeypatch.setattr(smoke._source_evidence, "_verify_new_source_footprint", verify)
+
+    assert smoke._verified_source_footprint(_source_config(), city_id) is expected
+
+
+def test_unknown_city_has_no_source_footprint_fallback() -> None:
+    with pytest.raises(
+        evidence.MissingSupportCalibrationEvidenceV1Error,
+        match="No frozen source-footprint verifier",
+    ):
+        smoke._verified_source_footprint(_source_config(), "unknown_city")
 
 
 @dataclass(frozen=True)

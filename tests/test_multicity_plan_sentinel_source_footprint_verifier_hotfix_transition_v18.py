@@ -8,7 +8,7 @@ import pytest
 
 from la_heat.multicity import missing_support_calibration_evidence_v1 as evidence
 from la_heat.multicity import (
-    plan_sentinel_stac_calibration_metadata_hotfix_transition_v17 as transition,
+    plan_sentinel_source_footprint_verifier_hotfix_transition_v18 as transition,
 )
 from la_heat.provenance import canonical_sha256
 
@@ -27,7 +27,7 @@ def _record(seed: str) -> dict[str, Any]:
 
 
 def _payload() -> tuple[dict[str, Any], dict[str, Any]]:
-    predecessor, _ = transition._historical_v16(ROOT)
+    predecessor, _ = transition._historical_v17(ROOT)
     code_files = {path: _record("a") for path in evidence.CODE_PATHS}
     transition_files = {
         path: _record("b") for path in transition.transition_code_paths(evidence.CODE_PATHS)
@@ -43,10 +43,10 @@ def _payload() -> tuple[dict[str, Any], dict[str, Any]]:
     return predecessor, payload
 
 
-def test_v17_accepts_absent_optional_stac_calibration_without_relaxing_xml() -> None:
+def test_v18_routes_each_frozen_source_footprint_to_its_published_verifier() -> None:
     predecessor, payload = _payload()
 
-    assert payload["schema_version"] == 17
+    assert payload["schema_version"] == 18
     assert payload["algorithm_version"] == transition.ALGORITHM_VERSION
     assert payload["planning_stage"] == transition.PLANNING_STAGE
     assert payload["next_safe_stage"] == transition.NEXT_SAFE_STAGE
@@ -54,46 +54,51 @@ def test_v17_accepts_absent_optional_stac_calibration_without_relaxing_xml() -> 
     assert payload["locks"] == predecessor["locks"]
     fix = payload["transition"]["authorized_fix"]
     assert fix == transition.AUTHORIZED_FIX
-    assert fix["product_metadata_xml_remains_decode_authority"] is True
-    assert fix["stac_calibration_values_synthesized_from_xml"] is False
-    assert fix["missing_stac_calibration_counted_as_match"] is False
-    assert fix["partial_or_malformed_stac_calibration_rejected"] is True
-    assert fix["sentinel_decode_formula_changed"] is False
+    assert fix["existing_source_footprint_manifests_only"] is True
+    assert fix["source_footprint_rediscovery_performed"] is False
+    assert fix["source_metadata_table_or_values_changed"] is False
+    assert fix["network_requests_added"] is False
+    assert fix["sentinel_probe_selection_changed"] is False
     assert fix["permissions_changed"] is False
     assert fix["locks_changed"] is False
-    assert fix["successful_evidence_next_plan_version"] == "v18"
+    assert fix["successful_evidence_next_plan_version"] == "v19"
     body = {key: value for key, value in payload.items() if key != "commit_sha256"}
     assert payload["commit_sha256"] == canonical_sha256(body)
 
 
-def test_v17_binds_all_ten_completed_pre_sentinel_checkpoints() -> None:
+def test_v18_binds_phoenix_sentinel_as_the_eleventh_checkpoint() -> None:
     _, payload = _payload()
 
     resume = payload["transition"]["resume_checkpoints"]
     assert tuple(record["path"] for record in resume) == (transition.RESUME_CHECKPOINT_PATHS)
-    assert transition.RESUME_CHECKPOINT_PATHS == evidence.TRACKED_OUTPUT_PATHS[:10]
-    assert len(resume) == 10
-    assert resume[-1]["state"] == ("complete_target_blind_four_city_worldcover_support")
+    assert transition.RESUME_CHECKPOINT_PATHS == evidence.TRACKED_OUTPUT_PATHS[:11]
+    assert len(resume) == 11
+    assert resume[-1] == transition.PHOENIX_SENTINEL_RESUME_CHECKPOINT_V18
 
 
-def test_v17_moves_successful_evidence_decision_gate_to_v18() -> None:
-    assert transition.AUTHORIZED_FIX["successful_evidence_next_plan_version"] == "v18"
+def test_v18_binds_source_evidence_config_and_moves_decision_to_v19() -> None:
+    scope = evidence.expected_plan_authorization_scope()
+    assert "configs/multicity/portable_predictor_source_evidence_v1.toml" in scope["code_paths"]
+    assert scope["next_gate"] == (
+        "publish_tracked_only_plan_v19_for_portable_predictor_contract_v3_decision"
+    )
 
 
-def test_v17_status_parser_rejects_noncheckpoint_paths() -> None:
+def test_v18_status_parser_rejects_noncheckpoint_paths() -> None:
     exact = b"".join(
         b"?? " + path.encode("utf-8") + b"\0" for path in transition.RESUME_CHECKPOINT_PATHS
     )
     assert transition._parse_status(exact) == frozenset(transition.RESUME_CHECKPOINT_PATHS)
     assert transition._parse_status(b"") == frozenset()
     with pytest.raises(
-        transition.MulticityPlanSentinelStacCalibrationMetadataHotfixV17Error,
+        transition.MulticityPlanSentinelSourceFootprintVerifierHotfixV18Error,
         match="Unexpected dirty path",
     ):
         transition._parse_status(exact + b"?? unexpected.txt\0")
 
 
-def test_v17_implementation_delta_is_exact(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_v18_implementation_delta_is_exact(monkeypatch: pytest.MonkeyPatch) -> None:
+    assert len(transition.EXPECTED_IMPLEMENTATION_DELTA) == 8
     implementation = "d" * 40
     mode = {"extra": False}
 
@@ -111,18 +116,18 @@ def test_v17_implementation_delta_is_exact(monkeypatch: pytest.MonkeyPatch) -> N
             )
         raise AssertionError(args)
 
-    monkeypatch.setattr(transition.v16.v15.v14, "_run_git", fake_git)
+    monkeypatch.setattr(transition.v17.v16.v15.v14, "_run_git", fake_git)
     transition._implementation_delta(ROOT, implementation)
     mode["extra"] = True
     with pytest.raises(
-        transition.MulticityPlanSentinelStacCalibrationMetadataHotfixV17Error,
+        transition.MulticityPlanSentinelSourceFootprintVerifierHotfixV18Error,
         match="outside its exact allowlist",
     ):
         transition._implementation_delta(ROOT, implementation)
 
 
 @pytest.mark.parametrize("path", [MODULE, SCRIPT])
-def test_v17_transition_has_no_network_raster_or_model_reader_imports(
+def test_v18_transition_has_no_network_raster_or_model_reader_imports(
     path: Path,
 ) -> None:
     source = path.read_text(encoding="utf-8")

@@ -25,7 +25,9 @@ from pyproj import Transformer
 from rasterio.windows import Window
 from shapely.geometry import mapping
 
+from la_heat.multicity import portable_predictor_source_evidence_v1 as _source_evidence
 from la_heat.multicity import source_footprints as _footprints
+from la_heat.multicity.config import load_multicity_plan
 from la_heat.multicity.missing_support_calibration_evidence_v1 import (
     EXTERNAL_CITY_IDS,
     SENTINEL_GLOBAL_PATH,
@@ -41,6 +43,7 @@ from la_heat.multicity.missing_support_calibration_evidence_v1 import (
     read_json_with_commit,
     write_manifest_no_clobber,
 )
+from la_heat.multicity.workspace import MulticityWorkspace
 from la_heat.provenance import canonical_sha256
 from la_heat.sentinel_features import decode_boa_reflectance, parse_boa_calibration
 from la_heat.sentinel_inventory import (
@@ -52,7 +55,7 @@ from la_heat.sentinel_inventory import (
 ALGORITHM_VERSION: Final = "external-city-sentinel-calibration-smoke-v1"
 COMPLETE_STATE: Final = "complete_target_blind_sentinel_calibration_smoke"
 NEXT_GATE: Final = (
-    "publish_tracked_only_plan_v18_for_portable_predictor_contract_v3_decision"
+    "publish_tracked_only_plan_v19_for_portable_predictor_contract_v3_decision"
 )
 MGRS = re.compile(r"^(?P<zone>\d{2})(?P<band>[C-HJ-NP-X])(?P<square>[A-Z]{2})$")
 REFLECTANCE_ASSETS: Final = ("B02", "B03", "B04", "B08", "B8A", "B11", "B12")
@@ -475,11 +478,33 @@ def _city_timezone_and_crs(config: EvidenceConfig, city_id: str) -> tuple[str, s
     return timezone, crs
 
 
+def _verified_source_footprint(
+    config: EvidenceConfig, city_id: str
+) -> dict[str, Any]:
+    experiment = config.project_path(str(config.raw["stage"]["experiment_config"]))
+    if city_id == "phoenix_az":
+        return _footprints.verify_city_source_footprints(experiment, city_id)
+    if city_id not in {"houston_tx", "chicago_il"}:
+        raise MissingSupportCalibrationEvidenceV1Error(
+            f"No frozen source-footprint verifier is registered for {city_id}."
+        )
+    source_config = _source_evidence._read_config(
+        config.project_path(_source_evidence.CONFIG_PATH)
+    )
+    experiment = source_config.project_path(
+        str(source_config.raw["stage"]["experiment_config"])
+    )
+    plan = load_multicity_plan(experiment)
+    workspace = MulticityWorkspace.from_plan(plan)
+    return _source_evidence._verify_new_source_footprint(
+        source_config, workspace, city_id
+    )
+
+
 def _source_inputs(
     config: EvidenceConfig, city_id: str
 ) -> tuple[gpd.GeoDataFrame, dict[str, Any], gpd.GeoDataFrame, dict[str, Any]]:
-    experiment = config.project_path(str(config.raw["stage"]["experiment_config"]))
-    source = _footprints.verify_city_source_footprints(experiment, city_id)
+    source = _verified_source_footprint(config, city_id)
     sentinel_record = source["output_tables"]["sentinel_items"]
     sentinel = gpd.read_parquet(config.project_path(str(sentinel_record["path"])))
     if (
