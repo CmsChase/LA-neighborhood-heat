@@ -29,8 +29,8 @@ ALGORITHM_VERSION: Final = "multicity-missing-support-calibration-evidence-v1"
 STAGE_ID: Final = "target_blind_missing_support_and_calibration_evidence_v1"
 COMPLETE_STATE: Final = "complete_target_blind_missing_support_and_calibration_evidence"
 CONFIG_PATH: Final = "configs/multicity/missing_support_calibration_evidence_v1.toml"
-CONFIG_SHA256: Final = "0f8aa21047dc64b9a9baf1210dd4fad5aa965fa18d29743ffb8cc320de91a341"
-PLAN_PATH: Final = "manifests/multicity/PLAN_READINESS.json"
+CONFIG_SHA256: Final = "f0b066da60768f6931e26e0498fba8bfd230af20009708d8991e3bfacb39d586"
+PLAN_PATH: Final = "manifests/multicity/ACTIVE_STAGE.json"
 PREDECESSOR_TERMINAL_PATH: Final = (
     "manifests/multicity/reviews/portable_predictor_contract/"
     "PORTABLE_PREDICTOR_CONTRACT_FREEZE_V2.json"
@@ -155,7 +155,7 @@ _SECRET_QUERY_KEYS: Final = frozenset(
 
 
 class MissingSupportCalibrationEvidenceV1Error(ValueError):
-    """Raised when the narrow V12 evidence contract cannot be authenticated."""
+    """Raised when the active evidence contract cannot be authenticated."""
 
 
 @dataclass(frozen=True, slots=True)
@@ -195,7 +195,7 @@ def expected_authorized_now() -> dict[str, bool]:
 
 
 def expected_plan_authorization_scope() -> dict[str, Any]:
-    """Return the exact scope canonical planning V12 must bind."""
+    """Return the scientific scope recorded by the active evidence stage."""
 
     return {
         "stage_id": STAGE_ID,
@@ -252,9 +252,9 @@ def expected_plan_authorization_scope() -> dict[str, Any]:
             "expected_output_count": 15,
             "overall_terminal_written_last": True,
             "check_only_network_requests": 0,
-            "single_direct_child_publication_required": True,
+            "tracked_outputs_must_match_head": True,
         },
-        "next_gate": ("publish_tracked_only_plan_v19_for_portable_predictor_contract_v3_decision"),
+        "next_gate": "portable_predictor_contract_decision",
     }
 
 
@@ -267,7 +267,7 @@ def _require_exact_keys(value: Mapping[str, Any], expected: set[str], *, label: 
 
 
 def read_evidence_config(path: str | Path = CONFIG_PATH) -> EvidenceConfig:
-    """Load and authenticate the complete V12 scientific configuration."""
+    """Load and authenticate the active scientific configuration."""
 
     config_path = Path(path).resolve()
     if not config_path.is_file() or config_path.is_symlink():
@@ -275,7 +275,7 @@ def read_evidence_config(path: str | Path = CONFIG_PATH) -> EvidenceConfig:
     observed_sha = sha256_file(config_path)
     if observed_sha != CONFIG_SHA256:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "The exact V12 evidence configuration SHA-256 changed."
+            "The active evidence configuration SHA-256 changed."
         )
     with config_path.open("rb") as handle:
         raw = tomllib.load(handle)
@@ -315,7 +315,7 @@ def read_evidence_config(path: str | Path = CONFIG_PATH) -> EvidenceConfig:
         "external_target_access_authorized": False,
     }:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "The exact V12 stage identity or access boundary changed."
+            "The evidence stage identity or access boundary changed."
         )
     outputs = raw["outputs"]
     expected_outputs = {
@@ -338,19 +338,17 @@ def read_evidence_config(path: str | Path = CONFIG_PATH) -> EvidenceConfig:
         "terminal_written_last": True,
     }
     if outputs != expected_outputs:
-        raise MissingSupportCalibrationEvidenceV1Error("V12 output paths changed.")
+        raise MissingSupportCalibrationEvidenceV1Error("Evidence output paths changed.")
     if raw["publication"] != {
         "expected_city_manifest_count": 11,
         "expected_global_terminal_count": 4,
         "expected_total_tracked_output_count": 15,
-        "single_direct_child_publication_required": True,
-        "each_output_must_be_one_git_addition": True,
-        "tracked_output_may_not_change_after_publication": True,
+        "tracked_outputs_must_match_head": True,
     }:
-        raise MissingSupportCalibrationEvidenceV1Error("V12 publication contract changed.")
+        raise MissingSupportCalibrationEvidenceV1Error("Evidence publication contract changed.")
     if len(TRACKED_OUTPUT_PATHS) != 15 or len(set(TRACKED_OUTPUT_PATHS)) != 15:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "The V12 tracked output set is not the exact fifteen-file set."
+            "The tracked output set is not the exact fifteen-file set."
         )
     return EvidenceConfig(path=config_path, project_root=project_root, raw=raw)
 
@@ -531,15 +529,6 @@ def _run_git(project_root: Path, *arguments: str, binary: bool = False) -> str |
     return completed.stdout
 
 
-def _is_ancestor(project_root: Path, ancestor: str, descendant: str) -> bool:
-    completed = subprocess.run(
-        ["git", "-C", str(project_root), "merge-base", "--is-ancestor", ancestor, descendant],
-        check=False,
-        capture_output=True,
-    )
-    return completed.returncode == 0
-
-
 def _status_paths(raw: bytes) -> tuple[str, ...]:
     fields = raw.split(b"\0")
     if fields[-1:] != [b""]:
@@ -555,11 +544,8 @@ def _status_paths(raw: bytes) -> tuple[str, ...]:
 def authenticate_plan(
     config: EvidenceConfig, *, allowed_untracked_outputs: Sequence[str] = ()
 ) -> dict[str, Any]:
-    """Authenticate the current canonical plan before any scientific reader."""
+    """Confirm the active stage and resumable output set before networking."""
 
-    branch = str(_run_git(config.project_root, "branch", "--show-current")).strip()
-    head = str(_run_git(config.project_root, "rev-parse", "HEAD")).strip()
-    origin = str(_run_git(config.project_root, "rev-parse", "origin/main")).strip()
     status = _run_git(
         config.project_root,
         "status",
@@ -571,126 +557,58 @@ def authenticate_plan(
     assert isinstance(status, bytes)
     observed_paths = set(_status_paths(status))
     allowed = set(allowed_untracked_outputs)
-    if (
-        branch != "main"
-        or head != origin
-        or observed_paths != allowed
-        or not observed_paths.issubset(TRACKED_OUTPUT_PATHS)
-    ):
+    if observed_paths != allowed or not observed_paths.issubset(TRACKED_OUTPUT_PATHS):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Evidence execution requires synchronized main and exact resumable outputs."
+            "Evidence execution requires only the declared resumable outputs in the worktree."
         )
+
     plan_path = config.project_path(PLAN_PATH)
-    plan = read_json_with_commit(plan_path, label="canonical planning V18")
+    try:
+        plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise MissingSupportCalibrationEvidenceV1Error(
+            "Cannot read the active multicity stage."
+        ) from exc
     if (
-        plan.get("schema_version") != 18
-        or plan.get("algorithm_version") != "multicity-planning-readiness-v18"
-        or plan.get("state") != "planning_ready"
-        or plan.get("planning_stage")
-        != (
-            "missing_support_calibration_evidence_v1_source_footprint_verifier_"
-            "hotfix_resume_authorized"
-        )
+        not isinstance(plan, dict)
+        or plan.get("schema_version") != 1
+        or plan.get("stage_id") != STAGE_ID
+        or plan.get("state") != "ready"
         or plan.get("next_safe_stage")
         != "stage_target_blind_missing_support_and_calibration_evidence_v1"
-        or plan.get("authorized_now") != EXPECTED_AUTHORIZED_NOW
+        or plan.get("tracked_output_paths") != list(TRACKED_OUTPUT_PATHS)
+        or plan.get("permissions")
+        != {
+            "run_public_evidence": True,
+            "build_predictor": False,
+            "fit_or_score_model": False,
+            "read_external_targets": False,
+        }
         or plan.get("locks") != EXPECTED_LOCKS
-        or plan.get("missing_support_calibration_evidence_v1_authorization_scope")
-        != expected_plan_authorization_scope()
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical planning does not grant the exact V18 evidence scope."
+            "The active multicity stage does not authorize this evidence run."
         )
-    from la_heat.multicity.plan_sentinel_source_footprint_verifier_hotfix_transition_v18 import (
-        AUTHORIZED_FIX as expected_fix,
-    )
 
-    transition = plan.get("transition")
-    if not isinstance(transition, Mapping) or transition.get("authorized_fix") != expected_fix:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical planning lost the exact source-footprint verifier hotfix."
-        )
-    resume = transition.get("resume_checkpoints")
-    if not isinstance(resume, list) or [record.get("path") for record in resume] != list(
-        TRACKED_OUTPUT_PATHS[:11]
-    ):
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical planning lost the exact eleven resume checkpoints."
-        )
-    for record in resume:
-        path = config.project_path(str(record["path"]))
-        payload = read_json_with_commit(path, label=str(record["path"]))
-        if (
-            path.stat().st_size != int(record["bytes"])
-            or sha256_file(path) != record["file_sha256"]
-            or payload["commit_sha256"] != record["commit_sha256"]
-            or payload.get("state") != record["state"]
-        ):
+    for relative in sorted(allowed):
+        payload = read_json_with_commit(config.project_path(relative), label=relative)
+        if not str(payload.get("state", "")).startswith("complete_target_blind"):
             raise MissingSupportCalibrationEvidenceV1Error(
-                f"Resume checkpoint changed: {record['path']}"
+                f"Resume checkpoint is not complete: {relative}"
             )
-    additions = str(
-        _run_git(
-            config.project_root,
-            "log",
-            "--format=%H",
-            "--diff-filter=M",
-            head,
-            "--",
-            PLAN_PATH,
-        )
-    ).splitlines()
-    if not additions:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V18 planning publication cannot be located."
-        )
-    publication = additions[0]
-    if not _is_ancestor(config.project_root, publication, head):
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V18 planning is not on current main."
-        )
-    later = str(
-        _run_git(
-            config.project_root,
-            "log",
-            "--format=%H",
-            f"{publication}..{head}",
-            "--",
-            PLAN_PATH,
-        )
-    )
-    if later.strip():
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "Canonical V18 planning changed after publication."
-        )
+
     return {
         "path": PLAN_PATH,
-        "publication_git_commit": publication,
         "bytes": plan_path.stat().st_size,
         "file_sha256": sha256_file(plan_path),
-        "commit_sha256": plan["commit_sha256"],
+        "revision": plan["revision"],
     }
 
 
-def _parse_name_status(raw: bytes) -> frozenset[tuple[str, str]]:
-    fields = raw.split(b"\0")
-    if fields[-1:] != [b""] or len(fields[:-1]) % 2:
-        raise MissingSupportCalibrationEvidenceV1Error("Git name-status output is malformed.")
-    return frozenset(
-        (
-            fields[index].decode("ascii"),
-            fields[index + 1].decode("utf-8"),
-        )
-        for index in range(0, len(fields) - 1, 2)
-    )
-
-
 def authenticate_publication(config: EvidenceConfig) -> str:
-    """Require one direct-child commit that adds exactly the fifteen outputs."""
+    """Confirm that the fifteen evidence outputs are committed and unchanged."""
 
-    branch = str(_run_git(config.project_root, "branch", "--show-current")).strip()
     head = str(_run_git(config.project_root, "rev-parse", "HEAD")).strip()
-    origin = str(_run_git(config.project_root, "rev-parse", "origin/main")).strip()
     status = _run_git(
         config.project_root,
         "status",
@@ -700,79 +618,27 @@ def authenticate_publication(config: EvidenceConfig) -> str:
         binary=True,
     )
     assert isinstance(status, bytes)
-    if branch != "main" or head != origin or status:
+    if status:
         raise MissingSupportCalibrationEvidenceV1Error(
-            "Publication authentication requires clean synchronized main."
+            "Publication authentication requires a clean worktree."
         )
-    additions = str(
-        _run_git(
-            config.project_root,
-            "log",
-            "--format=%H",
-            "--diff-filter=A",
-            head,
-            "--",
-            OVERALL_TERMINAL_PATH,
-        )
-    ).splitlines()
-    if len(additions) != 1:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "The overall terminal must have one exact Git addition."
-        )
-    publication = additions[0]
-    parent_line = str(
-        _run_git(config.project_root, "rev-list", "--parents", "-n", "1", publication)
-    ).split()
-    if len(parent_line) != 2:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "The evidence publication must have one parent."
-        )
-    plan_record = authenticate_plan(config)
-    if parent_line[1] != plan_record["publication_git_commit"]:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "The evidence publication is not the planning-V18 direct child."
-        )
-    raw = _run_git(
-        config.project_root,
-        "diff-tree",
-        "--no-commit-id",
-        "--name-status",
-        "-r",
-        "-z",
-        "--no-renames",
-        parent_line[1],
-        publication,
-        binary=True,
-    )
-    assert isinstance(raw, bytes)
-    expected = frozenset(("A", path) for path in TRACKED_OUTPUT_PATHS)
-    if _parse_name_status(raw) != expected:
-        raise MissingSupportCalibrationEvidenceV1Error(
-            "Evidence publication changed a path outside its exact allowlist."
-        )
+
     for relative in TRACKED_OUTPUT_PATHS:
-        history = str(
-            _run_git(
-                config.project_root,
-                "log",
-                "--format=%H",
-                f"{publication}..{head}",
-                "--",
-                relative,
-            )
-        )
-        if history.strip():
-            raise MissingSupportCalibrationEvidenceV1Error(
-                f"Tracked evidence changed after publication: {relative}"
-            )
         worktree = config.project_path(relative)
-        head_bytes = _run_git(config.project_root, "show", f"{head}:{relative}", binary=True)
+        try:
+            head_bytes = _run_git(
+                config.project_root, "show", f"{head}:{relative}", binary=True
+            )
+        except MissingSupportCalibrationEvidenceV1Error as exc:
+            raise MissingSupportCalibrationEvidenceV1Error(
+                f"Evidence output is not committed: {relative}"
+            ) from exc
         assert isinstance(head_bytes, bytes)
         if not worktree.is_file() or worktree.read_bytes() != head_bytes:
             raise MissingSupportCalibrationEvidenceV1Error(
                 f"Tracked evidence differs from HEAD: {relative}"
             )
-    return publication
+    return head
 
 
 def _tracked_outputs_present(config: EvidenceConfig) -> tuple[str, ...]:
@@ -785,7 +651,7 @@ def verify_terminal(config: EvidenceConfig, *, require_publication: bool = True)
     """Authenticate every checkpoint without networking or scientific recompute."""
 
     terminal_path = config.project_path(OVERALL_TERMINAL_PATH)
-    terminal = read_json_with_commit(terminal_path, label="V12 evidence terminal")
+    terminal = read_json_with_commit(terminal_path, label="evidence terminal")
     if (
         terminal.get("schema_version") != SCHEMA_VERSION
         or terminal.get("algorithm_version") != ALGORITHM_VERSION
@@ -795,7 +661,7 @@ def verify_terminal(config: EvidenceConfig, *, require_publication: bool = True)
         or terminal.get("access_contract") != config.raw["access_contract"]
     ):
         raise MissingSupportCalibrationEvidenceV1Error(
-            "The V12 evidence terminal contract changed."
+            "The evidence terminal contract changed."
         )
     checkpoints = terminal.get("tracked_checkpoints")
     expected_checkpoint_paths = set(TRACKED_OUTPUT_PATHS[:-1])

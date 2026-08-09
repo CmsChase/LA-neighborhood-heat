@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import ast
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
@@ -230,10 +231,89 @@ def test_partial_stac_calibration_availability_fails_closed() -> None:
         smoke._provider_encoding_evidence(records, _calibration())
 
 
-def test_sentinel_terminal_uses_the_v19_decision_gate() -> None:
-    assert smoke.NEXT_GATE == (
-        "publish_tracked_only_plan_v19_for_portable_predictor_contract_v3_decision"
+def test_sentinel_terminal_uses_the_stable_decision_gate() -> None:
+    assert smoke.NEXT_GATE == "portable_predictor_contract_decision"
+
+
+def test_cohort_query_uses_bbox_then_exact_acquisition_filter(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    class Client:
+        query: dict[str, Any] | None = None
+
+        def post_stac(self, query: dict[str, Any]) -> tuple[list[dict[str, Any]], bytes]:
+            self.query = query
+
+            def feature(item_id: str) -> dict[str, Any]:
+                return {
+                    "type": "Feature",
+                    "stac_version": "1.0.0",
+                    "id": item_id,
+                    "collection": "sentinel-2-l2a",
+                    "bbox": [-96.0, 29.0, -95.0, 30.0],
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [-96.0, 29.0],
+                            [-95.0, 29.0],
+                            [-95.0, 30.0],
+                            [-96.0, 30.0],
+                            [-96.0, 29.0],
+                        ]],
+                    },
+                    "properties": {"datetime": "2025-06-01T12:00:00Z"},
+                    "links": [],
+                    "assets": {},
+                }
+
+            return [feature("same-acquisition"), feature("other-acquisition")], b"{}"
+
+    selected_key = SimpleNamespace(
+        acquired_utc=datetime(2025, 6, 1, 12, tzinfo=UTC), semantic_id="selected"
     )
+    other_key = SimpleNamespace(
+        acquired_utc=datetime(2025, 6, 2, 12, tzinfo=UTC), semantic_id="other"
+    )
+    initial = object()
+
+    def acquisition_key(value: object) -> SimpleNamespace:
+        if value is initial or value == "same-acquisition":
+            return selected_key
+        return other_key
+
+    monkeypatch.setattr(smoke, "sentinel_record_from_item", lambda item: item.id)
+    monkeypatch.setattr(smoke, "physical_acquisition_key", acquisition_key)
+
+    def select(records: list[str], **kwargs: Any) -> str:
+        assert records == ["same-acquisition"]
+        assert kwargs["analysis_crs"] == "EPSG:5070"
+        assert tuple(kwargs["aoi_geometry_wgs84"].bounds) == (-96.0, 29.0, -95.0, 30.0)
+        return "selected-cohort"
+
+    monkeypatch.setattr(smoke, "select_reprocessing_cohort", select)
+    client = Client()
+    config = SimpleNamespace(
+        raw={"sentinel": {"limits": {"working_directory": "work"}}},
+        project_root=tmp_path,
+        project_path=lambda value: tmp_path / value,
+    )
+    boundary = gpd.GeoDataFrame(
+        geometry=[box(-96.0, 29.0, -95.0, 30.0)], crs="EPSG:4326"
+    )
+
+    cohort, _ = smoke._query_cohort(
+        client,  # type: ignore[arg-type]
+        config,  # type: ignore[arg-type]
+        city_id="houston_tx",
+        initial=initial,
+        boundary=boundary,
+        analysis_crs="EPSG:5070",
+    )
+
+    assert cohort == "selected-cohort"
+    assert client.query is not None
+    assert client.query["bbox"] == [-96.0, 29.0, -95.0, 30.0]
+    assert "intersects" not in client.query
 
 
 def _source_config() -> SimpleNamespace:

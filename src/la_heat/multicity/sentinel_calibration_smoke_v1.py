@@ -23,7 +23,6 @@ import requests
 import shapely
 from pyproj import Transformer
 from rasterio.windows import Window
-from shapely.geometry import mapping
 
 from la_heat.multicity import portable_predictor_source_evidence_v1 as _source_evidence
 from la_heat.multicity import source_footprints as _footprints
@@ -54,9 +53,7 @@ from la_heat.sentinel_inventory import (
 
 ALGORITHM_VERSION: Final = "external-city-sentinel-calibration-smoke-v1"
 COMPLETE_STATE: Final = "complete_target_blind_sentinel_calibration_smoke"
-NEXT_GATE: Final = (
-    "publish_tracked_only_plan_v19_for_portable_predictor_contract_v3_decision"
-)
+NEXT_GATE: Final = "portable_predictor_contract_decision"
 MGRS = re.compile(r"^(?P<zone>\d{2})(?P<band>[C-HJ-NP-X])(?P<square>[A-Z]{2})$")
 REFLECTANCE_ASSETS: Final = ("B02", "B03", "B04", "B08", "B8A", "B11", "B12")
 ALL_ASSETS: Final = (*REFLECTANCE_ASSETS, "SCL", "product-metadata")
@@ -659,12 +656,13 @@ def _query_cohort(
     key = physical_acquisition_key(initial)
     start = key.acquired_utc - timedelta(seconds=1)
     end = key.acquired_utc + timedelta(seconds=1)
+    aoi_wgs84 = boundary.to_crs("EPSG:4326").geometry.union_all()
     query = {
         "collections": ["sentinel-2-l2a"],
         "datetime": (
             f"{start.isoformat().replace('+00:00', 'Z')}/{end.isoformat().replace('+00:00', 'Z')}"
         ),
-        "intersects": mapping(boundary.to_crs("EPSG:4326").geometry.union_all()),
+        "bbox": [float(value) for value in aoi_wgs84.bounds],
         "limit": 100,
     }
     features, raw = client.post_stac(query)
@@ -683,7 +681,7 @@ def _query_cohort(
         )
     cohort = select_reprocessing_cohort(
         records,
-        aoi_geometry_wgs84=boundary.to_crs("EPSG:4326").geometry.union_all(),
+        aoi_geometry_wgs84=aoi_wgs84,
         analysis_crs=analysis_crs,
     )
     path = _stac_snapshot_path(config, city_id, f"cohort_{key.semantic_id}")

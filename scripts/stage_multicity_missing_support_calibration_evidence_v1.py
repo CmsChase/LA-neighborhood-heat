@@ -1,4 +1,4 @@
-"""Run or authenticate the target-blind V12 support/calibration evidence."""
+"""Run or authenticate the active target-blind support/calibration evidence."""
 
 from __future__ import annotations
 
