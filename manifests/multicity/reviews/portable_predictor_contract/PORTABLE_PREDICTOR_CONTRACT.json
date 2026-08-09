@@ -1,0 +1,1130 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "portable-predictor-contract",
+  "state": "complete_portable_predictor_contract_locked",
+  "generated_at_utc": "2026-08-09T13:14:07.377121+00:00",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "outcome": "portable_predictor_build_authorized_external_targets_sealed",
+  "predecessor_evidence_state": "complete_target_blind_missing_support_and_calibration_evidence",
+  "evidence": {
+    "manifests/multicity/cities/chicago_il/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json": {
+      "path": "manifests/multicity/cities/chicago_il/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 7710,
+      "sha256": "f0434db27ae59a87a8e14a76af1969fe638b804f0ca390a2bf8bd3e96c87ea01",
+      "commit_sha256": "9d5b54df7f6562ddc2bb1540cac36c4d61b866fcb9f8a49a7c2b4e7fee3b56ef"
+    },
+    "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 6697,
+      "sha256": "96dfd6ad524a362f90f508e5a7c706a3dac41b7e89fd4b9e5ae2ab6ba557e7d8",
+      "commit_sha256": "8eb9427e9b599908e4f9c9fc04676a7962a8e1863a1603af9a581069954bed17"
+    },
+    "manifests/multicity/cities/chicago_il/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json": {
+      "path": "manifests/multicity/cities/chicago_il/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "bytes": 21688,
+      "sha256": "de5465a7fef99912223926a3c2eba2abff37605ceab08967491a25646941172d",
+      "commit_sha256": "f5210297dfc82cc8f96c4c18b24439eabed2316f179d5770294c7fcf934a5eeb"
+    },
+    "manifests/multicity/cities/houston_tx/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json": {
+      "path": "manifests/multicity/cities/houston_tx/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 7739,
+      "sha256": "060b090224e86976cdbb1537f51b8eab003249e4441b7533b076a8eb7d13d9a5",
+      "commit_sha256": "e24427bcb4a3b049f971c370f0e7ff1f6653ad7f222f4028d2ba86dec86fbb91"
+    },
+    "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 6700,
+      "sha256": "d59acaece62cdbc479ded735ce66c1f3812ffb61d816f2d0e521b2dbe8169515",
+      "commit_sha256": "b72342417216ca354318167a3f5ccae8906df309ac071b4093c5ddf3745dbbfb"
+    },
+    "manifests/multicity/cities/houston_tx/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json": {
+      "path": "manifests/multicity/cities/houston_tx/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "bytes": 21887,
+      "sha256": "b21119cbe0a221f0ca2083c91e924478ad1867afb3f58d82e94bd50b6c1cd32c",
+      "commit_sha256": "cd9ad3065998ffcd135cb95397bc517dbe21d6b907468a90b265fbb005a38b1c"
+    },
+    "manifests/multicity/cities/los_angeles_ca/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json": {
+      "path": "manifests/multicity/cities/los_angeles_ca/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 6122,
+      "sha256": "cfc228675524b20adf36935cc4a240c995af0d3437a576e07de29e6f985f1258",
+      "commit_sha256": "4fc8323acc0eca002a6d8fc82f1cc9bca721076dd50b7027efe3a3769f0c685e"
+    },
+    "manifests/multicity/cities/los_angeles_ca/geography/GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/cities/los_angeles_ca/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 8770,
+      "sha256": "af1949e3b75fb31278aa4e496f3cb628bcdc732232ba3124766d3979a6067fdf",
+      "commit_sha256": "f6105bbc1060013c98e63eafca9ca227d4d8538cfc2fb91afd38f5c616e690e3"
+    },
+    "manifests/multicity/cities/phoenix_az/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json": {
+      "path": "manifests/multicity/cities/phoenix_az/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 6059,
+      "sha256": "eb9309cb120668551090f50ea7ad5a7bc75d41afaa697de162a8454491787e04",
+      "commit_sha256": "7eb0196636025ef307c7d0c9371139a3fb1b4161949b2751a24981a77fd3aa66"
+    },
+    "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 8653,
+      "sha256": "04cd83097a56b9154a335db155ff7544fe31ef867f94cc8d07d6c5feeb8ca05e",
+      "commit_sha256": "776d752cc8d51bc0b5c30da1d77fd5fa26b9e3ad17c259d5e0ddfe4592c10eee"
+    },
+    "manifests/multicity/cities/phoenix_az/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json": {
+      "path": "manifests/multicity/cities/phoenix_az/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "bytes": 21998,
+      "sha256": "d36074e08da1130f1ee8c56fe21b48942537a9865626efa95c935a9407e8c664",
+      "commit_sha256": "1183bab7a5ebad26e809b9e3a7eacb1460a3c65f921bf6202615c79bd85b53ff"
+    },
+    "manifests/multicity/cities/phoenix_az/source_footprints/PORTABLE_SOURCE_FOOTPRINT.json": {
+      "path": "manifests/multicity/cities/phoenix_az/source_footprints/PORTABLE_SOURCE_FOOTPRINT.json",
+      "bytes": 16401,
+      "sha256": "fd558775cfb386d2237f0ab38df0edccb3354f8891fe390d71c05a958e7d24f8",
+      "commit_sha256": "bbcef320eeb9442f97f5ee764c0a2983d15d7e55c537030daf4fa23b0668d6e7"
+    },
+    "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 2665,
+      "sha256": "ec5a3bb6b97e56f18689b11a412034bd7a14d3905f3cd769f010e8c61a47c0ee",
+      "commit_sha256": "dc6e58b0081e90f603270475f471ecda533e3bff731ab6624cf7939455ca3fc3"
+    },
+    "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_WORLDCOVER_ELIGIBLE_SUPPORT_V1.json": {
+      "path": "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 4066,
+      "sha256": "4b36fc6eb22e8e1a611f29f58b2ddd3db8c1803271ed7ea6a3d2c07110578279",
+      "commit_sha256": "2a7a714df11f8f93858ce0d80185240441e8f938be4e23ade41110091f263e82"
+    },
+    "manifests/multicity/reviews/portable_predictor_contract/MISSING_SUPPORT_CALIBRATION_EVIDENCE_V1.json": {
+      "path": "manifests/multicity/reviews/portable_predictor_contract/MISSING_SUPPORT_CALIBRATION_EVIDENCE_V1.json",
+      "bytes": 16548,
+      "sha256": "ed6034d2cff73296301c130da6ab86f726b11a249b4723c0d8ce6bf0949d3b5d",
+      "commit_sha256": "1251247b821093a3208b5dc0da65b5e2ae2969e14030da83666fbd65e45e6d07"
+    },
+    "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V2.json": {
+      "path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V2.json",
+      "bytes": 54290,
+      "sha256": "0a851312b135c7c955ac238f84b7dad3a64609cf1d2f54fc343174c912bb8e34",
+      "commit_sha256": "425562de6b11254485fe14b00735d8b5da5c4de0485e789201d07e969ba49100"
+    },
+    "manifests/multicity/reviews/portable_predictor_contract/SENTINEL_CALIBRATION_SMOKE_EVIDENCE_V1.json": {
+      "path": "manifests/multicity/reviews/portable_predictor_contract/SENTINEL_CALIBRATION_SMOKE_EVIDENCE_V1.json",
+      "bytes": 2397,
+      "sha256": "8abea143903b736c88d9ed79a0153da1cdb75335bb83e99f8d9280accf34a648",
+      "commit_sha256": "801243637be27a3601f5f23f0f185afea34050ab392610118df54ec29b2155c8"
+    }
+  },
+  "contract": {
+    "eligible_support": {
+      "provider": "European Space Agency via Microsoft Planetary Computer",
+      "dataset": "ESA WorldCover 10 m 2020 v100",
+      "stac_collection": "esa-worldcover",
+      "year": 2020,
+      "asset": "map",
+      "source_nodata_class": 0,
+      "excluded_water_classes": [
+        80
+      ],
+      "categorical_resampling": "mode",
+      "target_rasterization_all_touched": false,
+      "definition": "tract_zone_and_worldcover_valid_and_not_class_80",
+      "denominator_invariant_across_dates": true,
+      "same_support_required_for_static_daymet_sentinel_and_landsat_target": true,
+      "item_selection": "all_year_2020_v100_map_assets_with_positive_intersection_to_frozen_city_grid",
+      "raw_stac_and_asset_hash_commit_required_during_build": true,
+      "exact_item_mosaic_and_eligible_cell_identity_evidence_required_before_build": true
+    },
+    "static": {
+      "minimum_valid_coverage_fraction": 0.98,
+      "quantile_method": "linear",
+      "continuous_std_ddof": 0,
+      "complete_features_may_not_be_imputed": true,
+      "nlcd_remainder_fraction_must_equal_zero": true,
+      "land_cover_group_fraction_sum_must_equal_land_cover_coverage_fraction": true,
+      "nlcd": {
+        "provider": "U.S. Geological Survey / MRLC Consortium",
+        "dataset": "National Land Cover Database 2016 original release",
+        "release_date": "2019-04-30",
+        "doi": "10.5066/P937PN4Z",
+        "native_crs": "EPSG:5070",
+        "native_resolution_m": 30,
+        "land_cover_coverage_id": "mrlc_download__NLCD_2016_Land_Cover_L48",
+        "impervious_coverage_id": "mrlc_download__NLCD_2016_Impervious_L48",
+        "land_cover_dtype": "uint8",
+        "land_cover_nodata": 0,
+        "land_cover_scale": 1.0,
+        "land_cover_offset": 0.0,
+        "land_cover_resampling": "nearest",
+        "impervious_dtype": "uint8",
+        "impervious_nodata": 127,
+        "impervious_valid_minimum": 0,
+        "impervious_valid_maximum": 100,
+        "impervious_scale_divisor": 100.0,
+        "impervious_resampling": "bilinear",
+        "source_halo_pixels": 2,
+        "groups": {
+          "open_water": [
+            11
+          ],
+          "developed_open": [
+            21
+          ],
+          "developed_low": [
+            22
+          ],
+          "developed_medium": [
+            23
+          ],
+          "developed_high": [
+            24
+          ],
+          "barren": [
+            31
+          ],
+          "forest": [
+            41,
+            42,
+            43
+          ],
+          "shrub_grass": [
+            52,
+            71
+          ],
+          "agriculture": [
+            81,
+            82
+          ],
+          "wetland": [
+            90,
+            95
+          ]
+        }
+      },
+      "terrain": {
+        "provider": "NASA/USGS via OpenTopography",
+        "dataset": "NASA SRTM Global 1 arc second V003",
+        "opentopo_id": "OTSRTM.082015.4326.1",
+        "dataset_doi": "10.5069/G9445JDF",
+        "native_crs": "EPSG:4326",
+        "native_shape": [
+          3601,
+          3601
+        ],
+        "native_dtype": "int16",
+        "native_area_or_point": "Point",
+        "native_nodata": -32768,
+        "native_scale": 1.0,
+        "native_offset": 0.0,
+        "vertical_unit": "metre",
+        "vertical_datum": "EGM96 orthometric height",
+        "tile_merge_method": "first_on_shared_native_grid_before_reprojection",
+        "elevation_resampling": "bilinear",
+        "slope_algorithm": "Horn 3x3",
+        "slope_source_halo_cells": 1,
+        "slope_pixel_size_m": 30.0
+      },
+      "water_distance": {
+        "definition": "nearest qualifying ocean-or-Great-Lakes shoreline point distance",
+        "source_id": "gshhg_2_3_7_full_shapefile",
+        "source_version": "2.3.7",
+        "source_and_point_algorithm_locked": true,
+        "source_linework": "all qualifying repaired full-resolution L1 ocean exteriors plus selected L2 180507 180515 180517 exteriors plus every directly parented L3 island exterior",
+        "distance_kernel": "exact projected point-to-line distance under the locked adaptive-radius algorithm",
+        "cell_locations": "centers_of_every_fixed_eligible_30m_cell",
+        "distance_unit": "km",
+        "aggregation_statistics": [
+          "mean",
+          "p10"
+        ],
+        "quantile_method": "linear",
+        "require_finite_distance_for_every_eligible_cell": true,
+        "phase1_pacific_feature_alias_allowed": false,
+        "census_fallback_allowed": false
+      }
+    },
+    "calendar": {
+      "formula": "theta=2*pi*(dayofyear-1)/(365+is_leap_year)",
+      "features": [
+        "calendar_doy_sin",
+        "calendar_doy_cos"
+      ],
+      "units": "unitless",
+      "known_at_prediction_origin": true
+    },
+    "daymet": {
+      "provider": "NASA ORNL DAAC",
+      "dataset": "Daymet V4 R1 daily North America",
+      "doi": "10.3334/ORNLDAAC/2129",
+      "collection_concept_id": "C2532426483-ORNL_CLOUD",
+      "native_resolution_m": 1000,
+      "native_calendar": "365_records_with_leap_Feb29_and_leap_Dec31_omitted",
+      "variables": [
+        "dayl",
+        "prcp",
+        "srad",
+        "tmax",
+        "tmin",
+        "vp"
+      ],
+      "windows_days": [
+        1,
+        3,
+        7
+      ],
+      "latest_source_offset_days": -1,
+      "window_calendar_days_must_be_complete": true,
+      "spatial_assignment": "map_each_fixed_eligible_30m_cell_center_to_one_native_Daymet_cell",
+      "spatial_aggregation": "fixed_eligible_cell_count_weighted_tract_daily_mean",
+      "weight_denominator": "same_invariant_eligible_land_pixel_count",
+      "missing_source_days_are_never_filled": true,
+      "variable_rules": {
+        "dayl": "mean_seconds_per_day",
+        "prcp": "sum_millimetres",
+        "srad": "mean_watts_per_square_metre",
+        "tmax": "mean_degrees_C",
+        "tmin": "mean_degrees_C",
+        "vp": "mean_pascals",
+        "srad_energy": "sum_of_srad_w_m2_times_dayl_s_divided_by_1000000_in_MJ_m2"
+      }
+    },
+    "sentinel": {
+      "provider": "ESA Copernicus via Microsoft Planetary Computer",
+      "stac_collection": "sentinel-2-l2a",
+      "prohibited_provider_collection": "Element84_EarthSearch_sentinel-2-l2a_legacy_harmonized_COG",
+      "required_assets": [
+        "B02",
+        "B03",
+        "B04",
+        "B08",
+        "B8A",
+        "B11",
+        "B12",
+        "SCL",
+        "product-metadata"
+      ],
+      "window_start_days_before_target": 60,
+      "window_end_days_before_target": 1,
+      "local_timezone_source": "per_city_frozen_IANA_timezone",
+      "physical_acquisition_key": "platform_acquired_utc_relative_orbit_normalized_datatake_id",
+      "reprocessing_selection_order": "coverage_desc_processing_baseline_desc_generation_time_desc_item_id_asc",
+      "global_scene_cloud_filter": false,
+      "optical_grid_resolution_m": 20.0,
+      "optical_grid_edge_anchor_x_m": 0.0,
+      "optical_grid_edge_anchor_y_m": 0.0,
+      "reflectance_resampling": "average",
+      "scl_resampling": "nearest",
+      "processing_order": "validate_phase_then_area_average_DN_and_max_saturation_mask_to_20m_then_decode_BOA_once_then_SCL_4_5_gate",
+      "boa_formula": "reflectance=(DN+BOA_ADD_OFFSET)/BOA_QUANTIFICATION_VALUE",
+      "boa_offset_applied_exactly_once": true,
+      "require_all_seven_band_offsets_for_processing_baseline_04_or_later": true,
+      "nodata_dn": 0,
+      "saturated_dn": 65535,
+      "accepted_scl_classes": [
+        4,
+        5
+      ],
+      "index_denominator_epsilon": 1e-06,
+      "minimum_acquisition_coverage_fraction": 0.8,
+      "minimum_physical_acquisitions": 3,
+      "acquisition_tract_statistic": "valid_area_average_to_30m_then_eligible_cell_valid_area_weighted_median",
+      "temporal_composite_statistic": "median_across_qualifying_physical_acquisitions",
+      "all_five_missing_when_fewer_than_three_qualifying_acquisitions": true,
+      "partial_five_feature_missingness_allowed": false,
+      "albedo_proxy": {
+        "intercept": 0.0,
+        "B02": 0.2266,
+        "B03": 0.1236,
+        "B04": 0.1573,
+        "B08": 0.3417,
+        "B11": 0.117,
+        "B12": 0.0338
+      }
+    },
+    "missingness": {
+      "infinite_values_allowed": false,
+      "static_or_calendar_missing_allowed": false,
+      "daymet_incomplete_window_action": "row_not_prediction_eligible_and_record_before_target_access",
+      "sentinel_missing_pattern": "all_five_or_none",
+      "sentinel_imputation_source": "Los_Angeles_2020_2023_train_only_feature_medians",
+      "predictor_row_eligibility_frozen_before_external_target_access": true
+    }
+  },
+  "feature_registry": {
+    "key_columns": [
+      "city_id",
+      "tract_geoid",
+      "target_date"
+    ],
+    "feature_count": 46,
+    "features": [
+      {
+        "feature_name": "nlcd_open_water_fraction",
+        "family": "land_use",
+        "source": "NLCD 2016 original release",
+        "units": "fraction",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "nlcd_developed_open_fraction",
+        "family": "land_use",
+        "source": "NLCD 2016 original release",
+        "units": "fraction",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "nlcd_developed_low_fraction",
+        "family": "land_use",
+        "source": "NLCD 2016 original release",
+        "units": "fraction",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "nlcd_developed_high_fraction",
+        "family": "land_use",
+        "source": "NLCD 2016 original release",
+        "units": "fraction",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "nlcd_barren_fraction",
+        "family": "land_use",
+        "source": "NLCD 2016 original release",
+        "units": "fraction",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "nlcd_forest_fraction",
+        "family": "land_use",
+        "source": "NLCD 2016 original release",
+        "units": "fraction",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "nlcd_shrub_grass_fraction",
+        "family": "land_use",
+        "source": "NLCD 2016 original release",
+        "units": "fraction",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "nlcd_agriculture_fraction",
+        "family": "land_use",
+        "source": "NLCD 2016 original release",
+        "units": "fraction",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "nlcd_wetland_fraction",
+        "family": "land_use",
+        "source": "NLCD 2016 original release",
+        "units": "fraction",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "impervious_mean_fraction",
+        "family": "land_use",
+        "source": "NLCD 2016 original release",
+        "units": "fraction",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "impervious_p90_fraction",
+        "family": "land_use",
+        "source": "NLCD 2016 original release",
+        "units": "fraction",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "impervious_at_least_50_fraction",
+        "family": "land_use",
+        "source": "NLCD 2016 original release",
+        "units": "fraction",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "elevation_mean_m",
+        "family": "geography",
+        "source": "SRTM GL1 v3",
+        "units": "metre",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "elevation_std_m",
+        "family": "geography",
+        "source": "SRTM GL1 v3",
+        "units": "metre",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "slope_mean_degrees",
+        "family": "geography",
+        "source": "SRTM GL1 v3 derived Horn slope",
+        "units": "degree",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "slope_p90_degrees",
+        "family": "geography",
+        "source": "SRTM GL1 v3 derived Horn slope",
+        "units": "degree",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "gshhg_ocean_great_lakes_shore_distance_mean_km",
+        "family": "geography",
+        "source": "GSHHG 2.3.7 locked ocean/Great-Lakes linework",
+        "units": "km",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "gshhg_ocean_great_lakes_shore_distance_p10_km",
+        "family": "geography",
+        "source": "GSHHG 2.3.7 locked ocean/Great-Lakes linework",
+        "units": "km",
+        "static": true,
+        "timing": "static",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "calendar_doy_sin",
+        "family": "calendar",
+        "source": "civil target date",
+        "units": "unitless",
+        "static": false,
+        "timing": "known_at_00_00_local_target_date",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "calendar_doy_cos",
+        "family": "calendar",
+        "source": "civil target date",
+        "units": "unitless",
+        "static": false,
+        "timing": "known_at_00_00_local_target_date",
+        "missingness": "must_be_finite_no_imputation",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_dayl_s_mean_prev_1d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "second_per_day",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_prcp_mm_sum_prev_1d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "mm",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_srad_w_m2_mean_prev_1d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "W_m-2",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_tmax_c_mean_prev_1d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "degree_C",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_tmin_c_mean_prev_1d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "degree_C",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_vp_pa_mean_prev_1d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "Pa",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_srad_energy_mj_m2_sum_prev_1d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "MJ_m-2",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_dayl_s_mean_prev_3d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "second_per_day",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_prcp_mm_sum_prev_3d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "mm",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_srad_w_m2_mean_prev_3d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "W_m-2",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_tmax_c_mean_prev_3d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "degree_C",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_tmin_c_mean_prev_3d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "degree_C",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_vp_pa_mean_prev_3d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "Pa",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_srad_energy_mj_m2_sum_prev_3d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "MJ_m-2",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_dayl_s_mean_prev_7d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "second_per_day",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_prcp_mm_sum_prev_7d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "mm",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_srad_w_m2_mean_prev_7d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "W_m-2",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_tmax_c_mean_prev_7d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "degree_C",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_tmin_c_mean_prev_7d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "degree_C",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_vp_pa_mean_prev_7d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "Pa",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "daymet_srad_energy_mj_m2_sum_prev_7d",
+        "family": "weather",
+        "source": "Daymet V4 R1",
+        "units": "MJ_m-2",
+        "static": false,
+        "timing": "complete_calendar_window_ending_d_minus_1",
+        "missingness": "train_only_median_if_eligible_row_has_missing_dynamic_value",
+        "b1_transfer": true,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "sentinel_ndvi_lag60",
+        "family": "satellite",
+        "source": "Sentinel-2 L2A via Microsoft Planetary Computer",
+        "units": "unitless",
+        "static": false,
+        "timing": "physical_acquisitions_d_minus_60_through_d_minus_1",
+        "missingness": "all_five_or_none_then_train_only_median",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "sentinel_evi_lag60",
+        "family": "satellite",
+        "source": "Sentinel-2 L2A via Microsoft Planetary Computer",
+        "units": "unitless",
+        "static": false,
+        "timing": "physical_acquisitions_d_minus_60_through_d_minus_1",
+        "missingness": "all_five_or_none_then_train_only_median",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "sentinel_ndwi_lag60",
+        "family": "satellite",
+        "source": "Sentinel-2 L2A via Microsoft Planetary Computer",
+        "units": "unitless",
+        "static": false,
+        "timing": "physical_acquisitions_d_minus_60_through_d_minus_1",
+        "missingness": "all_five_or_none_then_train_only_median",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "sentinel_ndbi_lag60",
+        "family": "satellite",
+        "source": "Sentinel-2 L2A via Microsoft Planetary Computer",
+        "units": "unitless",
+        "static": false,
+        "timing": "physical_acquisitions_d_minus_60_through_d_minus_1",
+        "missingness": "all_five_or_none_then_train_only_median",
+        "b1_transfer": false,
+        "m2_transfer": true
+      },
+      {
+        "feature_name": "sentinel_albedo_proxy_lag60",
+        "family": "satellite",
+        "source": "Sentinel-2 L2A via Microsoft Planetary Computer",
+        "units": "unitless",
+        "static": false,
+        "timing": "physical_acquisitions_d_minus_60_through_d_minus_1",
+        "missingness": "all_five_or_none_then_train_only_median",
+        "b1_transfer": false,
+        "m2_transfer": true
+      }
+    ],
+    "feature_order": [
+      "nlcd_open_water_fraction",
+      "nlcd_developed_open_fraction",
+      "nlcd_developed_low_fraction",
+      "nlcd_developed_high_fraction",
+      "nlcd_barren_fraction",
+      "nlcd_forest_fraction",
+      "nlcd_shrub_grass_fraction",
+      "nlcd_agriculture_fraction",
+      "nlcd_wetland_fraction",
+      "impervious_mean_fraction",
+      "impervious_p90_fraction",
+      "impervious_at_least_50_fraction",
+      "elevation_mean_m",
+      "elevation_std_m",
+      "slope_mean_degrees",
+      "slope_p90_degrees",
+      "gshhg_ocean_great_lakes_shore_distance_mean_km",
+      "gshhg_ocean_great_lakes_shore_distance_p10_km",
+      "calendar_doy_sin",
+      "calendar_doy_cos",
+      "daymet_dayl_s_mean_prev_1d",
+      "daymet_prcp_mm_sum_prev_1d",
+      "daymet_srad_w_m2_mean_prev_1d",
+      "daymet_tmax_c_mean_prev_1d",
+      "daymet_tmin_c_mean_prev_1d",
+      "daymet_vp_pa_mean_prev_1d",
+      "daymet_srad_energy_mj_m2_sum_prev_1d",
+      "daymet_dayl_s_mean_prev_3d",
+      "daymet_prcp_mm_sum_prev_3d",
+      "daymet_srad_w_m2_mean_prev_3d",
+      "daymet_tmax_c_mean_prev_3d",
+      "daymet_tmin_c_mean_prev_3d",
+      "daymet_vp_pa_mean_prev_3d",
+      "daymet_srad_energy_mj_m2_sum_prev_3d",
+      "daymet_dayl_s_mean_prev_7d",
+      "daymet_prcp_mm_sum_prev_7d",
+      "daymet_srad_w_m2_mean_prev_7d",
+      "daymet_tmax_c_mean_prev_7d",
+      "daymet_tmin_c_mean_prev_7d",
+      "daymet_vp_pa_mean_prev_7d",
+      "daymet_srad_energy_mj_m2_sum_prev_7d",
+      "sentinel_ndvi_lag60",
+      "sentinel_evi_lag60",
+      "sentinel_ndwi_lag60",
+      "sentinel_ndbi_lag60",
+      "sentinel_albedo_proxy_lag60"
+    ],
+    "semantic_sha256": "233ac39bedf7951065e772ba738fb304cba5b90ef5a403790333d37e56daf9cf",
+    "audit_only_features": [
+      "nlcd_developed_medium_fraction",
+      "nlcd_remainder_fraction"
+    ],
+    "candidate_rules_bound_for_evidence_stage": false,
+    "formal_feature_names_frozen": true,
+    "phase1_water_name_replacements": {
+      "pacific_coast_distance_mean_km": "gshhg_ocean_great_lakes_shore_distance_mean_km",
+      "pacific_coast_distance_p10_km": "gshhg_ocean_great_lakes_shore_distance_p10_km"
+    },
+    "phase1_pacific_water_names_are_historical_and_disabled": true,
+    "worldcover_is_support_not_predictor": true,
+    "prohibited_model_inputs": [
+      "city_id",
+      "tract_geoid",
+      "raw_coordinates"
+    ]
+  },
+  "model_contract": {
+    "training_city_id": "los_angeles_ca",
+    "training_years": [
+      2020,
+      2021,
+      2022,
+      2023
+    ],
+    "calibration_city_id": "los_angeles_ca",
+    "calibration_year": 2024,
+    "external_confirmation_year": 2025,
+    "training_row_weights": "each_training_date_total_weight_one_then_normalize",
+    "dynamic_imputation": "per_feature_median_fit_on_Los_Angeles_2020_2023_only",
+    "complete_static_and_calendar_imputation_allowed": false,
+    "external_city_fit_or_preprocessing_allowed": false,
+    "external_city_climatology_allowed": false,
+    "b1_transfer": {
+      "estimator": "Ridge",
+      "features": "calendar_plus_21_daymet",
+      "alpha": 10.0,
+      "fit_intercept": true,
+      "solver": "lsqr",
+      "tolerance": 0.0001,
+      "standardize_after_train_only_dynamic_median_imputation": true
+    },
+    "m2_transfer": {
+      "estimator": "HistGradientBoostingRegressor",
+      "features": "all_46_portable_features",
+      "loss": "absolute_error",
+      "learning_rate": 0.05,
+      "max_iter": 300,
+      "max_leaf_nodes": 31,
+      "min_samples_leaf": 50,
+      "l2_regularization": 1.0,
+      "early_stopping": false,
+      "random_state": 20260719,
+      "standardize": false
+    },
+    "b1_feature_order": [
+      "calendar_doy_sin",
+      "calendar_doy_cos",
+      "daymet_dayl_s_mean_prev_1d",
+      "daymet_prcp_mm_sum_prev_1d",
+      "daymet_srad_w_m2_mean_prev_1d",
+      "daymet_tmax_c_mean_prev_1d",
+      "daymet_tmin_c_mean_prev_1d",
+      "daymet_vp_pa_mean_prev_1d",
+      "daymet_srad_energy_mj_m2_sum_prev_1d",
+      "daymet_dayl_s_mean_prev_3d",
+      "daymet_prcp_mm_sum_prev_3d",
+      "daymet_srad_w_m2_mean_prev_3d",
+      "daymet_tmax_c_mean_prev_3d",
+      "daymet_tmin_c_mean_prev_3d",
+      "daymet_vp_pa_mean_prev_3d",
+      "daymet_srad_energy_mj_m2_sum_prev_3d",
+      "daymet_dayl_s_mean_prev_7d",
+      "daymet_prcp_mm_sum_prev_7d",
+      "daymet_srad_w_m2_mean_prev_7d",
+      "daymet_tmax_c_mean_prev_7d",
+      "daymet_tmin_c_mean_prev_7d",
+      "daymet_vp_pa_mean_prev_7d",
+      "daymet_srad_energy_mj_m2_sum_prev_7d"
+    ],
+    "m2_feature_order": [
+      "nlcd_open_water_fraction",
+      "nlcd_developed_open_fraction",
+      "nlcd_developed_low_fraction",
+      "nlcd_developed_high_fraction",
+      "nlcd_barren_fraction",
+      "nlcd_forest_fraction",
+      "nlcd_shrub_grass_fraction",
+      "nlcd_agriculture_fraction",
+      "nlcd_wetland_fraction",
+      "impervious_mean_fraction",
+      "impervious_p90_fraction",
+      "impervious_at_least_50_fraction",
+      "elevation_mean_m",
+      "elevation_std_m",
+      "slope_mean_degrees",
+      "slope_p90_degrees",
+      "gshhg_ocean_great_lakes_shore_distance_mean_km",
+      "gshhg_ocean_great_lakes_shore_distance_p10_km",
+      "calendar_doy_sin",
+      "calendar_doy_cos",
+      "daymet_dayl_s_mean_prev_1d",
+      "daymet_prcp_mm_sum_prev_1d",
+      "daymet_srad_w_m2_mean_prev_1d",
+      "daymet_tmax_c_mean_prev_1d",
+      "daymet_tmin_c_mean_prev_1d",
+      "daymet_vp_pa_mean_prev_1d",
+      "daymet_srad_energy_mj_m2_sum_prev_1d",
+      "daymet_dayl_s_mean_prev_3d",
+      "daymet_prcp_mm_sum_prev_3d",
+      "daymet_srad_w_m2_mean_prev_3d",
+      "daymet_tmax_c_mean_prev_3d",
+      "daymet_tmin_c_mean_prev_3d",
+      "daymet_vp_pa_mean_prev_3d",
+      "daymet_srad_energy_mj_m2_sum_prev_3d",
+      "daymet_dayl_s_mean_prev_7d",
+      "daymet_prcp_mm_sum_prev_7d",
+      "daymet_srad_w_m2_mean_prev_7d",
+      "daymet_tmax_c_mean_prev_7d",
+      "daymet_tmin_c_mean_prev_7d",
+      "daymet_vp_pa_mean_prev_7d",
+      "daymet_srad_energy_mj_m2_sum_prev_7d",
+      "sentinel_ndvi_lag60",
+      "sentinel_evi_lag60",
+      "sentinel_ndwi_lag60",
+      "sentinel_ndbi_lag60",
+      "sentinel_albedo_proxy_lag60"
+    ],
+    "uncertainty": {
+      "method": "equal_date_weighted_conformalized_quantile_regression",
+      "lower_quantile": 0.05,
+      "upper_quantile": 0.95,
+      "nominal_coverage": 0.9,
+      "quantile_model_structure": "same_as_m2_transfer_except_quantile_loss",
+      "nonconformity_score": "max(lower_prediction_minus_y,y_minus_upper_prediction,0)",
+      "calibration_distribution": "Los_Angeles_2024_rows_each_date_total_weight_one",
+      "weighted_quantile_method": "sort_value_then_target_date_then_tract_geoid_and_select_first_cumulative_weight_at_or_above_probability",
+      "conformal_probability": 0.9,
+      "corrected_lower": "lower_quantile_prediction_minus_weighted_nonconformity_quantile",
+      "corrected_upper": "upper_quantile_prediction_plus_weighted_nonconformity_quantile",
+      "abstention_width_quantile": 0.8,
+      "abstention_distribution": "Los_Angeles_2024_corrected_interval_widths_each_date_total_weight_one",
+      "abstain_rule": "corrected_interval_width_strictly_greater_than_frozen_80th_percentile",
+      "external_recalibration_allowed": false
+    }
+  },
+  "model_roles": {
+    "primary": "m2_transfer",
+    "diagnostic_baseline": "b1_transfer",
+    "b1_deployment_candidate": false,
+    "reason": "B1 has little neighborhood spatial differentiation and is retained only as a comparator."
+  },
+  "canonical_support": {
+    "city_ids": [
+      "los_angeles_ca",
+      "phoenix_az",
+      "houston_tx",
+      "chicago_il"
+    ],
+    "geography": "new_same_adapter_four_city_census_2020_geography",
+    "eligible_land": "new_four_city_worldcover_2020_v100_valid_non_water_support",
+    "worldcover_role": "support_mask_only_not_predictor",
+    "same_eligible_denominator_for_all_source_families": true,
+    "los_angeles": {
+      "primary_geoid_count": 1096,
+      "primary_geoid_set_matches_phase1": true,
+      "legacy_zone_assignment_exact": false,
+      "zone_disagreement_cell_count": 6872,
+      "minimum_tract_geometry_iou": 0.5129066492363569,
+      "decision": "new_canonical_support_wins",
+      "rebuild_2020_2024_predictors_and_target_aggregation": true,
+      "phase1_zone_mask_pixel_feature_or_aggregated_target_reuse_allowed": false
+    },
+    "phoenix": {
+      "canonical_boundary_source_footprint_restaged": true,
+      "historical_item_count_parity_required": false,
+      "external_targets_remain_sealed": true
+    }
+  },
+  "sentinel_calibration": {
+    "authority": "official_product_metadata_xml",
+    "formula": "reflectance=(DN+BOA_ADD_OFFSET)/BOA_QUANTIFICATION_VALUE",
+    "offset_applied_exactly_once": true,
+    "native_cog_identity_dn_storage_required": true,
+    "stac_raster_calibration_role": "diagnostic_only_never_decode_authority",
+    "stac_values_may_not_be_synthesized_from_xml": true,
+    "missing_stac_calibration_is_blocker": false,
+    "verified_processing_baseline": "05.11",
+    "verified_quantification_value": 10000.0,
+    "verified_band_offset_dn": -1000.0,
+    "verified_external_native_utm_zone_count": 3
+  },
+  "decision": {
+    "portable_predictor_contract_locked": true,
+    "portable_feature_names_frozen": true,
+    "predictor_build_authorized": true,
+    "model_fit_authorized": false,
+    "model_score_authorized": false,
+    "external_targets_unlocked": false,
+    "external_target_values_read": false,
+    "external_prediction_commit_exists": false,
+    "protocol_lock_created": false,
+    "next_safe_stage": "build_portable_predictors"
+  },
+  "access_contract": {
+    "external_target_or_qa_values_read": false,
+    "landsat_thermal_or_target_qa_values_read": false,
+    "predictor_construction_performed": false,
+    "model_fit_or_prediction_performed": false,
+    "final_evaluation_outputs_opened": false
+  },
+  "semantic_locks": {
+    "contract_sha256": "dc2d74bcf5c9d57f7afd1c7b09246660db8ae6c5140b63ec46dac984efad4894",
+    "feature_records_sha256": "233ac39bedf7951065e772ba738fb304cba5b90ef5a403790333d37e56daf9cf",
+    "model_contract_sha256": "c7af930851beb2f89dd37da7d7a4ee8511e377cd92d25816036ac22b5369c502"
+  },
+  "commit_sha256": "b92be8575e836157daa39e94f6720e01802c41143a396ba1a97fad5f40499bd1"
+}

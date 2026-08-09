@@ -2,8 +2,10 @@
 
 The active continuation is intentionally small:
 
-- `missing_support_calibration_evidence_v1.py` — orchestrates the current
-  public-only evidence stage;
+- `portable_predictor_contract.py` — locks and authenticates the current
+  46-feature contract;
+- `phoenix_source_footprint_restage.py` — refreshes Phoenix public source
+  metadata against the canonical boundary;
 - `four_city_geography_contract_v1.py` — common Census geography;
 - `worldcover_eligible_support_evidence_v1.py` — common eligible-land support;
 - `sentinel_calibration_smoke_v1.py` — real Sentinel-2 metadata and small native

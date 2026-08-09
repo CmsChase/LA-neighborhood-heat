@@ -1,52 +1,48 @@
 {
   "schema_version": 1,
   "revision": "2026-08-consolidated",
-  "stage_id": "target_blind_missing_support_and_calibration_evidence_v1",
+  "stage_id": "portable_predictor_build",
   "state": "ready",
-  "next_safe_stage": "stage_target_blind_missing_support_and_calibration_evidence_v1",
-  "summary": "Complete the public-data support and Sentinel calibration evidence for Los Angeles, Phoenix, Houston, and Chicago.",
+  "next_safe_stage": "build_portable_predictors",
+  "summary": "Build the frozen 46-feature public predictor surfaces on the canonical four-city support.",
   "permissions": {
-    "run_public_evidence": true,
-    "build_predictor": false,
-    "fit_or_score_model": false,
+    "read_public_predictor_sources": true,
+    "build_predictor": true,
+    "fit_model": false,
+    "score_model": false,
     "read_external_targets": false
   },
   "locks": {
+    "portable_predictor_contract_locked": true,
+    "portable_feature_names_frozen": true,
+    "predictor_build_authorized": true,
+    "model_fit_authorized": false,
+    "model_score_authorized": false,
     "protocol_locked": false,
     "external_targets_unlocked": false,
     "external_target_values_read": false,
-    "external_prediction_commit_exists": false,
-    "portable_water_distance_source_locked": true,
-    "portable_water_distance_algorithm_locked": true,
-    "portable_water_distance_feature_names_frozen": false,
-    "predictor_build_authorized": false,
-    "protocol_lock_created": false
+    "external_prediction_commit_exists": false
   },
-  "tracked_output_paths": [
-    "manifests/multicity/cities/los_angeles_ca/geography/GEOGRAPHY_CONTRACT_V1.json",
-    "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json",
-    "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY_CONTRACT_V1.json",
-    "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY_CONTRACT_V1.json",
-    "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_GEOGRAPHY_CONTRACT_V1.json",
-    "manifests/multicity/cities/los_angeles_ca/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
-    "manifests/multicity/cities/phoenix_az/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
-    "manifests/multicity/cities/houston_tx/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
-    "manifests/multicity/cities/chicago_il/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
-    "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
-    "manifests/multicity/cities/phoenix_az/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
-    "manifests/multicity/cities/houston_tx/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
-    "manifests/multicity/cities/chicago_il/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
-    "manifests/multicity/reviews/portable_predictor_contract/SENTINEL_CALIBRATION_SMOKE_EVIDENCE_V1.json",
-    "manifests/multicity/reviews/portable_predictor_contract/MISSING_SUPPORT_CALIBRATION_EVIDENCE_V1.json"
-  ],
+  "inputs": {
+    "contract": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT.json",
+    "phoenix_source_footprint": "manifests/multicity/cities/phoenix_az/source_footprints/PORTABLE_SOURCE_FOOTPRINT.json",
+    "canonical_city_ids": [
+      "los_angeles_ca",
+      "phoenix_az",
+      "houston_tx",
+      "chicago_il"
+    ]
+  },
   "current_implementation": {
-    "sentinel_cohort_query": "city_boundary_bbox_then_exact_physical_acquisition_key_filter",
-    "resume_existing_checkpoints": true,
-    "next_gate": "portable_predictor_contract_decision"
+    "builder_status": "reuse_audit_pending",
+    "worker_running": false,
+    "long_computation_started": false,
+    "next_action": "audit_existing_feature_builders_then_implement_one_resumable_runner"
   },
   "workflow_policy": {
     "numbered_transitions_through_v18_are_history_only": true,
     "new_hotfix_version_files": false,
-    "focused_tests_for_changed_behavior": true
+    "focused_tests_for_changed_behavior": true,
+    "visible_resume_status_required_before_long_compute": true
   }
 }

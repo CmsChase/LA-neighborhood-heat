@@ -1,0 +1,57 @@
+"""Lock or verify the final portable four-city predictor contract."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from collections.abc import Sequence
+from pathlib import Path
+
+from la_heat.multicity.portable_predictor_contract import (
+    lock_portable_predictor_contract,
+    verify_portable_predictor_contract,
+)
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/multicity/experiment.toml"),
+    )
+    parser.add_argument("--check-only", action="store_true")
+    return parser
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
+    payload = (
+        verify_portable_predictor_contract(args.config)
+        if args.check_only
+        else lock_portable_predictor_contract(args.config)
+    )
+    print(
+        json.dumps(
+            {
+                "state": payload["state"],
+                "primary_model": payload["model_roles"]["primary"],
+                "diagnostic_baseline": payload["model_roles"]["diagnostic_baseline"],
+                "feature_count": payload["feature_registry"]["feature_count"],
+                "predictor_build_authorized": payload["decision"][
+                    "predictor_build_authorized"
+                ],
+                "external_targets_unlocked": payload["decision"][
+                    "external_targets_unlocked"
+                ],
+                "next_safe_stage": payload["decision"]["next_safe_stage"],
+                "commit_sha256": payload["commit_sha256"],
+            },
+            indent=2,
+        )
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

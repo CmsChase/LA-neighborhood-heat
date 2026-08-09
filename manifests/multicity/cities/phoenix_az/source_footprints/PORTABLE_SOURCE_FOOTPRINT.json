@@ -1,0 +1,432 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "phoenix-portable-source-footprint-restage",
+  "state": "complete_target_blind_portable_source_footprint",
+  "generated_at_utc": "2026-08-09T13:08:53.712364+00:00",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "city": {
+    "id": "phoenix_az",
+    "name": "Phoenix",
+    "role": "external_confirmation",
+    "target_values_status": "sealed",
+    "timezone": "America/Phoenix"
+  },
+  "purpose": "refresh_public_metadata_for_canonical_four_city_support",
+  "geography_input": {
+    "path": "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json",
+    "bytes": 8653,
+    "sha256": "04cd83097a56b9154a335db155ff7544fe31ef867f94cc8d07d6c5feeb8ca05e",
+    "manifest_commit_sha256": "776d752cc8d51bc0b5c30da1d77fd5fa26b9e3ad17c259d5e0ddfe4592c10eee",
+    "city_boundary": {
+      "sha256": "17b53a054eb6cd70811476763e4c5034d848535e4157c520be55c927cf3f2ad9",
+      "bytes": 115164,
+      "rows": 1,
+      "schema_sha256": "a263767165e1033548d4368b03e52a80d798c039670b1f189e99e49e3d134374",
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/city_boundary.parquet",
+      "geometry_semantic_sha256": "e83742993ea5f3688da024fad1a0a876f4607735a26735fdf66d81486c22bb72",
+      "full_row_semantic_sha256": "6be0dc756cd6d5b55fd9fcc7ae597c2f4c32606b842cf082555581372cfb2745"
+    },
+    "bbox_wgs84": [
+      -112.32406499972545,
+      33.290259999723524,
+      -111.92552100007323,
+      33.91839100033971
+    ]
+  },
+  "source_config": {
+    "path": "configs/multicity/source_footprints_v1.toml",
+    "bytes": 1818,
+    "sha256": "54e572e0e9e8925e11d634b39799d9e061a6c84ecf2430614e018ffc8cc5936d"
+  },
+  "selection_contract": {
+    "analysis_crs": "EPSG:5070",
+    "spatial_rule": "strictly_positive_city_intersection_area",
+    "windows_derived_from_canonical_city_boundary": true,
+    "no_external_target_dates_selected": true
+  },
+  "queries": {
+    "landsat": {
+      "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "query": {
+        "collections": [
+          "landsat-c2-l2"
+        ],
+        "bbox": [
+          -112.32406499972545,
+          33.290259999723524,
+          -111.92552100007323,
+          33.91839100033971
+        ],
+        "datetime": "2025-05-01T07:00:00Z/2025-11-01T07:00:00Z",
+        "limit": 100,
+        "fields": {
+          "include": [
+            "id",
+            "collection",
+            "geometry",
+            "bbox",
+            "properties.datetime",
+            "properties.platform",
+            "properties.landsat:wrs_path",
+            "properties.landsat:wrs_row",
+            "properties.landsat:collection_category",
+            "properties.landsat:correction"
+          ],
+          "exclude": [
+            "assets",
+            "links"
+          ]
+        },
+        "query": {
+          "platform": {
+            "in": [
+              "landsat-8",
+              "landsat-9"
+            ]
+          },
+          "landsat:collection_category": {
+            "eq": "T1"
+          },
+          "landsat:correction": {
+            "eq": "L2SP"
+          }
+        }
+      },
+      "query_sha256": "e90abac0462df53ddf93ecb232a972d591c05c9970488e98f91cfc68b53424dd",
+      "page_count": 1,
+      "query_response_items": 67,
+      "unique_items": 67,
+      "duplicate_items": 0,
+      "pagination_exhausted": true,
+      "assets_excluded": true
+    },
+    "sentinel": {
+      "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "query": {
+        "collections": [
+          "sentinel-2-l2a"
+        ],
+        "bbox": [
+          -112.32406499972545,
+          33.290259999723524,
+          -111.92552100007323,
+          33.91839100033971
+        ],
+        "datetime": "2025-03-02T07:00:00Z/2025-10-31T07:00:00Z",
+        "limit": 100,
+        "fields": {
+          "include": [
+            "id",
+            "collection",
+            "geometry",
+            "bbox",
+            "properties.datetime",
+            "properties.platform",
+            "properties.s2:mgrs_tile"
+          ],
+          "exclude": [
+            "assets",
+            "links"
+          ]
+        }
+      },
+      "query_sha256": "0455436b35ac580c83a0af18cacf5a6ba2192bf7547bb5633ab574826dfd80d4",
+      "page_count": 5,
+      "query_response_items": 494,
+      "unique_items": 494,
+      "duplicate_items": 0,
+      "pagination_exhausted": true,
+      "assets_excluded": true
+    },
+    "daymet": {
+      "endpoint": "https://cmr.earthdata.nasa.gov/search/granules.json",
+      "params": {
+        "collection_concept_id": "C2532426483-ORNL_CLOUD",
+        "temporal": "2025-01-01T00:00:00Z,2025-12-31T23:59:59Z",
+        "bounding_box": "-112.3240649997,33.2902599997,-111.9255210001,33.9183910003",
+        "page_size": 2000
+      },
+      "query_sha256": "c4821453cb453d57cd6715226aadb50f87a6e591513275576a790d3a8bb9d493",
+      "http_status": 200,
+      "response_headers": {
+        "Content-Type": "application/json;charset=utf-8",
+        "CMR-Request-Id": "1c11bb67-f7d4-4cea-a4bf-9d62cd0e3a66",
+        "CMR-Hits": "7"
+      },
+      "returned_feed_entries": 7,
+      "selected_granules": 6
+    },
+    "terrain": {
+      "method": "HEAD",
+      "object_count": 2,
+      "payload_bytes_read": 0
+    }
+  },
+  "source_families": {
+    "landsat_wrs": {
+      "member_count": 3,
+      "member_ids": [
+        "WRS2-036037",
+        "WRS2-037036",
+        "WRS2-037037"
+      ],
+      "item_count": 65,
+      "platforms": [
+        "landsat-8",
+        "landsat-9"
+      ],
+      "item_metadata_semantic_sha256": "4271580a4c577136fadca596fa71bebe1768b296b3c47cdaea787aa4835b0708",
+      "unit_semantic_sha256": "c1264ab4b26877c65c1ab4757e648e83786d90084b0dccf86be04290c0a5cc90"
+    },
+    "sentinel_mgrs": {
+      "member_count": 4,
+      "member_ids": [
+        "MGRS-12SUB",
+        "MGRS-12SUC",
+        "MGRS-12SVB",
+        "MGRS-12SVC"
+      ],
+      "item_count": 493,
+      "platforms": [
+        "sentinel-2a",
+        "sentinel-2b",
+        "sentinel-2c"
+      ],
+      "item_metadata_semantic_sha256": "cdbc51870bb3a00709b593754baa20f0365387299b2fb42635d54bc722152dcf",
+      "unit_semantic_sha256": "92e9d879724772aeb516d66954ca038552c75a3e60df2453f07d5277b5876c38"
+    },
+    "daymet_cells": {
+      "member_count": 1462,
+      "member_id_set_sha256": "dce2d6853b01420a98a2eabf1527f568f2a038a51e85ed1dfc340c7daa63c6d4",
+      "granule_count": 6,
+      "granule_concept_ids": [
+        "G4194395888-ORNL_CLOUD",
+        "G4194396069-ORNL_CLOUD",
+        "G4194396402-ORNL_CLOUD",
+        "G4194396426-ORNL_CLOUD",
+        "G4194396868-ORNL_CLOUD",
+        "G4194397011-ORNL_CLOUD"
+      ],
+      "granule_semantic_sha256": "79a1a923db2447d0fe9a9f9a8e47cc147ee4feb9ae7d2bc85c9859e5008f807f",
+      "cell_semantic_sha256": "1d1d8aff74fb7c7233eb83f3fce5a524855c972771d69b575ef4066edac4f48a",
+      "window": {
+        "full_grid_shape": [
+          8075,
+          7814
+        ],
+        "full_grid_transform": [
+          1000.0,
+          0.0,
+          -4560750.0,
+          0.0,
+          -1000.0,
+          4984500.0
+        ],
+        "grid_crs": "+proj=lcc +lat_1=25 +lat_2=60 +lat_0=42.5 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs",
+        "resolution_m": 1000,
+        "projected_bbox_m": [
+          -1106730.15,
+          -903271.155,
+          -1061591.608,
+          -831448.099
+        ],
+        "minimal_y_indices_inclusive": [
+          5815,
+          5887
+        ],
+        "minimal_x_indices_inclusive": [
+          3454,
+          3499
+        ],
+        "halo_cells": 1,
+        "y_indices_inclusive": [
+          5814,
+          5888
+        ],
+        "x_indices_inclusive": [
+          3453,
+          3500
+        ],
+        "window_shape": [
+          75,
+          48
+        ],
+        "window_cell_count": 3600,
+        "candidate_grid_cells_only": true
+      }
+    },
+    "terrain_windows": {
+      "member_count": 2,
+      "member_ids": [
+        "N33W112",
+        "N33W113"
+      ],
+      "tile_semantic_sha256": "0f33c68f032d4c4cc930b63a163dd143236b5445c5a82fcace154730cfd16ef5",
+      "all_objects_head_verified": true,
+      "content_sha256_frozen": false,
+      "raster_schema_verified": false
+    }
+  },
+  "comparison_to_historical_snapshot": {
+    "historical_manifest": {
+      "path": "manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json",
+      "bytes": 18861,
+      "sha256": "76a667f559a98bf6281d7f8af71fab18c2fac8d3701ea91813eef8ff8ef479df"
+    },
+    "families": {
+      "landsat_wrs": {
+        "historical_member_count": 3,
+        "current_member_count": 3,
+        "historical_only_member_ids": [],
+        "current_only_member_ids": [],
+        "historical_item_count": 65,
+        "current_item_count": 65
+      },
+      "sentinel_mgrs": {
+        "historical_member_count": 4,
+        "current_member_count": 4,
+        "historical_only_member_ids": [],
+        "current_only_member_ids": [],
+        "historical_item_count": 493,
+        "current_item_count": 493
+      },
+      "daymet_cells": {
+        "historical_member_count": 1461,
+        "current_member_count": 1462,
+        "historical_only_member_ids": [],
+        "current_only_member_ids": []
+      },
+      "terrain_windows": {
+        "historical_member_count": 2,
+        "current_member_count": 2,
+        "historical_only_member_ids": [],
+        "current_only_member_ids": []
+      }
+    }
+  },
+  "access_contract": {
+    "metadata_responses_only": true,
+    "stac_fields_excluded_assets": true,
+    "stac_asset_objects_returned": false,
+    "stac_asset_hrefs_read": false,
+    "asset_sign_calls": 0,
+    "landsat_asset_http_requests": 0,
+    "landsat_thermal_values_read": false,
+    "landsat_target_qa_values_read": false,
+    "sentinel_asset_http_requests": 0,
+    "sentinel_band_values_read": false,
+    "daymet_data_download_requests": 0,
+    "daymet_values_read": false,
+    "terrain_get_requests": 0,
+    "terrain_values_read": false,
+    "raster_payload_bytes_read": 0,
+    "external_lst_values_read": false,
+    "predictor_construction_performed": false,
+    "model_fit_performed": false,
+    "model_predictions_computed": false
+  },
+  "raw_files": {
+    "data/raw/multicity/phoenix_az/portable_source_footprint/daymet/cmr_granules_2025.json": {
+      "path": "data/raw/multicity/phoenix_az/portable_source_footprint/daymet/cmr_granules_2025.json",
+      "bytes": 32179,
+      "sha256": "a60333db5ff02b9a01dd984f2aa1997df1e8fc19cda2922fe226061ec0207bbf"
+    },
+    "data/raw/multicity/phoenix_az/portable_source_footprint/landsat/stac_page_001.json": {
+      "path": "data/raw/multicity/phoenix_az/portable_source_footprint/landsat/stac_page_001.json",
+      "bytes": 76589,
+      "sha256": "54b60d1aadbe0756fb5cbbf06fcb699097e7bd286a01832a256f43741a417618"
+    },
+    "data/raw/multicity/phoenix_az/portable_source_footprint/sentinel/stac_page_001.json": {
+      "path": "data/raw/multicity/phoenix_az/portable_source_footprint/sentinel/stac_page_001.json",
+      "bytes": 134041,
+      "sha256": "b59dc7c64363d4a625b485d54e64bfbd18bc339d45f0ac7a4e50861ff90b8266"
+    },
+    "data/raw/multicity/phoenix_az/portable_source_footprint/sentinel/stac_page_002.json": {
+      "path": "data/raw/multicity/phoenix_az/portable_source_footprint/sentinel/stac_page_002.json",
+      "bytes": 133806,
+      "sha256": "816ba9f63437a3624e26f87574bc62bbd0c15e8fb8829e26fee9d3678ff5064a"
+    },
+    "data/raw/multicity/phoenix_az/portable_source_footprint/sentinel/stac_page_003.json": {
+      "path": "data/raw/multicity/phoenix_az/portable_source_footprint/sentinel/stac_page_003.json",
+      "bytes": 134857,
+      "sha256": "a75039f103459b9c6e5814f8d002eea2f502493d6fda307647bcdcbae0bb2122"
+    },
+    "data/raw/multicity/phoenix_az/portable_source_footprint/sentinel/stac_page_004.json": {
+      "path": "data/raw/multicity/phoenix_az/portable_source_footprint/sentinel/stac_page_004.json",
+      "bytes": 133731,
+      "sha256": "755e5f0a2e3d036206d07b454f9c342b0cd3b01b1a46f61c0ec473808046afc7"
+    },
+    "data/raw/multicity/phoenix_az/portable_source_footprint/sentinel/stac_page_005.json": {
+      "path": "data/raw/multicity/phoenix_az/portable_source_footprint/sentinel/stac_page_005.json",
+      "bytes": 137510,
+      "sha256": "4b5d93ac384da8666fbcaeae00b9d78ae53742b8ab6f1250aca6afec799c108a"
+    },
+    "data/raw/multicity/phoenix_az/portable_source_footprint/terrain/N33W112_head.json": {
+      "path": "data/raw/multicity/phoenix_az/portable_source_footprint/terrain/N33W112_head.json",
+      "bytes": 537,
+      "sha256": "f9067aec04c300432ff09363dc946b1db794dc383ad2edc0291fce13dbc432dc"
+    },
+    "data/raw/multicity/phoenix_az/portable_source_footprint/terrain/N33W113_head.json": {
+      "path": "data/raw/multicity/phoenix_az/portable_source_footprint/terrain/N33W113_head.json",
+      "bytes": 537,
+      "sha256": "14f67e4ab6312ef79ea3c5e7631f2f4c3b73984e591ddc4b3cce39b22cc951a4"
+    }
+  },
+  "output_tables": {
+    "landsat_items": {
+      "sha256": "ddea00d964cf6116b967411af53b38aca02b52ccee0890ad9bfff3c90312ab64",
+      "bytes": 27056,
+      "rows": 65,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/phoenix_az/portable_source_footprint/landsat_metadata_items.parquet",
+      "geometry_semantic_sha256": "a41e34e1b732f4b7aa3675ec23facd9a9bfa7831e39af2fdfaf94cff1c21e98e"
+    },
+    "sentinel_items": {
+      "sha256": "2ddb612f2fa963146a3dc954af75c8b9b202ad3ab4c4092ea98240a614f85653",
+      "bytes": 99988,
+      "rows": 493,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/phoenix_az/portable_source_footprint/sentinel_metadata_items.parquet",
+      "geometry_semantic_sha256": "eeaf7ab6711efa5490eee8e4eefe8a2a87bf19216d8030c9c1c97ab788d7c712"
+    },
+    "optical_units": {
+      "sha256": "60527f96da6ec91cb72a6519b4309f1f6fd9d84afcbee255de178ce6ae142c4b",
+      "bytes": 20205,
+      "rows": 7,
+      "schema_sha256": "0ca7f481c45996c15a79804fa9d7f07c71a048b31792794b0a1d95fd5363e365",
+      "path": "data/processed/multicity/phoenix_az/portable_source_footprint/optical_source_units.parquet",
+      "geometry_semantic_sha256": "9d5eeffc60c204895e02953ab76df6e907140516006415f1bac25526c60ff53b"
+    },
+    "daymet_granules": {
+      "sha256": "37d28262c7bdeff82f259eb1aef52e6f611e35e5f4051515d0b9427f805d0957",
+      "bytes": 6686,
+      "rows": 6,
+      "schema_sha256": "ef120b77a9d505f60d384f7b004e2fde2a26f9315443ca213e63ffa9f4cb5ed1",
+      "path": "data/processed/multicity/phoenix_az/portable_source_footprint/daymet_granules.parquet"
+    },
+    "daymet_cells": {
+      "sha256": "477b5e0cf7f4936965d60ddd85d62842391cad563922dca5151830b4efc7b84c",
+      "bytes": 72143,
+      "rows": 1462,
+      "schema_sha256": "3c7c59a4d863fd8522309c8eb9fe6aad09fb277c8978ee25d1b980d50cc2ce13",
+      "path": "data/processed/multicity/phoenix_az/portable_source_footprint/daymet_intersecting_cells.parquet",
+      "geometry_semantic_sha256": "fe7656154eed00f2a571f1a6cdff414ea89499fea96ed3fea557962cee637120"
+    },
+    "terrain_tiles": {
+      "sha256": "1e0732828b79156fb6ff601339bb491b629890de611f35638d53809a4bf5936c",
+      "bytes": 16522,
+      "rows": 2,
+      "schema_sha256": "19e0b079235ddc5071be7509574af356752328029aaf72f5f8b83cdd63adc2e9",
+      "path": "data/processed/multicity/phoenix_az/portable_source_footprint/terrain_tiles.parquet",
+      "geometry_semantic_sha256": "b39fe76fe7a0f65bc5573546efd4e4bb81fd1bcc314f7446fdc46b436c73770c"
+    }
+  },
+  "decision": {
+    "canonical_geography_used": true,
+    "source_footprint_blocker_closed": true,
+    "predictor_build_performed": false,
+    "external_targets_remain_sealed": true,
+    "next_gate": "portable_predictor_contract_decision"
+  },
+  "commit_sha256": "bbcef320eeb9442f97f5ee764c0a2983d15d7e55c537030daf4fa23b0668d6e7"
+}
