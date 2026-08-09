@@ -29,7 +29,7 @@ ALGORITHM_VERSION: Final = "multicity-missing-support-calibration-evidence-v1"
 STAGE_ID: Final = "target_blind_missing_support_and_calibration_evidence_v1"
 COMPLETE_STATE: Final = "complete_target_blind_missing_support_and_calibration_evidence"
 CONFIG_PATH: Final = "configs/multicity/missing_support_calibration_evidence_v1.toml"
-CONFIG_SHA256: Final = "f0b066da60768f6931e26e0498fba8bfd230af20009708d8991e3bfacb39d586"
+CONFIG_SHA256: Final = "74207f529d410047c8e65971e92f6ce485056a3b91c820df4f74c0b61a2ac9c7"
 PLAN_PATH: Final = "manifests/multicity/ACTIVE_STAGE.json"
 PREDECESSOR_TERMINAL_PATH: Final = (
     "manifests/multicity/reviews/portable_predictor_contract/"
@@ -241,7 +241,7 @@ def expected_plan_authorization_scope() -> dict[str, Any]:
             "redirects_allowed": False,
             "maximum_geography_requests": 64,
             "maximum_worldcover_requests": 64,
-            "maximum_sentinel_requests": 1024,
+            "maximum_sentinel_requests": 8192,
             "maximum_worldcover_asset_bytes": 12_884_901_888,
             "maximum_sentinel_probe_bytes": 1_073_741_824,
             "signed_urls_persisted": False,

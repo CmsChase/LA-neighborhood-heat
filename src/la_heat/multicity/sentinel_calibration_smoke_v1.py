@@ -77,7 +77,10 @@ class _SentinelClient:
     def _count(self) -> None:
         self.request_count += 1
         if self.request_count > self.maximum_requests:
-            raise MissingSupportCalibrationEvidenceV1Error("Sentinel smoke request limit exceeded.")
+            raise MissingSupportCalibrationEvidenceV1Error(
+                f"Sentinel smoke request limit exceeded "
+                f"({self.request_count} > {self.maximum_requests})."
+            )
 
     def _read_bounded_body(
         self,

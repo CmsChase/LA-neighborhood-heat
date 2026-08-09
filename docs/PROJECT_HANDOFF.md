@@ -38,14 +38,19 @@ V20, and so on. The only current stage record is:
 5. The former oversized Sentinel cohort request has been fixed: STAC discovery
    now uses the city bounding box, then keeps only records with the exact frozen
    physical acquisition key and computes coverage against the true city shape.
+6. The stage request budget is 8,192 counted range requests. The earlier 1,024
+   limit was smaller than the legal workload: the completed Phoenix probe alone
+   used 937 requests, while the stage permits up to eight probe groups. The
+   independent 1 GB response-byte ceiling is unchanged.
 
 ## Active task and resume point
 
 No Python worker should be running at handoff.
 
 The active public-only evidence stage previously stopped on Houston because a
-full city MultiPolygon caused HTTP 413 at the Planetary Computer STAC endpoint.
-The code fix and a focused regression test are now in the repository. Resume
+full city MultiPolygon caused HTTP 413 and then because the stage-wide counted
+range-request limit was too small for the already frozen probe count. Both
+technical fixes and focused regression tests are now in the repository. Resume
 from the existing eleven checkpoints with:
 
 ```powershell
