@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "four-city-worldcover-eligible-support-v1",
+  "state": "complete_target_blind_city_worldcover_support",
+  "generated_at_utc": "2026-08-03T18:45:41.777617+00:00",
+  "city_id": "phoenix_az",
+  "plan_authorization": {
+    "path": "manifests/multicity/PLAN_READINESS.json",
+    "publication_git_commit": "0a83032c73c2cfe2b925278702970b3ab74551bb",
+    "bytes": 60178,
+    "file_sha256": "ab1e361eb1f395764754a0adecff42f2ec5220642d0157d2e6d172d8ba555d6b",
+    "commit_sha256": "95c223b2abe826f9121aa451e4ea9e06fa459b1b8aa27c31c8be59f24f51d7de"
+  },
+  "geography": {
+    "path": "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json",
+    "commit_sha256": "776d752cc8d51bc0b5c30da1d77fd5fa26b9e3ad17c259d5e0ddfe4592c10eee",
+    "primary_tract_count": 375
+  },
+  "source": {
+    "provider": "European Space Agency via Microsoft Planetary Computer",
+    "collection": "esa-worldcover",
+    "year": 2020,
+    "version": "v100",
+    "asset": "map",
+    "query": {
+      "query_sha256": "2c4673804e07234257ce0d7cfb71fe31e3629cf01957f3eaf9c9f915f86962f0",
+      "raw_response": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/worldcover/phoenix_az/stac_search.json",
+        "bytes": 5210,
+        "sha256": "c288473aa708e91174292630fdd5a677b9e5ac2c1abd921daf7902b8359f1cff"
+      }
+    },
+    "items": [
+      {
+        "item_id": "ESA_WorldCover_10m_2020_v100_N33W114",
+        "tile_id": "N33W114",
+        "unsigned_asset_url": "https://ai4edataeuwest.blob.core.windows.net/esa-worldcover/v100/2020/map/ESA_WorldCover_10m_2020_v100_N33W114_Map.tif",
+        "stac_asset_keys": [
+          "input_quality",
+          "map",
+          "rendered_preview",
+          "tilejson"
+        ],
+        "stac_geometry_sha256": "8fe6c627bcb2651adb8b27e5cec4d9c8f9f7a1cdfbce5e833dc4f4d23363b819",
+        "asset": {
+          "bytes": 111626750,
+          "sha256": "f1d043ac86cedea5d6f1e692266587e4640ece5aa9e7911d41a1ca8e1e2c71bc",
+          "etag": "\"0x8D993EB39EB049F\"",
+          "cache_path": "data/raw/multicity/worldcover_2020_v100/assets_by_sha256/f1d043ac86cedea5d6f1e692266587e4640ece5aa9e7911d41a1ca8e1e2c71bc.tif"
+        },
+        "schema": {
+          "crs": "EPSG:4326",
+          "shape": [
+            36000,
+            36000
+          ],
+          "transform": [
+            8.333333333333333e-05,
+            0.0,
+            -114.0,
+            0.0,
+            -8.333333333333333e-05,
+            36.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "resolution": [
+            8.333333333333333e-05,
+            8.333333333333333e-05
+          ],
+          "dtype": "uint8",
+          "nodata": 0.0,
+          "class_domain": [
+            10,
+            20,
+            30,
+            40,
+            50,
+            60,
+            80,
+            90,
+            100
+          ],
+          "raster_footprint_wgs84_sha256": "8fe6c627bcb2651adb8b27e5cec4d9c8f9f7a1cdfbce5e833dc4f4d23363b819"
+        }
+      }
+    ]
+  },
+  "grid": {
+    "crs": "EPSG:32612",
+    "resolution_m": 30.0,
+    "anchor_x_m": 15.0,
+    "anchor_y_m": 15.0,
+    "bounds": [
+      376995.0,
+      3683925.0,
+      414255.0,
+      3753765.0
+    ],
+    "shape": [
+      2328,
+      1242
+    ],
+    "transform": [
+      30.0,
+      0.0,
+      376995.0,
+      0.0,
+      -30.0,
+      3753765.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e"
+  },
+  "mosaic": {
+    "native_mosaic_before_reprojection": true,
+    "item_order": [
+      "ESA_WorldCover_10m_2020_v100_N33W114"
+    ],
+    "reverse_order_parity": true,
+    "resampling": "mode",
+    "class_domain": [
+      0,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      80,
+      90
+    ],
+    "class_raster_sha256": "4299f07d315d34342fd6a9536982501c9f983a7ab19ca9c9742fbfefea58050e"
+  },
+  "support": {
+    "zone_raster_sha256": "ff3853c72b8ab5630708ed0e3c7fe6cf623241973eca501a5191261a80b496b1",
+    "worldcover_class_raster_sha256": "4299f07d315d34342fd6a9536982501c9f983a7ab19ca9c9742fbfefea58050e",
+    "eligible_mask_sha256": "50da18ab7c945a8fcc45ad105cdefd84d3a957150304e852b47df360fb9ebc19",
+    "city_support_identity_sha256": "15408d4d9a032566f785e5ac7841bf1115a4a6b892b12bedfec77f1f356c67d7",
+    "tract_count": 375,
+    "total_zone_cells": 1365530,
+    "total_eligible_cells": 1363030,
+    "all_tracts_positive_zone_and_eligible": true,
+    "denominator_invariant_across_dates": true
+  },
+  "outputs": {
+    "tract_zones_30m": {
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/worldcover/phoenix_az/tract_zones_30m.tif",
+      "bytes": 59315,
+      "sha256": "3b8a45db97949cbd76825836543029d113bf14677d4181beddb303945936a565"
+    },
+    "worldcover_classes_30m": {
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/worldcover/phoenix_az/worldcover_classes_30m.tif",
+      "bytes": 411576,
+      "sha256": "dc9488bba6958d70325cd6db537891ed068513f1d4ef8bc143a5033f96069d6e"
+    },
+    "eligible_mask_30m": {
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/worldcover/phoenix_az/eligible_mask_30m.tif",
+      "bytes": 14724,
+      "sha256": "453182aef6be8b92fd9bbc2b59df959729388de5c5c895780d9bd46b4f18f5c9"
+    },
+    "tract_support": {
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/worldcover/phoenix_az/tract_eligible_support.parquet",
+      "bytes": 43753,
+      "sha256": "fbf54d5d083e1396e462d9fd0ab261028fb490e01e572df604f573666ab3d50d"
+    }
+  },
+  "access_contract": {
+    "worldcover_static_class_values_read": true,
+    "external_target_or_qa_values_read": false,
+    "landsat_thermal_values_read": false,
+    "sentinel_values_read": false,
+    "predictor_values_computed": false,
+    "model_fit_or_prediction_performed": false,
+    "final_evaluation_outputs_opened": false
+  },
+  "commit_sha256": "7eb0196636025ef307c7d0c9371139a3fb1b4161949b2751a24981a77fd3aa66"
+}

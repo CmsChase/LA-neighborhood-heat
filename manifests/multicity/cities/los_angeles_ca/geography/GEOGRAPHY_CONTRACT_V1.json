@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "four-city-census-geography-contract-v1",
+  "state": "complete_target_blind_city_geography_evidence",
+  "generated_at_utc": "2026-08-03T10:53:32.988884+00:00",
+  "city": {
+    "id": "los_angeles_ca",
+    "name": "Los Angeles",
+    "census_place_geoid": "0644000",
+    "role": "source_anchor",
+    "target_values_status": "known_phase1_anchor"
+  },
+  "plan_authorization": {
+    "path": "manifests/multicity/PLAN_READINESS.json",
+    "publication_git_commit": "297d47f10c648e31f78135038d1b09f7548a9e5a",
+    "bytes": 52152,
+    "file_sha256": "7b1613130d9068183c0ad4e5867dbbbf5a442f9e73a05cb5d307421f544bd6de",
+    "commit_sha256": "09d464d52485e1318927a6b820aff26610d6143356609b882f8ed4fe56be59b3"
+  },
+  "selection_contract": {
+    "vintage": 2020,
+    "analysis_crs": "EPSG:5070",
+    "minimum_original_tract_area_inside_place_fraction": 0.5,
+    "exclude_special_use_tract_prefix": "98",
+    "repair_order": "make_each_geometry_valid_before_place_dissolve_or_tract_intersection",
+    "target_or_predictor_performance_used": false
+  },
+  "source": {
+    "mode": "fresh_tigerweb_same_adapter",
+    "place": {
+      "label": "census_tigerweb_2020_place_v12",
+      "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/26",
+      "provider": "U.S. Census Bureau"
+    },
+    "tract": {
+      "label": "census_tigerweb_2020_tract_v12",
+      "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/6",
+      "provider": "U.S. Census Bureau"
+    },
+    "raw_files": {
+      "data/raw/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/place/layer_metadata.json": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/place/layer_metadata.json",
+        "bytes": 6033,
+        "sha256": "f3c32d196e581350881c28817090d84e64bbbc9542983a4af737e4f6eb98cf0e"
+      },
+      "data/raw/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/place/query_count.json": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/place/query_count.json",
+        "bytes": 11,
+        "sha256": "6aea6dfe6561984cdc5c54ead84d47d2cf29e48253ae282aef237404adad4661"
+      },
+      "data/raw/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/place/features.geojson": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/place/features.geojson",
+        "bytes": 338932,
+        "sha256": "e16b1cdb2f8cfecfa1ea6be4ebeaa37bc7a6e46e688b49ec3a1c1c6bbe9a8989"
+      },
+      "data/raw/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/tract/layer_metadata.json": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/tract/layer_metadata.json",
+        "bytes": 5659,
+        "sha256": "cd8c8136a6e9ea16debc05724edacbc76573cba18266e0f4fff33ae32a623219"
+      },
+      "data/raw/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/tract/query_count.json": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/tract/query_count.json",
+        "bytes": 14,
+        "sha256": "1d03b3a103439fc3cb7ca89691a703d03338d3c61c84e0d6edea23af25c5854e"
+      },
+      "data/raw/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/tract/features_0000.geojson": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/tract/features_0000.geojson",
+        "bytes": 7715917,
+        "sha256": "b1c8de0f3c7cb4e3e739674b5b9bc256ee81e7bfa14e2961620d03ac3bda3a8e"
+      }
+    }
+  },
+  "counts": {
+    "candidate_tracts": 1757,
+    "positive_overlap_tracts": 1121,
+    "threshold_tracts": 1110,
+    "special_use_threshold_tracts": 14,
+    "primary_tracts": 1096
+  },
+  "table_identities": {
+    "city_boundary": {
+      "rows": 1,
+      "crs": "EPSG:4326",
+      "geometry_semantic_sha256": "ce6f7d10522c2b57c8a5fe63464f077a7e74b40ef8686f0cd92c91d1c4e4a200",
+      "full_row_semantic_sha256": "ed800e6bc6f217b4dd2836a1e70f2b799522d6a0dc0fdc17c29efcc9f79954bb",
+      "geoid_geometry_mapping_sha256": null
+    },
+    "tract_candidates": {
+      "rows": 1757,
+      "crs": "EPSG:5070",
+      "geometry_semantic_sha256": "221f9ab63f06782a2a6abbe78a133d894c5d8162b5bb91bd0746e169cff3a0f9",
+      "full_row_semantic_sha256": "a0c5ccf5a340071a12a411e564c526c3ab90a6dfb258c220716d23a67e25ffce",
+      "geoid_geometry_mapping_sha256": "cb4e17e09358cc1a639526ebec1b4388829437788e53737881d2e4736819a4ad"
+    },
+    "primary_tracts": {
+      "rows": 1096,
+      "crs": "EPSG:5070",
+      "geometry_semantic_sha256": "1309f0272fda93df0cb4590174e9a8adc528264d0b9093d8e64a7eb9644310f9",
+      "full_row_semantic_sha256": "7936345d46285b9258603f6255f79d436959c06969718758d8065ae657a3b1fc",
+      "geoid_geometry_mapping_sha256": "110d78c30d5abafbd2dd81c5d8ce953bb636bf9b4f5b405d37c738569fdbfea3"
+    }
+  },
+  "output_tables": {
+    "city_boundary": {
+      "sha256": "4172d7e79a570d7a5775330d2ed9edce033a3d11e53aa8d24a8fd3379601304d",
+      "bytes": 143388,
+      "rows": 1,
+      "schema_sha256": "a263767165e1033548d4368b03e52a80d798c039670b1f189e99e49e3d134374",
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/city_boundary.parquet",
+      "geometry_semantic_sha256": "ce6f7d10522c2b57c8a5fe63464f077a7e74b40ef8686f0cd92c91d1c4e4a200",
+      "full_row_semantic_sha256": "ed800e6bc6f217b4dd2836a1e70f2b799522d6a0dc0fdc17c29efcc9f79954bb"
+    },
+    "tract_candidates": {
+      "sha256": "6a11f272356d42b2014567378f160136527a6f7e66fedacf10e53ccabe87864e",
+      "bytes": 2961929,
+      "rows": 1757,
+      "schema_sha256": "37716cf0dadb1b70d72e72f3b1db20cbe90502c0587804200c38193e9c1737b0",
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/tract_candidates.parquet",
+      "geometry_semantic_sha256": "221f9ab63f06782a2a6abbe78a133d894c5d8162b5bb91bd0746e169cff3a0f9",
+      "full_row_semantic_sha256": "a0c5ccf5a340071a12a411e564c526c3ab90a6dfb258c220716d23a67e25ffce"
+    },
+    "primary_tracts": {
+      "sha256": "3956346be8e1a3fe750eca4094dd5ffdca4269c39741f5a5ef779c0fbe66a727",
+      "bytes": 1416522,
+      "rows": 1096,
+      "schema_sha256": "ad67cbc21f4d53fe7dbb12abb4554a256b073ba7b3b6fc2b2fa084fd717898a2",
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/geography/los_angeles_ca/primary_tracts.parquet",
+      "geometry_semantic_sha256": "1309f0272fda93df0cb4590174e9a8adc528264d0b9093d8e64a7eb9644310f9",
+      "full_row_semantic_sha256": "7936345d46285b9258603f6255f79d436959c06969718758d8065ae657a3b1fc"
+    }
+  },
+  "compatibility": {
+    "mode": "same_adapter_rebuild_plus_phase1_compatibility_audit",
+    "legacy_inputs": {
+      "city_boundary": {
+        "path": "data/interim/pilot/la_city_boundary.geojson",
+        "bytes": 414598,
+        "sha256": "f1b10a382213f3f1e3a1aa9a0cdbcddda7453c4219d45ed19d1084b1dbf38465"
+      },
+      "tract_universe": {
+        "path": "data/interim/pilot/tract_universe_manifest.parquet",
+        "bytes": 1505988,
+        "sha256": "64bab55ef6bf4c06304bcbd803228316da9dad1312526d95c9191d3a349c56a6"
+      }
+    },
+    "legacy_primary_count": 1096,
+    "new_primary_count": 1096,
+    "exact_primary_geoid_set": true,
+    "legacy_only_geoids": [],
+    "new_only_geoids": [],
+    "shared_geoid_count": 1096,
+    "minimum_tract_geometry_iou": 0.5129066492363569,
+    "median_tract_geometry_iou": 0.995496987157262,
+    "grid": {
+      "crs": "EPSG:32611",
+      "shape": [
+        2353,
+        1573
+      ],
+      "sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc"
+    },
+    "legacy_zone_sha256": "bc5159a5b690d0c2248ba0dd21e396ed1701a6d7b940bb16dab5107c31227949",
+    "new_zone_sha256": "9d799823df38675cb4e754f01550a40a384686a2fc20bb3669f05e8eeb8d4462",
+    "zone_cell_assignment_exact": false,
+    "zone_disagreement_cell_count": 6872,
+    "parity_is_observed_evidence_not_assumed_success": true,
+    "requires_v3_interpretation": true
+  },
+  "access_contract": {
+    "public_census_geometry_read": true,
+    "saved_tigerweb_geometry_replayed": false,
+    "phase1_pilot_geography_read_for_compatibility": true,
+    "external_target_or_qa_values_read": false,
+    "landsat_thermal_values_read": false,
+    "predictor_values_read_or_computed": false,
+    "model_fit_or_prediction_performed": false,
+    "final_evaluation_outputs_opened": false
+  },
+  "commit_sha256": "f6105bbc1060013c98e63eafca9ca227d4d8538cfc2fb91afd38f5c616e690e3"
+}

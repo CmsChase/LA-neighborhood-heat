@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "multicity-missing-support-calibration-evidence-v1",
+  "state": "complete_target_blind_missing_support_and_calibration_evidence",
+  "generated_at_utc": "2026-08-09T12:57:01.150342+00:00",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "plan_authorization": {
+    "path": "manifests/multicity/ACTIVE_STAGE.json",
+    "bytes": 2857,
+    "file_sha256": "54938766bf427c3366f96d7cd1cbd9c4f706ad01b84e3446ed804a82d65f58ef",
+    "revision": "2026-08-consolidated"
+  },
+  "authorization_scope": {
+    "stage_id": "target_blind_missing_support_and_calibration_evidence_v1",
+    "experiment_id": "la_to_three_city_zero_shot_v1",
+    "configuration": {
+      "path": "configs/multicity/missing_support_calibration_evidence_v1.toml",
+      "sha256": "0d4f8e9996b48b029b38e7bd40637a69dd27477d255d5da697f890945c07b475"
+    },
+    "predecessor_terminal_path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT_FREEZE_V2.json",
+    "cities": [
+      "los_angeles_ca",
+      "phoenix_az",
+      "houston_tx",
+      "chicago_il"
+    ],
+    "external_sentinel_cities": [
+      "phoenix_az",
+      "houston_tx",
+      "chicago_il"
+    ],
+    "code_paths": [
+      "configs/multicity/missing_support_calibration_evidence_v1.toml",
+      "configs/multicity/experiment.toml",
+      "configs/multicity/portable_predictor_source_evidence_v1.toml",
+      "configs/multicity/portable_predictor_contract_freeze_v2.toml",
+      "configs/multicity/cities/los_angeles_ca.toml",
+      "configs/multicity/cities/phoenix_az.toml",
+      "configs/multicity/cities/houston_tx.toml",
+      "configs/multicity/cities/chicago_il.toml",
+      "scripts/stage_multicity_missing_support_calibration_evidence_v1.py",
+      "src/la_heat/grid.py",
+      "src/la_heat/multicity/config.py",
+      "src/la_heat/multicity/four_city_geography_contract_v1.py",
+      "src/la_heat/multicity/geography.py",
+      "src/la_heat/multicity/missing_support_calibration_evidence_v1.py",
+      "src/la_heat/multicity/portable_predictor_source_evidence_v1.py",
+      "src/la_heat/multicity/sentinel_calibration_smoke_v1.py",
+      "src/la_heat/multicity/source_footprints.py",
+      "src/la_heat/multicity/worldcover_eligible_support_evidence_v1.py",
+      "src/la_heat/provenance.py",
+      "src/la_heat/sentinel_features.py",
+      "src/la_heat/sentinel_inventory.py"
+    ],
+    "evidence_tasks": {
+      "geography": "four-city Census-2020 same-adapter rebuild/replay plus Los Angeles and Phoenix compatibility evidence",
+      "worldcover": "exact 2020-v100 item/assets, local mosaic, and invariant 30 m eligible-cell identities",
+      "sentinel": "one real product-metadata and seven-band/SCL native-DN probe per contributing external native UTM zone"
+    },
+    "allowed_reads": {
+      "authenticated_predecessor_and_source_manifests": true,
+      "public_census_geometry": true,
+      "los_angeles_pilot_geography_for_compatibility_only": true,
+      "saved_source_metadata_for_geometry_and_probe_selection": true,
+      "worldcover_static_land_class_assets": true,
+      "sentinel_product_metadata_and_small_native_dn_windows": true
+    },
+    "prohibited_reads_and_actions": {
+      "landsat_thermal_or_target_qa_values": true,
+      "external_target_or_lst_values": true,
+      "final_evaluation_or_feature_ablation_outputs": true,
+      "predictor_values_or_predictor_construction": true,
+      "sentinel_indices_or_tract_features": true,
+      "model_fit_prediction_or_scoring": true,
+      "protocol_promotion_or_external_target_unlock": true
+    },
+    "network": {
+      "only_configured_https_hosts_and_paths": true,
+      "redirects_allowed": false,
+      "maximum_geography_requests": 64,
+      "maximum_worldcover_requests": 64,
+      "maximum_sentinel_requests": 8192,
+      "maximum_worldcover_asset_bytes": 12884901888,
+      "maximum_sentinel_probe_bytes": 1073741824,
+      "signed_urls_persisted": false
+    },
+    "tracked_output_paths": [
+      "manifests/multicity/cities/los_angeles_ca/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_GEOGRAPHY_CONTRACT_V1.json",
+      "manifests/multicity/cities/los_angeles_ca/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "manifests/multicity/cities/phoenix_az/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "manifests/multicity/cities/houston_tx/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "manifests/multicity/cities/chicago_il/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "manifests/multicity/cities/phoenix_az/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "manifests/multicity/cities/houston_tx/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "manifests/multicity/cities/chicago_il/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "manifests/multicity/reviews/portable_predictor_contract/SENTINEL_CALIBRATION_SMOKE_EVIDENCE_V1.json",
+      "manifests/multicity/reviews/portable_predictor_contract/MISSING_SUPPORT_CALIBRATION_EVIDENCE_V1.json"
+    ],
+    "write_contract": {
+      "append_only": true,
+      "expected_output_count": 15,
+      "overall_terminal_written_last": true,
+      "check_only_network_requests": 0,
+      "tracked_outputs_must_match_head": true
+    },
+    "next_gate": "portable_predictor_contract_decision"
+  },
+  "config": {
+    "path": "configs/multicity/missing_support_calibration_evidence_v1.toml",
+    "bytes": 11429,
+    "sha256": "0d4f8e9996b48b029b38e7bd40637a69dd27477d255d5da697f890945c07b475",
+    "semantic_sha256": "1a11b9f57cb77bb2b5431cbba3abf42c6899dd720d7f27b3b314003016a2ab3b"
+  },
+  "evidence": {
+    "geography_commit_sha256": "dc6e58b0081e90f603270475f471ecda533e3bff731ab6624cf7939455ca3fc3",
+    "worldcover_commit_sha256": "2a7a714df11f8f93858ce0d80185240441e8f938be4e23ade41110091f263e82",
+    "sentinel_commit_sha256": "801243637be27a3601f5f23f0f185afea34050ab392610118df54ec29b2155c8"
+  },
+  "tracked_output_paths": [
+    "manifests/multicity/cities/los_angeles_ca/geography/GEOGRAPHY_CONTRACT_V1.json",
+    "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json",
+    "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY_CONTRACT_V1.json",
+    "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY_CONTRACT_V1.json",
+    "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_GEOGRAPHY_CONTRACT_V1.json",
+    "manifests/multicity/cities/los_angeles_ca/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+    "manifests/multicity/cities/phoenix_az/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+    "manifests/multicity/cities/houston_tx/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+    "manifests/multicity/cities/chicago_il/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+    "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+    "manifests/multicity/cities/phoenix_az/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+    "manifests/multicity/cities/houston_tx/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+    "manifests/multicity/cities/chicago_il/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+    "manifests/multicity/reviews/portable_predictor_contract/SENTINEL_CALIBRATION_SMOKE_EVIDENCE_V1.json",
+    "manifests/multicity/reviews/portable_predictor_contract/MISSING_SUPPORT_CALIBRATION_EVIDENCE_V1.json"
+  ],
+  "tracked_checkpoints": {
+    "manifests/multicity/cities/los_angeles_ca/geography/GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/cities/los_angeles_ca/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 8770,
+      "sha256": "af1949e3b75fb31278aa4e496f3cb628bcdc732232ba3124766d3979a6067fdf",
+      "state": "complete_target_blind_city_geography_evidence",
+      "commit_sha256": "f6105bbc1060013c98e63eafca9ca227d4d8538cfc2fb91afd38f5c616e690e3"
+    },
+    "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 8653,
+      "sha256": "04cd83097a56b9154a335db155ff7544fe31ef867f94cc8d07d6c5feeb8ca05e",
+      "state": "complete_target_blind_city_geography_evidence",
+      "commit_sha256": "776d752cc8d51bc0b5c30da1d77fd5fa26b9e3ad17c259d5e0ddfe4592c10eee"
+    },
+    "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 6700,
+      "sha256": "d59acaece62cdbc479ded735ce66c1f3812ffb61d816f2d0e521b2dbe8169515",
+      "state": "complete_target_blind_city_geography_evidence",
+      "commit_sha256": "b72342417216ca354318167a3f5ccae8906df309ac071b4093c5ddf3745dbbfb"
+    },
+    "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 6697,
+      "sha256": "96dfd6ad524a362f90f508e5a7c706a3dac41b7e89fd4b9e5ae2ab6ba557e7d8",
+      "state": "complete_target_blind_city_geography_evidence",
+      "commit_sha256": "8eb9427e9b599908e4f9c9fc04676a7962a8e1863a1603af9a581069954bed17"
+    },
+    "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 2665,
+      "sha256": "ec5a3bb6b97e56f18689b11a412034bd7a14d3905f3cd769f010e8c61a47c0ee",
+      "state": "complete_target_blind_four_city_geography_evidence",
+      "commit_sha256": "dc6e58b0081e90f603270475f471ecda533e3bff731ab6624cf7939455ca3fc3"
+    },
+    "manifests/multicity/cities/los_angeles_ca/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json": {
+      "path": "manifests/multicity/cities/los_angeles_ca/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 6122,
+      "sha256": "cfc228675524b20adf36935cc4a240c995af0d3437a576e07de29e6f985f1258",
+      "state": "complete_target_blind_city_worldcover_support",
+      "commit_sha256": "4fc8323acc0eca002a6d8fc82f1cc9bca721076dd50b7027efe3a3769f0c685e"
+    },
+    "manifests/multicity/cities/phoenix_az/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json": {
+      "path": "manifests/multicity/cities/phoenix_az/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 6059,
+      "sha256": "eb9309cb120668551090f50ea7ad5a7bc75d41afaa697de162a8454491787e04",
+      "state": "complete_target_blind_city_worldcover_support",
+      "commit_sha256": "7eb0196636025ef307c7d0c9371139a3fb1b4161949b2751a24981a77fd3aa66"
+    },
+    "manifests/multicity/cities/houston_tx/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json": {
+      "path": "manifests/multicity/cities/houston_tx/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 7739,
+      "sha256": "060b090224e86976cdbb1537f51b8eab003249e4441b7533b076a8eb7d13d9a5",
+      "state": "complete_target_blind_city_worldcover_support",
+      "commit_sha256": "e24427bcb4a3b049f971c370f0e7ff1f6653ad7f222f4028d2ba86dec86fbb91"
+    },
+    "manifests/multicity/cities/chicago_il/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json": {
+      "path": "manifests/multicity/cities/chicago_il/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 7710,
+      "sha256": "f0434db27ae59a87a8e14a76af1969fe638b804f0ca390a2bf8bd3e96c87ea01",
+      "state": "complete_target_blind_city_worldcover_support",
+      "commit_sha256": "9d5b54df7f6562ddc2bb1540cac36c4d61b866fcb9f8a49a7c2b4e7fee3b56ef"
+    },
+    "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_WORLDCOVER_ELIGIBLE_SUPPORT_V1.json": {
+      "path": "manifests/multicity/reviews/portable_predictor_contract/FOUR_CITY_WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 4066,
+      "sha256": "4b36fc6eb22e8e1a611f29f58b2ddd3db8c1803271ed7ea6a3d2c07110578279",
+      "state": "complete_target_blind_four_city_worldcover_support",
+      "commit_sha256": "2a7a714df11f8f93858ce0d80185240441e8f938be4e23ade41110091f263e82"
+    },
+    "manifests/multicity/cities/phoenix_az/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json": {
+      "path": "manifests/multicity/cities/phoenix_az/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "bytes": 21998,
+      "sha256": "d36074e08da1130f1ee8c56fe21b48942537a9865626efa95c935a9407e8c664",
+      "state": "complete_target_blind_city_sentinel_calibration_smoke",
+      "commit_sha256": "1183bab7a5ebad26e809b9e3a7eacb1460a3c65f921bf6202615c79bd85b53ff"
+    },
+    "manifests/multicity/cities/houston_tx/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json": {
+      "path": "manifests/multicity/cities/houston_tx/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "bytes": 21887,
+      "sha256": "b21119cbe0a221f0ca2083c91e924478ad1867afb3f58d82e94bd50b6c1cd32c",
+      "state": "complete_target_blind_city_sentinel_calibration_smoke",
+      "commit_sha256": "cd9ad3065998ffcd135cb95397bc517dbe21d6b907468a90b265fbb005a38b1c"
+    },
+    "manifests/multicity/cities/chicago_il/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json": {
+      "path": "manifests/multicity/cities/chicago_il/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "bytes": 21688,
+      "sha256": "de5465a7fef99912223926a3c2eba2abff37605ceab08967491a25646941172d",
+      "state": "complete_target_blind_city_sentinel_calibration_smoke",
+      "commit_sha256": "f5210297dfc82cc8f96c4c18b24439eabed2316f179d5770294c7fcf934a5eeb"
+    },
+    "manifests/multicity/reviews/portable_predictor_contract/SENTINEL_CALIBRATION_SMOKE_EVIDENCE_V1.json": {
+      "path": "manifests/multicity/reviews/portable_predictor_contract/SENTINEL_CALIBRATION_SMOKE_EVIDENCE_V1.json",
+      "bytes": 2397,
+      "sha256": "8abea143903b736c88d9ed79a0153da1cdb75335bb83e99f8d9280accf34a648",
+      "state": "complete_target_blind_sentinel_calibration_smoke",
+      "commit_sha256": "801243637be27a3601f5f23f0f185afea34050ab392610118df54ec29b2155c8"
+    }
+  },
+  "tracked_output_set_exact": true,
+  "terminal_written_last": true,
+  "access_contract": {
+    "tracked_and_authenticated_predecessor_bytes_read": true,
+    "authenticated_geometry_and_source_metadata_read": true,
+    "official_census_geometry_network_read": true,
+    "worldcover_stac_and_static_land_class_raster_read": true,
+    "sentinel_stac_product_metadata_and_small_native_dn_windows_read": true,
+    "landsat_metadata_for_predictor_selection_read": false,
+    "landsat_thermal_values_read": false,
+    "landsat_target_qa_values_read": false,
+    "external_target_or_qa_values_read": false,
+    "external_lst_values_read": false,
+    "final_evaluation_outputs_opened": false,
+    "feature_ablation_outputs_opened": false,
+    "predictor_values_opened_or_computed": false,
+    "predictor_construction_performed": false,
+    "sentinel_indices_or_tract_features_computed": false,
+    "model_fit_performed": false,
+    "model_predictions_computed": false,
+    "protocol_lock_created": false
+  },
+  "locks": {
+    "protocol_locked": false,
+    "external_targets_unlocked": false,
+    "external_target_values_read": false,
+    "external_prediction_commit_exists": false,
+    "portable_water_distance_source_locked": true,
+    "portable_water_distance_algorithm_locked": true,
+    "portable_water_distance_feature_names_frozen": false,
+    "predictor_build_authorized": false,
+    "protocol_lock_created": false
+  },
+  "predictor_contract_locked": false,
+  "predictor_build_authorized": false,
+  "external_targets_unlocked": false,
+  "next_gate": {
+    "successful_evidence_next_stage": "portable_predictor_contract_decision",
+    "portable_predictor_contract_v3_decision_required": true,
+    "predictor_build_requires_later_separate_authorization": true,
+    "protocol_promotion_requires_later_separate_lock": true,
+    "external_targets_remain_sealed": true
+  },
+  "commit_sha256": "1251247b821093a3208b5dc0da65b5e2ae2969e14030da83666fbd65e45e6d07"
+}

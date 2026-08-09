@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "four-city-census-geography-contract-v1",
+  "state": "complete_target_blind_four_city_geography_evidence",
+  "generated_at_utc": "2026-08-03T10:58:41.924870+00:00",
+  "plan_authorization": {
+    "path": "manifests/multicity/PLAN_READINESS.json",
+    "publication_git_commit": "297d47f10c648e31f78135038d1b09f7548a9e5a",
+    "bytes": 52152,
+    "file_sha256": "7b1613130d9068183c0ad4e5867dbbbf5a442f9e73a05cb5d307421f544bd6de",
+    "commit_sha256": "09d464d52485e1318927a6b820aff26610d6143356609b882f8ed4fe56be59b3"
+  },
+  "cities": {
+    "los_angeles_ca": {
+      "path": "manifests/multicity/cities/los_angeles_ca/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 8770,
+      "sha256": "af1949e3b75fb31278aa4e496f3cb628bcdc732232ba3124766d3979a6067fdf",
+      "state": "complete_target_blind_city_geography_evidence",
+      "commit_sha256": "f6105bbc1060013c98e63eafca9ca227d4d8538cfc2fb91afd38f5c616e690e3"
+    },
+    "phoenix_az": {
+      "path": "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 8653,
+      "sha256": "04cd83097a56b9154a335db155ff7544fe31ef867f94cc8d07d6c5feeb8ca05e",
+      "state": "complete_target_blind_city_geography_evidence",
+      "commit_sha256": "776d752cc8d51bc0b5c30da1d77fd5fa26b9e3ad17c259d5e0ddfe4592c10eee"
+    },
+    "houston_tx": {
+      "path": "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 6700,
+      "sha256": "d59acaece62cdbc479ded735ce66c1f3812ffb61d816f2d0e521b2dbe8169515",
+      "state": "complete_target_blind_city_geography_evidence",
+      "commit_sha256": "b72342417216ca354318167a3f5ccae8906df309ac071b4093c5ddf3745dbbfb"
+    },
+    "chicago_il": {
+      "path": "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 6697,
+      "sha256": "96dfd6ad524a362f90f508e5a7c706a3dac41b7e89fd4b9e5ae2ab6ba557e7d8",
+      "state": "complete_target_blind_city_geography_evidence",
+      "commit_sha256": "8eb9427e9b599908e4f9c9fc04676a7962a8e1863a1603af9a581069954bed17"
+    }
+  },
+  "fresh_tigerweb_request_count": 6,
+  "fresh_tigerweb_response_bytes": 3880450,
+  "same_adapter_city_ids": [
+    "los_angeles_ca",
+    "phoenix_az"
+  ],
+  "offline_replayed_city_ids": [
+    "houston_tx",
+    "chicago_il"
+  ],
+  "compatibility_evidence_may_record_nonparity": true,
+  "geography_contract_formally_locked": false,
+  "predictor_build_authorized": false,
+  "external_target_or_qa_values_read": false,
+  "next_gate": "worldcover_eligible_support_evidence_v1",
+  "commit_sha256": "dc6e58b0081e90f603270475f471ecda533e3bff731ab6624cf7939455ca3fc3"
+}

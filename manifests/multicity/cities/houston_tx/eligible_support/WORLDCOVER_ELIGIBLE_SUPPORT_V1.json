@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "four-city-worldcover-eligible-support-v1",
+  "state": "complete_target_blind_city_worldcover_support",
+  "generated_at_utc": "2026-08-03T19:12:57.450589+00:00",
+  "city_id": "houston_tx",
+  "plan_authorization": {
+    "path": "manifests/multicity/PLAN_READINESS.json",
+    "publication_git_commit": "e465011a5926382f9e41a8628d9775de92f829ae",
+    "bytes": 62383,
+    "file_sha256": "ada23261dd944193c76b4cf9de2bc025e53e8942fdb03aa003d4878952c02ac7",
+    "commit_sha256": "7871becf14b624d052f93be827de48e379d1d1bfe7af2c4fb86a26632bbf854a"
+  },
+  "geography": {
+    "path": "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY_CONTRACT_V1.json",
+    "commit_sha256": "b72342417216ca354318167a3f5ccae8906df309ac071b4093c5ddf3745dbbfb",
+    "primary_tract_count": 651
+  },
+  "source": {
+    "provider": "European Space Agency via Microsoft Planetary Computer",
+    "collection": "esa-worldcover",
+    "year": 2020,
+    "version": "v100",
+    "asset": "map",
+    "query": {
+      "query_sha256": "034003830c0f075a6ffe9706b7193c036cc0d162ce74d1dbe529327cd4668129",
+      "raw_response": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/worldcover/houston_tx/stac_search.json",
+        "bytes": 33132,
+        "sha256": "ba273b162724af8beb571c5796646bea12031b7d4eccabc359239abaf28c19fd"
+      }
+    },
+    "items": [
+      {
+        "item_id": "ESA_WorldCover_10m_2020_v100_N27W096",
+        "tile_id": "N27W096",
+        "unsigned_asset_url": "https://ai4edataeuwest.blob.core.windows.net/esa-worldcover/v100/2020/map/ESA_WorldCover_10m_2020_v100_N27W096_Map.tif",
+        "stac_asset_keys": [
+          "input_quality",
+          "map",
+          "rendered_preview",
+          "tilejson"
+        ],
+        "stac_geometry_sha256": "9c71660247c12bd18b2a0dead1676dbb6e856687824bf3ced90fa4e022db8b86",
+        "asset": {
+          "bytes": 30292968,
+          "sha256": "9fc6b65a8621f9a517c6a83e2abe5cca89f269a3ea6e54ae3f86c187a349c516",
+          "etag": "\"0x8D993EB3C4B84A0\"",
+          "cache_path": "data/raw/multicity/worldcover_2020_v100/assets_by_sha256/9fc6b65a8621f9a517c6a83e2abe5cca89f269a3ea6e54ae3f86c187a349c516.tif"
+        },
+        "schema": {
+          "crs": "EPSG:4326",
+          "shape": [
+            36000,
+            36000
+          ],
+          "transform": [
+            8.333333333333333e-05,
+            0.0,
+            -96.0,
+            0.0,
+            -8.333333333333333e-05,
+            30.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "resolution": [
+            8.333333333333333e-05,
+            8.333333333333333e-05
+          ],
+          "dtype": "uint8",
+          "nodata": 0.0,
+          "class_domain": [
+            0,
+            10,
+            20,
+            30,
+            40,
+            50,
+            60,
+            80,
+            90
+          ],
+          "raster_footprint_wgs84_sha256": "5c7e9d5a4dd29697c2e869a058dbbf4825b67f1a6a5c89ef9fe997a43fe88e97"
+        }
+      },
+      {
+        "item_id": "ESA_WorldCover_10m_2020_v100_N30W096",
+        "tile_id": "N30W096",
+        "unsigned_asset_url": "https://ai4edataeuwest.blob.core.windows.net/esa-worldcover/v100/2020/map/ESA_WorldCover_10m_2020_v100_N30W096_Map.tif",
+        "stac_asset_keys": [
+          "input_quality",
+          "map",
+          "rendered_preview",
+          "tilejson"
+        ],
+        "stac_geometry_sha256": "b283dec62516d1bfb06f6a0c8ffa6f941ef9cc5dc61d6e8d4c67e519c5efe3c3",
+        "asset": {
+          "bytes": 89995242,
+          "sha256": "816f9e435cf4d6501dceaf09f50677ebb52064706eac352c404bc46290270a4d",
+          "etag": "\"0x8D993EB56E29F70\"",
+          "cache_path": "data/raw/multicity/worldcover_2020_v100/assets_by_sha256/816f9e435cf4d6501dceaf09f50677ebb52064706eac352c404bc46290270a4d.tif"
+        },
+        "schema": {
+          "crs": "EPSG:4326",
+          "shape": [
+            36000,
+            36000
+          ],
+          "transform": [
+            8.333333333333333e-05,
+            0.0,
+            -96.0,
+            0.0,
+            -8.333333333333333e-05,
+            33.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "resolution": [
+            8.333333333333333e-05,
+            8.333333333333333e-05
+          ],
+          "dtype": "uint8",
+          "nodata": 0.0,
+          "class_domain": [
+            10,
+            20,
+            30,
+            40,
+            50,
+            60,
+            80,
+            90
+          ],
+          "raster_footprint_wgs84_sha256": "b283dec62516d1bfb06f6a0c8ffa6f941ef9cc5dc61d6e8d4c67e519c5efe3c3"
+        }
+      }
+    ]
+  },
+  "grid": {
+    "crs": "EPSG:32615",
+    "resolution_m": 30.0,
+    "anchor_x_m": 15.0,
+    "anchor_y_m": 15.0,
+    "bounds": [
+      219585.0,
+      3267735.0,
+      305325.0,
+      3338625.0
+    ],
+    "shape": [
+      2363,
+      2858
+    ],
+    "transform": [
+      30.0,
+      0.0,
+      219585.0,
+      0.0,
+      -30.0,
+      3338625.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550"
+  },
+  "mosaic": {
+    "native_mosaic_before_reprojection": true,
+    "item_order": [
+      "ESA_WorldCover_10m_2020_v100_N27W096",
+      "ESA_WorldCover_10m_2020_v100_N30W096"
+    ],
+    "reverse_order_parity": true,
+    "resampling": "mode",
+    "class_domain": [
+      0,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      80,
+      90
+    ],
+    "class_raster_sha256": "c936eae6a32fc24aaf06f443f8d8f126af74ea8e3f5184a651e2a5d747e9319b"
+  },
+  "support": {
+    "zone_raster_sha256": "7c38e8dc9b779f4389604766d794719218795e36879f04e1ba7ab6a1bb5cf7dc",
+    "worldcover_class_raster_sha256": "c936eae6a32fc24aaf06f443f8d8f126af74ea8e3f5184a651e2a5d747e9319b",
+    "eligible_mask_sha256": "c63c5d9bbb6e59529e55cc750b1ff5d8826566361398071dc2ab63cf1086f10c",
+    "city_support_identity_sha256": "20fa4f7ecd05efad9b5e85aa83aba947f43af7cbdd9bd6cb3b3f9ff6b7eeb6a5",
+    "tract_count": 651,
+    "total_zone_cells": 1572807,
+    "total_eligible_cells": 1528702,
+    "all_tracts_positive_zone_and_eligible": true,
+    "denominator_invariant_across_dates": true
+  },
+  "outputs": {
+    "tract_zones_30m": {
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/worldcover/houston_tx/tract_zones_30m.tif",
+      "bytes": 115764,
+      "sha256": "2473d90430d9044cbe9509411f11de183860fb445d6df600f5416f93062bc8a4"
+    },
+    "worldcover_classes_30m": {
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/worldcover/houston_tx/worldcover_classes_30m.tif",
+      "bytes": 1151069,
+      "sha256": "d69b212c00f46c6dd9014c158ddc450f5b5a0e1868e0c60f38b1b78ed11f7660"
+    },
+    "eligible_mask_30m": {
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/worldcover/houston_tx/eligible_mask_30m.tif",
+      "bytes": 41260,
+      "sha256": "62753b62d5119bd3ab2ad997a517b334ef3f09dc52cf85271e77b7962cb2d03e"
+    },
+    "tract_support": {
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/worldcover/houston_tx/tract_eligible_support.parquet",
+      "bytes": 71140,
+      "sha256": "63a986ae975f9f01c4f78e40274f42f4ed0eb427dc9ed3d383bc6c196952c70f"
+    }
+  },
+  "access_contract": {
+    "worldcover_static_class_values_read": true,
+    "external_target_or_qa_values_read": false,
+    "landsat_thermal_values_read": false,
+    "sentinel_values_read": false,
+    "predictor_values_computed": false,
+    "model_fit_or_prediction_performed": false,
+    "final_evaluation_outputs_opened": false
+  },
+  "commit_sha256": "e24427bcb4a3b049f971c370f0e7ff1f6653ad7f222f4028d2ba86dec86fbb91"
+}

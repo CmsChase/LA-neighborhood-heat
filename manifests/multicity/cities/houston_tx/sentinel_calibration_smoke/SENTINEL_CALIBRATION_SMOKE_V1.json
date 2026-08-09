@@ -1,0 +1,594 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "external-city-sentinel-calibration-smoke-v1",
+  "state": "complete_target_blind_city_sentinel_calibration_smoke",
+  "generated_at_utc": "2026-08-09T12:50:12.946488+00:00",
+  "city_id": "houston_tx",
+  "timezone": "America/Chicago",
+  "target_grid_crs": "EPSG:32615",
+  "plan_authorization": {
+    "path": "manifests/multicity/ACTIVE_STAGE.json",
+    "bytes": 2857,
+    "file_sha256": "54938766bf427c3366f96d7cd1cbd9c4f706ad01b84e3446ed804a82d65f58ef",
+    "revision": "2026-08-consolidated"
+  },
+  "source_footprint": {
+    "commit_sha256": "c1a47ad3ad5cfadb6e0f83ca05e913154383b181e0b2213ee86598597e59f27c",
+    "sentinel_table": {
+      "sha256": "8f3a1de4557af786187a0fec8cc6b5d804a7fd317c754d83fe2f5b1edb21177c",
+      "bytes": 100822,
+      "rows": 606,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/houston_tx/source_footprints/sentinel_metadata_items.parquet",
+      "geometry_semantic_sha256": "2f58a3c767085a79b05d727037c7aff56845e42d490616eed7a5bd832c873a0b"
+    }
+  },
+  "worldcover_support": {
+    "path": "manifests/multicity/cities/houston_tx/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+    "commit_sha256": "e24427bcb4a3b049f971c370f0e7ff1f6653ad7f222f4028d2ba86dec86fbb91",
+    "city_support_identity_sha256": "20fa4f7ecd05efad9b5e85aa83aba947f43af7cbdd9bd6cb3b3f9ff6b7eeb6a5"
+  },
+  "selection_contract": {
+    "group": "each_native_utm_zone_with_positive_eligible_cell_overlap",
+    "candidate_order": "eligible_cell_overlap_desc_acquired_utc_asc_mgrs_tile_asc_item_id_asc",
+    "probe_cell_order": "eligible_flat_index_ascending_inside_item_after_fixed_full_window_margin",
+    "cloud_scl_or_dn_used_for_selection": false,
+    "data_driven_fallback_allowed": false
+  },
+  "probe_count": 1,
+  "native_utm_zones": [
+    15
+  ],
+  "probes": [
+    {
+      "probe_id": "587d953229d78aabbd60b15030e2c36151603db111fb3a0e8e754f0976612ce6",
+      "native_utm_zone": 15,
+      "source_candidate": {
+        "native_utm_zone": 15,
+        "source_item_id": "S2C_MSIL2A_20250303T165231_R026_T15RTN_20250303T215953",
+        "mgrs_tile": "15RTN",
+        "acquired_utc": "2025-03-03T16:52:31.024000Z",
+        "eligible_cell_overlap": 1073272
+      },
+      "exact_candidate_query": {
+        "query_sha256": "f2d5cc1bbde438772446e84d3ab9f9e39c1a852298a64b34fe0dfd4833e1196e",
+        "raw": {
+          "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/houston_tx/stac/item_S2C_MSIL2A_20250303T165231_R026_T15RTN_20250303T215953.json",
+          "bytes": 15631,
+          "sha256": "724a4b555443c2953c9a8943876739617a18e86e7e126a7eec78262727ad1cde"
+        }
+      },
+      "cohort_query": {
+        "query_sha256": "182b5b290d7dce3aeecabf017f44823ad15c4c7aec08f30541dcf3c227cd9f11",
+        "raw": {
+          "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/houston_tx/stac/cohort_sentinel-2c_2025-03-03T16_52_31.024000Z_R26_GS2C_20250303T165231_002570.json",
+          "bytes": 61313,
+          "sha256": "b0bb19d4d39818e90a2907e4adb735c06f16bdd102c5c51c0fecf244d45fe3ef"
+        }
+      },
+      "selected_exact_query": {
+        "query_sha256": "f2d5cc1bbde438772446e84d3ab9f9e39c1a852298a64b34fe0dfd4833e1196e",
+        "raw": {
+          "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/houston_tx/stac/item_S2C_MSIL2A_20250303T165231_R026_T15RTN_20250303T215953.json",
+          "bytes": 15631,
+          "sha256": "724a4b555443c2953c9a8943876739617a18e86e7e126a7eec78262727ad1cde"
+        }
+      },
+      "physical_acquisition_id": "sentinel-2c|2025-03-03T16:52:31.024000Z|R26|GS2C_20250303T165231_002570",
+      "selected_item_id": "S2C_MSIL2A_20250303T165231_R026_T15RTN_20250303T215953",
+      "mgrs_tile": "15RTN",
+      "processing_baseline": "05.11",
+      "cohort_item_ids": [
+        "S2C_MSIL2A_20250303T165231_R026_T15RTN_20250303T215953",
+        "S2C_MSIL2A_20250303T165231_R026_T15RTP_20250303T215953",
+        "S2C_MSIL2A_20250303T165231_R026_T15RUN_20250303T215953",
+        "S2C_MSIL2A_20250303T165231_R026_T15RUP_20250303T215953"
+      ],
+      "cohort_union_aoi_coverage_fraction": 0.7335082010770957,
+      "probe_cell": {
+        "support_crs": "EPSG:32615",
+        "x": 279720.0,
+        "y": 3299520.0,
+        "flat_index": 3725978,
+        "selection": "minimum_flat_eligible_cell_index_inside_selected_item",
+        "full_window_margin_m": 400.0
+      },
+      "product_metadata": {
+        "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/houston_tx/probes/587d953229d78aabbd60b15030e2c36151603db111fb3a0e8e754f0976612ce6/product_metadata.xml",
+        "bytes": 58634,
+        "sha256": "021268fa9ee478307594e64e6057ec6c14d2d14a2eaf61668cce1cbbfd9ab95b",
+        "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/15/R/TN/2025/03/03/S2C_MSIL2A_20250303T165231_N0511_R026_T15RTN_20250303T215953.SAFE/MTD_MSIL2A.xml",
+        "processing_baseline": "05.11",
+        "quantification_value": 10000.0,
+        "band_offsets_dn": {
+          "B02": -1000.0,
+          "B03": -1000.0,
+          "B04": -1000.0,
+          "B08": -1000.0,
+          "B8A": -1000.0,
+          "B11": -1000.0,
+          "B12": -1000.0
+        },
+        "calibration_sha256": "7e7eed3a9bac579bc145c707c85a2282de2f64a3dbc1203eecfebe278cd40542"
+      },
+      "assets": {
+        "B02": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/15/R/TN/2025/03/03/S2C_MSIL2A_20250303T165231_N0511_R026_T15RTN_20250303T215953.SAFE/GRANULE/L2A_T15RTN_A002570_20250303T170055/IMG_DATA/R10m/T15RTN_20250303T165231_B02_10m.tif",
+          "schema": {
+            "crs": "EPSG:32615",
+            "shape": [
+              10980,
+              10980
+            ],
+            "transform": [
+              10.0,
+              0.0,
+              199980.0,
+              0.0,
+              -10.0,
+              3300000.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 10.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            7958,
+            32,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/houston_tx/probes/587d953229d78aabbd60b15030e2c36151603db111fb3a0e8e754f0976612ce6/B02_raw.npy",
+            "bytes": 2176,
+            "sha256": "b485cd9a073ddc6993ac85e81fe055d8abcaca41b46636cc950c7e5bd8df67ff"
+          },
+          "raw_array_sha256": "9670e2a610a3617fe2a5f568fa9856dd64093481afeaf4b5e4990b6d3859c233"
+        },
+        "B03": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/15/R/TN/2025/03/03/S2C_MSIL2A_20250303T165231_N0511_R026_T15RTN_20250303T215953.SAFE/GRANULE/L2A_T15RTN_A002570_20250303T170055/IMG_DATA/R10m/T15RTN_20250303T165231_B03_10m.tif",
+          "schema": {
+            "crs": "EPSG:32615",
+            "shape": [
+              10980,
+              10980
+            ],
+            "transform": [
+              10.0,
+              0.0,
+              199980.0,
+              0.0,
+              -10.0,
+              3300000.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 10.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            7958,
+            32,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/houston_tx/probes/587d953229d78aabbd60b15030e2c36151603db111fb3a0e8e754f0976612ce6/B03_raw.npy",
+            "bytes": 2176,
+            "sha256": "1557d7052c03ac8187377a38f4b0f3f38df7c750a90f7c16458261d720179740"
+          },
+          "raw_array_sha256": "ae7c0d8077e918e4ab2de8a8d4375a406aed725628d29b6d1962ad6259eb562d"
+        },
+        "B04": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/15/R/TN/2025/03/03/S2C_MSIL2A_20250303T165231_N0511_R026_T15RTN_20250303T215953.SAFE/GRANULE/L2A_T15RTN_A002570_20250303T170055/IMG_DATA/R10m/T15RTN_20250303T165231_B04_10m.tif",
+          "schema": {
+            "crs": "EPSG:32615",
+            "shape": [
+              10980,
+              10980
+            ],
+            "transform": [
+              10.0,
+              0.0,
+              199980.0,
+              0.0,
+              -10.0,
+              3300000.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 10.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            7958,
+            32,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/houston_tx/probes/587d953229d78aabbd60b15030e2c36151603db111fb3a0e8e754f0976612ce6/B04_raw.npy",
+            "bytes": 2176,
+            "sha256": "8abda943a44378d6acee5be36e2edf6061baf2d51f3a8ce5c8c58fe938247690"
+          },
+          "raw_array_sha256": "49519aecb8eaa835481b899fb927529f59ef0e1420545b65bb24a90b342b8253"
+        },
+        "B08": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/15/R/TN/2025/03/03/S2C_MSIL2A_20250303T165231_N0511_R026_T15RTN_20250303T215953.SAFE/GRANULE/L2A_T15RTN_A002570_20250303T170055/IMG_DATA/R10m/T15RTN_20250303T165231_B08_10m.tif",
+          "schema": {
+            "crs": "EPSG:32615",
+            "shape": [
+              10980,
+              10980
+            ],
+            "transform": [
+              10.0,
+              0.0,
+              199980.0,
+              0.0,
+              -10.0,
+              3300000.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 10.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            7958,
+            32,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/houston_tx/probes/587d953229d78aabbd60b15030e2c36151603db111fb3a0e8e754f0976612ce6/B08_raw.npy",
+            "bytes": 2176,
+            "sha256": "e1f299712ee1366ca743b128dc8b4ab4d638508a00881952594f21b9c292e51e"
+          },
+          "raw_array_sha256": "66810daa9456ecd754590d3481d48849fdd31248ef4795dbe025f7cdcaaf70c0"
+        },
+        "B8A": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/15/R/TN/2025/03/03/S2C_MSIL2A_20250303T165231_N0511_R026_T15RTN_20250303T215953.SAFE/GRANULE/L2A_T15RTN_A002570_20250303T170055/IMG_DATA/R20m/T15RTN_20250303T165231_B8A_20m.tif",
+          "schema": {
+            "crs": "EPSG:32615",
+            "shape": [
+              5490,
+              5490
+            ],
+            "transform": [
+              20.0,
+              0.0,
+              199980.0,
+              0.0,
+              -20.0,
+              3300000.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 20.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            3971,
+            8,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/houston_tx/probes/587d953229d78aabbd60b15030e2c36151603db111fb3a0e8e754f0976612ce6/B8A_raw.npy",
+            "bytes": 2176,
+            "sha256": "27dcfffc70e54a0f06c39de3f40c87a8be70d49dfc57694d5e11d15718f44a26"
+          },
+          "raw_array_sha256": "0988fc684d5ba4d95707e7c0d30b2ae00cea73a6e45cf1250bf7ea696462de3a"
+        },
+        "B11": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/15/R/TN/2025/03/03/S2C_MSIL2A_20250303T165231_N0511_R026_T15RTN_20250303T215953.SAFE/GRANULE/L2A_T15RTN_A002570_20250303T170055/IMG_DATA/R20m/T15RTN_20250303T165231_B11_20m.tif",
+          "schema": {
+            "crs": "EPSG:32615",
+            "shape": [
+              5490,
+              5490
+            ],
+            "transform": [
+              20.0,
+              0.0,
+              199980.0,
+              0.0,
+              -20.0,
+              3300000.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 20.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            3971,
+            8,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/houston_tx/probes/587d953229d78aabbd60b15030e2c36151603db111fb3a0e8e754f0976612ce6/B11_raw.npy",
+            "bytes": 2176,
+            "sha256": "362827e982c1fb91b55c2b728cde0c81d0cbaa11a37a1df1a20b587285749e43"
+          },
+          "raw_array_sha256": "4edc32bb5ca4427cf95fd84a6d3660075ea612ae3e6be9221f77481dffd4493b"
+        },
+        "B12": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/15/R/TN/2025/03/03/S2C_MSIL2A_20250303T165231_N0511_R026_T15RTN_20250303T215953.SAFE/GRANULE/L2A_T15RTN_A002570_20250303T170055/IMG_DATA/R20m/T15RTN_20250303T165231_B12_20m.tif",
+          "schema": {
+            "crs": "EPSG:32615",
+            "shape": [
+              5490,
+              5490
+            ],
+            "transform": [
+              20.0,
+              0.0,
+              199980.0,
+              0.0,
+              -20.0,
+              3300000.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 20.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            3971,
+            8,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/houston_tx/probes/587d953229d78aabbd60b15030e2c36151603db111fb3a0e8e754f0976612ce6/B12_raw.npy",
+            "bytes": 2176,
+            "sha256": "a7da97cee958d0bb49375ab17f6190f07862e12cb881b22dcbf54749b3fbd05b"
+          },
+          "raw_array_sha256": "4199f78a3309a9d5885b5d6f8cdb6d83fa8f18032cd1a0b75665a78fecf27d13"
+        },
+        "SCL": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/15/R/TN/2025/03/03/S2C_MSIL2A_20250303T165231_N0511_R026_T15RTN_20250303T215953.SAFE/GRANULE/L2A_T15RTN_A002570_20250303T170055/IMG_DATA/R20m/T15RTN_20250303T165231_SCL_20m.tif",
+          "schema": {
+            "crs": "EPSG:32615",
+            "shape": [
+              5490,
+              5490
+            ],
+            "transform": [
+              20.0,
+              0.0,
+              199980.0,
+              0.0,
+              -20.0,
+              3300000.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 20.0,
+            "dtype": "uint8",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            3971,
+            8,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/houston_tx/probes/587d953229d78aabbd60b15030e2c36151603db111fb3a0e8e754f0976612ce6/SCL_raw.npy",
+            "bytes": 1152,
+            "sha256": "89cccaa7d7f134f99cdbc3e1bcfb7de0b27cd43275696a684469c67b6f844135"
+          },
+          "raw_array_sha256": "35bde6829f6078b58212ae18b2808ffb41ee83f95b61c59e52133b568fab829a"
+        }
+      },
+      "decoded_reflectance": {
+        "formula": "(DN+BOA_ADD_OFFSET)/BOA_QUANTIFICATION_VALUE",
+        "offset_applied_exactly_once": true,
+        "finite_counts": {
+          "B02": 1024,
+          "B03": 1024,
+          "B04": 1024,
+          "B08": 1024,
+          "B8A": 1024,
+          "B11": 1024,
+          "B12": 1024
+        },
+        "value_hashes": {
+          "B02": "e0828d9f44c00139e87ed7cdd3d5ca76e15a6a136b471786711da1d9f734509e",
+          "B03": "00859b45f7d916ca8ce73a90d00a0549f45a595c13044fa9c5b4f708a3b753b8",
+          "B04": "c0ab4652062e1ef8c99e613e95476e5344fb32f8c62cb5ca080fb7f1b13ae1b7",
+          "B08": "da8a10d0066b8b930eba63f3125cd9debb563068dd907442ff28fd8431da5337",
+          "B8A": "739c49f0df95a247e0618d86cb7e5c3a0cb86e48be301cf7d2bd294e6dbe2f69",
+          "B11": "d9496184884b86a39979090cabad9ff8f08aca46da08312fc99cd8c27f6e222e",
+          "B12": "1578ee0210e448a8a51242506cfc2fe2b666a384d8a315b109117ecc05d94868"
+        },
+        "indices_or_albedo_computed": false
+      },
+      "provider_encoding_evidence": {
+        "decode_calibration_authority": "official_product_metadata_xml",
+        "stac_values_synthesized_from_xml": false,
+        "expected_stac_scale": 0.0001,
+        "expected_stac_offset_by_band": {
+          "B02": -0.1,
+          "B03": -0.1,
+          "B04": -0.1,
+          "B08": -0.1,
+          "B8A": -0.1,
+          "B11": -0.1,
+          "B12": -0.1
+        },
+        "stac_raster_band_declared_by_asset": {
+          "B02": false,
+          "B03": false,
+          "B04": false,
+          "B08": false,
+          "B8A": false,
+          "B11": false,
+          "B12": false
+        },
+        "stac_raster_band_matches_xml_formula": {
+          "B02": null,
+          "B03": null,
+          "B04": null,
+          "B08": null,
+          "B8A": null,
+          "B11": null,
+          "B12": null
+        },
+        "all_seven_assets_declare_stac_calibration": false,
+        "all_seven_assets_match_xml_formula": false,
+        "comparison_status": "provider_stac_raster_calibration_not_published",
+        "native_dn_storage_header_identity_required": true,
+        "interpretation_deferred_to_v3": true
+      },
+      "scl_histogram_audit_only": {
+        "8": 185,
+        "9": 839
+      },
+      "data_driven_candidate_fallback_used": false
+    }
+  ],
+  "network_audit": {
+    "explicit_request_count": 933,
+    "bounded_response_bytes": 3468918,
+    "python_range_asset_open_count": 8,
+    "all_cog_range_requests_counted": true,
+    "redirect_fallback_allowed": false,
+    "signed_urls_persisted": false
+  },
+  "access_contract": {
+    "sentinel_product_metadata_read": true,
+    "small_native_dn_windows_read": true,
+    "landsat_thermal_or_target_qa_values_read": false,
+    "external_target_or_lst_values_read": false,
+    "sentinel_indices_or_tract_features_computed": false,
+    "predictor_construction_performed": false,
+    "model_fit_or_prediction_performed": false,
+    "final_evaluation_outputs_opened": false
+  },
+  "commit_sha256": "cd9ad3065998ffcd135cb95397bc517dbe21d6b907468a90b265fbb005a38b1c"
+}

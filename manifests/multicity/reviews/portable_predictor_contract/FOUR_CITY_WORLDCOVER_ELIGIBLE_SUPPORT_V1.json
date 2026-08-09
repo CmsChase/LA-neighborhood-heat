@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "four-city-worldcover-eligible-support-v1",
+  "state": "complete_target_blind_four_city_worldcover_support",
+  "generated_at_utc": "2026-08-03T19:17:58.466478+00:00",
+  "plan_authorization": {
+    "path": "manifests/multicity/PLAN_READINESS.json",
+    "publication_git_commit": "e465011a5926382f9e41a8628d9775de92f829ae",
+    "bytes": 62383,
+    "file_sha256": "ada23261dd944193c76b4cf9de2bc025e53e8942fdb03aa003d4878952c02ac7",
+    "commit_sha256": "7871becf14b624d052f93be827de48e379d1d1bfe7af2c4fb86a26632bbf854a"
+  },
+  "cities": {
+    "los_angeles_ca": {
+      "path": "manifests/multicity/cities/los_angeles_ca/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 6122,
+      "sha256": "cfc228675524b20adf36935cc4a240c995af0d3437a576e07de29e6f985f1258",
+      "state": "complete_target_blind_city_worldcover_support",
+      "commit_sha256": "4fc8323acc0eca002a6d8fc82f1cc9bca721076dd50b7027efe3a3769f0c685e"
+    },
+    "phoenix_az": {
+      "path": "manifests/multicity/cities/phoenix_az/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 6059,
+      "sha256": "eb9309cb120668551090f50ea7ad5a7bc75d41afaa697de162a8454491787e04",
+      "state": "complete_target_blind_city_worldcover_support",
+      "commit_sha256": "7eb0196636025ef307c7d0c9371139a3fb1b4161949b2751a24981a77fd3aa66"
+    },
+    "houston_tx": {
+      "path": "manifests/multicity/cities/houston_tx/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 7739,
+      "sha256": "060b090224e86976cdbb1537f51b8eab003249e4441b7533b076a8eb7d13d9a5",
+      "state": "complete_target_blind_city_worldcover_support",
+      "commit_sha256": "e24427bcb4a3b049f971c370f0e7ff1f6653ad7f222f4028d2ba86dec86fbb91"
+    },
+    "chicago_il": {
+      "path": "manifests/multicity/cities/chicago_il/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+      "bytes": 7710,
+      "sha256": "f0434db27ae59a87a8e14a76af1969fe638b804f0ca390a2bf8bd3e96c87ea01",
+      "state": "complete_target_blind_city_worldcover_support",
+      "commit_sha256": "9d5b54df7f6562ddc2bb1540cac36c4d61b866fcb9f8a49a7c2b4e7fee3b56ef"
+    }
+  },
+  "unique_asset_count": 6,
+  "unique_assets": {
+    "230ebc936cca6f5ee2851dc72107cbb9d832b8bc53f249b773925459f36da805": {
+      "bytes": 79941574,
+      "sha256": "230ebc936cca6f5ee2851dc72107cbb9d832b8bc53f249b773925459f36da805",
+      "etag": "\"0x8D993EB85BE6469\""
+    },
+    "6f0fd33693669856d0f732f88358f13bb4b62016cbc65d0d2427bcb232eb8716": {
+      "bytes": 104207525,
+      "sha256": "6f0fd33693669856d0f732f88358f13bb4b62016cbc65d0d2427bcb232eb8716",
+      "etag": "\"0x8D993EB9487EAE0\""
+    },
+    "816f9e435cf4d6501dceaf09f50677ebb52064706eac352c404bc46290270a4d": {
+      "bytes": 89995242,
+      "sha256": "816f9e435cf4d6501dceaf09f50677ebb52064706eac352c404bc46290270a4d",
+      "etag": "\"0x8D993EB56E29F70\""
+    },
+    "9fc6b65a8621f9a517c6a83e2abe5cca89f269a3ea6e54ae3f86c187a349c516": {
+      "bytes": 30292968,
+      "sha256": "9fc6b65a8621f9a517c6a83e2abe5cca89f269a3ea6e54ae3f86c187a349c516",
+      "etag": "\"0x8D993EB3C4B84A0\""
+    },
+    "b062eb9fd15151d2428ec390e679e0c361852bd23ff3e6cbff9b444ad0a60701": {
+      "bytes": 94962328,
+      "sha256": "b062eb9fd15151d2428ec390e679e0c361852bd23ff3e6cbff9b444ad0a60701",
+      "etag": "\"0x8D993EB538456F4\""
+    },
+    "f1d043ac86cedea5d6f1e692266587e4640ece5aa9e7911d41a1ca8e1e2c71bc": {
+      "bytes": 111626750,
+      "sha256": "f1d043ac86cedea5d6f1e692266587e4640ece5aa9e7911d41a1ca8e1e2c71bc",
+      "etag": "\"0x8D993EB39EB049F\""
+    }
+  },
+  "network_audit": {
+    "request_count": 5,
+    "downloaded_asset_bytes": 174903902,
+    "redirects_followed": 0,
+    "signed_urls_persisted": false
+  },
+  "all_four_city_supports_complete": true,
+  "support_is_predictor_values": false,
+  "predictor_build_authorized": false,
+  "external_target_or_qa_values_read": false,
+  "next_gate": "external_city_sentinel_calibration_smoke_v1",
+  "commit_sha256": "2a7a714df11f8f93858ce0d80185240441e8f938be4e23ade41110091f263e82"
+}

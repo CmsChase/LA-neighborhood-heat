@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "four-city-worldcover-eligible-support-v1",
+  "state": "complete_target_blind_city_worldcover_support",
+  "generated_at_utc": "2026-08-03T18:01:41.965521+00:00",
+  "city_id": "los_angeles_ca",
+  "plan_authorization": {
+    "path": "manifests/multicity/PLAN_READINESS.json",
+    "publication_git_commit": "0a83032c73c2cfe2b925278702970b3ab74551bb",
+    "bytes": 60178,
+    "file_sha256": "ab1e361eb1f395764754a0adecff42f2ec5220642d0157d2e6d172d8ba555d6b",
+    "commit_sha256": "95c223b2abe826f9121aa451e4ea9e06fa459b1b8aa27c31c8be59f24f51d7de"
+  },
+  "geography": {
+    "path": "manifests/multicity/cities/los_angeles_ca/geography/GEOGRAPHY_CONTRACT_V1.json",
+    "commit_sha256": "f6105bbc1060013c98e63eafca9ca227d4d8538cfc2fb91afd38f5c616e690e3",
+    "primary_tract_count": 1096
+  },
+  "source": {
+    "provider": "European Space Agency via Microsoft Planetary Computer",
+    "collection": "esa-worldcover",
+    "year": 2020,
+    "version": "v100",
+    "asset": "map",
+    "query": {
+      "query_sha256": "988c4a9c2cad52a3240cddefb9e01d5334f2273760b36cc9f6e42a5421179272",
+      "raw_response": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/worldcover/los_angeles_ca/stac_search.json",
+        "bytes": 32947,
+        "sha256": "65e3f2bba3f04e5d475537abbd73087305bc8b1ce959360184fd99f1b0d345a5"
+      }
+    },
+    "items": [
+      {
+        "item_id": "ESA_WorldCover_10m_2020_v100_N33W120",
+        "tile_id": "N33W120",
+        "unsigned_asset_url": "https://ai4edataeuwest.blob.core.windows.net/esa-worldcover/v100/2020/map/ESA_WorldCover_10m_2020_v100_N33W120_Map.tif",
+        "stac_asset_keys": [
+          "input_quality",
+          "map",
+          "rendered_preview",
+          "tilejson"
+        ],
+        "stac_geometry_sha256": "ab350fa0f9e1414b3b415fe4c78697a3324d820bc6a00fc79852ec5a5c718a9e",
+        "asset": {
+          "bytes": 104207525,
+          "sha256": "6f0fd33693669856d0f732f88358f13bb4b62016cbc65d0d2427bcb232eb8716",
+          "etag": "\"0x8D993EB9487EAE0\"",
+          "cache_path": "data/raw/multicity/worldcover_2020_v100/assets_by_sha256/6f0fd33693669856d0f732f88358f13bb4b62016cbc65d0d2427bcb232eb8716.tif"
+        },
+        "schema": {
+          "crs": "EPSG:4326",
+          "shape": [
+            36000,
+            36000
+          ],
+          "transform": [
+            8.333333333333333e-05,
+            0.0,
+            -120.0,
+            0.0,
+            -8.333333333333333e-05,
+            36.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "resolution": [
+            8.333333333333333e-05,
+            8.333333333333333e-05
+          ],
+          "dtype": "uint8",
+          "nodata": 0.0,
+          "class_domain": [
+            0,
+            10,
+            20,
+            30,
+            40,
+            50,
+            60,
+            80,
+            90,
+            95,
+            100
+          ],
+          "raster_footprint_wgs84_sha256": "881e5c0bf2832b505a246caaeca667ae93265becbd4ae5091114ef47fc60bb1c"
+        }
+      }
+    ]
+  },
+  "grid": {
+    "crs": "EPSG:32611",
+    "resolution_m": 30.0,
+    "anchor_x_m": 15.0,
+    "anchor_y_m": 15.0,
+    "bounds": [
+      346245.0,
+      3730005.0,
+      393435.0,
+      3800595.0
+    ],
+    "shape": [
+      2353,
+      1573
+    ],
+    "transform": [
+      30.0,
+      0.0,
+      346245.0,
+      0.0,
+      -30.0,
+      3800595.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc"
+  },
+  "mosaic": {
+    "native_mosaic_before_reprojection": true,
+    "item_order": [
+      "ESA_WorldCover_10m_2020_v100_N33W120"
+    ],
+    "reverse_order_parity": true,
+    "resampling": "mode",
+    "class_domain": [
+      0,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      80,
+      90
+    ],
+    "class_raster_sha256": "58fe2d5f6b6f17d81299f9db2bdc9a580f1e63084e9df1078d6ee45566a62dbb"
+  },
+  "support": {
+    "zone_raster_sha256": "9d799823df38675cb4e754f01550a40a384686a2fc20bb3669f05e8eeb8d4462",
+    "worldcover_class_raster_sha256": "58fe2d5f6b6f17d81299f9db2bdc9a580f1e63084e9df1078d6ee45566a62dbb",
+    "eligible_mask_sha256": "5391730da023853fd36d408937595e1492d7d9ea563230ebfe388bc809048cbd",
+    "city_support_identity_sha256": "11b13f0efdb51d326064e14caf29afe4572170778aa8ccd7cbdd4f52c1252297",
+    "tract_count": 1096,
+    "total_zone_cells": 1176119,
+    "total_eligible_cells": 1167505,
+    "all_tracts_positive_zone_and_eligible": true,
+    "denominator_invariant_across_dates": true
+  },
+  "outputs": {
+    "tract_zones_30m": {
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/worldcover/los_angeles_ca/tract_zones_30m.tif",
+      "bytes": 95777,
+      "sha256": "f16c94380e4038e861e180659f8c6c29113185a97a310e3bf70b0138743eb59c"
+    },
+    "worldcover_classes_30m": {
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/worldcover/los_angeles_ca/worldcover_classes_30m.tif",
+      "bytes": 372255,
+      "sha256": "1ba262b36724b05fb55aa0a54736370023d993425f4852f4f356b150cdd4986f"
+    },
+    "eligible_mask_30m": {
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/worldcover/los_angeles_ca/eligible_mask_30m.tif",
+      "bytes": 25102,
+      "sha256": "ff87efed6598b8281cb426932fafd2bac38adfbc3b022bf1ef757271d6aa5436"
+    },
+    "tract_support": {
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/worldcover/los_angeles_ca/tract_eligible_support.parquet",
+      "bytes": 110167,
+      "sha256": "ae3ff3845fceed83e3e101fa86cb19644354f101490b301e92456191a10841a9"
+    }
+  },
+  "access_contract": {
+    "worldcover_static_class_values_read": true,
+    "external_target_or_qa_values_read": false,
+    "landsat_thermal_values_read": false,
+    "sentinel_values_read": false,
+    "predictor_values_computed": false,
+    "model_fit_or_prediction_performed": false,
+    "final_evaluation_outputs_opened": false
+  },
+  "commit_sha256": "4fc8323acc0eca002a6d8fc82f1cc9bca721076dd50b7027efe3a3769f0c685e"
+}

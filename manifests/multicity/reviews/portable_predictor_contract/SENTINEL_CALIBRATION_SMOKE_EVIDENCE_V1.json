@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "external-city-sentinel-calibration-smoke-v1",
+  "state": "complete_target_blind_sentinel_calibration_smoke",
+  "generated_at_utc": "2026-08-09T12:57:01.053801+00:00",
+  "plan_authorization": {
+    "path": "manifests/multicity/ACTIVE_STAGE.json",
+    "bytes": 2857,
+    "file_sha256": "54938766bf427c3366f96d7cd1cbd9c4f706ad01b84e3446ed804a82d65f58ef",
+    "revision": "2026-08-consolidated"
+  },
+  "cities": {
+    "phoenix_az": {
+      "path": "manifests/multicity/cities/phoenix_az/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "bytes": 21998,
+      "sha256": "d36074e08da1130f1ee8c56fe21b48942537a9865626efa95c935a9407e8c664",
+      "state": "complete_target_blind_city_sentinel_calibration_smoke",
+      "commit_sha256": "1183bab7a5ebad26e809b9e3a7eacb1460a3c65f921bf6202615c79bd85b53ff"
+    },
+    "houston_tx": {
+      "path": "manifests/multicity/cities/houston_tx/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "bytes": 21887,
+      "sha256": "b21119cbe0a221f0ca2083c91e924478ad1867afb3f58d82e94bd50b6c1cd32c",
+      "state": "complete_target_blind_city_sentinel_calibration_smoke",
+      "commit_sha256": "cd9ad3065998ffcd135cb95397bc517dbe21d6b907468a90b265fbb005a38b1c"
+    },
+    "chicago_il": {
+      "path": "manifests/multicity/cities/chicago_il/sentinel_calibration_smoke/SENTINEL_CALIBRATION_SMOKE_V1.json",
+      "bytes": 21688,
+      "sha256": "de5465a7fef99912223926a3c2eba2abff37605ceab08967491a25646941172d",
+      "state": "complete_target_blind_city_sentinel_calibration_smoke",
+      "commit_sha256": "f5210297dfc82cc8f96c4c18b24439eabed2316f179d5770294c7fcf934a5eeb"
+    }
+  },
+  "total_probe_groups": 3,
+  "network_audit": {
+    "explicit_request_count": 2802,
+    "bounded_response_bytes": 12169994,
+    "python_range_asset_open_count": 24,
+    "all_cog_range_requests_counted": true,
+    "redirect_fallback_allowed": false,
+    "signed_urls_persisted": false
+  },
+  "all_contributing_external_native_utm_zones_tested": true,
+  "all_seven_reflectance_assets_and_scl_tested_per_probe": true,
+  "sentinel_indices_or_tract_features_computed": false,
+  "predictor_build_authorized": false,
+  "external_target_or_qa_values_read": false,
+  "next_gate": "portable_predictor_contract_decision",
+  "commit_sha256": "801243637be27a3601f5f23f0f185afea34050ab392610118df54ec29b2155c8"
+}

@@ -1,0 +1,594 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "external-city-sentinel-calibration-smoke-v1",
+  "state": "complete_target_blind_city_sentinel_calibration_smoke",
+  "generated_at_utc": "2026-08-04T00:03:23.927594+00:00",
+  "city_id": "phoenix_az",
+  "timezone": "America/Phoenix",
+  "target_grid_crs": "EPSG:32612",
+  "plan_authorization": {
+    "path": "manifests/multicity/PLAN_READINESS.json",
+    "publication_git_commit": "6dd1a7998c048e54668e8fc531089d70a081144d",
+    "bytes": 65205,
+    "file_sha256": "e8ae1b93bb884cc606a3e2e70df2f30a94a52c75b8800f04735069367d02e171",
+    "commit_sha256": "8666329104dcd9ad46ca43465b782530ea2fe1984348592349229ba9481659d1"
+  },
+  "source_footprint": {
+    "commit_sha256": "a6f287daa22c41d893519dc751848c426b819dcf4ae00d33012fbf11c6073ed7",
+    "sentinel_table": {
+      "sha256": "97fb1cb7058b1da8ea5e98afb8ba0d74cb24c76ea5c342f10a7af9af982ed804",
+      "bytes": 97901,
+      "rows": 493,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/phoenix_az/source_footprints/sentinel_metadata_items.parquet",
+      "geometry_semantic_sha256": "eeaf7ab6711efa5490eee8e4eefe8a2a87bf19216d8030c9c1c97ab788d7c712"
+    }
+  },
+  "worldcover_support": {
+    "path": "manifests/multicity/cities/phoenix_az/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+    "commit_sha256": "7eb0196636025ef307c7d0c9371139a3fb1b4161949b2751a24981a77fd3aa66",
+    "city_support_identity_sha256": "15408d4d9a032566f785e5ac7841bf1115a4a6b892b12bedfec77f1f356c67d7"
+  },
+  "selection_contract": {
+    "group": "each_native_utm_zone_with_positive_eligible_cell_overlap",
+    "candidate_order": "eligible_cell_overlap_desc_acquired_utc_asc_mgrs_tile_asc_item_id_asc",
+    "probe_cell_order": "eligible_flat_index_ascending_inside_item_after_fixed_full_window_margin",
+    "cloud_scl_or_dn_used_for_selection": false,
+    "data_driven_fallback_allowed": false
+  },
+  "probe_count": 1,
+  "native_utm_zones": [
+    12
+  ],
+  "probes": [
+    {
+      "probe_id": "2e0a5090d6f9b536420a35749d40b62e52f38476bd2119276e04d702969ea397",
+      "native_utm_zone": 12,
+      "source_candidate": {
+        "native_utm_zone": 12,
+        "source_item_id": "S2B_MSIL2A_20250302T181149_R084_T12SUC_20250302T213847",
+        "mgrs_tile": "12SUC",
+        "acquired_utc": "2025-03-02T18:11:49.024000Z",
+        "eligible_cell_overlap": 721411
+      },
+      "exact_candidate_query": {
+        "query_sha256": "9d22895a7870c432fa1314e977a3e73fe85cf8c9844771cea02ace6802e22be3",
+        "raw": {
+          "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/phoenix_az/stac/item_S2B_MSIL2A_20250302T181149_R084_T12SUC_20250302T213847.json",
+          "bytes": 15450,
+          "sha256": "7b23b52983cb29d49f32610eeef6fb88929a17df838f0e5ba8cb2540128e8f64"
+        }
+      },
+      "cohort_query": {
+        "query_sha256": "5b3ff34f856a67297e9923acac9293a10a8e7092e282368eb3b166dd3a98d254",
+        "raw": {
+          "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/phoenix_az/stac/cohort_sentinel-2b_2025-03-02T18_11_49.024000Z_R84_GS2B_20250302T181149_041723.json",
+          "bytes": 61361,
+          "sha256": "eacdbe4d8ac0f2ae46c691e97548d8e80044b767a9bb5612e60c49aa1abff101"
+        }
+      },
+      "selected_exact_query": {
+        "query_sha256": "9d22895a7870c432fa1314e977a3e73fe85cf8c9844771cea02ace6802e22be3",
+        "raw": {
+          "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/phoenix_az/stac/item_S2B_MSIL2A_20250302T181149_R084_T12SUC_20250302T213847.json",
+          "bytes": 15450,
+          "sha256": "7b23b52983cb29d49f32610eeef6fb88929a17df838f0e5ba8cb2540128e8f64"
+        }
+      },
+      "physical_acquisition_id": "sentinel-2b|2025-03-02T18:11:49.024000Z|R84|GS2B_20250302T181149_041723",
+      "selected_item_id": "S2B_MSIL2A_20250302T181149_R084_T12SUC_20250302T213847",
+      "mgrs_tile": "12SUC",
+      "processing_baseline": "05.11",
+      "cohort_item_ids": [
+        "S2B_MSIL2A_20250302T181149_R084_T12SUB_20250302T213847",
+        "S2B_MSIL2A_20250302T181149_R084_T12SUC_20250302T213847",
+        "S2B_MSIL2A_20250302T181149_R084_T12SVB_20250302T213847",
+        "S2B_MSIL2A_20250302T181149_R084_T12SVC_20250302T213847"
+      ],
+      "cohort_union_aoi_coverage_fraction": 1.0,
+      "probe_cell": {
+        "support_crs": "EPSG:32612",
+        "x": 396600.0,
+        "y": 3743610.0,
+        "flat_index": 420449,
+        "selection": "minimum_flat_eligible_cell_index_inside_selected_item",
+        "full_window_margin_m": 400.0
+      },
+      "product_metadata": {
+        "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/phoenix_az/probes/2e0a5090d6f9b536420a35749d40b62e52f38476bd2119276e04d702969ea397/product_metadata.xml",
+        "bytes": 54732,
+        "sha256": "e6c53bb8218161afb4817f33e972f1be06db15cc3183297c9d37954fe4af77e4",
+        "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/12/S/UC/2025/03/02/S2B_MSIL2A_20250302T181149_N0511_R084_T12SUC_20250302T213847.SAFE/MTD_MSIL2A.xml",
+        "processing_baseline": "05.11",
+        "quantification_value": 10000.0,
+        "band_offsets_dn": {
+          "B02": -1000.0,
+          "B03": -1000.0,
+          "B04": -1000.0,
+          "B08": -1000.0,
+          "B8A": -1000.0,
+          "B11": -1000.0,
+          "B12": -1000.0
+        },
+        "calibration_sha256": "7e7eed3a9bac579bc145c707c85a2282de2f64a3dbc1203eecfebe278cd40542"
+      },
+      "assets": {
+        "B02": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/12/S/UC/2025/03/02/S2B_MSIL2A_20250302T181149_N0511_R084_T12SUC_20250302T213847.SAFE/GRANULE/L2A_T12SUC_A041723_20250302T181456/IMG_DATA/R10m/T12SUC_20250302T181149_B02_10m.tif",
+          "schema": {
+            "crs": "EPSG:32612",
+            "shape": [
+              10980,
+              10980
+            ],
+            "transform": [
+              10.0,
+              0.0,
+              300000.0,
+              0.0,
+              -10.0,
+              3800040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 10.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            9644,
+            5627,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/phoenix_az/probes/2e0a5090d6f9b536420a35749d40b62e52f38476bd2119276e04d702969ea397/B02_raw.npy",
+            "bytes": 2176,
+            "sha256": "a3d83391a94673bf9467aa385eebb760a7680c219a7f10d8dc5948de02d65781"
+          },
+          "raw_array_sha256": "452a271f62e18a0659e7fd3b5293fb64c6a90dc1a75e55d01ecc22d43f5943d1"
+        },
+        "B03": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/12/S/UC/2025/03/02/S2B_MSIL2A_20250302T181149_N0511_R084_T12SUC_20250302T213847.SAFE/GRANULE/L2A_T12SUC_A041723_20250302T181456/IMG_DATA/R10m/T12SUC_20250302T181149_B03_10m.tif",
+          "schema": {
+            "crs": "EPSG:32612",
+            "shape": [
+              10980,
+              10980
+            ],
+            "transform": [
+              10.0,
+              0.0,
+              300000.0,
+              0.0,
+              -10.0,
+              3800040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 10.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            9644,
+            5627,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/phoenix_az/probes/2e0a5090d6f9b536420a35749d40b62e52f38476bd2119276e04d702969ea397/B03_raw.npy",
+            "bytes": 2176,
+            "sha256": "95011607964e4ab1fa8578e3abbbec97b3f71603cce3a19f0348e82791c83689"
+          },
+          "raw_array_sha256": "d269936ad8a90e0cb60f7e8ead7703ce87499cc7072bed0149c34083b7635424"
+        },
+        "B04": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/12/S/UC/2025/03/02/S2B_MSIL2A_20250302T181149_N0511_R084_T12SUC_20250302T213847.SAFE/GRANULE/L2A_T12SUC_A041723_20250302T181456/IMG_DATA/R10m/T12SUC_20250302T181149_B04_10m.tif",
+          "schema": {
+            "crs": "EPSG:32612",
+            "shape": [
+              10980,
+              10980
+            ],
+            "transform": [
+              10.0,
+              0.0,
+              300000.0,
+              0.0,
+              -10.0,
+              3800040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 10.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            9644,
+            5627,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/phoenix_az/probes/2e0a5090d6f9b536420a35749d40b62e52f38476bd2119276e04d702969ea397/B04_raw.npy",
+            "bytes": 2176,
+            "sha256": "e082a3d139fb690c644db04e537f07c73f09f31e35a41fbc5780de778abfb7bf"
+          },
+          "raw_array_sha256": "e798fc4342b1699128af4aafca467102302e769b56ef745a9d91115ac0ffc998"
+        },
+        "B08": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/12/S/UC/2025/03/02/S2B_MSIL2A_20250302T181149_N0511_R084_T12SUC_20250302T213847.SAFE/GRANULE/L2A_T12SUC_A041723_20250302T181456/IMG_DATA/R10m/T12SUC_20250302T181149_B08_10m.tif",
+          "schema": {
+            "crs": "EPSG:32612",
+            "shape": [
+              10980,
+              10980
+            ],
+            "transform": [
+              10.0,
+              0.0,
+              300000.0,
+              0.0,
+              -10.0,
+              3800040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 10.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            9644,
+            5627,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/phoenix_az/probes/2e0a5090d6f9b536420a35749d40b62e52f38476bd2119276e04d702969ea397/B08_raw.npy",
+            "bytes": 2176,
+            "sha256": "f31d77f88b7afddf43de2d0ca3656847504c7b1595ffa417a89ed216f1c15894"
+          },
+          "raw_array_sha256": "582e1f838f784cfd4672b52f1f5df2dc97ebe87365be5a1d5688b71cd2357d49"
+        },
+        "B8A": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/12/S/UC/2025/03/02/S2B_MSIL2A_20250302T181149_N0511_R084_T12SUC_20250302T213847.SAFE/GRANULE/L2A_T12SUC_A041723_20250302T181456/IMG_DATA/R20m/T12SUC_20250302T181149_B8A_20m.tif",
+          "schema": {
+            "crs": "EPSG:32612",
+            "shape": [
+              5490,
+              5490
+            ],
+            "transform": [
+              20.0,
+              0.0,
+              300000.0,
+              0.0,
+              -20.0,
+              3800040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 20.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            4814,
+            2805,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/phoenix_az/probes/2e0a5090d6f9b536420a35749d40b62e52f38476bd2119276e04d702969ea397/B8A_raw.npy",
+            "bytes": 2176,
+            "sha256": "e9ffa1df7a993c5ab19a4c98f20cf4b12b10c621b0d95b03e155346decb76f90"
+          },
+          "raw_array_sha256": "8e775ae3817cc2b18616bbafef96fe18a21e3b201f4651545e152a103515a711"
+        },
+        "B11": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/12/S/UC/2025/03/02/S2B_MSIL2A_20250302T181149_N0511_R084_T12SUC_20250302T213847.SAFE/GRANULE/L2A_T12SUC_A041723_20250302T181456/IMG_DATA/R20m/T12SUC_20250302T181149_B11_20m.tif",
+          "schema": {
+            "crs": "EPSG:32612",
+            "shape": [
+              5490,
+              5490
+            ],
+            "transform": [
+              20.0,
+              0.0,
+              300000.0,
+              0.0,
+              -20.0,
+              3800040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 20.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            4814,
+            2805,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/phoenix_az/probes/2e0a5090d6f9b536420a35749d40b62e52f38476bd2119276e04d702969ea397/B11_raw.npy",
+            "bytes": 2176,
+            "sha256": "928ecf59f746b4f91308a44440524a7d1f97f4ac62b9e25d0c4a11506e745df6"
+          },
+          "raw_array_sha256": "70a466de512742fa74ac933a9d1d37cc6e2bfcf860b04d68bd3b941b709c5b8e"
+        },
+        "B12": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/12/S/UC/2025/03/02/S2B_MSIL2A_20250302T181149_N0511_R084_T12SUC_20250302T213847.SAFE/GRANULE/L2A_T12SUC_A041723_20250302T181456/IMG_DATA/R20m/T12SUC_20250302T181149_B12_20m.tif",
+          "schema": {
+            "crs": "EPSG:32612",
+            "shape": [
+              5490,
+              5490
+            ],
+            "transform": [
+              20.0,
+              0.0,
+              300000.0,
+              0.0,
+              -20.0,
+              3800040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 20.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            4814,
+            2805,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/phoenix_az/probes/2e0a5090d6f9b536420a35749d40b62e52f38476bd2119276e04d702969ea397/B12_raw.npy",
+            "bytes": 2176,
+            "sha256": "e850186d15bc24cacb13f429d251d192ca61b8957a50d381afb666ef6ff7a49c"
+          },
+          "raw_array_sha256": "162d269bf241b7282bd4a68c2cfabea681448dbceacfbeac36e798b9dc52b352"
+        },
+        "SCL": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/12/S/UC/2025/03/02/S2B_MSIL2A_20250302T181149_N0511_R084_T12SUC_20250302T213847.SAFE/GRANULE/L2A_T12SUC_A041723_20250302T181456/IMG_DATA/R20m/T12SUC_20250302T181149_SCL_20m.tif",
+          "schema": {
+            "crs": "EPSG:32612",
+            "shape": [
+              5490,
+              5490
+            ],
+            "transform": [
+              20.0,
+              0.0,
+              300000.0,
+              0.0,
+              -20.0,
+              3800040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 20.0,
+            "dtype": "uint8",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            4814,
+            2805,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/phoenix_az/probes/2e0a5090d6f9b536420a35749d40b62e52f38476bd2119276e04d702969ea397/SCL_raw.npy",
+            "bytes": 1152,
+            "sha256": "fabb296a5f2b9abfe1494626a9dcaa671d1e7bad73ee25b917374fc1debf05d6"
+          },
+          "raw_array_sha256": "1ba794e9305174cbcd58c9e8ce282af85b353d87ccd380db3a41c3bc4615d273"
+        }
+      },
+      "decoded_reflectance": {
+        "formula": "(DN+BOA_ADD_OFFSET)/BOA_QUANTIFICATION_VALUE",
+        "offset_applied_exactly_once": true,
+        "finite_counts": {
+          "B02": 1024,
+          "B03": 1024,
+          "B04": 1024,
+          "B08": 1024,
+          "B8A": 1024,
+          "B11": 1024,
+          "B12": 1024
+        },
+        "value_hashes": {
+          "B02": "6cd4c81d793008baea5446b484c434d71ddb908c67be5e2b03fd521b323a48ec",
+          "B03": "5f5cd422098d5bd15918979d596302957039a1065eb1c3d31f38dd2114435ec9",
+          "B04": "165673e66267e706c0ea0ce688736b492639287482e2fa6a9d347f948779311f",
+          "B08": "ec062d275518835baa0faafc1bea938fcd7da7550e14dc5fd2c87c7d34e057a5",
+          "B8A": "80996ff754958055caad05fec89ae98abf3cf9e42874279dd1eb348592372312",
+          "B11": "8986b9cf881b4a933c086ad8544b9db8ffa382fd553f16d5edf28553336ec373",
+          "B12": "d1f31ee1c0777bb3778fd2f84319204b350b01e2363462e831ee2a190dd87747"
+        },
+        "indices_or_albedo_computed": false
+      },
+      "provider_encoding_evidence": {
+        "decode_calibration_authority": "official_product_metadata_xml",
+        "stac_values_synthesized_from_xml": false,
+        "expected_stac_scale": 0.0001,
+        "expected_stac_offset_by_band": {
+          "B02": -0.1,
+          "B03": -0.1,
+          "B04": -0.1,
+          "B08": -0.1,
+          "B8A": -0.1,
+          "B11": -0.1,
+          "B12": -0.1
+        },
+        "stac_raster_band_declared_by_asset": {
+          "B02": false,
+          "B03": false,
+          "B04": false,
+          "B08": false,
+          "B8A": false,
+          "B11": false,
+          "B12": false
+        },
+        "stac_raster_band_matches_xml_formula": {
+          "B02": null,
+          "B03": null,
+          "B04": null,
+          "B08": null,
+          "B8A": null,
+          "B11": null,
+          "B12": null
+        },
+        "all_seven_assets_declare_stac_calibration": false,
+        "all_seven_assets_match_xml_formula": false,
+        "comparison_status": "provider_stac_raster_calibration_not_published",
+        "native_dn_storage_header_identity_required": true,
+        "interpretation_deferred_to_v3": true
+      },
+      "scl_histogram_audit_only": {
+        "5": 1024
+      },
+      "data_driven_candidate_fallback_used": false
+    }
+  ],
+  "network_audit": {
+    "explicit_request_count": 937,
+    "bounded_response_bytes": 5275795,
+    "python_range_asset_open_count": 8,
+    "all_cog_range_requests_counted": true,
+    "redirect_fallback_allowed": false,
+    "signed_urls_persisted": false
+  },
+  "access_contract": {
+    "sentinel_product_metadata_read": true,
+    "small_native_dn_windows_read": true,
+    "landsat_thermal_or_target_qa_values_read": false,
+    "external_target_or_lst_values_read": false,
+    "sentinel_indices_or_tract_features_computed": false,
+    "predictor_construction_performed": false,
+    "model_fit_or_prediction_performed": false,
+    "final_evaluation_outputs_opened": false
+  },
+  "commit_sha256": "1183bab7a5ebad26e809b9e3a7eacb1460a3c65f921bf6202615c79bd85b53ff"
+}

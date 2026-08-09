@@ -1,0 +1,591 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "external-city-sentinel-calibration-smoke-v1",
+  "state": "complete_target_blind_city_sentinel_calibration_smoke",
+  "generated_at_utc": "2026-08-09T12:55:11.129351+00:00",
+  "city_id": "chicago_il",
+  "timezone": "America/Chicago",
+  "target_grid_crs": "EPSG:32616",
+  "plan_authorization": {
+    "path": "manifests/multicity/ACTIVE_STAGE.json",
+    "bytes": 2857,
+    "file_sha256": "54938766bf427c3366f96d7cd1cbd9c4f706ad01b84e3446ed804a82d65f58ef",
+    "revision": "2026-08-consolidated"
+  },
+  "source_footprint": {
+    "commit_sha256": "1227a9f9030905c31ab420cdd72b0794984dcfc461acc8e0ab075c8ebac9fb82",
+    "sentinel_table": {
+      "sha256": "1c7d11d7a0258f745773e4a58d340dca7b6b3983d91a4de171fe61e360b7d3c4",
+      "bytes": 15070,
+      "rows": 57,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/chicago_il/source_footprints/sentinel_metadata_items.parquet",
+      "geometry_semantic_sha256": "e77a23d0efa21d9d614f7afabdb3b35d361b936e1860cc61824ccf15cf56b5b5"
+    }
+  },
+  "worldcover_support": {
+    "path": "manifests/multicity/cities/chicago_il/eligible_support/WORLDCOVER_ELIGIBLE_SUPPORT_V1.json",
+    "commit_sha256": "9d5b54df7f6562ddc2bb1540cac36c4d61b866fcb9f8a49a7c2b4e7fee3b56ef",
+    "city_support_identity_sha256": "1e2d179a274f813a7e7232f0dee571b7295c98f7009da6d14f82cbb608783cba"
+  },
+  "selection_contract": {
+    "group": "each_native_utm_zone_with_positive_eligible_cell_overlap",
+    "candidate_order": "eligible_cell_overlap_desc_acquired_utc_asc_mgrs_tile_asc_item_id_asc",
+    "probe_cell_order": "eligible_flat_index_ascending_inside_item_after_fixed_full_window_margin",
+    "cloud_scl_or_dn_used_for_selection": false,
+    "data_driven_fallback_allowed": false
+  },
+  "probe_count": 1,
+  "native_utm_zones": [
+    16
+  ],
+  "probes": [
+    {
+      "probe_id": "6194258d11411d6fe56afd8f55c855e96f1da6a1e45d41692d032feb4aba7e81",
+      "native_utm_zone": 16,
+      "source_candidate": {
+        "native_utm_zone": 16,
+        "source_item_id": "S2B_MSIL2A_20250305T164059_R126_T16TDM_20250305T203928",
+        "mgrs_tile": "16TDM",
+        "acquired_utc": "2025-03-05T16:40:59.024000Z",
+        "eligible_cell_overlap": 619941
+      },
+      "exact_candidate_query": {
+        "query_sha256": "314640f7354c3ccb1b378856f249c58c3ba6a0dbbd20ba3c67faa27cf1f50655",
+        "raw": {
+          "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/chicago_il/stac/item_S2B_MSIL2A_20250305T164059_R126_T16TDM_20250305T203928.json",
+          "bytes": 15431,
+          "sha256": "e6e29078485732dc5949ad6c0335454d16709f12c89e46d1132964bdffcf4cb4"
+        }
+      },
+      "cohort_query": {
+        "query_sha256": "7e58d968d2aa1b1c3ab78649e25e53c14cdbbb852b9771a7544a425ee171b7ee",
+        "raw": {
+          "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/chicago_il/stac/cohort_sentinel-2b_2025-03-05T16_40_59.024000Z_R126_GS2B_20250305T164059_041765.json",
+          "bytes": 15431,
+          "sha256": "e6e29078485732dc5949ad6c0335454d16709f12c89e46d1132964bdffcf4cb4"
+        }
+      },
+      "selected_exact_query": {
+        "query_sha256": "314640f7354c3ccb1b378856f249c58c3ba6a0dbbd20ba3c67faa27cf1f50655",
+        "raw": {
+          "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/chicago_il/stac/item_S2B_MSIL2A_20250305T164059_R126_T16TDM_20250305T203928.json",
+          "bytes": 15431,
+          "sha256": "e6e29078485732dc5949ad6c0335454d16709f12c89e46d1132964bdffcf4cb4"
+        }
+      },
+      "physical_acquisition_id": "sentinel-2b|2025-03-05T16:40:59.024000Z|R126|GS2B_20250305T164059_041765",
+      "selected_item_id": "S2B_MSIL2A_20250305T164059_R126_T16TDM_20250305T203928",
+      "mgrs_tile": "16TDM",
+      "processing_baseline": "05.11",
+      "cohort_item_ids": [
+        "S2B_MSIL2A_20250305T164059_R126_T16TDM_20250305T203928"
+      ],
+      "cohort_union_aoi_coverage_fraction": 1.0,
+      "probe_cell": {
+        "support_crs": "EPSG:32616",
+        "x": 444390.0,
+        "y": 4652550.0,
+        "flat_index": 742,
+        "selection": "minimum_flat_eligible_cell_index_inside_selected_item",
+        "full_window_margin_m": 400.0
+      },
+      "product_metadata": {
+        "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/chicago_il/probes/6194258d11411d6fe56afd8f55c855e96f1da6a1e45d41692d032feb4aba7e81/product_metadata.xml",
+        "bytes": 54450,
+        "sha256": "2038720cb80190b542be8945ec6c36a6c1e29fb2f874e2985af40d3cfb566654",
+        "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/16/T/DM/2025/03/05/S2B_MSIL2A_20250305T164059_N0511_R126_T16TDM_20250305T203928.SAFE/MTD_MSIL2A.xml",
+        "processing_baseline": "05.11",
+        "quantification_value": 10000.0,
+        "band_offsets_dn": {
+          "B02": -1000.0,
+          "B03": -1000.0,
+          "B04": -1000.0,
+          "B08": -1000.0,
+          "B8A": -1000.0,
+          "B11": -1000.0,
+          "B12": -1000.0
+        },
+        "calibration_sha256": "7e7eed3a9bac579bc145c707c85a2282de2f64a3dbc1203eecfebe278cd40542"
+      },
+      "assets": {
+        "B02": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/16/T/DM/2025/03/05/S2B_MSIL2A_20250305T164059_N0511_R126_T16TDM_20250305T203928.SAFE/GRANULE/L2A_T16TDM_A041765_20250305T164341/IMG_DATA/R10m/T16TDM_20250305T164059_B02_10m.tif",
+          "schema": {
+            "crs": "EPSG:32616",
+            "shape": [
+              10980,
+              10980
+            ],
+            "transform": [
+              10.0,
+              0.0,
+              399960.0,
+              0.0,
+              -10.0,
+              4700040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 10.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            4427,
+            4733,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/chicago_il/probes/6194258d11411d6fe56afd8f55c855e96f1da6a1e45d41692d032feb4aba7e81/B02_raw.npy",
+            "bytes": 2176,
+            "sha256": "47de5892d30c807bf8c05b3e0066e192ba99d16b79cddc3c8fe184931e81df55"
+          },
+          "raw_array_sha256": "e63bf614df4c6d5fccc7f3a27d881c2ff06142090f722742415f598fc6f64b71"
+        },
+        "B03": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/16/T/DM/2025/03/05/S2B_MSIL2A_20250305T164059_N0511_R126_T16TDM_20250305T203928.SAFE/GRANULE/L2A_T16TDM_A041765_20250305T164341/IMG_DATA/R10m/T16TDM_20250305T164059_B03_10m.tif",
+          "schema": {
+            "crs": "EPSG:32616",
+            "shape": [
+              10980,
+              10980
+            ],
+            "transform": [
+              10.0,
+              0.0,
+              399960.0,
+              0.0,
+              -10.0,
+              4700040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 10.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            4427,
+            4733,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/chicago_il/probes/6194258d11411d6fe56afd8f55c855e96f1da6a1e45d41692d032feb4aba7e81/B03_raw.npy",
+            "bytes": 2176,
+            "sha256": "6b1735010b5a27d1a5ead0f376d627029d9b615188af5b80c0c7b40aec69e068"
+          },
+          "raw_array_sha256": "531a29482143b4b47218bfcf292213813e2c123684db2fc40c4b3ae68b779646"
+        },
+        "B04": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/16/T/DM/2025/03/05/S2B_MSIL2A_20250305T164059_N0511_R126_T16TDM_20250305T203928.SAFE/GRANULE/L2A_T16TDM_A041765_20250305T164341/IMG_DATA/R10m/T16TDM_20250305T164059_B04_10m.tif",
+          "schema": {
+            "crs": "EPSG:32616",
+            "shape": [
+              10980,
+              10980
+            ],
+            "transform": [
+              10.0,
+              0.0,
+              399960.0,
+              0.0,
+              -10.0,
+              4700040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 10.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            4427,
+            4733,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/chicago_il/probes/6194258d11411d6fe56afd8f55c855e96f1da6a1e45d41692d032feb4aba7e81/B04_raw.npy",
+            "bytes": 2176,
+            "sha256": "7bf99477af692a15f58baf03117cc4a9595377c730a09df6f0b8accb8dbc9e30"
+          },
+          "raw_array_sha256": "738f7942f6c9f33da097749a46f8e273aac8742942a6e25c1ca3ec02374642ad"
+        },
+        "B08": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/16/T/DM/2025/03/05/S2B_MSIL2A_20250305T164059_N0511_R126_T16TDM_20250305T203928.SAFE/GRANULE/L2A_T16TDM_A041765_20250305T164341/IMG_DATA/R10m/T16TDM_20250305T164059_B08_10m.tif",
+          "schema": {
+            "crs": "EPSG:32616",
+            "shape": [
+              10980,
+              10980
+            ],
+            "transform": [
+              10.0,
+              0.0,
+              399960.0,
+              0.0,
+              -10.0,
+              4700040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 10.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            4427,
+            4733,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/chicago_il/probes/6194258d11411d6fe56afd8f55c855e96f1da6a1e45d41692d032feb4aba7e81/B08_raw.npy",
+            "bytes": 2176,
+            "sha256": "9e98d5cd13cc96f7e04382ffb669313d58e5b72b5da710e488c63f8bf810d6dd"
+          },
+          "raw_array_sha256": "50b5c080197e43b03e3610ea32cdc2634bbb5a076ef48387bedb38a247537cea"
+        },
+        "B8A": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/16/T/DM/2025/03/05/S2B_MSIL2A_20250305T164059_N0511_R126_T16TDM_20250305T203928.SAFE/GRANULE/L2A_T16TDM_A041765_20250305T164341/IMG_DATA/R20m/T16TDM_20250305T164059_B8A_20m.tif",
+          "schema": {
+            "crs": "EPSG:32616",
+            "shape": [
+              5490,
+              5490
+            ],
+            "transform": [
+              20.0,
+              0.0,
+              399960.0,
+              0.0,
+              -20.0,
+              4700040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 20.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            2205,
+            2358,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/chicago_il/probes/6194258d11411d6fe56afd8f55c855e96f1da6a1e45d41692d032feb4aba7e81/B8A_raw.npy",
+            "bytes": 2176,
+            "sha256": "dc8c75b251ccf5b8516344414a9001318ac35cab4371bc023c8ef453b74aaaf2"
+          },
+          "raw_array_sha256": "a555c7f21ec0e2ca8cb523c143fc058c35bfcd285dec9ac428fe41a79de742dd"
+        },
+        "B11": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/16/T/DM/2025/03/05/S2B_MSIL2A_20250305T164059_N0511_R126_T16TDM_20250305T203928.SAFE/GRANULE/L2A_T16TDM_A041765_20250305T164341/IMG_DATA/R20m/T16TDM_20250305T164059_B11_20m.tif",
+          "schema": {
+            "crs": "EPSG:32616",
+            "shape": [
+              5490,
+              5490
+            ],
+            "transform": [
+              20.0,
+              0.0,
+              399960.0,
+              0.0,
+              -20.0,
+              4700040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 20.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            2205,
+            2358,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/chicago_il/probes/6194258d11411d6fe56afd8f55c855e96f1da6a1e45d41692d032feb4aba7e81/B11_raw.npy",
+            "bytes": 2176,
+            "sha256": "5f2001c1c6c9049f096d5c5290ef4d926f4eff4146082f8f0405207f26a13774"
+          },
+          "raw_array_sha256": "a9419e843e689ae2d9afa3506a49701553c8a265bdafe5a42cf2b65c387f525f"
+        },
+        "B12": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/16/T/DM/2025/03/05/S2B_MSIL2A_20250305T164059_N0511_R126_T16TDM_20250305T203928.SAFE/GRANULE/L2A_T16TDM_A041765_20250305T164341/IMG_DATA/R20m/T16TDM_20250305T164059_B12_20m.tif",
+          "schema": {
+            "crs": "EPSG:32616",
+            "shape": [
+              5490,
+              5490
+            ],
+            "transform": [
+              20.0,
+              0.0,
+              399960.0,
+              0.0,
+              -20.0,
+              4700040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 20.0,
+            "dtype": "uint16",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            2205,
+            2358,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/chicago_il/probes/6194258d11411d6fe56afd8f55c855e96f1da6a1e45d41692d032feb4aba7e81/B12_raw.npy",
+            "bytes": 2176,
+            "sha256": "5880ddd09e5ef376428f1585e9e6dc0bb4e4546652601852ef89b4e9af2866ce"
+          },
+          "raw_array_sha256": "de260914579f141eb1b0d72c0a4cf36b98edf403834e1b3a37e93e90785b6200"
+        },
+        "SCL": {
+          "unsigned_url": "https://sentinel2l2a01.blob.core.windows.net/sentinel2-l2/16/T/DM/2025/03/05/S2B_MSIL2A_20250305T164059_N0511_R126_T16TDM_20250305T203928.SAFE/GRANULE/L2A_T16TDM_A041765_20250305T164341/IMG_DATA/R20m/T16TDM_20250305T164059_SCL_20m.tif",
+          "schema": {
+            "crs": "EPSG:32616",
+            "shape": [
+              5490,
+              5490
+            ],
+            "transform": [
+              20.0,
+              0.0,
+              399960.0,
+              0.0,
+              -20.0,
+              4700040.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "resolution_m": 20.0,
+            "dtype": "uint8",
+            "nodata": 0.0,
+            "scales": [
+              1.0
+            ],
+            "offsets": [
+              0.0
+            ],
+            "native_dn_identity_storage": true
+          },
+          "stac_raster_band": {
+            "availability": "not_published_by_provider_stac_item",
+            "scale": null,
+            "offset": null,
+            "nodata": null
+          },
+          "window": [
+            2205,
+            2358,
+            32,
+            32
+          ],
+          "raw_window": {
+            "path": "data/interim/multicity/missing_support_calibration_evidence_v1/sentinel_smoke/chicago_il/probes/6194258d11411d6fe56afd8f55c855e96f1da6a1e45d41692d032feb4aba7e81/SCL_raw.npy",
+            "bytes": 1152,
+            "sha256": "a13f59108a3c33b2f7cda8980d23ad83cd5b59671a21088069134f071bac39fa"
+          },
+          "raw_array_sha256": "e65ef4e3655e245ff65eafe89606b02e3c9270192d35d7f97fdbb08992b68c07"
+        }
+      },
+      "decoded_reflectance": {
+        "formula": "(DN+BOA_ADD_OFFSET)/BOA_QUANTIFICATION_VALUE",
+        "offset_applied_exactly_once": true,
+        "finite_counts": {
+          "B02": 1024,
+          "B03": 1024,
+          "B04": 1024,
+          "B08": 1024,
+          "B8A": 1024,
+          "B11": 1024,
+          "B12": 1024
+        },
+        "value_hashes": {
+          "B02": "dbb5d5e4c7071c408fead5e44e55664acc90604913296c21c171440f651f1bcb",
+          "B03": "e67811d065e60db3906bac3fb043b4d78ff2dc6254ea70549d381ea35f6fab2b",
+          "B04": "4a60a51df9004ffc10d6f3ff245f06c20eacaf9d3b4efbc33cd31a4607b4a342",
+          "B08": "618532b2de88e72159a7643737acd80b0f0ed4850c34e6bb42127b3be99b5155",
+          "B8A": "2fc4d8fe1bf8540f51ddeb180b412cfa311cd04fad488dc8d591982c23694446",
+          "B11": "481e08094610809f9e4315e2d08355e2ae3365011a7909e1f1dfa38f8f2208af",
+          "B12": "9f3198a3c6ea2dcb50661997b49674b55c6f00c10f1c14c6fca4d270ce6d753f"
+        },
+        "indices_or_albedo_computed": false
+      },
+      "provider_encoding_evidence": {
+        "decode_calibration_authority": "official_product_metadata_xml",
+        "stac_values_synthesized_from_xml": false,
+        "expected_stac_scale": 0.0001,
+        "expected_stac_offset_by_band": {
+          "B02": -0.1,
+          "B03": -0.1,
+          "B04": -0.1,
+          "B08": -0.1,
+          "B8A": -0.1,
+          "B11": -0.1,
+          "B12": -0.1
+        },
+        "stac_raster_band_declared_by_asset": {
+          "B02": false,
+          "B03": false,
+          "B04": false,
+          "B08": false,
+          "B8A": false,
+          "B11": false,
+          "B12": false
+        },
+        "stac_raster_band_matches_xml_formula": {
+          "B02": null,
+          "B03": null,
+          "B04": null,
+          "B08": null,
+          "B8A": null,
+          "B11": null,
+          "B12": null
+        },
+        "all_seven_assets_declare_stac_calibration": false,
+        "all_seven_assets_match_xml_formula": false,
+        "comparison_status": "provider_stac_raster_calibration_not_published",
+        "native_dn_storage_header_identity_required": true,
+        "interpretation_deferred_to_v3": true
+      },
+      "scl_histogram_audit_only": {
+        "8": 68,
+        "9": 956
+      },
+      "data_driven_candidate_fallback_used": false
+    }
+  ],
+  "network_audit": {
+    "explicit_request_count": 932,
+    "bounded_response_bytes": 3425281,
+    "python_range_asset_open_count": 8,
+    "all_cog_range_requests_counted": true,
+    "redirect_fallback_allowed": false,
+    "signed_urls_persisted": false
+  },
+  "access_contract": {
+    "sentinel_product_metadata_read": true,
+    "small_native_dn_windows_read": true,
+    "landsat_thermal_or_target_qa_values_read": false,
+    "external_target_or_lst_values_read": false,
+    "sentinel_indices_or_tract_features_computed": false,
+    "predictor_construction_performed": false,
+    "model_fit_or_prediction_performed": false,
+    "final_evaluation_outputs_opened": false
+  },
+  "commit_sha256": "f5210297dfc82cc8f96c4c18b24439eabed2316f179d5770294c7fcf934a5eeb"
+}

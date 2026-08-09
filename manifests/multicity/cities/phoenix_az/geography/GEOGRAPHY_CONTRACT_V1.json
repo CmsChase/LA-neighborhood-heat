@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "four-city-census-geography-contract-v1",
+  "state": "complete_target_blind_city_geography_evidence",
+  "generated_at_utc": "2026-08-03T10:58:07.131148+00:00",
+  "city": {
+    "id": "phoenix_az",
+    "name": "Phoenix",
+    "census_place_geoid": "0455000",
+    "role": "external_confirmation",
+    "target_values_status": "sealed"
+  },
+  "plan_authorization": {
+    "path": "manifests/multicity/PLAN_READINESS.json",
+    "publication_git_commit": "297d47f10c648e31f78135038d1b09f7548a9e5a",
+    "bytes": 52152,
+    "file_sha256": "7b1613130d9068183c0ad4e5867dbbbf5a442f9e73a05cb5d307421f544bd6de",
+    "commit_sha256": "09d464d52485e1318927a6b820aff26610d6143356609b882f8ed4fe56be59b3"
+  },
+  "selection_contract": {
+    "vintage": 2020,
+    "analysis_crs": "EPSG:5070",
+    "minimum_original_tract_area_inside_place_fraction": 0.5,
+    "exclude_special_use_tract_prefix": "98",
+    "repair_order": "make_each_geometry_valid_before_place_dissolve_or_tract_intersection",
+    "target_or_predictor_performance_used": false
+  },
+  "source": {
+    "mode": "fresh_tigerweb_same_adapter",
+    "place": {
+      "label": "census_tigerweb_2020_place_v12",
+      "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/26",
+      "provider": "U.S. Census Bureau"
+    },
+    "tract": {
+      "label": "census_tigerweb_2020_tract_v12",
+      "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/6",
+      "provider": "U.S. Census Bureau"
+    },
+    "raw_files": {
+      "data/raw/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/place/layer_metadata.json": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/place/layer_metadata.json",
+        "bytes": 6033,
+        "sha256": "f3c32d196e581350881c28817090d84e64bbbc9542983a4af737e4f6eb98cf0e"
+      },
+      "data/raw/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/place/query_count.json": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/place/query_count.json",
+        "bytes": 11,
+        "sha256": "6aea6dfe6561984cdc5c54ead84d47d2cf29e48253ae282aef237404adad4661"
+      },
+      "data/raw/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/place/features.geojson": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/place/features.geojson",
+        "bytes": 265784,
+        "sha256": "6fc4adae08070791aba827c1a93b40d3732d3030186ea1fa60913f82580ebe76"
+      },
+      "data/raw/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/tract/layer_metadata.json": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/tract/layer_metadata.json",
+        "bytes": 5659,
+        "sha256": "cd8c8136a6e9ea16debc05724edacbc76573cba18266e0f4fff33ae32a623219"
+      },
+      "data/raw/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/tract/query_count.json": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/tract/query_count.json",
+        "bytes": 13,
+        "sha256": "a15a36a18808fe0aee80c131f10f16ecaf94e7ff4134e4a0c49eec1af0062ee5"
+      },
+      "data/raw/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/tract/features_0000.geojson": {
+        "path": "data/raw/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/tract/features_0000.geojson",
+        "bytes": 3602950,
+        "sha256": "c4b476f53871b3496856f1b2dff6c3375b53c30dbabf900dbcfeed57169a1f30"
+      }
+    }
+  },
+  "counts": {
+    "candidate_tracts": 603,
+    "positive_overlap_tracts": 389,
+    "threshold_tracts": 376,
+    "special_use_threshold_tracts": 1,
+    "primary_tracts": 375
+  },
+  "table_identities": {
+    "city_boundary": {
+      "rows": 1,
+      "crs": "EPSG:4326",
+      "geometry_semantic_sha256": "e83742993ea5f3688da024fad1a0a876f4607735a26735fdf66d81486c22bb72",
+      "full_row_semantic_sha256": "6be0dc756cd6d5b55fd9fcc7ae597c2f4c32606b842cf082555581372cfb2745",
+      "geoid_geometry_mapping_sha256": null
+    },
+    "tract_candidates": {
+      "rows": 603,
+      "crs": "EPSG:5070",
+      "geometry_semantic_sha256": "67b90ee6512b9bf6ff109408edb241c9ed601513fa4fc28f439d4df9862174ec",
+      "full_row_semantic_sha256": "202ad60cc51ad3be1550e45d53b2391cd99b0b52960ee676d13141c1cb5b7c9d",
+      "geoid_geometry_mapping_sha256": "e80de3660834740c968fdd5fc458ff92b7bf281af12a5ab33614d614f30850a4"
+    },
+    "primary_tracts": {
+      "rows": 375,
+      "crs": "EPSG:5070",
+      "geometry_semantic_sha256": "741c9fc7eb2ebb8ac876874659c9c0e8b403390ebdbf91f7f12fd74eecf59e86",
+      "full_row_semantic_sha256": "514f728ba87be95e3033d0589d40bc07259aed7e6930c725057d7f3623f40e7f",
+      "geoid_geometry_mapping_sha256": "6207d2b2334f9d05084e9a833d217b3be1b263e18cb7a0c163b74cf1a6a98383"
+    }
+  },
+  "output_tables": {
+    "city_boundary": {
+      "sha256": "17b53a054eb6cd70811476763e4c5034d848535e4157c520be55c927cf3f2ad9",
+      "bytes": 115164,
+      "rows": 1,
+      "schema_sha256": "a263767165e1033548d4368b03e52a80d798c039670b1f189e99e49e3d134374",
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/city_boundary.parquet",
+      "geometry_semantic_sha256": "e83742993ea5f3688da024fad1a0a876f4607735a26735fdf66d81486c22bb72",
+      "full_row_semantic_sha256": "6be0dc756cd6d5b55fd9fcc7ae597c2f4c32606b842cf082555581372cfb2745"
+    },
+    "tract_candidates": {
+      "sha256": "fe54936c957658cb16277d6b17f3bb6792e9771f1817e03529da6df91e006127",
+      "bytes": 1446625,
+      "rows": 603,
+      "schema_sha256": "37716cf0dadb1b70d72e72f3b1db20cbe90502c0587804200c38193e9c1737b0",
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/tract_candidates.parquet",
+      "geometry_semantic_sha256": "67b90ee6512b9bf6ff109408edb241c9ed601513fa4fc28f439d4df9862174ec",
+      "full_row_semantic_sha256": "202ad60cc51ad3be1550e45d53b2391cd99b0b52960ee676d13141c1cb5b7c9d"
+    },
+    "primary_tracts": {
+      "sha256": "20b063c09c20f4506c60a3beacd8754705517bb831f24d73e18acf598ad47a5f",
+      "bytes": 707978,
+      "rows": 375,
+      "schema_sha256": "ad67cbc21f4d53fe7dbb12abb4554a256b073ba7b3b6fc2b2fa084fd717898a2",
+      "path": "data/processed/multicity/missing_support_calibration_evidence_v1/geography/phoenix_az/primary_tracts.parquet",
+      "geometry_semantic_sha256": "741c9fc7eb2ebb8ac876874659c9c0e8b403390ebdbf91f7f12fd74eecf59e86",
+      "full_row_semantic_sha256": "514f728ba87be95e3033d0589d40bc07259aed7e6930c725057d7f3623f40e7f"
+    }
+  },
+  "compatibility": {
+    "mode": "same_adapter_rebuild_plus_source_footprint_compatibility_audit",
+    "historical_manifest_commit_sha256": "a6f287daa22c41d893519dc751848c426b819dcf4ae00d33012fbf11c6073ed7",
+    "new_bbox_within_historical_query_bbox": false,
+    "saved_metadata_replay": {
+      "landsat_items": {
+        "old_count": 65,
+        "new_count": 65,
+        "exact_identity_set": true,
+        "old_only": [],
+        "new_only_within_saved_query": []
+      },
+      "sentinel_items": {
+        "old_count": 493,
+        "new_count": 493,
+        "exact_identity_set": true,
+        "old_only": [],
+        "new_only_within_saved_query": []
+      },
+      "optical_units": {
+        "old_count": 7,
+        "new_count": 7,
+        "exact_identity_set": true,
+        "old_only": [],
+        "new_only_within_saved_query": []
+      },
+      "daymet_cells": {
+        "old_count": 1461,
+        "new_count": 1461,
+        "exact_identity_set": true,
+        "old_only": [],
+        "new_only_within_saved_query": []
+      },
+      "terrain_tiles": {
+        "old_count": 2,
+        "new_count": 2,
+        "exact_identity_set": true,
+        "old_only": [],
+        "new_only_within_saved_query": []
+      }
+    },
+    "historical_source_footprint_compatible": false,
+    "noncompatibility_requires_source_footprint_restage_before_v3": true
+  },
+  "access_contract": {
+    "public_census_geometry_read": true,
+    "saved_tigerweb_geometry_replayed": false,
+    "phase1_pilot_geography_read_for_compatibility": false,
+    "external_target_or_qa_values_read": false,
+    "landsat_thermal_values_read": false,
+    "predictor_values_read_or_computed": false,
+    "model_fit_or_prediction_performed": false,
+    "final_evaluation_outputs_opened": false
+  },
+  "commit_sha256": "776d752cc8d51bc0b5c30da1d77fd5fa26b9e3ad17c259d5e0ddfe4592c10eee"
+}
