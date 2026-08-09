@@ -166,7 +166,7 @@ allowed_http_content_encodings = ["identity", "gzip", "deflate", "br", "zstd"]
 http_entity_body_accounting = "maximum_of_declared_encoded_and_decoded_bytes"
 
 [sentinel.limits]
-expected_minimum_probe_groups = 4
+expected_minimum_probe_groups = 3
 maximum_probe_groups = 8
 maximum_requests = 8192
 maximum_product_metadata_bytes = 16777216

@@ -29,7 +29,7 @@ ALGORITHM_VERSION: Final = "multicity-missing-support-calibration-evidence-v1"
 STAGE_ID: Final = "target_blind_missing_support_and_calibration_evidence_v1"
 COMPLETE_STATE: Final = "complete_target_blind_missing_support_and_calibration_evidence"
 CONFIG_PATH: Final = "configs/multicity/missing_support_calibration_evidence_v1.toml"
-CONFIG_SHA256: Final = "74207f529d410047c8e65971e92f6ce485056a3b91c820df4f74c0b61a2ac9c7"
+CONFIG_SHA256: Final = "0d4f8e9996b48b029b38e7bd40637a69dd27477d255d5da697f890945c07b475"
 PLAN_PATH: Final = "manifests/multicity/ACTIVE_STAGE.json"
 PREDECESSOR_TERMINAL_PATH: Final = (
     "manifests/multicity/reviews/portable_predictor_contract/"

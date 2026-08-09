@@ -42,6 +42,10 @@ V20, and so on. The only current stage record is:
    limit was smaller than the legal workload: the completed Phoenix probe alone
    used 937 requests, while the stage permits up to eight probe groups. The
    independent 1 GB response-byte ceiling is unchanged.
+7. The observed public support produces exactly three positive-overlap native
+   UTM probe groups: Phoenix zone 12, Houston zone 15, and Chicago zone 16. The
+   earlier minimum of four was an incorrect geography assumption; the active
+   target-blind range is now three through eight.
 
 ## Active task and resume point
 
