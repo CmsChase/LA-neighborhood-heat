@@ -1,5 +1,5 @@
 {
-  "name": "la-surface-heat-atlas",
+  "name": "la-neighborhood-heat-atlas",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "test": "npm run build && node --test tests/static-export.test.mjs",
     "lint": "eslint ."
   },

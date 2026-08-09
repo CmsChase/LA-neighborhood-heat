@@ -1,60 +1,77 @@
 # Repository guidance
 
-This repository contains a reproducible student research project about predicting neighborhood-scale surface heat in the City of Los Angeles. These rules apply to the entire repository.
+This repository contains the surface-heat research pipeline and its public
+atlas. These rules apply to the whole repository.
 
-## Mandatory session startup and handoff
+## Start and handoff
 
-- Before doing any repository work, read `docs/PROJECT_HANDOFF.md` in full.
-  Do not rely on conversation memory or an older status document.
-- Before editing files, starting computation, downloading data, or accessing
-  any final-test artifact, verify the live Git and runtime state using the
-  commands in that handoff.
-- After every material result, failure, decision, commit, or runtime-state
-  change, update `docs/PROJECT_HANDOFF.md`. Update it again immediately before
-  ending or transferring a session so another contributor can resume exactly.
-- Never put credentials, bearer tokens, signed URLs, cookies, or other secrets
-  in the handoff. If the handoff conflicts with an authenticated manifest,
-  generated provenance, or this file, stop and resolve the discrepancy before
-  continuing.
+- Read `docs/PROJECT_HANDOFF.md` before changing the project.
+- Check `git status` and the active runtime status named in the handoff.
+- Update the handoff at a meaningful milestone, failure, or session transfer.
+  Do not append a diary entry for every command or repeat unchanged history.
+- Never place credentials, bearer tokens, signed URLs, or cookies in tracked
+  files.
+
+## Delivery principle
+
+Prefer the shortest correct path that advances the research.
+
+- Keep one active workflow in `manifests/multicity/ACTIVE_STAGE.json`.
+- Do not create a new V19/V20-style transition module for each technical fix.
+  Historical V7–V18 files remain provenance only.
+- Avoid repeated authentication, ancestry checks, direct-child commit rules,
+  and duplicate validation when they do not protect a scientific result.
+- During normal implementation, run focused tests for the behavior changed and
+  one lint pass over touched files.
+- Run the full suite only for scientific-contract changes, broad refactors, or
+  release checkpoints.
+- Prefer resumable programs with visible status for genuinely long computation;
+  do not build a controller for a short task.
+
+This simplification does not relax the scientific boundaries below.
 
 ## Scientific objective
 
-Predict QA-filtered daytime Landsat land-surface temperature (LST) at census-tract × overpass-date resolution from public weather, land-use, geography, and lagged non-thermal satellite features. Treat LST as a surface-heat hazard proxy, never as measured human heat exposure or a health outcome.
+Predict QA-filtered daytime Landsat land-surface temperature at census-tract ×
+overpass-date resolution from public weather, land-use, geography, and lagged
+non-thermal satellite features. LST is a surface-heat hazard proxy, not human
+heat exposure or a health outcome.
 
-## Non-negotiable guardrails
+## Scientific boundaries
 
-- Never randomly split tract-date rows. Use whole-date, whole-year, contiguous spatial-block, or joint spatiotemporal splits.
-- Keep calendar year 2025 locked as the final test set until `unlock_final_test = true` is intentionally changed in `configs/research.toml` after model and threshold freeze.
-- Never use Landsat thermal bands, LST products, target-derived statistics, same-scene optical bands, or future observations as model predictors.
-- A lagged satellite composite must end before its target date. Validate this in code and tests.
-- Fit imputation, scaling, feature selection, climatology, and model tuning only on the training fold.
-- Do not use tract identifiers as predictors. Raw coordinates are allowed only in a named sensitivity analysis, never the primary model.
-- Count independent overpass dates and spatial blocks in every performance report. Do not present tract-date rows as independent samples.
-- Report missingness, valid-pixel coverage, sensor, cloud/QA rules, uncertainty, and failure cases.
-- Discover all eligible Landsat 8/9 Tier-1 L2SP scenes without a global scene-cloud cutoff; decide target availability from local pixel, tract, and date QA.
-- Keep each tract's WorldCover-derived static eligible-land denominator invariant across dates. A changing denominator is a hard failure.
-- Construct relative anomaly/hotspot endpoints only after their spatial-representativeness gate passes. Hotspot labels use exact top-k with a frozen GEOID tie-break.
-- Treat adjacent WRS rows/paths from the same physical overpass as mosaic contributors, not duplicate dates. Never count scenes as independent dates.
-- Interpret feature importance as predictive association, not causal effect.
-- The primary historical hindcast has a prediction origin at 00:00 local time on target date. Dynamic observed predictors must end by target day −1. Target-day observed weather belongs only in a clearly labeled contemporaneous sensitivity analysis.
-- Do not claim an operational weather forecast from historical observed predictors; call the primary analysis a historical hindcast.
+- Never randomly split tract-date rows. Use whole-date, whole-year, contiguous
+  spatial-block, or joint spatiotemporal splits.
+- Do not use Landsat thermal values, target-derived statistics, same-scene
+  optical bands, future observations, or tract identifiers as predictors.
+- Every satellite composite must end before its target date.
+- Fit preprocessing and model selection only on the training fold.
+- Count independent dates and spatial blocks in every performance report.
+- Keep each tract's eligible-land denominator invariant across dates.
+- Treat adjacent WRS contributors from one physical overpass as one date.
+- Interpret feature importance as association, not causation.
+- Call the primary analysis a historical hindcast, not an operational forecast.
+- The one-time 2025 evaluation is complete. Do not retune against it or create a
+  second claim from the same holdout.
+- External-city targets remain sealed until the active stage explicitly changes
+  that permission.
 
-## Data and provenance
+## Project structure
 
-- Never hand-edit generated analysis tables or figure values.
-- Preserve raw downloads; transformations write to `data/interim/` or `data/processed/`.
-- Record every external source, query date, version, URL/DOI, units, scale/offset, and license in `docs/DATA_MANIFEST.csv`.
-- Large data files stay untracked. Scripts and manifests must be sufficient to recreate them.
-- Keep the final-test unlock event and every material scientific decision in `docs/DECISION_LOG.md`.
+- Reusable Python code: `src/la_heat/`
+- Command-line entry points: `scripts/`
+- Public website: `atlas/`
+- Configuration: `configs/`
+- Machine-readable provenance: `manifests/`
+- Human documentation: `docs/`
+- Tests: `tests/`
 
-## Engineering workflow
-
-- Put reusable code under `src/la_heat/`, thin entry points under `scripts/`, and tests under `tests/`.
-- Prefer configuration over hard-coded dates, thresholds, paths, and scene IDs.
-- Add or update tests for temporal leakage, split leakage, QA decoding, unit conversion, and schema invariants.
-- Before finishing a change, run `python -m pytest` and `python -m ruff check .`.
-- All reported figures and tables must be generated by scripts from frozen inputs and configuration.
+Generated data stays under ignored `data/`, `exports/`, or runtime directories.
+Do not hand-edit generated scientific tables, figures, compact website JSON, or
+authenticated evidence manifests.
 
 ## Definition of done
 
-A pipeline step is done only when it runs from the documented command, produces a provenance record, passes relevant tests, and has an auditable output summary. A model is not done merely because it trains; it must be evaluated on the predeclared grouped splits against the legal baselines.
+A normal code change is done when the intended behavior works, its focused
+regression test passes, touched files lint, and the handoff states the new
+resume point. A scientific release additionally requires the relevant full
+verification and generated provenance.

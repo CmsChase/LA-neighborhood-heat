@@ -3,7 +3,7 @@ import "./globals.css";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://cmschase.github.io/LA-surface-heat-atlas/";
+  "https://cmschase.github.io/LA-neighborhood-heat/";
 const socialImageUrl = new URL("og.png", siteUrl).toString();
 const description =
   "Explore observed and predicted neighborhood-scale land-surface temperature across Los Angeles in the held-out 2025 evaluation.";

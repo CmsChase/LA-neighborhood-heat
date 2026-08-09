@@ -1,16 +1,19 @@
 # Los Angeles Neighborhood Surface Heat
 
-This repository tests whether public weather, land-use, topographic, and
-lagged non-thermal satellite features can predict daytime land-surface
-temperature (LST) across City of Los Angeles census tracts.
+This repository contains one complete project: the research pipeline, frozen
+evidence, and the public interactive atlas for neighborhood-scale daytime
+land-surface temperature (LST) in Los Angeles.
 
-LST is treated as a **surface-heat hazard proxy**. It is not air temperature,
-personal heat exposure, a health outcome, or evidence of a causal effect.
+[Open the heat atlas](https://cmschase.github.io/LA-neighborhood-heat/)
 
-## Final held-out result
+## Research question
 
-The primary model (M2) was evaluated once on the predeclared 2025 final test
-after all modeling choices were frozen.
+Can public weather, land-use, geography, and lagged non-thermal satellite
+features predict census-tract-scale daytime surface heat?
+
+The primary model (M2) was trained on 2020–2024 data and evaluated once on a
+predeclared 2025 holdout. Its inputs contain no Landsat thermal target values,
+same-scene optical data, future observations, or tract identifiers.
 
 | Held-out 2025 result | B1 baseline | M2 model |
 |---|---:|---:|
@@ -18,208 +21,96 @@ after all modeling choices were frozen.
 | Relative MAE change | — | 30.53% lower |
 | Median per-date Spearman | — | 0.8447 |
 
-The point estimate is promising, but the crossed date/spatial-block 95%
-interval for relative MAE improvement was **−10.13% to 58.46%**. Because that
-interval crosses zero, the prespecified uncertainty gate did not pass and
-`overall_protocol_success` is false. The result must not be presented as a
-confirmed general improvement.
-
-Explore the 15 usable held-out dates in the
-[interactive result atlas](https://cmschase.github.io/LA-surface-heat-atlas/).
-The atlas includes a zoomable tract map, GEOID search, and a complete
-date-by-date record for each selected tract.
-
-## Cross-city continuation
-
-A separate continuation is now in draft planning. It asks whether a fixed
-model trained only with Los Angeles labels transfers to Phoenix, Houston, and
-Chicago, and whether calibrated uncertainty can identify predictions that
-should be withheld. The three external cities remain target-sealed; no new LST
-or target-QA value has been opened.
-
-Start with the
-[cross-city protocol](docs/MULTICITY_GENERALIZATION_PROTOCOL.md) and the
-[planning readiness record](manifests/multicity/PLAN_READINESS.json). This
-work uses isolated `multicity/` paths and cannot modify the completed 2025
-transaction.
-
-The first target-blind engineering pilot is complete: the generic Census
-place/tract adapter discovered a 375-tract primary Phoenix universe from the
-fixed 2020 incorporated-place boundary. The authenticated
-[Phoenix geography manifest](manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json)
-records the exact source responses, geometry hashes, selection audit, and the
-fact that no external LST or target-QA value was read. The source remains a
-pilot snapshot rather than a locked confirmatory input.
-
-The Phoenix source-footprint pilot is also complete at metadata-only scope.
-Its authenticated
-[source-footprint manifest](manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json)
-records three Landsat WRS contributors, four Sentinel MGRS tiles, 1,461
-positive-intersection Daymet candidate cells with a one-cell halo window, six
-Daymet granules, and two terrain tiles verified by `HEAD` only. The STAC
-queries returned 67 Landsat and 494 Sentinel items while excluding item assets
-and item links. No STAC asset href, signed request, raster GET/payload,
-target/QA value, predictor, prediction, or model was opened or constructed.
-This remains a pilot metadata snapshot, not a source or protocol lock.
-
-The target-blind
-[portable water-distance review](docs/PORTABLE_WATER_DISTANCE_REVIEW.md) is
-now complete. It reauthenticated the existing Census 2019 coastline as the
-best U.S.-only reproducibility benchmark, but did not freeze it because that
-national-coverage contract is not equivalent to unrestricted global-ocean
-distance for Phoenix.
-
-The subsequent
-[GSHHG geometry pilot](docs/GSHHG_GEOMETRY_PILOT_REPORT.md) is also complete.
-Its preregistered V1 failed on one invalid L1 polygon and the source's
-five named lake seeds resolving to three L2 connected-water polygons; both
-facts were preserved before a source-structure-only V2 amendment. The amended
-contract uses L1 exteriors plus those three L2 exteriors and excludes L3
-lake-island shores. V2 passed every geometry and numerical gate. At the fixed
-target-blind Phoenix point, GSHHG gave 262.208 km versus 482.409 km for the
-U.S.-only Census benchmark, a 220.201 km contract difference. These four
-point diagnostics test semantics and numerical stability, not positional
-accuracy or a complete distance surface. No temperature, target-QA,
-predictor, model, prediction, or feature surface was opened or built.
-
-The separate
-[freeze decision](docs/PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md) is now
-complete and intentionally deferred. GSHHG remains the candidate source, but
-the current L1/L2-only algorithm cannot honestly be frozen as
-ocean-or-Great-Lakes shoreline distance while it excludes L3 lake-island
-shores. Every computation and target lock remains closed. The only next task
-was to preregister a narrow, source-only GSHHG L3 hierarchy audit. That
-[preregistration](docs/GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md) is now
-complete without opening the archive or any member. The separate clean,
-pushed, tracked-only transition is also complete. It authorizes only the
-preregistered source-only L3 hierarchy audit against 12 exact local
-L1/L2/L3 shapefile members; it still forbids downloads, L4/Census geometry,
-eligible support, predictors, models, targets, results, geometry export, and
-redistribution. The L3 audit itself has not yet run.
-
-## Six ways into the project
-
-| If you want to… | Start here |
-|---|---|
-| 1. See the result | [Final evaluation report](reports/FINAL_EVALUATION_REPORT.md) and [interactive atlas](https://cmschase.github.io/LA-surface-heat-atlas/) |
-| 2. Understand the study | [Research protocol](docs/RESEARCH_PROTOCOL.md) and [pipeline diagram](docs/PIPELINE_DIAGRAM.md) |
-| 3. Verify the final evidence | [Evidence attestation](manifests/final_test_2025/evaluation/EVIDENCE_EXPORT.json) and [manifest guide](manifests/README.md) |
-| 4. Reproduce development work | [Script map](scripts/README.md), [configuration map](configs/README.md), and [test guide](tests/README.md) |
-| 5. Continue the project safely | [Mandatory handoff](docs/PROJECT_HANDOFF.md) and [repository rules](AGENTS.md) |
-| 6. Use the communication materials | [Publication guide](docs/PUBLICATION_MATERIALS.md) and [website guide](docs/RESULTS_WEBSITE.md) |
-
-The [documentation index](docs/README.md) provides the complete role-based
-map.
-
-## Locked research design
-
-- Unit: 2020 Census tract × Landsat physical-overpass date.
-- Study area: City of Los Angeles.
-- Warm season: May through October.
-- Development period: 2020–2024.
-- One-time held-out final test: 2025.
-- Target: QA-filtered tract-median Landsat 8/9 daytime LST in °C.
-- Predictors: 18 static land-use/geography, 2 calendar, 21 lagged Daymet, and
-  5 lagged Sentinel-2 features.
-- Primary metric: equal-date-weighted MAE.
-- Validation: whole-date, whole-year, contiguous spatial-block, and joint
-  spatiotemporal holdouts—never random tract-date splits.
-- Prediction origin: 00:00 local time on the target date; dynamic observed
-  inputs end on target day minus one.
-
-The development table contains 63,403 legal rows across 65 independent dates,
-1,096 tracts, and 71 spatial blocks. The held-out display contains 15,116
-evaluated tract-date rows across 15 usable 2025 dates.
-
-## Scientific boundaries
-
-- Do not describe this historical hindcast as an operational weather forecast.
-- Do not treat tract-date rows as independent samples.
-- Do not interpret feature importance as causation.
-- Never use Landsat thermal values, target-derived statistics, same-scene
-  optical bands, future observations, raw tract IDs, or target-day observed
-  weather as primary-model predictors.
-- Every Sentinel composite ends before its target date.
-- Preprocessing and model selection are fit within the appropriate training
-  folds only.
-- The one-time 2025 evaluation is complete. Do not create another claim,
-  retune after viewing results, or rerun the authorization sequence.
+The point estimate favors M2, but the prespecified 95% interval for relative
+MAE improvement was -10.13% to 58.46%. Because it crosses zero, the result is
+promising rather than protocol-confirmed.
 
 ## Repository map
 
-```text
-configs/                 versioned configuration; see configs/README.md
-data/                    ignored raw, interim, and processed data products
-docs/                    protocol, provenance, decisions, and navigation
-manifests/               frozen machine-readable audit and state records
-reports/                 generated scientific reports, figures, and tables
-scripts/                 thin command-line entry points grouped by workflow
-src/la_heat/             reusable Python implementation
-tests/                   leakage, schema, provenance, and engineering tests
-portable_templates/      Windows transfer and remote-run templates
-tools/                   static dashboard front ends
-exports/                 ignored local evidence and publication packages
-website-github-pages/    ignored local clone of the separate public site repo
+| Path | Purpose |
+|---|---|
+| `atlas/` | Next.js source and compact frozen data for the public website |
+| `src/la_heat/` | Reusable Python data, feature, modeling, and evidence code |
+| `scripts/` | Command-line entry points |
+| `configs/` | Research and runtime configuration |
+| `manifests/` | Machine-readable provenance and stage records |
+| `docs/` | Protocols, decisions, data sources, status, and handoff |
+| `reports/` | Scientific reports, tables, and figures |
+| `tests/` | Scientific invariants and focused regression tests |
+| `data/`, `exports/` | Local generated data and evidence packages; not tracked |
+
+The old standalone Atlas repository has been merged into `atlas/`. It is no
+longer a separate codebase. The current website is built and deployed from
+this repository by GitHub Actions.
+
+## Current continuation
+
+The Los Angeles evaluation is complete. The active research extension tests
+whether a Los-Angeles-trained predictor can transfer, without retraining, to
+Phoenix, Houston, and Chicago. External-city target values remain sealed.
+
+The only active runtime state is
+[`manifests/multicity/ACTIVE_STAGE.json`](manifests/multicity/ACTIVE_STAGE.json).
+It authorizes public geography, WorldCover support, and small Sentinel-2
+calibration checks. The earlier V7–V18 transition files are historical
+provenance; they are not the active workflow and no new numbered hotfix file
+should be created.
+
+Current resumable command:
+
+```powershell
+.\.venv\Scripts\python scripts\stage_multicity_missing_support_calibration_evidence_v1.py
 ```
 
-Bulk data and export packages are intentionally untracked. Their authenticated
-hashes and provenance are recorded in the manifests and documentation.
+The Sentinel cohort search uses a small city bounding box, then filters by the
+exact physical acquisition key. This avoids oversized STAC requests without
+changing acquisition membership or the final spatial coverage calculation.
 
-## Safe verification
+## Local setup
 
-From the repository root, install the development environment and run:
+Python pipeline:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python -m pip install --upgrade pip
 .\.venv\Scripts\python -m pip install -e ".[dev]"
+```
+
+Atlas:
+
+```powershell
+Set-Location atlas
+npm ci
+npm run dev
+```
+
+Rebuild or verify the compact display data from the repository root:
+
+```powershell
+.\.venv\Scripts\python scripts\build_website_data.py
+.\.venv\Scripts\python scripts\build_website_data.py --verify-only
+```
+
+Run focused tests for changed behavior during normal development. Run the full
+suite before a scientific release or a change to targets, features, splits,
+metrics, or frozen evidence:
+
+```powershell
 .\.venv\Scripts\python -m pytest -q
 .\.venv\Scripts\python -m ruff check .
 ```
 
-Verify an existing unpacked final-evaluation evidence package without
-recomputing the final result:
+## Interpretation limits
 
-```powershell
-.\.venv\Scripts\python scripts\verify_final_evaluation_evidence.py
-```
+- LST is a clear-sky surface-heat hazard proxy, not air temperature, personal
+  exposure, illness, or mortality.
+- This is a historical hindcast, not an operational weather forecast.
+- Tract-date rows are not independent; evaluation groups dates and spatial
+  blocks.
+- Feature importance is predictive association, not causation.
+- The completed 2025 holdout must not be retuned or presented as a second test.
 
-Verify the existing website display export:
-
-```powershell
-.\.venv\Scripts\python scripts\build_website_data.py --verify-only `
-  --output-dir website-github-pages\public\data
-```
-
-These commands are checks. The final-evaluation preparation, authorization,
-claim, and value-opening workflow is a completed historical transaction and
-must not be started again.
-
-## Output authority
-
-Use this order when records disagree:
-
-1. authenticated manifests and generated provenance;
-2. the completed final-evaluation evidence package;
-3. the mandatory project handoff;
-4. generated reports and communication materials;
-5. narrative status summaries.
-
-Never hand-edit generated analysis tables, figures, compact website JSON, or
-byte-authenticated manifests. Regenerate only through the documented scripts
-and preserve every frozen path and checksum.
-
-## Main outputs
-
-- [Final evaluation report](reports/FINAL_EVALUATION_REPORT.md)
-- [Development report](reports/DEVELOPMENT_REPORT.md)
-- [Read-only evidence package documentation](docs/PROJECT_HANDOFF.md)
-- [Interactive results website documentation](docs/RESULTS_WEBSITE.md)
-- [Research paper, poster, and defense-deck documentation](docs/PUBLICATION_MATERIALS.md)
-- [Data-source manifest](docs/DATA_MANIFEST.csv)
-- [Scientific decision log](docs/DECISION_LOG.md)
-
-Before changing anything, read [AGENTS.md](AGENTS.md) and the complete
-[project handoff](docs/PROJECT_HANDOFF.md). They contain the current Git
-checkpoint, one-time-evaluation state, immutable paths, and required validation
-steps.
+Start a new work session with the concise
+[`docs/PROJECT_HANDOFF.md`](docs/PROJECT_HANDOFF.md). Detailed scientific
+decisions remain in [`docs/DECISION_LOG.md`](docs/DECISION_LOG.md), and source
+provenance is in [`docs/DATA_MANIFEST.csv`](docs/DATA_MANIFEST.csv).

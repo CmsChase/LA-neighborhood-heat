@@ -15,7 +15,7 @@ history is intentionally separated from the short project landing page.
 | Where did each external dataset come from? | [DATA_MANIFEST.csv](DATA_MANIFEST.csv) |
 | How is the public atlas authenticated? | [RESULTS_WEBSITE.md](RESULTS_WEBSITE.md) |
 | Where are the paper, poster, and deck? | [PUBLICATION_MATERIALS.md](PUBLICATION_MATERIALS.md) |
-| What is the proposed cross-city continuation? | [MULTICITY_GENERALIZATION_PROTOCOL.md](MULTICITY_GENERALIZATION_PROTOCOL.md) |
+| What is the active cross-city continuation? | [Active stage](../manifests/multicity/ACTIVE_STAGE.json) and [MULTICITY_GENERALIZATION_PROTOCOL.md](MULTICITY_GENERALIZATION_PROTOCOL.md) |
 | What did the Phoenix geography pilot produce? | [Phoenix geography manifest](../manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json) |
 | What source footprints did the Phoenix metadata pilot discover? | [Phoenix source-footprint manifest](../manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json) |
 | Why is the portable water-distance source not frozen yet? | [PORTABLE_WATER_DISTANCE_REVIEW.md](PORTABLE_WATER_DISTANCE_REVIEW.md) |
@@ -70,8 +70,8 @@ history is intentionally separated from the short project landing page.
 
 - [PROJECT_PLAN.md](PROJECT_PLAN.md): phase roadmap and completed deliverables.
 - [PROJECT_STATUS.md](PROJECT_STATUS.md): readable scientific status.
-- [PROJECT_HANDOFF.md](PROJECT_HANDOFF.md): mandatory operational state,
-  immutable paths, hashes, and first safe commands.
+- [PROJECT_HANDOFF.md](PROJECT_HANDOFF.md): concise operational state and the
+  next resumable command.
 - [EXPERIMENT_LOG.csv](EXPERIMENT_LOG.csv): experiment-level record.
 
 ## Authority and editing rules
@@ -80,7 +80,7 @@ When records disagree, authenticated manifests and generated provenance take
 priority, followed by the evidence package, project handoff, generated reports,
 and narrative summaries.
 
-Do not shorten the handoff by deleting history, move frozen files, or hand-edit
-generated results. Update the decision log, data manifest, and handoff after a
-material scientific or runtime change as required by
-[the repository rules](../AGENTS.md).
+Detailed history belongs in the decision log and Git history, not in the
+handoff. Do not move frozen scientific files or hand-edit generated results.
+Update the handoff after a meaningful scientific or runtime change as required
+by [the repository rules](../AGENTS.md).

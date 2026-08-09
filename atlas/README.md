@@ -5,7 +5,11 @@ temperature with two frozen model predictions across Los Angeles census tracts
 in the held-out 2025 evaluation.
 
 Live site:
-<https://cmschase.github.io/LA-surface-heat-atlas/>
+<https://cmschase.github.io/LA-neighborhood-heat/>
+
+The atlas now lives in `atlas/` of the same repository as the research
+pipeline. The former standalone repository is retained only as an archived
+historical snapshot.
 
 ## What the atlas shows
 
@@ -43,8 +47,8 @@ Requires Node.js 22 or newer.
 ```bash
 npm ci
 GITHUB_PAGES=true \
-NEXT_PUBLIC_BASE_PATH=/LA-surface-heat-atlas \
-NEXT_PUBLIC_SITE_URL=https://cmschase.github.io/LA-surface-heat-atlas/ \
+NEXT_PUBLIC_BASE_PATH=/LA-neighborhood-heat \
+NEXT_PUBLIC_SITE_URL=https://cmschase.github.io/LA-neighborhood-heat/ \
 npm test
 npm run lint
 ```

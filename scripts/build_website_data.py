@@ -9,7 +9,7 @@ from pathlib import Path
 from la_heat.website_export import build_website_export, verify_website_export
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_OUTPUT = ROOT / "website" / "public" / "data"
+DEFAULT_OUTPUT = ROOT / "atlas" / "public" / "data"
 
 
 def main() -> None:

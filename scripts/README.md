@@ -33,9 +33,8 @@ matches. `build_website_data.py` then derives display-only neighborhood
 assignments and homepage pixels from that source and the already frozen
 evaluation; neither command trains or retunes a model.
 
-The current public output is `website-display-export-v3`, deployed from the
-nested website commit `206c04b797b184aa3dcb3aec60ac0ffaba8775bb` by successful
-GitHub Actions run `30358959707`. Exact display hashes are recorded in
+The current public output lives in `atlas/public/data` and is deployed from the
+same repository. Exact display hashes are recorded in
 [`docs/RESULTS_WEBSITE.md`](../docs/RESULTS_WEBSITE.md).
 
 ## Safe read-only checks
@@ -44,8 +43,7 @@ These commands verify existing products rather than rerun the one-time result:
 
 ```powershell
 .\.venv\Scripts\python scripts\verify_final_evaluation_evidence.py
-.\.venv\Scripts\python scripts\build_website_data.py --verify-only `
-  --output-dir website-github-pages\public\data
+.\.venv\Scripts\python scripts\build_website_data.py --verify-only
 ```
 
 Tests and Ruff are documented in [`tests/README.md`](../tests/README.md).

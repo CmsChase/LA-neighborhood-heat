@@ -1564,7 +1564,7 @@ def build_document() -> Path:
         doc,
         "A read-only interactive visualization of observed LST, M2 and B1 "
         "predictions, residuals, per-date diagnostics, and uncertainty is available "
-        "at https://cmschase.github.io/LA-surface-heat-atlas/. The public GitHub "
+        "at https://cmschase.github.io/LA-neighborhood-heat/. The public GitHub "
         "Pages site is a display layer over the frozen outputs, not an independent "
         "model run."
     )
