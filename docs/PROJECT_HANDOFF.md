@@ -32,6 +32,9 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
    2 terrain tiles without opening raster or target values.
 6. The final portable predictor contract is locked in
    `manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT.json`.
+7. The target-blind predictor key inventory is frozen: Los Angeles has 90
+   dates, Phoenix 22, Houston 21, and Chicago 21. Across 2,902 city-specific
+   tracts this yields 136,941 predictor rows without reading target assets.
 
 ## Frozen scientific decisions
 
@@ -73,11 +76,11 @@ through V18 remain for provenance and must not be extended with V19/V20 files.
 
 ## Exact resume point
 
-No long-running worker should be active at this handoff. The next task is to
-build one stable, resumable portable-predictor orchestrator from the locked
-contract. Before implementing it, audit the existing static, Daymet, Sentinel,
-and multicity source modules for direct reuse. Do not create another numbered
-transition or duplicate the existing feature algorithms.
+No long-running worker should be active at this handoff. The predictor date and
+tract inventory is complete. The next task is to build the static, calendar,
+and Daymet components, followed by the long Sentinel component. Reuse the
+existing feature algorithms and add a visible resumable runner before starting
+the long computation.
 
 Authenticate the completed gates with:
 
@@ -86,6 +89,7 @@ Set-Location "D:\HuaweiMoveData\Users\haora\Documents\ISEF"
 .\.venv\Scripts\python scripts\stage_multicity_missing_support_calibration_evidence_v1.py --check-only
 .\.venv\Scripts\python scripts\stage_phoenix_source_footprint_restage.py --check-only
 .\.venv\Scripts\python scripts\lock_portable_predictor_contract.py --check-only
+.\.venv\Scripts\python scripts\build_portable_predictor_inventory.py --check-only
 ```
 
 The predictor build should write to stable, purpose-named paths and expose a

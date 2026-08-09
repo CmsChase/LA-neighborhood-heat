@@ -4,6 +4,8 @@ The active continuation is intentionally small:
 
 - `portable_predictor_contract.py` — locks and authenticates the current
   46-feature contract;
+- `portable_predictor_inventory.py` — freezes the target-blind city, tract, and
+  Landsat-date predictor keys;
 - `phoenix_source_footprint_restage.py` — refreshes Phoenix public source
   metadata against the canonical boundary;
 - `four_city_geography_contract_v1.py` — common Census geography;

@@ -1,0 +1,19 @@
+[stage]
+schema_version = 1
+algorithm_version = "portable-predictor-inventory"
+analysis_crs = "EPSG:5070"
+
+[landsat_dates]
+maximum_overpass_span_minutes = 15
+minimum_city_union_coverage_fraction = 0.98
+warm_season_start_month = 5
+warm_season_end_month = 10
+los_angeles_start_year = 2020
+los_angeles_end_year = 2024
+external_year = 2025
+page_limit = 100
+
+[outputs]
+raw_directory = "data/raw/multicity/portable_predictors/inventory"
+processed_directory = "data/processed/multicity/portable_predictors/inventory"
+manifest = "manifests/multicity/predictors/PORTABLE_PREDICTOR_INVENTORY.json"

@@ -1,0 +1,732 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "portable-predictor-inventory",
+  "state": "complete_target_blind_portable_predictor_inventory",
+  "generated_at_utc": "2026-08-09T13:22:48.847655+00:00",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "contract_commit_sha256": "b92be8575e836157daa39e94f6720e01802c41143a396ba1a97fad5f40499bd1",
+  "date_selection_contract": {
+    "source": "public_landsat_stac_metadata_only",
+    "maximum_overpass_span_minutes": 15,
+    "minimum_city_union_coverage_fraction": 0.98,
+    "ambiguous_same_local_date_excluded": true,
+    "global_scene_cloud_filter": false
+  },
+  "cities": {
+    "los_angeles_ca": {
+      "role": "source_anchor",
+      "target_values_status": "known_phase1_anchor",
+      "geography_commit_sha256": "f6105bbc1060013c98e63eafca9ca227d4d8538cfc2fb91afd38f5c616e690e3",
+      "source_manifest_commit_sha256": null,
+      "landsat_query_records": [
+        {
+          "year": 2020,
+          "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+          "query": {
+            "collections": [
+              "landsat-c2-l2"
+            ],
+            "bbox": [
+              -118.66817600012067,
+              33.70365200005196,
+              -118.15528899989148,
+              34.33730599999661
+            ],
+            "datetime": "2020-05-01T07:00:00Z/2020-11-01T07:00:00Z",
+            "limit": 100,
+            "fields": {
+              "include": [
+                "id",
+                "collection",
+                "geometry",
+                "bbox",
+                "properties.datetime",
+                "properties.platform",
+                "properties.landsat:wrs_path",
+                "properties.landsat:wrs_row",
+                "properties.landsat:collection_category",
+                "properties.landsat:correction"
+              ],
+              "exclude": [
+                "assets",
+                "links"
+              ]
+            },
+            "query": {
+              "platform": {
+                "in": [
+                  "landsat-8",
+                  "landsat-9"
+                ]
+              },
+              "landsat:collection_category": {
+                "eq": "T1"
+              },
+              "landsat:correction": {
+                "eq": "L2SP"
+              }
+            }
+          },
+          "query_sha256": "b8c2360e19f62e214434d3034269e7f05dd79760348941b4aa9d06892f45354e",
+          "page_count": 1,
+          "query_response_items": 22,
+          "unique_items": 22,
+          "duplicate_items": 0,
+          "pagination_exhausted": true,
+          "assets_excluded": true
+        },
+        {
+          "year": 2021,
+          "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+          "query": {
+            "collections": [
+              "landsat-c2-l2"
+            ],
+            "bbox": [
+              -118.66817600012067,
+              33.70365200005196,
+              -118.15528899989148,
+              34.33730599999661
+            ],
+            "datetime": "2021-05-01T07:00:00Z/2021-11-01T07:00:00Z",
+            "limit": 100,
+            "fields": {
+              "include": [
+                "id",
+                "collection",
+                "geometry",
+                "bbox",
+                "properties.datetime",
+                "properties.platform",
+                "properties.landsat:wrs_path",
+                "properties.landsat:wrs_row",
+                "properties.landsat:collection_category",
+                "properties.landsat:correction"
+              ],
+              "exclude": [
+                "assets",
+                "links"
+              ]
+            },
+            "query": {
+              "platform": {
+                "in": [
+                  "landsat-8",
+                  "landsat-9"
+                ]
+              },
+              "landsat:collection_category": {
+                "eq": "T1"
+              },
+              "landsat:correction": {
+                "eq": "L2SP"
+              }
+            }
+          },
+          "query_sha256": "9a71b5089778e636c7d7c51aa74a895a75cf2381d2fed557d21583bfc452af3e",
+          "page_count": 1,
+          "query_response_items": 24,
+          "unique_items": 24,
+          "duplicate_items": 0,
+          "pagination_exhausted": true,
+          "assets_excluded": true
+        },
+        {
+          "year": 2022,
+          "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+          "query": {
+            "collections": [
+              "landsat-c2-l2"
+            ],
+            "bbox": [
+              -118.66817600012067,
+              33.70365200005196,
+              -118.15528899989148,
+              34.33730599999661
+            ],
+            "datetime": "2022-05-01T07:00:00Z/2022-11-01T07:00:00Z",
+            "limit": 100,
+            "fields": {
+              "include": [
+                "id",
+                "collection",
+                "geometry",
+                "bbox",
+                "properties.datetime",
+                "properties.platform",
+                "properties.landsat:wrs_path",
+                "properties.landsat:wrs_row",
+                "properties.landsat:collection_category",
+                "properties.landsat:correction"
+              ],
+              "exclude": [
+                "assets",
+                "links"
+              ]
+            },
+            "query": {
+              "platform": {
+                "in": [
+                  "landsat-8",
+                  "landsat-9"
+                ]
+              },
+              "landsat:collection_category": {
+                "eq": "T1"
+              },
+              "landsat:correction": {
+                "eq": "L2SP"
+              }
+            }
+          },
+          "query_sha256": "f4e8ccd60845bda6c571bc055b52b3be94de90be2f06eb47c918fe321364a9e1",
+          "page_count": 1,
+          "query_response_items": 42,
+          "unique_items": 42,
+          "duplicate_items": 0,
+          "pagination_exhausted": true,
+          "assets_excluded": true
+        },
+        {
+          "year": 2023,
+          "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+          "query": {
+            "collections": [
+              "landsat-c2-l2"
+            ],
+            "bbox": [
+              -118.66817600012067,
+              33.70365200005196,
+              -118.15528899989148,
+              34.33730599999661
+            ],
+            "datetime": "2023-05-01T07:00:00Z/2023-11-01T07:00:00Z",
+            "limit": 100,
+            "fields": {
+              "include": [
+                "id",
+                "collection",
+                "geometry",
+                "bbox",
+                "properties.datetime",
+                "properties.platform",
+                "properties.landsat:wrs_path",
+                "properties.landsat:wrs_row",
+                "properties.landsat:collection_category",
+                "properties.landsat:correction"
+              ],
+              "exclude": [
+                "assets",
+                "links"
+              ]
+            },
+            "query": {
+              "platform": {
+                "in": [
+                  "landsat-8",
+                  "landsat-9"
+                ]
+              },
+              "landsat:collection_category": {
+                "eq": "T1"
+              },
+              "landsat:correction": {
+                "eq": "L2SP"
+              }
+            }
+          },
+          "query_sha256": "26c2209ba80a97f84254e6021ab0b9da7905d3bfe02786ef45c7e22ea6311367",
+          "page_count": 1,
+          "query_response_items": 44,
+          "unique_items": 44,
+          "duplicate_items": 0,
+          "pagination_exhausted": true,
+          "assets_excluded": true
+        },
+        {
+          "year": 2024,
+          "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+          "query": {
+            "collections": [
+              "landsat-c2-l2"
+            ],
+            "bbox": [
+              -118.66817600012067,
+              33.70365200005196,
+              -118.15528899989148,
+              34.33730599999661
+            ],
+            "datetime": "2024-05-01T07:00:00Z/2024-11-01T07:00:00Z",
+            "limit": 100,
+            "fields": {
+              "include": [
+                "id",
+                "collection",
+                "geometry",
+                "bbox",
+                "properties.datetime",
+                "properties.platform",
+                "properties.landsat:wrs_path",
+                "properties.landsat:wrs_row",
+                "properties.landsat:collection_category",
+                "properties.landsat:correction"
+              ],
+              "exclude": [
+                "assets",
+                "links"
+              ]
+            },
+            "query": {
+              "platform": {
+                "in": [
+                  "landsat-8",
+                  "landsat-9"
+                ]
+              },
+              "landsat:collection_category": {
+                "eq": "T1"
+              },
+              "landsat:correction": {
+                "eq": "L2SP"
+              }
+            }
+          },
+          "query_sha256": "0b6ee68d78b8e3641405e01eb82f6e6df499d7c253c6baa2fb5fb7b405a7fb9f",
+          "page_count": 1,
+          "query_response_items": 46,
+          "unique_items": 46,
+          "duplicate_items": 0,
+          "pagination_exhausted": true,
+          "assets_excluded": true
+        }
+      ],
+      "landsat_item_count": 178,
+      "physical_overpass_count": 91,
+      "primary_date_count": 90,
+      "tract_count": 1096,
+      "predictor_key_count": 98640,
+      "date_range": [
+        "2020-05-16",
+        "2024-10-26"
+      ]
+    },
+    "phoenix_az": {
+      "role": "external_confirmation",
+      "target_values_status": "sealed",
+      "geography_commit_sha256": "776d752cc8d51bc0b5c30da1d77fd5fa26b9e3ad17c259d5e0ddfe4592c10eee",
+      "source_manifest_commit_sha256": "bbcef320eeb9442f97f5ee764c0a2983d15d7e55c537030daf4fa23b0668d6e7",
+      "landsat_query_records": [
+        {
+          "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+          "query": {
+            "collections": [
+              "landsat-c2-l2"
+            ],
+            "bbox": [
+              -112.32406499972545,
+              33.290259999723524,
+              -111.92552100007323,
+              33.91839100033971
+            ],
+            "datetime": "2025-05-01T07:00:00Z/2025-11-01T07:00:00Z",
+            "limit": 100,
+            "fields": {
+              "include": [
+                "id",
+                "collection",
+                "geometry",
+                "bbox",
+                "properties.datetime",
+                "properties.platform",
+                "properties.landsat:wrs_path",
+                "properties.landsat:wrs_row",
+                "properties.landsat:collection_category",
+                "properties.landsat:correction"
+              ],
+              "exclude": [
+                "assets",
+                "links"
+              ]
+            },
+            "query": {
+              "platform": {
+                "in": [
+                  "landsat-8",
+                  "landsat-9"
+                ]
+              },
+              "landsat:collection_category": {
+                "eq": "T1"
+              },
+              "landsat:correction": {
+                "eq": "L2SP"
+              }
+            }
+          },
+          "query_sha256": "e90abac0462df53ddf93ecb232a972d591c05c9970488e98f91cfc68b53424dd",
+          "page_count": 1,
+          "query_response_items": 67,
+          "unique_items": 67,
+          "duplicate_items": 0,
+          "pagination_exhausted": true,
+          "assets_excluded": true
+        }
+      ],
+      "landsat_item_count": 65,
+      "physical_overpass_count": 43,
+      "primary_date_count": 22,
+      "tract_count": 375,
+      "predictor_key_count": 8250,
+      "date_range": [
+        "2025-05-02",
+        "2025-10-25"
+      ]
+    },
+    "houston_tx": {
+      "role": "external_confirmation",
+      "target_values_status": "sealed",
+      "geography_commit_sha256": "b72342417216ca354318167a3f5ccae8906df309ac071b4093c5ddf3745dbbfb",
+      "source_manifest_commit_sha256": "c1a47ad3ad5cfadb6e0f83ca05e913154383b181e0b2213ee86598597e59f27c",
+      "landsat_query_records": [
+        {
+          "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+          "query": {
+            "collections": [
+              "landsat-c2-l2"
+            ],
+            "bbox": [
+              -95.9097430002,
+              29.5162819997,
+              -95.0126370003,
+              30.1559080004
+            ],
+            "datetime": "2025-05-01T05:00:00Z/2025-11-01T05:00:00Z",
+            "limit": 100,
+            "fields": {
+              "include": [
+                "id",
+                "collection",
+                "geometry",
+                "bbox",
+                "properties.datetime",
+                "properties.platform",
+                "properties.landsat:wrs_path",
+                "properties.landsat:wrs_row",
+                "properties.landsat:collection_category",
+                "properties.landsat:correction"
+              ],
+              "exclude": [
+                "assets",
+                "links"
+              ]
+            },
+            "query": {
+              "platform": {
+                "in": [
+                  "landsat-8",
+                  "landsat-9"
+                ]
+              },
+              "landsat:collection_category": {
+                "eq": "T1"
+              },
+              "landsat:correction": {
+                "eq": "L2SP"
+              }
+            }
+          },
+          "query_sha256": "2904b98c799b09e7532ee7ebffa5beb2eca7ad5283987a1e35131e3dffa8526b",
+          "page_count": 1,
+          "query_response_items": 86,
+          "unique_items": 86,
+          "duplicate_items": 0,
+          "pagination_exhausted": true,
+          "assets_excluded": true
+        }
+      ],
+      "landsat_item_count": 65,
+      "physical_overpass_count": 44,
+      "primary_date_count": 21,
+      "tract_count": 651,
+      "predictor_key_count": 13671,
+      "date_range": [
+        "2025-05-14",
+        "2025-10-29"
+      ]
+    },
+    "chicago_il": {
+      "role": "external_confirmation",
+      "target_values_status": "sealed",
+      "geography_commit_sha256": "8eb9427e9b599908e4f9c9fc04676a7962a8e1863a1603af9a581069954bed17",
+      "source_manifest_commit_sha256": "1227a9f9030905c31ab420cdd72b0794984dcfc461acc8e0ab075c8ebac9fb82",
+      "landsat_query_records": [
+        {
+          "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+          "query": {
+            "collections": [
+              "landsat-c2-l2"
+            ],
+            "bbox": [
+              -87.9400970004,
+              41.6442859998,
+              -87.5236610002,
+              42.0231350002
+            ],
+            "datetime": "2025-05-01T05:00:00Z/2025-11-01T05:00:00Z",
+            "limit": 100,
+            "fields": {
+              "include": [
+                "id",
+                "collection",
+                "geometry",
+                "bbox",
+                "properties.datetime",
+                "properties.platform",
+                "properties.landsat:wrs_path",
+                "properties.landsat:wrs_row",
+                "properties.landsat:collection_category",
+                "properties.landsat:correction"
+              ],
+              "exclude": [
+                "assets",
+                "links"
+              ]
+            },
+            "query": {
+              "platform": {
+                "in": [
+                  "landsat-8",
+                  "landsat-9"
+                ]
+              },
+              "landsat:collection_category": {
+                "eq": "T1"
+              },
+              "landsat:correction": {
+                "eq": "L2SP"
+              }
+            }
+          },
+          "query_sha256": "4e91cfb5718d1e685ce57f0ed1ffc76c8f0ce36e8214c8365a4db3baae6552df",
+          "page_count": 1,
+          "query_response_items": 39,
+          "unique_items": 39,
+          "duplicate_items": 0,
+          "pagination_exhausted": true,
+          "assets_excluded": true
+        }
+      ],
+      "landsat_item_count": 39,
+      "physical_overpass_count": 39,
+      "primary_date_count": 21,
+      "tract_count": 780,
+      "predictor_key_count": 16380,
+      "date_range": [
+        "2025-05-08",
+        "2025-10-31"
+      ]
+    }
+  },
+  "evidence": {
+    "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT.json": {
+      "path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT.json",
+      "bytes": 44866,
+      "sha256": "b36d21488cbf31794701e42a4739222c6c0b1586a313cb965def7814c4795f40"
+    },
+    "configs/multicity/portable_predictor_build.toml": {
+      "path": "configs/multicity/portable_predictor_build.toml",
+      "bytes": 587,
+      "sha256": "75ae67d49573991856da6e807c04a52867e5ab44e618095448dbf5a4aed7fdce"
+    },
+    "manifests/multicity/cities/los_angeles_ca/geography/GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/cities/los_angeles_ca/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 8770,
+      "sha256": "af1949e3b75fb31278aa4e496f3cb628bcdc732232ba3124766d3979a6067fdf"
+    },
+    "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 8653,
+      "sha256": "04cd83097a56b9154a335db155ff7544fe31ef867f94cc8d07d6c5feeb8ca05e"
+    },
+    "manifests/multicity/cities/phoenix_az/source_footprints/PORTABLE_SOURCE_FOOTPRINT.json": {
+      "path": "manifests/multicity/cities/phoenix_az/source_footprints/PORTABLE_SOURCE_FOOTPRINT.json",
+      "bytes": 16401,
+      "sha256": "fd558775cfb386d2237f0ab38df0edccb3354f8891fe390d71c05a958e7d24f8"
+    },
+    "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/cities/houston_tx/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 6700,
+      "sha256": "d59acaece62cdbc479ded735ce66c1f3812ffb61d816f2d0e521b2dbe8169515"
+    },
+    "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json": {
+      "path": "manifests/multicity/cities/houston_tx/source_footprints/SOURCE_FOOTPRINTS.json",
+      "bytes": 14379,
+      "sha256": "af2dd226caf4df1dd14a6ed583ab331c9d791736c47ee35c3fde0332d1172798"
+    },
+    "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY_CONTRACT_V1.json": {
+      "path": "manifests/multicity/cities/chicago_il/geography/GEOGRAPHY_CONTRACT_V1.json",
+      "bytes": 6697,
+      "sha256": "96dfd6ad524a362f90f508e5a7c706a3dac41b7e89fd4b9e5ae2ab6ba557e7d8"
+    },
+    "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json": {
+      "path": "manifests/multicity/cities/chicago_il/source_footprints/SOURCE_FOOTPRINTS.json",
+      "bytes": 12740,
+      "sha256": "d99e8e320c4c1bb3703cdda0bf98ded183369f41cc0feaee8a568ebfcffdb55c"
+    }
+  },
+  "raw_files": {
+    "data/raw/multicity/portable_predictors/inventory/los_angeles_ca/landsat/2020/stac_page_001.json": {
+      "path": "data/raw/multicity/portable_predictors/inventory/los_angeles_ca/landsat/2020/stac_page_001.json",
+      "bytes": 23304,
+      "sha256": "fac7df3756fd5ace88f6177791024abbc86ee3169d20e2b9e584972f186f335e"
+    },
+    "data/raw/multicity/portable_predictors/inventory/los_angeles_ca/landsat/2021/stac_page_001.json": {
+      "path": "data/raw/multicity/portable_predictors/inventory/los_angeles_ca/landsat/2021/stac_page_001.json",
+      "bytes": 25387,
+      "sha256": "f0bde01dcfdc86d0432332cdc2721272e37eb7605adfcfe270de16b6c4962ee0"
+    },
+    "data/raw/multicity/portable_predictors/inventory/los_angeles_ca/landsat/2022/stac_page_001.json": {
+      "path": "data/raw/multicity/portable_predictors/inventory/los_angeles_ca/landsat/2022/stac_page_001.json",
+      "bytes": 44137,
+      "sha256": "5c0f8f78ff02d1829cfc288402beac8d8e015f9521cbd5060ee950d3c8ba033d"
+    },
+    "data/raw/multicity/portable_predictors/inventory/los_angeles_ca/landsat/2023/stac_page_001.json": {
+      "path": "data/raw/multicity/portable_predictors/inventory/los_angeles_ca/landsat/2023/stac_page_001.json",
+      "bytes": 48714,
+      "sha256": "57a319afcaabc91d7e6a3581e3b36762cbec2446cd111dc852418b1341891561"
+    },
+    "data/raw/multicity/portable_predictors/inventory/los_angeles_ca/landsat/2024/stac_page_001.json": {
+      "path": "data/raw/multicity/portable_predictors/inventory/los_angeles_ca/landsat/2024/stac_page_001.json",
+      "bytes": 52710,
+      "sha256": "b54ca8c11cb3d6b17715caebb0b23b53bb051ab8a99a60a80a04010582ae082f"
+    }
+  },
+  "output_tables": {
+    "los_angeles_ca/landsat_items": {
+      "sha256": "1940510fbd17ac2ffeacb4cf633dfd79ed1f84e7b9c3d96fecb9708f3e8b60a0",
+      "bytes": 46041,
+      "rows": 178,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/portable_predictors/inventory/los_angeles_ca/landsat_metadata_items.parquet",
+      "geometry_semantic_sha256": "34661d05a0486da58ee46ef690d2ffd384f5a10084a84fa648100da6e8a0bb3f"
+    },
+    "los_angeles_ca/overpasses": {
+      "sha256": "63a59871a5b8dd3ba14b1333a5cd8cbe502d2a4da9d40164c63b30291faf11f1",
+      "bytes": 21065,
+      "rows": 91,
+      "schema_sha256": "7e195e8eb5bd75c24bce10eff83e24027d2f90bad15bb9d8be8c512933c79fa4",
+      "path": "data/processed/multicity/portable_predictors/inventory/los_angeles_ca/landsat_overpasses.parquet",
+      "frame_semantic_sha256": "f27f67cef3301943072e109d26e0710e8b9d6b051d0ee28266906636d14cad82"
+    },
+    "los_angeles_ca/keys": {
+      "sha256": "31d9cb26d07509ce43847a95d256c12b3fedf6b305169442b53774375b26876f",
+      "bytes": 29955,
+      "rows": 98640,
+      "schema_sha256": "177cbf2b3f8db409b3c017c17b436e5efe0f9aa043169a7bd1c4c50689b92326",
+      "path": "data/processed/multicity/portable_predictors/inventory/los_angeles_ca/predictor_keys.parquet",
+      "frame_semantic_sha256": "9cdc0d73213a6f8363912ed47e9e629bc7040388b2f3d813ffa336de0aee8b85"
+    },
+    "phoenix_az/landsat_items": {
+      "sha256": "ddea00d964cf6116b967411af53b38aca02b52ccee0890ad9bfff3c90312ab64",
+      "bytes": 27056,
+      "rows": 65,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/portable_predictors/inventory/phoenix_az/landsat_metadata_items.parquet",
+      "geometry_semantic_sha256": "a41e34e1b732f4b7aa3675ec23facd9a9bfa7831e39af2fdfaf94cff1c21e98e"
+    },
+    "phoenix_az/overpasses": {
+      "sha256": "1da14a8a7cc6224ca058f275c178f3b25a612ad63cb3d2f5533c914b5848eca3",
+      "bytes": 14512,
+      "rows": 43,
+      "schema_sha256": "7e195e8eb5bd75c24bce10eff83e24027d2f90bad15bb9d8be8c512933c79fa4",
+      "path": "data/processed/multicity/portable_predictors/inventory/phoenix_az/landsat_overpasses.parquet",
+      "frame_semantic_sha256": "3c62676e06a3b3c3958d1f3edc81627338c5794fd5c7c5b3e94566fc4cee7a1d"
+    },
+    "phoenix_az/keys": {
+      "sha256": "4c6a924f0d2e980a421be2d62d62e5bbeb73e8c280a3410199305ace826b591b",
+      "bytes": 15174,
+      "rows": 8250,
+      "schema_sha256": "177cbf2b3f8db409b3c017c17b436e5efe0f9aa043169a7bd1c4c50689b92326",
+      "path": "data/processed/multicity/portable_predictors/inventory/phoenix_az/predictor_keys.parquet",
+      "frame_semantic_sha256": "c8675a8def63423b68855d1faabe79689d06c670ea9966aa0682133e3294ff11"
+    },
+    "houston_tx/landsat_items": {
+      "sha256": "cc469e18ea81d0272e321bcd205106eb4593e0d79af4092a47b829021b2996c1",
+      "bytes": 27407,
+      "rows": 65,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/portable_predictors/inventory/houston_tx/landsat_metadata_items.parquet",
+      "geometry_semantic_sha256": "f1629e329cf4a9d57cd1b32117722c551ecfb9ccb367f087cf72e3673727bf32"
+    },
+    "houston_tx/overpasses": {
+      "sha256": "aa0d66da9ea0dc9a7a836394438a88eaf79733212e62ede74b02c9426bd8b909",
+      "bytes": 14828,
+      "rows": 44,
+      "schema_sha256": "7e195e8eb5bd75c24bce10eff83e24027d2f90bad15bb9d8be8c512933c79fa4",
+      "path": "data/processed/multicity/portable_predictors/inventory/houston_tx/landsat_overpasses.parquet",
+      "frame_semantic_sha256": "e0d1717a132085f4f76d445757b760afae6e15111287a8aab17767ef82b48c3d"
+    },
+    "houston_tx/keys": {
+      "sha256": "a0ff094c5c545e75a511ef14f7e984ffb6ea61466aa8866bc09521d13d8c2ef1",
+      "bytes": 12708,
+      "rows": 13671,
+      "schema_sha256": "177cbf2b3f8db409b3c017c17b436e5efe0f9aa043169a7bd1c4c50689b92326",
+      "path": "data/processed/multicity/portable_predictors/inventory/houston_tx/predictor_keys.parquet",
+      "frame_semantic_sha256": "f0bac6fd092e683b4f0b8db6d0bcfe84205fc610d9ae8249f677a5a01ec7256f"
+    },
+    "chicago_il/landsat_items": {
+      "sha256": "c847332dd25a00c057c90951b56fa9f72303d4bcee0462913b9b3d15a464f806",
+      "bytes": 20008,
+      "rows": 39,
+      "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+      "path": "data/processed/multicity/portable_predictors/inventory/chicago_il/landsat_metadata_items.parquet",
+      "geometry_semantic_sha256": "07db3984e7c4c66bb740ab2a30d963028bf16271eb624c1662f72bc40504d9d9"
+    },
+    "chicago_il/overpasses": {
+      "sha256": "4fba68189977ad5c42049b0793d915b494b5f4d996a36d1290cfbca99c429147",
+      "bytes": 13644,
+      "rows": 39,
+      "schema_sha256": "7e195e8eb5bd75c24bce10eff83e24027d2f90bad15bb9d8be8c512933c79fa4",
+      "path": "data/processed/multicity/portable_predictors/inventory/chicago_il/landsat_overpasses.parquet",
+      "frame_semantic_sha256": "d4230bbc8425e03fb574b387f218b6a10b8011150a9008fde8c14aedf573776e"
+    },
+    "chicago_il/keys": {
+      "sha256": "6c81d475786c527f873e0158ea5f65946ed1008c482c64a9513ca6504c903320",
+      "bytes": 10410,
+      "rows": 16380,
+      "schema_sha256": "177cbf2b3f8db409b3c017c17b436e5efe0f9aa043169a7bd1c4c50689b92326",
+      "path": "data/processed/multicity/portable_predictors/inventory/chicago_il/predictor_keys.parquet",
+      "frame_semantic_sha256": "390d1576d5dc97f5da6429c9e5089e66e352875015ca947211d3c5c93eceeb57"
+    },
+    "combined_predictor_keys": {
+      "sha256": "a660bfe81198dc2a57af02c19d9630e931eab2ce83c8f4a02d9662d7aa5a911a",
+      "bytes": 57344,
+      "rows": 136941,
+      "schema_sha256": "177cbf2b3f8db409b3c017c17b436e5efe0f9aa043169a7bd1c4c50689b92326",
+      "path": "data/processed/multicity/portable_predictors/inventory/predictor_keys.parquet",
+      "frame_semantic_sha256": "bdecb50fe1fa3c629a09bb12e6825f3f96b3742dce4ad75d3c926513213768bc"
+    }
+  },
+  "combined": {
+    "city_count": 4,
+    "date_count": 154,
+    "tract_count": 2902,
+    "key_count": 136941
+  },
+  "access_contract": {
+    "public_landsat_metadata_read": true,
+    "landsat_assets_excluded_from_network_queries": true,
+    "landsat_asset_hrefs_read": false,
+    "landsat_thermal_or_target_qa_values_read": false,
+    "external_target_or_qa_values_read": false,
+    "predictor_values_computed": false,
+    "model_fit_or_prediction_performed": false,
+    "evaluation_outputs_opened": false
+  },
+  "decision": {
+    "predictor_keys_frozen": true,
+    "external_targets_remain_sealed": true,
+    "next_safe_stage": "build_static_calendar_and_daymet_predictors"
+  },
+  "commit_sha256": "6d0c26d8c1e23a28d7d855aebf1957801c2e76513070700a61122b96f579f2ab"
+}

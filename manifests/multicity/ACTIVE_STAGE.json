@@ -26,6 +26,7 @@
   "inputs": {
     "contract": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT.json",
     "phoenix_source_footprint": "manifests/multicity/cities/phoenix_az/source_footprints/PORTABLE_SOURCE_FOOTPRINT.json",
+    "predictor_inventory": "manifests/multicity/predictors/PORTABLE_PREDICTOR_INVENTORY.json",
     "canonical_city_ids": [
       "los_angeles_ca",
       "phoenix_az",
@@ -34,10 +35,12 @@
     ]
   },
   "current_implementation": {
-    "builder_status": "reuse_audit_pending",
+    "builder_status": "inventory_complete",
     "worker_running": false,
     "long_computation_started": false,
-    "next_action": "audit_existing_feature_builders_then_implement_one_resumable_runner"
+    "inventory_city_date_count": 154,
+    "inventory_key_count": 136941,
+    "next_action": "build_static_calendar_and_daymet_predictors_then_resumable_sentinel"
   },
   "workflow_policy": {
     "numbered_transitions_through_v18_are_history_only": true,
