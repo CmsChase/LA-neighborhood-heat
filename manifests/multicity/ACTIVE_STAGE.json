@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "revision": "2026-08-consolidated",
-  "stage_id": "portable_predictor_build",
-  "state": "running",
-  "next_safe_stage": "finish_public_component_build",
-  "summary": "The resumable 84-unit static, calendar, and Daymet component build is running on the canonical four-city support.",
+  "stage_id": "portable_sentinel_build",
+  "state": "ready",
+  "next_safe_stage": "build_resumable_sentinel_predictors",
+  "summary": "The target-blind static, calendar, and Daymet components are complete; the next stage is the visible resumable Sentinel predictor build.",
   "permissions": {
     "read_public_predictor_sources": true,
     "build_predictor": true,
@@ -35,15 +35,20 @@
     ]
   },
   "current_implementation": {
-    "builder_status": "component_runner_started",
-    "worker_running": true,
+    "builder_status": "static_calendar_daymet_components_complete",
+    "worker_running": false,
     "long_computation_started": true,
+    "long_computation_completed": true,
     "inventory_city_date_count": 154,
     "inventory_key_count": 136941,
     "work_unit_count": 84,
+    "completed_work_unit_count": 84,
+    "completed_feature_count": 41,
+    "component_output": "data/processed/multicity/portable_predictors/components/predictors_static_calendar_daymet.parquet",
+    "completion_record": "data/processed/multicity/portable_predictors/components/COMPONENTS_COMPLETE.json",
     "dashboard_url": "http://127.0.0.1:8768/",
     "runtime_status": "data/interim/multicity/portable_predictors/runtime/status.json",
-    "next_action": "finish_static_calendar_and_daymet_components_then_build_resumable_sentinel"
+    "next_action": "implement_and_run_visible_resumable_sentinel_predictor_build"
   },
   "workflow_policy": {
     "numbered_transitions_through_v18_are_history_only": true,

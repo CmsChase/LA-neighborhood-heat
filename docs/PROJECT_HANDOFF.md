@@ -40,6 +40,10 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
    tables, four static bases, 49 GSHHG distance chunks, four static finalizers,
    Los Angeles Daymet compilation, 18 external-city Daymet downloads, three
    external-city compilations, and one final component merge.
+9. That 84-unit build is complete. It produced all 41 non-Sentinel predictors
+   for 136,941 frozen city-date-tract rows. The merged Parquet has 46 columns:
+   five keys plus the 41 frozen static, calendar, and Daymet features. No model
+   was fit and no external-city target values were opened.
 
 ## Frozen scientific decisions
 
@@ -81,30 +85,18 @@ through V18 remain for provenance and must not be extended with V19/V20 files.
 
 ## Exact resume point
 
-The static, calendar, and Daymet component runner was started on 2026-08-10.
-Its authoritative live state is:
+The static, calendar, and Daymet component build reached `84 / 84` on
+2026-08-10. Its canonical completion record and merged output are:
 
-`data/interim/multicity/portable_predictors/runtime/status.json`
+- `data/processed/multicity/portable_predictors/components/COMPONENTS_COMPLETE.json`
+- `data/processed/multicity/portable_predictors/components/predictors_static_calendar_daymet.parquet`
 
-When the local dashboard process is active, open `http://127.0.0.1:8768/`.
-If it is not active, restart the supervisor with:
-
-```powershell
-Set-Location "D:\HuaweiMoveData\Users\haora\Documents\ISEF"
-.\.venv\Scripts\python scripts\run_portable_predictor_dashboard.py --host 127.0.0.1 --port 8768
-```
-
-The work plan resumes from completed task records rather than rebuilding prior
-chunks. It first completes all token-free calendar, static, GSHHG, and Los
-Angeles Daymet work. It then enters `waiting_for_earthdata_token` if the 18
-external-city Daymet subsets are still missing. Paste a fresh Earthdata bearer
-token into the local page and click Start / Continue. The token is held only in
-the dashboard process memory and child environment.
-
-After the component runner reaches `complete`, the next implementation stage
-is the visible, resumable Sentinel predictor build. Do not fit M2 or open any
-external-city Landsat target values before the protocol, prediction commit,
-and target-opening gates authorize those actions.
+The next task is to implement a visible, resumable Sentinel-2 predictor runner
+on the same frozen four-city support, then run it. Reuse the already completed
+Sentinel calibration and acquisition evidence. Do not rebuild the 41 completed
+features, fit M2, or open any external-city Landsat target values. Model fitting
+and target access remain behind the protocol, prediction-commit, and
+target-opening gates.
 
 Authenticate the completed gates with:
 
@@ -116,7 +108,7 @@ Set-Location "D:\HuaweiMoveData\Users\haora\Documents\ISEF"
 .\.venv\Scripts\python scripts\build_portable_predictor_inventory.py --check-only
 ```
 
-The current component build writes stable, purpose-named outputs and builds Los
+The completed component build uses stable, purpose-named outputs and builds Los
 Angeles on the new canonical support rather than copying Phase-I feature
 tables. Its focused test set is:
 

@@ -49,31 +49,20 @@ The Los Angeles evaluation is complete. The active research extension tests
 whether a Los-Angeles-trained predictor can transfer, without retraining, to
 Phoenix, Houston, and Chicago. External-city target values remain sealed.
 
-The only active runtime state is
+The active stage is recorded in
 [`manifests/multicity/ACTIVE_STAGE.json`](manifests/multicity/ACTIVE_STAGE.json).
-It authorizes public geography, WorldCover support, and small Sentinel-2
-calibration checks. The earlier V7–V18 transition files are historical
-provenance; they are not the active workflow and no new numbered hotfix file
-should be created.
+The earlier V7–V18 transition files are historical provenance; they are not the
+active workflow and no new numbered hotfix file should be created.
 
-The static, calendar, and Daymet component build now runs through a local,
-resumable progress page:
+The resumable static, calendar, and Daymet build is complete: all 84 work units
+produced 41 non-Sentinel predictors for 136,941 frozen rows. Its canonical
+outputs are:
 
-```powershell
-.\.venv\Scripts\python scripts\run_portable_predictor_dashboard.py --host 127.0.0.1 --port 8768
-```
+- `data/processed/multicity/portable_predictors/components/COMPONENTS_COMPLETE.json`
+- `data/processed/multicity/portable_predictors/components/predictors_static_calendar_daymet.parquet`
 
-Open `http://127.0.0.1:8768/` to see the active city and phase, completed work
-units, estimated time, and recent events. Safe pause finishes the current
-atomic file or geography chunk and preserves all completed work. When the
-three external cities reach their weather downloads, enter an Earthdata bearer
-token in the page; it is passed only to the child process and is not written to
-the repository or runtime logs.
-
-The machine-readable live state is
-`data/interim/multicity/portable_predictors/runtime/status.json`. The current
-runner builds only public predictor components. It does not fit a model or
-read external-city target values.
+The next stage is the visible, resumable Sentinel-2 predictor build. No model
+has been fit and external-city target values remain sealed.
 
 ## Local setup
 

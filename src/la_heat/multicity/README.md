@@ -28,7 +28,7 @@ Do not create another numbered transition for a routine implementation fix;
 update `manifests/multicity/ACTIVE_STAGE.json`, the affected module, and its
 focused regression test.
 
-Start or resume the current component build from the repository root with:
+The completed component build can be inspected from the repository root with:
 
 ```powershell
 .\.venv\Scripts\python scripts\run_portable_predictor_dashboard.py --host 127.0.0.1 --port 8768
@@ -37,3 +37,6 @@ Start or resume the current component build from the repository root with:
 The live status is written below
 `data/interim/multicity/portable_predictors/runtime/`. The dashboard and build
 remain target-blind and never fit or score a model.
+
+The active next implementation is a visible, resumable Sentinel-2 predictor
+runner on the same frozen four-city support.
