@@ -61,8 +61,10 @@ outputs are:
 - `data/processed/multicity/portable_predictors/components/COMPONENTS_COMPLETE.json`
 - `data/processed/multicity/portable_predictors/components/predictors_static_calendar_daymet.parquet`
 
-The next stage is the visible, resumable Sentinel-2 predictor build. No model
-has been fit and external-city target values remain sealed.
+The visible, resumable four-city Sentinel-2 predictor build is currently
+running on the gaming laptop, in the fixed order Chicago, Phoenix, Houston,
+then Los Angeles. No model has been fit and external-city target values remain
+sealed.
 
 ## Local setup
 

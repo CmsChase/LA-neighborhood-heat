@@ -2,9 +2,9 @@
   "schema_version": 1,
   "revision": "2026-08-consolidated",
   "stage_id": "portable_sentinel_build",
-  "state": "portable_bundle_ready",
-  "next_safe_stage": "run_resumable_sentinel_predictors_on_gaming_laptop",
-  "summary": "The target-blind 41-feature component, four-city Sentinel inventory, resumable engine, dashboard, and copy-ready gaming-laptop folder are complete; the long Sentinel raster build has not started.",
+  "state": "sentinel_build_running_on_gaming_laptop",
+  "next_safe_stage": "verify_and_import_completed_portable_sentinel_results",
+  "summary": "The target-blind 41-feature component is complete and the resumable four-city Sentinel build is now running on the gaming laptop. External-city targets remain sealed and no model has been fit.",
   "permissions": {
     "read_public_predictor_sources": true,
     "build_predictor": true,
@@ -35,15 +35,15 @@
     ]
   },
   "current_implementation": {
-    "builder_status": "portable_sentinel_runner_ready",
-    "worker_running": false,
-    "long_computation_started": false,
+    "builder_status": "portable_sentinel_runner_active",
+    "worker_running": true,
+    "long_computation_started": true,
     "long_computation_completed": false,
     "inventory_city_date_count": 154,
     "inventory_key_count": 136941,
     "completed_component_work_unit_count": 84,
     "sentinel_work_unit_count": 516,
-    "completed_sentinel_work_unit_count": 0,
+    "completed_sentinel_work_unit_count": 2,
     "sentinel_physical_acquisition_count": 511,
     "completed_feature_count": 41,
     "component_output": "data/processed/multicity/portable_predictors/components/predictors_static_calendar_daymet.parquet",
@@ -52,9 +52,19 @@
     "runtime_status": "data/interim/multicity/portable_predictors/runtime/sentinel/status.json",
     "portable_bundle": "exports/GAMING_LAPTOP_SENTINEL",
     "portable_bundle_file_count": 3410,
-    "portable_bundle_bytes": 370520872,
+    "portable_bundle_bytes": 370521440,
     "portable_bundle_manifest_sha256": "41819b6054b10a708e1644349ef31e361fd6d2db89b0ef26599c1a8cfafea449",
-    "next_action": "copy_bundle_to_gaming_laptop_and_run_start_here"
+    "runtime_location": "gaming_laptop_local_nvme",
+    "progress_is_last_observed_snapshot": true,
+    "last_observed_at": "2026-08-10T18:25:00+08:00",
+    "last_observed_city": "chicago_il",
+    "next_action": "wait_for_516_of_516_then_package_return_zip_and_sha256"
+  },
+  "prepared_post_return_tools": {
+    "one_click_import": "IMPORT_SENTINEL_RESULTS.cmd",
+    "import_script": "scripts/import_portable_sentinel_results.py",
+    "predictor_readiness_audit": "scripts/audit_multicity_predictor_readiness.py",
+    "long_compute_started_by_tools": false
   },
   "workflow_policy": {
     "numbered_transitions_through_v18_are_history_only": true,

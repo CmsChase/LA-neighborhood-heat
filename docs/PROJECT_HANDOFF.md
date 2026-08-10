@@ -55,13 +55,25 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     unexpectedly exited engine.
 12. A copy-ready gaming-laptop folder is staged at
     `exports/GAMING_LAPTOP_SENTINEL`. Its 3,410 manifest-tracked files total
-    370,520,872 bytes. Independent verification found zero missing, extra, or
+    370,521,440 bytes. Independent verification found zero missing, extra, or
     hash-mismatched files. The manifest SHA-256 is
     `41819b6054b10a708e1644349ef31e361fd6d2db89b0ef26599c1a8cfafea449`.
     Package-local engine check returned `ready`; dashboard smoke returned
     `paused` with no engine process. The complete Windows PowerShell first-run
-    path also passed after the quoting repair. The long raster build has not
-    started.
+    path also passed after the quoting repair.
+13. The folder was copied to the gaming laptop and the long Sentinel build is
+    now running there with six asset-read threads and one acquisition at a
+    time. The engine intentionally processes cities serially in the fixed
+    order Chicago, Phoenix, Houston, then Los Angeles. The last user-provided
+    dashboard snapshot showed 2 / 516 complete in Chicago; that number is a
+    snapshot, not a live status feed to this repository.
+14. Return-package tooling is prepared while the build runs. The importer
+    verifies the companion ZIP checksum, every packaged file, the 516 / 516
+    terminal status, four city completion commits, and the final 46-feature
+    completion record before importing only result-owned paths. A separate
+    target-blind readiness audit checks keys, schema, row counts, numerical
+    values, and Sentinel all-or-none missingness without fitting a model or
+    opening any external target.
 
 ## Frozen scientific decisions
 
@@ -109,20 +121,31 @@ The static, calendar, and Daymet component build reached `84 / 84` on
 - `data/processed/multicity/portable_predictors/components/COMPONENTS_COMPLETE.json`
 - `data/processed/multicity/portable_predictors/components/predictors_static_calendar_daymet.parquet`
 
-The implementation and portable folder are now complete. The exact next task
-is to copy the whole `exports/GAMING_LAPTOP_SENTINEL` directory to the gaming
-laptop's local NVMe drive, double-click `START_HERE.cmd`, keep the default 6
-download threads and 1 acquisition concurrency initially, and click
-`Start / Continue`. The dashboard tracks 516 durable units: 511 acquisitions,
-four city compiles, and one final merge. Do not rebuild the 41 completed
-features, fit M2, or open any external-city Landsat target values. Model fitting
-and target access remain behind later locks.
+The implementation and portable folder are complete, and the gaming-laptop
+run is active. Leave it running or use `Safe Pause` only when the laptop must
+stop. The dashboard tracks 516 durable units: 511 acquisitions, four city
+compiles, and one final merge. Chicago moves first by design; the other cities
+begin automatically afterward. Do not rebuild the 41 completed features, fit
+M2, or open any external-city Landsat target values. Model fitting and target
+access remain behind later locks.
 
 When the page reports `complete`, close it and double-click
 `PACKAGE_RESULTS.cmd`. Bring back both the generated ZIP and its `.sha256`
 file. A safe pause is also portable: request `Safe Pause`, wait for running to
 reach zero, then package or shut down. The returned cache can resume without
 repeating committed acquisitions.
+
+After bringing back a complete ZIP and its adjacent `.zip.sha256`, either drag
+the ZIP onto `IMPORT_SENTINEL_RESULTS.cmd` or run:
+
+```powershell
+.\.venv\Scripts\python scripts\import_portable_sentinel_results.py --archive "D:\path\GAMING_LAPTOP_SENTINEL_RESULTS_...zip"
+.\.venv\Scripts\python scripts\audit_multicity_predictor_readiness.py --write-report
+```
+
+The first command imports only after terminal authentication; the second must
+report `ready_for_protocol_lock_not_model_fit`. It still does not authorize or
+perform model fitting.
 
 Authenticate the completed gates with:
 
