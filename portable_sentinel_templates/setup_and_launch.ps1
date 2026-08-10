@@ -2,7 +2,8 @@
 param(
     [ValidateRange(1024, 65535)]
     [int]$Port = 8769,
-    [switch]$NoBrowser
+    [switch]$NoBrowser,
+    [switch]$ValidateOnly
 )
 
 $ErrorActionPreference = 'Stop'
@@ -67,9 +68,14 @@ $env:PYTHONUTF8 = '1'
 $env:PYTHONUNBUFFERED = '1'
 $env:GDAL_DISABLE_READDIR_ON_OPEN = 'EMPTY_DIR'
 
-& $venvPython -c 'import geopandas, numpy, pandas, planetary_computer, pyarrow, rasterio, shapely; print("Environment ready.")'
+& $venvPython -c "import geopandas, numpy, pandas, planetary_computer, pyarrow, rasterio, shapely; print('Environment ready.')"
 if ($LASTEXITCODE -ne 0) {
     throw 'The local Python environment is incomplete.'
+}
+
+if ($ValidateOnly) {
+    Write-Host 'Startup validation complete; dashboard was not started.'
+    exit 0
 }
 
 $arguments = @($dashboard, '--port', [string]$Port)

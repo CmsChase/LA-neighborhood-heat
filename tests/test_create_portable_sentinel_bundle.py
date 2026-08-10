@@ -1,7 +1,11 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 from pathlib import Path
+
+import pytest
 
 from scripts.create_portable_sentinel_bundle import (
     DIRECTORY_COPIES,
@@ -67,3 +71,36 @@ def test_create_bundle_is_runnable_and_excludes_transient_files(tmp_path: Path) 
     )
     assert written["long_computation_started"] is False
     assert written["file_count"] == manifest["file_count"]
+
+
+@pytest.mark.skipif(__import__("os").name != "nt", reason="Windows startup contract")
+def test_windows_powershell_preserves_python_self_check_quotes() -> None:
+    script = (
+        Path(__file__).resolve().parents[1]
+        / "portable_sentinel_templates/setup_and_launch.ps1"
+    ).read_text(encoding="utf-8")
+    command_line = next(
+        line.strip()
+        for line in script.splitlines()
+        if line.strip().startswith("& $venvPython -c")
+        and "import geopandas" in line
+    )
+
+    assert "-c \"" in command_line
+    assert "print('Environment ready.')" in command_line
+    python_path = str(Path(sys.executable).resolve()).replace("'", "''")
+    result = subprocess.run(
+        [
+            "powershell.exe",
+            "-NoLogo",
+            "-NoProfile",
+            "-Command",
+            f"$venvPython = '{python_path}'; " + command_line,
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "Environment ready." in result.stdout
