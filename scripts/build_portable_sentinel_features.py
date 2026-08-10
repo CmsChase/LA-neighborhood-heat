@@ -17,15 +17,31 @@ from la_heat.sentinel_compile_adapter import (
     COMPILE_ADAPTER_VERSION,
     build_previous_60_day_composites_by_target,
 )
+from la_heat.sentinel_features import CompositeArtifacts
+
+
+def _portable_target_sharded_composites(*args: Any, **kwargs: Any) -> CompositeArtifacts:
+    artifacts = build_previous_60_day_composites_by_target(*args, **kwargs)
+
+    def without_city_id(frame: Any) -> Any:
+        if "city_id" not in frame.columns:
+            return frame
+        if frame["city_id"].astype(str).nunique() != 1:
+            raise ValueError("Compiled Sentinel frame mixes multiple city IDs.")
+        return frame.drop(columns="city_id")
+
+    return CompositeArtifacts(
+        features=without_city_id(artifacts.features),
+        audit=without_city_id(artifacts.audit),
+        lineage=without_city_id(artifacts.lineage),
+    )
 
 
 def _install_compile_adapter() -> None:
     if getattr(engine, "_target_sharded_compile_adapter_installed", False):
         return
     original_compile_city = engine.compile_city
-    engine.build_previous_60_day_composites = (
-        build_previous_60_day_composites_by_target
-    )
+    engine.build_previous_60_day_composites = _portable_target_sharded_composites
 
     def compile_city_with_audit(
         project_root: Path,
