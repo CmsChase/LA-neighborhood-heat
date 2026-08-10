@@ -62,7 +62,7 @@ DIRECTORY_COPIES = (
     (Path("src"), Path("src")),
     (Path("scripts"), Path("scripts")),
     (Path("configs"), Path("configs")),
-    (Path("manifests"), Path("manifests")),
+    (Path("manifests/multicity"), Path("manifests/multicity")),
     (
         Path("data/processed/multicity/missing_support_calibration_evidence_v1"),
         Path("data/processed/multicity/missing_support_calibration_evidence_v1"),
@@ -111,6 +111,14 @@ IGNORED_DIRECTORY_NAMES = {
     "tmp",
 }
 
+BUNDLE_EXCLUDED_FILE_NAMES = {
+    "model_dashboard.py",
+    "returned_result_import.py",
+    "sentinel_dashboard.py",
+    "research_runner_ui.py",
+    "transfer_prepare_bundle.ps1",
+}
+
 
 class PortableBundleError(RuntimeError):
     """Raised when a complete, runnable bundle cannot be assembled."""
@@ -144,7 +152,8 @@ def _ignore_names(_directory: str, names: list[str]) -> set[str]:
     ignored = {
         name
         for name in names
-        if any(secret in name.lower() for secret in ("token", "credential", "cookie"))
+        if name in BUNDLE_EXCLUDED_FILE_NAMES
+        or any(secret in name.lower() for secret in ("token", "credential", "cookie"))
     }
     return ignored | _ignored_transient_names(names)
 
