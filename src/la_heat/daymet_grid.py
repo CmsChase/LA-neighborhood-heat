@@ -823,10 +823,15 @@ def _select_daymet_subdataset(path: Path, variable: str) -> str:
             raise DaymetGridAuditError(
                 f"Daymet NetCDF {path} does not expose the expected variable {variable!r}."
             )
+    # DAP4 NetCDF responses may place root variables inside a generated group.
+    # GDAL then exposes names such as ``/group/tmax`` instead of plain ``tmax``.
+    # Match the final NetCDF path component while still requiring one unique
+    # variable across all groups.
     candidates = [
         uri
         for uri in subdatasets
-        if uri.rsplit(":", maxsplit=1)[-1].strip('"') == variable
+        if uri.rsplit(":", maxsplit=1)[-1].strip('"').rsplit("/", maxsplit=1)[-1]
+        == variable
     ]
     if len(candidates) != 1:
         raise DaymetGridAuditError(

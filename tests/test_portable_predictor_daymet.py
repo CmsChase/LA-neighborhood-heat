@@ -107,6 +107,7 @@ def test_missing_downloads_report_credential_gap_with_ui_record(
     )
 
     assert result["state"] == "credential_required"
+    assert result["complete"] is False
     assert result["completed"] == 0
     assert result["total"] == 18
     assert result["remaining"] == 18
@@ -117,7 +118,9 @@ def test_missing_downloads_report_credential_gap_with_ui_record(
         "completed",
         "total",
         "message",
+        "task_complete",
     }
+    assert progress[-1]["task_complete"] is False
 
 
 def test_downloader_pauses_after_one_atomic_file(
@@ -130,6 +133,8 @@ def test_downloader_pauses_after_one_atomic_file(
 
     def fake_download(_url, destination, **_kwargs):
         path = Path(destination)
+        assert path.suffix == ".nc"
+        assert path.name.endswith(".validating.nc")
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(b"netcdf-test")
         return {"path": path.as_posix()}
@@ -137,22 +142,27 @@ def test_downloader_pauses_after_one_atomic_file(
     monkeypatch.setattr(stage, "authenticated_netcdf_download", fake_download)
     pause_checks = iter((False, True))
 
+    progress: list[dict[str, object]] = []
     result = stage.download_missing_external_subsets(
         root,
         credential=EarthdataBearerToken("secret", "test_token"),
+        progress_callback=progress.append,
         pause_callback=lambda: next(pause_checks),
     )
 
     assert result["state"] == "incomplete"
+    assert result["complete"] is False
     assert result["paused"] is True
     assert result["completed"] == 1
     assert result["downloaded"] == 1
     assert tasks[0].destination.read_bytes() == b"netcdf-test"
-    assert not tasks[0].destination.with_suffix(
-        tasks[0].destination.suffix + ".validating"
-    ).exists()
+    validating = tasks[0].destination.with_name(
+        f"{tasks[0].destination.stem}.validating{tasks[0].destination.suffix}"
+    )
+    assert not validating.exists()
     assert not tasks[1].destination.exists()
     assert "secret" not in repr(result)
+    assert progress[-1]["task_complete"] is True
 
 
 def test_los_angeles_reuses_thirty_existing_subsets(tmp_path: Path) -> None:

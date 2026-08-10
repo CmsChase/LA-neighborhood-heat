@@ -71,6 +71,26 @@ class _FakeResponse:
         self.closed = True
 
 
+def test_select_daymet_subdataset_accepts_dap4_group_path(monkeypatch) -> None:
+    expected = 'NETCDF:"subset.nc":/generated_group/tmax'
+
+    class _Root:
+        subdatasets = (
+            'NETCDF:"subset.nc":/generated_group/lat',
+            expected,
+        )
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args: object) -> None:
+            return None
+
+    monkeypatch.setattr(daymet_grid.rasterio, "open", lambda _path: _Root())
+
+    assert daymet_grid._select_daymet_subdataset(Path("subset.nc"), "tmax") == expected
+
+
 class _RecordingClient:
     def __init__(self, response: _FakeResponse) -> None:
         self.response = response

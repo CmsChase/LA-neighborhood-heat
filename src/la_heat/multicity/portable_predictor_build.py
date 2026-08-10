@@ -577,7 +577,11 @@ def run_portable_predictor_build(project_root: str | Path) -> int:
             def download_progress(event: Mapping[str, object]) -> None:
                 raw_city = event.get("city_id")
                 raw_variable = event.get("variable")
-                if raw_city is not None and raw_variable is not None:
+                if (
+                    raw_city is not None
+                    and raw_variable is not None
+                    and event.get("task_complete") is True
+                ):
                     city_id = str(raw_city)
                     variable = str(raw_variable)
                     tracker.finish(
@@ -601,7 +605,9 @@ def run_portable_predictor_build(project_root: str | Path) -> int:
                 tracker.event("Earthdata token 被拒绝；请在本机页面输入新的 token。")
                 tracker.write("waiting_for_earthdata_token", phase="daymet_download")
                 return WAITING_EXIT_CODE
-            if pause() or (isinstance(result, Mapping) and not result.get("complete", True)):
+            if pause() or (
+                isinstance(result, Mapping) and result.get("state") != "complete"
+            ):
                 tracker.event("已在 Daymet 文件边界暂停。")
                 tracker.write("paused")
                 return 0

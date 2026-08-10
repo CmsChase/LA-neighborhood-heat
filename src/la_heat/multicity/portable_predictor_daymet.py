@@ -375,6 +375,7 @@ def _notify(
     completed: int,
     total: int,
     message: str,
+    task_complete: bool = False,
 ) -> None:
     if callback is None:
         return
@@ -385,6 +386,7 @@ def _notify(
             "completed": completed,
             "total": total,
             "message": message,
+            "task_complete": task_complete,
         }
     )
 
@@ -400,6 +402,7 @@ def _download_result(
     missing = [task for task in tasks if task.task_id not in completed_ids]
     return {
         "state": state,
+        "complete": state == "complete",
         "paused": state == "incomplete",
         "completed": len(completed_ids),
         "total": len(tasks),
@@ -477,7 +480,11 @@ def download_missing_external_subsets(
             message=f"正在下载 {task.city_id} {task.variable}",
         )
         task.destination.parent.mkdir(parents=True, exist_ok=True)
-        validating = task.destination.with_suffix(task.destination.suffix + ".validating")
+        # Keep the NetCDF extension last so GDAL selects its NetCDF driver while
+        # the file is audited before the final atomic rename.
+        validating = task.destination.with_name(
+            f"{task.destination.stem}.validating{task.destination.suffix}"
+        )
         validating.unlink(missing_ok=True)
         try:
             authenticated_netcdf_download(
@@ -498,6 +505,7 @@ def download_missing_external_subsets(
             completed=len(completed_ids),
             total=total,
             message=f"已完成 {task.city_id} {task.variable}",
+            task_complete=True,
         )
     return _download_result(
         state="complete",
