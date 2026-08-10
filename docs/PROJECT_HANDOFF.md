@@ -57,9 +57,11 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     `exports/GAMING_LAPTOP_SENTINEL`. Its 3,410 manifest-tracked files total
     370,520,872 bytes. Independent verification found zero missing, extra, or
     hash-mismatched files. The manifest SHA-256 is
-    `b38601fa675b90d6ba4313ee297e8839bb31b0c91de12c53e3d3e49b913a01ef`.
+    `41819b6054b10a708e1644349ef31e361fd6d2db89b0ef26599c1a8cfafea449`.
     Package-local engine check returned `ready`; dashboard smoke returned
-    `paused` with no engine process. The long raster build has not started.
+    `paused` with no engine process. The complete Windows PowerShell first-run
+    path also passed after the quoting repair. The long raster build has not
+    started.
 
 ## Frozen scientific decisions
 

@@ -53,7 +53,7 @@
     "portable_bundle": "exports/GAMING_LAPTOP_SENTINEL",
     "portable_bundle_file_count": 3410,
     "portable_bundle_bytes": 370520872,
-    "portable_bundle_manifest_sha256": "b38601fa675b90d6ba4313ee297e8839bb31b0c91de12c53e3d3e49b913a01ef",
+    "portable_bundle_manifest_sha256": "41819b6054b10a708e1644349ef31e361fd6d2db89b0ef26599c1a8cfafea449",
     "next_action": "copy_bundle_to_gaming_laptop_and_run_start_here"
   },
   "workflow_policy": {
