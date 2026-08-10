@@ -16,15 +16,18 @@ history is intentionally separated from the short project landing page.
 | How is the public atlas authenticated? | [RESULTS_WEBSITE.md](RESULTS_WEBSITE.md) |
 | Where are the paper, poster, and deck? | [PUBLICATION_MATERIALS.md](PUBLICATION_MATERIALS.md) |
 | What is the active cross-city continuation? | [Active stage](../manifests/multicity/ACTIVE_STAGE.json) and [MULTICITY_GENERALIZATION_PROTOCOL.md](MULTICITY_GENERALIZATION_PROTOCOL.md) |
+| How can I exercise the four-city interfaces without real targets? | [MULTICITY_SYNTHETIC_SMOKE.md](MULTICITY_SYNTHETIC_SMOKE.md) |
+| How are the cross-city methods, gates, resume points, and evidence preserved? | [MULTICITY_METHODS_AND_EVIDENCE.md](MULTICITY_METHODS_AND_EVIDENCE.md) |
 | What did the Phoenix geography pilot produce? | [Phoenix geography manifest](../manifests/multicity/cities/phoenix_az/geography/GEOGRAPHY.json) |
-| What source footprints did the Phoenix metadata pilot discover? | [Phoenix source-footprint manifest](../manifests/multicity/cities/phoenix_az/source_footprints/SOURCE_FOOTPRINTS.json) |
-| Why is the portable water-distance source not frozen yet? | [PORTABLE_WATER_DISTANCE_REVIEW.md](PORTABLE_WATER_DISTANCE_REVIEW.md) |
+| What is the current Phoenix portable source footprint? | [Portable Phoenix source-footprint manifest](../manifests/multicity/cities/phoenix_az/source_footprints/PORTABLE_SOURCE_FOOTPRINT.json) |
+| Why was the portable water-distance source initially deferred? | [Historical review](PORTABLE_WATER_DISTANCE_REVIEW.md) |
 | What did the global shoreline geometry pilot find? | [GSHHG_GEOMETRY_PILOT_REPORT.md](GSHHG_GEOMETRY_PILOT_REPORT.md) |
 | Why was the portable source-and-algorithm freeze deferred? | [PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md](PORTABLE_WATER_DISTANCE_FREEZE_DECISION.md) |
 | What exactly is fixed before the L3 hierarchy audit? | [GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md](GSHHG_L3_HIERARCHY_AUDIT_PREREGISTRATION.md) |
 | What did the completed L3 hierarchy audit find? | [GSHHG_L3_HIERARCHY_AUDIT_REPORT.md](GSHHG_L3_HIERARCHY_AUDIT_REPORT.md) |
 | What source and water-distance algorithm are now frozen? | [WATER_DISTANCE_FREEZE_DECISION_V2.md](WATER_DISTANCE_FREEZE_DECISION_V2.md) |
-| Why is the portable predictor contract still deferred? | [PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.md](PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.md) |
+| Why was the first portable predictor contract deferred? | [Historical V1 decision](PORTABLE_PREDICTOR_CONTRACT_FREEZE_V1.md) |
+| What predictor contract is now authoritative? | [Locked portable predictor contract](../manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT.json) |
 
 ## Scientific contracts
 
@@ -38,9 +41,13 @@ history is intentionally separated from the short project landing page.
   project-result evidence.
 - [MULTICITY_GENERALIZATION_PROTOCOL.md](MULTICITY_GENERALIZATION_PROTOCOL.md):
   draft zero-shot transfer and uncertainty study; its external targets remain
-  locked. The completed Phoenix geography and source-footprint metadata
-  snapshots are pilots, not source or protocol locks, and do not authorize
-  predictor construction.
+  locked. The portable predictor contract and 46 feature names are frozen and
+  predictor construction is authorized; protocol promotion, real fitting, and
+  all target-value access remain locked.
+- [MULTICITY_METHODS_AND_EVIDENCE.md](MULTICITY_METHODS_AND_EVIDENCE.md):
+  implementation-facing gate sequence, fixed cohorts and metrics, synthetic
+  rehearsal boundary, transfer/resume rules, and final evidence-package
+  requirements.
 - [PORTABLE_WATER_DISTANCE_REVIEW.md](PORTABLE_WATER_DISTANCE_REVIEW.md):
   target-blind source comparison, authenticated Census benchmark, cross-border
   semantic limitation, reviewed algorithm, and GSHHG geometry-pilot gate.

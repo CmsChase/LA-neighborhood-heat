@@ -9,6 +9,7 @@ import re
 import shutil
 import stat
 import uuid
+from collections.abc import Callable
 from dataclasses import asdict, dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any, Final
@@ -221,14 +222,11 @@ def _record_matches(
     )
 
 
-def _validate_completed_outputs(
-    archive: ZipFile,
-    members: dict[str, ZipInfo],
+def _validate_completed_payloads(
+    read_json: Callable[[str, str], dict[str, Any]],
     records: dict[str, dict[str, object]],
 ) -> tuple[dict[str, Any], dict[str, str], str]:
-    status = _read_member_json(
-        archive, members, STATUS_PATH, label="Sentinel runtime status"
-    )
+    status = read_json(STATUS_PATH, "Sentinel runtime status")
     if (
         status.get("state") != "complete"
         or status.get("algorithm_version") != "portable-four-city-sentinel-v1"
@@ -266,9 +264,7 @@ def _validate_completed_outputs(
     for city_id, acquisition_count in EXPECTED_ACQUISITIONS.items():
         directory = f"{component_root}/{city_id}"
         complete_path = f"{directory}/{CITY_COMPLETE_FILENAME}"
-        complete = _read_member_json(
-            archive, members, complete_path, label=f"{city_id} completion record"
-        )
+        complete = read_json(complete_path, f"{city_id} completion record")
         commit = _committed(complete, label=f"{city_id} completion")
         if (
             complete.get("state") != "complete"
@@ -300,9 +296,7 @@ def _validate_completed_outputs(
         city_commits[city_id] = commit
 
     final_path = FINAL_COMPLETE.as_posix()
-    final = _read_member_json(
-        archive, members, final_path, label="final 46-feature completion record"
-    )
+    final = read_json(final_path, "final 46-feature completion record")
     final_commit = _committed(final, label="final 46-feature completion")
     if (
         final.get("state") != "complete_target_blind_46_feature_predictors"
@@ -319,6 +313,19 @@ def _validate_completed_outputs(
     ):
         raise PortableSentinelReturnError("Final 46-feature completion record is invalid.")
     return status, city_commits, final_commit
+
+
+def _validate_completed_outputs(
+    archive: ZipFile,
+    members: dict[str, ZipInfo],
+    records: dict[str, dict[str, object]],
+) -> tuple[dict[str, Any], dict[str, str], str]:
+    return _validate_completed_payloads(
+        lambda path, label: _read_member_json(
+            archive, members, path, label=label
+        ),
+        records,
+    )
 
 
 def _read_checksum(checksum_path: Path, archive_name: str) -> str:
@@ -405,7 +412,89 @@ def _verify_archive(
 
 
 def _should_import(path: str) -> bool:
-    return path in _IMPORT_FILES or path.startswith(_IMPORT_PREFIXES)
+    parts = PurePosixPath(path).parts
+    runtime = PurePosixPath(_IMPORT_PREFIXES[0]).parts
+    is_acquisition_checkpoint = (
+        len(parts) == len(runtime) + 4
+        and parts[: len(runtime)] == runtime
+        and parts[len(runtime)] in EXPECTED_CITY_TOTALS
+        and parts[len(runtime) + 1] == "by_acquisition"
+        and parts[-1] in {"summary.json", "acquisition_tract.parquet"}
+    )
+    return bool(
+        path in _IMPORT_FILES
+        or is_acquisition_checkpoint
+        or path.startswith(_IMPORT_PREFIXES[1:])
+        or path.startswith(_IMPORT_PREFIXES[3])
+    )
+
+
+def _require_destination_inside_project(project_root: Path, destination: Path) -> None:
+    """Resolve existing links/junctions before any destination-side write."""
+
+    root = project_root.resolve(strict=True)
+    try:
+        destination.relative_to(root)
+    except ValueError as error:
+        raise PortableSentinelReturnError(
+            f"Import destination is outside the project root: {destination}"
+        ) from error
+
+    cursor = destination.parent
+    while not cursor.exists() and not cursor.is_symlink():
+        if cursor == cursor.parent:
+            break
+        cursor = cursor.parent
+    try:
+        resolved_parent = cursor.resolve(strict=cursor.exists())
+        resolved_parent.relative_to(root)
+    except (OSError, ValueError) as error:
+        raise PortableSentinelReturnError(
+            "Import destination parent resolves outside the project root: "
+            f"{destination.parent}"
+        ) from error
+
+    if destination.exists() or destination.is_symlink():
+        try:
+            resolved_destination = destination.resolve(strict=destination.exists())
+            resolved_destination.relative_to(root)
+        except (OSError, ValueError) as error:
+            raise PortableSentinelReturnError(
+                "Existing import destination resolves outside the project root: "
+                f"{destination}"
+            ) from error
+
+
+def _preflight_member_destinations(
+    project_root: Path,
+    package: _VerifiedPackage,
+) -> tuple[list[str], int]:
+    pending: list[str] = []
+    unchanged = 0
+    conflicts: list[str] = []
+    for path in sorted(package.records):
+        if not _should_import(path):
+            continue
+        destination = project_root / Path(*PurePosixPath(path).parts)
+        _require_destination_inside_project(project_root, destination)
+        record = package.records[path]
+        if not destination.exists():
+            pending.append(path)
+        elif (
+            destination.is_file()
+            and destination.stat().st_size == record["bytes"]
+            and sha256_file(destination) == record["sha256"]
+        ):
+            unchanged += 1
+        else:
+            conflicts.append(path)
+    if conflicts:
+        shown = ", ".join(conflicts[:5])
+        suffix = " ..." if len(conflicts) > 5 else ""
+        raise PortableSentinelReturnError(
+            "Import would overwrite existing different data: " + shown + suffix
+        )
+    return pending, unchanged
 
 
 def _install_members(
@@ -414,21 +503,14 @@ def _install_members(
     package: _VerifiedPackage,
 ) -> tuple[int, int]:
     imported = 0
-    unchanged = 0
+    pending, unchanged = _preflight_member_destinations(project_root, package)
     with ZipFile(archive_path, "r") as archive:
-        for path in sorted(package.records):
-            if not _should_import(path):
-                continue
+        for path in pending:
             destination = project_root / Path(*PurePosixPath(path).parts)
             record = package.records[path]
-            if (
-                destination.is_file()
-                and destination.stat().st_size == record["bytes"]
-                and sha256_file(destination) == record["sha256"]
-            ):
-                unchanged += 1
-                continue
+            _require_destination_inside_project(project_root, destination)
             destination.parent.mkdir(parents=True, exist_ok=True)
+            _require_destination_inside_project(project_root, destination)
             temporary = destination.with_name(
                 f".{destination.name}.return-{uuid.uuid4().hex}.tmp"
             )
@@ -436,7 +518,17 @@ def _install_members(
                 with archive.open(package.members[path], "r") as source:
                     with temporary.open("wb") as target:
                         shutil.copyfileobj(source, target, 1024 * 1024)
-                os.replace(temporary, destination)
+                if (
+                    temporary.stat().st_size != record["bytes"]
+                    or sha256_file(temporary) != record["sha256"]
+                ):
+                    raise PortableSentinelReturnError(
+                        f"Copied file changed during import: {path}"
+                    )
+                # The complete preflight above guarantees this is a new path.
+                # os.link is an atomic create-if-absent operation, so a concurrent
+                # writer can never be overwritten between preflight and publish.
+                os.link(temporary, destination)
             finally:
                 temporary.unlink(missing_ok=True)
             imported += 1
@@ -455,6 +547,54 @@ def _authenticate_imported_outputs(project_root: Path) -> None:
         raise PortableSentinelReturnError(
             f"Imported outputs failed canonical authentication: {detail}."
         )
+
+
+def _write_return_receipt(
+    project_root: Path,
+    *,
+    source_kind: str,
+    source_path: str,
+    archive: str | None,
+    archive_sha256: str | None,
+    result_manifest_sha256: str | None,
+    source_bundle_manifest_sha256: str,
+    city_complete_commits: dict[str, str],
+    final_complete_commit_sha256: str,
+    imported_file_count: int,
+    unchanged_file_count: int,
+) -> Path:
+    """Publish the common complete-return contract for ZIP and directory inputs."""
+
+    receipt_path = project_root / RECEIPT_PATH
+    _require_destination_inside_project(project_root, receipt_path)
+    receipt_path.parent.mkdir(parents=True, exist_ok=True)
+    _require_destination_inside_project(project_root, receipt_path)
+    receipt_payload: dict[str, Any] = {
+        "schema_version": 1,
+        "state": "complete_verified_portable_sentinel_return",
+        "returned_source": {
+            "kind": source_kind,
+            "path": source_path,
+        },
+        "archive": archive,
+        "archive_sha256": archive_sha256,
+        "result_manifest_sha256": result_manifest_sha256,
+        "source_bundle_manifest_sha256": source_bundle_manifest_sha256,
+        "completed_work_units": EXPECTED_TOTAL,
+        "city_complete_commits": city_complete_commits,
+        "final_complete_commit_sha256": final_complete_commit_sha256,
+        "final_predictor_path": FINAL_OUTPUT.as_posix(),
+        "imported_file_count": imported_file_count,
+        "unchanged_file_count": unchanged_file_count,
+        "access_contract": {
+            "external_target_or_qa_values_read": False,
+            "model_fit_or_prediction_performed": False,
+        },
+        "next_safe_stage": "lock_multicity_evaluation_protocol",
+    }
+    receipt_payload["commit_sha256"] = canonical_sha256(receipt_payload)
+    atomic_json(receipt_payload, receipt_path)
+    return receipt_path
 
 
 def verify_and_import_portable_sentinel_results(
@@ -484,28 +624,19 @@ def verify_and_import_portable_sentinel_results(
     if not verify_only:
         imported_count, unchanged_count = _install_members(archive, root, package)
         _authenticate_imported_outputs(root)
-        receipt_path = root / RECEIPT_PATH
-        receipt_payload: dict[str, Any] = {
-            "schema_version": 1,
-            "state": "complete_verified_portable_sentinel_return",
-            "archive": archive.name,
-            "archive_sha256": package.archive_sha256,
-            "result_manifest_sha256": package.result_manifest_sha256,
-            "source_bundle_manifest_sha256": package.bundle_manifest_sha256,
-            "completed_work_units": EXPECTED_TOTAL,
-            "city_complete_commits": package.city_commits,
-            "final_complete_commit_sha256": package.final_commit,
-            "final_predictor_path": FINAL_OUTPUT.as_posix(),
-            "imported_file_count": imported_count,
-            "unchanged_file_count": unchanged_count,
-            "access_contract": {
-                "external_target_or_qa_values_read": False,
-                "model_fit_or_prediction_performed": False,
-            },
-            "next_safe_stage": "lock_multicity_evaluation_protocol",
-        }
-        receipt_payload["commit_sha256"] = canonical_sha256(receipt_payload)
-        atomic_json(receipt_payload, receipt_path)
+        _write_return_receipt(
+            root,
+            source_kind="zip_archive",
+            source_path=str(archive),
+            archive=archive.name,
+            archive_sha256=package.archive_sha256,
+            result_manifest_sha256=package.result_manifest_sha256,
+            source_bundle_manifest_sha256=package.bundle_manifest_sha256,
+            city_complete_commits=package.city_commits,
+            final_complete_commit_sha256=package.final_commit,
+            imported_file_count=imported_count,
+            unchanged_file_count=unchanged_count,
+        )
         receipt = RECEIPT_PATH.as_posix()
     return PortableSentinelReturnSummary(
         archive=str(archive),

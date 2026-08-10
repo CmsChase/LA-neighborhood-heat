@@ -91,3 +91,34 @@ test("keeps hero annotations on-screen and distinguishes tract taps from map dra
   assert.match(explorer, /finishPointer\(event, true\)/);
   assert.doesNotMatch(explorer, /onClick=\{\(event\) => \{[\s\S]*?onSelectTract\(index\);/);
 });
+
+test("exports an explicitly target-sealed four-city preview", async () => {
+  const html = await readFile(
+    new URL("../out/cities/index.html", import.meta.url),
+    "utf8",
+  );
+  const dataContract = await readFile(
+    new URL("../app/cities/comparison-data.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(html, /One frozen model contract/);
+  assert.match(html, /no real fit has occurred yet/);
+  assert.match(html, /aria-label="Scrollable four-city performance table"/);
+  assert.match(html, /Preview · targets sealed/);
+  assert.match(html, /Result slots are intentionally empty/);
+  assert.match(html, /External targets sealed/);
+  assert.match(html, /No cross-city outcome values are bundled/);
+  assert.match(html, /Los Angeles/);
+  assert.match(html, /Phoenix/);
+  assert.match(html, /Houston/);
+  assert.match(html, /Chicago/);
+  assert.match(html, /cities\[\*\]\.results/);
+  assert.match(dataContract, /state: "preview"/);
+  assert.match(dataContract, /claimId: null/);
+  assert.equal((dataContract.match(/^\s{6}results: null,/gm) ?? []).length, 4);
+  assert.match(
+    dataContract,
+    /Preview releases cannot contain a claim ID or result values/,
+  );
+});

@@ -1,33 +1,34 @@
 @echo off
 setlocal
-title Import completed Sentinel-2 results
+title Validate, import, and resume Sentinel-2 results
 
 if "%~1"=="" (
-    echo Paste the full path to the returned .zip file, then press Enter:
-    set /p "RESULT_ZIP=> "
+    echo Paste the full path to the copied result folder or returned .zip file:
+    set /p "RESULT_SOURCE=> "
 ) else (
-    set "RESULT_ZIP=%~1"
+    set "RESULT_SOURCE=%~1"
 )
 
-if not exist "%RESULT_ZIP%" (
-    echo Result ZIP not found: %RESULT_ZIP%
+if not exist "%RESULT_SOURCE%" (
+    echo Result source not found: %RESULT_SOURCE%
     pause
     exit /b 1
 )
 
-"%~dp0.venv\Scripts\python.exe" "%~dp0scripts\import_portable_sentinel_results.py" --project-root "%~dp0" --archive "%RESULT_ZIP%"
+if exist "%RESULT_SOURCE%\NUL" goto import_directory
+
+"%~dp0.venv\Scripts\python.exe" "%~dp0scripts\import_portable_sentinel_results.py" --project-root "%~dp0" --archive "%RESULT_SOURCE%" --audit-if-complete
+goto import_done
+
+:import_directory
+"%~dp0.venv\Scripts\python.exe" "%~dp0scripts\import_portable_sentinel_results.py" --project-root "%~dp0" --source-directory "%RESULT_SOURCE%" --audit-if-complete --resume-dashboard
+
+:import_done
 if errorlevel 1 (
-    echo Import failed. The returned ZIP was not accepted.
+    echo Validation, import, or resume failed. Existing project data was not overwritten.
     pause
     exit /b 1
 )
 
-"%~dp0.venv\Scripts\python.exe" "%~dp0scripts\audit_multicity_predictor_readiness.py" --project-root "%~dp0" --write-report
-if errorlevel 1 (
-    echo Import finished, but predictor readiness audit failed.
-    pause
-    exit /b 1
-)
-
-echo Result import and predictor readiness audit completed.
+echo Return workflow finished. Read the status above for the exact resume point.
 pause

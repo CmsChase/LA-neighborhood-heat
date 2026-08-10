@@ -43,8 +43,9 @@ runner on the same frozen four-city support.
 
 Post-return preparation is also implemented:
 
-- `portable_sentinel_return.py` verifies and imports the completed portable
-  result without replacing stage-control files;
+- `portable_sentinel_return.py` and `portable_sentinel_directory_return.py`
+  authenticate ZIP or copied-folder returns, import only durable result-owned
+  files, resume partial safe-pause returns, and emit the same terminal receipt;
 - `predictor_readiness.py` audits the final 46-feature table before any fit;
 - `spatial_blocks.py` freezes the continuation-specific EPSG:5070 5 km
   evaluation partition;
@@ -56,3 +57,6 @@ Post-return preparation is also implemented:
   equal-date weighting, LA-2024 CQR calibration, and target-blind external
   prediction core. It has synthetic tests but is not authorized to fit real
   labels during the current stage.
+- `synthetic_smoke.py` runs an explicitly non-evidence, in-memory four-city
+  integration check and writes only to a caller-owned noncanonical directory;
+  see `docs/MULTICITY_SYNTHETIC_SMOKE.md`.

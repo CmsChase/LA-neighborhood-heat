@@ -4,7 +4,7 @@
   "stage_id": "portable_sentinel_build",
   "state": "sentinel_build_running_on_gaming_laptop",
   "next_safe_stage": "verify_and_import_completed_portable_sentinel_results",
-  "summary": "The target-blind 41-feature component is complete and the resumable four-city Sentinel build is now running on the gaming laptop. External-city targets remain sealed and no model has been fit.",
+  "summary": "The target-blind 41-feature component is complete. The resumable four-city Sentinel build is running on the gaming laptop; Chicago is the latest user-confirmed completed city at 57/516 durable units. External-city targets remain sealed and no real model has been fit.",
   "permissions": {
     "read_public_predictor_sources": true,
     "build_predictor": true,
@@ -43,7 +43,11 @@
     "inventory_key_count": 136941,
     "completed_component_work_unit_count": 84,
     "sentinel_work_unit_count": 516,
-    "completed_sentinel_work_unit_count": 2,
+    "completed_sentinel_work_unit_count": 57,
+    "completed_sentinel_city_count": 1,
+    "completed_sentinel_city_ids": [
+      "chicago_il"
+    ],
     "sentinel_physical_acquisition_count": 511,
     "completed_feature_count": 41,
     "component_output": "data/processed/multicity/portable_predictors/components/predictors_static_calendar_daymet.parquet",
@@ -56,13 +60,22 @@
     "portable_bundle_manifest_sha256": "41819b6054b10a708e1644349ef31e361fd6d2db89b0ef26599c1a8cfafea449",
     "runtime_location": "gaming_laptop_local_nvme",
     "progress_is_last_observed_snapshot": true,
-    "last_observed_at": "2026-08-10T18:25:00+08:00",
+    "last_observed_at": "2026-08-10T20:44:00+08:00",
+    "last_observed_at_is_lower_bound": true,
     "last_observed_city": "chicago_il",
+    "last_observed_milestone": "city_complete",
     "next_action": "wait_for_516_of_516_then_package_return_zip_and_sha256"
   },
   "prepared_post_return_tools": {
     "one_click_import": "IMPORT_SENTINEL_RESULTS.cmd",
     "import_script": "scripts/import_portable_sentinel_results.py",
+    "accepted_return_inputs": [
+      "result_zip",
+      "copied_portable_directory",
+      "extracted_result_directory"
+    ],
+    "partial_return_behavior": "validate_import_resume_dashboard_reauthenticate",
+    "terminal_return_receipt": "manifests/multicity/returns/PORTABLE_SENTINEL_RETURN.json",
     "predictor_readiness_audit": "scripts/audit_multicity_predictor_readiness.py",
     "spatial_blocks_complete": true,
     "spatial_blocks_manifest": "manifests/multicity/evaluation/SPATIAL_BLOCKS.json",
@@ -83,6 +96,12 @@
     "transfer_model_core_implemented": true,
     "transfer_model_core": "src/la_heat/multicity/transfer_model.py",
     "transfer_model_core_sha256": "13fbfc2233b89960a80a63bd22c75d9b90b8fc3f9b3b78e9f84364eebc77c211",
+    "synthetic_smoke_runner": "scripts/run_multicity_synthetic_smoke.py",
+    "synthetic_smoke_state": "tested_non_evidence_only",
+    "four_city_preview_route": "/cities/",
+    "four_city_preview_results_released": false,
+    "target_runtime_preparer": "scripts/prepare_multicity_target_runtime.py",
+    "target_runtime_initial_state": "paused_not_authorized",
     "real_model_fit_performed": false,
     "long_compute_started_by_tools": false
   },

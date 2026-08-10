@@ -62,18 +62,19 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     `paused` with no engine process. The complete Windows PowerShell first-run
     path also passed after the quoting repair.
 13. The folder was copied to the gaming laptop and the long Sentinel build is
-    now running there with six asset-read threads and one acquisition at a
-    time. The engine intentionally processes cities serially in the fixed
-    order Chicago, Phoenix, Houston, then Los Angeles. The last user-provided
-    dashboard snapshot showed 2 / 516 complete in Chicago; that number is a
-    snapshot, not a live status feed to this repository.
-14. Return-package tooling is prepared while the build runs. The importer
-    verifies the companion ZIP checksum, every packaged file, the 516 / 516
-    terminal status, four city completion commits, and the final 46-feature
-    completion record before importing only result-owned paths. A separate
-    target-blind readiness audit checks keys, schema, row counts, numerical
-    values, and Sentinel all-or-none missingness without fitting a model or
-    opening any external target.
+    running there with six asset-read threads and one acquisition at a time.
+    The engine intentionally processes cities serially in the fixed order
+    Chicago, Phoenix, Houston, then Los Angeles. The latest user-confirmed
+    checkpoint is Chicago complete (`57 / 516` durable units); that number is
+    a snapshot, not a live status feed to this repository.
+14. One-click return tooling now accepts the packaged ZIP, the copied
+    `GAMING_LAPTOP_SENTINEL` folder, or its extracted result folder. It first
+    verifies the frozen 3,410-file source identity and all durable result
+    hashes. A safe-paused partial return imports additively, opens the existing
+    dashboard, and reauthenticates after the dashboard exits. A complete return
+    must prove 516 / 516, four city completion commits, and the final 46-feature
+    completion record; it then writes a formal return receipt and runs the
+    target-blind predictor-readiness audit.
 15. The continuation-specific target-blind 5 km spatial partition is complete
     in EPSG:5070 for all 2,902 tracts: Los Angeles has 71 blocks, Phoenix 59,
     Houston 88, and Chicago 36 (254 globally unique city-prefixed blocks).
@@ -100,6 +101,18 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     item IDs and metadata relationships; all asset hydration and target-value
     access remain unauthorized. Its record is
     `manifests/multicity/targets/TARGET_BUILD_PLAN.json`.
+19. The complete four-city software path now has a deterministic in-memory
+    rehearsal. It exercises the frozen LA training/calibration interface,
+    target-blind three-city prediction, mechanical leave-one-city-out folds,
+    evaluation tables, uncertainty diagnostics, and a figure. Every artifact
+    is explicitly synthetic and non-evidence, and project-local output is
+    restricted to `.tmp/`.
+20. The public Atlas now includes a static `/cities/` preview. It compares the
+    authenticated target-blind study frame for all four cities while enforcing
+    `null` result objects and a `null` claim ID. A later verified payload must
+    be complete for all four cities. The future 159-unit target runtime is also
+    implemented and testable only in `paused_not_authorized`; no worker, target
+    href, thermal value, QA value, model fit, or external result was opened.
 
 ## Frozen scientific decisions
 
@@ -148,30 +161,33 @@ The static, calendar, and Daymet component build reached `84 / 84` on
 - `data/processed/multicity/portable_predictors/components/predictors_static_calendar_daymet.parquet`
 
 The implementation and portable folder are complete, and the gaming-laptop
-run is active. Leave it running or use `Safe Pause` only when the laptop must
-stop. The dashboard tracks 516 durable units: 511 acquisitions, four city
-compiles, and one final merge. Chicago moves first by design; the other cities
-begin automatically afterward. Do not rebuild the 41 completed features, fit
-M2, or open any external-city Landsat target values. Model fitting and target
-access remain behind later locks.
+run is active. The last confirmed checkpoint is Chicago complete (`57 / 516`).
+Leave it running or use `Safe Pause` only when the laptop must stop. The
+dashboard tracks 511 acquisitions, four city compiles, and one final merge.
+The remaining cities begin automatically in the fixed order. Do not rebuild
+the 41 completed features, fit M2, or open any external-city Landsat target
+values. Model fitting and target access remain behind later locks.
 
 When the page reports `complete`, close it and double-click
-`PACKAGE_RESULTS.cmd`. Bring back both the generated ZIP and its `.sha256`
-file. A safe pause is also portable: request `Safe Pause`, wait for running to
-reach zero, then package or shut down. The returned cache can resume without
-repeating committed acquisitions.
+`PACKAGE_RESULTS.cmd`. Bring back the generated ZIP and its `.sha256`, or copy
+back the whole portable folder. A safe pause is also portable: request
+`Safe Pause`, wait for running to reach zero, then package or copy the folder.
+The returned cache can resume without repeating committed acquisitions.
 
-After bringing back a complete ZIP and its adjacent `.zip.sha256`, either drag
-the ZIP onto `IMPORT_SENTINEL_RESULTS.cmd` or run:
+For the simplest return, drag the ZIP or returned folder onto
+`IMPORT_SENTINEL_RESULTS.cmd`; double-clicking it also prompts for a path. The
+equivalent commands are:
 
 ```powershell
-.\.venv\Scripts\python scripts\import_portable_sentinel_results.py --archive "D:\path\GAMING_LAPTOP_SENTINEL_RESULTS_...zip"
-.\.venv\Scripts\python scripts\audit_multicity_predictor_readiness.py --write-report
+.\.venv\Scripts\python scripts\import_portable_sentinel_results.py --archive "D:\path\returned-results.zip" --audit-if-complete
+.\.venv\Scripts\python scripts\import_portable_sentinel_results.py --source-directory "D:\path\returned-folder" --resume-dashboard --audit-if-complete
 ```
 
-The first command imports only after terminal authentication; the second must
-report `ready_for_protocol_lock_not_model_fit`. It still does not authorize or
-perform model fitting.
+The command validates before import. A partial safe-pause return resumes through
+the portable dashboard and is rechecked when the dashboard closes. A complete
+return writes `manifests/multicity/returns/PORTABLE_SENTINEL_RETURN.json` and
+must report `ready_for_protocol_lock_not_model_fit`. It still does not
+authorize or perform model fitting.
 
 The already completed spatial partition can be reauthenticated without target
 or predictor access using:
@@ -182,10 +198,13 @@ or predictor access using:
 .\.venv\Scripts\python scripts\stage_multicity_target_build_plan.py --check-only
 ```
 
-After predictor readiness succeeds, the next scientific action is to lock the
-full evaluation/target transaction and only then authorize the real LA model
-fit. Do not call the transfer-model fit functions against real labels while
-`ACTIVE_STAGE.json` still has `model_fit_authorized=false`.
+After predictor readiness succeeds, the next scientific action is to bind the
+existing frozen predictor/model contract into the full protocol/model lock.
+That lock must then separately authorize and complete the 90-date LA
+2020–2024 source-target lane on the new support before any real fit. Do not
+call the transfer-model fit functions against real labels while
+`ACTIVE_STAGE.json` still has `model_fit_authorized=false`; external targets
+remain behind the later prediction-commit and one-claim gates.
 
 Authenticate the completed gates with:
 
@@ -225,5 +244,7 @@ tables. Its focused test set is:
 - `reports/FINAL_EVALUATION_REPORT.md` — held-out Los Angeles result
 - `docs/RESULTS_WEBSITE.md` — atlas source and deployment
 - `docs/MULTICITY_GENERALIZATION_PROTOCOL.md` — cross-city design
+- `docs/MULTICITY_METHODS_AND_EVIDENCE.md` — continuation gates and evidence contract
+- `docs/MULTICITY_SYNTHETIC_SMOKE.md` — deterministic non-evidence rehearsal
 - `docs/DECISION_LOG.md` — detailed historical decisions
 - `docs/DATA_MANIFEST.csv` — public-data provenance

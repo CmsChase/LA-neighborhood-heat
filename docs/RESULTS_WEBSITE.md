@@ -2,6 +2,9 @@
 
 Public site: <https://cmschase.github.io/LA-neighborhood-heat/>
 
+Target-sealed four-city preview:
+<https://cmschase.github.io/LA-neighborhood-heat/cities/>
+
 The Atlas is the presentation layer for the frozen one-time 2025 evaluation.
 It does not train a model, recalculate metrics, or authorize another holdout
 read. Its source now lives in `atlas/` of this repository; the former
@@ -23,10 +26,24 @@ The displayed endpoint is clear-sky daytime land-surface temperature. It is not
 air temperature, personal exposure, illness, or mortality. The experiment is a
 historical hindcast, not an operational forecast.
 
+## Four-city preview
+
+`atlas/app/cities/` is a static comparison interface for Los Angeles, Phoenix,
+Houston, and Chicago. While external targets are sealed it exposes only the
+authenticated study design: city roles, tract counts, planned overpasses,
+spatial-block counts, the fixed 46-feature contract, and the gate sequence.
+Every result object and the external claim ID are `null` in preview mode.
+
+The runtime validator in `atlas/app/cities/comparison-data.ts` rejects any
+preview payload containing result values. A future verified release must supply
+one authenticated claim ID and a complete result object for all four cities;
+partial or selectively released city results are rejected. The browser never
+fits a model, opens target data, or calculates a scientific metric.
+
 ## Source and data layout
 
 ```text
-atlas/app/                 interface and map components
+atlas/app/                 LA interface plus the target-sealed /cities route
 atlas/public/data/         compact authenticated display JSON
 atlas/tests/               static-export regression test
 scripts/build_website_data.py

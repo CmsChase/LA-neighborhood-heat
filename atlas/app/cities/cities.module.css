@@ -1,0 +1,1104 @@
+.page {
+  background:
+    linear-gradient(rgba(24, 32, 31, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 32, 31, 0.025) 1px, transparent 1px),
+    var(--paper);
+  background-size: 48px 48px;
+  min-height: 100vh;
+}
+
+.hero {
+  align-items: center;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  gap: clamp(54px, 8vw, 128px);
+  grid-template-columns: minmax(0, 1.1fr) minmax(420px, 0.9fr);
+  min-height: calc(100svh - 72px);
+  overflow: hidden;
+  padding: clamp(72px, 9vw, 130px) clamp(24px, 7vw, 110px);
+  position: relative;
+}
+
+.hero::before {
+  border: 1px solid rgba(201, 88, 62, 0.13);
+  border-radius: 50%;
+  content: "";
+  height: min(64vw, 850px);
+  position: absolute;
+  right: -31vw;
+  top: -28vw;
+  width: min(64vw, 850px);
+}
+
+.hero::after {
+  border: 1px solid rgba(24, 32, 31, 0.07);
+  border-radius: 50%;
+  bottom: -220px;
+  content: "";
+  height: 500px;
+  left: -270px;
+  position: absolute;
+  width: 500px;
+}
+
+.heroCopy,
+.cityIndex {
+  position: relative;
+  z-index: 1;
+}
+
+.releaseBadge {
+  align-items: center;
+  background: #f0ded2;
+  border: 1px solid rgba(129, 51, 40, 0.2);
+  border-radius: 999px;
+  color: var(--terracotta-dark);
+  display: inline-flex;
+  font-size: 10px;
+  font-weight: 750;
+  gap: 8px;
+  letter-spacing: 0.1em;
+  margin-bottom: 36px;
+  padding: 8px 11px;
+  text-transform: uppercase;
+}
+
+.releaseBadge i {
+  background: var(--terracotta);
+  border-radius: 50%;
+  height: 6px;
+  width: 6px;
+}
+
+.heroCopy h1 {
+  font-family: var(--serif);
+  font-size: clamp(54px, 6vw, 88px);
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  line-height: 0.96;
+  margin: 0;
+}
+
+.heroCopy h1 em {
+  color: var(--terracotta);
+  font-weight: 500;
+}
+
+.heroCopy > p {
+  color: #4f5753;
+  font-size: clamp(15px, 1.25vw, 19px);
+  line-height: 1.7;
+  margin: 32px 0 0;
+  max-width: 690px;
+}
+
+.heroActions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+  margin-top: 42px;
+}
+
+.secondaryAction {
+  border-bottom: 1px solid rgba(24, 32, 31, 0.28);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  padding-bottom: 4px;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.secondaryAction:hover {
+  border-color: var(--terracotta);
+  color: var(--ink);
+}
+
+.cityIndex {
+  background: var(--ink);
+  box-shadow: 30px 35px 80px rgba(24, 32, 31, 0.12);
+  color: var(--paper);
+  margin-left: auto;
+  max-width: 590px;
+  padding: 18px;
+  width: 100%;
+}
+
+.cityIndexHeader,
+.cityIndexFooter {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cityIndexHeader {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 5px 5px 18px;
+}
+
+.cityIndexHeader span,
+.cityIndexFooter span {
+  color: #a9b5b1;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cityIndexHeader strong,
+.cityIndexFooter strong {
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.cityIndex article {
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 25px 12px 1fr auto;
+  min-height: 94px;
+  padding: 16px 6px;
+}
+
+.cityOrdinal {
+  color: #81908b;
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+  font-size: 9px;
+}
+
+.cityDot {
+  background: #d36c50;
+  border-radius: 50%;
+  height: 8px;
+  width: 8px;
+}
+
+.cityIndex article[data-city="phoenix_az"] .cityDot,
+.cityBarRow[data-city="phoenix_az"] .barTrack i {
+  background: #d6a354;
+}
+
+.cityIndex article[data-city="houston_tx"] .cityDot,
+.cityBarRow[data-city="houston_tx"] .barTrack i {
+  background: #6e9b89;
+}
+
+.cityIndex article[data-city="chicago_il"] .cityDot,
+.cityBarRow[data-city="chicago_il"] .barTrack i {
+  background: #8495a4;
+}
+
+.cityIndex article > div {
+  display: grid;
+  gap: 5px;
+}
+
+.cityIndex article > div strong {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.cityIndex article > div small {
+  color: #9faeaa;
+  font-size: 10px;
+}
+
+.cityCode {
+  color: #d5dbd8;
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.cityIndexFooter {
+  padding: 18px 5px 4px;
+}
+
+.cityIndexFooter strong {
+  color: #efb49f;
+}
+
+.summaryRail {
+  background: var(--card);
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0 clamp(24px, 5vw, 80px);
+  position: relative;
+}
+
+.summaryRail > div {
+  display: grid;
+  gap: 5px;
+  padding: 30px clamp(18px, 2.5vw, 40px) 38px;
+}
+
+.summaryRail > div + div {
+  border-left: 1px solid var(--rule);
+}
+
+.summaryRail span,
+.contractState > span,
+.contractSources > span,
+.endpointNote > span {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.summaryRail strong {
+  font-family: var(--serif);
+  font-size: clamp(34px, 4vw, 51px);
+  font-weight: 500;
+}
+
+.summaryRail small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.summaryRail > p {
+  background: var(--terracotta-dark);
+  bottom: -12px;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  margin: 0;
+  padding: 7px 10px;
+  position: absolute;
+  right: 18px;
+  text-transform: uppercase;
+}
+
+.section {
+  margin: 0 auto;
+  max-width: 1580px;
+  padding: clamp(100px, 11vw, 170px) clamp(24px, 5vw, 80px);
+}
+
+.sectionHeading {
+  align-items: end;
+  display: grid;
+  gap: clamp(40px, 8vw, 140px);
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.65fr);
+  margin-bottom: 62px;
+}
+
+.sectionHeading h2 {
+  font-family: var(--serif);
+  font-size: clamp(43px, 5vw, 68px);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+  margin: 0;
+}
+
+.sectionHeading > p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.comparisonCard {
+  background: var(--card);
+  border: 1px solid var(--rule);
+}
+
+.comparisonToolbar {
+  align-items: center;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  padding: 21px 24px;
+}
+
+.comparisonToolbar > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.comparisonToolbar > div:first-child span {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.comparisonToolbar > div:first-child strong {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.metricToggle {
+  border: 1px solid var(--rule);
+  display: flex;
+  padding: 3px;
+}
+
+.metricToggle button {
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 88px;
+  padding: 9px 12px;
+}
+
+.metricToggle button.active {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.cityBars {
+  padding: 0 24px;
+}
+
+.cityBarRow {
+  align-items: center;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(205px, 0.65fr) minmax(180px, 1.2fr) 92px minmax(255px, 0.9fr);
+  min-height: 142px;
+  padding: 20px 0;
+}
+
+.cityBarIdentity {
+  align-items: center;
+  display: flex;
+  gap: 17px;
+}
+
+.cityBarIdentity > span {
+  align-items: center;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  color: var(--muted);
+  display: flex;
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+  font-size: 9px;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+.cityBarIdentity > div {
+  display: grid;
+  gap: 5px;
+}
+
+.cityBarIdentity strong {
+  font-family: var(--serif);
+  font-size: 23px;
+  font-weight: 600;
+}
+
+.cityBarIdentity small {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.barTrack {
+  background: var(--paper-2);
+  height: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.barTrack i {
+  background: var(--terracotta);
+  display: block;
+  height: 100%;
+  transform-origin: left;
+  transition: width 320ms ease;
+  width: var(--bar-width);
+}
+
+.barValue {
+  display: grid;
+  gap: 1px;
+  text-align: right;
+}
+
+.barValue strong {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.barValue span {
+  color: var(--muted);
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.cityInventory {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+}
+
+.cityInventory > div {
+  display: grid;
+  gap: 5px;
+  padding-left: 16px;
+}
+
+.cityInventory > div + div {
+  border-left: 1px solid var(--rule);
+}
+
+.cityInventory dt {
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cityInventory dd {
+  font-family: var(--serif);
+  font-size: 19px;
+  margin: 0;
+}
+
+.inventoryNote {
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 15px 24px 17px;
+}
+
+.resultSection {
+  border-top: 1px solid var(--rule);
+  padding-top: clamp(90px, 9vw, 140px);
+}
+
+.resultFrame {
+  background: var(--card);
+  border: 1px solid var(--rule);
+}
+
+.resultFrameHeader {
+  align-items: center;
+  background: var(--forest);
+  color: var(--paper);
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 24px;
+}
+
+.resultFrameHeader > div {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+}
+
+.resultFrameHeader > div > div {
+  display: grid;
+  gap: 3px;
+}
+
+.resultFrameHeader strong {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.resultFrameHeader > div > div span {
+  color: #aebdb8;
+  font-size: 9px;
+}
+
+.lockIcon {
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  color: #f1b69f;
+  display: flex;
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+  height: 31px;
+  justify-content: center;
+  width: 31px;
+}
+
+.previewPill {
+  background: #efb46e;
+  border-radius: 999px;
+  color: #28241f;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 7px 10px;
+  text-transform: uppercase;
+}
+
+.tableScroller {
+  overflow-x: auto;
+}
+
+.tableScroller:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 2px;
+}
+
+.resultTable {
+  border-collapse: collapse;
+  min-width: 960px;
+  width: 100%;
+}
+
+.resultTable caption {
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
+
+.resultTable th,
+.resultTable td {
+  border-bottom: 1px solid var(--rule);
+  padding: 21px 18px;
+  text-align: left;
+}
+
+.resultTable thead th {
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.resultTable tbody th {
+  align-items: center;
+  display: flex;
+  font-family: var(--serif);
+  font-size: 16px;
+  gap: 10px;
+}
+
+.tableCityCode {
+  color: var(--terracotta-dark);
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+  font-size: 9px;
+}
+
+.resultTable td {
+  font-size: 11px;
+}
+
+.pendingValue {
+  color: #9ca29f;
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+  font-size: 9px;
+}
+
+.pendingValue::before {
+  color: #b2b5b3;
+  content: "— ";
+}
+
+.pendingState,
+.verifiedState {
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  display: inline-block;
+  font-size: 8px;
+  font-weight: 750;
+  padding: 7px 9px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pendingState {
+  background: var(--paper-2);
+  color: var(--muted);
+}
+
+.verifiedState {
+  background: #d9e8df;
+  color: var(--forest);
+}
+
+.protocolSection {
+  background: var(--forest);
+  color: var(--paper);
+  max-width: none;
+}
+
+.protocolSection .sectionHeading {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1420px;
+}
+
+.protocolSection .sectionHeading > p {
+  color: #b7c5c0;
+}
+
+.protocolFlow {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0 auto;
+  max-width: 1420px;
+}
+
+.protocolFlow article {
+  min-height: 320px;
+  padding: 29px clamp(20px, 2.5vw, 40px);
+  position: relative;
+}
+
+.protocolFlow article + article {
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.protocolFlow article > span {
+  color: #7f9990;
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+  font-size: 9px;
+  position: absolute;
+  right: 24px;
+  top: 29px;
+}
+
+.protocolFlow small {
+  color: #efb49d;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.protocolFlow h3 {
+  font-family: var(--serif);
+  font-size: clamp(25px, 2.4vw, 37px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.03;
+  margin: 70px 0 22px;
+}
+
+.protocolFlow p {
+  color: #b7c5c0;
+  font-size: 11px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.contractPanel {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: minmax(300px, 0.8fr) minmax(400px, 1.2fr);
+}
+
+.contractState,
+.contractSources {
+  padding: clamp(28px, 4vw, 54px);
+}
+
+.contractState {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.contractState > span {
+  color: #a7b3af;
+}
+
+.contractState > strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(27px, 3vw, 39px);
+  font-weight: 500;
+  line-height: 1.1;
+  margin: 25px 0 18px;
+}
+
+.contractState > p,
+.contractSources > p {
+  color: #aeb9b5;
+  font-size: 11px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.contractState dl {
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  margin: 38px 0 0;
+}
+
+.contractState dl > div {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+
+.contractState dt,
+.contractState dd,
+.contractSources code {
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+  font-size: 9px;
+}
+
+.contractState dt {
+  color: #94a19d;
+}
+
+.contractState dd {
+  color: #f0b49e;
+  margin: 0;
+}
+
+.contractSources > p {
+  color: var(--muted);
+  margin-top: 22px;
+  max-width: 660px;
+}
+
+.contractSources ul {
+  list-style: none;
+  margin: 35px 0 0;
+  padding: 0;
+}
+
+.contractSources li {
+  border-top: 1px solid var(--rule);
+}
+
+.contractSources li:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.contractSources a {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: 1fr auto;
+  padding: 17px 0;
+}
+
+.contractSources a > span {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.contractSources code {
+  color: var(--muted);
+  grid-column: 1;
+  overflow-wrap: anywhere;
+}
+
+.contractSources i {
+  color: var(--terracotta);
+  font-style: normal;
+  grid-column: 2;
+  grid-row: 1 / 3;
+}
+
+.endpointNote {
+  align-items: center;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: 20px clamp(30px, 6vw, 100px);
+  grid-template-columns: 0.6fr 1.2fr 1fr;
+  margin: 0 clamp(24px, 5vw, 80px);
+  padding: 34px clamp(22px, 3vw, 48px);
+}
+
+.endpointNote h2 {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-weight: 500;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.endpointNote p {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.footer {
+  align-items: end;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 clamp(24px, 5vw, 80px);
+  padding: 48px 0 64px;
+}
+
+.footer > div {
+  display: grid;
+  gap: 6px;
+}
+
+.footer strong {
+  font-family: var(--serif);
+  font-size: 20px;
+}
+
+.footer span,
+.footer p {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.footer p {
+  margin: 0;
+  max-width: 560px;
+  text-align: right;
+}
+
+.footer a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1120px) {
+  .hero {
+    gap: 55px;
+    grid-template-columns: minmax(0, 1fr) minmax(380px, 0.85fr);
+    padding-inline: clamp(24px, 5vw, 70px);
+  }
+
+  .cityBarRow {
+    gap: 20px;
+    grid-template-columns: minmax(200px, 0.8fr) 1fr 78px;
+  }
+
+  .cityInventory {
+    display: none;
+  }
+
+  .protocolFlow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .protocolFlow article:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .protocolFlow article:nth-child(4) {
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+}
+
+@media (max-width: 850px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-block: 80px;
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(50px, 11vw, 76px);
+  }
+
+  .cityIndex {
+    margin: 0;
+    max-width: none;
+  }
+
+  .summaryRail {
+    grid-template-columns: repeat(2, 1fr);
+    margin-inline: 20px;
+  }
+
+  .summaryRail > div:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .summaryRail > div:nth-child(4) {
+    border-top: 1px solid var(--rule);
+  }
+
+  .section {
+    padding: 96px 20px;
+  }
+
+  .sectionHeading {
+    align-items: start;
+    gap: 25px;
+    grid-template-columns: 1fr;
+    margin-bottom: 44px;
+  }
+
+  .comparisonToolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .metricToggle {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .metricToggle button {
+    min-width: 0;
+  }
+
+  .contractPanel {
+    grid-template-columns: 1fr;
+  }
+
+  .endpointNote {
+    align-items: start;
+    gap: 15px;
+    grid-template-columns: 1fr;
+    margin-inline: 20px;
+  }
+
+  .footer {
+    align-items: start;
+    flex-direction: column;
+    gap: 22px;
+    margin-inline: 20px;
+  }
+
+  .footer p {
+    text-align: left;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero {
+    padding: 60px 20px 74px;
+  }
+
+  .releaseBadge {
+    margin-bottom: 28px;
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(47px, 14vw, 66px);
+  }
+
+  .heroActions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cityIndex {
+    padding: 13px;
+  }
+
+  .cityIndex article {
+    gap: 10px;
+    grid-template-columns: 20px 9px 1fr auto;
+    min-height: 82px;
+  }
+
+  .cityIndex article > div strong {
+    font-size: 21px;
+  }
+
+  .cityIndex article > div small {
+    font-size: 9px;
+  }
+
+  .summaryRail > div {
+    padding: 22px 15px 28px;
+  }
+
+  .summaryRail strong {
+    font-size: 35px;
+  }
+
+  .comparisonToolbar,
+  .cityBars {
+    padding-inline: 14px;
+  }
+
+  .metricToggle button {
+    font-size: 9px;
+    padding-inline: 5px;
+  }
+
+  .cityBarRow {
+    gap: 12px;
+    grid-template-columns: 1fr auto;
+    min-height: 128px;
+  }
+
+  .cityBarIdentity {
+    gap: 10px;
+  }
+
+  .cityBarIdentity > span {
+    height: 27px;
+    width: 27px;
+  }
+
+  .cityBarIdentity strong {
+    font-size: 20px;
+  }
+
+  .barTrack {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .barValue {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .barValue strong {
+    font-size: 27px;
+  }
+
+  .resultFrameHeader {
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .resultFrameHeader > div > div span {
+    display: none;
+  }
+
+  .protocolFlow {
+    grid-template-columns: 1fr;
+  }
+
+  .protocolFlow article {
+    min-height: auto;
+    padding: 28px 22px 34px;
+  }
+
+  .protocolFlow article + article {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .protocolFlow h3 {
+    margin-top: 48px;
+  }
+
+  .contractState,
+  .contractSources {
+    padding: 28px 21px;
+  }
+}

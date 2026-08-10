@@ -4,7 +4,8 @@ This repository contains one complete project: the research pipeline, frozen
 evidence, and the public interactive atlas for neighborhood-scale daytime
 land-surface temperature (LST) in Los Angeles.
 
-[Open the heat atlas](https://cmschase.github.io/LA-neighborhood-heat/)
+[Open the Los Angeles heat atlas](https://cmschase.github.io/LA-neighborhood-heat/)
+· [Open the target-sealed four-city preview](https://cmschase.github.io/LA-neighborhood-heat/cities/)
 
 ## Research question
 
@@ -63,13 +64,17 @@ outputs are:
 
 The visible, resumable four-city Sentinel-2 predictor build is currently
 running on the gaming laptop, in the fixed order Chicago, Phoenix, Houston,
-then Los Angeles. No model has been fit and external-city target values remain
-sealed.
+then Los Angeles. The latest user-confirmed checkpoint is Chicago complete
+(`57 / 516` durable units); later progress is intentionally not guessed from
+this repository. No real model has been fit and external-city target values
+remain sealed.
 
 While that build runs, the continuation-specific 5 km spatial partition has
 been completed for all 2,902 tracts, and the frozen B1/M2 plus conformal
-uncertainty core has passed synthetic-data tests. These preparations do not
-authorize or perform a real model fit.
+uncertainty core has passed a deterministic four-city synthetic rehearsal. A
+one-click copy-back acceptance/resume workflow and a target-sealed `/cities/`
+website interface are ready. These preparations do not authorize or perform a
+real model fit; synthetic metrics are not research evidence.
 
 ## Local setup
 

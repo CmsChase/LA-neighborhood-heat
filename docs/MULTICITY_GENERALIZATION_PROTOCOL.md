@@ -4,6 +4,11 @@ Status: **draft pre-registration, version 0.1**
 
 Internal study name: `la_to_three_city_zero_shot_v1`
 
+The operational gate sequence, synthetic-rehearsal boundary, transfer/resume
+rules, and evidence-package requirements are maintained in
+`MULTICITY_METHODS_AND_EVIDENCE.md`. Synthetic smoke outputs test software only
+and cannot amend this protocol or count as research evidence.
+
 This document defines a new continuation study. It does not reopen, revise, or
 reinterpret the completed Los Angeles 2025 evaluation. In particular, the
 known Los Angeles 2025 result is descriptive context and cannot count as new
@@ -34,7 +39,7 @@ been tested.
 
 | City | Role | Climate contrast | Target-label status |
 |---|---|---|---|
-| Los Angeles | sole training and calibration source | Mediterranean coastal | 2020–2024 available; 2025 already known |
+| Los Angeles | sole training and calibration source | Mediterranean coastal | 2020–2024 scene/queue metadata frozen but targets not yet authorized or built on the new support; 2025 already known |
 | Phoenix | zero-shot external confirmation | hot arid | sealed |
 | Houston | zero-shot external confirmation | hot humid | sealed |
 | Chicago | zero-shot external confirmation | continental and Great Lakes | sealed |
@@ -69,10 +74,17 @@ draft planning audit does not grant that authorization.
 ## Target and support contract
 
 The continuation retains the Phase I Landsat 8/9 Collection 2 Level-2 L2SP
-mosaic, QA, valid-pixel, fixed eligible-land denominator, and
-spatial-representativeness rules unless a pre-target implementation audit
-demonstrates a city-independent defect. Any approved portable change must be
-documented and frozen before external target access.
+mosaic, QA, valid-pixel, and spatial-representativeness rules, but uses one new
+four-city support contract: Census 2020 geography plus ESA WorldCover 2020 v100
+valid non-water cells. This same fixed denominator is required for static,
+Daymet, Sentinel, and Landsat target aggregation in every city. WorldCover is a
+support mask only, never a predictor.
+
+Los Angeles keeps the same 1,096 GEOIDs, but 6,872 cells have a different zone
+assignment from Phase I. The new canonical support wins. Phase-I masks, pixel
+identities, feature tables, and aggregated targets may not be reused; LA
+2020–2024 predictors and target aggregation must be rebuilt before the source
+fit. No LA source-target value is authorized by the current predictor stage.
 
 All city bounding boxes, Landsat WRS contributors, Sentinel MGRS tiles, Daymet
 grid cells, terrain tiles, and source windows must be discovered from frozen
@@ -111,9 +123,11 @@ lake-island shores. V2 passed every geometry and numerical gate. At the fixed
 target-blind Phoenix point, the GSHHG contract gave 262.208 km and the Census
 contract gave 482.409 km, a -220.201 km difference. This establishes that the
 contracts are not interchangeable, not that either source is positional
-ground truth. The Census source remains only a conditional fallback, in which
-case the feature must be named and interpreted as distance to a U.S. Census
-qualifying shoreline rather than an unrestricted nearest ocean.
+ground truth. At that historical pilot checkpoint Census remained a
+conditional fallback. The later locked contract superseded that option: it
+uses GSHHG 2.3.7 L1 ocean exteriors, the fixed L2 Great Lakes exteriors, and all
+directly parented L3 island exteriors, with
+`census_fallback_allowed=false`.
 
 At that historical geometry-pilot checkpoint, neither the GSHHG source nor
 the algorithm was frozen. See
@@ -252,36 +266,23 @@ contract blocks. Expected atomic tasks are:
 
 ## Current authorization
 
-At draft version 0.1, the following completed metadata-pilot actions were
-authorized:
+The final portable predictor contract is now locked and authenticated. It
+freezes the four-city Census/WorldCover support, all 46 feature names and
+ordering, GSHHG 2.3.7 water distance, Sentinel calibration, missingness rules,
+and the B1/M2 estimator and weighting contracts. Predictor construction is
+authorized and currently active; the 41 non-Sentinel features are complete and
+the 516-unit Sentinel build is running, with Chicago the latest confirmed
+completed city (`57 / 516`).
 
-1. authenticate the completed Phase I evidence;
-2. stage official Census boundary and public source metadata;
-3. implement and test city-independent adapters;
-4. run a Phoenix metadata-only pilot that reads no Landsat thermal or target-QA
-   value.
+Still locked are protocol promotion, real model fitting/scoring, LA source
+target construction, all external-city Landsat target/QA access, the external
+prediction commitment, and the one-time external claim. The next safe action is
+to authenticate and import a complete Sentinel return, then pass target-blind
+predictor readiness. Only afterward may a separate reviewed protocol/model
+lock authorize the LA source-target lane. An operational-forecast claim remains
+out of scope because this is a historical hindcast.
 
-Canonical planning v7 then authorized only the completed water-distance V2
-decision. Its append-only terminal is published in commit
-`91a31fd9e1793bbfa9c9f751459fc73d0e0bbb4c` and freezes the exact GSHHG
-source and point-distance algorithm. A staged v8 transition may copy only
-those two locks into canonical planning, close the consumed permission, and
-authorize the exact preregistered predictor-source/calibration-contract audit.
-The staged implementation has no authority before v8 is committed, pushed,
-and authenticated.
-
-Canonical planning v8 is now published and authenticated. Its bound V1
-contract decision is also complete and append-only, but the contract freeze
-was deferred: Houston and Chicago lack metadata-only source-footprint
-manifests, while the Phoenix pilot lacks an NLCD family and a frozen terrain
-content/schema contract. This preserves the source/algorithm locks from V2
-while leaving feature names, predictor construction, protocol, model, target,
-and evaluation permissions closed. The next stage may stage only those
-missing target-blind source facts under a separate exact authorization.
-
-Predictor construction, model fitting, external target access, and an
-operational-forecast claim remain locked until their missing source and
-protocol contracts are separately frozen.
+### Historical checkpoints (provenance only)
 
 The Phoenix geography portion of item 4 completed on 2026-07-29. The adapter
 found 603 bbox candidates, 389 with positive city overlap, 376 meeting the
@@ -309,6 +310,8 @@ requests.
 
 This is `complete_metadata_only_source_not_protocol_locked`: a reproducible
 pilot metadata snapshot, not a confirmatory source freeze or protocol lock.
+The later canonical Phoenix restage supersedes its Daymet-cell count with
+1,462 cells.
 
 The subsequent portable water-distance review is also complete and records
 state `review_complete_source_not_frozen`. Its audit program made zero
@@ -345,7 +348,7 @@ portable water-distance source-and-algorithm freeze decision; predictor
 construction, model fitting, protocol promotion, and target access remained
 separately locked.
 
-Canonical planning v7, published in commit
+At an earlier planning checkpoint, canonical v7, published in commit
 `252c01d015110336c65bb602d4c5b608708fb092`, only closes the consumed L3
 geometry-read permission and authorizes the evidence-only V2 freeze decision.
 Its 20,809-byte plan has file SHA-256
@@ -359,12 +362,10 @@ target/QA, or result. Its 18,541-byte terminal, file SHA-256
 `a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b`,
 freezes only the exact source and audited point-distance algorithm. It does
 not freeze tract aggregation or feature names and does not authorize predictor
-construction. A separate tracked-only planning v8 must authenticate and
-consume the exact V2 terminal, update the canonical plan locks, close the
-consumed decision permission, and authorize only the exact preregistered
-predictor-source/calibration-contract freeze. Its configuration, runtime
-paths, tracked read set, and unique append-only output must be bound by v8
-before that audit runs.
+construction. The subsequently completed v8 and contract-evidence stages
+consumed that terminal, closed the permission, filled the missing source facts,
+and ultimately produced the current locked portable predictor contract. This
+paragraph records history and is not the active next action.
 
 ## Official source anchors
 

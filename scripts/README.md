@@ -17,7 +17,7 @@ many historical stages are already complete.
 | Final-test predictor preparation | files beginning `build_final_test_`, `stage_final_test_`, `run_final_test_`, and `audit_final_test_` |
 | Final evaluation and evidence | `prepare_final_evaluation.py`, `authorize_final_test_2025.py`, `execute_locked_final_evaluation.py`, `build_final_evaluation_evidence.py`, `verify_final_evaluation_evidence.py` |
 | Communication | `stage_mapping_la_neighborhoods.py`, `build_website_data.py`, `build_research_paper.py` |
-| Cross-city continuation | `audit_multicity_plan.py`, `stage_multicity_geography.py`, `build_portable_predictor_components.py`, `build_portable_sentinel_features.py`, `stage_multicity_spatial_blocks.py`, `stage_multicity_target_contexts.py`, `stage_multicity_target_build_plan.py`, `import_portable_sentinel_results.py`, `audit_multicity_predictor_readiness.py` |
+| Cross-city continuation | `audit_multicity_plan.py`, `stage_multicity_geography.py`, `build_portable_predictor_components.py`, `build_portable_sentinel_features.py`, `stage_multicity_spatial_blocks.py`, `stage_multicity_target_contexts.py`, `stage_multicity_target_build_plan.py`, `import_portable_sentinel_results.py`, `audit_multicity_predictor_readiness.py`, `prepare_multicity_target_runtime.py`, `run_multicity_synthetic_smoke.py` |
 | Transfer and local control | `create_portable_relocation.py`, `verify_portable_relocation.py`, `transfer_queue_snapshot.py`, `*_dashboard.py`, `*_watchdog.py`, `research_runner_ui.py`, and the PowerShell transfer helpers |
 
 ## Website source staging
@@ -36,6 +36,18 @@ evaluation; neither command trains or retunes a model.
 The current public output lives in `atlas/public/data` and is deployed from the
 same repository. Exact display hashes are recorded in
 [`docs/RESULTS_WEBSITE.md`](../docs/RESULTS_WEBSITE.md).
+
+`prepare_multicity_target_runtime.py` authenticates the frozen 159-unit target
+plan and creates only a durable `paused_not_authorized` queue. It does not run a
+worker, hydrate a Landsat asset href, or read a target/QA value. A later
+protocol-issued authorization is required before any target execution.
+
+`IMPORT_SENTINEL_RESULTS.cmd` is the one-click Sentinel return entry point. It
+accepts a result ZIP, a copied `GAMING_LAPTOP_SENTINEL` folder, or an extracted
+result folder. Complete returns are authenticated, imported additively, given a
+formal return receipt, and passed through predictor readiness. A safe-paused
+partial return opens its existing dashboard, resumes committed work, and is
+revalidated when that dashboard exits.
 
 ## Safe read-only checks
 

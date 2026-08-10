@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import TractDetailExplorer from "./components/TractDetailExplorer";
 
 type ModelId = "B1" | "M2";
@@ -862,8 +863,9 @@ function App() {
           <a href="#tract-detail">Tract detail</a>
           <a href="#performance">Performance</a>
           <a href="#method">Method</a>
+          <Link href="/cities">Four cities</Link>
         </nav>
-        <span className="header-tag">Held-out 2025</span>
+        <Link className="header-tag" href="/cities">Four-city preview</Link>
       </header>
 
       <section className="hero" id="top">
