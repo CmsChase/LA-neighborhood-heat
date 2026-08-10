@@ -74,6 +74,18 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     target-blind readiness audit checks keys, schema, row counts, numerical
     values, and Sentinel all-or-none missingness without fitting a model or
     opening any external target.
+15. The continuation-specific target-blind 5 km spatial partition is complete
+    in EPSG:5070 for all 2,902 tracts: Los Angeles has 71 blocks, Phoenix 59,
+    Houston 88, and Chicago 36 (254 globally unique city-prefixed blocks).
+    Although Los Angeles again has 71 blocks, this is not the Phase-I EPSG:3310
+    partition and no Phase-I block assignment is reused. The committed control
+    record is `manifests/multicity/evaluation/SPATIAL_BLOCKS.json`.
+16. The fixed transfer-model core is implemented and synthetic-tested. It
+    builds the exact 23-feature B1 diagnostic, 46-feature point M2, and q05/q95
+    M2 pipelines; enforces LA 2020-2023 training, LA 2024 calibration, and the
+    complete three-city 2025 external prediction cohort; and implements the
+    frozen equal-date weighting, CQR correction, and strict-greater-than
+    abstention rule. No real target was read and no real model was fit.
 
 ## Frozen scientific decisions
 
@@ -146,6 +158,18 @@ the ZIP onto `IMPORT_SENTINEL_RESULTS.cmd` or run:
 The first command imports only after terminal authentication; the second must
 report `ready_for_protocol_lock_not_model_fit`. It still does not authorize or
 perform model fitting.
+
+The already completed spatial partition can be reauthenticated without target
+or predictor access using:
+
+```powershell
+.\.venv\Scripts\python scripts\stage_multicity_spatial_blocks.py --check-only
+```
+
+After predictor readiness succeeds, the next scientific action is to lock the
+full evaluation/target transaction and only then authorize the real LA model
+fit. Do not call the transfer-model fit functions against real labels while
+`ACTIVE_STAGE.json` still has `model_fit_authorized=false`.
 
 Authenticate the completed gates with:
 

@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "multicity-5km-spatial-blocks-v1",
+  "state": "complete_target_blind_spatial_blocks",
+  "block_size_km": 5.0,
+  "spatial_crs": "EPSG:5070",
+  "grid_origin_m": [
+    0.0,
+    0.0
+  ],
+  "cell_interval": "half_open_floor_index",
+  "assignment": "floor_projected_tract_centroid_divided_by_5000m",
+  "city_prefix_prevents_cross_city_block_id_collision": true,
+  "continuation_specific_partition": true,
+  "phase1_spatial_block_labels_or_assignments_reused": false,
+  "quartile_columns_are_metadata_only_forbidden_model_inputs": true,
+  "source_commits": {
+    "los_angeles_ca": {
+      "geography_commit_sha256": "f6105bbc1060013c98e63eafca9ca227d4d8538cfc2fb91afd38f5c616e690e3",
+      "worldcover_commit_sha256": "4fc8323acc0eca002a6d8fc82f1cc9bca721076dd50b7027efe3a3769f0c685e"
+    },
+    "phoenix_az": {
+      "geography_commit_sha256": "776d752cc8d51bc0b5c30da1d77fd5fa26b9e3ad17c259d5e0ddfe4592c10eee",
+      "worldcover_commit_sha256": "7eb0196636025ef307c7d0c9371139a3fb1b4161949b2751a24981a77fd3aa66"
+    },
+    "houston_tx": {
+      "geography_commit_sha256": "b72342417216ca354318167a3f5ccae8906df309ac071b4093c5ddf3745dbbfb",
+      "worldcover_commit_sha256": "e24427bcb4a3b049f971c370f0e7ff1f6653ad7f222f4028d2ba86dec86fbb91"
+    },
+    "chicago_il": {
+      "geography_commit_sha256": "8eb9427e9b599908e4f9c9fc04676a7962a8e1863a1603af9a581069954bed17",
+      "worldcover_commit_sha256": "9d5b54df7f6562ddc2bb1540cac36c4d61b866fcb9f8a49a7c2b4e7fee3b56ef"
+    }
+  },
+  "cities": {
+    "los_angeles_ca": {
+      "tract_count": 1096,
+      "spatial_block_count": 71,
+      "semantic_sha256": "df2795c3b351f88db232660bc6a283475f3dd1ea627787464a1c2f75bbc4254a"
+    },
+    "phoenix_az": {
+      "tract_count": 375,
+      "spatial_block_count": 59,
+      "semantic_sha256": "3ccce252d9c30543eed5543721ba4c1d3d2cb880676be7a6837a12b76a1e19f1"
+    },
+    "houston_tx": {
+      "tract_count": 651,
+      "spatial_block_count": 88,
+      "semantic_sha256": "080fc913e163a7cbeee31afbf30b4b7cc1f6c2a1a3b9a8199ab6e9f3cae2e381"
+    },
+    "chicago_il": {
+      "tract_count": 780,
+      "spatial_block_count": 36,
+      "semantic_sha256": "ec51d6bdd51eb55079972cd734189f80252024bb9a324225a8d1f8d51df2147f"
+    }
+  },
+  "combined_tract_count": 2902,
+  "combined_spatial_block_count": 254,
+  "output": {
+    "path": "data/processed/multicity/evaluation_support/spatial_blocks/tract_spatial_blocks.parquet",
+    "sha256": "858c76ef48b466d4d3778b4f84e0e63cc7ed414500d94be857f117b387ca7a98",
+    "bytes": 30332,
+    "rows": 2902,
+    "schema_sha256": "ee9cdfa185375759932a7f7b1d8b3b8e0c33c9c0d741050360e154da452d429c",
+    "semantic_sha256": "2d57952dcb7d738764e14b6d98ed67d13aa21244cdc94cde755e9448bab6d976"
+  },
+  "access_contract": {
+    "public_geometry_read": true,
+    "predictor_values_read": false,
+    "target_or_qa_values_read": false,
+    "model_fit_or_prediction_performed": false
+  },
+  "next_safe_stage": "wait_for_sentinel_return_import_then_protocol_lock",
+  "commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0"
+}

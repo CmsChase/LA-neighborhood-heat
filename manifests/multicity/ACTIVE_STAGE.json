@@ -64,6 +64,14 @@
     "one_click_import": "IMPORT_SENTINEL_RESULTS.cmd",
     "import_script": "scripts/import_portable_sentinel_results.py",
     "predictor_readiness_audit": "scripts/audit_multicity_predictor_readiness.py",
+    "spatial_blocks_complete": true,
+    "spatial_blocks_manifest": "manifests/multicity/evaluation/SPATIAL_BLOCKS.json",
+    "spatial_blocks_commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0",
+    "spatial_block_count": 254,
+    "transfer_model_core_implemented": true,
+    "transfer_model_core": "src/la_heat/multicity/transfer_model.py",
+    "transfer_model_core_sha256": "13fbfc2233b89960a80a63bd22c75d9b90b8fc3f9b3b78e9f84364eebc77c211",
+    "real_model_fit_performed": false,
     "long_compute_started_by_tools": false
   },
   "workflow_policy": {

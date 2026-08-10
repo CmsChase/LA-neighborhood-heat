@@ -66,6 +66,11 @@ running on the gaming laptop, in the fixed order Chicago, Phoenix, Houston,
 then Los Angeles. No model has been fit and external-city target values remain
 sealed.
 
+While that build runs, the continuation-specific 5 km spatial partition has
+been completed for all 2,902 tracts, and the frozen B1/M2 plus conformal
+uncertainty core has passed synthetic-data tests. These preparations do not
+authorize or perform a real model fit.
+
 ## Local setup
 
 Python pipeline:

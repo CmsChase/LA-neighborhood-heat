@@ -40,3 +40,15 @@ remain target-blind and never fit or score a model.
 
 The active next implementation is a visible, resumable Sentinel-2 predictor
 runner on the same frozen four-city support.
+
+Post-return preparation is also implemented:
+
+- `portable_sentinel_return.py` verifies and imports the completed portable
+  result without replacing stage-control files;
+- `predictor_readiness.py` audits the final 46-feature table before any fit;
+- `spatial_blocks.py` freezes the continuation-specific EPSG:5070 5 km
+  evaluation partition; and
+- `transfer_model.py` contains the exact B1 diagnostic, point/quantile M2,
+  equal-date weighting, LA-2024 CQR calibration, and target-blind external
+  prediction core. It has synthetic tests but is not authorized to fit real
+  labels during the current stage.
