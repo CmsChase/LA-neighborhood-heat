@@ -1,0 +1,3130 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "multicity-target-build-plan-v1",
+  "state": "prepared_target_blind_builder_not_authorized",
+  "input_locks": {
+    "predictor_inventory": {
+      "path": "manifests/multicity/predictors/PORTABLE_PREDICTOR_INVENTORY.json",
+      "commit_sha256": "6d0c26d8c1e23a28d7d855aebf1957801c2e76513070700a61122b96f579f2ab"
+    },
+    "target_contexts": {
+      "path": "manifests/multicity/targets/TARGET_CONTEXTS.json",
+      "commit_sha256": "013c4a51800e3d0016e801db7d1c1e196babcf379a1e78a6a21cea24f03c0bdb"
+    }
+  },
+  "target_asset_contract": {
+    "required_assets": [
+      "lwir11",
+      "qa_pixel",
+      "qa",
+      "cdist",
+      "qa_radsat"
+    ],
+    "required_assets_exact": true,
+    "asset_hrefs_present_in_plan": false,
+    "later_hydration_must_use_frozen_item_ids": true,
+    "date_or_scene_reselection_permitted": false
+  },
+  "output_contract": {
+    "staging_root": "data/interim/multicity/targets",
+    "phase_i_target_outputs_reused": false,
+    "signed_urls_tokens_or_cookies_persisted": false
+  },
+  "cohort_lanes": {
+    "los_angeles_2020_2024_source": {
+      "city_ids": [
+        "los_angeles_ca"
+      ],
+      "years": [
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "purpose": "los_angeles_training_and_calibration_labels",
+      "overpasses": 90,
+      "scenes": 177,
+      "keys": 98640
+    },
+    "three_city_2025_combined_external": {
+      "city_ids": [
+        "phoenix_az",
+        "houston_tx",
+        "chicago_il"
+      ],
+      "years": [
+        2025
+      ],
+      "purpose": "one_combined_external_confirmation_cohort",
+      "single_append_only_claim_required": true,
+      "per_city_claims_forbidden": true,
+      "overpasses": 64,
+      "scenes": 107,
+      "keys": 38301
+    }
+  },
+  "cities": {
+    "los_angeles_ca": {
+      "role": "source_anchor",
+      "lane": "los_angeles_2020_2024_source",
+      "tract_count": 1096,
+      "overpass_target_unit_count": 90,
+      "primary_scene_count": 177,
+      "target_key_count": 98640,
+      "date_range": [
+        "2020-05-16",
+        "2024-10-26"
+      ],
+      "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+      "relationships_sha256": "b5f5d791e2e36525aa8dc385dbc010617c0ebd595ce3faec31b052fd3d395d28",
+      "context_locks": {
+        "geography_commit_sha256": "f6105bbc1060013c98e63eafca9ca227d4d8538cfc2fb91afd38f5c616e690e3",
+        "worldcover_commit_sha256": "4fc8323acc0eca002a6d8fc82f1cc9bca721076dd50b7027efe3a3769f0c685e",
+        "spatial_blocks_commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0",
+        "spatial_blocks_semantic_sha256": "df2795c3b351f88db232660bc6a283475f3dd1ea627787464a1c2f75bbc4254a",
+        "target_grid_definition_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc"
+      }
+    },
+    "phoenix_az": {
+      "role": "external_confirmation",
+      "lane": "three_city_2025_combined_external",
+      "tract_count": 375,
+      "overpass_target_unit_count": 22,
+      "primary_scene_count": 44,
+      "target_key_count": 8250,
+      "date_range": [
+        "2025-05-02",
+        "2025-10-25"
+      ],
+      "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+      "relationships_sha256": "812f6c846692dca947a96ab82aeb4ef05a741d9038a07dcf6784c54aec1a2538",
+      "context_locks": {
+        "geography_commit_sha256": "776d752cc8d51bc0b5c30da1d77fd5fa26b9e3ad17c259d5e0ddfe4592c10eee",
+        "worldcover_commit_sha256": "7eb0196636025ef307c7d0c9371139a3fb1b4161949b2751a24981a77fd3aa66",
+        "spatial_blocks_commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0",
+        "spatial_blocks_semantic_sha256": "3ccce252d9c30543eed5543721ba4c1d3d2cb880676be7a6837a12b76a1e19f1",
+        "target_grid_definition_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e"
+      }
+    },
+    "houston_tx": {
+      "role": "external_confirmation",
+      "lane": "three_city_2025_combined_external",
+      "tract_count": 651,
+      "overpass_target_unit_count": 21,
+      "primary_scene_count": 42,
+      "target_key_count": 13671,
+      "date_range": [
+        "2025-05-14",
+        "2025-10-29"
+      ],
+      "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+      "relationships_sha256": "a34961df555df68764873ddd85c30ac3bc600255b834a219114e49f6913863f8",
+      "context_locks": {
+        "geography_commit_sha256": "b72342417216ca354318167a3f5ccae8906df309ac071b4093c5ddf3745dbbfb",
+        "worldcover_commit_sha256": "e24427bcb4a3b049f971c370f0e7ff1f6653ad7f222f4028d2ba86dec86fbb91",
+        "spatial_blocks_commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0",
+        "spatial_blocks_semantic_sha256": "080fc913e163a7cbeee31afbf30b4b7cc1f6c2a1a3b9a8199ab6e9f3cae2e381",
+        "target_grid_definition_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550"
+      }
+    },
+    "chicago_il": {
+      "role": "external_confirmation",
+      "lane": "three_city_2025_combined_external",
+      "tract_count": 780,
+      "overpass_target_unit_count": 21,
+      "primary_scene_count": 21,
+      "target_key_count": 16380,
+      "date_range": [
+        "2025-05-08",
+        "2025-10-31"
+      ],
+      "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+      "relationships_sha256": "47c6d659a46ad0926b48bcddd1191020660e3ee6e6beccc319901d76ac1eb1bc",
+      "context_locks": {
+        "geography_commit_sha256": "8eb9427e9b599908e4f9c9fc04676a7962a8e1863a1603af9a581069954bed17",
+        "worldcover_commit_sha256": "9d5b54df7f6562ddc2bb1540cac36c4d61b866fcb9f8a49a7c2b4e7fee3b56ef",
+        "spatial_blocks_commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0",
+        "spatial_blocks_semantic_sha256": "ec51d6bdd51eb55079972cd734189f80252024bb9a324225a8d1f8d51df2147f",
+        "target_grid_definition_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc"
+      }
+    }
+  },
+  "work_plan": {
+    "overpass_target_unit_count": 154,
+    "city_compile_unit_count": 4,
+    "final_merge_unit_count": 1,
+    "total_unit_count": 159,
+    "units_sha256": "4f7be47c537c440a51f433e93a5af3cb29252fb07a5c0169566ac14fa9434b3c",
+    "units": [
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20200516T182745Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2020-05-16",
+        "overpass_id": "landsat-8_20200516T182745Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20200516_02_T1",
+          "LC08_L2SP_041037_20200516_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "c5223a618cf91d5ed1a6032f0a2b8f75828a2068fdbc7239d80fe5a0f76db282",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "7f01792264aabfa0c74577b1614c73bf4108f56e0fa8dbb6dd1178f2859c3815",
+        "ordinal": 1
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20200601T182750Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2020-06-01",
+        "overpass_id": "landsat-8_20200601T182750Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20200601_02_T1",
+          "LC08_L2SP_041037_20200601_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "1e687471c932b2d46c80e31ca1468cc864aedcdf7cf1c0fce346c29b9d0c613c",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "d5847929fc4ac41aa708e3c5130bc8ad45597482e99885b708f5c539b1cf5f00",
+        "ordinal": 2
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20200617T182800Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2020-06-17",
+        "overpass_id": "landsat-8_20200617T182800Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20200617_02_T1",
+          "LC08_L2SP_041037_20200617_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "d083d1ac2b0ceabd27fc56e74a2f6d23e75e4488d7bda21f6c0e474d4a158096",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "862638bdbc011390ee86f970e579ef5af769fb94e48703c980ab322705367551",
+        "ordinal": 3
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20200703T182808Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2020-07-03",
+        "overpass_id": "landsat-8_20200703T182808Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20200703_02_T1",
+          "LC08_L2SP_041037_20200703_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "b025ae7007a02bdc4418376fdfd7a64cd2adf706c5a166120bc3e47b43a1bea9",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "6d268eae02d1752478caa8ecd90aec64ca05e6f7c5c95408ff5e2c106da045d0",
+        "ordinal": 4
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20200719T182813Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2020-07-19",
+        "overpass_id": "landsat-8_20200719T182813Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20200719_02_T1",
+          "LC08_L2SP_041037_20200719_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "1e115ce4389b8ccf34e644b7453bc37a43338b39d042d6292b6b8b48ced22675",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "5017d4cac8a00a95093e98ecc31c2b65b83d85b928e49b8b5e3e487fa9aade87",
+        "ordinal": 5
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20200804T182817Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2020-08-04",
+        "overpass_id": "landsat-8_20200804T182817Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20200804_02_T1",
+          "LC08_L2SP_041037_20200804_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "e69367caf9018a5b8212d20702ed5363bae52271bfdcb1a1a54b4d304715c57d",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "171117119cff446c00a2f560233e7b7fe5ba191e9a5128f54e970fa9efc3ccba",
+        "ordinal": 6
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20200820T182823Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2020-08-20",
+        "overpass_id": "landsat-8_20200820T182823Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20200820_02_T1",
+          "LC08_L2SP_041037_20200820_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "cd19223990a99154478a3f576ff40008e113fb6e86db806861c107c412ad4650",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "4e70b514829de670dd8bca9450abc613cf127a93b4a2a71fad7e3b8c2b7cd74d",
+        "ordinal": 7
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20200905T182831Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2020-09-05",
+        "overpass_id": "landsat-8_20200905T182831Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20200905_02_T1",
+          "LC08_L2SP_041037_20200905_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "36dc26794430c5ee5584c1f937879705ecd2f7e1943e9d88315dcd1414cd6cc5",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "a1491c03e96f0790afac7d4bbc6cd6e5cea4a892ae9d0665e20c76b4cbd2810e",
+        "ordinal": 8
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20200921T182836Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2020-09-21",
+        "overpass_id": "landsat-8_20200921T182836Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20200921_02_T1",
+          "LC08_L2SP_041037_20200921_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "24db586c6a8320cb9759e6e61a1a8db7f831e50dedd0ea1cc374aafd652711a5",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "95a3978932f7d9060f9e8f1936c3b3b28c06e7023ce7874b4809b0308e77781d",
+        "ordinal": 9
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20201007T182839Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2020-10-07",
+        "overpass_id": "landsat-8_20201007T182839Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20201007_02_T1",
+          "LC08_L2SP_041037_20201007_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "25bcdb7d70f67335d53a31434953fb83220adc39cce4ec2b0288fb19c1a9ea6a",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "8b7f13444feed87b1f214a1eb9ff953a0a1525666990c36ca459991a45940def",
+        "ordinal": 10
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20201023T182840Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2020-10-23",
+        "overpass_id": "landsat-8_20201023T182840Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20201023_02_T1",
+          "LC08_L2SP_041037_20201023_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "8fdc5138619e522d9d81259a0e07b4b0fbf7b66a3c46721dfc1df2ab2d306320",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "63d9d73b405d4b1ad8eb17bf9c182e8e08467332e9a4d04f9a8e8bc839a70dbe",
+        "ordinal": 11
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20210503T182750Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2021-05-03",
+        "overpass_id": "landsat-8_20210503T182750Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20210503_02_T1",
+          "LC08_L2SP_041037_20210503_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "51d620a1764eb960d5f2b13e4f157c28b5d7f5da0f4ac14ca08dab923255a7c6",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "13f0622a01b0270dbe11e07509655122c39e073d2ac2b2c18751186e577de244",
+        "ordinal": 12
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20210519T182758Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2021-05-19",
+        "overpass_id": "landsat-8_20210519T182758Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20210519_02_T1",
+          "LC08_L2SP_041037_20210519_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "7710bface1aad186508e434f562e21aef98411309ddf35e8f990e3562001c7f5",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "81c3e73383b51f408822371f6a9b3f8530586c9f15a3a04c259b0e359613dbb9",
+        "ordinal": 13
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20210604T182806Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2021-06-04",
+        "overpass_id": "landsat-8_20210604T182806Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20210604_02_T1",
+          "LC08_L2SP_041037_20210604_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "5ef891d8132a788c192e1e84b55f199d7e19e1633a19f8f8e0fd9ce60b6b4696",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "b16e06bb2a5333bc9c68222e191e4fa69c459d1518c13675988c382647e0e0b4",
+        "ordinal": 14
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20210620T182811Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2021-06-20",
+        "overpass_id": "landsat-8_20210620T182811Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20210620_02_T1",
+          "LC08_L2SP_041037_20210620_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "10a1436ff7209d8f760881d939813ebd7a21921e18d8a62aec309fbfd632228d",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "4b0a120d9ce08dcc4e46dcfc721e43c34adbcc310aa6e5cea7136591d02450bf",
+        "ordinal": 15
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20210706T182814Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2021-07-06",
+        "overpass_id": "landsat-8_20210706T182814Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20210706_02_T1",
+          "LC08_L2SP_041037_20210706_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "6b9eb77ec2f54bd8bd2723d267fd597490c91be1115178dc25136a2412b72e3f",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "1eaf2ef5b816f390b3c17aa2a59f4447c67164f0cafba164391a86e13aba8056",
+        "ordinal": 16
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20210722T182818Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2021-07-22",
+        "overpass_id": "landsat-8_20210722T182818Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20210722_02_T1",
+          "LC08_L2SP_041037_20210722_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "7c57e6397c29ef78ff9239817eb5ebc3848a66b7b6d874598b6f531adb99bc6b",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "40fcadb151e2ec059cce0efa44124abf8054979ba1e138131405a5267b50aafc",
+        "ordinal": 17
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20210807T182826Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2021-08-07",
+        "overpass_id": "landsat-8_20210807T182826Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20210807_02_T1",
+          "LC08_L2SP_041037_20210807_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "e41255902831c09238f9fd06020c474d91ad99c72c8c781fe486edef8daa4ca5",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "1b2b407be6e477dec9f1adb362172e5fa6cb369aac8b0e41074c1a3dc2ba64d3",
+        "ordinal": 18
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20210823T182831Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2021-08-23",
+        "overpass_id": "landsat-8_20210823T182831Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20210823_02_T1",
+          "LC08_L2SP_041037_20210823_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "471efeb452317ef52d783dd7a5175791c3222bb82bb7780f8db39ff44db1078e",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "5d9f11b1c6594db5812da4da2e49ba82687ff10b304d391b4382e11b2c675f7a",
+        "ordinal": 19
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20210908T182835Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2021-09-08",
+        "overpass_id": "landsat-8_20210908T182835Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20210908_02_T1",
+          "LC08_L2SP_041037_20210908_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "9cbe90e07bba24b8c4031a83828d39b16e9c471a9f23a84729b2bdd9d98d9eec",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "3281a558e245de6493ccf9be638a89beb8a0925ccdcb60843eeb3dea412962cf",
+        "ordinal": 20
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20210924T182838Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2021-09-24",
+        "overpass_id": "landsat-8_20210924T182838Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20210924_02_T1",
+          "LC08_L2SP_041037_20210924_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "b1ab0d55dcceee4c5a5a3c16d913aa020b9b1a44e73cf17a35f63de30d0a0474",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "5588326fbad056c448be70625a8746136ed50005138e1a465052871825a7fc91",
+        "ordinal": 21
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20211010T182844Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2021-10-10",
+        "overpass_id": "landsat-8_20211010T182844Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20211010_02_T1",
+          "LC08_L2SP_041037_20211010_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "f9ec806fd201dd97b4d6996e49026f3f698894335cca13ad32ab6034faa86b1d",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "7c067b9cc324c2e68df0f362f4b9ef7cffde4a16da8c3cf4470e946138ee2ae1",
+        "ordinal": 22
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20211026T182846Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2021-10-26",
+        "overpass_id": "landsat-8_20211026T182846Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20211026_02_T1",
+          "LC08_L2SP_041037_20211026_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "d83ba26ddbac5c05d525100801001d3f2a326d565f7607cd4b75a1cf3169b72d",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "09e46a80b09528aaf59e25e0ec3e2bc945c8b49a39e4506398f675b212332ac0",
+        "ordinal": 23
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20220506T182811Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-05-06",
+        "overpass_id": "landsat-8_20220506T182811Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20220506_02_T1",
+          "LC08_L2SP_041037_20220506_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "f2b8c822e403b985fc603b96481c5ebe75a92a8a772f9bd2bd5b9c05d1d08949",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "31cedee1e31b19b564a851f922d9abfbd0a62c68416449c1d2fbdf165ac03491",
+        "ordinal": 24
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20220514T182755Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-05-14",
+        "overpass_id": "landsat-9_20220514T182755Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20220514_02_T1",
+          "LC09_L2SP_041037_20220514_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "c52789de623a9d2b0faa24990dc10b186b03e7889907786c2035dcbc9cce3087",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "8c5c1d511e3fc7daccb18c580931b4b38e6a41604627096d5f6b714a3c039ed5",
+        "ordinal": 25
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20220522T182816Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-05-22",
+        "overpass_id": "landsat-8_20220522T182816Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20220522_02_T1",
+          "LC08_L2SP_041037_20220522_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "8f36db47cb5eecf1d8e0cf493993e298ff74a7e1a5ab3912d0f7e293262ab6fc",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "0b789695c318a66f26a29d9c0e6d441937b11b3411052d6b7ed433c44485a927",
+        "ordinal": 26
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20220530T182751Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-05-30",
+        "overpass_id": "landsat-9_20220530T182751Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20220530_02_T1",
+          "LC09_L2SP_041037_20220530_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "4cdf95561b37a8d180ccefe079899ad53606b2effebd0f01de3b74e6f7ca8c97",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "a2b27fcda4202df80e474cf9e5cea21aeb48b09521ae8326399ff040ca9f99fe",
+        "ordinal": 27
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20220607T182825Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-06-07",
+        "overpass_id": "landsat-8_20220607T182825Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20220607_02_T1",
+          "LC08_L2SP_041037_20220607_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "3fd14d95dbe2605fae3729d4b4257a3bc5ab1f1734689dc5b3b98fa6c82518ef",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "3f51b978910d8cd57d02601f92d1442e1025b4257fecc7fc9bd9758ea9078bb6",
+        "ordinal": 28
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20220615T182757Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-06-15",
+        "overpass_id": "landsat-9_20220615T182757Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20220615_02_T1",
+          "LC09_L2SP_041037_20220615_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "6dc350e5bc4b2335b554fcc4c2be9df22ece20904852ffa722f3965e0e1a44a8",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "66b6cc0731b596447cb957b597a55cf6ecf67548541e54fba74faa3cb2dd0684",
+        "ordinal": 29
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20220623T182833Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-06-23",
+        "overpass_id": "landsat-8_20220623T182833Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20220623_02_T1",
+          "LC08_L2SP_041037_20220623_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "ccdad3d296bc61f585c4f4299974de677ac33380c760d1a36f2ad42e356abaab",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "5e1cc651ef9618ecce2060665fc9fcdc5526c82652ffbe0498478513563be6bf",
+        "ordinal": 30
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20220701T182812Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-07-01",
+        "overpass_id": "landsat-9_20220701T182812Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20220701_02_T1",
+          "LC09_L2SP_041037_20220701_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "ea90cf5bb17407fe4f55d307819ecdb82a4805b89d3d61546f5db60be5b76d7f",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "7704bdf36fbe1b16b032469878765ed48eb016f1479198e9b16276dd238bcb32",
+        "ordinal": 31
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20220709T182834Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-07-09",
+        "overpass_id": "landsat-8_20220709T182834Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20220709_02_T1",
+          "LC08_L2SP_041037_20220709_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "528ff8504f4d36b18fcbff722570bb6668e4c41fb691ea652a65c2e9d3ceca30",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "49f3a9d3aaf78544934beee06e21c59032850c57bb040f9b0a348343bc5ea8b9",
+        "ordinal": 32
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20220717T182811Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-07-17",
+        "overpass_id": "landsat-9_20220717T182811Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20220717_02_T1",
+          "LC09_L2SP_041037_20220717_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "dff9ca1aa1707e1bfa1d5f6b090dc527e0cfc6933f37ff5c606230547bd1f7a1",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "467d5342519e80fad1eddf7bb1346abded9cdf4d80144c8bbe8124e5b74c1aec",
+        "ordinal": 33
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20220725T182841Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-07-25",
+        "overpass_id": "landsat-8_20220725T182841Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20220725_02_T1",
+          "LC08_L2SP_041037_20220725_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "2d46609a91caf657b01e3c871216df1ec7f004f791a433a97c6f8f429c2771c8",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "49a1004dd111fac06db73b387f923741594fd8c06b5afbe6ab81ad6ec412ec27",
+        "ordinal": 34
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20220802T182825Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-08-02",
+        "overpass_id": "landsat-9_20220802T182825Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20220802_02_T1",
+          "LC09_L2SP_041037_20220802_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "f8ceb82ab6b9c3322577026dc184d8417fe7a53417f8b223b2cd67c3d58df798",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "137a33e9e692922d8f371ef90464f2cbe9cdc209ac4a6b59ceefcf8cc1b5a958",
+        "ordinal": 35
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20220818T182832Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-08-18",
+        "overpass_id": "landsat-9_20220818T182832Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20220818_02_T1",
+          "LC09_L2SP_041037_20220818_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "7718fc215b569870accf84d4a94359987daded9a1b01114fe4e76261e895ba68",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "a2f6bc4a632fc98fb7e66ef0ae06ccc98e84357b42cf0fd0185f76ed9dd912f4",
+        "ordinal": 36
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20220826T182852Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-08-26",
+        "overpass_id": "landsat-8_20220826T182852Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20220826_02_T1",
+          "LC08_L2SP_041037_20220826_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "4df67a3ce52c5fd882efa26cf5bfa6e6c62b4382da422fbfb5d819813af6df99",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "99b866e33a2fd3076d26ce03744f794b39d7318cabedca1f91887becc15804cd",
+        "ordinal": 37
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20220903T182833Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-09-03",
+        "overpass_id": "landsat-9_20220903T182833Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20220903_02_T1",
+          "LC09_L2SP_041037_20220903_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "618499aa990a0302505bce0b4aa7bae6d071189158219d34a01fce35235aa7d2",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "f1833bd59b211f278dd9d69463c76497266aa07e089e6f278a912ce4fc31ae36",
+        "ordinal": 38
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20220911T182856Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-09-11",
+        "overpass_id": "landsat-8_20220911T182856Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20220911_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "986ea77e7d100884c47f0a1f212c176137233d49ec66aab6769c8124c4361543",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "330496eee4d06da7b866e7c4e69dfdbf79b2566d256ec2fc2472f3f3f2cf1e10",
+        "ordinal": 39
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20220927T182858Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-09-27",
+        "overpass_id": "landsat-8_20220927T182858Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20220927_02_T1",
+          "LC08_L2SP_041037_20220927_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "987bd76db4a3ed38ef504ecb3c711929db078bacf26fff9d1da5217bb9f3a918",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "c48185a5406449ce7f8d02f30ad524407d773dc45ccb546cad44ad1fc2ad81e2",
+        "ordinal": 40
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20221005T182840Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-10-05",
+        "overpass_id": "landsat-9_20221005T182840Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20221005_02_T1",
+          "LC09_L2SP_041037_20221005_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "9219239694ad1fe2ef4d3e9c045fbd1c737dea1cfead6cc9beedea2d2340b580",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "8f8775600de76a95eb07b74492eb3a811633229353368c1785d8d34d8ea2610d",
+        "ordinal": 41
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20221013T182849Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-10-13",
+        "overpass_id": "landsat-8_20221013T182849Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20221013_02_T1",
+          "LC08_L2SP_041037_20221013_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "7365acb99236b09102c824ced0e3e92d7e280dc9a3703776a768b7dd16d1195e",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "dcaaafefe43d7d1375d848dfea9adea84ba1440ce5e9a37aefca06309fa44b36",
+        "ordinal": 42
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20221021T182847Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-10-21",
+        "overpass_id": "landsat-9_20221021T182847Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20221021_02_T1",
+          "LC09_L2SP_041037_20221021_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "153963786ad3f6df4ea3528625fd5f65b4181527ceb625fc062122f0f9d78e2e",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "9324baa6a57d7b042cae90d5a543a27b60a6b884dc5a45ec3b9d6ac5a6e2ef53",
+        "ordinal": 43
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20221029T182858Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2022-10-29",
+        "overpass_id": "landsat-8_20221029T182858Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20221029_02_T1",
+          "LC08_L2SP_041037_20221029_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "775c874a921796dacb4d9ed30fcfa3189920dea9587cb409d2dea7bf31f9a262",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "21207d7071cd6c3bb187e07531fa24663382058494cf6197611fca5ec9381b42",
+        "ordinal": 44
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20230501T182802Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-05-01",
+        "overpass_id": "landsat-9_20230501T182802Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20230501_02_T1",
+          "LC09_L2SP_041037_20230501_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "d6328da266b3b437943f2c94d7066a109253c2e415346142db58e9d266be6365",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "b88c193127edc61c80652e18e35630ec7c30ab095694b29f972d5415e16799d6",
+        "ordinal": 45
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20230509T182740Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-05-09",
+        "overpass_id": "landsat-8_20230509T182740Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20230509_02_T1",
+          "LC08_L2SP_041037_20230509_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "4063eb4d47440a1c9fa28a9ff5297a9e513fe82990d98513bb626f12e1bfa8e0",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "aa9a8e535ffa85f2b253be5adc7040eeaf704039c412fe21de8f28212e82fadc",
+        "ordinal": 46
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20230517T182755Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-05-17",
+        "overpass_id": "landsat-9_20230517T182755Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20230517_02_T1",
+          "LC09_L2SP_041037_20230517_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "878883831c9a699738e0f454c0807ec6f18137da36ab529bb18defc48120c102",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "e993b7697e67411deb32c5fdd07af5cf8645d2334e22c21403ade13e512c80f5",
+        "ordinal": 47
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20230525T182738Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-05-25",
+        "overpass_id": "landsat-8_20230525T182738Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20230525_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "aad023e81c3d4367fa573766325dcf8f9c4303e6b792e28be602204513f14331",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "07e08e166a997c28ab5df6a40ee5fe27a85db62923f2b7283945cbcb9c683ccd",
+        "ordinal": 48
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20230602T182747Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-06-02",
+        "overpass_id": "landsat-9_20230602T182747Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20230602_02_T1",
+          "LC09_L2SP_041037_20230602_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "800c30bae6f39dc58444e86fddf7f5484dde17452797892830b6075a3ecd81f4",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "1c728a1d386527e0b87a04271b58933b5d12c2fb8ea026c68dc2ac3787f901bf",
+        "ordinal": 49
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20230610T182745Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-06-10",
+        "overpass_id": "landsat-8_20230610T182745Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20230610_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "baa3f6384f7752d5bd8fdaacdda422b96b2bd7029b9ad11bfa07d2f4b0944ea6",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "0b7ecb0560f5054d91500f8c8941bad2a8ece9c251cec343818bfcdfd5547764",
+        "ordinal": 50
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20230618T182739Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-06-18",
+        "overpass_id": "landsat-9_20230618T182739Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20230618_02_T1",
+          "LC09_L2SP_041037_20230618_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "82f231ceeec6cd278b316ce2c3a184d91ab9d0059286ea42ded093e9f46e5723",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "445dd4a577c4eda9d25589e12a1685c4193aefbd7ab53f1b018cfe2affd22eac",
+        "ordinal": 51
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20230626T182752Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-06-26",
+        "overpass_id": "landsat-8_20230626T182752Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20230626_02_T1",
+          "LC08_L2SP_041037_20230626_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "a6d821eb87ba9935259302ba3d0c8ffc02a48af6c56c1e289d6eb0e026c55803",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "68a4d9503b93e0df0a44842ae9c53536c70776048ae1083c316df58aedf4e11c",
+        "ordinal": 52
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20230704T182751Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-07-04",
+        "overpass_id": "landsat-9_20230704T182751Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20230704_02_T1",
+          "LC09_L2SP_041037_20230704_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "c4075dd8b5e350842723d335459d8bcb0d8f88d70b0d7a67b978e3248de06413",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "2b261cbbdb69019bad00b76a5a5bc890d02c480ce34127c1c2699b41016d990c",
+        "ordinal": 53
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20230712T182802Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-07-12",
+        "overpass_id": "landsat-8_20230712T182802Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20230712_02_T1",
+          "LC08_L2SP_041037_20230712_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "b82c56dcbab5f9dcdd3525de5de5222a2684ac11b3dd42dac7afb7a56500b47b",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "59b1419c091bed60d1d66bf67fdae16f6a644f516a412aef4d2cc5b1f34bb824",
+        "ordinal": 54
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20230720T182756Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-07-20",
+        "overpass_id": "landsat-9_20230720T182756Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20230720_02_T1",
+          "LC09_L2SP_041037_20230720_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "88842d1f55bdb26196ec4437b14876a1e36df6f790420621d451785b9a491222",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "7370343cc900d89a1089c94bc5d6b9fd5436a7a9d20e04a71d6f93399ac6fd95",
+        "ordinal": 55
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20230728T182808Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-07-28",
+        "overpass_id": "landsat-8_20230728T182808Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20230728_02_T1",
+          "LC08_L2SP_041037_20230728_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "29f77443f694b17593a21a05d431536ccb99c0cf04a7cf22710b4d04ad224712",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "23e8c27449fa4ba7b7f6f49baed570a761256d8cd4cff4f5aee19a8ab20a7f28",
+        "ordinal": 56
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20230805T182805Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-08-05",
+        "overpass_id": "landsat-9_20230805T182805Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20230805_02_T1",
+          "LC09_L2SP_041037_20230805_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "f67f3c35c5a55f6d89045e06f805de62f2af656cb1d2604aaed37b0b67aa922d",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "e2d2aeb231ca02a907add20106c87d644b43d44db892a57bea5e527b6c46c043",
+        "ordinal": 57
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20230813T182813Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-08-13",
+        "overpass_id": "landsat-8_20230813T182813Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20230813_02_T1",
+          "LC08_L2SP_041037_20230813_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "bd481425e649fadb930e5bc2337209fa65d52726b2610decb9c04ec2d8ecf8cf",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "fe1108f8c6f0f6e1a1ffec6a76f636f6c0d4de81119f8dd77148820112c19efc",
+        "ordinal": 58
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20230821T182809Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-08-21",
+        "overpass_id": "landsat-9_20230821T182809Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20230821_02_T1",
+          "LC09_L2SP_041037_20230821_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "f300c6f42fbc2298c714dc60dd7dba90ce0474b1a5cccc4abaa510f33f8b4e2b",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "44051cd9f93d8101ddc97143faf2f8e52fe10593878121587322963e05b3b74e",
+        "ordinal": 59
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20230829T182820Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-08-29",
+        "overpass_id": "landsat-8_20230829T182820Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20230829_02_T1",
+          "LC08_L2SP_041037_20230829_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "f48c8d482ac9add353bdc0ebc26f851f6e9575a36f8b1fa0405785d294cb5f0b",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "4bc5b4ea5692f61e14af5c0eea93bd7a6b6884921a894ee54acf179e3238f8e2",
+        "ordinal": 60
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20230906T182820Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-09-06",
+        "overpass_id": "landsat-9_20230906T182820Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20230906_02_T1",
+          "LC09_L2SP_041037_20230906_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "8f3eeaac179083dabc872ebe8f02958d214e9531e64c9cd14a4d915e18865b26",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "3ea653a0c86ea09be77d9afc886873407c9e78172362045b060549b7a0076e3c",
+        "ordinal": 61
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20230914T182823Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-09-14",
+        "overpass_id": "landsat-8_20230914T182823Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20230914_02_T1",
+          "LC08_L2SP_041037_20230914_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "bc8426ad8f0c6be80ceccab0a5f8e518496ae5cb33810ca9f7ce8728bef04d2a",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "138d9a1c38fdd5f024126aca6406732a1109076272d40cc4075d47063dfc600a",
+        "ordinal": 62
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20230922T182823Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-09-22",
+        "overpass_id": "landsat-9_20230922T182823Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20230922_02_T1",
+          "LC09_L2SP_041037_20230922_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "f653080aafb10017459b48c03e9630c4a27e046b54ffbdbce60de4b2d6f5fda5",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "716d4d41b484c64f9a57cfe86b1e34f89a52cf3d9a7d2a126a569acb4f1aed7b",
+        "ordinal": 63
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20230930T182827Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-09-30",
+        "overpass_id": "landsat-8_20230930T182827Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20230930_02_T1",
+          "LC08_L2SP_041037_20230930_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "f50141c6f2a4f4d72b158f5b9f1815ca8ef3cd06aad9b1adbbea55b351a3233a",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "267882531257a9ce1a996cb97ceb6356dc51984dfed1dc645045c8684706e9d3",
+        "ordinal": 64
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20231008T182828Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-10-08",
+        "overpass_id": "landsat-9_20231008T182828Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20231008_02_T1",
+          "LC09_L2SP_041037_20231008_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "1e9384ea76ed9440777f2664841696483c5ab424eb44ccd26be17c9594ec3d28",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "59cebdd47a2508dbba836068e0bcb87a6f2f23119c65f8338be5e6662fb041fb",
+        "ordinal": 65
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20231016T182829Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-10-16",
+        "overpass_id": "landsat-8_20231016T182829Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20231016_02_T1",
+          "LC08_L2SP_041037_20231016_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "b99fb5bc2dd8dd8819d69f4728bbf6ec2bf2c33057582f2baf658eee3594fb75",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "0fddc73c4e45df2f0428f47a450bd2b9f1dfc6d86b5ce0defe717a47daf9f34a",
+        "ordinal": 66
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20231024T182834Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2023-10-24",
+        "overpass_id": "landsat-9_20231024T182834Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20231024_02_T1",
+          "LC09_L2SP_041037_20231024_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "12868f03685cac9b2d4574932e685086c1a8d72bad74abde88527c2b9eb23ab3",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "613d043a7fc7b6f0e62a32fb7af2efcea4b41d52f155517c19a1bf47d77a207a",
+        "ordinal": 67
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20240503T182755Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-05-03",
+        "overpass_id": "landsat-9_20240503T182755Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20240503_02_T1",
+          "LC09_L2SP_041037_20240503_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "e0d9853abf50a4fda311b8667e5e8bfc1f04fc43f47cbf3b07f115c42967b0af",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "756c713fdedde5aac715b621558a368244b28cbd84f40635ee281958244e6460",
+        "ordinal": 68
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20240511T182734Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-05-11",
+        "overpass_id": "landsat-8_20240511T182734Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20240511_02_T1",
+          "LC08_L2SP_041037_20240511_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "6434e0c2ad0164bbf9cb823b4a5b91f786b06399565faa1c0ddeecec4386c323",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "994d9c69d21a5a9eac6fec1b8630a5867d45f2756d5ef22ceb9259121f6368ea",
+        "ordinal": 69
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20240519T182748Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-05-19",
+        "overpass_id": "landsat-9_20240519T182748Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20240519_02_T1",
+          "LC09_L2SP_041037_20240519_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "1eed9f6293e3208256c7f2c29f2e85441c3aad5ebf48e52c12b3b8d1a0657eb8",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "0726e6e27dd1ad0d3f6a88cb1ed9d500c03be4b2a95dbaf24294aa1bf67fff45",
+        "ordinal": 70
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20240527T182723Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-05-27",
+        "overpass_id": "landsat-8_20240527T182723Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20240527_02_T1",
+          "LC08_L2SP_041037_20240527_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "63918c3c44a1be2a1102342688fc00671629047e1d441ae2afe5cd2ef61f98b6",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "aa55dcda1efee577c0fcba7db965749f1c443958f9aafc805ce8e45ad977340c",
+        "ordinal": 71
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20240604T182742Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-06-04",
+        "overpass_id": "landsat-9_20240604T182742Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20240604_02_T1",
+          "LC09_L2SP_041037_20240604_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "842547b4ff8fd25986d52c36c6b7c4406aab15fa4d9d428b23aff18ff93deb33",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "4e12f55b1db119b493f8f91fbea00d636561266f113d808f03e515c3e4c8c033",
+        "ordinal": 72
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20240612T182724Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-06-12",
+        "overpass_id": "landsat-8_20240612T182724Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20240612_02_T1",
+          "LC08_L2SP_041037_20240612_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "9468f0dc03cbeddf1cd2b334c5060ae10774a4417d0ff3d2a2e3ef9e57ebee78",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "c52bd398962d858165d3965ffb6b73709d6ba947418bea8cf993a0282877bb5a",
+        "ordinal": 73
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20240620T182725Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-06-20",
+        "overpass_id": "landsat-9_20240620T182725Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20240620_02_T1",
+          "LC09_L2SP_041037_20240620_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "d8c1122c788566baf04312c83151b001a267cef71f2745d06d7ba01bf3df26a1",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "41817a06ff2c8235f8871dc8d8042bff3f8e751542d25a0487a81e25bfab1393",
+        "ordinal": 74
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20240628T182737Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-06-28",
+        "overpass_id": "landsat-8_20240628T182737Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20240628_02_T1",
+          "LC08_L2SP_041037_20240628_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "54268c4ec705093c797e053e5a0f51f13acf2bf02df08185592b91091097e11a",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "5f2b4fc323691af067b6a9fb3822e6f9fdbc86e70a3f73f3263373be651c1e60",
+        "ordinal": 75
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20240706T182738Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-07-06",
+        "overpass_id": "landsat-9_20240706T182738Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20240706_02_T1",
+          "LC09_L2SP_041037_20240706_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "27167063abaff2aceba618370f3cf9d1db61ffcddbdbb78edc5b1972cd5e00df",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "09213de000f1d82481793661b3578eafdcdcebc68b74ac673a87ccfa8533c9c3",
+        "ordinal": 76
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20240714T182748Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-07-14",
+        "overpass_id": "landsat-8_20240714T182748Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20240714_02_T1",
+          "LC08_L2SP_041037_20240714_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "44c01ac38bcbd2617c127e8f67b42a8bbde148034c815bf9d192e7929506f94e",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "bdfb3168eddb28a014ee80dc4d47eb97a4870740b505be2b3aadabcddada31c0",
+        "ordinal": 77
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20240722T182746Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-07-22",
+        "overpass_id": "landsat-9_20240722T182746Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20240722_02_T1",
+          "LC09_L2SP_041037_20240722_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "753183a17f44c98a19f80b12580dceaf0d1123ce58286fbabb771cb117c4f97e",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "4753f487157f74ca655accb45c4ce2661fcd5b9ed04ea534e7800b60b44a8c0c",
+        "ordinal": 78
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20240730T182757Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-07-30",
+        "overpass_id": "landsat-8_20240730T182757Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20240730_02_T1",
+          "LC08_L2SP_041037_20240730_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "4d8f985c3e468511319ca6a92ded1334d1dcf763a3381f84e1342ff8e20e29dd",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "39a54d6dd1e006221a838f8bee1af43ffef88806b6b428b6c2a64f1163de42de",
+        "ordinal": 79
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20240807T182750Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-08-07",
+        "overpass_id": "landsat-9_20240807T182750Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20240807_02_T1",
+          "LC09_L2SP_041037_20240807_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "bbd6572139b3f43bb38362814a8303f540b20a7d8343fda841ae1ede2c56d601",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "531f33fadd40448ef971eead7038220c3400d1c9a8516847106c94576a6abd42",
+        "ordinal": 80
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20240815T182800Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-08-15",
+        "overpass_id": "landsat-8_20240815T182800Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20240815_02_T1",
+          "LC08_L2SP_041037_20240815_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "056f77b2d13ef49ad985ab8cd1c735f92f1886bfb95864eceb78d77fa2d58804",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "f7f7c9cc6e97510eb53b997fbef35276a90db7fc602583983152d547ee06aa13",
+        "ordinal": 81
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20240823T182805Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-08-23",
+        "overpass_id": "landsat-9_20240823T182805Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20240823_02_T1",
+          "LC09_L2SP_041037_20240823_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "e569e2bed5dfc57da1781e5c2231e2b95d353213e5ac14b107b8f186eadd8da1",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "c38c2ba1b4d4193b02604cc3c940cae46dd0380993c35db04028d4e8c84b5eed",
+        "ordinal": 82
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20240831T182809Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-08-31",
+        "overpass_id": "landsat-8_20240831T182809Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20240831_02_T1",
+          "LC08_L2SP_041037_20240831_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "24dca149dfe188c8e9a6e26760ebce72afd2ac6323bb1acf35d900c7781f0ceb",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "0b37d68ea6611ba0beab62f47f5b0e41bf409a72d488f535edbb5de0b41ac62e",
+        "ordinal": 83
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20240908T182805Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-09-08",
+        "overpass_id": "landsat-9_20240908T182805Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20240908_02_T1",
+          "LC09_L2SP_041037_20240908_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "1e54b0e50d6fd6d4fc334a86387732e4b3c7069ffa9333b18769d9abe8c08627",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "c4cb700022933d5a1745f03552e82613de55c00934de43f9befe640333551498",
+        "ordinal": 84
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20240916T182815Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-09-16",
+        "overpass_id": "landsat-8_20240916T182815Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20240916_02_T1",
+          "LC08_L2SP_041037_20240916_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "32bd39f15994d404a0725d92296715fec2e2b5b3b8a077b5597c23ac9a2323d5",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "08a9f75e05b31a122b101a73b58811e18d103147321ed8f2f2c2ee33ac0e358e",
+        "ordinal": 85
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20240924T182807Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-09-24",
+        "overpass_id": "landsat-9_20240924T182807Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20240924_02_T1",
+          "LC09_L2SP_041037_20240924_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "3fbfaf5cfca538157ff4e6201789fb5b0b36e74f5e7178cb432a01061c9bf650",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "15e8bfc3cb06be6b87c73e29df904b5963b75c422f6e953b195967306674c38a",
+        "ordinal": 86
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20241002T182811Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-10-02",
+        "overpass_id": "landsat-8_20241002T182811Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20241002_02_T1",
+          "LC08_L2SP_041037_20241002_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "c1f3b851f930ee0f3743f7b14ab0d955b656fa53f1a9b647a5779d280fac285a",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "0e0173ccbd899659bf3cc5de83bd48b427e2dadff15cfa742523c71920d627f7",
+        "ordinal": 87
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20241010T182815Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-10-10",
+        "overpass_id": "landsat-9_20241010T182815Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20241010_02_T1",
+          "LC09_L2SP_041037_20241010_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "b18d18b1afe1bfeecb5650692803f6e34792ec2a7c5d9325d2c5d713e1f5e2fc",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "50f731c2b439b2673572e746020d4f031bc25f2e123ad8fff5b73307ea0935d8",
+        "ordinal": 88
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-8_20241018T182824Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-10-18",
+        "overpass_id": "landsat-8_20241018T182824Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_041036_20241018_02_T1",
+          "LC08_L2SP_041037_20241018_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "3b4c733286dc17506a9914af5aba1249ed6b50dba40b04958637c9ff3b87b43e",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "eec9a85d4a645e55c57c1c2b3479abc03f5cfd29d4a3756d16e79b8b34eff4aa",
+        "ordinal": 89
+      },
+      {
+        "unit_id": "target:los_angeles_ca:landsat-9_20241026T182830Z",
+        "kind": "overpass_target",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "target_date": "2024-10-26",
+        "overpass_id": "landsat-9_20241026T182830Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_041036_20241026_02_T1",
+          "LC09_L2SP_041037_20241026_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 1096,
+        "source_lock_sha256": "01d88bfff68dfb50f5b2229c9bab7f1566dd5d02ef3b14bec75f2e820724c40f",
+        "target_grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "relationship_sha256": "2b53b419b17d490b80d0e7e2c5d85764362d4bde8d4586bdd70a3bb1d3eb48e1",
+        "ordinal": 90
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-8_20250502T180301Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-05-02",
+        "overpass_id": "landsat-8_20250502T180301Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_037036_20250502_02_T1",
+          "LC08_L2SP_037037_20250502_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "1660221662a0d437e34d0a0a2bf5cd8b95cf36574af65cccdd4f91d8056c21ec",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "c577d821e5ab6342542cde293aae78caf188ec61ed71197fe7510ec1e3b74087",
+        "ordinal": 91
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-9_20250510T180314Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-05-10",
+        "overpass_id": "landsat-9_20250510T180314Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_037036_20250510_02_T1",
+          "LC09_L2SP_037037_20250510_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "c5ca54c1f9f95181533d21e762ba34bcc81766b36e02b023cf0f236e21f6340f",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "0e451e835738c37d2fb2b52f87948bc14cf5225b8dec451964eb808b640c0d53",
+        "ordinal": 92
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-8_20250518T180302Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-05-18",
+        "overpass_id": "landsat-8_20250518T180302Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_037036_20250518_02_T1",
+          "LC08_L2SP_037037_20250518_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "c15dfd62d29eddd4b25f7952a82ec109ff662f6b06f29a1e4c36602655bd9e18",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "6876e83a643e2bbd6b3953683a497b74cae09b7503e7b7500f605e56c2c31c1e",
+        "ordinal": 93
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-9_20250526T180305Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-05-26",
+        "overpass_id": "landsat-9_20250526T180305Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_037036_20250526_02_T1",
+          "LC09_L2SP_037037_20250526_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "e21be68186e7ad51fbe682acbe8b74cad8e5c0f3e1f951328fbdf336704aa576",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "839e0c8a09f10701a528e4d42f9fecb4a8459857a111ba06348aac8b5cfae8c9",
+        "ordinal": 94
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-8_20250603T180304Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-06-03",
+        "overpass_id": "landsat-8_20250603T180304Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_037036_20250603_02_T1",
+          "LC08_L2SP_037037_20250603_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "d1742dc4d1f473b3585c82e3d9c9ece6e98e0c2d24a62e310fa7f2ee79c4228d",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "ace8e720bb63d9d41c8cf931ab24022f99d4acf08c01b93b7ddb2527c580781b",
+        "ordinal": 95
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-9_20250611T180308Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-06-11",
+        "overpass_id": "landsat-9_20250611T180308Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_037036_20250611_02_T1",
+          "LC09_L2SP_037037_20250611_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "8d2950779b3cef638962ee960ce8dadd1c99c44e22ffa4e31c7f5458f6d6fee8",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "757423127f8427c0fa5f575fa585477fdac54ddcaf0e0588f8d83996f803b258",
+        "ordinal": 96
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-8_20250619T180317Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-06-19",
+        "overpass_id": "landsat-8_20250619T180317Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_037036_20250619_02_T1",
+          "LC08_L2SP_037037_20250619_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "796fa52af984a9dc7a008ec8cbd3b98cdb83498cfda299c63f095e42cee1eb37",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "0506b9642ffa899b6a30046820c2b6834a98ab1aacc35842910a62b5078250f1",
+        "ordinal": 97
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-9_20250627T180318Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-06-27",
+        "overpass_id": "landsat-9_20250627T180318Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_037036_20250627_02_T1",
+          "LC09_L2SP_037037_20250627_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "330f94025a6e5dc43cefc1c8fcf5edd1e678306f91f391340d128f8e1031d80f",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "b9b8c709e1a55671f15970444837f92e3612a20cdedd262f099fbcf65ce4c87a",
+        "ordinal": 98
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-8_20250705T180322Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-07-05",
+        "overpass_id": "landsat-8_20250705T180322Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_037036_20250705_02_T1",
+          "LC08_L2SP_037037_20250705_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "dc374f4d5c1471e5cfd700cc5e8e758582346d46b5dfc644585d4a6fa107115e",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "3456b4bad6529df0ca9713935fbc5936736599cd85d9293bae50e851e068bd2f",
+        "ordinal": 99
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-9_20250713T180322Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-07-13",
+        "overpass_id": "landsat-9_20250713T180322Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_037036_20250713_02_T1",
+          "LC09_L2SP_037037_20250713_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "cc597dc58ef888031a30cf856a77812b82e9512584e94bec3e75a0adbd95a050",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "633231acf8ef490a02e95278d52277ef585a2601f74b6fefe6cbe0ac6e83f225",
+        "ordinal": 100
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-8_20250721T180328Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-07-21",
+        "overpass_id": "landsat-8_20250721T180328Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_037036_20250721_02_T1",
+          "LC08_L2SP_037037_20250721_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "fca2f29c4040d8843cb8dbc1ad914c350b18ea77956c8d035f23650115680eaf",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "866c6ba84a8813ff293f1fd3f579f1a3c0677786191184e745511fa1a6b2100d",
+        "ordinal": 101
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-9_20250729T180329Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-07-29",
+        "overpass_id": "landsat-9_20250729T180329Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_037036_20250729_02_T1",
+          "LC09_L2SP_037037_20250729_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "e609be16825f3882a43b44638b07fd5fbfce3467ff4c32851a456bc43c7fd989",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "cd56cbae25563efbb32523b98d16cf7f5570846bed1c1226dd06a467773ed6f8",
+        "ordinal": 102
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-8_20250806T180335Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-08-06",
+        "overpass_id": "landsat-8_20250806T180335Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_037036_20250806_02_T1",
+          "LC08_L2SP_037037_20250806_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "0ecaa587b6dc23ae29a23d43d5abbf03aa79e8abfe0559f3ada3bf6fc9cc6e71",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "fa2926f46216ff836b063e798bd68c9083085d18d64db1b74fb69a230cd988f1",
+        "ordinal": 103
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-9_20250814T180341Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-08-14",
+        "overpass_id": "landsat-9_20250814T180341Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_037036_20250814_02_T1",
+          "LC09_L2SP_037037_20250814_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "8ae97c95c7dab22c0e31fa3aa7dd69f5c9028fc22465bdffdcb429f61f0859b4",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "fd876aff1ba5c14ce28b5030b38c34a644c5f3d421c3bb9652ae4fee8aa5be3d",
+        "ordinal": 104
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-8_20250822T180340Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-08-22",
+        "overpass_id": "landsat-8_20250822T180340Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_037036_20250822_02_T1",
+          "LC08_L2SP_037037_20250822_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "a9118c3546709b6ba578500bcf63c426c3f554ea5fb7ef3b56c3f7daeb12e776",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "45da055c75428f409927702791faeb2a5ec050658b72e603146e9d1b6532007e",
+        "ordinal": 105
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-9_20250830T180344Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-08-30",
+        "overpass_id": "landsat-9_20250830T180344Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_037036_20250830_02_T1",
+          "LC09_L2SP_037037_20250830_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "1641ac4e2e9f966d8a44ce1bcd982821758c9fb80908ba6812837434e2a64b98",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "db6e9ea55ff3f5c2648c72da28db20617426775813fac533db4d87db4ee2fcd8",
+        "ordinal": 106
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-8_20250907T180344Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-09-07",
+        "overpass_id": "landsat-8_20250907T180344Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_037036_20250907_02_T1",
+          "LC08_L2SP_037037_20250907_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "89f6d3ea2fda4f806061dce02860620012dec2771abf719900d09acb6e8b53fa",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "e02d983df62543314d78ddafad9880d75ff95768a311ea1751386cabcfbe70ae",
+        "ordinal": 107
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-9_20250915T180350Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-09-15",
+        "overpass_id": "landsat-9_20250915T180350Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_037036_20250915_02_T1",
+          "LC09_L2SP_037037_20250915_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "c6eed59117022b1e9f6863f13c07256eb3dd21ebf950907fc82272fb9ecbb458",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "bc96336a19dab7c330e64ef0870b6c8143631d4801e880ff888af89690aa874b",
+        "ordinal": 108
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-8_20250923T180351Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-09-23",
+        "overpass_id": "landsat-8_20250923T180351Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_037036_20250923_02_T1",
+          "LC08_L2SP_037037_20250923_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "3d1513a18c849ca8871743d4a9d9bb225e534fa7f695731a7c04e4da8a7945ee",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "5340ffed67d184be5f90a7c3d9c9793e0a1bb2c33504ba741031f67b27177925",
+        "ordinal": 109
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-9_20251001T180352Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-10-01",
+        "overpass_id": "landsat-9_20251001T180352Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_037036_20251001_02_T1",
+          "LC09_L2SP_037037_20251001_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "8b81e429768da9007cbb55d855005de136238c7e8d1b70223a96375aee0d62a7",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "77b817ee31ea0b0f5b26b868f48795ca28432a30d794b182017a9afe1ff9dab9",
+        "ordinal": 110
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-8_20251009T180352Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-10-09",
+        "overpass_id": "landsat-8_20251009T180352Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_037036_20251009_02_T1",
+          "LC08_L2SP_037037_20251009_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "d9f79917aaa05149893d04944996e6b9b781b8e2335613ed9d0dccf0a0d36f7b",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "0ad1266109f9ac76aee3624529dca774f4ddc894668f5a5e448b232fe5371343",
+        "ordinal": 111
+      },
+      {
+        "unit_id": "target:phoenix_az:landsat-8_20251025T180351Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "target_date": "2025-10-25",
+        "overpass_id": "landsat-8_20251025T180351Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_037036_20251025_02_T1",
+          "LC08_L2SP_037037_20251025_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 375,
+        "source_lock_sha256": "7d8538721ef250571ff14ae789b89e25924773538317e9dd9e08573f22c93fd6",
+        "target_grid_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e",
+        "relationship_sha256": "c087e988e45e81a446d37e39779bdb06e85c853618ba64b0b8e7fd55f9011c9e",
+        "ordinal": 112
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-8_20250514T165003Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-05-14",
+        "overpass_id": "landsat-8_20250514T165003Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_025039_20250514_02_T1",
+          "LC08_L2SP_025040_20250514_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "d3174b865016a1e6fa637c87bb80c68c5739e098dcebe7130cd2e86029b6c7ce",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "b0dcf7866d137c0a1e43278a542f237b5850c891bd157358de11f85227174a12",
+        "ordinal": 113
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-9_20250522T165008Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-05-22",
+        "overpass_id": "landsat-9_20250522T165008Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_025039_20250522_02_T1",
+          "LC09_L2SP_025040_20250522_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "a6cf1537a0ed371cb0dcfe935679df1578c93af277b98db625e501f0cf3d2451",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "d2fb7ae6ab1a1fc47ef9f0a63f67f2bb9e763b1360f56deadeec75717a321125",
+        "ordinal": 114
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-9_20250607T165005Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-06-07",
+        "overpass_id": "landsat-9_20250607T165005Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_025039_20250607_02_T1",
+          "LC09_L2SP_025040_20250607_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "c91f1ba4ef2f40e581e10d5a63e0c9cade4c84c0680ce549143ca8b7c0e965e0",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "1920f2f80ed86f7cd3a3ebea885e5f6b5b69caea1d0aaf863ae63e5a9635b81b",
+        "ordinal": 115
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-8_20250615T165017Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-06-15",
+        "overpass_id": "landsat-8_20250615T165017Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_025039_20250615_02_T1",
+          "LC08_L2SP_025040_20250615_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "a2c3f6eca2c3daaf5b3342a68e608229ff3f832e1a3a6bf8429f37a58ed09407",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "89108fe22e43886b7a1cd3e00e803f2bb226d8a7ce5895209eb516657d154a4d",
+        "ordinal": 116
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-9_20250623T165018Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-06-23",
+        "overpass_id": "landsat-9_20250623T165018Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_025039_20250623_02_T1",
+          "LC09_L2SP_025040_20250623_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "813550fead1b583095cd41d891571245ded40997bee9f6753768456b9f457c44",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "c4cfd3bcfb716dbc564403650fcb91797dd8020067f5287db73f291de7459f50",
+        "ordinal": 117
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-8_20250701T165024Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-07-01",
+        "overpass_id": "landsat-8_20250701T165024Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_025039_20250701_02_T1",
+          "LC08_L2SP_025040_20250701_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "dfaf8e4f0e422ff95428cd9f50d0677467d4ccec14b2a84f1ddf944880c5e41c",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "fca6b651127cf307eaedf6bc38daad0029019a95e7247d987ab0919552efb6fe",
+        "ordinal": 118
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-9_20250709T165021Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-07-09",
+        "overpass_id": "landsat-9_20250709T165021Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_025039_20250709_02_T1",
+          "LC09_L2SP_025040_20250709_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "35b070aba8cede45819eb2ff34d19578557c3afe1520a0c3b88923aaac07a9f7",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "783e4a91e6bc96c3d8b69f7c72a40eec33bbc5ea9ff4881bf4645382cca58c1b",
+        "ordinal": 119
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-8_20250717T165029Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-07-17",
+        "overpass_id": "landsat-8_20250717T165029Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_025039_20250717_02_T1",
+          "LC08_L2SP_025040_20250717_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "7344388f7b9bc6a1960c1784960e2f017112dce1935a1fd73b9d1139150bdde8",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "dd92123215e343667cdd0dbc4af5822b0b9739646300a93133a2c6835c17e13d",
+        "ordinal": 120
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-9_20250725T165030Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-07-25",
+        "overpass_id": "landsat-9_20250725T165030Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_025039_20250725_02_T1",
+          "LC09_L2SP_025040_20250725_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "6d1753ff868ae5e6f3fcfdc5024214d56c4f3926a6112465d7b5996b86dff8e0",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "a53ab56d429bef77759484b4202dac46f3c4f01ab24a9f0ff1d9a8e6418c2ae1",
+        "ordinal": 121
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-8_20250802T165034Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-08-02",
+        "overpass_id": "landsat-8_20250802T165034Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_025039_20250802_02_T1",
+          "LC08_L2SP_025040_20250802_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "6e993ed68ff9fa2ba16a3883a4e59f7249767eb63691725fff20a9da2fe034b4",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "db41ca95f27b8b20a124801b27503fc572b15572ff27842a62235af166554c1b",
+        "ordinal": 122
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-9_20250810T165040Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-08-10",
+        "overpass_id": "landsat-9_20250810T165040Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_025039_20250810_02_T1",
+          "LC09_L2SP_025040_20250810_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "66ae3e9f71d490e450d55497b8a2a575b5e54419ab9514cdcd9837ef1e2abd29",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "0858aa54d8531506560db6fc7fffda3d6b65b41206a2fe8fdfcea2f0529df9b7",
+        "ordinal": 123
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-8_20250818T165041Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-08-18",
+        "overpass_id": "landsat-8_20250818T165041Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_025039_20250818_02_T1",
+          "LC08_L2SP_025040_20250818_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "838892d39828ab5dd45b0881884d6089d38ce516d92ec90f2e640549dcdf7c35",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "c13d36e89b3d540f2f07d5d85e993014763d1d3e56a88de7d2b00d8fd87d3737",
+        "ordinal": 124
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-9_20250826T165045Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-08-26",
+        "overpass_id": "landsat-9_20250826T165045Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_025039_20250826_02_T1",
+          "LC09_L2SP_025040_20250826_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "1bf487d040c82c62846c2b6fe01f6a90621641dc300400b9949ed55b739c4ed8",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "87e423583f89dd4610b367d007b3f1976fe5398e2ef646c9c2dea766ff6cdb94",
+        "ordinal": 125
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-8_20250903T165045Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-09-03",
+        "overpass_id": "landsat-8_20250903T165045Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_025039_20250903_02_T1",
+          "LC08_L2SP_025040_20250903_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "b11c611beb52ea115217572368a56efb3135c9aa513b8a574e5aabbdb03d04bc",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "e944d6ab853b09481d4e9e55a1682d2c249cdb469f92baf80ee26723ea286b78",
+        "ordinal": 126
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-9_20250911T165051Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-09-11",
+        "overpass_id": "landsat-9_20250911T165051Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_025039_20250911_02_T1",
+          "LC09_L2SP_025040_20250911_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "bcacaed9d05882bc0a980a3aa75ccaa6a22ecd8ae6acc6ad5ef2fa03090f6c7c",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "43f49cc9748b82fb56d6d039240ea1d91ceee402cb2deb43d92c54c0c032945c",
+        "ordinal": 127
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-8_20250919T165051Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-09-19",
+        "overpass_id": "landsat-8_20250919T165051Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_025039_20250919_02_T1",
+          "LC08_L2SP_025040_20250919_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "eaaf4347d8e67e14e6bccba6178ef1246ea6cf121f8e3d7795bba0fe04261a1a",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "32408b64eb8700c240ac450b64a0423d20a76baa2ef6fc496372ebeb1ddccf11",
+        "ordinal": 128
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-9_20250927T165055Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-09-27",
+        "overpass_id": "landsat-9_20250927T165055Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_025039_20250927_02_T1",
+          "LC09_L2SP_025040_20250927_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "fe9f21c0e1fa50c9d56fdfb27fff10b67bae207880b8d1bdb2a42da92cba70ee",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "160d3bbb4d6d6e3bd2140f0eb93709e6646bc3aab70ee1c4c5c8d998d33308d6",
+        "ordinal": 129
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-8_20251005T165053Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-10-05",
+        "overpass_id": "landsat-8_20251005T165053Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_025039_20251005_02_T1",
+          "LC08_L2SP_025040_20251005_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "266f36bc485d1f4e15919d0e1202c34e9a5381f6fe33aa5c0e7a1cc0691b31b3",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "3c6e07e0a689ba0aa10b0bc64804143ea918ca623cd4b8ac23bef79abea1d0be",
+        "ordinal": 130
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-9_20251013T165101Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-10-13",
+        "overpass_id": "landsat-9_20251013T165101Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_025039_20251013_02_T1",
+          "LC09_L2SP_025040_20251013_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "a5a70638a6a5d633cc0e351916d476e013610f8e7d8a96256fde93ceb3aa66a1",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "163ccee8808008daadc70c363e5977776dd18176c34096f3cf7437d5402fc5a7",
+        "ordinal": 131
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-8_20251021T165052Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-10-21",
+        "overpass_id": "landsat-8_20251021T165052Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_025039_20251021_02_T1",
+          "LC08_L2SP_025040_20251021_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "25194020817e2d7c56d388f48eaa075d499a6905ad1d34814f03e95116aea4cd",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "107ea418de1822387a6e2dc2098235de09d0f937880efcd48d5ac6d3758c95be",
+        "ordinal": 132
+      },
+      {
+        "unit_id": "target:houston_tx:landsat-9_20251029T165053Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "target_date": "2025-10-29",
+        "overpass_id": "landsat-9_20251029T165053Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_025039_20251029_02_T1",
+          "LC09_L2SP_025040_20251029_02_T1"
+        ],
+        "scene_count": 2,
+        "tract_key_count": 651,
+        "source_lock_sha256": "f524fe42e1e7f3482dd64f95179b6a214af03d7926f2f9c23c47e5ff03abadcd",
+        "target_grid_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550",
+        "relationship_sha256": "6be88669b4e3eccba22fd82fcf0c76a33374197af47e3584c1b7fa5f317aa513",
+        "ordinal": 133
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-9_20250508T163444Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-05-08",
+        "overpass_id": "landsat-9_20250508T163444Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_023031_20250508_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "dfdb1742fb9dad4628915379c7f5f00750dd2f35eb476cbc6fe8c63f7b6adf6b",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "435581b82f9aee4aede28154e6a93fdc6b1de58c8526fe65bcc90c15ab0d501c",
+        "ordinal": 134
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-8_20250516T163430Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-05-16",
+        "overpass_id": "landsat-8_20250516T163430Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_023031_20250516_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "0c35a84c99988bd7b780ea9f09a1b5dd9ab9606bfb7d050e858932ccd8918e91",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "d0107f7e29092a3d166774764f1f2af7728306e9b0defa26c5c3827ccdaa63fe",
+        "ordinal": 135
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-9_20250524T163435Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-05-24",
+        "overpass_id": "landsat-9_20250524T163435Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_023031_20250524_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "c98dd2682ca610ecee52d197113a85ad2270f3051e5ec180cbe11f6f5e7a443d",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "44219b84925e3304277aec88d70e0c6589c87ad871d571a0ddacb12a39afe664",
+        "ordinal": 136
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-8_20250601T163434Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-06-01",
+        "overpass_id": "landsat-8_20250601T163434Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_023031_20250601_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "ab1b1d4443f9f757e3174971d8252653fdbde06d7785f5f4dfeb4c79e4e2b352",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "2df8fa36b4e4f8de0eea587177363736f48b7d7162f8ba976dce899dfcb8b035",
+        "ordinal": 137
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-9_20250609T163434Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-06-09",
+        "overpass_id": "landsat-9_20250609T163434Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_023031_20250609_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "1bfa263cfc5dbf4c688d71ee286272f0c3169d234a90cc43f983f7ba88a985da",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "1ccd58d11e5312be165f6b3968a05e416f2cdcac0d6b1c1aaab8e5db501da61e",
+        "ordinal": 138
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-8_20250617T163445Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-06-17",
+        "overpass_id": "landsat-8_20250617T163445Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_023031_20250617_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "40774e0207c2a43d8669612607776774138ab3f044d51915055b560fbb27398f",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "9a11c409602bf64050b6e135e97b1bf2a5cc436f04d52fdfae1831a7652935eb",
+        "ordinal": 139
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-9_20250625T163446Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-06-25",
+        "overpass_id": "landsat-9_20250625T163446Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_023031_20250625_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "ed0c1c6bad7676d868c356aeeca0e38a718fd62f3ad683d81f09dbc75976f267",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "6b3cd88f744e554f3e668c151fac22aaadf25314f96c39d47287b89af5d9cd34",
+        "ordinal": 140
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-8_20250703T163451Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-07-03",
+        "overpass_id": "landsat-8_20250703T163451Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_023031_20250703_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "21d287d65c6964fde4a0b551fff09b8dba901df527650112a1611389db0d7420",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "77b179b632c2bf48cd204aee3074acf0414c1d669ea54ed423020380cd06f016",
+        "ordinal": 141
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-9_20250711T163449Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-07-11",
+        "overpass_id": "landsat-9_20250711T163449Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_023031_20250711_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "16186476d498a803ec2969fb57e533fdce1922e83cee59fb49c5812ba2ede6bb",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "574d39b9da8166856f3c3967cbdf422fcf3d0fb90f526fb51d3284160fad1568",
+        "ordinal": 142
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-9_20250727T163458Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-07-27",
+        "overpass_id": "landsat-9_20250727T163458Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_023031_20250727_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "6b66876ef7f9667027c0c942662181016b526694d1df009e4007e7304592f617",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "88d479ec1af2d5206df7cae11b0947db220af7dabadc2a39b304396dd519c960",
+        "ordinal": 143
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-8_20250804T163503Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-08-04",
+        "overpass_id": "landsat-8_20250804T163503Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_023031_20250804_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "aff7d624fad26f607205c45678d86236e95d46eda60670bea6dffd86b1cd0759",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "7d28f42179848e9e5376ed9cf398ccbed9b09a2a72fc363893ba8620f7434dab",
+        "ordinal": 144
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-9_20250812T163509Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-08-12",
+        "overpass_id": "landsat-9_20250812T163509Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_023031_20250812_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "35878049cfa29a47c5dba202f2285aac7a70b219dba79f3ea92480ab6072ada8",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "bd0787bce80ece0a77ff66c8975dfe9bc192ef32bcfc54876061d536ca668ef9",
+        "ordinal": 145
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-8_20250820T163509Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-08-20",
+        "overpass_id": "landsat-8_20250820T163509Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_023031_20250820_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "d339fba36c97f728af64d017650d5b27494dc68a6dab88475b7e744a2d0ca3da",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "c9e616f43984f87f5bd5b478d14dacf85d191d463089c08f5dda5809ff3aa5d2",
+        "ordinal": 146
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-9_20250828T163512Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-08-28",
+        "overpass_id": "landsat-9_20250828T163512Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_023031_20250828_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "55f6a71d6404ccd76bb2261a7e694e4ab66542ac8477d8df837a76000405c4e8",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "1261792b551da4ae59e0226f840036a0e4279e81bc891df95672dbb7f2863608",
+        "ordinal": 147
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-8_20250905T163513Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-09-05",
+        "overpass_id": "landsat-8_20250905T163513Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_023031_20250905_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "4324275365d39e7492125028ac5fb2d81daf575bef1deab51e7a755cd950246b",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "ca0ccf76684669585837a39721d9b743528a96d050a8b56bc79afb646cb23a83",
+        "ordinal": 148
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-9_20250913T163519Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-09-13",
+        "overpass_id": "landsat-9_20250913T163519Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_023031_20250913_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "d708bdfb942d23d6996495f1e0034a25ff4a4700833ceedff18eccfc73ee9aad",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "4405796f59ff79b14a77b1cb5b18e30c0dc4a175d269683e3b7080216c981c80",
+        "ordinal": 149
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-8_20250921T163519Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-09-21",
+        "overpass_id": "landsat-8_20250921T163519Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_023031_20250921_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "97c1fe94133bd2d8bbdd320e4c55d00b99894f57fa697e8cb204de8c6ab2185c",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "c5faa091d4e19d95ff83d32adeed5802ed03c64d40536822f5b8d1ff88d2a32f",
+        "ordinal": 150
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-9_20250929T163522Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-09-29",
+        "overpass_id": "landsat-9_20250929T163522Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_023031_20250929_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "5c42c30266611333d2473dbc387d57216b84d9e2434d707ceecb633d49703c84",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "848e4d0d0e6d7c54f89956a73065602841faa34c2a9a7406dd81a064c96d20a8",
+        "ordinal": 151
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-8_20251007T163521Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-10-07",
+        "overpass_id": "landsat-8_20251007T163521Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_023031_20251007_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "ace1944dfd33f61b060a80b5b4cd60cdbd3f5ed2a95571ff4fcc878a1b67327f",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "f47ff7c200397c0bf177be52f43336ff6a335316e904bdab58ee28207d8e0f3b",
+        "ordinal": 152
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-8_20251023T163519Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-10-23",
+        "overpass_id": "landsat-8_20251023T163519Z",
+        "platform": "landsat-8",
+        "scene_ids": [
+          "LC08_L2SP_023031_20251023_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "77c8ed1b4a94c860df1e3cfc8f0beb77d857a8cd4da05459b8a5c085d21fb737",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "95084b4911f014cd192bc78fb20b7f31e7ba4092fdb71db3acba605b6aedd593",
+        "ordinal": 153
+      },
+      {
+        "unit_id": "target:chicago_il:landsat-9_20251031T163522Z",
+        "kind": "overpass_target",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "target_date": "2025-10-31",
+        "overpass_id": "landsat-9_20251031T163522Z",
+        "platform": "landsat-9",
+        "scene_ids": [
+          "LC09_L2SP_023031_20251031_02_T1"
+        ],
+        "scene_count": 1,
+        "tract_key_count": 780,
+        "source_lock_sha256": "a11787717130448f7f2bca294dc9f9d30416880884ff06ee7112befbb0c915b8",
+        "target_grid_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc",
+        "relationship_sha256": "cc8f6565c29eafe984d43979300d7508c3814c5bdaa9e1084211c759ab08feb2",
+        "ordinal": 154
+      },
+      {
+        "unit_id": "compile:los_angeles_ca",
+        "kind": "city_compile",
+        "lane": "los_angeles_2020_2024_source",
+        "city_id": "los_angeles_ca",
+        "expected_overpass_unit_count": 90,
+        "expected_target_key_count": 98640,
+        "ordinal": 155
+      },
+      {
+        "unit_id": "compile:phoenix_az",
+        "kind": "city_compile",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "phoenix_az",
+        "expected_overpass_unit_count": 22,
+        "expected_target_key_count": 8250,
+        "ordinal": 156
+      },
+      {
+        "unit_id": "compile:houston_tx",
+        "kind": "city_compile",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "houston_tx",
+        "expected_overpass_unit_count": 21,
+        "expected_target_key_count": 13671,
+        "ordinal": 157
+      },
+      {
+        "unit_id": "compile:chicago_il",
+        "kind": "city_compile",
+        "lane": "three_city_2025_combined_external",
+        "city_id": "chicago_il",
+        "expected_overpass_unit_count": 21,
+        "expected_target_key_count": 16380,
+        "ordinal": 158
+      },
+      {
+        "unit_id": "merge:four_city_targets",
+        "kind": "final_merge",
+        "city_ids": [
+          "los_angeles_ca",
+          "phoenix_az",
+          "houston_tx",
+          "chicago_il"
+        ],
+        "expected_city_compile_count": 4,
+        "expected_target_key_count": 136941,
+        "ordinal": 159
+      }
+    ]
+  },
+  "authorization": {
+    "asset_href_hydration_authorized": false,
+    "source_target_build_authorized": false,
+    "external_target_build_authorized": false,
+    "external_target_values_open_authorized": false,
+    "model_fit_or_prediction_authorized": false,
+    "external_claim_created": false
+  },
+  "access_contract": {
+    "network_access_performed": false,
+    "landsat_asset_hrefs_read": false,
+    "landsat_thermal_or_target_qa_values_read": false,
+    "target_tables_read": false,
+    "model_fit_or_prediction_performed": false
+  },
+  "next_safe_stage": "wait_for_predictor_readiness_then_lock_protocol",
+  "commit_sha256": "65a90338c9bb96bf2ade17e13d33f561adb78a891f40fdfdf3ce71ddb2843a63"
+}

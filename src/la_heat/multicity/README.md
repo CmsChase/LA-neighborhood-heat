@@ -50,7 +50,8 @@ Post-return preparation is also implemented:
   evaluation partition;
 - `target_context.py` combines each canonical tract/raster support with that
   frozen partition for later Landsat aggregation without opening target data;
-  and
+- `target_transaction.py` authenticates frozen scene-overpass-key
+  relationships and prepares the 159-unit, still-unauthorized target plan; and
 - `transfer_model.py` contains the exact B1 diagnostic, point/quantile M2,
   equal-date weighting, LA-2024 CQR calibration, and target-blind external
   prediction core. It has synthetic tests but is not authorized to fit real

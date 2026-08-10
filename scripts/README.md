@@ -17,7 +17,7 @@ many historical stages are already complete.
 | Final-test predictor preparation | files beginning `build_final_test_`, `stage_final_test_`, `run_final_test_`, and `audit_final_test_` |
 | Final evaluation and evidence | `prepare_final_evaluation.py`, `authorize_final_test_2025.py`, `execute_locked_final_evaluation.py`, `build_final_evaluation_evidence.py`, `verify_final_evaluation_evidence.py` |
 | Communication | `stage_mapping_la_neighborhoods.py`, `build_website_data.py`, `build_research_paper.py` |
-| Cross-city continuation | `audit_multicity_plan.py`, `stage_multicity_geography.py`, `build_portable_predictor_components.py`, `build_portable_sentinel_features.py`, `stage_multicity_spatial_blocks.py`, `stage_multicity_target_contexts.py`, `import_portable_sentinel_results.py`, `audit_multicity_predictor_readiness.py` |
+| Cross-city continuation | `audit_multicity_plan.py`, `stage_multicity_geography.py`, `build_portable_predictor_components.py`, `build_portable_sentinel_features.py`, `stage_multicity_spatial_blocks.py`, `stage_multicity_target_contexts.py`, `stage_multicity_target_build_plan.py`, `import_portable_sentinel_results.py`, `audit_multicity_predictor_readiness.py` |
 | Transfer and local control | `create_portable_relocation.py`, `verify_portable_relocation.py`, `transfer_queue_snapshot.py`, `*_dashboard.py`, `*_watchdog.py`, `research_runner_ui.py`, and the PowerShell transfer helpers |
 
 ## Website source staging

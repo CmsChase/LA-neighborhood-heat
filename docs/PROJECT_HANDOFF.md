@@ -92,6 +92,14 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     and block assignment. The control record is
     `manifests/multicity/targets/TARGET_CONTEXTS.json`. This step opened no
     Landsat asset href, thermal band, QA band, or target table.
+18. The still-unauthorized target build plan is complete and reproducible. It
+    contains 159 durable units: 154 overpass targets, four city compiles, and
+    one final merge. Los Angeles 2020-2024 is a separate 90-date source lane;
+    Phoenix, Houston, and Chicago form one indivisible 64-date external 2025
+    cohort that requires one later append-only claim. The plan freezes only
+    item IDs and metadata relationships; all asset hydration and target-value
+    access remain unauthorized. Its record is
+    `manifests/multicity/targets/TARGET_BUILD_PLAN.json`.
 
 ## Frozen scientific decisions
 
@@ -171,6 +179,7 @@ or predictor access using:
 ```powershell
 .\.venv\Scripts\python scripts\stage_multicity_spatial_blocks.py --check-only
 .\.venv\Scripts\python scripts\stage_multicity_target_contexts.py --check-only
+.\.venv\Scripts\python scripts\stage_multicity_target_build_plan.py --check-only
 ```
 
 After predictor readiness succeeds, the next scientific action is to lock the
