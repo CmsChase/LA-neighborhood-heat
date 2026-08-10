@@ -14,6 +14,7 @@ import hashlib
 import json
 import math
 import tomllib
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
@@ -670,6 +671,7 @@ def _acquisition_cache_is_current(
     directory: Path,
     *,
     expected_lock: dict[str, str],
+    metadata_path_root: Path | None = None,
 ) -> bool:
     summary_path = directory / "summary.json"
     output_path = directory / "acquisition_tract.parquet"
@@ -685,6 +687,8 @@ def _acquisition_cache_is_current(
         return False
     for metadata in metadata_records:
         metadata_path = Path(str(metadata.get("product_metadata_path", "")))
+        if not metadata_path.is_absolute() and metadata_path_root is not None:
+            metadata_path = metadata_path_root / metadata_path
         if (
             not metadata_path.exists()
             or sha256_file(metadata_path) != metadata.get("product_metadata_sha256")
@@ -710,13 +714,21 @@ def _process_acquisition(
     raw_metadata_directory: Path,
     session: requests.Session,
     force: bool,
+    metadata_path_root: Path | None = None,
+    download_threads: int = 1,
 ) -> dict[str, Any]:
+    if download_threads < 1 or download_threads > 8:
+        raise ValueError("download_threads must be between 1 and 8.")
     physical_id = str(acquisition_row.physical_acquisition_id)
     directory = _acquisition_cache_directory(output_directory, physical_id)
     expected_lock = _expected_acquisition_lock(
         base_lock=base_lock, physical_id=physical_id, item_rows=item_rows
     )
-    if not force and _acquisition_cache_is_current(directory, expected_lock=expected_lock):
+    if not force and _acquisition_cache_is_current(
+        directory,
+        expected_lock=expected_lock,
+        metadata_path_root=metadata_path_root,
+    ):
         print(f"[sentinel] cache hit {physical_id}", flush=True)
         return json.loads((directory / "summary.json").read_text(encoding="utf-8"))
     directory.mkdir(parents=True, exist_ok=True)
@@ -738,25 +750,53 @@ def _process_acquisition(
             metadata,
             processing_baseline=str(item.processing_baseline),
         )
-        scl = _read_asset_to_optical_grid(
-            str(item.asset_scl_href), grid=spatial.optical_grid, categorical=True
-        )
-        reflectance: dict[str, np.ndarray] = {}
-        for band in REFLECTANCE_BANDS:
-            print(f"[sentinel] read {item.item_id} {band}", flush=True)
+        def read_reflectance(
+            band: str,
+            *,
+            current_item: Any = item,
+            current_calibration: Any = calibration,
+        ) -> np.ndarray:
+            print(f"[sentinel] read {current_item.item_id} {band}", flush=True)
             dn = _read_asset_to_optical_grid(
-                str(getattr(item, f"asset_{band.lower()}_href")),
+                str(getattr(current_item, f"asset_{band.lower()}_href")),
                 grid=spatial.optical_grid,
                 categorical=False,
                 saturated_dn=int(qa["saturated_dn"]),
             )
-            reflectance[band] = decode_boa_reflectance(
+            return decode_boa_reflectance(
                 dn,
                 band=band,
-                calibration=calibration,
+                calibration=current_calibration,
                 nodata_dn=int(qa["nodata_dn"]),
                 saturated_dn=int(qa["saturated_dn"]),
             )
+
+        if download_threads == 1:
+            scl = _read_asset_to_optical_grid(
+                str(item.asset_scl_href),
+                grid=spatial.optical_grid,
+                categorical=True,
+            )
+            reflectance = {band: read_reflectance(band) for band in REFLECTANCE_BANDS}
+        else:
+            with ThreadPoolExecutor(
+                max_workers=download_threads,
+                thread_name_prefix="sentinel-asset",
+            ) as pool:
+                scl_future = pool.submit(
+                    _read_asset_to_optical_grid,
+                    str(item.asset_scl_href),
+                    grid=spatial.optical_grid,
+                    categorical=True,
+                )
+                band_futures = {
+                    band: pool.submit(read_reflectance, band)
+                    for band in REFLECTANCE_BANDS
+                }
+                scl = scl_future.result()
+                reflectance = {
+                    band: band_futures[band].result() for band in REFLECTANCE_BANDS
+                }
         aligned_tiles.append(
             AlignedSentinelTile(
                 item_id=str(item.item_id),
@@ -766,12 +806,18 @@ def _process_acquisition(
                 calibration_sha256=calibration.sha256,
             )
         )
+        recorded_metadata_path = metadata_path
+        if metadata_path_root is not None:
+            try:
+                recorded_metadata_path = metadata_path.relative_to(metadata_path_root)
+            except ValueError:
+                pass
         metadata_records.append(
             {
                 "item_id": str(item.item_id),
                 "processing_baseline": calibration.processing_baseline,
                 "calibration_sha256": calibration.sha256,
-                "product_metadata_path": metadata_path.as_posix(),
+                "product_metadata_path": recorded_metadata_path.as_posix(),
                 "product_metadata_sha256": metadata_sha,
             }
         )
