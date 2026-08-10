@@ -44,6 +44,22 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
    for 136,941 frozen city-date-tract rows. The merged Parquet has 46 columns:
    five keys plus the 41 frozen static, calendar, and Daymet features. No model
    was fit and no external-city target values were opened.
+10. The four-city Sentinel metadata inventory is frozen and authenticated:
+    Los Angeles has 226 physical acquisitions, Phoenix 116, Houston 113, and
+    Chicago 56 (511 total). Houston's UTM-14 zero-support candidates remain in
+    audit lineage but are not raster contributors.
+11. The resumable Sentinel engine and localhost dashboard are implemented and
+    tested. The dashboard exposes 6/8 asset-read threads separately from 1/2
+    complete-acquisition concurrency, defaults to 6/1, pauses only after a
+    durable acquisition boundary, retries failed acquisitions, and restarts an
+    unexpectedly exited engine.
+12. A copy-ready gaming-laptop folder is staged at
+    `exports/GAMING_LAPTOP_SENTINEL`. Its 3,410 manifest-tracked files total
+    370,520,872 bytes. Independent verification found zero missing, extra, or
+    hash-mismatched files. The manifest SHA-256 is
+    `b38601fa675b90d6ba4313ee297e8839bb31b0c91de12c53e3d3e49b913a01ef`.
+    Package-local engine check returned `ready`; dashboard smoke returned
+    `paused` with no engine process. The long raster build has not started.
 
 ## Frozen scientific decisions
 
@@ -91,12 +107,20 @@ The static, calendar, and Daymet component build reached `84 / 84` on
 - `data/processed/multicity/portable_predictors/components/COMPONENTS_COMPLETE.json`
 - `data/processed/multicity/portable_predictors/components/predictors_static_calendar_daymet.parquet`
 
-The next task is to implement a visible, resumable Sentinel-2 predictor runner
-on the same frozen four-city support, then run it. Reuse the already completed
-Sentinel calibration and acquisition evidence. Do not rebuild the 41 completed
+The implementation and portable folder are now complete. The exact next task
+is to copy the whole `exports/GAMING_LAPTOP_SENTINEL` directory to the gaming
+laptop's local NVMe drive, double-click `START_HERE.cmd`, keep the default 6
+download threads and 1 acquisition concurrency initially, and click
+`Start / Continue`. The dashboard tracks 516 durable units: 511 acquisitions,
+four city compiles, and one final merge. Do not rebuild the 41 completed
 features, fit M2, or open any external-city Landsat target values. Model fitting
-and target access remain behind the protocol, prediction-commit, and
-target-opening gates.
+and target access remain behind later locks.
+
+When the page reports `complete`, close it and double-click
+`PACKAGE_RESULTS.cmd`. Bring back both the generated ZIP and its `.sha256`
+file. A safe pause is also portable: request `Safe Pause`, wait for running to
+reach zero, then package or shut down. The returned cache can resume without
+repeating committed acquisitions.
 
 Authenticate the completed gates with:
 
@@ -106,6 +130,8 @@ Set-Location "D:\HuaweiMoveData\Users\haora\Documents\ISEF"
 .\.venv\Scripts\python scripts\stage_phoenix_source_footprint_restage.py --check-only
 .\.venv\Scripts\python scripts\lock_portable_predictor_contract.py --check-only
 .\.venv\Scripts\python scripts\build_portable_predictor_inventory.py --check-only
+.\.venv\Scripts\python scripts\build_portable_sentinel_inventory.py --check-only
+.\.venv\Scripts\python scripts\build_portable_sentinel_features.py --check-only
 ```
 
 The completed component build uses stable, purpose-named outputs and builds Los
@@ -114,6 +140,7 @@ tables. Its focused test set is:
 
 ```powershell
 .\.venv\Scripts\python -m pytest -q tests/test_portable_predictor_build.py tests/test_portable_predictor_components.py tests/test_portable_predictor_dashboard.py tests/test_portable_predictor_daymet.py
+.\.venv\Scripts\python -m pytest -q tests/test_portable_sentinel_build.py tests/test_portable_sentinel_inventory.py tests/test_portable_sentinel_dashboard.py tests/test_create_portable_sentinel_bundle.py tests/test_sentinel_features.py
 ```
 
 ## Working style
