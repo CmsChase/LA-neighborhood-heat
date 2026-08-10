@@ -86,6 +86,12 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     complete three-city 2025 external prediction cohort; and implements the
     frozen equal-date weighting, CQR correction, and strict-greater-than
     abstention rule. No real target was read and no real model was fit.
+17. The target-blind four-city aggregation contexts are complete. They attach
+    the frozen 5 km blocks to all 2,902 tracts in canonical raster-zone order
+    and authenticate each city's 30 m target grid, geography, WorldCover mask,
+    and block assignment. The control record is
+    `manifests/multicity/targets/TARGET_CONTEXTS.json`. This step opened no
+    Landsat asset href, thermal band, QA band, or target table.
 
 ## Frozen scientific decisions
 
@@ -164,6 +170,7 @@ or predictor access using:
 
 ```powershell
 .\.venv\Scripts\python scripts\stage_multicity_spatial_blocks.py --check-only
+.\.venv\Scripts\python scripts\stage_multicity_target_contexts.py --check-only
 ```
 
 After predictor readiness succeeds, the next scientific action is to lock the

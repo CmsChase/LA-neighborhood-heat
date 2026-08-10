@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "multicity-target-context-v1",
+  "state": "complete_target_blind_target_contexts",
+  "spatial_block_manifest": "manifests/multicity/evaluation/SPATIAL_BLOCKS.json",
+  "spatial_block_commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0",
+  "cities": {
+    "los_angeles_ca": {
+      "tract_count": 1096,
+      "spatial_block_count": 71,
+      "grid": {
+        "crs": "EPSG:32611",
+        "width": 1573,
+        "height": 2353,
+        "resolution_m": 30.0,
+        "sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc"
+      },
+      "locks": {
+        "geography_commit_sha256": "f6105bbc1060013c98e63eafca9ca227d4d8538cfc2fb91afd38f5c616e690e3",
+        "worldcover_commit_sha256": "4fc8323acc0eca002a6d8fc82f1cc9bca721076dd50b7027efe3a3769f0c685e",
+        "spatial_blocks_commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0",
+        "spatial_blocks_semantic_sha256": "df2795c3b351f88db232660bc6a283475f3dd1ea627787464a1c2f75bbc4254a",
+        "target_grid_definition_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc"
+      }
+    },
+    "phoenix_az": {
+      "tract_count": 375,
+      "spatial_block_count": 59,
+      "grid": {
+        "crs": "EPSG:32612",
+        "width": 1242,
+        "height": 2328,
+        "resolution_m": 30.0,
+        "sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e"
+      },
+      "locks": {
+        "geography_commit_sha256": "776d752cc8d51bc0b5c30da1d77fd5fa26b9e3ad17c259d5e0ddfe4592c10eee",
+        "worldcover_commit_sha256": "7eb0196636025ef307c7d0c9371139a3fb1b4161949b2751a24981a77fd3aa66",
+        "spatial_blocks_commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0",
+        "spatial_blocks_semantic_sha256": "3ccce252d9c30543eed5543721ba4c1d3d2cb880676be7a6837a12b76a1e19f1",
+        "target_grid_definition_sha256": "87135d00a7c1a7c59f4b6cfa7b5a724e4d6b1495ddf1b32c5b443ee984f6cd7e"
+      }
+    },
+    "houston_tx": {
+      "tract_count": 651,
+      "spatial_block_count": 88,
+      "grid": {
+        "crs": "EPSG:32615",
+        "width": 2858,
+        "height": 2363,
+        "resolution_m": 30.0,
+        "sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550"
+      },
+      "locks": {
+        "geography_commit_sha256": "b72342417216ca354318167a3f5ccae8906df309ac071b4093c5ddf3745dbbfb",
+        "worldcover_commit_sha256": "e24427bcb4a3b049f971c370f0e7ff1f6653ad7f222f4028d2ba86dec86fbb91",
+        "spatial_blocks_commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0",
+        "spatial_blocks_semantic_sha256": "080fc913e163a7cbeee31afbf30b4b7cc1f6c2a1a3b9a8199ab6e9f3cae2e381",
+        "target_grid_definition_sha256": "62d98eb78c25ba0a19ea66f832b1e7f199475d9412d5d6028316638f3211d550"
+      }
+    },
+    "chicago_il": {
+      "tract_count": 780,
+      "spatial_block_count": 36,
+      "grid": {
+        "crs": "EPSG:32616",
+        "width": 1146,
+        "height": 1405,
+        "resolution_m": 30.0,
+        "sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc"
+      },
+      "locks": {
+        "geography_commit_sha256": "8eb9427e9b599908e4f9c9fc04676a7962a8e1863a1603af9a581069954bed17",
+        "worldcover_commit_sha256": "9d5b54df7f6562ddc2bb1540cac36c4d61b866fcb9f8a49a7c2b4e7fee3b56ef",
+        "spatial_blocks_commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0",
+        "spatial_blocks_semantic_sha256": "ec51d6bdd51eb55079972cd734189f80252024bb9a324225a8d1f8d51df2147f",
+        "target_grid_definition_sha256": "0a5206eb69b3f5c09c1b09ab758ffef87e8d4ead65a4de719ba1bbedcac1fdbc"
+      }
+    }
+  },
+  "access_contract": {
+    "public_geography_and_support_read": true,
+    "landsat_asset_hrefs_read": false,
+    "landsat_thermal_or_target_qa_values_read": false,
+    "target_tables_read": false,
+    "model_fit_or_prediction_performed": false
+  },
+  "next_safe_stage": "freeze_target_transaction_after_predictor_readiness",
+  "commit_sha256": "013c4a51800e3d0016e801db7d1c1e196babcf379a1e78a6a21cea24f03c0bdb"
+}

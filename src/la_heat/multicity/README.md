@@ -47,7 +47,10 @@ Post-return preparation is also implemented:
   result without replacing stage-control files;
 - `predictor_readiness.py` audits the final 46-feature table before any fit;
 - `spatial_blocks.py` freezes the continuation-specific EPSG:5070 5 km
-  evaluation partition; and
+  evaluation partition;
+- `target_context.py` combines each canonical tract/raster support with that
+  frozen partition for later Landsat aggregation without opening target data;
+  and
 - `transfer_model.py` contains the exact B1 diagnostic, point/quantile M2,
   equal-date weighting, LA-2024 CQR calibration, and target-blind external
   prediction core. It has synthetic tests but is not authorized to fit real
