@@ -351,6 +351,8 @@ def test_local_http_page_and_token_protected_controls(tmp_path: Path) -> None:
         page = requests.get(base, timeout=5).text
         assert "四城市预测变量构建" in page
         assert 'type="password"' in page
+        assert '.join("\\n")' in page
+        assert '.join("\n")' not in page
         token = re.search(r'const control\s*=\s*"([^"]+)"', page).group(1)  # type: ignore[union-attr]
         assert requests.post(f"{base}/api/start", timeout=5).status_code == 403
         started = requests.post(

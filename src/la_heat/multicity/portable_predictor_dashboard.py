@@ -1039,7 +1039,7 @@ function render(data) {
     : (data.status_contract_error || data.error?.message || "");
   const events = Array.isArray(data.events) ? data.events : [];
   byId("events").textContent = events.length
-    ? events.map(item => `${item.at || ""}  ${item.message || ""}`).join("\n")
+    ? events.map(item => `${item.at || ""}  ${item.message || ""}`).join("\\n")
     : "暂无日志";
   byId("start").disabled = ["running", "pausing", "complete"].includes(data.state);
   byId("pause").disabled =
