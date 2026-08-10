@@ -56,15 +56,24 @@ calibration checks. The earlier V7–V18 transition files are historical
 provenance; they are not the active workflow and no new numbered hotfix file
 should be created.
 
-Current resumable command:
+The static, calendar, and Daymet component build now runs through a local,
+resumable progress page:
 
 ```powershell
-.\.venv\Scripts\python scripts\stage_multicity_missing_support_calibration_evidence_v1.py
+.\.venv\Scripts\python scripts\run_portable_predictor_dashboard.py --host 127.0.0.1 --port 8768
 ```
 
-The Sentinel cohort search uses a small city bounding box, then filters by the
-exact physical acquisition key. This avoids oversized STAC requests without
-changing acquisition membership or the final spatial coverage calculation.
+Open `http://127.0.0.1:8768/` to see the active city and phase, completed work
+units, estimated time, and recent events. Safe pause finishes the current
+atomic file or geography chunk and preserves all completed work. When the
+three external cities reach their weather downloads, enter an Earthdata bearer
+token in the page; it is passed only to the child process and is not written to
+the repository or runtime logs.
+
+The machine-readable live state is
+`data/interim/multicity/portable_predictors/runtime/status.json`. The current
+runner builds only public predictor components. It does not fit a model or
+read external-city target values.
 
 ## Local setup
 

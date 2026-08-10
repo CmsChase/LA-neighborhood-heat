@@ -2,9 +2,9 @@
   "schema_version": 1,
   "revision": "2026-08-consolidated",
   "stage_id": "portable_predictor_build",
-  "state": "ready",
-  "next_safe_stage": "build_portable_predictors",
-  "summary": "Build the frozen 46-feature public predictor surfaces on the canonical four-city support.",
+  "state": "running",
+  "next_safe_stage": "finish_public_component_build",
+  "summary": "The resumable 84-unit static, calendar, and Daymet component build is running on the canonical four-city support.",
   "permissions": {
     "read_public_predictor_sources": true,
     "build_predictor": true,
@@ -35,12 +35,15 @@
     ]
   },
   "current_implementation": {
-    "builder_status": "inventory_complete",
-    "worker_running": false,
-    "long_computation_started": false,
+    "builder_status": "component_runner_started",
+    "worker_running": true,
+    "long_computation_started": true,
     "inventory_city_date_count": 154,
     "inventory_key_count": 136941,
-    "next_action": "build_static_calendar_and_daymet_predictors_then_resumable_sentinel"
+    "work_unit_count": 84,
+    "dashboard_url": "http://127.0.0.1:8768/",
+    "runtime_status": "data/interim/multicity/portable_predictors/runtime/status.json",
+    "next_action": "finish_static_calendar_and_daymet_components_then_build_resumable_sentinel"
   },
   "workflow_policy": {
     "numbered_transitions_through_v18_are_history_only": true,
