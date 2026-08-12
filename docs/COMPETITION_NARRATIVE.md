@@ -13,7 +13,7 @@
 **English:** Can Public Data Predict Neighborhood Surface Heat Across Cities? A
 Target-Blind Transfer and Reliability Study
 
-**中文：** 公共数据能否跨城市预测社区尺度地表热？一项目标盲测的迁移与可靠性研究
+**中文：** 公共数据能否跨城市预测社区尺度地表热？一项基于目标盲测的迁移与可靠性研究
 
 ## 2. One-sentence claim / 一句话主线
 
@@ -112,8 +112,8 @@ The project contributes three linked ideas:
 2. Instead of tuning until the result looked stronger, the study asks a harder
    question: does the signal survive in unseen cities? / 项目没有继续调参追求更漂亮的
    数字，而是提出更难的问题：规律能否在从未见过的城市中成立？
-3. Los-Angeles-specific geography was replaced by one portable four-city
-   feature and support contract. / 项目建立了统一、可迁移的四城特征与空间支撑合同，
+3. Los-Angeles-specific geography was replaced by a portable four-city
+   feature-and-support contract. / 项目建立了统一、可迁移的四城特征与空间支撑合同，
    而不是把洛杉矶专用变量硬套到其他城市。
 4. External predictions and uncertainty decisions were fixed before external
    labels were available to the evaluator. / 外部真实温度进入评估前，预测、区间和拒绝
@@ -139,11 +139,12 @@ M2 在 Phoenix、Houston 和 Chicago 的等城市、等日期加权 MAE 将比 B
 ### H2 — Reliability / 可靠性假设
 
 The conformalized interval system will achieve 85%–95% overall coverage, at
-least 80% coverage in every external city, retain at least 60% of predictions,
-and reduce accepted-set MAE by at least 10% relative to using all predictions.
+least 80% coverage in every external city, retain at least 60% of predictions
+in every external city, and reduce accepted-set MAE by at least 10% relative
+to using all predictions.
 
-经保形校准的区间系统应达到总体 85%–95% 覆盖率、每个外部城市至少 80% 覆盖率、至少
-保留 60% 的预测，并使保留样本的 MAE 比全部预测至少降低 10%。
+经保形校准的区间系统应达到总体 85%–95% 覆盖率、每个外部城市至少 80% 覆盖率、每个
+外部城市至少保留 60% 的预测，并使保留样本的 MAE 比全部预测至少降低 10%。
 
 Failure of either gate is a scientific result, not permission to change a
 threshold, replace a city, or rerun the test with a retuned model.
@@ -175,8 +176,8 @@ rows. These counts describe the predictor/support universe; the rows entering
 model fitting, calibration, or formal evaluation can be lower after unchanged
 Landsat QA and date-retention rules are applied.
 
-冻结候选队列包含 73,432 条洛杉矶 2020–2023 预测信息行、25,208 条洛杉矶 2024 预测
-信息行，以及 38,301 条只含预测信息的外部城市行。这里是预测支撑规模；经过不变的
+冻结候选队列包含 73,432 条洛杉矶 2020–2023 预测特征候选行、25,208 条洛杉矶 2024
+预测特征候选行，以及 38,301 条只含预测信息的外部城市行。这里是预测支撑规模；经过不变的
 Landsat 质量控制和日期保留规则后，实际进入拟合、校准或正式评估的样本数可能更少。
 
 ### Frozen predictor families / 冻结特征组
