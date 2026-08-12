@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "multicity-model-fit-prediction-v1",
+  "state": "external_predictions_committed_before_target_access",
+  "authorization_commit_sha256": "2ef78fb83ab1af3364691df650dd398072e81675fef96fb6db9882178f4883a1",
+  "model_fit_authorization_path": "manifests/multicity/model/MODEL_FIT_AUTHORIZATION.json",
+  "model_fit_claim_id": "0250268cecaa3ec1660a20d578d08ecfb5a44cc9d061d25afef02a8c3364c442",
+  "model_fit_completion_path": "manifests/multicity/model/MODEL_FIT_COMPLETE.json",
+  "protocol_lock_commit_sha256": "c93cee9d7d05194dd75fe8dba662ae1d5b9ee2a8e1401178a1a9c0fc8675304f",
+  "model_fit_commit_sha256": "e11eb9974d0a399e1d1960e50040ae3c72bdb7c898dbdc207a66c042b6fbd613",
+  "calibration_commit_sha256": "c5522a330453517cb1427c837bb809b3b0a8deb6152d52d4bb5440666f63449c",
+  "external_city_ids": [
+    "phoenix_az",
+    "houston_tx",
+    "chicago_il"
+  ],
+  "external_year": 2025,
+  "row_count": 38301,
+  "city_date_count": 64,
+  "prediction_columns": [
+    "city_id",
+    "tract_geoid",
+    "target_date",
+    "b1_prediction_c",
+    "m2_prediction_c",
+    "m2_lower_c",
+    "m2_upper_c",
+    "m2_interval_width_c",
+    "m2_abstain",
+    "m2_accepted"
+  ],
+  "external_target_or_qa_values_read": false,
+  "output": {
+    "path": "data/processed/multicity/models/frozen_transfer/external_predictions_2025.parquet",
+    "bytes": 1952660,
+    "sha256": "adb6277c1ef1c19637713dc1a5d48165e5050667dcf3be9624ea6ce521fbe888",
+    "semantic_sha256": "6f2e5d8fec67e3e48d85f84f6bc6d22d7d8eb81b72ba9691b7af033aaa82f83e"
+  },
+  "access_audit": {
+    "external_target_or_qa_files_read": [],
+    "external_target_or_qa_values_read": false,
+    "external_target_claim_existed_at_publication": false
+  },
+  "next_safe_stage": "authorize_one_indivisible_three_city_external_target_claim",
+  "commit_sha256": "6f9a6b10f8b523efb79244f2d3faef9fd78684c2dadb0e05ad71103e6ec54ac1"
+}

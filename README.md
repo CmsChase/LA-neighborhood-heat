@@ -67,10 +67,11 @@ durable units (511 physical acquisitions, four city compiles, and one final
 merge) authenticated after import. The final predictor table contains 136,941
 rows and 46 frozen features.
 
-The separately authorized 91-unit Los Angeles 2020-2024 source-target build is
-complete. Its authenticated table contains 98,640 tract-date keys. The next
-stage is the separate frozen-model fit authorization. Phoenix, Houston, and
-Chicago target and QA values remain sealed, and no real model has yet been fit.
+The separately authorized Los Angeles source-target build and frozen model fit
+are complete. The model produced a committed, predictor-only set of 38,301
+predictions before any external target was opened. The single combined
+Phoenix-Houston-Chicago target build is now active at
+`http://127.0.0.1:8771/`; scoring remains disabled until all three cities finish.
 
 The continuation-specific 5 km spatial partition is complete for all 2,902
 tracts. The frozen fit, predictor-only external publication, one-claim external

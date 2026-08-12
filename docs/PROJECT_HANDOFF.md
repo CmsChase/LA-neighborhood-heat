@@ -117,14 +117,12 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     the equal-city/equal-date primary metric, all success and reliability gates,
     the 10,000-replicate crossed bootstrap, output schema, planned figures, and
     code/input identities. This lock did not read any target value or fit a model.
-22. A separate append-only authorization now opens only the Los Angeles
-    2020-2024 source-target lane. Its commit is
-    `9770ccfa5678a4cbac62d7225190ecfd489054f0dcdb295bdf2bafb580fa7b6b`.
-    A resumable localhost runner at `http://127.0.0.1:8770/` has been launched
-    with one worker. It contains 90 LA overpasses plus one LA compile, retries
-    transient failures automatically, and leaves all 68 external/final tasks
-    untouched. Live process state and the completed-unit count exist only in
-    `data/interim/multicity/targets/runtime/source_worker_status.json`; this
+22. The separately authorized Los Angeles lane completed all 90 overpasses and
+    one compile, yielding 98,640 source tract-date keys. Frozen B1/M2/CQR fitting
+    then committed 38,301 predictor-only external predictions without opening
+    external targets. The one indivisible Phoenix-Houston-Chicago claim is now
+    running at `http://127.0.0.1:8771/`. Live progress belongs only in
+    `data/interim/multicity/targets/runtime/external_worker_status.json`; this
     tracked handoff intentionally does not freeze a transient count.
 
 ## Frozen scientific decisions
@@ -152,14 +150,14 @@ Authorized now:
 - authenticate the completed public predictor table and its evidence;
 - authenticate the append-only protocol/model specification lock;
 - authenticate the completed LA 2020-2024 source-target table;
-- issue the separate frozen-model fit authorization after that authentication.
+- authenticate the completed frozen model fit and committed external predictions;
+- resume the one indivisible Phoenix-Houston-Chicago target claim.
 
-Still prohibited:
+Still prohibited until all three city compiles authenticate:
 
-- fitting or scoring a real model;
-- reading external-city Landsat target or QA values;
-- opening external evaluation results;
-- creating an external prediction commit or external target claim.
+- scoring or inspecting partial external results;
+- refitting, recalibrating, or selecting models from external outcomes;
+- releasing external metrics, evidence figures, or verified Atlas data.
 
 The single active control record is
 `manifests/multicity/ACTIVE_STAGE.json`. Historical numbered transition modules
@@ -171,10 +169,11 @@ The public predictor phase is complete: static/calendar/Daymet reached `84 / 84`
 Sentinel reached `516 / 516`, and the final table is 136,941 rows by 46 frozen
 features. Do not rebuild or re-import these products.
 
-The exact tracked stage is `source_targets_complete_ready_for_model_fit_authorization`.
-All 90 LA overpasses and the one city compile completed, producing 98,640
-tract-date keys. `LA_SOURCE_TARGETS_COMPLETE.json` is the append-only completion
-record. The external 68 tasks remain `pending` with zero attempts.
+The exact tracked stage is `three_city_external_target_build_active`. The LA
+source table contains 98,640 tract-date keys. Frozen fitting then produced a
+committed 38,301-row predictor-only external prediction table before the
+external target claim was issued. Resume or monitor the combined claim at
+`http://127.0.0.1:8771/`; never score a partial city or partial date set.
 
 Reauthenticate the protocol and LA-only authorization with:
 
@@ -183,12 +182,11 @@ Reauthenticate the protocol and LA-only authorization with:
 .\.venv\Scripts\python scripts\authorize_multicity_source_targets.py --project-root . --check-only
 ```
 
-The next transition is to authenticate `LA_SOURCE_TARGETS_COMPLETE.json`, issue
-the model-fit authorization, fit the frozen B1/M2/CQR models, and create the
-three-city predictor-only prediction commit. Phoenix, Houston, and Chicago 2025
-target values must remain sealed until that prediction commit authenticates.
-The implemented external evaluator is bound and fingerprinted when the later
-single external-target claim is issued.
+The next transition occurs only after all 64 external overpasses and all three
+city compiles complete and the combined completion record authenticates. Then
+run the already bound evaluator once, authenticate its completion before
+reading metrics, generate the six evidence figures, and publish the verified
+Atlas payload without model retuning.
 
 The already completed spatial partition can be reauthenticated without target
 or predictor access using:
@@ -199,9 +197,10 @@ or predictor access using:
 .\.venv\Scripts\python scripts\stage_multicity_target_build_plan.py --check-only
 ```
 
-Do not call the transfer-model fit functions against real labels while
-`ACTIVE_STAGE.json` has `model_fit_authorized=false`; external targets remain
-behind the later prediction-commit and one-claim gates.
+Do not refit or recalibrate the committed model, and do not score partial
+external targets. The prediction commit preceded the single combined external
+claim; the next legal evaluation begins only after all three city compiles
+authenticate.
 
 Authenticate the completed gates with:
 

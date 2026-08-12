@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "multicity-model-fit-authorization-v1",
+  "state": "model_fit_authorized",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "protocol_lock": {
+    "path": "manifests/multicity/evaluation/PROTOCOL_MODEL_LOCK.json",
+    "bytes": 16276,
+    "sha256": "d6a77fd0a916206934eaf8fa1d0b364d7363e70d19868213151fc3bd025a3e73",
+    "commit_sha256": "c93cee9d7d05194dd75fe8dba662ae1d5b9ee2a8e1401178a1a9c0fc8675304f"
+  },
+  "source_targets_complete": {
+    "path": "manifests/multicity/targets/LA_SOURCE_TARGETS_COMPLETE.json",
+    "bytes": 2583,
+    "sha256": "5c41230061569479010794693528d0c2a3f35be3f99c87a29cbd234cc831e8d1",
+    "commit_sha256": "9eb4a38936568b4fc284734c0dab426944b93b51f0853740338ccdf7649243a4"
+  },
+  "predictor_complete": {
+    "path": "data/processed/multicity/portable_predictors/components/PREDICTORS_ALL_46_COMPLETE.json",
+    "bytes": 8408,
+    "sha256": "93f6961155750fdfc44a25308d420913e5e337b10c2fc1e152608550c86f4563",
+    "commit_sha256": "ae4c583b8392b237978743e1742c4f9403826ece74e06de7fb1f84f3a72802ae"
+  },
+  "predictor_table": {
+    "path": "data/processed/multicity/portable_predictors/components/predictors_all_46.parquet",
+    "bytes": 27643037,
+    "sha256": "31b472b53f11a69c8a2d44dfc927ed46162db0c076ef644693233cea4e026b0f"
+  },
+  "protocol_model_lock_commit_sha256": "c93cee9d7d05194dd75fe8dba662ae1d5b9ee2a8e1401178a1a9c0fc8675304f",
+  "source_completion_commit_sha256": "9eb4a38936568b4fc284734c0dab426944b93b51f0853740338ccdf7649243a4",
+  "predictor_complete_commit_sha256": "ae4c583b8392b237978743e1742c4f9403826ece74e06de7fb1f84f3a72802ae",
+  "predictor_sha256": "31b472b53f11a69c8a2d44dfc927ed46162db0c076ef644693233cea4e026b0f",
+  "source_target_identity": {
+    "city_target_commit_sha256": "e26efb651e84354e1dfc90789fe3aab61163fbc91259fa632bf3d69fe0be5fdc",
+    "target_table_sha256": "3518dc765d13632cc10c5b262fb7756c0793c66242e02cd620eebad859c3ac78",
+    "source_work_units": 91
+  },
+  "cohorts": {
+    "training_city_id": "los_angeles_ca",
+    "training_years": [
+      2020,
+      2021,
+      2022,
+      2023
+    ],
+    "training_rows": 73432,
+    "calibration_city_id": "los_angeles_ca",
+    "calibration_year": 2024,
+    "calibration_rows": 25208,
+    "external_city_ids": [
+      "phoenix_az",
+      "houston_tx",
+      "chicago_il"
+    ],
+    "external_year": 2025,
+    "external_rows": 38301,
+    "external_city_dates": 64
+  },
+  "permissions": {
+    "read_la_source_targets": true,
+    "fit_frozen_models": true,
+    "calibrate_la_2024_cqr": true,
+    "create_external_predictor_only_predictions": true,
+    "read_external_targets": false,
+    "score_external_targets": false,
+    "retune_or_select_models": false,
+    "external_target_claim_authorized": false
+  },
+  "output_contract": {
+    "model_root": "data/processed/multicity/models/frozen_transfer",
+    "model_artifact_path": "data/processed/multicity/models/frozen_transfer/fitted_transfer_models.joblib",
+    "fit_audit_path": "data/processed/multicity/models/frozen_transfer/fit_audit.json",
+    "external_predictions_path": "data/processed/multicity/models/frozen_transfer/external_predictions_2025.parquet",
+    "external_prediction_commit_manifest": "manifests/multicity/evaluation/EXTERNAL_PREDICTIONS_COMMITTED.json",
+    "completion_manifest": "manifests/multicity/model/MODEL_FIT_COMPLETE.json"
+  },
+  "code_identity": {
+    "files": {
+      "src/la_heat/multicity/model_fit_authorization.py": {
+        "path": "src/la_heat/multicity/model_fit_authorization.py",
+        "bytes": 16275,
+        "sha256": "aad30c36aebe5fca95b6ea48b51b0ab24288455b614fed55f4dd5e9d91a30f7b"
+      },
+      "src/la_heat/multicity/model_fit_prediction.py": {
+        "path": "src/la_heat/multicity/model_fit_prediction.py",
+        "bytes": 39892,
+        "sha256": "2c0ffd203242308eaf39b335a6b0073e1c6bc950834b68f51e03f8d3358c21c4"
+      },
+      "src/la_heat/multicity/source_target_worker.py": {
+        "path": "src/la_heat/multicity/source_target_worker.py",
+        "bytes": 21812,
+        "sha256": "0404d64ee76ea523f3588292468a388d9e6c146e124211794badc7e01b871860"
+      },
+      "src/la_heat/multicity/transfer_model.py": {
+        "path": "src/la_heat/multicity/transfer_model.py",
+        "bytes": 16384,
+        "sha256": "13fbfc2233b89960a80a63bd22c75d9b90b8fc3f9b3b78e9f84364eebc77c211"
+      },
+      "src/la_heat/model_rows.py": {
+        "path": "src/la_heat/model_rows.py",
+        "bytes": 4608,
+        "sha256": "e4f252cd8eb055d24514d09f6008012b6795fc32be81bf918c416b5e9e057143"
+      },
+      "src/la_heat/provenance.py": {
+        "path": "src/la_heat/provenance.py",
+        "bytes": 4679,
+        "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+      },
+      "scripts/authorize_multicity_model_fit.py": {
+        "path": "scripts/authorize_multicity_model_fit.py",
+        "bytes": 1285,
+        "sha256": "d4a66cac4590765f5aa48f19fe88d3aebe5d86b6f49171350eef6168cffb82d9"
+      },
+      "scripts/run_multicity_model_fit_prediction.py": {
+        "path": "scripts/run_multicity_model_fit_prediction.py",
+        "bytes": 1560,
+        "sha256": "54647ea5549aaf015a3513e891a42b49cf1861e4ce9fa2be5a5ca4fb35996712"
+      }
+    }
+  },
+  "access_audit": {
+    "source_target_values_read_by_authorization": false,
+    "external_target_values_read_by_authorization": false,
+    "model_fit_performed_by_authorization": false,
+    "external_prediction_performed_by_authorization": false
+  },
+  "next_safe_stage": "run_authorized_frozen_model_fit_and_external_predictor_only_prediction",
+  "claim_id": "0250268cecaa3ec1660a20d578d08ecfb5a44cc9d061d25afef02a8c3364c442",
+  "commit_sha256": "2ef78fb83ab1af3364691df650dd398072e81675fef96fb6db9882178f4883a1"
+}

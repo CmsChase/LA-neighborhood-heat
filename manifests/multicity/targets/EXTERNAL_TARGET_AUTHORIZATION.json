@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "multicity-external-target-authorization-v1",
+  "state": "target_execution_authorized",
+  "lane": "three_city_2025_combined_external",
+  "city_ids": [
+    "phoenix_az",
+    "houston_tx",
+    "chicago_il"
+  ],
+  "years": [
+    2025
+  ],
+  "purpose": "one_time_three_city_zero_shot_confirmation",
+  "single_global_claim": true,
+  "per_city_or_partial_claims_forbidden": true,
+  "expected_overpass_count": 64,
+  "expected_city_compile_count": 3,
+  "expected_target_key_count": 38301,
+  "protocol_lock": {
+    "path": "manifests/multicity/evaluation/PROTOCOL_MODEL_LOCK.json",
+    "bytes": 16276,
+    "sha256": "d6a77fd0a916206934eaf8fa1d0b364d7363e70d19868213151fc3bd025a3e73",
+    "commit_sha256": "c93cee9d7d05194dd75fe8dba662ae1d5b9ee2a8e1401178a1a9c0fc8675304f"
+  },
+  "source_completion": {
+    "path": "manifests/multicity/targets/LA_SOURCE_TARGETS_COMPLETE.json",
+    "bytes": 2583,
+    "sha256": "5c41230061569479010794693528d0c2a3f35be3f99c87a29cbd234cc831e8d1",
+    "commit_sha256": "9eb4a38936568b4fc284734c0dab426944b93b51f0853740338ccdf7649243a4"
+  },
+  "external_prediction_commit": {
+    "path": "manifests/multicity/evaluation/EXTERNAL_PREDICTIONS_COMMITTED.json",
+    "bytes": 1903,
+    "sha256": "bc054f7e507b4f4b8bbdbfae12242717b36019671b891fc4bddfb1d0edd8fe62",
+    "commit_sha256": "6f9a6b10f8b523efb79244f2d3faef9fd78684c2dadb0e05ad71103e6ec54ac1"
+  },
+  "external_prediction_commit_sha256": "6f9a6b10f8b523efb79244f2d3faef9fd78684c2dadb0e05ad71103e6ec54ac1",
+  "plan_commit_sha256": "65a90338c9bb96bf2ade17e13d33f561adb78a891f40fdfdf3ce71ddb2843a63",
+  "target_plan": {
+    "path": "manifests/multicity/targets/TARGET_BUILD_PLAN.json",
+    "bytes": 138265,
+    "sha256": "00fa094ccf81066e01f5952aa2b42724f2176704c5353b3f92cb330939bc5a5c",
+    "commit_sha256": "65a90338c9bb96bf2ade17e13d33f561adb78a891f40fdfdf3ce71ddb2843a63"
+  },
+  "target_config_path": "configs/research.toml",
+  "target_config_file_sha256": "a2d4f7300d8a264c77c3ddc15a730546945a2d7f6ed253ff2f49e352102c60b9",
+  "target_config_sha256": "429c6ce616a1fadff213234759926a042533c65e77d3dbef561b4de939624f37",
+  "asset_href_hydration_authorized": true,
+  "target_values_open_authorized": true,
+  "values_opened_marker": "data/interim/multicity/targets/values_opened/three_city_2025_combined_external/VALUES_OPENED.json",
+  "evaluator_binding": {
+    "files": {
+      "src/la_heat/multicity/external_target_authorization.py": {
+        "path": "src/la_heat/multicity/external_target_authorization.py",
+        "bytes": 21846,
+        "sha256": "a195562bc624663df990712dd7ca8ea0ee6ed73c152e7e4ddc5add54ddb59591"
+      },
+      "src/la_heat/multicity/external_target_worker.py": {
+        "path": "src/la_heat/multicity/external_target_worker.py",
+        "bytes": 20977,
+        "sha256": "6ca46d837cb9b0be627c5c9d9568d735ab54c37f729e7b3b25d4a6fe0227dacb"
+      },
+      "src/la_heat/multicity/external_evaluation.py": {
+        "path": "src/la_heat/multicity/external_evaluation.py",
+        "bytes": 49328,
+        "sha256": "419364c6a0f77e9393a5500b8adbfcfe70b6494c30861ed8fbf82a4053795e89"
+      }
+    },
+    "primary_metric": "one_minus_external_equal_city_equal_date_mae_m2_divided_by_b1",
+    "bootstrap_iterations": 10000,
+    "bootstrap_method": "city_stratified_crossed_complete_date_x_5km_spatial_block",
+    "bootstrap_seed": 20260728,
+    "secondary_metrics": [
+      "per_city_equal_date_mae",
+      "rmse",
+      "signed_error",
+      "anomaly_mae",
+      "per_date_spearman",
+      "top20_hotspot_metrics",
+      "coverage",
+      "interval_width",
+      "wis",
+      "risk_coverage"
+    ],
+    "prediction_columns": [
+      "city_id",
+      "tract_geoid",
+      "target_date",
+      "b1_prediction_c",
+      "m2_prediction_c",
+      "m2_lower_c",
+      "m2_upper_c",
+      "m2_interval_width_c",
+      "m2_abstain",
+      "m2_accepted"
+    ]
+  },
+  "permissions": {
+    "external_target_build_authorized": true,
+    "external_targets_unlocked": true,
+    "external_target_scoring_before_all_three_city_compiles": false,
+    "external_model_refit_or_recalibration": false,
+    "external_claim_reissue": false
+  },
+  "access_audit": {
+    "external_prediction_values_read": true,
+    "landsat_asset_hrefs_read_by_authorization": false,
+    "landsat_thermal_or_target_qa_values_read_by_authorization": false,
+    "external_target_tables_read_by_authorization": false,
+    "values_opened_marker_created_by_authorization": false
+  },
+  "next_safe_stage": "run_resumable_combined_three_city_external_target_build",
+  "claim_id": "6483f3075f62248ba65072d2354a9043ce12463893e2a4104acfbfbdffb4cdec",
+  "commit_sha256": "565f58a106387b2c4e3690c4ecfa7a017b1cacc63d908386c801e17fde7cf161"
+}
