@@ -121,6 +121,29 @@ def test_publish_maps_only_three_external_results_and_keeps_la_reference(
     )
     assert payload["externalResults"][0]["primary"]["equalDateMaeC"] == 3.0
     assert payload["externalResults"][0]["primary"]["relativeMaeImprovementPercent"] == 25.0
+    expected_public_paths = {
+        "atlas/public/evidence/multicity/external-evaluation-completion.json",
+        "atlas/public/evidence/multicity/external-evaluation-summary.json",
+        "atlas/public/evidence/multicity/external-city-metrics.json",
+    }
+    assert {item["repositoryPath"] for item in payload["provenance"]} == (expected_public_paths)
+    for item in payload["provenance"]:
+        assert item["href"] == atlas_release.GITHUB_BLOB_BASE + item["repositoryPath"]
+        assert (tmp_path / item["repositoryPath"]).is_file()
+    assert {
+        record["path"] for record in manifest["evidence"]["public_evidence"].values()
+    } == expected_public_paths
+    projection = json.loads(
+        (tmp_path / "atlas/public/evidence/multicity/external-city-metrics.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert projection["state"] == "authenticated_external_city_metrics_projection"
+    assert projection["evaluation_completion_commit_sha256"] == completion["commit_sha256"]
+    assert [item["cityId"] for item in projection["results"]] == list(EXTERNAL_CITY_IDS)
+    unsigned_projection = dict(projection)
+    unsigned_projection.pop("commit_sha256")
+    assert projection["commit_sha256"] == canonical_sha256(unsigned_projection)
 
     assert (
         authenticate_atlas_release(
@@ -148,6 +171,31 @@ def test_check_only_rejects_generated_file_tamper(
     atlas_output.write_text("export const forged = true;\n", encoding="utf-8")
 
     with pytest.raises(AtlasReleaseError, match="no longer reproduces"):
+        publish_atlas_release(
+            tmp_path,
+            evaluation_output_directory=evaluation,
+            atlas_output_path=atlas_output,
+            release_manifest_path=manifest_path,
+            check_only=True,
+        )
+
+
+def test_check_only_rejects_public_evidence_tamper(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    evaluation, _completion = _evaluation_fixture(tmp_path, monkeypatch)
+    atlas_output = tmp_path / "generated-results.ts"
+    manifest_path = tmp_path / "ATLAS_RESULTS_RELEASE.json"
+    publish_atlas_release(
+        tmp_path,
+        evaluation_output_directory=evaluation,
+        atlas_output_path=atlas_output,
+        release_manifest_path=manifest_path,
+    )
+    public_summary = tmp_path / "atlas/public/evidence/multicity/external-evaluation-summary.json"
+    public_summary.write_text("{}", encoding="utf-8")
+
+    with pytest.raises(AtlasReleaseError, match="Public Atlas evidence changed"):
         publish_atlas_release(
             tmp_path,
             evaluation_output_directory=evaluation,

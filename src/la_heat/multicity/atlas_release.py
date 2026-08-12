@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import os
@@ -26,6 +27,13 @@ RELEASE_MANIFEST_PATH: Final = Path("manifests/multicity/releases/ATLAS_RESULTS_
 CITY_METRICS_FILENAME: Final = "city_metrics.parquet"
 DATE_METRICS_FILENAME: Final = "date_metrics.parquet"
 SUMMARY_FILENAME: Final = "summary.json"
+PUBLIC_EVIDENCE_DIRECTORY: Final = Path("atlas/public/evidence/multicity")
+PUBLIC_EVIDENCE_FILENAMES: Final = {
+    "evaluation_completion": "external-evaluation-completion.json",
+    "summary": "external-evaluation-summary.json",
+    "city_metrics": "external-city-metrics.json",
+}
+GITHUB_BLOB_BASE: Final = "https://github.com/CmsChase/LA-neighborhood-heat/blob/main/"
 
 
 class AtlasReleaseError(RuntimeError):
@@ -72,6 +80,14 @@ def _file_record(root: Path, path: Path) -> dict[str, Any]:
     }
 
 
+def _expected_file_record(root: Path, path: Path, content: bytes) -> dict[str, Any]:
+    return {
+        "path": _relative(root, path),
+        "bytes": len(content),
+        "sha256": hashlib.sha256(content).hexdigest(),
+    }
+
+
 def _exclusive_json(payload: dict[str, Any], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     encoded = (json.dumps(payload, ensure_ascii=False, indent=2) + "\n").encode()
@@ -97,6 +113,32 @@ def _atomic_text(text: str, path: Path) -> None:
         partial.replace(path)
     except BaseException:
         partial.unlink(missing_ok=True)
+        raise
+
+
+def _publish_exact_once(path: Path, content: bytes) -> None:
+    """Create a public evidence file once, accepting an identical retry."""
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL)
+    except FileExistsError as exists_error:
+        try:
+            observed = path.read_bytes()
+        except OSError as read_error:
+            raise AtlasReleaseError(f"Public Atlas evidence is unavailable: {path}") from read_error
+        if observed != content:
+            raise AtlasReleaseError(
+                f"Public Atlas evidence already differs: {path}"
+            ) from exists_error
+        return
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(content)
+            handle.flush()
+            os.fsync(handle.fileno())
+    except Exception:
+        path.unlink(missing_ok=True)
         raise
 
 
@@ -201,12 +243,12 @@ def _external_result(
     }
 
 
-def build_atlas_release_payload(
+def _build_atlas_release_materials(
     project_root: str | Path,
     *,
     evaluation_output_directory: str | Path = EVALUATION_OUTPUT_DIRECTORY,
-) -> tuple[dict[str, Any], dict[str, Any]]:
-    """Build a verified overlay only after authenticating the complete evaluation."""
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, tuple[Path, bytes]]]:
+    """Build the overlay and its compact, publicly tracked evidence projections."""
 
     root = Path(project_root).resolve()
     evaluation_output = _inside(
@@ -226,6 +268,60 @@ def build_atlas_release_payload(
         _external_result(city_id, indexed.loc[city_id], date_metrics)
         for city_id in EXTERNAL_CITY_IDS
     ]
+    evidence: dict[str, Any] = {
+        "evaluation_completion": {
+            **_file_record(root, evaluation_output / "EXTERNAL_EVALUATION_COMPLETE.json"),
+            "commit_sha256": completion["commit_sha256"],
+        },
+        "city_metrics": {
+            **_file_record(root, evaluation_output / CITY_METRICS_FILENAME),
+            **parquet_file_record(evaluation_output / CITY_METRICS_FILENAME, city_metrics),
+        },
+        "date_metrics": {
+            **_file_record(root, evaluation_output / DATE_METRICS_FILENAME),
+            **parquet_file_record(evaluation_output / DATE_METRICS_FILENAME, date_metrics),
+        },
+        "summary": _file_record(root, evaluation_output / SUMMARY_FILENAME),
+    }
+    public_root = _inside(root, PUBLIC_EVIDENCE_DIRECTORY, label="Public Atlas evidence")
+    city_projection: dict[str, Any] = {
+        "schema_version": 1,
+        "state": "authenticated_external_city_metrics_projection",
+        "evaluation_completion_commit_sha256": completion["commit_sha256"],
+        "authenticated_parquet_source": evidence["city_metrics"],
+        "city_ids": list(EXTERNAL_CITY_IDS),
+        "results": external_results,
+    }
+    city_projection["commit_sha256"] = canonical_sha256(city_projection)
+    try:
+        artifacts: dict[str, tuple[Path, bytes]] = {
+            "evaluation_completion": (
+                public_root / PUBLIC_EVIDENCE_FILENAMES["evaluation_completion"],
+                (evaluation_output / "EXTERNAL_EVALUATION_COMPLETE.json").read_bytes(),
+            ),
+            "summary": (
+                public_root / PUBLIC_EVIDENCE_FILENAMES["summary"],
+                (evaluation_output / SUMMARY_FILENAME).read_bytes(),
+            ),
+            "city_metrics": (
+                public_root / PUBLIC_EVIDENCE_FILENAMES["city_metrics"],
+                (
+                    json.dumps(
+                        city_projection,
+                        ensure_ascii=False,
+                        indent=2,
+                        allow_nan=False,
+                    )
+                    + "\n"
+                ).encode("utf-8"),
+            ),
+        }
+    except OSError as error:
+        raise AtlasReleaseError("Authenticated public evidence source is unavailable") from error
+    evidence["public_evidence"] = {
+        key: _expected_file_record(root, path, content)
+        for key, (path, content) in artifacts.items()
+    }
     payload: dict[str, Any] = {
         "schemaVersion": ATLAS_SCHEMA_VERSION,
         "release": {
@@ -279,39 +375,34 @@ def build_atlas_release_payload(
         "provenance": [
             {
                 "label": "Authenticated external evaluation completion",
-                "repositoryPath": _relative(
-                    root, evaluation_output / "EXTERNAL_EVALUATION_COMPLETE.json"
-                ),
+                "repositoryPath": evidence["public_evidence"]["evaluation_completion"]["path"],
             },
             {
                 "label": "Authenticated three-city summary",
-                "repositoryPath": _relative(root, evaluation_output / SUMMARY_FILENAME),
+                "repositoryPath": evidence["public_evidence"]["summary"]["path"],
             },
             {
                 "label": "Authenticated per-city metrics",
-                "repositoryPath": _relative(root, evaluation_output / CITY_METRICS_FILENAME),
+                "repositoryPath": evidence["public_evidence"]["city_metrics"]["path"],
             },
         ],
     }
     for source in payload["provenance"]:
-        source["href"] = (
-            "https://github.com/CmsChase/LA-neighborhood-heat/blob/main/" + source["repositoryPath"]
-        )
-    evidence = {
-        "evaluation_completion": {
-            **_file_record(root, evaluation_output / "EXTERNAL_EVALUATION_COMPLETE.json"),
-            "commit_sha256": completion["commit_sha256"],
-        },
-        "city_metrics": {
-            **_file_record(root, evaluation_output / CITY_METRICS_FILENAME),
-            **parquet_file_record(evaluation_output / CITY_METRICS_FILENAME, city_metrics),
-        },
-        "date_metrics": {
-            **_file_record(root, evaluation_output / DATE_METRICS_FILENAME),
-            **parquet_file_record(evaluation_output / DATE_METRICS_FILENAME, date_metrics),
-        },
-        "summary": _file_record(root, evaluation_output / SUMMARY_FILENAME),
-    }
+        source["href"] = GITHUB_BLOB_BASE + source["repositoryPath"]
+    return payload, evidence, artifacts
+
+
+def build_atlas_release_payload(
+    project_root: str | Path,
+    *,
+    evaluation_output_directory: str | Path = EVALUATION_OUTPUT_DIRECTORY,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Build a verified overlay only after authenticating the complete evaluation."""
+
+    payload, evidence, _artifacts = _build_atlas_release_materials(
+        project_root,
+        evaluation_output_directory=evaluation_output_directory,
+    )
     return payload, evidence
 
 
@@ -322,6 +413,18 @@ def _render_typescript(payload: dict[str, Any]) -> str:
         "// Do not edit by hand; use scripts/publish_multicity_atlas_release.py.\n"
         f"export const GENERATED_VERIFIED_RELEASE: unknown = {encoded};\n"
     )
+
+
+def _authenticate_public_artifacts(
+    artifacts: dict[str, tuple[Path, bytes]],
+) -> None:
+    for path, expected in artifacts.values():
+        try:
+            observed = path.read_bytes()
+        except OSError as error:
+            raise AtlasReleaseError(f"Public Atlas evidence is unavailable: {path}") from error
+        if observed != expected:
+            raise AtlasReleaseError(f"Public Atlas evidence changed: {path}")
 
 
 def authenticate_atlas_release(
@@ -337,9 +440,10 @@ def authenticate_atlas_release(
     atlas_path = _inside(root, atlas_output_path, label="Atlas generated result")
     manifest_path = _inside(root, release_manifest_path, label="Atlas release manifest")
     manifest = _read_committed(manifest_path, label="Atlas release manifest")
-    payload, evidence = build_atlas_release_payload(
+    payload, evidence, artifacts = _build_atlas_release_materials(
         root, evaluation_output_directory=evaluation_output_directory
     )
+    _authenticate_public_artifacts(artifacts)
     expected_text = _render_typescript(payload)
     try:
         observed_text = atlas_path.read_text(encoding="utf-8")
@@ -384,9 +488,11 @@ def publish_atlas_release(
             atlas_output_path=atlas_path,
             release_manifest_path=manifest_path,
         )
-    payload, evidence = build_atlas_release_payload(
+    payload, evidence, artifacts = _build_atlas_release_materials(
         root, evaluation_output_directory=evaluation_output_directory
     )
+    for path, content in artifacts.values():
+        _publish_exact_once(path, content)
     _atomic_text(_render_typescript(payload), atlas_path)
     manifest: dict[str, Any] = {
         "schema_version": 1,
