@@ -5,7 +5,7 @@ evidence, and the public interactive atlas for neighborhood-scale daytime
 land-surface temperature (LST) in Los Angeles.
 
 [Open the Los Angeles heat atlas](https://cmschase.github.io/LA-neighborhood-heat/)
-· [Open the target-sealed four-city preview](https://cmschase.github.io/LA-neighborhood-heat/cities/)
+| [Open the evaluation-sealed four-city preview](https://cmschase.github.io/LA-neighborhood-heat/cities/)
 
 ## Research question
 
@@ -48,7 +48,8 @@ this repository by GitHub Actions.
 
 The Los Angeles evaluation is complete. The active research extension tests
 whether a Los-Angeles-trained predictor can transfer, without retraining, to
-Phoenix, Houston, and Chicago. External-city target values remain sealed.
+Phoenix, Houston, and Chicago. External targets are being built under one
+indivisible claim; partial scoring and result inspection remain sealed.
 
 The active stage is recorded in
 [`manifests/multicity/ACTIVE_STAGE.json`](manifests/multicity/ACTIVE_STAGE.json).

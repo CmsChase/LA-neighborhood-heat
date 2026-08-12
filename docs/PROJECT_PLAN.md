@@ -14,7 +14,7 @@ dates.
 | 5. Robustness and interpretation — complete with limitations | 11 | Feature-family ablations, strict pixel-level ST_QA sensitivity, QA cohorts, sensor checks, uncertainty intervals, endpoint and residual diagnostics | Authenticated ablation/sensitivity tables, unified evidence table, generated development report, hotspot and spatial diagnostics | Complete: strict 2 K date-support gate failed and spatial clustering remains, so the claim is explicitly narrowed | Research team |
 | 6. Model lock and one-time final test — complete | 12 | Freeze code/config/features/model/figures, create hashes, then unlock and evaluate 2025 once | `MODEL_LOCK.json`, append-only claim chain, one-way 2025 predictions, metrics, and figures | Evaluator never fits; every hash matches; one authenticated final transaction | Authorized operator after student approval |
 | 7. Research communication — complete | 13–14 | Write paper, poster, public result atlas, limitations, and oral-defense materials | Final report, reviewed paper, print poster, defense deck, website, and reproducibility instructions | Every number traceable to a table or script; claims match estimand | Writing and QA team; student presents |
-| 8. Cross-city continuation — predictor build active; targets sealed | continuation | Test zero-shot transfer from LA to Phoenix, Houston, and Chicago; add calibrated uncertainty and abstention | Separate protocol/config, city manifests, target-blind predictors, frozen predictions, one-time external evidence | Finish and authenticate 516 Sentinel units, pass predictor readiness, then lock the protocol/model before any real fit or target access | Research engineering implements; independent review challenges; student approves freeze |
+| 8. Cross-city continuation - combined external claim active | continuation | Test zero-shot transfer from LA to Phoenix, Houston, and Chicago; add calibrated uncertainty and abstention | Separate protocol/config, city manifests, target-blind predictors, frozen predictions, one-time external evidence | Complete and authenticate all 64 external overpasses plus three city compiles, then run the frozen evaluator once | Research engineering implements; independent review challenges; student approves freeze |
 
 ## Planned result package
 
@@ -128,7 +128,7 @@ Phase 7 is complete: the reviewed paper, 36 × 48 inch poster, ten-slide defense
 deck, public interactive result atlas, and reproducibility documentation all
 preserve the qualified held-out conclusion.
 
-Phase 8 remains a target-locked draft. The Phoenix geography and
+The following source-contract history is retained for provenance. The Phoenix geography and
 source-footprint metadata pilots, portable water-distance review, and
 target-blind GSHHG geometry pilot are authenticated. The geometry pilot
 preserved its preregistered V1 failure, then passed a source-structure-only V2
@@ -166,14 +166,14 @@ permission, and authorize only the exact preregistered predictor-contract
 freeze program. That program is staged together with v8 so the permission
 cannot later be widened by substituting different code or inputs.
 
-Current Phase 8 checkpoint (2026-08-10): the later source-contract and
-predictor-contract gates described above are complete. All 41 non-Sentinel
-features are compiled for the 136,941-row four-city predictor universe. The
-resumable 516-unit Sentinel build is running on the gaming laptop; the latest
-user-confirmed checkpoint is Chicago complete (`57 / 516`). Copy-back
-acceptance/resume tooling, a deterministic non-evidence four-city smoke run,
-the target-sealed `/cities/` website interface, and a future 159-unit target
-runtime initialized only as `paused_not_authorized` are ready. No real model
-fit or external-city target read has occurred. The next scientific gate remains
-terminal predictor readiness followed by a separately reviewed protocol/model
-lock.
+Current Phase 8 checkpoint (2026-08-12): all 516 Sentinel units and the
+136,941-row by 46-feature predictor table authenticated. The protocol/model
+specification was locked before target access. The LA source lane completed all
+91 units and produced 98,640 tract-date keys. Frozen B1/M2/CQR fitting then
+committed exactly 38,301 predictor-only Phoenix/Houston/Chicago predictions
+before any external target was opened. One indivisible three-city claim is now
+active at `http://127.0.0.1:8771/`; it contains 64 external overpasses plus
+three city compiles. Partial scoring, refitting, and result inspection remain
+forbidden. The next scientific gate is authentication of the complete combined
+target set, followed by one frozen evaluation, evidence release, and Atlas
+publication.

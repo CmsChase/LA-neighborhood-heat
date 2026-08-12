@@ -568,7 +568,11 @@ spatial residual clustering as a material limitation. Reconciliation commit:
 The generated development report is `reports/DEVELOPMENT_REPORT.md`, report SHA
 `d0fbdc5a598b9b4acb23ae7c3cbc7afe2596d1cb428bdbba6042cdb738574d31`.
 
-## Immediate next work
+## Historical next work (as of 2026-08-01)
+
+This section is retained only as historical provenance and must not be used to
+resume the current workflow. The authoritative resume record is
+`manifests/multicity/ACTIVE_STAGE.json`.
 
 1. Preserve the completed Los Angeles evidence chain; never create a second
    claim or rerun it with changed settings.

@@ -9,7 +9,7 @@
     "read_public_predictor_sources": true,
     "build_predictor": false,
     "read_source_targets": true,
-    "fit_model": true,
+    "fit_model": false,
     "score_model": false,
     "read_external_targets": true
   },
