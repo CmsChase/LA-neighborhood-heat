@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import json
 import subprocess
 import sys
@@ -104,3 +105,53 @@ def test_windows_powershell_preserves_python_self_check_quotes() -> None:
     )
     assert result.returncode == 0, result.stderr
     assert "Environment ready." in result.stdout
+
+
+@pytest.mark.skipif(__import__("os").name != "nt", reason="Windows packaging contract")
+def test_result_packager_relative_paths_work_in_windows_powershell_5_1() -> None:
+    script_path = (
+        Path(__file__).resolve().parents[1]
+        / "portable_sentinel_templates/package_results.ps1"
+    )
+    escaped_script_path = str(script_path).replace("'", "''")
+    command = f"""
+$tokens = $null
+$parseErrors = $null
+$ast = [System.Management.Automation.Language.Parser]::ParseFile(
+    '{escaped_script_path}', [ref]$tokens, [ref]$parseErrors
+)
+if ($parseErrors.Count -gt 0) {{ throw ($parseErrors | Out-String) }}
+$functionAst = $ast.Find({{
+    param($node)
+    $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and
+        $node.Name -eq 'Get-RelativePath'
+}}, $true)
+Invoke-Expression $functionAst.Extent.Text
+$observed = Get-RelativePath `
+    -Root 'C:/fixture/root' `
+    -Path 'C:/fixture/root/nested/file.txt'
+$normalized = $observed.Replace([IO.Path]::DirectorySeparatorChar, '/')
+if ($normalized -ne 'nested/file.txt') {{
+    throw "Unexpected relative path: $observed"
+}}
+Write-Output $observed
+"""
+    encoded = base64.b64encode(command.encode("utf-16-le")).decode("ascii")
+    result = subprocess.run(
+        [
+            "powershell.exe",
+            "-NoLogo",
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-EncodedCommand",
+            encoded,
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "nested\\file.txt" in result.stdout

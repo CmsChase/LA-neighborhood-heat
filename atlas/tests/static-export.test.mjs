@@ -49,8 +49,7 @@ test("ships exact authenticated display data and repository-prefixed fetches", a
 
   const scripts = (
     await walk(fileURLToPath(new URL("../out/_next/static", import.meta.url)))
-  )
-    .filter((path) => path.endsWith(".js"));
+  ).filter((path) => path.endsWith(".js"));
   const javascript = (
     await Promise.all(scripts.map((path) => readFile(path, "utf8")))
   ).join("\n");
@@ -89,7 +88,10 @@ test("keeps hero annotations on-screen and distinguishes tract taps from map dra
   assert.match(explorer, /data-tract-index=\{index\}/);
   assert.match(explorer, /aria-pressed=\{isSelected\}/);
   assert.match(explorer, /finishPointer\(event, true\)/);
-  assert.doesNotMatch(explorer, /onClick=\{\(event\) => \{[\s\S]*?onSelectTract\(index\);/);
+  assert.doesNotMatch(
+    explorer,
+    /onClick=\{\(event\) => \{[\s\S]*?onSelectTract\(index\);/,
+  );
 });
 
 test("exports an explicitly target-sealed four-city preview", async () => {
@@ -99,6 +101,10 @@ test("exports an explicitly target-sealed four-city preview", async () => {
   );
   const dataContract = await readFile(
     new URL("../app/cities/comparison-data.ts", import.meta.url),
+    "utf8",
+  );
+  const generatedResults = await readFile(
+    new URL("../app/cities/generated-results.ts", import.meta.url),
     "utf8",
   );
 
@@ -121,4 +127,25 @@ test("exports an explicitly target-sealed four-city preview", async () => {
     dataContract,
     /Preview releases cannot contain a claim ID or result values/,
   );
+  assert.match(dataContract, /historical_source_reference/);
+  assert.match(dataContract, /authenticated_external_confirmation/);
+  assert.match(generatedResults, /GENERATED_VERIFIED_RELEASE: unknown = null/);
+});
+
+test("keeps a verified rendering branch without inventing external results", async () => {
+  const page = await readFile(
+    new URL("../app/cities/page.tsx", import.meta.url),
+    "utf8",
+  );
+  const panel = await readFile(
+    new URL("../app/cities/ComparisonPanel.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(page, /data\.release\.state === "verified"/);
+  assert.match(page, /Verified · external confirmation/);
+  assert.match(page, /Los Angeles remains the historical source reference/);
+  assert.match(panel, /External confirmation results are authenticated/);
+  assert.match(panel, /Authenticated external result/);
+  assert.match(panel, /Historical LA reference/);
 });

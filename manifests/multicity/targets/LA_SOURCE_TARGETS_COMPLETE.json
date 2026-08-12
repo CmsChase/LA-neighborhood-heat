@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "state": "la_source_targets_complete",
+  "lane": "los_angeles_2020_2024_source",
+  "city_ids": [
+    "los_angeles_ca"
+  ],
+  "run_id": "multicity-targets-v1-65a90338c9bb96bf",
+  "claim_id_sha256": "9b18e09edd9e80651f6a753ad96b0f49618f17e200a03fe469b6e1e4261b6868",
+  "plan_commit_sha256": "65a90338c9bb96bf2ade17e13d33f561adb78a891f40fdfdf3ce71ddb2843a63",
+  "authorization": {
+    "path": "manifests/multicity/targets/SOURCE_TARGET_AUTHORIZATION.json",
+    "bytes": 2426,
+    "sha256": "22bbc2c013359de3613cefceb40fbb405e5fe708ab6e8592f12cecc1dd3716c7",
+    "commit_sha256": "9770ccfa5678a4cbac62d7225190ecfd489054f0dcdb295bdf2bafb580fa7b6b"
+  },
+  "values_opened_marker": {
+    "path": "data/interim/multicity/targets/values_opened/los_angeles_2020_2024_source/VALUES_OPENED.json",
+    "bytes": 744,
+    "sha256": "fd5734b159598f4b7423308f3a23de422012c05fcb17ff8d4a4e8b9199131b33",
+    "commit_sha256": "8224d85c2b70a6d53182dc987ca6cba4fbefbebdfc2719db6bec7a3a81b7f6cc"
+  },
+  "source_work_units": {
+    "overpass": 90,
+    "compile": 1,
+    "total": 91,
+    "result_commits_sha256": "7ce95b91ad4f57c8030dcb415199be12ddb0bb7570d1132b025aff09c1c28ad3"
+  },
+  "city_target_commit": {
+    "path": "data/interim/multicity/targets/claims/los_angeles_2020_2024_source-9b18e09edd9e80651f6a/cities/los_angeles_ca/CITY_TARGETS_COMPLETE.json",
+    "bytes": 1838,
+    "sha256": "ee937b5b1db69238c47a254c41c302abf3cf9bb2e485e0985538287b94a0a45f",
+    "commit_sha256": "e26efb651e84354e1dfc90789fe3aab61163fbc91259fa632bf3d69fe0be5fdc",
+    "output_files": {
+      "targets.parquet": {
+        "sha256": "3518dc765d13632cc10c5b262fb7756c0793c66242e02cd620eebad859c3ac78",
+        "bytes": 3533793,
+        "rows": 98640,
+        "schema_sha256": "7da7c8f6eb25fbf6c6514c217bf6a68218d2c8a20e0a6002bfe9259b96913052"
+      },
+      "date_summary.parquet": {
+        "sha256": "a618dd9353ae3fb0f85fe8b6449dd1f7e278c18faef413061f818390f233d0bb",
+        "bytes": 23449,
+        "rows": 90,
+        "schema_sha256": "b7361c23e26116af8b5e9b9efb26eb8499fecf6314d64ec5b6922ef1905b128d"
+      },
+      "scene_contributions.parquet": {
+        "sha256": "93c9f1b6aeb5c83a763844a805ee5824c768687180e16139ebc45110fa8321ed",
+        "bytes": 223726,
+        "rows": 77742,
+        "schema_sha256": "b03dee573cec738a308f5d7cb807d0764571af361afd93f0b3b157dc6deb3020"
+      }
+    }
+  },
+  "external_cohort": {
+    "task_count": 68,
+    "tasks_claimed": false,
+    "target_values_read": false
+  },
+  "commit_sha256": "9eb4a38936568b4fc284734c0dab426944b93b51f0853740338ccdf7649243a4"
+}

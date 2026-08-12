@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "state": "complete_verified_portable_sentinel_return",
+  "returned_source": {
+    "kind": "copied_portable_project",
+    "path": "D:\\Downloads\\GAMING_LAPTOP_SENTINEL_RECOVERED_20260812\\GAMING_LAPTOP_SENTINEL"
+  },
+  "archive": null,
+  "archive_sha256": null,
+  "result_manifest_sha256": null,
+  "source_bundle_manifest_sha256": "41819b6054b10a708e1644349ef31e361fd6d2db89b0ef26599c1a8cfafea449",
+  "completed_work_units": 516,
+  "city_complete_commits": {
+    "chicago_il": "feb89cd1f55260127947bbd34b22db134de446e8baa5190bfe7e50c63f7169ad",
+    "phoenix_az": "9b98f0f792c3190bfd230dbff24eb36dc789ede90fc2e61a71701fedaca0b22d",
+    "houston_tx": "dbd6e9e4c1249b63647d875292e06489018e5ec40ecfc21e06cae5f5d80d03ea",
+    "los_angeles_ca": "602b23cc6432b3337ec059ffe0214866b728698b0249d1e8816c9a6f326ce80d"
+  },
+  "final_complete_commit_sha256": "ae4c583b8392b237978743e1742c4f9403826ece74e06de7fb1f84f3a72802ae",
+  "final_predictor_path": "data/processed/multicity/portable_predictors/components/predictors_all_46.parquet",
+  "imported_file_count": 2235,
+  "unchanged_file_count": 0,
+  "access_contract": {
+    "external_target_or_qa_values_read": false,
+    "model_fit_or_prediction_performed": false
+  },
+  "next_safe_stage": "lock_multicity_evaluation_protocol",
+  "commit_sha256": "eed32011e04ba54e5e404576124398c51fed82f85e3ffc2ffbe23d0bfa99dd88"
+}

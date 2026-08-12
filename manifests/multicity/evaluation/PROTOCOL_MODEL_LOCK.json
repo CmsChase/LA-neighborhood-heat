@@ -1,0 +1,403 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "multicity-protocol-model-lock-v1",
+  "state": "locked_before_source_targets_and_real_fit",
+  "experiment_id": "la_to_three_city_zero_shot_v1",
+  "protocol_locked": true,
+  "model_spec_locked": true,
+  "fitted_model_artifacts_locked": false,
+  "research_question": "Can a target-blind model trained on public weather, land-use, geography, and lagged satellite features predict neighborhood-scale daytime land-surface temperature on future dates and in unseen U.S. cities, with calibrated uncertainty?",
+  "cohorts": {
+    "training_city_id": "los_angeles_ca",
+    "training_years": [
+      2020,
+      2021,
+      2022,
+      2023
+    ],
+    "training_rows": 73432,
+    "calibration_city_id": "los_angeles_ca",
+    "calibration_year": 2024,
+    "calibration_rows": 25208,
+    "external_city_ids": [
+      "phoenix_az",
+      "houston_tx",
+      "chicago_il"
+    ],
+    "external_year": 2025,
+    "external_rows": 38301,
+    "external_city_dates": 64,
+    "los_angeles_2025_excluded_from_confirmation": true
+  },
+  "target_contract": {
+    "name": "daytime_land_surface_temperature_c",
+    "analysis_unit": "census_tract_by_target_date",
+    "source": "Landsat Collection 2 Level-2 surface temperature",
+    "minimum_valid_pixel_fraction": 0.6,
+    "minimum_valid_pixels_per_tract": 20,
+    "minimum_tract_footprint_fraction": 0.9,
+    "minimum_cloud_distance_km": 1.0
+  },
+  "model_contract": {
+    "feature_registry_semantic_sha256": "233ac39bedf7951065e772ba738fb304cba5b90ef5a403790333d37e56daf9cf",
+    "b1_feature_order": [
+      "calendar_doy_sin",
+      "calendar_doy_cos",
+      "daymet_dayl_s_mean_prev_1d",
+      "daymet_prcp_mm_sum_prev_1d",
+      "daymet_srad_w_m2_mean_prev_1d",
+      "daymet_tmax_c_mean_prev_1d",
+      "daymet_tmin_c_mean_prev_1d",
+      "daymet_vp_pa_mean_prev_1d",
+      "daymet_srad_energy_mj_m2_sum_prev_1d",
+      "daymet_dayl_s_mean_prev_3d",
+      "daymet_prcp_mm_sum_prev_3d",
+      "daymet_srad_w_m2_mean_prev_3d",
+      "daymet_tmax_c_mean_prev_3d",
+      "daymet_tmin_c_mean_prev_3d",
+      "daymet_vp_pa_mean_prev_3d",
+      "daymet_srad_energy_mj_m2_sum_prev_3d",
+      "daymet_dayl_s_mean_prev_7d",
+      "daymet_prcp_mm_sum_prev_7d",
+      "daymet_srad_w_m2_mean_prev_7d",
+      "daymet_tmax_c_mean_prev_7d",
+      "daymet_tmin_c_mean_prev_7d",
+      "daymet_vp_pa_mean_prev_7d",
+      "daymet_srad_energy_mj_m2_sum_prev_7d"
+    ],
+    "m2_feature_order": [
+      "nlcd_open_water_fraction",
+      "nlcd_developed_open_fraction",
+      "nlcd_developed_low_fraction",
+      "nlcd_developed_high_fraction",
+      "nlcd_barren_fraction",
+      "nlcd_forest_fraction",
+      "nlcd_shrub_grass_fraction",
+      "nlcd_agriculture_fraction",
+      "nlcd_wetland_fraction",
+      "impervious_mean_fraction",
+      "impervious_p90_fraction",
+      "impervious_at_least_50_fraction",
+      "elevation_mean_m",
+      "elevation_std_m",
+      "slope_mean_degrees",
+      "slope_p90_degrees",
+      "gshhg_ocean_great_lakes_shore_distance_mean_km",
+      "gshhg_ocean_great_lakes_shore_distance_p10_km",
+      "calendar_doy_sin",
+      "calendar_doy_cos",
+      "daymet_dayl_s_mean_prev_1d",
+      "daymet_prcp_mm_sum_prev_1d",
+      "daymet_srad_w_m2_mean_prev_1d",
+      "daymet_tmax_c_mean_prev_1d",
+      "daymet_tmin_c_mean_prev_1d",
+      "daymet_vp_pa_mean_prev_1d",
+      "daymet_srad_energy_mj_m2_sum_prev_1d",
+      "daymet_dayl_s_mean_prev_3d",
+      "daymet_prcp_mm_sum_prev_3d",
+      "daymet_srad_w_m2_mean_prev_3d",
+      "daymet_tmax_c_mean_prev_3d",
+      "daymet_tmin_c_mean_prev_3d",
+      "daymet_vp_pa_mean_prev_3d",
+      "daymet_srad_energy_mj_m2_sum_prev_3d",
+      "daymet_dayl_s_mean_prev_7d",
+      "daymet_prcp_mm_sum_prev_7d",
+      "daymet_srad_w_m2_mean_prev_7d",
+      "daymet_tmax_c_mean_prev_7d",
+      "daymet_tmin_c_mean_prev_7d",
+      "daymet_vp_pa_mean_prev_7d",
+      "daymet_srad_energy_mj_m2_sum_prev_7d",
+      "sentinel_ndvi_lag60",
+      "sentinel_evi_lag60",
+      "sentinel_ndwi_lag60",
+      "sentinel_ndbi_lag60",
+      "sentinel_albedo_proxy_lag60"
+    ],
+    "b1_transfer": {
+      "estimator": "Ridge",
+      "features": "calendar_plus_21_daymet",
+      "alpha": 10.0,
+      "fit_intercept": true,
+      "solver": "lsqr",
+      "tolerance": 0.0001,
+      "standardize_after_train_only_dynamic_median_imputation": true
+    },
+    "m2_transfer": {
+      "estimator": "HistGradientBoostingRegressor",
+      "features": "all_46_portable_features",
+      "loss": "absolute_error",
+      "learning_rate": 0.05,
+      "max_iter": 300,
+      "max_leaf_nodes": 31,
+      "min_samples_leaf": 50,
+      "l2_regularization": 1.0,
+      "early_stopping": false,
+      "random_state": 20260719,
+      "standardize": false
+    },
+    "uncertainty": {
+      "method": "equal_date_weighted_conformalized_quantile_regression",
+      "lower_quantile": 0.05,
+      "upper_quantile": 0.95,
+      "nominal_coverage": 0.9,
+      "quantile_model_structure": "same_as_m2_transfer_except_quantile_loss",
+      "nonconformity_score": "max(lower_prediction_minus_y,y_minus_upper_prediction,0)",
+      "calibration_distribution": "Los_Angeles_2024_rows_each_date_total_weight_one",
+      "weighted_quantile_method": "sort_value_then_target_date_then_tract_geoid_and_select_first_cumulative_weight_at_or_above_probability",
+      "conformal_probability": 0.9,
+      "corrected_lower": "lower_quantile_prediction_minus_weighted_nonconformity_quantile",
+      "corrected_upper": "upper_quantile_prediction_plus_weighted_nonconformity_quantile",
+      "abstention_width_quantile": 0.8,
+      "abstention_distribution": "Los_Angeles_2024_corrected_interval_widths_each_date_total_weight_one",
+      "abstain_rule": "corrected_interval_width_strictly_greater_than_frozen_80th_percentile",
+      "external_recalibration_allowed": false
+    },
+    "training_row_weights": "each_training_date_total_weight_one_then_normalize",
+    "dynamic_imputation": "per_feature_median_fit_on_Los_Angeles_2020_2023_only"
+  },
+  "evaluation_contract": {
+    "primary_metric": "one_minus_external_equal_city_equal_date_mae_m2_divided_by_b1",
+    "minimum_relative_mae_improvement": 0.1,
+    "require_ci_lower_above_zero": true,
+    "require_no_external_city_point_degradation": true,
+    "minimum_total_city_dates": 30,
+    "minimum_dates_per_external_city": 8,
+    "bootstrap_iterations": 10000,
+    "bootstrap_method": "city_stratified_crossed_complete_date_x_5km_spatial_block",
+    "bootstrap_seed": 20260728,
+    "confidence_level": 0.95,
+    "overall_coverage_lower": 0.85,
+    "overall_coverage_upper": 0.95,
+    "per_city_coverage_lower": 0.8,
+    "minimum_retention": 0.6,
+    "accepted_mae_improvement": 0.1,
+    "hotspot_fraction": 0.2,
+    "hotspot_tie_break": "score_desc_tract_geoid_asc",
+    "secondary_metrics": [
+      "per_city_equal_date_mae",
+      "rmse",
+      "signed_error",
+      "anomaly_mae",
+      "per_date_spearman",
+      "top20_hotspot_metrics",
+      "coverage",
+      "interval_width",
+      "wis",
+      "risk_coverage"
+    ]
+  },
+  "uncertainty_contract": {
+    "method": "equal_date_weighted_conformalized_quantile_regression",
+    "lower_quantile": 0.05,
+    "upper_quantile": 0.95,
+    "nominal_coverage": 0.9,
+    "calibration_city_id": "los_angeles_ca",
+    "calibration_year": 2024,
+    "abstention_width_quantile": 0.8,
+    "abstain_rule": "corrected_interval_width_strictly_greater_than_frozen_80th_percentile"
+  },
+  "prediction_output_contract": {
+    "prediction_columns": [
+      "city_id",
+      "tract_geoid",
+      "target_date",
+      "b1_prediction_c",
+      "m2_prediction_c",
+      "m2_lower_c",
+      "m2_upper_c",
+      "m2_interval_width_c",
+      "m2_abstain",
+      "m2_accepted"
+    ],
+    "planned_figure_ids": [
+      "external_city_mae",
+      "predicted_vs_observed",
+      "error_by_city_date",
+      "interval_calibration",
+      "risk_coverage",
+      "spatial_error_maps"
+    ],
+    "all_reports_require_row_date_block_counts": true
+  },
+  "permissions": {
+    "source_target_build_authorized": false,
+    "external_target_build_authorized": false,
+    "model_fit_authorized": false,
+    "model_score_authorized": false,
+    "external_targets_unlocked": false,
+    "external_target_values_read": false,
+    "external_prediction_commit_exists": false
+  },
+  "input_fingerprints": {
+    "predictor_contract": {
+      "path": "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT.json",
+      "bytes": 44866,
+      "sha256": "b36d21488cbf31794701e42a4739222c6c0b1586a313cb965def7814c4795f40",
+      "commit_sha256": "b92be8575e836157daa39e94f6720e01802c41143a396ba1a97fad5f40499bd1"
+    },
+    "return_receipt": {
+      "path": "manifests/multicity/returns/PORTABLE_SENTINEL_RETURN.json",
+      "bytes": 1408,
+      "sha256": "92caed888c11b36b93f64b097e74e2b658505ee67167bbfd08e79c8719bc9b01",
+      "commit_sha256": "eed32011e04ba54e5e404576124398c51fed82f85e3ffc2ffbe23d0bfa99dd88"
+    },
+    "predictor_complete": {
+      "path": "data/processed/multicity/portable_predictors/components/PREDICTORS_ALL_46_COMPLETE.json",
+      "bytes": 8408,
+      "sha256": "93f6961155750fdfc44a25308d420913e5e337b10c2fc1e152608550c86f4563",
+      "commit_sha256": "ae4c583b8392b237978743e1742c4f9403826ece74e06de7fb1f84f3a72802ae"
+    },
+    "readiness": {
+      "path": "data/processed/multicity/portable_predictors/readiness/TRAINING_PREFLIGHT.json",
+      "bytes": 1097,
+      "sha256": "eed22c521e8f6d00e31c26426b5e022b800061258cc972b970c4706fcde17e24",
+      "commit_sha256": "6d079de3d224e8eefd7a0ffd3fc010998a5a6e0729fd19425dd7de21728bbfd1"
+    },
+    "spatial_blocks": {
+      "path": "manifests/multicity/evaluation/SPATIAL_BLOCKS.json",
+      "bytes": 3171,
+      "sha256": "e670cfa3c558e042317c1bdb88f6d31c7605d45742230f8fb27074f509372b69",
+      "commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0"
+    },
+    "target_contexts": {
+      "path": "manifests/multicity/targets/TARGET_CONTEXTS.json",
+      "bytes": 4278,
+      "sha256": "181a1b94ba7d94ed0af641ead3c5541131a3fb261e236ee917a5f40c1417d906",
+      "commit_sha256": "013c4a51800e3d0016e801db7d1c1e196babcf379a1e78a6a21cea24f03c0bdb"
+    },
+    "target_plan": {
+      "path": "manifests/multicity/targets/TARGET_BUILD_PLAN.json",
+      "bytes": 138265,
+      "sha256": "00fa094ccf81066e01f5952aa2b42724f2176704c5353b3f92cb330939bc5a5c",
+      "commit_sha256": "65a90338c9bb96bf2ade17e13d33f561adb78a891f40fdfdf3ce71ddb2843a63"
+    },
+    "predictor_table": {
+      "path": "data/processed/multicity/portable_predictors/components/predictors_all_46.parquet",
+      "bytes": 27643037,
+      "sha256": "31b472b53f11a69c8a2d44dfc927ed46162db0c076ef644693233cea4e026b0f"
+    },
+    "historical_experiment_draft_non_authoritative": {
+      "path": "configs/multicity/experiment.toml",
+      "bytes": 5765,
+      "sha256": "fd5330d83bf292204f05dc0aa64e0a535e45523060dd926e3a9b42f8969e5349"
+    }
+  },
+  "historical_anchor": {
+    "phase1_is_context_only": true,
+    "phase1_model_lock": {
+      "path": "manifests/model_lock/MODEL_LOCK.json",
+      "bytes": 12162,
+      "sha256": "bf77762bbd1838be2b67e8461c5f99aad1c2ebf36b4f3b53b25dac1801a81245",
+      "commit_sha256": "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b"
+    },
+    "phase1_evaluation": {
+      "path": "manifests/final_test_2025/evaluation/EVALUATION_COMPLETE.json",
+      "bytes": 1673,
+      "sha256": "edd0420e83e23f8cf7c761c8fae0050c02e2a8f44cfaf4fcf74320658eb3b950",
+      "commit_sha256": "4cc8a5536cf1055d42876577f8d9f6300c799176779a7ec89cd1d3ed819d77a0"
+    },
+    "phase1_claim": {
+      "path": "manifests/final_test_2025/evaluation/CONSUMPTION_CLAIM.json",
+      "bytes": 13047,
+      "sha256": "6ab8ef7074a3637d29335d42ac07ca06bee1eba37ad56a0a55d4c654e0955b3c",
+      "claim_id": "c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f",
+      "commit_sha256": "fbb9b7a5706620384fee3abf66db2be09c3875edadcdcda8787697a038de8015"
+    }
+  },
+  "code_identity": {
+    "git_head_informational": "64ecd73f1c21e94c91355d1081650f527fdff4fb",
+    "files": {
+      "pyproject.toml": {
+        "path": "pyproject.toml",
+        "bytes": 886,
+        "sha256": "6e3c1996227eacf9d19e77498cb39eafda66efb9df4d0a58873cda386e4da971"
+      },
+      "src/la_heat/multicity/evaluation_protocol_lock.py": {
+        "path": "src/la_heat/multicity/evaluation_protocol_lock.py",
+        "bytes": 16466,
+        "sha256": "d6469f9ec8e4aef085ad61da1ac8f8679e202a037080d6a7f6294f4ecda58d9f"
+      },
+      "src/la_heat/multicity/transfer_model.py": {
+        "path": "src/la_heat/multicity/transfer_model.py",
+        "bytes": 16384,
+        "sha256": "13fbfc2233b89960a80a63bd22c75d9b90b8fc3f9b3b78e9f84364eebc77c211"
+      },
+      "src/la_heat/multicity/predictor_readiness.py": {
+        "path": "src/la_heat/multicity/predictor_readiness.py",
+        "bytes": 8543,
+        "sha256": "10cdf92077c92a40f8743740bf1ad51f0dc62b6f03a429348e15deebaf063475"
+      },
+      "src/la_heat/multicity/target_authorization.py": {
+        "path": "src/la_heat/multicity/target_authorization.py",
+        "bytes": 7784,
+        "sha256": "1ff4633570ee3e14a01a35283c5e2093a58832173f9bb677aea8a968c4531bb1"
+      },
+      "src/la_heat/multicity/target_context.py": {
+        "path": "src/la_heat/multicity/target_context.py",
+        "bytes": 7122,
+        "sha256": "372a4c55fd3e11cfbb0b262cb4e9c8800eb5e91b11de66248a44ed3e4bb497d8"
+      },
+      "src/la_heat/multicity/target_transaction.py": {
+        "path": "src/la_heat/multicity/target_transaction.py",
+        "bytes": 15703,
+        "sha256": "5eb3a5464fd18fc1de65586aad02963f7950b3d4b6b4af047fb5c6265dea4072"
+      },
+      "src/la_heat/multicity/target_processor.py": {
+        "path": "src/la_heat/multicity/target_processor.py",
+        "bytes": 8063,
+        "sha256": "d4be2f33ab0e3dbdbdc6678b82c3d83a51f71cfa94e2711f9a379ea1fffa59e6"
+      },
+      "src/la_heat/multicity/target_engine.py": {
+        "path": "src/la_heat/multicity/target_engine.py",
+        "bytes": 15868,
+        "sha256": "3c13b0690971265b250379314c0d7f27317b8209a4ca69a525a55865981a82fe"
+      },
+      "src/la_heat/modeling.py": {
+        "path": "src/la_heat/modeling.py",
+        "bytes": 15517,
+        "sha256": "8f632a5e75426436d7245c9797c347cf839a1162e05b7293eb6cae29975cb747"
+      },
+      "src/la_heat/training_contract.py": {
+        "path": "src/la_heat/training_contract.py",
+        "bytes": 7570,
+        "sha256": "4cc80265f2026a905e2de19e8e47309e4ce03587adc48ad0dc87ceda86c8cbb6"
+      },
+      "src/la_heat/provenance.py": {
+        "path": "src/la_heat/provenance.py",
+        "bytes": 4679,
+        "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+      },
+      "scripts/lock_multicity_evaluation_protocol.py": {
+        "path": "scripts/lock_multicity_evaluation_protocol.py",
+        "bytes": 1262,
+        "sha256": "d32f21972a618bc42f7993ea3bb83e91577c5f3a2acf72ca1489cc490561c8d8"
+      },
+      "configs/multicity/evaluation_protocol_lock_v1.toml": {
+        "path": "configs/multicity/evaluation_protocol_lock_v1.toml",
+        "bytes": 6007,
+        "sha256": "857aecc01f5198ba7d1782c9043619d0ffd5e04ccb3aba020a7f51882f03f92c"
+      },
+      "configs/research.toml": {
+        "path": "configs/research.toml",
+        "bytes": 5416,
+        "sha256": "a2d4f7300d8a264c77c3ddc15a730546945a2d7f6ed253ff2f49e352102c60b9"
+      }
+    },
+    "protocol_config": {
+      "path": "configs/multicity/evaluation_protocol_lock_v1.toml",
+      "bytes": 6007,
+      "sha256": "857aecc01f5198ba7d1782c9043619d0ffd5e04ccb3aba020a7f51882f03f92c"
+    },
+    "future_external_evaluator_implementation_must_be_bound_before_external_claim": true
+  },
+  "access_audit": {
+    "predictor_values_read_by_this_lock": false,
+    "landsat_asset_hrefs_read_by_this_lock": false,
+    "landsat_thermal_or_target_qa_values_read_by_this_lock": false,
+    "target_tables_read_by_this_lock": false,
+    "model_fit_or_prediction_performed_by_this_lock": false,
+    "values_opened_marker_created_by_this_lock": false
+  },
+  "next_safe_stage": "explicitly_authorize_la_2020_2024_source_target_lane",
+  "commit_sha256": "c93cee9d7d05194dd75fe8dba662ae1d5b9ee2a8e1401178a1a9c0fc8675304f"
+}

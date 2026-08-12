@@ -1,6 +1,6 @@
 # Project handoff
 
-Last updated: 2026-08-10 Asia/Shanghai
+Last updated: 2026-08-12 Asia/Shanghai
 
 ## Project summary
 
@@ -61,20 +61,17 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     Package-local engine check returned `ready`; dashboard smoke returned
     `paused` with no engine process. The complete Windows PowerShell first-run
     path also passed after the quoting repair.
-13. The folder was copied to the gaming laptop and the long Sentinel build is
-    running there with six asset-read threads and one acquisition at a time.
-    The engine intentionally processes cities serially in the fixed order
-    Chicago, Phoenix, Houston, then Los Angeles. The latest user-confirmed
-    checkpoint is Chicago complete (`57 / 516` durable units); that number is
-    a snapshot, not a live status feed to this repository.
-14. One-click return tooling now accepts the packaged ZIP, the copied
-    `GAMING_LAPTOP_SENTINEL` folder, or its extracted result folder. It first
-    verifies the frozen 3,410-file source identity and all durable result
-    hashes. A safe-paused partial return imports additively, opens the existing
-    dashboard, and reauthenticates after the dashboard exits. A complete return
-    must prove 516 / 516, four city completion commits, and the final 46-feature
-    completion record; it then writes a formal return receipt and runs the
-    target-blind predictor-readiness audit.
+13. The gaming-laptop Sentinel run completed all `516 / 516` durable units:
+    511 physical acquisitions, four city compiles, and one final merge. The
+    copied return ZIP passed a complete CRC audit and was imported into this
+    primary project without rerunning acquisitions.
+14. The formal return receipt is
+    `manifests/multicity/returns/PORTABLE_SENTINEL_RETURN.json`. The completed
+    predictor table contains 136,941 rows and 46 features; its SHA-256 is
+    `31b472b53f11a69c8a2d44dfc927ed46162db0c076ef644693233cea4e026b0f`.
+    The target-blind readiness audit is `ready_for_protocol_lock_not_model_fit`
+    with 73,432 LA training rows, 25,208 LA calibration rows, and 38,301 sealed
+    external-city prediction rows.
 15. The continuation-specific target-blind 5 km spatial partition is complete
     in EPSG:5070 for all 2,902 tracts: Los Angeles has 71 blocks, Phoenix 59,
     Houston 88, and Chicago 36 (254 globally unique city-prefixed blocks).
@@ -113,6 +110,22 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     be complete for all four cities. The future 159-unit target runtime is also
     implemented and testable only in `paused_not_authorized`; no worker, target
     href, thermal value, QA value, model fit, or external result was opened.
+21. The four-city pre-fit protocol/model specification is append-only locked in
+    `manifests/multicity/evaluation/PROTOCOL_MODEL_LOCK.json`, commit
+    `c93cee9d7d05194dd75fe8dba662ae1d5b9ee2a8e1401178a1a9c0fc8675304f`.
+    It freezes cohorts, exact B1/M2 feature order and parameters, LA-2024 CQR,
+    the equal-city/equal-date primary metric, all success and reliability gates,
+    the 10,000-replicate crossed bootstrap, output schema, planned figures, and
+    code/input identities. This lock did not read any target value or fit a model.
+22. A separate append-only authorization now opens only the Los Angeles
+    2020-2024 source-target lane. Its commit is
+    `9770ccfa5678a4cbac62d7225190ecfd489054f0dcdb295bdf2bafb580fa7b6b`.
+    A resumable localhost runner at `http://127.0.0.1:8770/` has been launched
+    with one worker. It contains 90 LA overpasses plus one LA compile, retries
+    transient failures automatically, and leaves all 68 external/final tasks
+    untouched. Live process state and the completed-unit count exist only in
+    `data/interim/multicity/targets/runtime/source_worker_status.json`; this
+    tracked handoff intentionally does not freeze a transient count.
 
 ## Frozen scientific decisions
 
@@ -136,17 +149,17 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
 
 Authorized now:
 
-- build public predictors for the four canonical city supports;
-- read the public static, weather, and non-thermal Sentinel inputs needed for
-  those predictors;
-- keep the build resumable and visible.
+- authenticate the completed public predictor table and its evidence;
+- authenticate the append-only protocol/model specification lock;
+- authenticate the completed LA 2020-2024 source-target table;
+- issue the separate frozen-model fit authorization after that authentication.
 
 Still prohibited:
 
-- fitting or scoring a model;
+- fitting or scoring a real model;
 - reading external-city Landsat target or QA values;
 - opening external evaluation results;
-- creating the final protocol lock or external prediction commit.
+- creating an external prediction commit or external target claim.
 
 The single active control record is
 `manifests/multicity/ACTIVE_STAGE.json`. Historical numbered transition modules
@@ -154,40 +167,28 @@ through V18 remain for provenance and must not be extended with V19/V20 files.
 
 ## Exact resume point
 
-The static, calendar, and Daymet component build reached `84 / 84` on
-2026-08-10. Its canonical completion record and merged output are:
+The public predictor phase is complete: static/calendar/Daymet reached `84 / 84`,
+Sentinel reached `516 / 516`, and the final table is 136,941 rows by 46 frozen
+features. Do not rebuild or re-import these products.
 
-- `data/processed/multicity/portable_predictors/components/COMPONENTS_COMPLETE.json`
-- `data/processed/multicity/portable_predictors/components/predictors_static_calendar_daymet.parquet`
+The exact tracked stage is `source_targets_complete_ready_for_model_fit_authorization`.
+All 90 LA overpasses and the one city compile completed, producing 98,640
+tract-date keys. `LA_SOURCE_TARGETS_COMPLETE.json` is the append-only completion
+record. The external 68 tasks remain `pending` with zero attempts.
 
-The implementation and portable folder are complete, and the gaming-laptop
-run is active. The last confirmed checkpoint is Chicago complete (`57 / 516`).
-Leave it running or use `Safe Pause` only when the laptop must stop. The
-dashboard tracks 511 acquisitions, four city compiles, and one final merge.
-The remaining cities begin automatically in the fixed order. Do not rebuild
-the 41 completed features, fit M2, or open any external-city Landsat target
-values. Model fitting and target access remain behind later locks.
-
-When the page reports `complete`, close it and double-click
-`PACKAGE_RESULTS.cmd`. Bring back the generated ZIP and its `.sha256`, or copy
-back the whole portable folder. A safe pause is also portable: request
-`Safe Pause`, wait for running to reach zero, then package or copy the folder.
-The returned cache can resume without repeating committed acquisitions.
-
-For the simplest return, drag the ZIP or returned folder onto
-`IMPORT_SENTINEL_RESULTS.cmd`; double-clicking it also prompts for a path. The
-equivalent commands are:
+Reauthenticate the protocol and LA-only authorization with:
 
 ```powershell
-.\.venv\Scripts\python scripts\import_portable_sentinel_results.py --archive "D:\path\returned-results.zip" --audit-if-complete
-.\.venv\Scripts\python scripts\import_portable_sentinel_results.py --source-directory "D:\path\returned-folder" --resume-dashboard --audit-if-complete
+.\.venv\Scripts\python scripts\lock_multicity_evaluation_protocol.py --project-root . --check-only
+.\.venv\Scripts\python scripts\authorize_multicity_source_targets.py --project-root . --check-only
 ```
 
-The command validates before import. A partial safe-pause return resumes through
-the portable dashboard and is rechecked when the dashboard closes. A complete
-return writes `manifests/multicity/returns/PORTABLE_SENTINEL_RETURN.json` and
-must report `ready_for_protocol_lock_not_model_fit`. It still does not
-authorize or perform model fitting.
+The next transition is to authenticate `LA_SOURCE_TARGETS_COMPLETE.json`, issue
+the model-fit authorization, fit the frozen B1/M2/CQR models, and create the
+three-city predictor-only prediction commit. Phoenix, Houston, and Chicago 2025
+target values must remain sealed until that prediction commit authenticates.
+The implemented external evaluator is bound and fingerprinted when the later
+single external-target claim is issued.
 
 The already completed spatial partition can be reauthenticated without target
 or predictor access using:
@@ -198,18 +199,13 @@ or predictor access using:
 .\.venv\Scripts\python scripts\stage_multicity_target_build_plan.py --check-only
 ```
 
-After predictor readiness succeeds, the next scientific action is to bind the
-existing frozen predictor/model contract into the full protocol/model lock.
-That lock must then separately authorize and complete the 90-date LA
-2020–2024 source-target lane on the new support before any real fit. Do not
-call the transfer-model fit functions against real labels while
-`ACTIVE_STAGE.json` still has `model_fit_authorized=false`; external targets
-remain behind the later prediction-commit and one-claim gates.
+Do not call the transfer-model fit functions against real labels while
+`ACTIVE_STAGE.json` has `model_fit_authorized=false`; external targets remain
+behind the later prediction-commit and one-claim gates.
 
 Authenticate the completed gates with:
 
 ```powershell
-Set-Location "D:\HuaweiMoveData\Users\haora\Documents\ISEF"
 .\.venv\Scripts\python scripts\stage_multicity_missing_support_calibration_evidence_v1.py --check-only
 .\.venv\Scripts\python scripts\stage_phoenix_source_footprint_restage.py --check-only
 .\.venv\Scripts\python scripts\lock_portable_predictor_contract.py --check-only

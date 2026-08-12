@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "multicity-source-target-authorization-v1",
+  "state": "target_execution_authorized",
+  "lane": "los_angeles_2020_2024_source",
+  "city_ids": [
+    "los_angeles_ca"
+  ],
+  "years": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "purpose": "los_angeles_training_and_calibration_labels",
+  "expected_overpass_count": 90,
+  "expected_scene_count": 177,
+  "expected_target_key_count": 98640,
+  "protocol_lock": {
+    "path": "manifests/multicity/evaluation/PROTOCOL_MODEL_LOCK.json",
+    "bytes": 16276,
+    "sha256": "d6a77fd0a916206934eaf8fa1d0b364d7363e70d19868213151fc3bd025a3e73",
+    "commit_sha256": "c93cee9d7d05194dd75fe8dba662ae1d5b9ee2a8e1401178a1a9c0fc8675304f"
+  },
+  "plan_commit_sha256": "65a90338c9bb96bf2ade17e13d33f561adb78a891f40fdfdf3ce71ddb2843a63",
+  "target_plan": {
+    "path": "manifests/multicity/targets/TARGET_BUILD_PLAN.json",
+    "bytes": 138265,
+    "sha256": "00fa094ccf81066e01f5952aa2b42724f2176704c5353b3f92cb330939bc5a5c",
+    "commit_sha256": "65a90338c9bb96bf2ade17e13d33f561adb78a891f40fdfdf3ce71ddb2843a63"
+  },
+  "target_config_path": "configs/research.toml",
+  "target_config_file_sha256": "a2d4f7300d8a264c77c3ddc15a730546945a2d7f6ed253ff2f49e352102c60b9",
+  "target_config_sha256": "429c6ce616a1fadff213234759926a042533c65e77d3dbef561b4de939624f37",
+  "asset_href_hydration_authorized": true,
+  "target_values_open_authorized": true,
+  "single_global_claim": false,
+  "external_prediction_commit_sha256": null,
+  "values_opened_marker": "data/interim/multicity/targets/values_opened/los_angeles_2020_2024_source/VALUES_OPENED.json",
+  "permissions": {
+    "source_target_build_authorized": true,
+    "external_target_build_authorized": false,
+    "model_fit_authorized": false,
+    "model_score_authorized": false,
+    "external_targets_unlocked": false
+  },
+  "access_audit": {
+    "landsat_asset_hrefs_read_by_authorization": false,
+    "landsat_thermal_or_target_qa_values_read_by_authorization": false,
+    "target_tables_read_by_authorization": false,
+    "model_fit_or_prediction_performed_by_authorization": false,
+    "values_opened_marker_created_by_authorization": false
+  },
+  "next_safe_stage": "run_resumable_la_2020_2024_source_target_build",
+  "claim_id": "0616b0c695094ed2cfac1ce8b960e59fbd92396817189ded585d6a2a0d317033",
+  "commit_sha256": "9770ccfa5678a4cbac62d7225190ecfd489054f0dcdb295bdf2bafb580fa7b6b"
+}

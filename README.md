@@ -62,19 +62,21 @@ outputs are:
 - `data/processed/multicity/portable_predictors/components/COMPONENTS_COMPLETE.json`
 - `data/processed/multicity/portable_predictors/components/predictors_static_calendar_daymet.parquet`
 
-The visible, resumable four-city Sentinel-2 predictor build is currently
-running on the gaming laptop, in the fixed order Chicago, Phoenix, Houston,
-then Los Angeles. The latest user-confirmed checkpoint is Chicago complete
-(`57 / 516` durable units); later progress is intentionally not guessed from
-this repository. No real model has been fit and external-city target values
-remain sealed.
+The four-city Sentinel-2 predictor build and return are complete. All `516 / 516`
+durable units (511 physical acquisitions, four city compiles, and one final
+merge) authenticated after import. The final predictor table contains 136,941
+rows and 46 frozen features.
 
-While that build runs, the continuation-specific 5 km spatial partition has
-been completed for all 2,902 tracts, and the frozen B1/M2 plus conformal
-uncertainty core has passed a deterministic four-city synthetic rehearsal. A
-one-click copy-back acceptance/resume workflow and a target-sealed `/cities/`
-website interface are ready. These preparations do not authorize or perform a
-real model fit; synthetic metrics are not research evidence.
+The separately authorized 91-unit Los Angeles 2020-2024 source-target build is
+complete. Its authenticated table contains 98,640 tract-date keys. The next
+stage is the separate frozen-model fit authorization. Phoenix, Houston, and
+Chicago target and QA values remain sealed, and no real model has yet been fit.
+
+The continuation-specific 5 km spatial partition is complete for all 2,902
+tracts. The frozen fit, predictor-only external publication, one-claim external
+target build, evaluation, and Atlas-release paths are implemented and covered
+by synthetic tests. These preparations do not authorize a later stage by
+themselves; synthetic metrics are not research evidence.
 
 ## Local setup
 

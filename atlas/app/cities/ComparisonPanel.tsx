@@ -50,9 +50,9 @@ const RESULT_COLUMNS: Array<{
     format: (value) => `${value.toFixed(2)}°C`,
   },
   {
-    label: "Pooled RMSE",
-    read: (result) => result.primary.pooledRmseC,
-    format: (value) => `${value.toFixed(2)}°C`,
+    label: "MAE improvement vs B1",
+    read: (result) => result.primary.relativeMaeImprovementPercent,
+    format: (value) => `${value.toFixed(1)}%`,
   },
   {
     label: "Median rank ρ",
@@ -67,7 +67,18 @@ const RESULT_COLUMNS: Array<{
 ];
 
 function roleLabel(role: CityDesign["role"]) {
-  return role === "source_anchor" ? "Source + calibration" : "External confirmation";
+  return role === "source_anchor"
+    ? "Source + calibration"
+    : "External confirmation";
+}
+
+function isExternalResult(value: unknown): value is AuthenticatedCityResults {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "resultState" in value &&
+    value.resultState === "authenticated_external_confirmation"
+  );
 }
 
 export default function ComparisonPanel({
@@ -77,7 +88,7 @@ export default function ComparisonPanel({
 }) {
   const [metricKey, setMetricKey] =
     useState<DesignMetricKey>("tractCount");
-
+  const verified = data.release.state === "verified";
   const metric = DESIGN_METRICS.find((item) => item.key === metricKey)!;
   const maximum = useMemo(
     () => Math.max(...data.cities.map((city) => city[metricKey])),
@@ -93,9 +104,8 @@ export default function ComparisonPanel({
             <h2>Compare the design before the outcomes.</h2>
           </div>
           <p>
-            These are authenticated, target-blind inventory counts. They describe
-            what each city contributes to the protocol; they are not performance
-            estimates.
+            These authenticated inventory counts describe what each city
+            contributes to the protocol; they are not performance estimates.
           </p>
         </div>
 
@@ -130,7 +140,6 @@ export default function ComparisonPanel({
               const barStyle = {
                 "--bar-width": `${Math.max(5, (value / maximum) * 100)}%`,
               } as CSSProperties;
-
               return (
                 <article
                   className={styles.cityBarRow}
@@ -171,8 +180,8 @@ export default function ComparisonPanel({
             })}
           </div>
           <p className={styles.inventoryNote}>
-            Inventory source: frozen target contexts and build plan. Overpasses are
-            planned physical target units, not usable evaluation-date counts.
+            Inventory source: frozen target contexts and build plan. Overpasses
+            are planned physical target units, not usable evaluation-date counts.
           </p>
         </div>
       </section>
@@ -181,21 +190,36 @@ export default function ComparisonPanel({
         <div className={styles.sectionHeading}>
           <div>
             <span className="eyebrow">02 · Result interface</span>
-            <h2>Result slots are intentionally empty.</h2>
+            <h2>
+              {verified
+                ? "External confirmation results are authenticated."
+                : "Result slots are intentionally empty."}
+            </h2>
           </div>
           <p>
-            A verified release can populate this same interface. In preview mode,
-            the schema requires every result object and the claim ID to remain null.
+            {verified
+              ? "Los Angeles remains a historical source reference; the three 2025 external cities come from one authenticated confirmation claim."
+              : "A verified release can populate this same interface. In preview mode, every result object and the claim ID must remain null."}
           </p>
         </div>
 
         <div className={styles.resultFrame}>
           <div className={styles.resultFrameHeader}>
             <div>
-              <span className={styles.lockIcon} aria-hidden="true">×</span>
+              <span className={styles.lockIcon} aria-hidden="true">
+                {verified ? "✓" : "×"}
+              </span>
               <div>
-                <strong>External targets sealed</strong>
-                <span>No cross-city outcome values are bundled with this page.</span>
+                <strong>
+                  {verified
+                    ? "External evaluation verified"
+                    : "External targets sealed"}
+                </strong>
+                <span>
+                  {verified
+                    ? data.release.notice
+                    : "No cross-city outcome values are bundled with this page."}
+                </span>
               </div>
             </div>
             <span className={styles.previewPill}>{data.release.state}</span>
@@ -209,13 +233,16 @@ export default function ComparisonPanel({
           >
             <table className={styles.resultTable}>
               <caption>
-                Four-city performance interface; values are unavailable in preview mode.
+                Los Angeles historical source reference and three-city external
+                confirmation interface.
               </caption>
               <thead>
                 <tr>
                   <th scope="col">City</th>
                   {RESULT_COLUMNS.map((column) => (
-                    <th key={column.label} scope="col">{column.label}</th>
+                    <th key={column.label} scope="col">
+                      {column.label}
+                    </th>
                   ))}
                   <th scope="col">Release state</th>
                 </tr>
@@ -229,8 +256,15 @@ export default function ComparisonPanel({
                     </th>
                     {RESULT_COLUMNS.map((column) => (
                       <td key={column.label}>
-                        {city.results ? (
-                          <strong>{column.format(column.read(city.results))}</strong>
+                        {isExternalResult(city.results) ? (
+                          <strong>
+                            {column.format(column.read(city.results))}
+                          </strong>
+                        ) : city.results?.resultState ===
+                          "historical_source_reference" ? (
+                          <span className={styles.pendingValue}>
+                            Source reference
+                          </span>
                         ) : (
                           <span className={styles.pendingValue}>Not released</span>
                         )}
@@ -239,10 +273,17 @@ export default function ComparisonPanel({
                     <td>
                       <span
                         className={
-                          city.results ? styles.verifiedState : styles.pendingState
+                          isExternalResult(city.results)
+                            ? styles.verifiedState
+                            : styles.pendingState
                         }
                       >
-                        {city.results ? "Authenticated" : "Awaiting verified release"}
+                        {isExternalResult(city.results)
+                          ? "Authenticated external result"
+                          : city.results?.resultState ===
+                              "historical_source_reference"
+                            ? "Historical LA reference"
+                            : "Awaiting verified release"}
                       </span>
                     </td>
                   </tr>

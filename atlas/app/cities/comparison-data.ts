@@ -1,3 +1,5 @@
+import { GENERATED_VERIFIED_RELEASE } from "./generated-results";
+
 export const COMPARISON_SCHEMA_VERSION = "four-city-comparison-v1" as const;
 
 export const CITY_IDS = [
@@ -22,24 +24,41 @@ export type CityDesign = {
 };
 
 export type AuthenticatedCityResults = {
-  resultState: "authenticated";
+  resultState: "authenticated_external_confirmation";
   evaluationRows: number;
   independentDates: number;
+  independentSpatialBlocks: number;
+  evaluatedDateRange: {
+    first: string;
+    last: string;
+  };
   primary: {
     equalDateMaeC: number;
-    pooledRmseC: number;
+    baselineEqualDateMaeC: number;
     medianPerDateSpearman: number;
     relativeMaeImprovementPercent: number;
   };
   uncertainty: {
     nominalCoverage: number;
     empiricalCoverage: number;
-    abstentionRate: number;
+    retentionFraction: number;
+    meanIntervalWidthC: number;
+    wis90C: number;
   };
 };
 
+export type HistoricalSourceReference = {
+  resultState: "historical_source_reference";
+  label: string;
+  href: string;
+  comparableAsExternalConfirmation: false;
+  notice: string;
+};
+
 type PreviewCity = CityDesign & { results: null };
-type VerifiedCity = CityDesign & { results: AuthenticatedCityResults };
+type VerifiedCity = CityDesign & {
+  results: AuthenticatedCityResults | HistoricalSourceReference;
+};
 
 type ComparisonDataBase = {
   schemaVersion: typeof COMPARISON_SCHEMA_VERSION;
@@ -96,7 +115,10 @@ function isFiniteNumber(value: unknown): value is number {
 }
 
 function validateAuthenticatedResults(value: unknown, cityId: string) {
-  if (!isRecord(value) || value.resultState !== "authenticated") {
+  if (
+    !isRecord(value) ||
+    value.resultState !== "authenticated_external_confirmation"
+  ) {
     throw new Error(`${cityId}: verified releases require authenticated results.`);
   }
 
@@ -105,20 +127,46 @@ function validateAuthenticatedResults(value: unknown, cityId: string) {
   if (!isRecord(primary) || !isRecord(uncertainty)) {
     throw new Error(`${cityId}: result metric groups are incomplete.`);
   }
+  const dateRange = value.evaluatedDateRange;
+  if (
+    !isRecord(dateRange) ||
+    typeof dateRange.first !== "string" ||
+    typeof dateRange.last !== "string"
+  ) {
+    throw new Error(`${cityId}: evaluated date range is incomplete.`);
+  }
 
   const requiredNumbers = [
     value.evaluationRows,
     value.independentDates,
+    value.independentSpatialBlocks,
     primary.equalDateMaeC,
-    primary.pooledRmseC,
+    primary.baselineEqualDateMaeC,
     primary.medianPerDateSpearman,
     primary.relativeMaeImprovementPercent,
     uncertainty.nominalCoverage,
     uncertainty.empiricalCoverage,
-    uncertainty.abstentionRate,
+    uncertainty.retentionFraction,
+    uncertainty.meanIntervalWidthC,
+    uncertainty.wis90C,
   ];
   if (!requiredNumbers.every(isFiniteNumber)) {
     throw new Error(`${cityId}: result metrics must all be finite numbers.`);
+  }
+}
+
+function validateSourceReference(value: unknown) {
+  if (
+    !isRecord(value) ||
+    value.resultState !== "historical_source_reference" ||
+    value.comparableAsExternalConfirmation !== false ||
+    typeof value.label !== "string" ||
+    typeof value.href !== "string" ||
+    typeof value.notice !== "string"
+  ) {
+    throw new Error(
+      "Los Angeles must remain an explicit historical source reference.",
+    );
   }
 }
 
@@ -177,7 +225,11 @@ export function parseFourCityComparisonData(
       throw new Error("Verified releases require a non-empty claim ID.");
     }
     for (const city of cities) {
-      validateAuthenticatedResults(city.results, String(city.id));
+      if (city.id === "los_angeles_ca") {
+        validateSourceReference(city.results);
+      } else {
+        validateAuthenticatedResults(city.results, String(city.id));
+      }
     }
   } else {
     throw new Error("Unknown four-city comparison release state.");
@@ -280,5 +332,50 @@ const previewData = {
   ],
 } satisfies PreviewComparisonData;
 
+function materializeGeneratedRelease(input: unknown): unknown {
+  if (input === null) return previewData;
+  if (
+    !isRecord(input) ||
+    input.schemaVersion !== "multicity-atlas-release-v1" ||
+    !isRecord(input.release) ||
+    !isRecord(input.sourceReference) ||
+    !Array.isArray(input.externalResults) ||
+    !Array.isArray(input.provenance)
+  ) {
+    throw new Error("Generated Atlas release has an unsupported schema.");
+  }
+  const byCity = new Map<string, unknown>();
+  for (const result of input.externalResults) {
+    if (!isRecord(result) || typeof result.cityId !== "string") {
+      throw new Error("Generated external result lacks a city ID.");
+    }
+    if (byCity.has(result.cityId)) {
+      throw new Error(`Generated result duplicates ${result.cityId}.`);
+    }
+    byCity.set(result.cityId, result);
+  }
+  const expectedExternal = CITY_IDS.filter((id) => id !== "los_angeles_ca");
+  if (
+    byCity.size !== expectedExternal.length ||
+    expectedExternal.some((id) => !byCity.has(id))
+  ) {
+    throw new Error("Generated release must contain exactly three external cities.");
+  }
+  return {
+    ...previewData,
+    release: input.release,
+    cities: previewData.cities.map((city) => ({
+      ...city,
+      results:
+        city.id === "los_angeles_ca"
+          ? input.sourceReference
+          : byCity.get(city.id),
+    })),
+    provenance: [...previewData.provenance, ...input.provenance],
+  };
+}
+
 export const FOUR_CITY_COMPARISON_DATA =
-  parseFourCityComparisonData(previewData);
+  parseFourCityComparisonData(
+    materializeGeneratedRelease(GENERATED_VERIFIED_RELEASE),
+  );

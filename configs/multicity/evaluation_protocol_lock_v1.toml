@@ -1,0 +1,124 @@
+[identity]
+schema_version = 1
+algorithm_version = "multicity-protocol-model-lock-v1"
+experiment_id = "la_to_three_city_zero_shot_v1"
+research_question = "Can a target-blind model trained on public weather, land-use, geography, and lagged satellite features predict neighborhood-scale daytime land-surface temperature on future dates and in unseen U.S. cities, with calibrated uncertainty?"
+
+[cohorts]
+training_city_id = "los_angeles_ca"
+training_years = [2020, 2021, 2022, 2023]
+training_rows = 73432
+calibration_city_id = "los_angeles_ca"
+calibration_year = 2024
+calibration_rows = 25208
+external_city_ids = ["phoenix_az", "houston_tx", "chicago_il"]
+external_year = 2025
+external_rows = 38301
+external_city_dates = 64
+los_angeles_2025_excluded_from_confirmation = true
+
+[target]
+name = "daytime_land_surface_temperature_c"
+analysis_unit = "census_tract_by_target_date"
+source = "Landsat Collection 2 Level-2 surface temperature"
+minimum_valid_pixel_fraction = 0.60
+minimum_valid_pixels_per_tract = 20
+minimum_tract_footprint_fraction = 0.90
+minimum_cloud_distance_km = 1.0
+
+[models]
+contract_source = "portable_predictor_contract"
+training_row_weights = "each_training_date_total_weight_one_then_normalize"
+dynamic_imputation = "per_feature_median_fit_on_los_angeles_2020_2023_only"
+external_fit_or_recalibration_allowed = false
+
+[uncertainty]
+method = "equal_date_weighted_conformalized_quantile_regression"
+lower_quantile = 0.05
+upper_quantile = 0.95
+nominal_coverage = 0.90
+calibration_city_id = "los_angeles_ca"
+calibration_year = 2024
+abstention_width_quantile = 0.80
+abstain_rule = "corrected_interval_width_strictly_greater_than_frozen_80th_percentile"
+
+[evaluation]
+primary_metric = "one_minus_external_equal_city_equal_date_mae_m2_divided_by_b1"
+minimum_relative_mae_improvement = 0.10
+require_ci_lower_above_zero = true
+require_no_external_city_point_degradation = true
+minimum_total_city_dates = 30
+minimum_dates_per_external_city = 8
+bootstrap_iterations = 10000
+bootstrap_method = "city_stratified_crossed_complete_date_x_5km_spatial_block"
+bootstrap_seed = 20260728
+confidence_level = 0.95
+overall_coverage_lower = 0.85
+overall_coverage_upper = 0.95
+per_city_coverage_lower = 0.80
+minimum_retention = 0.60
+accepted_mae_improvement = 0.10
+hotspot_fraction = 0.20
+hotspot_tie_break = "score_desc_tract_geoid_asc"
+secondary_metrics = ["per_city_equal_date_mae", "rmse", "signed_error", "anomaly_mae", "per_date_spearman", "top20_hotspot_metrics", "coverage", "interval_width", "wis", "risk_coverage"]
+
+[outputs]
+prediction_columns = ["city_id", "tract_geoid", "target_date", "b1_prediction_c", "m2_prediction_c", "m2_lower_c", "m2_upper_c", "m2_interval_width_c", "m2_abstain", "m2_accepted"]
+planned_figure_ids = ["external_city_mae", "predicted_vs_observed", "error_by_city_date", "interval_calibration", "risk_coverage", "spatial_error_maps"]
+all_reports_require_row_date_block_counts = true
+
+[permissions]
+source_target_build_authorized = false
+external_target_build_authorized = false
+model_fit_authorized = false
+model_score_authorized = false
+external_targets_unlocked = false
+external_target_values_read = false
+external_prediction_commit_exists = false
+
+[inputs]
+predictor_contract_path = "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT.json"
+predictor_contract_commit_sha256 = "b92be8575e836157daa39e94f6720e01802c41143a396ba1a97fad5f40499bd1"
+return_receipt_path = "manifests/multicity/returns/PORTABLE_SENTINEL_RETURN.json"
+return_receipt_commit_sha256 = "eed32011e04ba54e5e404576124398c51fed82f85e3ffc2ffbe23d0bfa99dd88"
+predictor_complete_path = "data/processed/multicity/portable_predictors/components/PREDICTORS_ALL_46_COMPLETE.json"
+predictor_complete_commit_sha256 = "ae4c583b8392b237978743e1742c4f9403826ece74e06de7fb1f84f3a72802ae"
+predictor_table_path = "data/processed/multicity/portable_predictors/components/predictors_all_46.parquet"
+predictor_table_sha256 = "31b472b53f11a69c8a2d44dfc927ed46162db0c076ef644693233cea4e026b0f"
+readiness_path = "data/processed/multicity/portable_predictors/readiness/TRAINING_PREFLIGHT.json"
+readiness_commit_sha256 = "6d079de3d224e8eefd7a0ffd3fc010998a5a6e0729fd19425dd7de21728bbfd1"
+spatial_blocks_path = "manifests/multicity/evaluation/SPATIAL_BLOCKS.json"
+spatial_blocks_commit_sha256 = "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0"
+target_contexts_path = "manifests/multicity/targets/TARGET_CONTEXTS.json"
+target_contexts_commit_sha256 = "013c4a51800e3d0016e801db7d1c1e196babcf379a1e78a6a21cea24f03c0bdb"
+target_plan_path = "manifests/multicity/targets/TARGET_BUILD_PLAN.json"
+target_plan_commit_sha256 = "65a90338c9bb96bf2ade17e13d33f561adb78a891f40fdfdf3ce71ddb2843a63"
+historical_experiment_draft_path = "configs/multicity/experiment.toml"
+
+[historical_anchor]
+phase1_model_lock_path = "manifests/model_lock/MODEL_LOCK.json"
+phase1_model_lock_commit_sha256 = "584ccfcb6a32a5a9c380e6e029f5205b91b21684ca6655f240eb72d49e76115b"
+phase1_claim_path = "manifests/final_test_2025/evaluation/CONSUMPTION_CLAIM.json"
+phase1_claim_id = "c174e0b26272dcb194a54ec4cdb468e18d0f64f8d04156681746a52361d1f01f"
+phase1_evaluation_path = "manifests/final_test_2025/evaluation/EVALUATION_COMPLETE.json"
+phase1_evaluation_commit_sha256 = "4cc8a5536cf1055d42876577f8d9f6300c799176779a7ec89cd1d3ed819d77a0"
+phase1_is_context_only = true
+
+[code]
+paths = [
+  "pyproject.toml",
+  "src/la_heat/multicity/evaluation_protocol_lock.py",
+  "src/la_heat/multicity/transfer_model.py",
+  "src/la_heat/multicity/predictor_readiness.py",
+  "src/la_heat/multicity/target_authorization.py",
+  "src/la_heat/multicity/target_context.py",
+  "src/la_heat/multicity/target_transaction.py",
+  "src/la_heat/multicity/target_processor.py",
+  "src/la_heat/multicity/target_engine.py",
+  "src/la_heat/modeling.py",
+  "src/la_heat/training_contract.py",
+  "src/la_heat/provenance.py",
+  "scripts/lock_multicity_evaluation_protocol.py",
+  "configs/multicity/evaluation_protocol_lock_v1.toml",
+  "configs/research.toml",
+]

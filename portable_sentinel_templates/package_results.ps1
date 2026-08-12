@@ -8,7 +8,22 @@ Set-StrictMode -Version Latest
 
 function Get-RelativePath {
     param([string]$Root, [string]$Path)
-    return [IO.Path]::GetRelativePath($Root, $Path)
+    # Windows PowerShell 5.1 runs on .NET Framework, where
+    # System.IO.Path.GetRelativePath() does not exist.  The portable bundle is
+    # intentionally launched with powershell.exe, so keep this implementation
+    # compatible with both Windows PowerShell 5.1 and newer PowerShell versions.
+    $rootFull = [IO.Path]::GetFullPath($Root).TrimEnd(
+        [char[]]@([IO.Path]::DirectorySeparatorChar, [IO.Path]::AltDirectorySeparatorChar)
+    )
+    $pathFull = [IO.Path]::GetFullPath($Path)
+    if ([string]::Equals($rootFull, $pathFull, [StringComparison]::OrdinalIgnoreCase)) {
+        return '.'
+    }
+    $rootPrefix = $rootFull + [IO.Path]::DirectorySeparatorChar
+    if (-not $pathFull.StartsWith($rootPrefix, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "Path is outside the requested root: root='$rootFull', path='$pathFull'"
+    }
+    return $pathFull.Substring($rootPrefix.Length)
 }
 
 function Test-ExcludedResultPath {

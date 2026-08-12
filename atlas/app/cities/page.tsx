@@ -4,19 +4,25 @@ import ComparisonPanel from "./ComparisonPanel";
 import { FOUR_CITY_COMPARISON_DATA } from "./comparison-data";
 import styles from "./cities.module.css";
 
-export const metadata: Metadata = {
-  title: "Four-city comparison preview · Surface Heat Atlas",
-  description:
-    "A target-sealed preview of the Los Angeles, Phoenix, Houston, and Chicago surface-heat transfer study interface.",
-};
-
 const data = FOUR_CITY_COMPARISON_DATA;
+
+export const metadata: Metadata = {
+  title:
+    data.release.state === "verified"
+      ? "Verified three-city confirmation · Surface Heat Atlas"
+      : "Four-city comparison preview · Surface Heat Atlas",
+  description:
+    data.release.state === "verified"
+      ? "Authenticated external confirmation results for Phoenix, Houston, and Chicago, with Los Angeles shown as the historical source reference."
+      : "A target-sealed preview of the Los Angeles, Phoenix, Houston, and Chicago surface-heat transfer study interface.",
+};
 
 function roleLabel(role: (typeof data.cities)[number]["role"]) {
   return role === "source_anchor" ? "Source anchor" : "External cohort";
 }
 
 export default function CitiesPage() {
+  const verified = data.release.state === "verified";
   return (
     <main className={styles.page}>
       <header className="site-header">
@@ -38,7 +44,9 @@ export default function CitiesPage() {
         <div className={styles.heroCopy}>
           <span className={styles.releaseBadge}>
             <i aria-hidden="true" />
-            Preview · targets sealed
+            {verified
+              ? "Verified · external confirmation"
+              : "Preview · targets sealed"}
           </span>
           <span className="eyebrow">Four-city transfer study</span>
           <h1>
@@ -47,9 +55,9 @@ export default function CitiesPage() {
             <em>Four different cities.</em>
           </h1>
           <p>
-            This comparison frame is live before the results are. It introduces
-            the cross-city design using target-blind inventory only; external-city
-            performance and target values remain absent by construction.
+            {verified
+              ? "The frozen Los Angeles model has now been evaluated as one indivisible external claim in Phoenix, Houston, and Chicago. Los Angeles remains the historical source reference."
+              : "This comparison frame is live before the results are. It introduces the cross-city design using target-blind inventory only; external-city performance and target values remain absent by construction."}
           </p>
           <div className={styles.heroActions}>
             <a className="primary-action" href="#compare">
@@ -74,14 +82,16 @@ export default function CitiesPage() {
               <span className={styles.cityDot} aria-hidden="true" />
               <div>
                 <strong>{city.name}</strong>
-                <small>{city.region} · {roleLabel(city.role)}</small>
+                <small>
+                  {city.region} · {roleLabel(city.role)}
+                </small>
               </div>
               <span className={styles.cityCode}>{city.code}</span>
             </article>
           ))}
           <div className={styles.cityIndexFooter}>
             <span>Outcome payload</span>
-            <strong>NULL · PREVIEW</strong>
+            <strong>{verified ? "VERIFIED · AUTHENTICATED" : "NULL · PREVIEW"}</strong>
           </div>
         </aside>
       </section>
@@ -112,7 +122,10 @@ export default function CitiesPage() {
 
       <ComparisonPanel data={data} />
 
-      <section className={[styles.section, styles.protocolSection].join(" ")} id="protocol">
+      <section
+        className={[styles.section, styles.protocolSection].join(" ")}
+        id="protocol"
+      >
         <div className={styles.sectionHeading}>
           <div>
             <span className="eyebrow light">03 · Transfer protocol</span>
@@ -120,8 +133,8 @@ export default function CitiesPage() {
           </div>
           <p>
             The sequence keeps training, calibration, and external confirmation
-            separate. Phoenix, Houston, and Chicago are evaluated together, not as
-            three opportunities to choose a favorable result.
+            separate. Phoenix, Houston, and Chicago are evaluated together, not
+            as three opportunities to choose a favorable result.
           </p>
         </div>
 
@@ -129,26 +142,51 @@ export default function CitiesPage() {
           <article>
             <span>01</span>
             <small>Fit</small>
-            <h3>Los Angeles<br />2020–2023</h3>
-            <p>Fit the preregistered M2 pipeline on source-city years only; no real fit has occurred yet.</p>
+            <h3>
+              Los Angeles
+              <br />2020–2023
+            </h3>
+            <p>
+              {verified
+                ? "The preregistered M2 pipeline was fit on source-city years only."
+                : "Fit the preregistered M2 pipeline on source-city years only; no real fit has occurred yet."}
+            </p>
           </article>
           <article>
             <span>02</span>
             <small>Calibrate</small>
-            <h3>Los Angeles<br />2024</h3>
-            <p>Freeze conformal correction and the abstention threshold without external labels.</p>
+            <h3>
+              Los Angeles
+              <br />2024
+            </h3>
+            <p>
+              Freeze conformal correction and the abstention threshold without
+              external labels.
+            </p>
           </article>
           <article>
             <span>03</span>
             <small>Transfer</small>
-            <h3>Three cities<br />2025</h3>
-            <p>Apply the unchanged pipeline to one indivisible external confirmation cohort.</p>
+            <h3>
+              Three cities
+              <br />2025
+            </h3>
+            <p>
+              Apply the unchanged pipeline to one indivisible external
+              confirmation cohort.
+            </p>
           </article>
           <article>
             <span>04</span>
             <small>Release</small>
-            <h3>One combined<br />claim</h3>
-            <p>Publish only after the target transaction and result evidence are authenticated.</p>
+            <h3>
+              One combined
+              <br />claim
+            </h3>
+            <p>
+              Publish only after the target transaction and result evidence are
+              authenticated.
+            </p>
           </article>
         </div>
       </section>
@@ -161,8 +199,9 @@ export default function CitiesPage() {
           </div>
           <p>
             The page consumes a versioned, runtime-validated interface. Preview
-            mode rejects any result value; verified mode requires one claim ID and
-            complete authenticated metrics for every city.
+            mode rejects every result value; verified mode requires one claim ID,
+            an explicit Los Angeles source reference, and complete authenticated
+            metrics for all three external cities.
           </p>
         </div>
 
@@ -182,21 +221,20 @@ export default function CitiesPage() {
               </div>
               <div>
                 <dt>release.claimId</dt>
-                <dd>null</dd>
+                <dd>{data.release.claimId ?? "null"}</dd>
               </div>
               <div>
                 <dt>cities[*].results</dt>
-                <dd>null × 4</dd>
+                <dd>{verified ? "1 source reference + 3 external" : "null × 4"}</dd>
               </div>
             </dl>
           </div>
 
           <div className={styles.contractSources}>
-            <span>Target-blind source records</span>
+            <span>Evidence records</span>
             <p>
-              The counts shown above come from committed protocol manifests. These
-              records authenticate the study frame without supplying target or
-              performance values.
+              Preview counts come from committed target-blind manifests. A
+              verified release adds only authenticated evaluation artifacts.
             </p>
             <ul>
               {data.provenance.map((source) => (
@@ -221,11 +259,15 @@ export default function CitiesPage() {
 
       <footer className={styles.footer}>
         <div>
-          <strong>Surface Heat Atlas · Four-city preview</strong>
+          <strong>
+            Surface Heat Atlas · {verified ? "Verified transfer study" : "Four-city preview"}
+          </strong>
           <span>Los Angeles · Phoenix · Houston · Chicago</span>
         </div>
         <p>
-          No external-city target, prediction, or performance value is included.{" "}
+          {verified
+            ? "External results were published only after completion authentication. "
+            : "No external-city target, prediction, or performance value is included. "}
           <Link href="/">Return to the completed Los Angeles atlas.</Link>
         </p>
       </footer>
