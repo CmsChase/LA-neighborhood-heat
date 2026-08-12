@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import ComparisonPanel from "./ComparisonPanel";
 import { FOUR_CITY_COMPARISON_DATA } from "./comparison-data";
 import styles from "./cities.module.css";
 
 const data = FOUR_CITY_COMPARISON_DATA;
+const ASSET_BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
   title:
@@ -32,6 +34,7 @@ export default function CitiesPage() {
         <nav aria-label="Four-city navigation">
           <a href="#compare">Compare</a>
           <a href="#results">Result interface</a>
+          {verified && <a href="#evidence">Evidence</a>}
           <a href="#protocol">Protocol</a>
           <a href="#data-interface">Data contract</a>
         </nav>
@@ -122,13 +125,74 @@ export default function CitiesPage() {
 
       <ComparisonPanel data={data} />
 
+      {verified && (
+        <section
+          className={[styles.section, styles.evidenceSection].join(" ")}
+          id="evidence"
+        >
+          <div className={styles.sectionHeading}>
+            <div>
+              <span className="eyebrow light">03 · Authenticated evidence</span>
+              <h2>Six views. One frozen claim.</h2>
+            </div>
+            <p>
+              Every figure is copied byte-for-byte from the authenticated,
+              read-only evaluation report. Open any panel at full resolution or
+              follow its source link to inspect the published artifact.
+            </p>
+          </div>
+
+          <div className={styles.evidenceGrid}>
+            {data.evidenceFigures.map((figure, index) => {
+              const publicHref = `${ASSET_BASE_PATH}${figure.publicPath}`;
+              return (
+                <article className={styles.evidenceCard} key={figure.id}>
+                  <a
+                    aria-label={`Open ${figure.title} at full resolution`}
+                    className={styles.evidenceImage}
+                    href={publicHref}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <Image
+                      alt={figure.description}
+                      fill
+                      sizes="(max-width: 850px) 100vw, 50vw"
+                      src={publicHref}
+                    />
+                  </a>
+                  <div className={styles.evidenceCaption}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <div>
+                      <h3>{figure.title}</h3>
+                      <p>{figure.description}</p>
+                    </div>
+                    <a href={figure.href} rel="noreferrer" target="_blank">
+                      Source record <i aria-hidden="true">↗</i>
+                    </a>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          <p className={styles.evidenceBoundary}>
+            Claim ID <code>{data.release.claimId}</code> · external 2025
+            confirmation only · Los Angeles remains the historical source
+            reference.
+          </p>
+        </section>
+      )}
+
       <section
         className={[styles.section, styles.protocolSection].join(" ")}
         id="protocol"
       >
         <div className={styles.sectionHeading}>
           <div>
-            <span className="eyebrow light">03 · Transfer protocol</span>
+            <span className="eyebrow light">
+              {verified ? "04" : "03"} · Transfer protocol
+            </span>
             <h2>One route through the evidence.</h2>
           </div>
           <p>
@@ -194,7 +258,9 @@ export default function CitiesPage() {
       <section className={styles.section} id="data-interface">
         <div className={styles.sectionHeading}>
           <div>
-            <span className="eyebrow">04 · Static data contract</span>
+            <span className="eyebrow">
+              {verified ? "05" : "04"} · Static data contract
+            </span>
             <h2>Honest while empty. Ready when verified.</h2>
           </div>
           <p>

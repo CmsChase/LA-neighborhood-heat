@@ -18,7 +18,7 @@ from la_heat.provenance import canonical_sha256, parquet_file_record, sha256_fil
 
 def _evaluation_fixture(
     root: Path, monkeypatch: pytest.MonkeyPatch
-) -> tuple[Path, dict[str, object]]:
+) -> tuple[Path, Path, dict[str, object]]:
     output = root / "evaluation"
     output.mkdir(parents=True)
     city_rows: list[dict[str, object]] = []
@@ -91,19 +91,47 @@ def _evaluation_fixture(
         "authenticate_external_evaluation_completion",
         lambda *_args, **_kwargs: completion,
     )
-    return output, completion
+    report = root / "report"
+    report.mkdir()
+    figures: dict[str, dict[str, object]] = {}
+    for index, (figure_id, filename) in enumerate(
+        atlas_release.EVALUATION_FIGURE_FILES.items()
+    ):
+        path = report / filename
+        content = b"\x89PNG\r\n\x1a\n" + bytes([index]) + figure_id.encode("ascii")
+        path.write_bytes(content)
+        figures[figure_id] = {
+            "path": filename,
+            "bytes": len(content),
+            "sha256": sha256_file(path),
+        }
+    report_manifest: dict[str, object] = {
+        "state": "read_only_external_evaluation_evidence",
+        "figures": figures,
+    }
+    report_manifest["commit_sha256"] = canonical_sha256(report_manifest)
+    (report / atlas_release.EVALUATION_REPORT_MANIFEST_FILENAME).write_text(
+        json.dumps(report_manifest), encoding="utf-8"
+    )
+    monkeypatch.setattr(
+        atlas_release,
+        "authenticate_external_evaluation_report",
+        lambda *_args, **_kwargs: report_manifest,
+    )
+    return output, report, completion
 
 
 def test_publish_maps_only_three_external_results_and_keeps_la_reference(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    evaluation, completion = _evaluation_fixture(tmp_path, monkeypatch)
+    evaluation, report, completion = _evaluation_fixture(tmp_path, monkeypatch)
     atlas_output = tmp_path / "atlas/app/cities/generated-results.ts"
     manifest_path = tmp_path / "ATLAS_RESULTS_RELEASE.json"
 
     manifest = publish_atlas_release(
         tmp_path,
         evaluation_output_directory=evaluation,
+        evaluation_report_directory=report,
         atlas_output_path=atlas_output,
         release_manifest_path=manifest_path,
     )
@@ -121,18 +149,36 @@ def test_publish_maps_only_three_external_results_and_keeps_la_reference(
     )
     assert payload["externalResults"][0]["primary"]["equalDateMaeC"] == 3.0
     assert payload["externalResults"][0]["primary"]["relativeMaeImprovementPercent"] == 25.0
-    expected_public_paths = {
+    expected_provenance_paths = {
         "atlas/public/evidence/multicity/external-evaluation-completion.json",
         "atlas/public/evidence/multicity/external-evaluation-summary.json",
         "atlas/public/evidence/multicity/external-city-metrics.json",
     }
-    assert {item["repositoryPath"] for item in payload["provenance"]} == (expected_public_paths)
+    expected_public_paths = {
+        *expected_provenance_paths,
+        *{
+            f"atlas/public/evidence/multicity/{filename}"
+            for filename in atlas_release.EVALUATION_FIGURE_FILES.values()
+        },
+    }
+    assert {item["repositoryPath"] for item in payload["provenance"]} == (
+        expected_provenance_paths
+    )
     for item in payload["provenance"]:
         assert item["href"] == atlas_release.GITHUB_BLOB_BASE + item["repositoryPath"]
         assert (tmp_path / item["repositoryPath"]).is_file()
     assert {
         record["path"] for record in manifest["evidence"]["public_evidence"].values()
     } == expected_public_paths
+    assert len(payload["evidenceFigures"]) == 6
+    for figure in payload["evidenceFigures"]:
+        public_path = tmp_path / figure["repositoryPath"]
+        source_path = report / atlas_release.EVALUATION_FIGURE_FILES[figure["id"]]
+        assert public_path.read_bytes() == source_path.read_bytes()
+        assert figure["publicPath"] == (
+            f"/evidence/multicity/{atlas_release.EVALUATION_FIGURE_FILES[figure['id']]}"
+        )
+        assert figure["sha256"] == sha256_file(source_path)
     projection = json.loads(
         (tmp_path / "atlas/public/evidence/multicity/external-city-metrics.json").read_text(
             encoding="utf-8"
@@ -149,6 +195,7 @@ def test_publish_maps_only_three_external_results_and_keeps_la_reference(
         authenticate_atlas_release(
             tmp_path,
             evaluation_output_directory=evaluation,
+            evaluation_report_directory=report,
             atlas_output_path=atlas_output,
             release_manifest_path=manifest_path,
         )
@@ -159,12 +206,13 @@ def test_publish_maps_only_three_external_results_and_keeps_la_reference(
 def test_check_only_rejects_generated_file_tamper(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    evaluation, _completion = _evaluation_fixture(tmp_path, monkeypatch)
+    evaluation, report, _completion = _evaluation_fixture(tmp_path, monkeypatch)
     atlas_output = tmp_path / "generated-results.ts"
     manifest_path = tmp_path / "ATLAS_RESULTS_RELEASE.json"
     publish_atlas_release(
         tmp_path,
         evaluation_output_directory=evaluation,
+        evaluation_report_directory=report,
         atlas_output_path=atlas_output,
         release_manifest_path=manifest_path,
     )
@@ -174,6 +222,7 @@ def test_check_only_rejects_generated_file_tamper(
         publish_atlas_release(
             tmp_path,
             evaluation_output_directory=evaluation,
+            evaluation_report_directory=report,
             atlas_output_path=atlas_output,
             release_manifest_path=manifest_path,
             check_only=True,
@@ -183,22 +232,28 @@ def test_check_only_rejects_generated_file_tamper(
 def test_check_only_rejects_public_evidence_tamper(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    evaluation, _completion = _evaluation_fixture(tmp_path, monkeypatch)
+    evaluation, report, _completion = _evaluation_fixture(tmp_path, monkeypatch)
     atlas_output = tmp_path / "generated-results.ts"
     manifest_path = tmp_path / "ATLAS_RESULTS_RELEASE.json"
     publish_atlas_release(
         tmp_path,
         evaluation_output_directory=evaluation,
+        evaluation_report_directory=report,
         atlas_output_path=atlas_output,
         release_manifest_path=manifest_path,
     )
-    public_summary = tmp_path / "atlas/public/evidence/multicity/external-evaluation-summary.json"
-    public_summary.write_text("{}", encoding="utf-8")
+    public_figure = (
+        tmp_path
+        / "atlas/public/evidence/multicity"
+        / atlas_release.EVALUATION_FIGURE_FILES["external_city_mae"]
+    )
+    public_figure.write_bytes(b"forged")
 
     with pytest.raises(AtlasReleaseError, match="Public Atlas evidence changed"):
         publish_atlas_release(
             tmp_path,
             evaluation_output_directory=evaluation,
+            evaluation_report_directory=report,
             atlas_output_path=atlas_output,
             release_manifest_path=manifest_path,
             check_only=True,
@@ -216,6 +271,7 @@ def test_failed_evaluation_authentication_does_not_touch_preview(
         raise RuntimeError("not authenticated")
 
     monkeypatch.setattr(atlas_release, "authenticate_external_evaluation_completion", reject)
+    monkeypatch.setattr(atlas_release, "authenticate_external_evaluation_report", reject)
     with pytest.raises(RuntimeError, match="not authenticated"):
         publish_atlas_release(
             tmp_path,

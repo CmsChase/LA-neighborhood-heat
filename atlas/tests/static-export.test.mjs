@@ -122,6 +122,7 @@ test("exports an explicitly target-sealed four-city preview", async () => {
   assert.match(html, /cities\[\*\]\.results/);
   assert.match(dataContract, /state: "preview"/);
   assert.match(dataContract, /claimId: null/);
+  assert.match(dataContract, /evidenceFigures: \[\]/);
   assert.equal((dataContract.match(/^\s{6}results: null,/gm) ?? []).length, 4);
   assert.match(
     dataContract,
@@ -130,6 +131,7 @@ test("exports an explicitly target-sealed four-city preview", async () => {
   assert.match(dataContract, /historical_source_reference/);
   assert.match(dataContract, /authenticated_external_confirmation/);
   assert.match(generatedResults, /GENERATED_VERIFIED_RELEASE: unknown = null/);
+  assert.doesNotMatch(html, /Six views\. One frozen claim\./);
 });
 
 test("keeps a verified rendering branch without inventing external results", async () => {
@@ -148,4 +150,8 @@ test("keeps a verified rendering branch without inventing external results", asy
   assert.match(panel, /External confirmation results are authenticated/);
   assert.match(panel, /Authenticated external result/);
   assert.match(panel, /Historical LA reference/);
+  assert.match(page, /data\.evidenceFigures\.map/);
+  assert.match(page, /Six views\. One frozen claim\./);
+  assert.match(page, /ASSET_BASE_PATH/);
+  assert.match(page, /Source record/);
 });

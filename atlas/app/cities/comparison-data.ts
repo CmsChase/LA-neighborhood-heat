@@ -9,6 +9,15 @@ export const CITY_IDS = [
   "chicago_il",
 ] as const;
 
+export const EVIDENCE_FIGURE_IDS = [
+  "external_city_mae",
+  "predicted_vs_observed",
+  "error_by_city_date",
+  "interval_calibration",
+  "risk_coverage",
+  "spatial_error_maps",
+] as const;
+
 export type CityId = (typeof CITY_IDS)[number];
 
 export type CityDesign = {
@@ -55,6 +64,16 @@ export type HistoricalSourceReference = {
   notice: string;
 };
 
+export type EvidenceFigure = {
+  id: (typeof EVIDENCE_FIGURE_IDS)[number];
+  title: string;
+  description: string;
+  publicPath: string;
+  repositoryPath: string;
+  href: string;
+  sha256: string;
+};
+
 type PreviewCity = CityDesign & { results: null };
 type VerifiedCity = CityDesign & {
   results: AuthenticatedCityResults | HistoricalSourceReference;
@@ -80,6 +99,7 @@ type ComparisonDataBase = {
     repositoryPath: string;
     href: string;
   }>;
+  evidenceFigures: EvidenceFigure[];
 };
 
 export type PreviewComparisonData = ComparisonDataBase & {
@@ -185,7 +205,13 @@ export function parseFourCityComparisonData(
   const release = input.release;
   const cities = input.cities;
   const cityOrder = input.cityOrder;
-  if (!isRecord(release) || !Array.isArray(cities) || !Array.isArray(cityOrder)) {
+  const evidenceFigures = input.evidenceFigures;
+  if (
+    !isRecord(release) ||
+    !Array.isArray(cities) ||
+    !Array.isArray(cityOrder) ||
+    !Array.isArray(evidenceFigures)
+  ) {
     throw new Error("Four-city comparison release metadata is incomplete.");
   }
 
@@ -217,7 +243,11 @@ export function parseFourCityComparisonData(
   }
 
   if (release.state === "preview") {
-    if (release.claimId !== null || cities.some((city) => city.results !== null)) {
+    if (
+      release.claimId !== null ||
+      cities.some((city) => city.results !== null) ||
+      evidenceFigures.length !== 0
+    ) {
       throw new Error("Preview releases cannot contain a claim ID or result values.");
     }
   } else if (release.state === "verified") {
@@ -230,6 +260,34 @@ export function parseFourCityComparisonData(
       } else {
         validateAuthenticatedResults(city.results, String(city.id));
       }
+    }
+    const figureIds = new Set<string>();
+    if (evidenceFigures.length !== 6) {
+      throw new Error("Verified releases require exactly six evidence figures.");
+    }
+    for (const figure of evidenceFigures) {
+      if (
+        !isRecord(figure) ||
+        typeof figure.id !== "string" ||
+        figureIds.has(figure.id) ||
+        typeof figure.title !== "string" ||
+        typeof figure.description !== "string" ||
+        typeof figure.publicPath !== "string" ||
+        !figure.publicPath.startsWith("/evidence/multicity/") ||
+        typeof figure.repositoryPath !== "string" ||
+        typeof figure.href !== "string" ||
+        typeof figure.sha256 !== "string" ||
+        !/^[0-9a-f]{64}$/.test(figure.sha256)
+      ) {
+        throw new Error("Verified evidence figure metadata is invalid.");
+      }
+      figureIds.add(figure.id);
+    }
+    if (
+      evidenceFigures.map((figure) => figure.id).join("|") !==
+      EVIDENCE_FIGURE_IDS.join("|")
+    ) {
+      throw new Error("Verified evidence figure order changed.");
     }
   } else {
     throw new Error("Unknown four-city comparison release state.");
@@ -312,6 +370,7 @@ const previewData = {
       results: null,
     },
   ],
+  evidenceFigures: [],
   provenance: [
     {
       label: "Target-blind city contexts",
@@ -340,6 +399,7 @@ function materializeGeneratedRelease(input: unknown): unknown {
     !isRecord(input.release) ||
     !isRecord(input.sourceReference) ||
     !Array.isArray(input.externalResults) ||
+    !Array.isArray(input.evidenceFigures) ||
     !Array.isArray(input.provenance)
   ) {
     throw new Error("Generated Atlas release has an unsupported schema.");
@@ -364,6 +424,7 @@ function materializeGeneratedRelease(input: unknown): unknown {
   return {
     ...previewData,
     release: input.release,
+    evidenceFigures: input.evidenceFigures,
     cities: previewData.cities.map((city) => ({
       ...city,
       results:

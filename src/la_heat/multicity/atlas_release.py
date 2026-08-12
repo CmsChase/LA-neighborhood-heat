@@ -17,6 +17,18 @@ from la_heat.multicity.external_evaluation import (
 from la_heat.multicity.external_evaluation import (
     authenticate_external_evaluation_completion,
 )
+from la_heat.multicity.external_evaluation_reporting import (
+    FIGURE_FILES as EVALUATION_FIGURE_FILES,
+)
+from la_heat.multicity.external_evaluation_reporting import (
+    MANIFEST_FILENAME as EVALUATION_REPORT_MANIFEST_FILENAME,
+)
+from la_heat.multicity.external_evaluation_reporting import (
+    OUTPUT_DIRECTORY as EVALUATION_REPORT_DIRECTORY,
+)
+from la_heat.multicity.external_evaluation_reporting import (
+    authenticate_external_evaluation_report,
+)
 from la_heat.multicity.portable_predictor_inventory import EXTERNAL_CITY_IDS
 from la_heat.provenance import canonical_sha256, parquet_file_record, sha256_file
 
@@ -32,6 +44,38 @@ PUBLIC_EVIDENCE_FILENAMES: Final = {
     "evaluation_completion": "external-evaluation-completion.json",
     "summary": "external-evaluation-summary.json",
     "city_metrics": "external-city-metrics.json",
+}
+EVIDENCE_FIGURE_METADATA: Final = {
+    "external_city_mae": {
+        "title": "Point accuracy by city",
+        "description": (
+            "Frozen M2 and diagnostic B1 equal-date MAE across the three external cities."
+        ),
+    },
+    "predicted_vs_observed": {
+        "title": "Predicted versus observed",
+        "description": "Every usable external observation against its frozen-model estimate.",
+    },
+    "error_by_city_date": {
+        "title": "Error through the season",
+        "description": (
+            "Date-level error traces show whether transfer performance is stable over time."
+        ),
+    },
+    "interval_calibration": {
+        "title": "Uncertainty calibration",
+        "description": "Observed coverage of the frozen 90% conformal prediction intervals.",
+    },
+    "risk_coverage": {
+        "title": "Risk–coverage tradeoff",
+        "description": (
+            "Accuracy as increasingly uncertain estimates are withheld by the frozen rule."
+        ),
+    },
+    "spatial_error_maps": {
+        "title": "Where errors concentrate",
+        "description": "Neighborhood-scale mean absolute error mapped across each external city.",
+    },
 }
 GITHUB_BLOB_BASE: Final = "https://github.com/CmsChase/LA-neighborhood-heat/blob/main/"
 
@@ -247,6 +291,7 @@ def _build_atlas_release_materials(
     project_root: str | Path,
     *,
     evaluation_output_directory: str | Path = EVALUATION_OUTPUT_DIRECTORY,
+    evaluation_report_directory: str | Path = EVALUATION_REPORT_DIRECTORY,
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, tuple[Path, bytes]]]:
     """Build the overlay and its compact, publicly tracked evidence projections."""
 
@@ -254,6 +299,16 @@ def _build_atlas_release_materials(
     evaluation_output = _inside(
         root, evaluation_output_directory, label="External evaluation output"
     )
+    evaluation_report = _inside(
+        root, evaluation_report_directory, label="External evaluation report"
+    )
+    report_manifest = authenticate_external_evaluation_report(
+        root,
+        evaluation_directory=evaluation_output,
+        output_directory=evaluation_report,
+    )
+    # The report authenticator verifies evaluation completion and every PNG before
+    # this publisher reads metrics or public evidence bytes.
     completion, city_metrics, date_metrics, summary = _load_authenticated_metrics(
         root, evaluation_output
     )
@@ -282,6 +337,12 @@ def _build_atlas_release_materials(
             **parquet_file_record(evaluation_output / DATE_METRICS_FILENAME, date_metrics),
         },
         "summary": _file_record(root, evaluation_output / SUMMARY_FILENAME),
+        "evaluation_report": {
+            **_file_record(
+                root, evaluation_report / EVALUATION_REPORT_MANIFEST_FILENAME
+            ),
+            "commit_sha256": report_manifest["commit_sha256"],
+        },
     }
     public_root = _inside(root, PUBLIC_EVIDENCE_DIRECTORY, label="Public Atlas evidence")
     city_projection: dict[str, Any] = {
@@ -316,12 +377,58 @@ def _build_atlas_release_materials(
                 ).encode("utf-8"),
             ),
         }
+        report_figure_records = report_manifest.get("figures")
+        if (
+            not isinstance(report_figure_records, dict)
+            or set(report_figure_records) != set(EVALUATION_FIGURE_FILES)
+        ):
+            raise AtlasReleaseError("Authenticated evaluation figure set changed")
+        source_figures: dict[str, dict[str, Any]] = {}
+        for figure_id, filename in EVALUATION_FIGURE_FILES.items():
+            source = evaluation_report / filename
+            source_record = report_figure_records[figure_id]
+            content = source.read_bytes()
+            content_sha256 = hashlib.sha256(content).hexdigest()
+            if (
+                not isinstance(source_record, dict)
+                or source_record.get("path") != filename
+                or source_record.get("bytes") != len(content)
+                or source_record.get("sha256") != content_sha256
+            ):
+                raise AtlasReleaseError(
+                    f"Authenticated evaluation figure changed: {figure_id}"
+                )
+            source_figures[figure_id] = {
+                "path": _relative(root, source),
+                "bytes": len(content),
+                "sha256": content_sha256,
+            }
+            artifacts[f"figure:{figure_id}"] = (
+                public_root / filename,
+                content,
+            )
     except OSError as error:
         raise AtlasReleaseError("Authenticated public evidence source is unavailable") from error
+    evidence["evaluation_figures"] = source_figures
     evidence["public_evidence"] = {
         key: _expected_file_record(root, path, content)
         for key, (path, content) in artifacts.items()
     }
+    evidence_figures = []
+    for figure_id, filename in EVALUATION_FIGURE_FILES.items():
+        public_record = evidence["public_evidence"][f"figure:{figure_id}"]
+        metadata = EVIDENCE_FIGURE_METADATA[figure_id]
+        evidence_figures.append(
+            {
+                "id": figure_id,
+                "title": metadata["title"],
+                "description": metadata["description"],
+                "publicPath": f"/evidence/multicity/{filename}",
+                "repositoryPath": public_record["path"],
+                "href": GITHUB_BLOB_BASE + public_record["path"],
+                "sha256": public_record["sha256"],
+            }
+        )
     payload: dict[str, Any] = {
         "schemaVersion": ATLAS_SCHEMA_VERSION,
         "release": {
@@ -372,6 +479,7 @@ def _build_atlas_release_materials(
             "reliabilityGatePassed": bool(summary["reliability"]["success"]),
         },
         "externalResults": external_results,
+        "evidenceFigures": evidence_figures,
         "provenance": [
             {
                 "label": "Authenticated external evaluation completion",
@@ -396,12 +504,14 @@ def build_atlas_release_payload(
     project_root: str | Path,
     *,
     evaluation_output_directory: str | Path = EVALUATION_OUTPUT_DIRECTORY,
+    evaluation_report_directory: str | Path = EVALUATION_REPORT_DIRECTORY,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """Build a verified overlay only after authenticating the complete evaluation."""
 
     payload, evidence, _artifacts = _build_atlas_release_materials(
         project_root,
         evaluation_output_directory=evaluation_output_directory,
+        evaluation_report_directory=evaluation_report_directory,
     )
     return payload, evidence
 
@@ -431,6 +541,7 @@ def authenticate_atlas_release(
     project_root: str | Path,
     *,
     evaluation_output_directory: str | Path = EVALUATION_OUTPUT_DIRECTORY,
+    evaluation_report_directory: str | Path = EVALUATION_REPORT_DIRECTORY,
     atlas_output_path: str | Path = ATLAS_OUTPUT_PATH,
     release_manifest_path: str | Path = RELEASE_MANIFEST_PATH,
 ) -> dict[str, Any]:
@@ -441,7 +552,9 @@ def authenticate_atlas_release(
     manifest_path = _inside(root, release_manifest_path, label="Atlas release manifest")
     manifest = _read_committed(manifest_path, label="Atlas release manifest")
     payload, evidence, artifacts = _build_atlas_release_materials(
-        root, evaluation_output_directory=evaluation_output_directory
+        root,
+        evaluation_output_directory=evaluation_output_directory,
+        evaluation_report_directory=evaluation_report_directory,
     )
     _authenticate_public_artifacts(artifacts)
     expected_text = _render_typescript(payload)
@@ -472,6 +585,7 @@ def publish_atlas_release(
     project_root: str | Path,
     *,
     evaluation_output_directory: str | Path = EVALUATION_OUTPUT_DIRECTORY,
+    evaluation_report_directory: str | Path = EVALUATION_REPORT_DIRECTORY,
     atlas_output_path: str | Path = ATLAS_OUTPUT_PATH,
     release_manifest_path: str | Path = RELEASE_MANIFEST_PATH,
     check_only: bool = False,
@@ -485,11 +599,14 @@ def publish_atlas_release(
         return authenticate_atlas_release(
             root,
             evaluation_output_directory=evaluation_output_directory,
+            evaluation_report_directory=evaluation_report_directory,
             atlas_output_path=atlas_path,
             release_manifest_path=manifest_path,
         )
     payload, evidence, artifacts = _build_atlas_release_materials(
-        root, evaluation_output_directory=evaluation_output_directory
+        root,
+        evaluation_output_directory=evaluation_output_directory,
+        evaluation_report_directory=evaluation_report_directory,
     )
     for path, content in artifacts.values():
         _publish_exact_once(path, content)
@@ -512,6 +629,7 @@ def publish_atlas_release(
     return authenticate_atlas_release(
         root,
         evaluation_output_directory=evaluation_output_directory,
+        evaluation_report_directory=evaluation_report_directory,
         atlas_output_path=atlas_path,
         release_manifest_path=manifest_path,
     )

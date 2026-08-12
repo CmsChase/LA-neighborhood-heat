@@ -599,6 +599,130 @@
   font-size: 11px;
 }
 
+.evidenceSection {
+  background: #17211f;
+  color: var(--paper);
+  max-width: none;
+}
+
+.evidenceSection .sectionHeading,
+.evidenceGrid,
+.evidenceBoundary {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1420px;
+}
+
+.evidenceSection .sectionHeading > p {
+  color: #aebdb8;
+}
+
+.evidenceGrid {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.evidenceCard {
+  background: #f2eee6;
+  color: var(--ink);
+  min-width: 0;
+}
+
+.evidenceImage {
+  background: #e7e2d9;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 1.72;
+}
+
+.evidenceImage img {
+  object-fit: contain;
+  padding: clamp(12px, 2vw, 28px);
+  transition: transform 260ms ease;
+}
+
+.evidenceImage:hover img {
+  transform: scale(1.015);
+}
+
+.evidenceImage:focus-visible {
+  outline: 3px solid var(--terracotta);
+  outline-offset: -3px;
+}
+
+.evidenceCaption {
+  align-items: start;
+  border-top: 1px solid rgba(24, 32, 31, 0.13);
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  min-height: 132px;
+  padding: 24px 25px 27px;
+}
+
+.evidenceCaption > span {
+  color: var(--terracotta-dark);
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+  font-size: 9px;
+  padding-top: 4px;
+}
+
+.evidenceCaption h3 {
+  font-family: var(--serif);
+  font-size: clamp(21px, 2vw, 29px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.evidenceCaption p {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+  margin: 9px 0 0;
+  max-width: 470px;
+}
+
+.evidenceCaption > a {
+  border-bottom: 1px solid rgba(24, 32, 31, 0.25);
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 750;
+  margin-top: 4px;
+  padding-bottom: 4px;
+  white-space: nowrap;
+}
+
+.evidenceCaption > a:hover {
+  border-color: var(--terracotta);
+  color: var(--terracotta-dark);
+}
+
+.evidenceCaption i {
+  color: var(--terracotta);
+  font-style: normal;
+  margin-left: 4px;
+}
+
+.evidenceBoundary {
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  color: #94a7a1;
+  font-size: 9px;
+  letter-spacing: 0.025em;
+  line-height: 1.7;
+  margin-bottom: 0;
+  margin-top: 30px;
+  overflow-wrap: anywhere;
+  padding-top: 18px;
+}
+
+.evidenceBoundary code {
+  color: #efb49d;
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+}
+
 .pendingValue {
   color: #9ca29f;
   font-family: ui-monospace, "Cascadia Mono", monospace;
@@ -964,6 +1088,10 @@
     grid-template-columns: 1fr;
   }
 
+  .evidenceGrid {
+    grid-template-columns: 1fr;
+  }
+
   .endpointNote {
     align-items: start;
     gap: 15px;
@@ -1077,6 +1205,17 @@
 
   .resultFrameHeader > div > div span {
     display: none;
+  }
+
+  .evidenceCaption {
+    grid-template-columns: 24px 1fr;
+    min-height: 0;
+    padding: 20px 17px 23px;
+  }
+
+  .evidenceCaption > a {
+    grid-column: 2;
+    justify-self: start;
   }
 
   .protocolFlow {
