@@ -175,6 +175,19 @@ evaluation used 11,207 QA-valid rows across 28 city-dates and 180 spatial
 blocks. M2 reduced equal-city/equal-date MAE from 9.738 °C to 6.922 °C, a 28.9%
 improvement with a 95% crossed-bootstrap interval of 14.1% to 43.5%.
 
+The compact offline evidence package can be created once, then reauthenticated,
+with:
+
+```powershell
+.\.venv\Scripts\python scripts\export_multicity_evidence.py --project-root .
+.\.venv\Scripts\python scripts\export_multicity_evidence.py --project-root . --check-only
+```
+
+Its default location is `exports/MULTICITY_EVALUATION_EVIDENCE.zip`. It contains
+only aggregate/date-level evidence, figures, protocol records, interpretation,
+and relevant code; it excludes tract-level scored rows and targets, model files,
+runtime state, credentials, and signed URLs.
+
 Reauthenticate the protocol and LA-only authorization with:
 
 ```powershell

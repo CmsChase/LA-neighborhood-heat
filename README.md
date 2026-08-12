@@ -109,6 +109,17 @@ Rebuild or verify the compact display data from the repository root:
 .\.venv\Scripts\python scripts\build_website_data.py --verify-only
 ```
 
+Build the compact, aggregate-only offline evidence package after a completed
+multicity evaluation, or reauthenticate an existing package:
+
+```powershell
+.\.venv\Scripts\python scripts\export_multicity_evidence.py --project-root .
+.\.venv\Scripts\python scripts\export_multicity_evidence.py --project-root . --check-only
+```
+
+The exporter deliberately excludes tract-level scored rows and targets, fitted
+model files, runtime databases, credentials, and signed asset URLs.
+
 Run focused tests for changed behavior during normal development. Run the full
 suite before a scientific release or a change to targets, features, splits,
 metrics, or frozen evidence:
