@@ -256,6 +256,8 @@ tables. Its focused test set is:
 - `docs/RESULTS_WEBSITE.md` — atlas source and deployment
 - `docs/MULTICITY_GENERALIZATION_PROTOCOL.md` — cross-city design
 - `docs/MULTICITY_METHODS_AND_EVIDENCE.md` — continuation gates and evidence contract
+- `docs/NEXT_EXPERIMENT_PREREGISTRATION_DRAFT.md` — recommended failure-driven
+  follow-up design; draft only, with no new target authorization
 - `docs/MULTICITY_SYNTHETIC_SMOKE.md` — deterministic non-evidence rehearsal
 - `docs/DECISION_LOG.md` — detailed historical decisions
 - `docs/DATA_MANIFEST.csv` — public-data provenance
