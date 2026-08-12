@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "multicity-external-evaluation-v1",
+  "state": "external_evaluation_complete",
+  "input_bindings": {
+    "protocol_lock_commit_sha256": "c93cee9d7d05194dd75fe8dba662ae1d5b9ee2a8e1401178a1a9c0fc8675304f",
+    "authorization_commit_sha256": "565f58a106387b2c4e3690c4ecfa7a017b1cacc63d908386c801e17fde7cf161",
+    "external_prediction_commit_sha256": "6f9a6b10f8b523efb79244f2d3faef9fd78684c2dadb0e05ad71103e6ec54ac1",
+    "external_target_completion_commit_sha256": "7cad689c4c050d879582617e3c97cc01b976bf34c13256d1b9df9875aeb106ba",
+    "values_opened_commit_sha256": "9d15c26938d3b6ffbc612340cff5e5774ac06a33b86c24b68e3d77f4abc91df7",
+    "spatial_blocks_manifest_commit_sha256": "e71d8c3e1c09f2eb6272e388db6c97e21d248f47092c0ce1ba057845483efef0",
+    "spatial_blocks_manifest_sha256": "e670cfa3c558e042317c1bdb88f6d31c7605d45742230f8fb27074f509372b69",
+    "spatial_blocks_sha256": "858c76ef48b466d4d3778b4f84e0e63cc7ed414500d94be857f117b387ca7a98",
+    "spatial_blocks_semantic_sha256": "2d57952dcb7d738764e14b6d98ed67d13aa21244cdc94cde755e9448bab6d976"
+  },
+  "evaluation_contract": {
+    "bootstrap_iterations": 10000,
+    "bootstrap_seed": 20260728,
+    "confidence_level": 0.95,
+    "prediction_columns": [
+      "city_id",
+      "tract_geoid",
+      "target_date",
+      "b1_prediction_c",
+      "m2_prediction_c",
+      "m2_lower_c",
+      "m2_upper_c",
+      "m2_interval_width_c",
+      "m2_abstain",
+      "m2_accepted"
+    ],
+    "city_ids": [
+      "phoenix_az",
+      "houston_tx",
+      "chicago_il"
+    ],
+    "cities_equal_weight": true,
+    "dates_equal_weight_within_city": true,
+    "random_row_bootstrap": false,
+    "output_columns": {
+      "scored_rows.parquet": [
+        "city_id",
+        "tract_geoid",
+        "target_date",
+        "b1_prediction_c",
+        "m2_prediction_c",
+        "m2_lower_c",
+        "m2_upper_c",
+        "m2_interval_width_c",
+        "m2_abstain",
+        "m2_accepted",
+        "target_lst_c",
+        "target_available",
+        "date_usable",
+        "spatial_block",
+        "b1_error_c",
+        "m2_error_c",
+        "b1_absolute_error_c",
+        "m2_absolute_error_c",
+        "m2_interval_covered",
+        "m2_wis90_c"
+      ],
+      "date_metrics.parquet": [
+        "city_id",
+        "target_date",
+        "date_count",
+        "row_count",
+        "spatial_block_count",
+        "b1_mae_c",
+        "b1_rmse_c",
+        "b1_signed_error_c",
+        "b1_anomaly_mae_c",
+        "b1_spearman",
+        "b1_hotspot_average_precision",
+        "b1_hotspot_precision",
+        "b1_hotspot_recall",
+        "b1_hotspot_false_negative_rate",
+        "m2_mae_c",
+        "m2_rmse_c",
+        "m2_signed_error_c",
+        "m2_anomaly_mae_c",
+        "m2_spearman",
+        "m2_hotspot_average_precision",
+        "m2_hotspot_precision",
+        "m2_hotspot_recall",
+        "m2_hotspot_false_negative_rate",
+        "m2_interval_coverage",
+        "m2_mean_interval_width_c",
+        "m2_wis90_c",
+        "m2_retention_fraction"
+      ],
+      "city_metrics.parquet": [
+        "city_id",
+        "date_count",
+        "row_count",
+        "spatial_block_count",
+        "b1_equal_date_mae_c",
+        "m2_equal_date_mae_c",
+        "m2_minus_b1_equal_date_mae_c",
+        "m2_interval_coverage",
+        "m2_mean_interval_width_c",
+        "m2_wis90_c",
+        "m2_retention_fraction",
+        "m2_all_prediction_mae_c",
+        "m2_accepted_prediction_mae_c",
+        "m2_accepted_mae_improvement_fraction",
+        "median_per_date_m2_spearman"
+      ],
+      "risk_coverage.parquet": [
+        "cohort_id",
+        "coverage_fraction",
+        "retained_rows",
+        "retained_city_date_count",
+        "retained_spatial_block_count",
+        "m2_mae_c",
+        "maximum_interval_width_c"
+      ]
+    },
+    "summary_keys": [
+      "schema_version",
+      "algorithm_version",
+      "state",
+      "city_ids",
+      "usable_row_count",
+      "usable_city_date_count",
+      "usable_dates_by_city",
+      "spatial_block_count",
+      "primary",
+      "point_prediction_gates",
+      "reliability",
+      "external_models_refit_or_recalibrated",
+      "prediction_commit_preceded_target_access",
+      "three_city_cohort_evaluated_as_one_claim"
+    ],
+    "bootstrap_keys": [
+      "bootstrap_method",
+      "bootstrap_iterations",
+      "bootstrap_seed",
+      "confidence_level",
+      "cities_resampled_separately",
+      "cities_equal_weight",
+      "complete_dates_resampled",
+      "complete_spatial_blocks_resampled",
+      "random_rows_sampled",
+      "city_units",
+      "relative_mae_improvement_mean",
+      "relative_mae_improvement_ci_lower",
+      "relative_mae_improvement_ci_upper",
+      "probability_improvement_gt_zero",
+      "probability_improvement_at_least_10_percent"
+    ]
+  },
+  "output_files": {
+    "scored_rows.parquet": {
+      "sha256": "b8c05f17eb4e7e6fb75fec09c230ce0b54c3e95b349fc9e22fd02a0a4e96ddb1",
+      "bytes": 1207720,
+      "rows": 11207,
+      "schema_sha256": "069c3787e1287583e7df5b4ad76dbea3b43c81504f8164fa79489cb829bd5b4f"
+    },
+    "date_metrics.parquet": {
+      "sha256": "358179ba4c975907294ada4a5605ed9dbe3d0a4454697de6be4a3e8bbff62eff",
+      "bytes": 23132,
+      "rows": 28,
+      "schema_sha256": "5a3dca50b5ba55ad586fa0e1dc74b3e54c0bdefd34c9f132ac0e40f772c05774"
+    },
+    "city_metrics.parquet": {
+      "sha256": "6a9ab53b72093e67d5d8366b5c76479ea1c4b76df0d33a8da545509100fa744d",
+      "bytes": 10806,
+      "rows": 3,
+      "schema_sha256": "86cc5886f440c16046988b37a22393c9bea5d2c980df4323da731c3c46c4443d"
+    },
+    "risk_coverage.parquet": {
+      "sha256": "9e4863ba7b6763fa99aa163c672fc4baa05669f2e6d248f9ef17ed1cb8c16a17",
+      "bytes": 6553,
+      "rows": 40,
+      "schema_sha256": "cd0c617eb2a73eeddf713f90581f3cecc58548bc45dd71a700017be082720b5b"
+    },
+    "bootstrap.json": {
+      "bytes": 1120,
+      "sha256": "b269308f44399ae1912861329d7f244b09ad00d3eb9eec2da05e2b5a0546c3a0"
+    },
+    "summary.json": {
+      "bytes": 1401,
+      "sha256": "ec7b9460f6416ade2508aa4f315cda5ad1b4acfc4f1ce1769da17da73a120d57"
+    }
+  },
+  "summary_commit_sha256": "ade02331c0815782e8bf53751543eea6b15a8a4595baa959c2e366ae479a7134",
+  "bootstrap_commit_sha256": "c1b837951229afceec3632fac03bad9ded43f794c80eb5a2008aa9f116830159",
+  "commit_sha256": "fda881ca15442257acaaff4b563dbc1d46e5c2002080a8423e8ca703e6c338de"
+}

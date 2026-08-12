@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "multicity-atlas-release-v1",
+  "state": "authenticated_multicity_atlas_release",
+  "evaluation_completion_commit_sha256": "fda881ca15442257acaaff4b563dbc1d46e5c2002080a8423e8ca703e6c338de",
+  "release_claim_id": "fda881ca15442257acaaff4b563dbc1d46e5c2002080a8423e8ca703e6c338de",
+  "payload_semantic_sha256": "efa8178bdf57ba71a32730e253d17c5ddb13d427c3d6d0542cc09b197d3a773d",
+  "evidence": {
+    "evaluation_completion": {
+      "path": "data/processed/multicity/external_evaluation/EXTERNAL_EVALUATION_COMPLETE.json",
+      "bytes": 6588,
+      "sha256": "1eab32c5d9d8939f67b4877a0a6fbf1e1d90983e3b2a3e36644a9b437c3ffcc5",
+      "commit_sha256": "fda881ca15442257acaaff4b563dbc1d46e5c2002080a8423e8ca703e6c338de"
+    },
+    "city_metrics": {
+      "path": "data/processed/multicity/external_evaluation/city_metrics.parquet",
+      "bytes": 10806,
+      "sha256": "6a9ab53b72093e67d5d8366b5c76479ea1c4b76df0d33a8da545509100fa744d",
+      "rows": 3,
+      "schema_sha256": "86cc5886f440c16046988b37a22393c9bea5d2c980df4323da731c3c46c4443d"
+    },
+    "date_metrics": {
+      "path": "data/processed/multicity/external_evaluation/date_metrics.parquet",
+      "bytes": 23132,
+      "sha256": "358179ba4c975907294ada4a5605ed9dbe3d0a4454697de6be4a3e8bbff62eff",
+      "rows": 28,
+      "schema_sha256": "5a3dca50b5ba55ad586fa0e1dc74b3e54c0bdefd34c9f132ac0e40f772c05774"
+    },
+    "summary": {
+      "path": "data/processed/multicity/external_evaluation/summary.json",
+      "bytes": 1401,
+      "sha256": "ec7b9460f6416ade2508aa4f315cda5ad1b4acfc4f1ce1769da17da73a120d57"
+    },
+    "evaluation_report": {
+      "path": "data/processed/multicity/external_evaluation_report/EXTERNAL_EVALUATION_EVIDENCE.json",
+      "bytes": 7358,
+      "sha256": "7165b3e9148c22891900a300c3b7405cbddfd9b113919f91ce313296b7d7deae",
+      "commit_sha256": "44f750ab03355042dc75a19df6e9d18bfb7e764b077bf41006735662b22a49c5"
+    },
+    "evaluation_figures": {
+      "external_city_mae": {
+        "path": "data/processed/multicity/external_evaluation_report/external_city_mae.png",
+        "bytes": 54804,
+        "sha256": "3dc3d5863b47c5bc5474b6ea25aa523ca7a66e297c065268dfcd5834407f94d3"
+      },
+      "predicted_vs_observed": {
+        "path": "data/processed/multicity/external_evaluation_report/predicted_vs_observed.png",
+        "bytes": 211305,
+        "sha256": "798f48c9878632811f0b986270bfc053d6c739264c2a482264aba4bfa977135b"
+      },
+      "error_by_city_date": {
+        "path": "data/processed/multicity/external_evaluation_report/error_by_city_date.png",
+        "bytes": 175938,
+        "sha256": "415c69833f2323caf08f301940e1b766e1b9d4cc3940a861565740be5e9c32c0"
+      },
+      "interval_calibration": {
+        "path": "data/processed/multicity/external_evaluation_report/interval_calibration.png",
+        "bytes": 73017,
+        "sha256": "f66661f19c9456de0ab485fe117027efef538e422037bf30008bc570c6f91be9"
+      },
+      "risk_coverage": {
+        "path": "data/processed/multicity/external_evaluation_report/risk_coverage.png",
+        "bytes": 102289,
+        "sha256": "05aa55cbc85873216ae4c8abd13b806e03fd725a10a46e19a4af12d40cf7cf3b"
+      },
+      "spatial_error_maps": {
+        "path": "data/processed/multicity/external_evaluation_report/spatial_error_maps.png",
+        "bytes": 320534,
+        "sha256": "968b66f40fe97ab5531057e90f65d781c4c12c1500a8587b20a89a18772d4af1"
+      }
+    },
+    "public_evidence": {
+      "evaluation_completion": {
+        "path": "atlas/public/evidence/multicity/external-evaluation-completion.json",
+        "bytes": 6588,
+        "sha256": "1eab32c5d9d8939f67b4877a0a6fbf1e1d90983e3b2a3e36644a9b437c3ffcc5"
+      },
+      "summary": {
+        "path": "atlas/public/evidence/multicity/external-evaluation-summary.json",
+        "bytes": 1401,
+        "sha256": "ec7b9460f6416ade2508aa4f315cda5ad1b4acfc4f1ce1769da17da73a120d57"
+      },
+      "city_metrics": {
+        "path": "atlas/public/evidence/multicity/external-city-metrics.json",
+        "bytes": 3053,
+        "sha256": "69ed532fe155fdbc6708b9805be847430959b4da14ac57c7a7994cfa6d50d4a1"
+      },
+      "figure:external_city_mae": {
+        "path": "atlas/public/evidence/multicity/external_city_mae.png",
+        "bytes": 54804,
+        "sha256": "3dc3d5863b47c5bc5474b6ea25aa523ca7a66e297c065268dfcd5834407f94d3"
+      },
+      "figure:predicted_vs_observed": {
+        "path": "atlas/public/evidence/multicity/predicted_vs_observed.png",
+        "bytes": 211305,
+        "sha256": "798f48c9878632811f0b986270bfc053d6c739264c2a482264aba4bfa977135b"
+      },
+      "figure:error_by_city_date": {
+        "path": "atlas/public/evidence/multicity/error_by_city_date.png",
+        "bytes": 175938,
+        "sha256": "415c69833f2323caf08f301940e1b766e1b9d4cc3940a861565740be5e9c32c0"
+      },
+      "figure:interval_calibration": {
+        "path": "atlas/public/evidence/multicity/interval_calibration.png",
+        "bytes": 73017,
+        "sha256": "f66661f19c9456de0ab485fe117027efef538e422037bf30008bc570c6f91be9"
+      },
+      "figure:risk_coverage": {
+        "path": "atlas/public/evidence/multicity/risk_coverage.png",
+        "bytes": 102289,
+        "sha256": "05aa55cbc85873216ae4c8abd13b806e03fd725a10a46e19a4af12d40cf7cf3b"
+      },
+      "figure:spatial_error_maps": {
+        "path": "atlas/public/evidence/multicity/spatial_error_maps.png",
+        "bytes": 320534,
+        "sha256": "968b66f40fe97ab5531057e90f65d781c4c12c1500a8587b20a89a18772d4af1"
+      }
+    }
+  },
+  "atlas_output": {
+    "path": "atlas/app/cities/generated-results.ts",
+    "bytes": 8116,
+    "sha256": "eebf1ecbacdece7f50dc24505dc7481b5c5b3ed164d7eebbeb1035346b4620e4"
+  },
+  "external_city_ids": [
+    "phoenix_az",
+    "houston_tx",
+    "chicago_il"
+  ],
+  "la_role": "historical_source_reference_not_external_confirmation",
+  "next_safe_stage": "build_and_publish_verified_static_atlas",
+  "commit_sha256": "b6223e8d880c0718eaa7d3ae5c27dea4ce2420bedbb1f8774e203320b13466c1"
+}

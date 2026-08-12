@@ -89,6 +89,7 @@ export default function ComparisonPanel({
   const [metricKey, setMetricKey] =
     useState<DesignMetricKey>("tractCount");
   const verified = data.release.state === "verified";
+  const outcome = verified ? data.externalConfirmation : null;
   const metric = DESIGN_METRICS.find((item) => item.key === metricKey)!;
   const maximum = useMemo(
     () => Math.max(...data.cities.map((city) => city[metricKey])),
@@ -192,14 +193,14 @@ export default function ComparisonPanel({
             <span className="eyebrow">02 · Result interface</span>
             <h2>
               {verified
-                ? "External confirmation results are authenticated."
+                ? "The evidence is authenticated. The outcome is inconclusive."
                 : "Result slots are intentionally empty."}
             </h2>
           </div>
           <p>
             {verified
-              ? "Los Angeles remains a historical source reference; the three 2025 external cities come from one authenticated confirmation claim."
-              : "A verified release can populate this same interface. In preview mode, every result object and the claim ID must remain null."}
+              ? "The pooled estimate favored M2, but the preregistered point-confirmation and reliability gates were not passed. Los Angeles remains a historical source reference."
+              : "An authenticated release can populate this same interface. In preview mode, every result object and the claim ID must remain null."}
           </p>
         </div>
 
@@ -207,12 +208,12 @@ export default function ComparisonPanel({
           <div className={styles.resultFrameHeader}>
             <div>
               <span className={styles.lockIcon} aria-hidden="true">
-                {verified ? "✓" : "×"}
+                {verified ? "A" : "×"}
               </span>
               <div>
                 <strong>
                   {verified
-                    ? "External evaluation verified"
+                    ? "Evidence record authenticated"
                     : "External targets sealed"}
                 </strong>
                 <span>
@@ -222,8 +223,48 @@ export default function ComparisonPanel({
                 </span>
               </div>
             </div>
-            <span className={styles.previewPill}>{data.release.state}</span>
+            <span className={styles.previewPill}>
+              {outcome ? "outcome: inconclusive" : data.release.state}
+            </span>
           </div>
+
+          {outcome && (
+            <div className={styles.cohortStrip}>
+              <div>
+                <span>Cohort estimate</span>
+                <strong>{outcome.relativeMaeImprovementPercent.toFixed(1)}%</strong>
+                <small>
+                  MAE improvement; 95% CI {outcome.bootstrapCiPercent.lower.toFixed(1)}%
+                  to {outcome.bootstrapCiPercent.upper.toFixed(1)}%
+                </small>
+              </div>
+              <div>
+                <span>Point-confirmation gate</span>
+                <strong
+                  className={
+                    outcome.pointPredictionGatePassed ? undefined : styles.gateFailed
+                  }
+                >
+                  {outcome.pointPredictionGatePassed ? "Passed" : "Not passed"}
+                </strong>
+              </div>
+              <div>
+                <span>Reliability gate</span>
+                <strong
+                  className={outcome.reliabilityGatePassed ? undefined : styles.gateFailed}
+                >
+                  {outcome.reliabilityGatePassed ? "Passed" : "Not passed"}
+                </strong>
+              </div>
+              <div>
+                <span>Usable support</span>
+                <strong>{outcome.usableRows.toLocaleString()} rows</strong>
+                <small>
+                  {outcome.usableCityDates} city-dates · {outcome.spatialBlocks} blocks
+                </small>
+              </div>
+            </div>
+          )}
 
           <div
             aria-label="Scrollable four-city performance table"
@@ -244,7 +285,7 @@ export default function ComparisonPanel({
                       {column.label}
                     </th>
                   ))}
-                  <th scope="col">Release state</th>
+                  <th scope="col">Record state</th>
                 </tr>
               </thead>
               <tbody>
@@ -279,11 +320,11 @@ export default function ComparisonPanel({
                         }
                       >
                         {isExternalResult(city.results)
-                          ? "Authenticated external result"
+                          ? "Authenticated metric record"
                           : city.results?.resultState ===
                               "historical_source_reference"
                             ? "Historical LA reference"
-                            : "Awaiting verified release"}
+                            : "Awaiting authenticated release"}
                       </span>
                     </td>
                   </tr>

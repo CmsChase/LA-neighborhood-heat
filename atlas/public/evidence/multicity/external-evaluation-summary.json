@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "multicity-external-evaluation-v1",
+  "state": "inconclusive_sample_size",
+  "city_ids": [
+    "phoenix_az",
+    "houston_tx",
+    "chicago_il"
+  ],
+  "usable_row_count": 11207,
+  "usable_city_date_count": 28,
+  "usable_dates_by_city": {
+    "phoenix_az": 21,
+    "houston_tx": 4,
+    "chicago_il": 3
+  },
+  "spatial_block_count": 180,
+  "primary": {
+    "b1_equal_city_equal_date_mae_c": 9.738064649262277,
+    "m2_equal_city_equal_date_mae_c": 6.922196889335232,
+    "relative_mae_improvement_fraction": 0.28916092276511696,
+    "bootstrap_ci_lower": 0.14105534669836145,
+    "bootstrap_ci_upper": 0.4351375492934664
+  },
+  "point_prediction_gates": {
+    "sample_size": false,
+    "relative_improvement_at_least_10_percent": true,
+    "bootstrap_ci_lower_above_zero": true,
+    "no_city_point_degradation": false,
+    "success": false
+  },
+  "reliability": {
+    "overall_interval_coverage": 0.4504327652360132,
+    "overall_retention_fraction": 0.5599179084500758,
+    "all_prediction_mae_c": 5.686446765297977,
+    "accepted_prediction_mae_c": 6.2053357259802135,
+    "accepted_mae_improvement_fraction": -0.0912501219300601,
+    "success": false
+  },
+  "external_models_refit_or_recalibrated": false,
+  "prediction_commit_preceded_target_access": true,
+  "three_city_cohort_evaluated_as_one_claim": true
+}

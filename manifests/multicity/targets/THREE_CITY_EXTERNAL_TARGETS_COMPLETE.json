@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "state": "three_city_external_targets_complete",
+  "lane": "three_city_2025_combined_external",
+  "city_ids": [
+    "phoenix_az",
+    "houston_tx",
+    "chicago_il"
+  ],
+  "run_id": "multicity-targets-v1-65a90338c9bb96bf",
+  "claim_id_sha256": "698d0941382ffb85d355f71296848968b04f216acd7ee1dc96e756124f80fef1",
+  "authorization": {
+    "path": "manifests/multicity/targets/EXTERNAL_TARGET_AUTHORIZATION.json",
+    "bytes": 4726,
+    "sha256": "c25543d3e4601a51797c3c227ec5b2b6b606242fb5815a20dba5f7d6bec05df0",
+    "commit_sha256": "565f58a106387b2c4e3690c4ecfa7a017b1cacc63d908386c801e17fde7cf161"
+  },
+  "external_prediction_commit_sha256": "6f9a6b10f8b523efb79244f2d3faef9fd78684c2dadb0e05ad71103e6ec54ac1",
+  "values_opened_marker": {
+    "path": "data/interim/multicity/targets/values_opened/three_city_2025_combined_external/VALUES_OPENED.json",
+    "bytes": 843,
+    "sha256": "82016f5870c51e5fb9a7c545bf643f1895d5ddd46f12a5e301c608c8d278d615",
+    "commit_sha256": "9d15c26938d3b6ffbc612340cff5e5774ac06a33b86c24b68e3d77f4abc91df7"
+  },
+  "external_work_units": {
+    "overpass": 64,
+    "city_compile": 3,
+    "total": 67,
+    "result_commits_sha256": "9a6838e47665cf6eae080331e339735155a43a69b461cee04c901d951ebb3924"
+  },
+  "city_targets": {
+    "phoenix_az": {
+      "path": "data/interim/multicity/targets/claims/three_city_2025_combined_external-698d0941382ffb85d355/cities/phoenix_az/CITY_TARGETS_COMPLETE.json",
+      "bytes": 1830,
+      "sha256": "4b19c49ab494e6eef4511e911e919544ac9466b6f04e6c5acbfeccbc48217875",
+      "commit_sha256": "97a56467881f9fd6c80e57681bc077075a15f586804b8e351c0c9577fbb28ef2",
+      "directory": "data/interim/multicity/targets/claims/three_city_2025_combined_external-698d0941382ffb85d355/cities/phoenix_az",
+      "output_files": {
+        "targets.parquet": {
+          "sha256": "4e914bb82bad24f5475ae3f99c9fbafd981d741d74d80c2da4679958e4915c49",
+          "bytes": 574569,
+          "rows": 8250,
+          "schema_sha256": "7da7c8f6eb25fbf6c6514c217bf6a68218d2c8a20e0a6002bfe9259b96913052"
+        },
+        "date_summary.parquet": {
+          "sha256": "e11897b9e569e159a2239e4fb5e22e05ef438756ec9b45d078a7a836e9b0a6fb",
+          "bytes": 18185,
+          "rows": 22,
+          "schema_sha256": "b7361c23e26116af8b5e9b9efb26eb8499fecf6314d64ec5b6922ef1905b128d"
+        },
+        "scene_contributions.parquet": {
+          "sha256": "013efc2af30996794e290bdb9687ac6b91892b338a0da775d8ea52b076717f25",
+          "bytes": 33625,
+          "rows": 8277,
+          "schema_sha256": "b03dee573cec738a308f5d7cb807d0764571af361afd93f0b3b157dc6deb3020"
+        }
+      }
+    },
+    "houston_tx": {
+      "path": "data/interim/multicity/targets/claims/three_city_2025_combined_external-698d0941382ffb85d355/cities/houston_tx/CITY_TARGETS_COMPLETE.json",
+      "bytes": 1831,
+      "sha256": "59831fdd14bb6999169d109e01fc0b13e90b8044ee4caf15b6987b179431b6f0",
+      "commit_sha256": "bfb7af0d2a1fb9610650f3dbb778a99c23f1a09049b57cf2e92d67d0137e474c",
+      "directory": "data/interim/multicity/targets/claims/three_city_2025_combined_external-698d0941382ffb85d355/cities/houston_tx",
+      "output_files": {
+        "targets.parquet": {
+          "sha256": "7c780385baa430c82171b95c22671c46bce6c2a4d3bb66e94db3166bbdb05df1",
+          "bytes": 329908,
+          "rows": 13671,
+          "schema_sha256": "7da7c8f6eb25fbf6c6514c217bf6a68218d2c8a20e0a6002bfe9259b96913052"
+        },
+        "date_summary.parquet": {
+          "sha256": "674a1328643b745b21790cba67abdeaf82ee93f6a8ed1d5aa16d3cf309991b2e",
+          "bytes": 18303,
+          "rows": 21,
+          "schema_sha256": "b7361c23e26116af8b5e9b9efb26eb8499fecf6314d64ec5b6922ef1905b128d"
+        },
+        "scene_contributions.parquet": {
+          "sha256": "3bfd8acea9e3bfac7d3464cf9aa22d1974ab9425d8e28427abfa262a68f8b138",
+          "bytes": 37146,
+          "rows": 6482,
+          "schema_sha256": "b03dee573cec738a308f5d7cb807d0764571af361afd93f0b3b157dc6deb3020"
+        }
+      }
+    },
+    "chicago_il": {
+      "path": "data/interim/multicity/targets/claims/three_city_2025_combined_external-698d0941382ffb85d355/cities/chicago_il/CITY_TARGETS_COMPLETE.json",
+      "bytes": 1831,
+      "sha256": "0c7f115d8ec0e45293832986616ab6441fbbecace2ed46a98f4ae96de32969e7",
+      "commit_sha256": "49a5e6696b5ab86bf852b28203402df73592a173ac401e12a4b0068a646c7934",
+      "directory": "data/interim/multicity/targets/claims/three_city_2025_combined_external-698d0941382ffb85d355/cities/chicago_il",
+      "output_files": {
+        "targets.parquet": {
+          "sha256": "6edc3bc387572a1d8c09b33b878af9b188b35d5cf13c2700b0fd8dd94a74d5b2",
+          "bytes": 272759,
+          "rows": 16380,
+          "schema_sha256": "7da7c8f6eb25fbf6c6514c217bf6a68218d2c8a20e0a6002bfe9259b96913052"
+        },
+        "date_summary.parquet": {
+          "sha256": "e50e6617e8c2677ce0b2662b3159c59f5b6bc19bfa47a75b0879cfa724eaf283",
+          "bytes": 17730,
+          "rows": 21,
+          "schema_sha256": "b7361c23e26116af8b5e9b9efb26eb8499fecf6314d64ec5b6922ef1905b128d"
+        },
+        "scene_contributions.parquet": {
+          "sha256": "c79339a25e0a2f662d6c72d2f5fca11bc5b11daaa2202ab116cabe5c55de2495",
+          "bytes": 23304,
+          "rows": 3891,
+          "schema_sha256": "b03dee573cec738a308f5d7cb807d0764571af361afd93f0b3b157dc6deb3020"
+        }
+      }
+    }
+  },
+  "source_tasks_complete": true,
+  "final_merge": {
+    "claimed": false,
+    "attempt": 0,
+    "status": "pending"
+  },
+  "next_safe_stage": "join_committed_predictions_and_run_frozen_external_evaluator",
+  "commit_sha256": "7cad689c4c050d879582617e3c97cc01b976bf34c13256d1b9df9875aeb106ba"
+}

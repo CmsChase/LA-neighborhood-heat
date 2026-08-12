@@ -298,50 +298,120 @@ but it is excluded from all new success gates.
 因此只能表述为“具有前景的留出集预测信号，但未达到完整协议确认”。它是新研究的动机，
 不是三城外推成功的证据。
 
-### External confirmation — do not fill until authenticated / 三城确认结果占位
+### Authenticated external confirmation / 已认证三城外部评估
 
-At the current documented checkpoint, external predictions were committed
-before target access, while the indivisible Phoenix–Houston–Chicago target
-transaction and its downstream evaluation had not yet produced an
-authenticated final result. Do not quote partial metrics.
+The indivisible Phoenix–Houston–Chicago evaluation completed and passed its
+read-only integrity authentication. Predictions were committed before target
+access, no external model was refit or recalibrated, and all values below come
+from the authenticated frozen evaluator—not from a partial run or a post-hoc
+replacement analysis.
 
-在当前文档检查点，三城预测已在读取目标前锁定，但完整的三城目标事务及后续评估尚未形成
-已认证最终结果。不得引用单城、单日期或运行中间值。
+Phoenix、Houston、Chicago 不可拆分的三城评估已经完成，并通过只读完整性认证。预测在
+目标值开放前已经锁定，外部模型没有重新拟合或校准；下列数字全部来自已认证的冻结评估器，
+不是运行中间值，也不是事后替代分析。
 
-| Required final statement / 最终必须报告 | Authenticated value / 认证值 |
+| Required statement / 必须报告项 | Authenticated result / 已认证结果 |
 |---|---|
-| Evaluated rows, usable city-dates, and 5 km blocks / 样本、日期、空间块 | **[PENDING AUTHENTICATED EVALUATION]** |
-| B1 equal-city/equal-date MAE / B1 主 MAE | **[PENDING]** |
-| M2 equal-city/equal-date MAE / M2 主 MAE | **[PENDING]** |
-| Relative improvement `R` and 95% CI / 相对改善及区间 | **[PENDING]** |
-| Per-city direction and sample-size gates / 各城方向与样本门槛 | **[PENDING]** |
-| Overall and per-city interval coverage / 区间覆盖率 | **[PENDING]** |
-| Retention and accepted-set MAE change / 保留率与拒绝后误差 | **[PENDING]** |
-| Point-prediction conclusion / 点预测结论 | **[PENDING: success, failure, or inconclusive sample size]** |
-| Reliability conclusion / 可靠性结论 | **[PENDING: success or failure]** |
+| Evaluated support / 评估支撑 | **11,207 rows; 28 usable city-dates; 180 5 km blocks / 11,207 行；28 个有效城市—日期；180 个 5 km 空间块** |
+| B1 equal-city/equal-date MAE / B1 主 MAE | **9.7381 °C** |
+| M2 equal-city/equal-date MAE / M2 主 MAE | **6.9222 °C** |
+| Relative improvement `R` / 相对改善 | **28.916%** |
+| 95% crossed-bootstrap CI / 95% 交叉 bootstrap 区间 | **14.106% to 43.514%** |
+| Usable dates by city / 各城有效日期 | **Phoenix 21/22; Houston 4/21; Chicago 3/21** |
+| City direction / 各城方向 | **Phoenix degraded; Houston and Chicago improved / Phoenix 退化；Houston、Chicago 改善** |
+| Overall interval coverage / 总体区间覆盖率 | **45.043%** |
+| Per-city interval coverage / 各城区间覆盖率 | **Phoenix 43.757%; Houston 63.326%; Chicago 24.571%** |
+| Overall retention / 总体保留率 | **55.992%** |
+| Per-city retention / 各城保留率 | **Phoenix 71.246%; Houston 20.323%; Chicago 29.581%** |
+| Accepted-set MAE / 保留样本 MAE | **6.2053 °C versus 5.6864 °C for all predictions; −9.125% improvement / 相比全部预测的 5.6864 °C，保留样本为 6.2053 °C；改善率 −9.125%** |
+| Point-prediction conclusion / 点预测结论 | **NOT MET — `inconclusive_sample_size`; the sample-size and no-city-degradation gates failed / 未通过——样本量不足；样本量门和“无城市退化”门失败** |
+| Reliability conclusion / 可靠性结论 | **NOT MET / 未通过** |
 
-These placeholders may be replaced only from the authenticated final evaluation
-and its evidence tables after the completion record passes its integrity check.
-If a gate fails, report the failure directly; do not soften it into success or
-change the preregistered rule.
+The favorable pooled point estimate and confidence interval passed two
+component gates: improvement was at least 10%, and the bootstrap lower bound
+was above zero. They do **not** establish three-city success. Only 28 of the
+required 30 city-dates were usable, Houston and Chicago had fewer than eight
+dates each, and M2 was worse than B1 in Phoenix. The reliability system also
+failed: coverage was far below its target, Houston and Chicago retention fell
+below 60%, and abstention increased rather than reduced MAE.
 
-## 12. Interpretation templates / 认证后结论模板
+整体点估计及其置信区间通过了两个组成门槛：改善达到 10%，且 bootstrap 下界高于 0；但这
+**不能**表述为三城成功。有效城市—日期只有 28 个，未达到 30 个；Houston 和 Chicago
+各自不足 8 个日期；M2 在 Phoenix 反而劣于 B1。可靠性系统也失败：区间覆盖率远低于目标，
+Houston 和 Chicago 的保留率不足 60%，而且拒绝预测后 MAE 不降反升。
 
-Use exactly one of these structures after inserting authenticated values:
+### City-level results / 分城市结果
 
-- **Both gates pass:** “The frozen Los-Angeles-trained M2 generalized to the
-  three prespecified cities with a ___% MAE reduction (95% CI ___ to ___), and
-  the interval/abstention system passed every reliability gate.”
-- **Point gate passes, reliability fails:** “Point prediction generalized by
-  the prespecified criteria, but uncertainty did not transfer reliably because
-  ___ failed.”
-- **Point gate fails:** “M2’s external point estimate was ___, but the
-  preregistered confirmation failed because ___. The model was not retuned.”
-- **Insufficient dates:** “The result is inconclusive for the primary claim
-  because only ___ usable city-dates remained after unchanged QA rules.”
+| City / 城市 | Dates / 日期 | Rows / 行 | Blocks / 空间块 | B1 MAE °C | M2 MAE °C | Relative change / 相对改善 | Median date Spearman / 日期 Spearman 中位数 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Phoenix | 21 | 7,585 | 59 | 3.1076 | 4.8878 | **−57.28% (degradation / 退化)** | 0.462 |
+| Houston | 4 | 2,165 | 88 | 16.4312 | 8.4488 | **48.58% improvement / 改善** | 0.749 |
+| Chicago | 3 | 1,457 | 33 | 9.6754 | 7.4300 | **23.21% improvement / 改善** | 0.276 |
 
-中文表达同样必须把“点估计较好”与“协议门槛通过”分开，不使用“证明了”“适用于所有城市”
-或“预测人体风险”等超出证据范围的措辞。
+Equal-city weighting prevents Phoenix's larger date count from dominating the
+primary estimate, but it cannot repair thin date support. Houston and Chicago
+therefore provide suggestive, not independently conclusive, city-level
+evidence.
+
+等城市权重避免 Phoenix 因日期更多而主导主效应，但不能弥补 Houston 和 Chicago 日期支撑
+过少的问题。因此，两城的改善是提示性证据，不能作为各自独立确认。
+
+### QA support audit / QA 支撑审计
+
+All 64 candidate city-dates were present, so no date disappeared because of a
+missing source footprint. Twenty-eight dates passed the unchanged QA and
+retention rules; all 36 exclusions were classified as
+`insufficient_date_tract_retention`. Across failed dates, 23,748 invalid
+tract-date rows comprised 21,253 (89.5%) with fewer than 20 valid pixels and
+2,495 (10.5%) with valid-pixel fraction below 60%. Separately, 1,734 rows met
+the tract-level criteria but were excluded because their entire date retained
+fewer than 50% of tracts.
+
+64 个候选城市—日期全部存在，没有任何日期因源覆盖范围缺失而消失。28 个日期通过不变的
+QA 与保留规则；其余 36 个全部因 `insufficient_date_tract_retention` 被排除。失败日期中
+共有 23,748 个无效 tract-date：21,253 个（89.5%）因有效像元少于 20，2,495 个
+（10.5%）因有效像元比例低于 60%。此外，另有 1,734 行本身达到普查区级标准，但因整日
+保留的普查区不足 50% 而随该日期一同排除。
+
+### Post-hoc data-quality alarm / 事后数据质量警报
+
+Houston on 2025-07-25 remained part of the formal result under the frozen
+rules. Among its 400 evaluated rows, 43 targets were below 0 °C, 147 were below
+20 °C, and the minimum was −26.27 °C. In the sub-zero group, the mean of the
+row-level median Landsat surface-temperature uncertainty measure was 6.38 K;
+the recorded target–uncertainty correlation was −0.878. A **post-hoc** removal
+of this date would change the overall point improvement from 28.9% to about
+36.7%. This is a diagnostic alarm, not evidence that the date is definitively
+wrong, and it does not replace, revise, or rescue the formal result.
+
+按冻结规则，Houston 的 2025-07-25 仍保留在正式结果中。该日 400 行里有 43 个目标值低于
+0 °C、147 个低于 20 °C，最小值为 −26.27 °C；负值组逐行 Landsat 地表温度不确定性
+中位数的均值为 6.38 K，记录到的目标值—不确定性相关为 −0.878。**事后**删除该日期会使
+总体点改善从 28.9% 变为约 36.7%。这只是需要后续核查的数据质量警报，不能证明该日期
+必然错误，也不能替代、修改或“挽救”正式结果。
+
+## 12. Competition-safe conclusion / 可用于比赛的准确结论
+
+**English:** The frozen Los-Angeles-trained M2 reduced equal-city/equal-date
+MAE by 28.9% relative to B1 (95% crossed-bootstrap CI 14.1% to 43.5%) across
+the available external evidence. However, the preregistered point-prediction
+claim was inconclusive because only 28 usable city-dates remained, Houston and
+Chicago each had fewer than eight, and Phoenix degraded. The frozen interval
+and abstention system also failed its reliability gate. No external labels were
+used to refit or recalibrate the model.
+
+**中文：** 在现有外部证据中，冻结的洛杉矶训练 M2 相比 B1 将等城市、等日期 MAE 降低了
+28.9%（交叉 bootstrap 95% 区间 14.1%–43.5%）。但是，预注册的点预测主张属于样本量
+不足下的未定论：最终只有 28 个有效城市—日期，Houston 和 Chicago 各自少于 8 个，且
+Phoenix 出现退化。冻结的不确定性区间与拒绝预测系统也未通过可靠性门槛。外部标签没有
+用于重新拟合或校准模型。
+
+Do not shorten this to “the model succeeded across three cities.” The honest
+result is a favorable aggregate signal accompanied by failed prespecified
+confirmation and reliability gates.
+
+不得将其缩写为“模型在三座城市外推成功”。准确结论是：整体信号有利，但预先规定的确认门
+和可靠性门均未通过。
 
 ## 13. Limitations / 局限
 
@@ -447,7 +517,7 @@ prediction commitments, and a new evaluation protocol.
 
 ## 16. Evidence checklist before submission / 提交前证据清单
 
-Before replacing any result placeholder or exporting a poster, confirm that:
+Before exporting a poster, paper, or public result, confirm that:
 
 - the three-city target completion record authenticates all 64 external
   overpasses and all three city compiles;

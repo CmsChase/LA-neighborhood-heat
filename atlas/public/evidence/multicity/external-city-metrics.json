@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "state": "authenticated_external_city_metrics_projection",
+  "evaluation_completion_commit_sha256": "fda881ca15442257acaaff4b563dbc1d46e5c2002080a8423e8ca703e6c338de",
+  "authenticated_parquet_source": {
+    "path": "data/processed/multicity/external_evaluation/city_metrics.parquet",
+    "bytes": 10806,
+    "sha256": "6a9ab53b72093e67d5d8366b5c76479ea1c4b76df0d33a8da545509100fa744d",
+    "rows": 3,
+    "schema_sha256": "86cc5886f440c16046988b37a22393c9bea5d2c980df4323da731c3c46c4443d"
+  },
+  "city_ids": [
+    "phoenix_az",
+    "houston_tx",
+    "chicago_il"
+  ],
+  "results": [
+    {
+      "cityId": "phoenix_az",
+      "resultState": "authenticated_external_confirmation",
+      "evaluationRows": 7585,
+      "independentDates": 21,
+      "independentSpatialBlocks": 59,
+      "evaluatedDateRange": {
+        "first": "2025-05-02",
+        "last": "2025-10-25"
+      },
+      "primary": {
+        "equalDateMaeC": 4.887776368276468,
+        "baselineEqualDateMaeC": 3.107616029637055,
+        "medianPerDateSpearman": 0.4618667831156191,
+        "relativeMaeImprovementPercent": -57.28379316048646
+      },
+      "uncertainty": {
+        "nominalCoverage": 0.9,
+        "empiricalCoverage": 0.43757415952537904,
+        "retentionFraction": 0.7124588002636784,
+        "meanIntervalWidthC": 9.261658530614707,
+        "wis90C": 2.986714797460451
+      }
+    },
+    {
+      "cityId": "houston_tx",
+      "resultState": "authenticated_external_confirmation",
+      "evaluationRows": 2165,
+      "independentDates": 4,
+      "independentSpatialBlocks": 88,
+      "evaluatedDateRange": {
+        "first": "2025-05-14",
+        "last": "2025-10-29"
+      },
+      "primary": {
+        "equalDateMaeC": 8.448789365703934,
+        "baselineEqualDateMaeC": 16.4311920837349,
+        "medianPerDateSpearman": 0.7490972100397764,
+        "relativeMaeImprovementPercent": 48.58078876658425
+      },
+      "uncertainty": {
+        "nominalCoverage": 0.9,
+        "empiricalCoverage": 0.6332563510392609,
+        "retentionFraction": 0.20323325635103925,
+        "meanIntervalWidthC": 11.14832736395381,
+        "wis90C": 5.199468991954653
+      }
+    },
+    {
+      "cityId": "chicago_il",
+      "resultState": "authenticated_external_confirmation",
+      "evaluationRows": 1457,
+      "independentDates": 3,
+      "independentSpatialBlocks": 33,
+      "evaluatedDateRange": {
+        "first": "2025-05-16",
+        "last": "2025-09-21"
+      },
+      "primary": {
+        "equalDateMaeC": 7.430024934025293,
+        "baselineEqualDateMaeC": 9.67538583441488,
+        "medianPerDateSpearman": 0.27634981624423804,
+        "relativeMaeImprovementPercent": 23.20693912177587
+      },
+      "uncertainty": {
+        "nominalCoverage": 0.9,
+        "empiricalCoverage": 0.24571036376115304,
+        "retentionFraction": 0.29581331503088537,
+        "meanIntervalWidthC": 10.639966566839513,
+        "wis90C": 4.4907424347672915
+      }
+    }
+  ],
+  "commit_sha256": "652702a44ec1d70e43d986f3a66177e4f7e7d864ca6406c5d9aabd7e045d4937"
+}

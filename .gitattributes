@@ -11,7 +11,9 @@
 
 # Generated audit artifacts carry byte-level provenance locks. Preserve their
 # exact serialized bytes instead of applying Git newline normalization.
-manifests/** -text
-reports/tables/** -text
-reports/DEVELOPMENT_REPORT.md -text
-reports/DEVELOPMENT_REPORT_provenance.json -text
+manifests/** -text whitespace=cr-at-eol
+reports/tables/** -text whitespace=cr-at-eol
+reports/DEVELOPMENT_REPORT.md -text whitespace=cr-at-eol
+reports/DEVELOPMENT_REPORT_provenance.json -text whitespace=cr-at-eol
+atlas/public/evidence/** -text whitespace=cr-at-eol
+atlas/app/cities/generated-results.ts -text

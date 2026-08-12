@@ -11,11 +11,11 @@ const ASSET_BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export const metadata: Metadata = {
   title:
     data.release.state === "verified"
-      ? "Verified three-city confirmation · Surface Heat Atlas"
+      ? "Authenticated external evaluation · Surface Heat Atlas"
       : "Four-city comparison preview · Surface Heat Atlas",
   description:
     data.release.state === "verified"
-      ? "Authenticated external confirmation results for Phoenix, Houston, and Chicago, with Los Angeles shown as the historical source reference."
+      ? "Authenticated Phoenix, Houston, and Chicago evaluation evidence with an inconclusive sample-size outcome and unmet point-prediction and reliability gates."
       : "A target-sealed preview of the Los Angeles, Phoenix, Houston, and Chicago surface-heat transfer study interface.",
 };
 
@@ -25,6 +25,7 @@ function roleLabel(role: (typeof data.cities)[number]["role"]) {
 
 export default function CitiesPage() {
   const verified = data.release.state === "verified";
+  const outcome = verified ? data.externalConfirmation : null;
   return (
     <main className={styles.page}>
       <header className="site-header">
@@ -48,7 +49,7 @@ export default function CitiesPage() {
           <span className={styles.releaseBadge}>
             <i aria-hidden="true" />
             {verified
-              ? "Verified · external confirmation"
+              ? "Authenticated record · outcome inconclusive"
               : "Preview · targets sealed"}
           </span>
           <span className="eyebrow">Four-city transfer study</span>
@@ -59,7 +60,7 @@ export default function CitiesPage() {
           </h1>
           <p>
             {verified
-              ? "The frozen Los Angeles model has now been evaluated as one indivisible external claim in Phoenix, Houston, and Chicago. Los Angeles remains the historical source reference."
+              ? "The frozen Los Angeles model was evaluated as one indivisible external claim in Phoenix, Houston, and Chicago. The evidence is authenticated; the preregistered scientific outcome is inconclusive."
               : "This comparison frame is live before the results are. It introduces the cross-city design using target-blind inventory only; external-city performance and target values remain absent by construction."}
           </p>
           <div className={styles.heroActions}>
@@ -94,10 +95,68 @@ export default function CitiesPage() {
           ))}
           <div className={styles.cityIndexFooter}>
             <span>Outcome payload</span>
-            <strong>{verified ? "VERIFIED · AUTHENTICATED" : "NULL · PREVIEW"}</strong>
+            <strong>
+              {verified ? "AUTHENTICATED · NOT CONFIRMED" : "NULL · PREVIEW"}
+            </strong>
           </div>
         </aside>
       </section>
+
+      {outcome && (
+        <section
+          aria-labelledby="external-outcome-heading"
+          className={styles.outcomeBanner}
+        >
+          <div className={styles.outcomeDecision}>
+            <span>Preregistered cohort outcome</span>
+            <strong id="external-outcome-heading">Inconclusive</strong>
+            <code>{outcome.cohortState}</code>
+            <p>
+              The required sample-size gate was not met. This authenticated
+              evaluation is evidence, but it is not a confirmed successful
+              transfer result.
+            </p>
+          </div>
+
+          <div className={styles.outcomeEstimate}>
+            <span>Pooled MAE improvement vs B1</span>
+            <strong>{outcome.relativeMaeImprovementPercent.toFixed(1)}%</strong>
+            <p>
+              95% bootstrap CI: {outcome.bootstrapCiPercent.lower.toFixed(1)}%
+              to {outcome.bootstrapCiPercent.upper.toFixed(1)}%
+            </p>
+          </div>
+
+          <dl className={styles.outcomeFacts}>
+            <div>
+              <dt>Point-confirmation gate</dt>
+              <dd data-passed={outcome.pointPredictionGatePassed}>
+                {outcome.pointPredictionGatePassed ? "Passed" : "Not passed"}
+              </dd>
+            </div>
+            <div>
+              <dt>Reliability gate</dt>
+              <dd data-passed={outcome.reliabilityGatePassed}>
+                {outcome.reliabilityGatePassed ? "Passed" : "Not passed"}
+              </dd>
+            </div>
+            <div>
+              <dt>Evaluation support</dt>
+              <dd>
+                {outcome.usableCityDates.toLocaleString()} city-dates ·{" "}
+                {outcome.usableRows.toLocaleString()} rows ·{" "}
+                {outcome.spatialBlocks.toLocaleString()} blocks
+              </dd>
+            </div>
+          </dl>
+
+          <p className={styles.authenticationBoundary}>
+            <strong>Authentication note.</strong> “Authenticated” means the
+            released values and evidence passed the frozen provenance checks. It
+            does not mean either scientific success gate passed.
+          </p>
+        </section>
+      )}
 
       <section className={styles.summaryRail} aria-label="Target-blind study inventory">
         <div>
@@ -132,8 +191,8 @@ export default function CitiesPage() {
         >
           <div className={styles.sectionHeading}>
             <div>
-              <span className="eyebrow light">03 · Authenticated evidence</span>
-              <h2>Six views. One frozen claim.</h2>
+              <span className="eyebrow light">03 · Authenticated evidence record</span>
+              <h2>Six views. One inconclusive claim.</h2>
             </div>
             <p>
               Every figure is copied byte-for-byte from the authenticated,
@@ -177,8 +236,8 @@ export default function CitiesPage() {
           </div>
 
           <p className={styles.evidenceBoundary}>
-            Claim ID <code>{data.release.claimId}</code> · external 2025
-            confirmation only · Los Angeles remains the historical source
+            Claim ID <code>{data.release.claimId}</code> · evidence authenticated
+            · outcome inconclusive · Los Angeles remains the historical source
             reference.
           </p>
         </section>
@@ -261,13 +320,13 @@ export default function CitiesPage() {
             <span className="eyebrow">
               {verified ? "05" : "04"} · Static data contract
             </span>
-            <h2>Honest while empty. Ready when verified.</h2>
+            <h2>Authenticated does not mean confirmed.</h2>
           </div>
           <p>
             The page consumes a versioned, runtime-validated interface. Preview
-            mode rejects every result value; verified mode requires one claim ID,
-            an explicit Los Angeles source reference, and complete authenticated
-            metrics for all three external cities.
+            mode rejects every result value; authenticated mode requires one claim
+            ID, an explicit Los Angeles source reference, a cohort-level outcome,
+            and complete metrics for all three external cities.
           </p>
         </div>
 
@@ -283,7 +342,9 @@ export default function CitiesPage() {
               </div>
               <div>
                 <dt>release.state</dt>
-                <dd>{data.release.state}</dd>
+                <dd>
+                  {verified ? "verified (integrity only)" : data.release.state}
+                </dd>
               </div>
               <div>
                 <dt>release.claimId</dt>
@@ -299,8 +360,9 @@ export default function CitiesPage() {
           <div className={styles.contractSources}>
             <span>Evidence records</span>
             <p>
-              Preview counts come from committed target-blind manifests. A
-              verified release adds only authenticated evaluation artifacts.
+              Preview counts come from committed target-blind manifests. An
+              authenticated release adds only provenance-checked evaluation
+              artifacts; its scientific outcome is reported separately.
             </p>
             <ul>
               {data.provenance.map((source) => (
@@ -326,13 +388,14 @@ export default function CitiesPage() {
       <footer className={styles.footer}>
         <div>
           <strong>
-            Surface Heat Atlas · {verified ? "Verified transfer study" : "Four-city preview"}
+            Surface Heat Atlas ·{" "}
+            {verified ? "Authenticated external study" : "Four-city preview"}
           </strong>
           <span>Los Angeles · Phoenix · Houston · Chicago</span>
         </div>
         <p>
           {verified
-            ? "External results were published only after completion authentication. "
+            ? "External results were published only after completion authentication; both success gates remain unmet. "
             : "No external-city target, prediction, or performance value is included. "}
           <Link href="/">Return to the completed Los Angeles atlas.</Link>
         </p>

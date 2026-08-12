@@ -220,6 +220,135 @@
   color: #efb49f;
 }
 
+.outcomeBanner {
+  background: #241f1c;
+  color: var(--paper);
+  display: grid;
+  grid-template-columns: minmax(250px, 0.9fr) minmax(250px, 0.75fr) minmax(390px, 1.35fr);
+  margin: 0 clamp(24px, 5vw, 80px);
+  position: relative;
+}
+
+.outcomeBanner::before {
+  background: var(--terracotta);
+  content: "";
+  height: 5px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.outcomeDecision,
+.outcomeEstimate,
+.outcomeFacts {
+  min-width: 0;
+  padding: clamp(28px, 3vw, 46px);
+}
+
+.outcomeEstimate,
+.outcomeFacts {
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.outcomeDecision,
+.outcomeEstimate {
+  display: flex;
+  flex-direction: column;
+}
+
+.outcomeDecision > span,
+.outcomeEstimate > span,
+.outcomeFacts dt,
+.authenticationBoundary strong,
+.cohortStrip span {
+  color: #aeb8b4;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.outcomeDecision > strong {
+  color: #f2b49d;
+  font-family: var(--serif);
+  font-size: clamp(39px, 4vw, 58px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  margin-top: 22px;
+}
+
+.outcomeDecision code {
+  color: #d9b5a8;
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+  font-size: 9px;
+  margin-top: 12px;
+}
+
+.outcomeDecision p,
+.outcomeEstimate p {
+  color: #b8c1bd;
+  font-size: 10px;
+  line-height: 1.65;
+  margin: auto 0 0;
+  padding-top: 24px;
+}
+
+.outcomeEstimate > strong {
+  color: #f4efe7;
+  font-family: var(--serif);
+  font-size: clamp(62px, 6vw, 90px);
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  line-height: 0.8;
+  margin-top: 32px;
+}
+
+.outcomeFacts {
+  display: grid;
+  margin: 0;
+}
+
+.outcomeFacts > div {
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(120px, 0.8fr) minmax(180px, 1.2fr);
+  padding: 13px 0;
+}
+
+.outcomeFacts > div:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.outcomeFacts dd {
+  font-family: var(--serif);
+  font-size: 18px;
+  margin: 0;
+}
+
+.outcomeFacts dd[data-passed="false"] {
+  color: #f2a184;
+}
+
+.authenticationBoundary {
+  background: #17211f;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  color: #aebdb8;
+  font-size: 10px;
+  grid-column: 1 / -1;
+  line-height: 1.65;
+  margin: 0;
+  padding: 15px clamp(28px, 3vw, 46px);
+}
+
+.authenticationBoundary strong {
+  color: #efb49f;
+  margin-right: 7px;
+}
+
 .summaryRail {
   background: var(--card);
   border-bottom: 1px solid var(--rule);
@@ -543,6 +672,45 @@
   letter-spacing: 0.1em;
   padding: 7px 10px;
   text-transform: uppercase;
+}
+
+.cohortStrip {
+  background: #f3eee5;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1.25fr repeat(3, 1fr);
+}
+
+.cohortStrip > div {
+  display: grid;
+  gap: 7px;
+  min-height: 122px;
+  padding: 23px 20px;
+}
+
+.cohortStrip > div + div {
+  border-left: 1px solid var(--rule);
+}
+
+.cohortStrip span {
+  color: var(--muted);
+}
+
+.cohortStrip strong {
+  align-self: end;
+  font-family: var(--serif);
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.cohortStrip small {
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.cohortStrip .gateFailed {
+  color: var(--terracotta-dark);
 }
 
 .tableScroller {
@@ -1011,6 +1179,33 @@
     grid-template-columns: minmax(200px, 0.8fr) 1fr 78px;
   }
 
+  .outcomeBanner {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .outcomeFacts {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .outcomeFacts > div {
+    align-content: center;
+    border: 0;
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr;
+  }
+
+  .outcomeFacts > div:first-child {
+    border-top: 0;
+  }
+
+  .outcomeFacts > div + div {
+    border-left: 1px solid rgba(255, 255, 255, 0.13);
+  }
+
   .cityInventory {
     display: none;
   }
@@ -1048,6 +1243,23 @@
   .summaryRail {
     grid-template-columns: repeat(2, 1fr);
     margin-inline: 20px;
+  }
+
+  .outcomeBanner {
+    margin-inline: 20px;
+  }
+
+  .cohortStrip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cohortStrip > div:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .cohortStrip > div:nth-child(4) {
+    border-top: 1px solid var(--rule);
   }
 
   .summaryRail > div:nth-child(3) {
@@ -1149,6 +1361,37 @@
 
   .summaryRail > div {
     padding: 22px 15px 28px;
+  }
+
+  .outcomeBanner {
+    grid-template-columns: 1fr;
+  }
+
+  .outcomeEstimate,
+  .outcomeFacts {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .outcomeFacts {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .outcomeFacts > div + div {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.13);
+  }
+
+  .cohortStrip {
+    grid-template-columns: 1fr;
+  }
+
+  .cohortStrip > div + div,
+  .cohortStrip > div:nth-child(3),
+  .cohortStrip > div:nth-child(4) {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
   }
 
   .summaryRail strong {

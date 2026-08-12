@@ -94,7 +94,7 @@ test("keeps hero annotations on-screen and distinguishes tract taps from map dra
   );
 });
 
-test("exports an explicitly target-sealed four-city preview", async () => {
+test("exports a release consistent with the generated four-city payload", async () => {
   const html = await readFile(
     new URL("../out/cities/index.html", import.meta.url),
     "utf8",
@@ -107,14 +107,10 @@ test("exports an explicitly target-sealed four-city preview", async () => {
     new URL("../app/cities/generated-results.ts", import.meta.url),
     "utf8",
   );
+  const renderedText = html.replace(/<!--[\s\S]*?-->/g, "");
 
   assert.match(html, /One frozen model contract/);
-  assert.match(html, /no real fit has occurred yet/);
   assert.match(html, /aria-label="Scrollable four-city performance table"/);
-  assert.match(html, /Preview · targets sealed/);
-  assert.match(html, /Result slots are intentionally empty/);
-  assert.match(html, /External targets sealed/);
-  assert.match(html, /No cross-city outcome values are bundled/);
   assert.match(html, /Los Angeles/);
   assert.match(html, /Phoenix/);
   assert.match(html, /Houston/);
@@ -122,6 +118,7 @@ test("exports an explicitly target-sealed four-city preview", async () => {
   assert.match(html, /cities\[\*\]\.results/);
   assert.match(dataContract, /state: "preview"/);
   assert.match(dataContract, /claimId: null/);
+  assert.match(dataContract, /externalConfirmation: null/);
   assert.match(dataContract, /evidenceFigures: \[\]/);
   assert.equal((dataContract.match(/^\s{6}results: null,/gm) ?? []).length, 4);
   assert.match(
@@ -130,11 +127,39 @@ test("exports an explicitly target-sealed four-city preview", async () => {
   );
   assert.match(dataContract, /historical_source_reference/);
   assert.match(dataContract, /authenticated_external_confirmation/);
-  assert.match(generatedResults, /GENERATED_VERIFIED_RELEASE: unknown = null/);
-  assert.doesNotMatch(html, /Six views\. One frozen claim\./);
+  const isPreview = /GENERATED_VERIFIED_RELEASE: unknown = null/.test(
+    generatedResults,
+  );
+  if (isPreview) {
+    assert.match(html, /no real fit has occurred yet/);
+    assert.match(html, /Preview · targets sealed/);
+    assert.match(html, /Result slots are intentionally empty/);
+    assert.match(html, /External targets sealed/);
+    assert.match(html, /No cross-city outcome values are bundled/);
+    assert.doesNotMatch(html, /Six views\. One frozen claim\./);
+  } else {
+    assert.match(html, /Authenticated record · outcome inconclusive/);
+    assert.match(html, /Evidence record authenticated/);
+    assert.match(html, /Six views\. One inconclusive claim\./);
+    assert.match(html, /inconclusive_sample_size/);
+    assert.match(renderedText, /28\.9%/);
+    assert.match(
+      renderedText,
+      /95% bootstrap CI:\s*14\.1%\s*to\s*43\.5%/,
+    );
+    assert.match(html, /Point-confirmation gate/);
+    assert.match(html, /Reliability gate/);
+    assert.match(
+      renderedText,
+      /28 city-dates[\s\S]*?11,207 rows[\s\S]*?180 blocks/,
+    );
+    assert.match(html, /AUTHENTICATED · NOT CONFIRMED/);
+    assert.match(html, /Authenticated does not mean confirmed\./);
+    assert.doesNotMatch(html, /Result slots are intentionally empty/);
+  }
 });
 
-test("keeps a verified rendering branch without inventing external results", async () => {
+test("keeps authentication distinct from scientific confirmation", async () => {
   const page = await readFile(
     new URL("../app/cities/page.tsx", import.meta.url),
     "utf8",
@@ -145,13 +170,20 @@ test("keeps a verified rendering branch without inventing external results", asy
   );
 
   assert.match(page, /data\.release\.state === "verified"/);
-  assert.match(page, /Verified · external confirmation/);
-  assert.match(page, /Los Angeles remains the historical source reference/);
-  assert.match(panel, /External confirmation results are authenticated/);
-  assert.match(panel, /Authenticated external result/);
+  assert.match(page, /Authenticated record · outcome inconclusive/);
+  assert.match(
+    page,
+    /Los Angeles remains the historical source[\s\S]*?reference/,
+  );
+  assert.match(page, /outcome\.cohortState/);
+  assert.match(page, /outcome\.relativeMaeImprovementPercent/);
+  assert.match(page, /outcome\.pointPredictionGatePassed/);
+  assert.match(page, /outcome\.reliabilityGatePassed/);
+  assert.match(panel, /The evidence is authenticated\. The outcome is inconclusive\./);
+  assert.match(panel, /Authenticated metric record/);
   assert.match(panel, /Historical LA reference/);
   assert.match(page, /data\.evidenceFigures\.map/);
-  assert.match(page, /Six views\. One frozen claim\./);
+  assert.match(page, /Six views\. One inconclusive claim\./);
   assert.match(page, /ASSET_BASE_PATH/);
   assert.match(page, /Source record/);
 });

@@ -5,18 +5,21 @@ evidence, and the public interactive atlas for neighborhood-scale daytime
 land-surface temperature (LST) in Los Angeles.
 
 [Open the Los Angeles heat atlas](https://cmschase.github.io/LA-neighborhood-heat/)
-| [Open the evaluation-sealed four-city preview](https://cmschase.github.io/LA-neighborhood-heat/cities/)
+| [Open the authenticated four-city evaluation](https://cmschase.github.io/LA-neighborhood-heat/cities/)
 
 ## Research question
 
 Can public weather, land-use, geography, and lagged non-thermal satellite
 features predict census-tract-scale daytime surface heat?
 
-The primary model (M2) was trained on 2020–2024 data and evaluated once on a
-predeclared 2025 holdout. Its inputs contain no Landsat thermal target values,
-same-scene optical data, future observations, or tract identifiers.
+In the original Los Angeles study, M2 was trained on 2020–2024 data and
+evaluated once on the predeclared Los Angeles 2025 holdout. The later transfer
+study used Los Angeles 2020–2023 for training, Los Angeles 2024 for calibration,
+and Phoenix, Houston, and Chicago 2025 as one target-blind external claim. Model
+inputs contain no Landsat thermal target values, same-scene optical data, future
+observations, or tract identifiers.
 
-| Held-out 2025 result | B1 baseline | M2 model |
+| Original Los Angeles held-out 2025 result | B1 baseline | M2 model |
 |---|---:|---:|
 | Equal-date-weighted MAE | 3.1165 °C | 2.1650 °C |
 | Relative MAE change | — | 30.53% lower |
@@ -46,10 +49,11 @@ this repository by GitHub Actions.
 
 ## Current continuation
 
-The Los Angeles evaluation is complete. The active research extension tests
-whether a Los-Angeles-trained predictor can transfer, without retraining, to
-Phoenix, Houston, and Chicago. External targets are being built under one
-indivisible claim; partial scoring and result inspection remain sealed.
+The Los Angeles evaluation and the one-time Phoenix-Houston-Chicago transfer
+evaluation are complete. M2 reduced equal-city/equal-date MAE by 28.9% overall
+(95% crossed-bootstrap CI 14.1%–43.5%), but the preregistered confirmation was
+not met because only 28 city-dates were usable and Phoenix degraded. The
+reliability gate also failed.
 
 The active stage is recorded in
 [`manifests/multicity/ACTIVE_STAGE.json`](manifests/multicity/ACTIVE_STAGE.json).
@@ -70,9 +74,9 @@ rows and 46 frozen features.
 
 The separately authorized Los Angeles source-target build and frozen model fit
 are complete. The model produced a committed, predictor-only set of 38,301
-predictions before any external target was opened. The single combined
-Phoenix-Houston-Chicago target build is now active at
-`http://127.0.0.1:8771/`; scoring remains disabled until all three cities finish.
+predictions before any external target was opened. All 64 external overpasses,
+three city compiles, the frozen evaluation, six evidence figures, and the Atlas
+release subsequently authenticated without refitting or recalibration.
 
 The continuation-specific 5 km spatial partition is complete for all 2,902
 tracts. The frozen fit, predictor-only external publication, one-claim external

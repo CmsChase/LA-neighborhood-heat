@@ -104,12 +104,11 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     evaluation tables, uncertainty diagnostics, and a figure. Every artifact
     is explicitly synthetic and non-evidence, and project-local output is
     restricted to `.tmp/`.
-20. The public Atlas now includes a static `/cities/` preview. It compares the
-    authenticated target-blind study frame for all four cities while enforcing
-    `null` result objects and a `null` claim ID. A later verified payload must
-    be complete for all four cities. The future 159-unit target runtime is also
-    implemented and testable only in `paused_not_authorized`; no worker, target
-    href, thermal value, QA value, model fit, or external result was opened.
+20. The public Atlas includes a static `/cities/` route. It began as a sealed
+    null-result preview and now publishes only the authenticated aggregate
+    evaluation, gate outcomes, and six evidence figures. It explicitly labels
+    the scientific outcome `inconclusive_sample_size` and distinguishes evidence
+    authentication from successful confirmation.
 21. The four-city pre-fit protocol/model specification is append-only locked in
     `manifests/multicity/evaluation/PROTOCOL_MODEL_LOCK.json`, commit
     `c93cee9d7d05194dd75fe8dba662ae1d5b9ee2a8e1401178a1a9c0fc8675304f`.
@@ -120,10 +119,10 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
 22. The separately authorized Los Angeles lane completed all 90 overpasses and
     one compile, yielding 98,640 source tract-date keys. Frozen B1/M2/CQR fitting
     then committed 38,301 predictor-only external predictions without opening
-    external targets. The one indivisible Phoenix-Houston-Chicago claim is now
-    running at `http://127.0.0.1:8771/`. Live progress belongs only in
-    `data/interim/multicity/targets/runtime/external_worker_status.json`; this
-    tracked handoff intentionally does not freeze a transient count.
+    external targets. The indivisible Phoenix-Houston-Chicago claim subsequently
+    completed all 64 overpasses and three city compiles; the frozen evaluator,
+    report, post-hoc QA audit, and public Atlas release all authenticated. No
+    target dashboard or worker is currently required.
 
 ## Frozen scientific decisions
 
@@ -145,19 +144,20 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
 
 ## Current permission boundary
 
-Authorized now:
+Completed and authenticated:
 
 - authenticate the completed public predictor table and its evidence;
 - authenticate the append-only protocol/model specification lock;
 - authenticate the completed LA 2020-2024 source-target table;
 - authenticate the completed frozen model fit and committed external predictions;
-- resume the one indivisible Phoenix-Houston-Chicago target claim.
+- the one indivisible Phoenix-Houston-Chicago target claim;
+- the frozen external evaluation, six-figure evidence package, and verified Atlas release.
 
-Still prohibited until all three city compiles authenticate:
+Still prohibited:
 
-- scoring or inspecting partial external results;
 - refitting, recalibrating, or selecting models from external outcomes;
-- releasing external metrics, evidence figures, or verified Atlas data.
+- replacing the frozen confirmatory result with a post-hoc sensitivity result;
+- claiming successful cross-city confirmation or calibrated uncertainty.
 
 The single active control record is
 `manifests/multicity/ACTIVE_STAGE.json`. Historical numbered transition modules
@@ -169,11 +169,11 @@ The public predictor phase is complete: static/calendar/Daymet reached `84 / 84`
 Sentinel reached `516 / 516`, and the final table is 136,941 rows by 46 frozen
 features. Do not rebuild or re-import these products.
 
-The exact tracked stage is `three_city_external_target_build_active`. The LA
-source table contains 98,640 tract-date keys. Frozen fitting then produced a
-committed 38,301-row predictor-only external prediction table before the
-external target claim was issued. Resume or monitor the combined claim at
-`http://127.0.0.1:8771/`; never score a partial city or partial date set.
+The exact tracked stage is `external_evaluation_complete_inconclusive_sample_size`.
+The complete target claim contains 64 overpasses and three city compiles. The
+evaluation used 11,207 QA-valid rows across 28 city-dates and 180 spatial
+blocks. M2 reduced equal-city/equal-date MAE from 9.738 °C to 6.922 °C, a 28.9%
+improvement with a 95% crossed-bootstrap interval of 14.1% to 43.5%.
 
 Reauthenticate the protocol and LA-only authorization with:
 
@@ -182,11 +182,14 @@ Reauthenticate the protocol and LA-only authorization with:
 .\.venv\Scripts\python scripts\authorize_multicity_source_targets.py --project-root . --check-only
 ```
 
-The next transition occurs only after all 64 external overpasses and all three
-city compiles complete and the combined completion record authenticates. Then
-run the already bound evaluator once, authenticate its completion before
-reading metrics, generate the six evidence figures, and publish the verified
-Atlas payload without model retuning.
+The preregistered point gate nevertheless failed: only 28 city-dates survived
+the unchanged QA rules, Houston and Chicago each had fewer than eight usable
+dates, and M2 degraded in Phoenix. The reliability gate also failed: nominal
+90% intervals covered only 45.0% overall and abstention increased rather than
+reduced accepted-set MAE. Preserve this result. A clearly labeled, read-only
+post-hoc quality audit is complete and does not replace the formal result. The
+next research step is to design and preregister a separate future experiment;
+it must not overwrite or be presented as the completed confirmatory test.
 
 The already completed spatial partition can be reauthenticated without target
 or predictor access using:
@@ -197,10 +200,10 @@ or predictor access using:
 .\.venv\Scripts\python scripts\stage_multicity_target_build_plan.py --check-only
 ```
 
-Do not refit or recalibrate the committed model, and do not score partial
-external targets. The prediction commit preceded the single combined external
-claim; the next legal evaluation begins only after all three city compiles
-authenticate.
+Do not refit or recalibrate the committed model, rescore the completed external
+claim, or reinterpret the post-hoc sensitivity as confirmatory. The prediction
+commit preceded the single combined external claim, and all three city compiles
+and the one-time evaluation have authenticated.
 
 Authenticate the completed gates with:
 

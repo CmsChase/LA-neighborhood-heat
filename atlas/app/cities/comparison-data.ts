@@ -74,6 +74,21 @@ export type EvidenceFigure = {
   sha256: string;
 };
 
+export type ExternalConfirmationOutcome = {
+  cohortState: "complete" | "inconclusive_sample_size";
+  cityIds: Exclude<CityId, "los_angeles_ca">[];
+  usableRows: number;
+  usableCityDates: number;
+  spatialBlocks: number;
+  relativeMaeImprovementPercent: number;
+  bootstrapCiPercent: {
+    lower: number;
+    upper: number;
+  };
+  pointPredictionGatePassed: boolean;
+  reliabilityGatePassed: boolean;
+};
+
 type PreviewCity = CityDesign & { results: null };
 type VerifiedCity = CityDesign & {
   results: AuthenticatedCityResults | HistoricalSourceReference;
@@ -109,6 +124,7 @@ export type PreviewComparisonData = ComparisonDataBase & {
     claimId: null;
     notice: string;
   };
+  externalConfirmation: null;
   cities: PreviewCity[];
 };
 
@@ -119,6 +135,7 @@ export type VerifiedComparisonData = ComparisonDataBase & {
     claimId: string;
     notice: string;
   };
+  externalConfirmation: ExternalConfirmationOutcome;
   cities: VerifiedCity[];
 };
 
@@ -190,6 +207,43 @@ function validateSourceReference(value: unknown) {
   }
 }
 
+function validateExternalConfirmation(value: unknown) {
+  if (!isRecord(value)) {
+    throw new Error("Authenticated releases require a cohort-level outcome.");
+  }
+  if (
+    value.cohortState !== "complete" &&
+    value.cohortState !== "inconclusive_sample_size"
+  ) {
+    throw new Error("Unknown external confirmation cohort state.");
+  }
+  const cityIds = value.cityIds;
+  const expectedCityIds = CITY_IDS.filter((id) => id !== "los_angeles_ca");
+  if (
+    !Array.isArray(cityIds) ||
+    cityIds.join("|") !== expectedCityIds.join("|")
+  ) {
+    throw new Error("External confirmation cohort membership changed.");
+  }
+  const bootstrapCiPercent = value.bootstrapCiPercent;
+  if (
+    !isRecord(bootstrapCiPercent) ||
+    ![
+      value.usableRows,
+      value.usableCityDates,
+      value.spatialBlocks,
+      value.relativeMaeImprovementPercent,
+      bootstrapCiPercent.lower,
+      bootstrapCiPercent.upper,
+    ].every(isFiniteNumber) ||
+    Number(bootstrapCiPercent.lower) > Number(bootstrapCiPercent.upper) ||
+    typeof value.pointPredictionGatePassed !== "boolean" ||
+    typeof value.reliabilityGatePassed !== "boolean"
+  ) {
+    throw new Error("External confirmation cohort metrics are incomplete.");
+  }
+}
+
 /**
  * Runtime boundary for a future generated static result bundle. Preview data is
  * required to keep every result object null; verified data is required to carry
@@ -206,6 +260,7 @@ export function parseFourCityComparisonData(
   const cities = input.cities;
   const cityOrder = input.cityOrder;
   const evidenceFigures = input.evidenceFigures;
+  const externalConfirmation = input.externalConfirmation;
   if (
     !isRecord(release) ||
     !Array.isArray(cities) ||
@@ -245,6 +300,7 @@ export function parseFourCityComparisonData(
   if (release.state === "preview") {
     if (
       release.claimId !== null ||
+      externalConfirmation !== null ||
       cities.some((city) => city.results !== null) ||
       evidenceFigures.length !== 0
     ) {
@@ -254,6 +310,7 @@ export function parseFourCityComparisonData(
     if (typeof release.claimId !== "string" || release.claimId.length === 0) {
       throw new Error("Verified releases require a non-empty claim ID.");
     }
+    validateExternalConfirmation(externalConfirmation);
     for (const city of cities) {
       if (city.id === "los_angeles_ca") {
         validateSourceReference(city.results);
@@ -305,6 +362,7 @@ const previewData = {
     notice:
       "This payload contains target-blind study-design inventory only. External-city performance and target values are not included.",
   },
+  externalConfirmation: null,
   endpoint: {
     name: "QA-filtered daytime land-surface temperature",
     unit: "degrees_celsius",
@@ -398,6 +456,7 @@ function materializeGeneratedRelease(input: unknown): unknown {
     input.schemaVersion !== "multicity-atlas-release-v1" ||
     !isRecord(input.release) ||
     !isRecord(input.sourceReference) ||
+    !isRecord(input.externalConfirmation) ||
     !Array.isArray(input.externalResults) ||
     !Array.isArray(input.evidenceFigures) ||
     !Array.isArray(input.provenance)
@@ -424,6 +483,7 @@ function materializeGeneratedRelease(input: unknown): unknown {
   return {
     ...previewData,
     release: input.release,
+    externalConfirmation: input.externalConfirmation,
     evidenceFigures: input.evidenceFigures,
     cities: previewData.cities.map((city) => ({
       ...city,
