@@ -1,0 +1,554 @@
+# M3 development intent. This file is descriptive only: it is not a protocol
+# lock and grants no permission to read values, build targets, fit, or score.
+
+[protocol]
+schema_version = 1
+id = "multicity_m3_level_anomaly_development_v1"
+status = "development_protocol_not_locked"
+research_question = "Can a multi-source model that separates city-date absolute temperature level from neighborhood spatial anomaly improve daytime Landsat land-surface-temperature prediction in entirely unseen cities?"
+analysis_unit = "2020_census_tract_x_physical_overpass_local_date"
+target = "qa_filtered_daytime_landsat_collection_2_level_2_surface_temperature_c"
+target_is_air_temperature = false
+target_is_human_heat_risk = false
+protocol_locked = false
+
+[cohorts]
+source_city_ids = [
+  "los_angeles_ca",
+  "phoenix_az",
+  "houston_tx",
+  "chicago_il",
+]
+blind_test_city_ids = [
+  "seattle_wa",
+  "denver_co",
+  "atlanta_ga",
+  "miami_fl",
+]
+source_role = "development_only_previously_opened_labels"
+blind_test_role = "one_indivisible_confirmation_cohort"
+blind_test_year = 2025
+los_angeles_2025_reuse_as_blind_test = false
+previous_phoenix_houston_chicago_results_reuse_as_independent_test = false
+
+[anchors.feasibility]
+path = "manifests/multicity/next_experiment/METADATA_FEASIBILITY_AUDIT.json"
+commit_sha256 = "450ecd604000fcec7f3958e9a15013c74f69c52fddd656e9786c703c62838922"
+required_state = "metadata_only_feasibility_complete"
+required_decision = "primary_set_feasible"
+
+[anchors.historical]
+previous_multicity_protocol = "manifests/multicity/evaluation/PROTOCOL_MODEL_LOCK.json"
+previous_multicity_model_fit = "manifests/multicity/model/MODEL_FIT_COMPLETE.json"
+previous_la_source_targets = "manifests/multicity/targets/LA_SOURCE_TARGETS_COMPLETE.json"
+previous_external_targets = "manifests/multicity/targets/THREE_CITY_EXTERNAL_TARGETS_COMPLETE.json"
+previous_external_evaluation = "data/processed/multicity/external_evaluation/EXTERNAL_EVALUATION_COMPLETE.json"
+previous_atlas_release = "manifests/multicity/releases/ATLAS_RESULTS_RELEASE.json"
+phase1_model_lock = "manifests/model_lock/MODEL_LOCK.json"
+phase1_evaluation = "manifests/final_test_2025/evaluation/EVALUATION_COMPLETE.json"
+interpretation = "context_and_source_development_evidence_only_not_new_confirmation"
+
+[features]
+old_23_dynamic_feature_count = 23
+old_46_portable_feature_count = 46
+forbid_city_id_as_predictor = true
+forbid_tract_geoid_as_predictor = true
+forbid_landsat_thermal_or_target_qa_as_predictor = true
+forbid_same_day_or_future_dynamic_predictors = true
+latest_dynamic_offset_days = -1
+dynamic_imputation = "feature_median_fit_inside_each_training_fold_only"
+
+[features.old_23_dynamic]
+names = [
+  "calendar_doy_sin",
+  "calendar_doy_cos",
+  "daymet_dayl_s_mean_prev_1d",
+  "daymet_prcp_mm_sum_prev_1d",
+  "daymet_srad_w_m2_mean_prev_1d",
+  "daymet_tmax_c_mean_prev_1d",
+  "daymet_tmin_c_mean_prev_1d",
+  "daymet_vp_pa_mean_prev_1d",
+  "daymet_srad_energy_mj_m2_sum_prev_1d",
+  "daymet_dayl_s_mean_prev_3d",
+  "daymet_prcp_mm_sum_prev_3d",
+  "daymet_srad_w_m2_mean_prev_3d",
+  "daymet_tmax_c_mean_prev_3d",
+  "daymet_tmin_c_mean_prev_3d",
+  "daymet_vp_pa_mean_prev_3d",
+  "daymet_srad_energy_mj_m2_sum_prev_3d",
+  "daymet_dayl_s_mean_prev_7d",
+  "daymet_prcp_mm_sum_prev_7d",
+  "daymet_srad_w_m2_mean_prev_7d",
+  "daymet_tmax_c_mean_prev_7d",
+  "daymet_tmin_c_mean_prev_7d",
+  "daymet_vp_pa_mean_prev_7d",
+  "daymet_srad_energy_mj_m2_sum_prev_7d",
+]
+
+[features.old_18_static]
+names = [
+  "nlcd_open_water_fraction",
+  "nlcd_developed_open_fraction",
+  "nlcd_developed_low_fraction",
+  "nlcd_developed_high_fraction",
+  "nlcd_barren_fraction",
+  "nlcd_forest_fraction",
+  "nlcd_shrub_grass_fraction",
+  "nlcd_agriculture_fraction",
+  "nlcd_wetland_fraction",
+  "impervious_mean_fraction",
+  "impervious_p90_fraction",
+  "impervious_at_least_50_fraction",
+  "elevation_mean_m",
+  "elevation_std_m",
+  "slope_mean_degrees",
+  "slope_p90_degrees",
+  "gshhg_ocean_great_lakes_shore_distance_mean_km",
+  "gshhg_ocean_great_lakes_shore_distance_p10_km",
+]
+
+[features.old_5_sentinel]
+names = [
+  "sentinel_ndvi_lag60",
+  "sentinel_evi_lag60",
+  "sentinel_ndwi_lag60",
+  "sentinel_ndbi_lag60",
+  "sentinel_albedo_proxy_lag60",
+]
+
+[seeds]
+model = 20260813
+density = 20260814
+risk = 20260815
+bootstrap = 20260816
+
+[models.shared]
+sample_weighting = "each_source_city_total_weight_one_then_each_city_date_total_weight_one_then_equal_rows_within_date"
+random_state = 20260813
+
+[models.b1]
+role = "legal_baseline"
+estimator = "Ridge"
+feature_names_from = "features.old_23_dynamic.names"
+feature_count = 23
+alpha = 10.0
+fit_intercept = true
+solver = "lsqr"
+tolerance = 0.0001
+standardize = true
+refit_on_each_training_city_set = true
+
+[models.m2_legacy]
+role = "legacy_full_model_retrained_on_the_same_four_sources"
+estimator = "HistGradientBoostingRegressor"
+feature_contract = "old_18_static_plus_old_23_dynamic_plus_old_5_sentinel"
+feature_count = 46
+loss = "absolute_error"
+learning_rate = 0.05
+max_iter = 300
+max_leaf_nodes = 31
+min_samples_leaf = 50
+l2_regularization = 1.0
+early_stopping = false
+random_state = 20260719
+standardize = false
+refit_on_each_training_city_set = true
+eligible_for_primary_model_selection = false
+
+[models.m3]
+role = "primary_level_plus_anomaly_model"
+identity = "predicted_city_date_level_plus_median_centered_predicted_neighborhood_anomaly"
+observed_level = "median_target_lst_c_over_eligible_tracts_within_source_city_date"
+observed_anomaly = "target_lst_c_minus_observed_city_date_median"
+predicted_anomaly_centering = "subtract_median_raw_anomaly_prediction_over_the_complete_frozen_predictor_tract_universe_within_each_city_date"
+final_prediction = "predicted_level_c_plus_centered_predicted_anomaly_c"
+level_training_unit = "source_city_date"
+anomaly_training_unit = "source_city_date_tract"
+candidate_count = 4
+
+[models.m3.level]
+estimator = "Ridge"
+old_23_aggregation = "median_over_complete_frozen_predictor_tract_universe_within_city_date"
+additional_feature_names = [
+  "elevation_mean_m",
+  "city_centroid_latitude_deg",
+]
+city_elevation_definition = "city_date_median_of_tract_elevation_mean_m"
+city_centroid_latitude_definition = "city_centroid_latitude_deg_repeated_per_tract_then_median_aggregated_within_city_date"
+ridge_alpha_candidates = [1.0, 10.0]
+fit_intercept = true
+solver = "lsqr"
+tolerance = 0.0001
+standardize = true
+
+[models.m3.anomaly]
+estimator = "HistGradientBoostingRegressor"
+feature_contract = "old_18_static_plus_old_5_sentinel"
+feature_count = 23
+loss = "absolute_error"
+learning_rate = 0.05
+max_iter = 300
+max_leaf_nodes_candidates = [15, 31]
+min_samples_leaf = 50
+l2_regularization = 1.0
+early_stopping = false
+random_state = 20260813
+standardize = false
+
+[[models.m3.candidates]]
+candidate_id = "level_ridge_alpha_1__anomaly_hgb_leaves_15"
+level_alpha = 1.0
+anomaly_max_leaf_nodes = 15
+
+[[models.m3.candidates]]
+candidate_id = "level_ridge_alpha_1__anomaly_hgb_leaves_31"
+level_alpha = 1.0
+anomaly_max_leaf_nodes = 31
+
+[[models.m3.candidates]]
+candidate_id = "level_ridge_alpha_10__anomaly_hgb_leaves_15"
+level_alpha = 10.0
+anomaly_max_leaf_nodes = 15
+
+[[models.m3.candidates]]
+candidate_id = "level_ridge_alpha_10__anomaly_hgb_leaves_31"
+level_alpha = 10.0
+anomaly_max_leaf_nodes = 31
+
+[target_qa]
+threshold_is_pixel_level = true
+threshold_is_not_tract_summary_filter = true
+st_qa_scale_kelvin = 0.01
+threshold_comparison = "st_qa_kelvin_less_than_or_equal_to_candidate"
+rebuild_mosaic_and_tract_date_targets_for_every_candidate = true
+never_inherit_date_usable_from_another_candidate = true
+pixel_mosaic_priority = "valid_then_lower_st_qa_then_greater_st_cdist_then_scene_id_lexicographic_ascending"
+excluded_qa_pixel_bits = [0, 1, 2, 3, 4, 5, 7]
+minimum_st_dn = 293
+maximum_st_dn = 61440
+require_st_qa_not_fill = true
+require_st_cdist_not_fill = true
+minimum_cloud_distance_km = 1.0
+exclude_terrain_occlusion = true
+require_physically_plausible_lst = true
+
+[[target_qa.st_qa_candidates]]
+id = "none"
+apply_threshold = false
+leniency_rank = 4
+
+[[target_qa.st_qa_candidates]]
+id = "3k"
+apply_threshold = true
+maximum_kelvin = 3.0
+leniency_rank = 1
+
+[[target_qa.st_qa_candidates]]
+id = "4k"
+apply_threshold = true
+maximum_kelvin = 4.0
+leniency_rank = 2
+
+[[target_qa.st_qa_candidates]]
+id = "6k"
+apply_threshold = true
+maximum_kelvin = 6.0
+leniency_rank = 3
+
+[target_support]
+static_mask = "ESA_WorldCover_2020_valid_nonwater_classes"
+worldcover_excluded_classes = [0, 80]
+minimum_tract_footprint_fraction = 0.90
+minimum_valid_pixels_per_tract = 20
+minimum_valid_pixel_fraction = 0.60
+minimum_city_union_coverage_fraction = 0.98
+minimum_date_tract_retention_fraction = 0.50
+tract_date_available_rule = "all_pixel_and_tract_support_gates_pass_and_target_lst_c_is_finite"
+city_date_usable_rule = "union_city_coverage_fraction_at_least_0_98_and_retained_tract_count_divided_by_frozen_city_tract_count_at_least_0_50"
+model_row_rule = "target_available_true_and_date_usable_true_and_target_lst_c_finite"
+
+[selection]
+model_and_st_qa_selected_jointly = true
+joint_configuration_count = 16
+method = "nested_whole_city_leave_one_source_city_out"
+outer_fold_count = 4
+outer_holdout_unit = "one_complete_source_city"
+inner_holdout_unit = "one_complete_city_from_the_three_outer_training_cities"
+forbid_rows_or_dates_from_held_out_city_during_fit_imputation_and_selection = true
+primary_objective = "minimum_equal_city_equal_date_m3_absolute_lst_mae"
+objective_city_weighting = "each_inner_validation_city_equal_weight"
+objective_date_weighting = "each_usable_date_equal_weight_with_equal_rows_within_date"
+objective_rounding_decimal_places = 12
+minimum_usable_dates_per_inner_validation_city = 8
+minimum_total_usable_inner_validation_city_dates = 30
+ineligible_if_support_gate_fails = true
+outer_scores_never_select_final_configuration = true
+final_selection = "repeat_whole_city_LOSO_on_all_four_sources_with_identical_objective_eligibility_and_tie_break_then_refit_on_all_four_sources"
+
+[selection.tie_break]
+order = [
+  "higher_minimum_usable_dates_across_inner_validation_cities",
+  "higher_total_usable_city_dates",
+  "higher_overall_tract_date_retention",
+  "more_lenient_st_qa_none_then_6k_then_4k_then_3k",
+  "lower_m3_complexity_rank",
+  "candidate_id_lexicographic_ascending",
+]
+exact_score_tolerance = 1e-12
+
+[uncertainty]
+nominal_coverage = 0.90
+preferred_method = "density_ratio_weighted_source_city_cross_conformal_absolute_residual_if_all_source_only_stability_and_benefit_gates_pass"
+fallback_method = "unweighted_cross_conformal"
+source_residuals = "nested_whole_city_out_of_fold_absolute_residuals_only"
+point_model = "selected_m3"
+nonconformity_score = "absolute_y_minus_m3_prediction_c"
+base_calibration_weight = "equal_city_then_equal_date_then_equal_rows_within_date"
+finite_sample_correction = "weighted_quantile_with_one_explicit_test_atom_at_infinity_of_weight_1"
+weighted_quantile_tie_break = "score_then_city_id_then_target_date_then_tract_geoid_ascending"
+interval = "m3_prediction_plus_or_minus_selected_absolute_residual_cross_conformal_correction"
+
+[uncertainty.covariate_shift]
+uses_only_unlabeled_predictor_rows_from_each_blind_test_city = true
+classifier = "LogisticRegression"
+classifier_role = "estimate_equal_prior_probability_that_a_row_is_from_the_blind_test_city"
+classifier_penalty = "l2"
+classifier_c = 1.0
+classifier_solver = "lbfgs"
+classifier_max_iter = 2000
+classifier_class_weight = "none"
+domain_class_prior = "equal_source_and_blind_test_total_weight"
+domain_sample_weighting = "each_domain_total_weight_0_5_then_equal_city_then_equal_date_then_equal_rows"
+preprocess_imputer = "SimpleImputer"
+preprocess_imputer_strategy = "median"
+preprocess_imputer_add_indicator = true
+preprocess_scaler = "StandardScaler"
+preprocess_fit_scope = "inside_each_density_cross_fit_training_fold_only"
+cross_fit_unit = "city_date"
+cross_fit_folds = 5
+cross_fit_assignment = "sha256_of_density_seed_city_id_target_date_modulo_5"
+classifier_random_state = 20260814
+feature_contract = "old_46_portable_features"
+density_ratio = "p_test_divided_by_one_minus_p_test_under_equal_classifier_priors"
+ratio_clip_lower = 0.20
+ratio_clip_upper = 5.0
+normalize_by_mean_clipped_source_ratio = true
+apply_separately_per_blind_test_city = true
+
+[uncertainty.stability]
+require_all_values_finite = true
+domain_classifier_roc_auc_lower = 0.50
+domain_classifier_roc_auc_upper = 0.95
+minimum_row_effective_sample_size_fraction = 0.25
+minimum_city_date_effective_sample_size_fraction = 0.50
+minimum_each_source_city_weight_share = 0.05
+maximum_source_ratio_clip_fraction = 0.20
+maximum_test_ratio_clip_fraction = 0.20
+source_oof_pooled_coverage_lower = 0.85
+source_oof_pooled_coverage_upper = 0.95
+minimum_source_oof_per_city_coverage = 0.80
+minimum_weighted_wis_improvement_over_unweighted = 0.02
+all_gates_required = true
+weighted_method_tie_break = "lower_weighted_wis_then_lower_clip_upper_then_method_id_lexicographic"
+fallback_trigger = "no_density_ratio_candidate_passes_every_gate"
+fallback_result = "unweighted_cross_conformal"
+
+[uncertainty.risk]
+candidate_methods = ["learned_error", "interval_width", "ensemble_sd"]
+learned_error_estimator = "HistGradientBoostingRegressor"
+learned_error_feature_contract = "old_46_portable_features_then_the_six_additional_features_in_the_exact_order_below"
+learned_error_feature_order = [
+  "nlcd_open_water_fraction",
+  "nlcd_developed_open_fraction",
+  "nlcd_developed_low_fraction",
+  "nlcd_developed_high_fraction",
+  "nlcd_barren_fraction",
+  "nlcd_forest_fraction",
+  "nlcd_shrub_grass_fraction",
+  "nlcd_agriculture_fraction",
+  "nlcd_wetland_fraction",
+  "impervious_mean_fraction",
+  "impervious_p90_fraction",
+  "impervious_at_least_50_fraction",
+  "elevation_mean_m",
+  "elevation_std_m",
+  "slope_mean_degrees",
+  "slope_p90_degrees",
+  "gshhg_ocean_great_lakes_shore_distance_mean_km",
+  "gshhg_ocean_great_lakes_shore_distance_p10_km",
+  "calendar_doy_sin",
+  "calendar_doy_cos",
+  "daymet_dayl_s_mean_prev_1d",
+  "daymet_prcp_mm_sum_prev_1d",
+  "daymet_srad_w_m2_mean_prev_1d",
+  "daymet_tmax_c_mean_prev_1d",
+  "daymet_tmin_c_mean_prev_1d",
+  "daymet_vp_pa_mean_prev_1d",
+  "daymet_srad_energy_mj_m2_sum_prev_1d",
+  "daymet_dayl_s_mean_prev_3d",
+  "daymet_prcp_mm_sum_prev_3d",
+  "daymet_srad_w_m2_mean_prev_3d",
+  "daymet_tmax_c_mean_prev_3d",
+  "daymet_tmin_c_mean_prev_3d",
+  "daymet_vp_pa_mean_prev_3d",
+  "daymet_srad_energy_mj_m2_sum_prev_3d",
+  "daymet_dayl_s_mean_prev_7d",
+  "daymet_prcp_mm_sum_prev_7d",
+  "daymet_srad_w_m2_mean_prev_7d",
+  "daymet_tmax_c_mean_prev_7d",
+  "daymet_tmin_c_mean_prev_7d",
+  "daymet_vp_pa_mean_prev_7d",
+  "daymet_srad_energy_mj_m2_sum_prev_7d",
+  "sentinel_ndvi_lag60",
+  "sentinel_evi_lag60",
+  "sentinel_ndwi_lag60",
+  "sentinel_ndbi_lag60",
+  "sentinel_albedo_proxy_lag60",
+  "m3_interval_width_c",
+  "m3_ensemble_point_sd_c",
+  "m3_abs_b1_disagreement_c",
+  "m3_abs_m2_legacy_disagreement_c",
+  "uq_abs_log_density_ratio",
+  "predictor_missing_count",
+]
+learned_error_preprocess_imputer = "SimpleImputer"
+learned_error_preprocess_imputer_strategy = "median"
+learned_error_preprocess_imputer_add_indicator = true
+learned_error_preprocess_fit_scope = "inside_each_whole_city_training_fold_only"
+learned_error_loss = "absolute_error"
+learned_error_learning_rate = 0.05
+learned_error_max_iter = 200
+learned_error_max_leaf_nodes = 15
+learned_error_min_samples_leaf = 50
+learned_error_l2_regularization = 1.0
+learned_error_early_stopping = false
+learned_error_random_state = 20260815
+accepted_fraction_within_each_city_date = 0.80
+acceptance_rule = "accept_ceil_0_80_times_n_lowest_risk_rows_within_each_city_date"
+row_tie_break = "risk_score_then_tract_geoid_ascending"
+minimum_equal_city_accepted_mae_improvement = 0.10
+minimum_retention = 0.60
+require_no_source_city_degradation = true
+selection_tie_break = "lower_accepted_equal_city_mae_then_learned_error_before_interval_width_before_ensemble_sd_then_method_id"
+fallback_result = "none_accept_all"
+
+[outputs]
+prediction_column_count = 21
+prediction_columns = [
+  "city_id",
+  "tract_geoid",
+  "target_date",
+  "b1_prediction_c",
+  "m2_legacy_prediction_c",
+  "m3_level_prediction_c",
+  "m3_anomaly_prediction_c",
+  "m3_prediction_c",
+  "m3_conformal_correction_c",
+  "m3_lower_c",
+  "m3_upper_c",
+  "m3_interval_width_c",
+  "m3_ensemble_point_sd_c",
+  "uq_method",
+  "uq_density_ratio_raw",
+  "uq_density_ratio_clipped",
+  "uq_weight_clip_hit",
+  "m3_predicted_absolute_error_c",
+  "m3_risk_percentile_within_city_date",
+  "m3_abstain",
+  "m3_accepted",
+]
+planned_figure_ids = [
+  "blind_city_mae",
+  "predicted_vs_observed",
+  "error_by_city_date",
+  "anomaly_performance",
+  "interval_calibration",
+  "risk_coverage",
+  "spatial_error_maps",
+  "source_loso_selection",
+]
+prediction_output_must_exclude_targets_and_target_qa = true
+prediction_output_order_is_exact = true
+
+[access_audit]
+predictor_tables_read_by_this_lock = false
+source_target_or_qa_values_read_by_this_lock = false
+blind_test_landsat_asset_hrefs_read_by_this_lock = false
+blind_test_thermal_or_target_qa_values_read_by_this_lock = false
+blind_test_target_tables_read_by_this_lock = false
+model_fit_prediction_or_scoring_performed_by_this_lock = false
+values_opened_marker_created_by_this_lock = false
+
+[audit]
+require_configuration_and_core_exact_contract_match = true
+require_authenticated_feasibility_and_historical_anchors = true
+require_separate_source_development_authorization = true
+require_authenticated_source_nested_loso_completion_commit = true
+require_blind_test_prediction_commit_before_target_authorization = true
+require_authenticated_target_authorization_before_values_opened = true
+require_append_only_committed_manifests = true
+require_sha256_row_date_and_spatial_block_counts = true
+forbid_metric_access_before_canonical_completion_authentication = true
+
+[evaluation]
+primary_comparison = "M3_vs_B1"
+legacy_comparison = "M2_legacy_vs_B1_secondary_only"
+primary_metric = "one_minus_equal_city_equal_date_mae_m3_divided_by_equal_city_equal_date_mae_b1"
+minimum_relative_mae_improvement = 0.10
+require_crossed_bootstrap_ci_lower_above_zero = true
+require_no_blind_test_city_point_degradation = true
+minimum_total_usable_city_dates = 40
+minimum_usable_dates_per_blind_test_city = 8
+bootstrap_iterations = 10000
+bootstrap_method = "city_stratified_crossed_complete_date_x_5km_spatial_block"
+bootstrap_seed = 20260816
+confidence_level = 0.95
+all_tables_require_row_date_and_spatial_block_counts = true
+secondary_metrics = [
+  "per_city_equal_date_mae",
+  "rmse",
+  "signed_error",
+  "spatial_anomaly_mae",
+  "per_date_spearman",
+  "top20_hotspot_average_precision_precision_recall",
+  "interval_coverage",
+  "interval_width",
+  "wis",
+  "risk_coverage",
+]
+
+[evaluation.reliability_gates]
+overall_coverage_lower = 0.85
+overall_coverage_upper = 0.95
+minimum_per_city_coverage = 0.80
+minimum_per_city_retention = 0.60
+minimum_accepted_set_mae_improvement_vs_all_predictions = 0.10
+
+[blind_test]
+prediction_commit_required_before_target_authorization = true
+one_indivisible_combined_target_claim = true
+apply_locked_st_qa_and_support_rules_mechanically = true
+reading_blind_test_st_qa_distribution_before_prediction_commit = false
+retuning_after_any_blind_test_target_or_qa_access = false
+descriptive_all_candidate_date_sensitivity_may_replace_primary = false
+
+[permissions]
+create_protocol_lock = false
+read_source_target_or_qa_values = false
+reprocess_source_targets = false
+build_source_predictors = false
+fit_models = false
+select_models_or_st_qa = false
+build_blind_test_predictors = false
+read_blind_test_landsat_asset_hrefs = false
+read_blind_test_thermal_values = false
+read_blind_test_target_qa_values = false
+read_blind_test_target_tables = false
+create_blind_test_values_opened_marker = false
+create_blind_test_target_authorization = false
+commit_blind_test_predictions = false
+score_blind_test_targets = false
+publish_results = false
+
+[next_stage]
+safe_action = "independently_review_and_then_create_a_separate_immutable_protocol_lock_before_any_value_access_or_model_fit"
