@@ -1,0 +1,132 @@
+[experiment]
+schema_version = 1
+id = "multicity_m3_level_anomaly_v1"
+status = "design_intent_metadata_feasibility"
+audit_class = "target_blind_label_free_city_feasibility"
+analysis_crs = "EPSG:5070"
+target_blind = true
+label_free = true
+target_access_authorized = false
+
+[window]
+start_date = "2025-03-01"
+end_date = "2025-11-30"
+
+[census]
+provider = "U.S. Census Bureau 2020 TIGER/Line"
+tract_layer_url = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/6"
+place_layer_url = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/26"
+tract_mirror_layer_url = "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Census_2020_Redistricting_Tracts/FeatureServer/0"
+tract_mirror_item = "e3a7d2d3e5834b7eb6b1c2943141ced6"
+place_mirror_layer_url = "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Census_2020_Redistricting_Incorporated_Places/FeatureServer/0"
+place_mirror_item = "13ea1fb24ca14842bb265e6ec6ac1d46"
+mirror_vertex_contract = "2020_TIGER_boundaries_no_vertex_alteration_declared"
+minimum_place_area_fraction = 0.50
+exclude_special_use_tracts = true
+special_use_tract_prefix = "98"
+
+[worldcover]
+provider = "European Space Agency via Microsoft Planetary Computer"
+stac_api = "https://planetarycomputer.microsoft.com/api/stac/v1"
+collection = "esa-worldcover"
+product_year = 2020
+product_version = "v100"
+asset = "map"
+no_data_class = 0
+water_class = 80
+exclude_classes = [0, 80]
+eligible_definition = "city_tract_support_and_worldcover_valid_non_water"
+
+[landsat]
+provider = "USGS via Microsoft Planetary Computer"
+stac_api = "https://planetarycomputer.microsoft.com/api/stac/v1"
+collection = "landsat-c2-l2"
+platforms = ["landsat-8", "landsat-9"]
+collection_category = "T1"
+processing_level = "L2SP"
+metadata_only = true
+physical_time_tolerance_minutes = 15
+minimum_union_coverage_fraction = 0.98
+minimum_unique_physical_dates = 16
+page_limit = 1000
+
+[paths]
+cache_root = "data/raw/multicity/next_experiment_feasibility"
+manifest = "manifests/multicity/next_experiment/METADATA_FEASIBILITY_AUDIT.json"
+status = "data/interim/multicity/next_experiment_feasibility/status.json"
+
+[[cities]]
+id = "seattle_wa"
+name = "Seattle"
+state_fips = "53"
+census_place_geoid = "5363000"
+timezone = "America/Los_Angeles"
+target_grid_crs = "EPSG:32610"
+tier = "primary"
+
+[[cities]]
+id = "denver_co"
+name = "Denver"
+state_fips = "08"
+census_place_geoid = "0820000"
+timezone = "America/Denver"
+target_grid_crs = "EPSG:32613"
+tier = "primary"
+
+[[cities]]
+id = "atlanta_ga"
+name = "Atlanta"
+state_fips = "13"
+census_place_geoid = "1304000"
+timezone = "America/New_York"
+target_grid_crs = "EPSG:32616"
+tier = "primary"
+
+[[cities]]
+id = "miami_fl"
+name = "Miami"
+state_fips = "12"
+census_place_geoid = "1245000"
+timezone = "America/New_York"
+target_grid_crs = "EPSG:32617"
+tier = "primary"
+
+[[cities]]
+id = "dallas_tx"
+name = "Dallas"
+state_fips = "48"
+census_place_geoid = "4819000"
+timezone = "America/Chicago"
+target_grid_crs = "EPSG:32614"
+tier = "replacement"
+replacement_order = 1
+
+[[cities]]
+id = "minneapolis_mn"
+name = "Minneapolis"
+state_fips = "27"
+census_place_geoid = "2743000"
+timezone = "America/Chicago"
+target_grid_crs = "EPSG:32615"
+tier = "replacement"
+replacement_order = 2
+
+[[cities]]
+id = "portland_or"
+name = "Portland"
+state_fips = "41"
+census_place_geoid = "4159000"
+timezone = "America/Los_Angeles"
+target_grid_crs = "EPSG:32610"
+tier = "replacement"
+replacement_order = 3
+
+[[cities]]
+id = "baltimore_md"
+name = "Baltimore"
+state_fips = "24"
+census_place_geoid = "2404000"
+timezone = "America/New_York"
+target_grid_crs = "EPSG:32618"
+tier = "replacement"
+replacement_order = 4

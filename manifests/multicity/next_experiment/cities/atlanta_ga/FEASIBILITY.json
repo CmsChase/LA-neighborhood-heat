@@ -1,0 +1,366 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "next-experiment-metadata-feasibility-v1",
+  "state": "complete_city_feasibility_audit",
+  "generated_at_utc": "2026-08-13T05:31:03.550351+00:00",
+  "experiment_id": "multicity_m3_level_anomaly_v1",
+  "config_sha256": "1d7a459fc3184623a8f542ff948352328d38a822daa4268aa1c5d8d88c548c53",
+  "city": {
+    "id": "atlanta_ga",
+    "name": "Atlanta",
+    "state_fips": "13",
+    "census_place_geoid": "1304000",
+    "timezone": "America/New_York",
+    "target_grid_crs": "EPSG:32616",
+    "tier": "primary",
+    "replacement_order": null
+  },
+  "passes": true,
+  "failure_codes": [],
+  "census": {
+    "passed": true,
+    "place_source": "esri_census2020_place_mirror",
+    "tract_source": "esri_census2020_tract_mirror",
+    "bbox_wgs84": [
+      -84.5508582479855,
+      33.6478144139134,
+      -84.2895641745692,
+      33.8868294635696
+    ],
+    "tract_candidate_count": 298,
+    "primary_tract_count": 173,
+    "primary_geoid_unique": true,
+    "primary_geometry_valid": true,
+    "outputs": {
+      "city_boundary": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/city_boundary.parquet",
+        "bytes": 66479,
+        "sha256": "6f5157a9063cf967a2b1deeaa499130b38f6ce78efc01d84a988d6f737352b52",
+        "rows": 1,
+        "schema_sha256": "a263767165e1033548d4368b03e52a80d798c039670b1f189e99e49e3d134374",
+        "geometry_semantic_sha256": "8d1b82762c1d422b1c5a49cb524698b919545606f1601e1803a488b8358d4473"
+      },
+      "tract_candidates": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/tract_candidates.parquet",
+        "bytes": 839835,
+        "sha256": "bcc1038e1d23ecf3611a7c5f1489d2aaf42330c3ddb4d8f30e5f99210651487d",
+        "rows": 298,
+        "schema_sha256": "37716cf0dadb1b70d72e72f3b1db20cbe90502c0587804200c38193e9c1737b0",
+        "geometry_semantic_sha256": "ba5e74bcc8aabbb50f644fe1187549e4d09c1e0c579406492e8a33211c3c4078"
+      },
+      "primary_tracts": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/primary_tracts.parquet",
+        "bytes": 424417,
+        "sha256": "e29f97784c6562613265dd7b02500e424dac70bdfb4885dcbf3b826add1c4555",
+        "rows": 173,
+        "schema_sha256": "ad67cbc21f4d53fe7dbb12abb4554a256b073ba7b3b6fc2b2fa084fd717898a2",
+        "geometry_semantic_sha256": "6f93fec4e9fc01d7e755aa33312879c883a1df75b94d3a20b1e3f0bee7459b70"
+      }
+    },
+    "raw_responses": {
+      "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/place/layer_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/place/layer_metadata.json",
+        "bytes": 251132,
+        "sha256": "01e5d0ce684d02688998c8135b731388dae072763f52f2f328386df3931d1de2"
+      },
+      "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/place/arcgis_item_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/place/arcgis_item_metadata.json",
+        "bytes": 10760,
+        "sha256": "30b5da4a26fd66fc731743f6b1c05b14c32c21114971faf0c2c52635d141736c"
+      },
+      "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/place/query_count.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/place/query_count.json",
+        "bytes": 11,
+        "sha256": "6aea6dfe6561984cdc5c54ead84d47d2cf29e48253ae282aef237404adad4661"
+      },
+      "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/place/features.geojson": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/place/features.geojson",
+        "bytes": 129127,
+        "sha256": "ba5eada172b4ecd31af4fe6d63515478030d558fa583b4eaaf471c55c9007141"
+      },
+      "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/tract/layer_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/tract/layer_metadata.json",
+        "bytes": 279594,
+        "sha256": "9481d69ddf9feb2aa5e357f89e0371a0e14eb3fdc058c3f3d04f27a0914e5a29"
+      },
+      "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/tract/arcgis_item_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/tract/arcgis_item_metadata.json",
+        "bytes": 11397,
+        "sha256": "43bed253a861df6b9ae14e83871b731503e4534a01b633919d4bb2e748bb376c"
+      },
+      "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/tract/query_count.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/tract/query_count.json",
+        "bytes": 13,
+        "sha256": "7a2859742adee8a3139e6407112ef8012e5fdaa1379ccc1cbde22fa1fa03157c"
+      },
+      "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/tract/features_0000.geojson": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/census/raw/tract/features_0000.geojson",
+        "bytes": 1861955,
+        "sha256": "fdadd8ffe53f71d537e1fcd21cdffca37930ec52dbe4287b892e4cb8e3cbcbd0"
+      }
+    }
+  },
+  "landsat": {
+    "passed": true,
+    "failure_codes": [],
+    "query": {
+      "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "query": {
+        "collections": [
+          "landsat-c2-l2"
+        ],
+        "bbox": [
+          -84.5508582479855,
+          33.6478144139134,
+          -84.2895641745692,
+          33.8868294635696
+        ],
+        "datetime": "2025-03-01T05:00:00Z/2025-12-01T05:00:00Z",
+        "limit": 1000,
+        "fields": {
+          "include": [
+            "id",
+            "collection",
+            "geometry",
+            "bbox",
+            "properties.datetime",
+            "properties.platform",
+            "properties.landsat:wrs_path",
+            "properties.landsat:wrs_row",
+            "properties.landsat:collection_category",
+            "properties.landsat:correction"
+          ],
+          "exclude": [
+            "assets",
+            "links"
+          ]
+        },
+        "query": {
+          "landsat:collection_category": {
+            "eq": "T1"
+          },
+          "landsat:correction": {
+            "eq": "L2SP"
+          }
+        }
+      },
+      "query_sha256": "d4297ba2def2c91a12dc32302a7323fb99ce215eab81f698cc05266f271f6125",
+      "page_count": 1,
+      "query_response_items": 58,
+      "unique_items": 58,
+      "duplicate_items": 0,
+      "pagination_exhausted": true,
+      "assets_excluded": true
+    },
+    "metadata_item_count": 58,
+    "physical_overpass_count": 32,
+    "eligible_unique_physical_date_count": 28,
+    "eligible_unique_physical_dates": [
+      "2025-03-01",
+      "2025-03-17",
+      "2025-03-25",
+      "2025-04-02",
+      "2025-04-10",
+      "2025-04-18",
+      "2025-04-26",
+      "2025-05-12",
+      "2025-05-20",
+      "2025-05-28",
+      "2025-06-13",
+      "2025-06-21",
+      "2025-06-29",
+      "2025-07-07",
+      "2025-07-15",
+      "2025-07-31",
+      "2025-08-16",
+      "2025-08-24",
+      "2025-09-01",
+      "2025-09-09",
+      "2025-09-17",
+      "2025-09-25",
+      "2025-10-03",
+      "2025-10-11",
+      "2025-11-04",
+      "2025-11-12",
+      "2025-11-20",
+      "2025-11-28"
+    ],
+    "minimum_required": 16,
+    "minimum_union_coverage_fraction": 0.98,
+    "ambiguous_overpass_count": 0,
+    "platform_item_counts": {
+      "landsat-8": 28,
+      "landsat-9": 30
+    },
+    "outputs": {
+      "metadata_items": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/landsat/landsat_metadata_items.parquet",
+        "bytes": 25346,
+        "sha256": "e0698d050eca2666143b73065ecf0dbe35f805dcd93ab0c2b63ac02c0c0d98ec",
+        "rows": 58,
+        "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+        "geometry_semantic_sha256": "fe4f47dc1fd13a0cb050790bf79b164cfc55aefa8a50bc7f3fd3deb43aa9650e"
+      },
+      "physical_overpasses": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/landsat/physical_overpasses.parquet",
+        "bytes": 9817,
+        "sha256": "e6e0b30d6a549755fe399b03d7bb89a327544ad80a5bfd6b6e1faa874432ab69",
+        "rows": 32,
+        "schema_sha256": "7dbdfa8db59e64c8418573677c1d346468309e04bf2ddae7ae04eaa21415d170",
+        "semantic_sha256": "894b167c5d55d1ad62e7ec39b339a531dde89213a1ec9b71e3a3088287f16bc5"
+      }
+    },
+    "raw_responses": {
+      "data/raw/multicity/next_experiment_feasibility/atlanta_ga/landsat/raw/stac_page_001.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/landsat/raw/stac_page_001.json",
+        "bytes": 63355,
+        "sha256": "1d5f5f6b2fdd23766e4e6362a6de15c92b0bd4b91e03e62c4e4ba1c96544a4cd"
+      }
+    },
+    "access_contract": {
+      "stac_fields_excluded_assets": true,
+      "stac_item_assets_returned": false,
+      "landsat_asset_hrefs_read": false,
+      "landsat_target_or_qa_values_read": false
+    }
+  },
+  "worldcover": {
+    "passed": true,
+    "failure_codes": [],
+    "item_count": 1,
+    "items": [
+      {
+        "item_id": "ESA_WorldCover_10m_2020_v100_N33W087",
+        "tile_id": "N33W087",
+        "asset": {
+          "path": "data/raw/multicity/next_experiment_feasibility/worldcover_cache/assets_by_sha256/f4fb9a036fe27036979ab98420d249379431cd7b2f1245b3938a5152fd4eaabf.tif",
+          "bytes": 102602580,
+          "sha256": "f4fb9a036fe27036979ab98420d249379431cd7b2f1245b3938a5152fd4eaabf"
+        },
+        "schema": {
+          "crs": "EPSG:4326",
+          "shape": [
+            36000,
+            36000
+          ],
+          "resolution": [
+            8.333333333333333e-05,
+            8.333333333333333e-05
+          ],
+          "dtype": "uint8",
+          "nodata": 0.0,
+          "city_window_only_validation": true
+        }
+      }
+    ],
+    "query": {
+      "query_sha256": "31f27e53b7d193864b363643a702050f5f61680c4da71577bbad5b0cae0137aa",
+      "raw_response": {
+        "path": "data/raw/multicity/next_experiment_feasibility/worldcover/atlanta_ga/stac_search.json",
+        "bytes": 5201,
+        "sha256": "370a7df1335c360cf048010a857a199b367f6b58e3f5c550c020c0717392c0e4"
+      }
+    },
+    "grid": {
+      "crs": "EPSG:32616",
+      "shape": [
+        884,
+        806
+      ],
+      "resolution_m": 30.0,
+      "sha256": "2063e0d0bc5e180353cbbf7a4af11d1a36e2c3a64c76f43a378d9bca4ecec00c"
+    },
+    "tract_count": 173,
+    "total_eligible_cell_count": 378683,
+    "all_tracts_positive_zone_and_eligible": true,
+    "denominator_invariant_across_dates": true,
+    "identities": {
+      "zone_raster_sha256": "3f1b75b63856570d03de076eae5f7c8e7f7cb95ce4f02079addbd3e267bafff1",
+      "worldcover_class_raster_sha256": "da28f2c8e6ab0f9be4552dfce57ac65f1999682a979ce83b4b18ed051c52eb55",
+      "eligible_mask_sha256": "d65ce6943dc5fb2763bdbc7f0307868e6f076769bf59a080d077e7db2444dc86",
+      "city_support_identity_sha256": "8c6c9495c045bf49fbc4284d3d9c448b3032cb129dc8440649810379e83b55b0"
+    },
+    "output": {
+      "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/worldcover/tract_eligible_support.parquet",
+      "bytes": 24854,
+      "sha256": "b1b9aa2fa3d5733f65019dc4a30c44f9994257820cbf6a27cbd2e846f9c13164",
+      "rows": 173,
+      "schema_sha256": "cf0a06ca952ea52cbb5cc9c55d1a7ca61d9b993e7b48c3262a97960a4641d1a9",
+      "semantic_sha256": "8b52b8eb908e3cb3847aa888b8edc6dd0a212b3ef1bc668abdfef66b7b8f93da"
+    },
+    "access_contract": {
+      "worldcover_static_class_values_read": true,
+      "worldcover_stac_item_assets_read": true,
+      "worldcover_unsigned_map_asset_hrefs_read": true,
+      "worldcover_signed_map_asset_urls_persisted": false,
+      "landsat_target_or_qa_values_read": false
+    }
+  },
+  "access_contract": {
+    "public_census_geometry_read": true,
+    "worldcover_static_support_values_read": true,
+    "worldcover_stac_item_assets_read": true,
+    "worldcover_unsigned_map_asset_hrefs_read": true,
+    "worldcover_unsigned_map_asset_hrefs_persisted_in_ignored_raw_evidence": true,
+    "worldcover_map_asset_http_requests_allowed_on_cache_miss": true,
+    "worldcover_sas_token_requests_allowed_on_azure_cache_miss": true,
+    "worldcover_signed_map_asset_urls_persisted": false,
+    "landsat_stac_metadata_read": true,
+    "landsat_stac_fields_excluded_assets": true,
+    "landsat_stac_item_assets_returned": false,
+    "new_candidate_landsat_asset_hrefs_read": false,
+    "new_candidate_landsat_asset_sign_calls": 0,
+    "new_candidate_landsat_asset_http_requests": 0,
+    "new_candidate_thermal_values_read": false,
+    "new_candidate_target_qa_values_read": false,
+    "new_candidate_target_tables_read": false,
+    "new_candidate_values_opened_marker_created": false,
+    "predictor_construction_performed": false,
+    "model_fit_or_prediction_performed": false,
+    "evaluation_metrics_computed": false,
+    "target_authorization_created": false
+  },
+  "code_identity": {
+    "configs/multicity/next_experiment_feasibility.toml": {
+      "bytes": 3711,
+      "sha256": "1d7a459fc3184623a8f542ff948352328d38a822daa4268aa1c5d8d88c548c53"
+    },
+    "docs/NEXT_EXPERIMENT_PREREGISTRATION_DRAFT.md": {
+      "bytes": 10092,
+      "sha256": "09d82624b45c4e0c9a40a4a2f17ada70cde7bdcb8535c2f94d03139e7ae0311c"
+    },
+    "scripts/audit_next_experiment_city_feasibility.py": {
+      "bytes": 2998,
+      "sha256": "3b5d8d5431a34c9683b22006768d27708f4055a52dbc1bf6431bee4609a6ef53"
+    },
+    "src/la_heat/grid.py": {
+      "bytes": 2739,
+      "sha256": "a875c023ac4d981b005f26317a905815f581437b77e6da979d0fcb249f534848"
+    },
+    "src/la_heat/inventory.py": {
+      "bytes": 16519,
+      "sha256": "466e3f592821c35020e9209222519202478573772a160f422bb3b7947ea82d9b"
+    },
+    "src/la_heat/multicity/geography.py": {
+      "bytes": 33879,
+      "sha256": "ec6d9d2a57f6ff085a50c1ec5570108c00e5abfeef202d99bcd31c7003656b38"
+    },
+    "src/la_heat/multicity/next_experiment_feasibility.py": {
+      "bytes": 42460,
+      "sha256": "343bfff04c6ddd75651c7b50663e5b4cde818a32b09596657c1032ca089147e7"
+    },
+    "src/la_heat/multicity/source_footprints.py": {
+      "bytes": 91900,
+      "sha256": "208710c307c69b78cd1dd2205297fdb66718534644cd83e56798b34347ccab41"
+    },
+    "src/la_heat/multicity/worldcover_eligible_support_evidence_v1.py": {
+      "bytes": 39651,
+      "sha256": "e4e316526bcde1bca5bb838010219faef4bf13cedcbb36cc3ecc746467ff1913"
+    },
+    "src/la_heat/provenance.py": {
+      "bytes": 4679,
+      "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "commit_sha256": "1af0b4f57b487c5bec3b744bf1909539ca618d86e3caf7314533d346f434ea77"
+}

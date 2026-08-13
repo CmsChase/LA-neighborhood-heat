@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "next-experiment-metadata-feasibility-v1",
+  "state": "metadata_only_feasibility_complete",
+  "generated_at_utc": "2026-08-13T05:32:44.816776+00:00",
+  "experiment_id": "multicity_m3_level_anomaly_v1",
+  "design_authorization": {
+    "scope": "user_confirmed_metadata_feasibility_only",
+    "design_draft": {
+      "path": "docs/NEXT_EXPERIMENT_PREREGISTRATION_DRAFT.md",
+      "bytes": 10092,
+      "sha256": "09d82624b45c4e0c9a40a4a2f17ada70cde7bdcb8535c2f94d03139e7ae0311c"
+    },
+    "configuration": {
+      "path": "configs/multicity/next_experiment_feasibility.toml",
+      "bytes": 3711,
+      "sha256": "1d7a459fc3184623a8f542ff948352328d38a822daa4268aa1c5d8d88c548c53"
+    }
+  },
+  "audit_contract": {
+    "year": 2025,
+    "local_start_date": "2025-03-01",
+    "local_end_date": "2025-11-30",
+    "minimum_place_fraction": 0.5,
+    "exclude_tract_prefix": "98",
+    "worldcover_year": 2020,
+    "worldcover_version": "v100",
+    "excluded_classes": [
+      0,
+      80
+    ],
+    "maximum_overpass_span_minutes": 15,
+    "minimum_city_union_coverage_fraction": 0.98,
+    "minimum_candidate_physical_acquisitions": 16
+  },
+  "primary_city_order": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "replacement_city_order": [
+    "dallas_tx",
+    "minneapolis_mn",
+    "portland_or",
+    "baltimore_md"
+  ],
+  "cities": {
+    "seattle_wa": {
+      "checkpoint": {
+        "path": "manifests/multicity/next_experiment/cities/seattle_wa/FEASIBILITY.json",
+        "bytes": 15260,
+        "sha256": "aabc8b7a6ba93c336d416997e5fa6b0fbd2b5cfca89d8384363ce5df2a542684",
+        "commit_sha256": "50d2635e1ace42f98cb0d32e45466215653b0e2b05c7e68fa9fd5391126a2052"
+      },
+      "tier": "primary",
+      "passes": true,
+      "failure_codes": [],
+      "primary_tract_count": 177,
+      "eligible_unique_physical_date_count": 54,
+      "worldcover_all_tracts_supported": true
+    },
+    "denver_co": {
+      "checkpoint": {
+        "path": "manifests/multicity/next_experiment/cities/denver_co/FEASIBILITY.json",
+        "bytes": 15536,
+        "sha256": "753e24eff8c69b6402b049af46640e938619b02c4088200d34f40d701f619e49",
+        "commit_sha256": "b7df97d83a30ee70f0bb0ad54a4c86fd092a0963d708b5fa27a106823bd83ffe"
+      },
+      "tier": "primary",
+      "passes": true,
+      "failure_codes": [],
+      "primary_tract_count": 175,
+      "eligible_unique_physical_date_count": 31,
+      "worldcover_all_tracts_supported": true
+    },
+    "atlanta_ga": {
+      "checkpoint": {
+        "path": "manifests/multicity/next_experiment/cities/atlanta_ga/FEASIBILITY.json",
+        "bytes": 14739,
+        "sha256": "535feecca6cb80147aa47f0fea35175edc53c6bfff1172c5659fb54d415d26a6",
+        "commit_sha256": "1af0b4f57b487c5bec3b744bf1909539ca618d86e3caf7314533d346f434ea77"
+      },
+      "tier": "primary",
+      "passes": true,
+      "failure_codes": [],
+      "primary_tract_count": 173,
+      "eligible_unique_physical_date_count": 28,
+      "worldcover_all_tracts_supported": true
+    },
+    "miami_fl": {
+      "checkpoint": {
+        "path": "manifests/multicity/next_experiment/cities/miami_fl/FEASIBILITY.json",
+        "bytes": 14721,
+        "sha256": "bcdc0f3162b6fb58c42a6e6db0fb890fabbc09d6ef7a09ba6e03c24e51fe06ff",
+        "commit_sha256": "a228401aebba1bd6bb2c3622dce8f59cbaf1c8e6f37ed7f4e9f337ac9e20c95a"
+      },
+      "tier": "primary",
+      "passes": true,
+      "failure_codes": [],
+      "primary_tract_count": 128,
+      "eligible_unique_physical_date_count": 30,
+      "worldcover_all_tracts_supported": true
+    }
+  },
+  "selection": {
+    "decision": "primary_set_feasible",
+    "selected_city_ids": [
+      "seattle_wa",
+      "denver_co",
+      "atlanta_ga",
+      "miami_fl"
+    ],
+    "replacements_used": [],
+    "all_selected_cities_passed": true
+  },
+  "access_contract": {
+    "public_census_geometry_read": true,
+    "worldcover_static_support_values_read": true,
+    "worldcover_stac_item_assets_read": true,
+    "worldcover_unsigned_map_asset_hrefs_read": true,
+    "worldcover_unsigned_map_asset_hrefs_persisted_in_ignored_raw_evidence": true,
+    "worldcover_map_asset_http_requests_allowed_on_cache_miss": true,
+    "worldcover_sas_token_requests_allowed_on_azure_cache_miss": true,
+    "worldcover_signed_map_asset_urls_persisted": false,
+    "landsat_stac_metadata_read": true,
+    "landsat_stac_fields_excluded_assets": true,
+    "landsat_stac_item_assets_returned": false,
+    "new_candidate_landsat_asset_hrefs_read": false,
+    "new_candidate_landsat_asset_sign_calls": 0,
+    "new_candidate_landsat_asset_http_requests": 0,
+    "new_candidate_thermal_values_read": false,
+    "new_candidate_target_qa_values_read": false,
+    "new_candidate_target_tables_read": false,
+    "new_candidate_values_opened_marker_created": false,
+    "predictor_construction_performed": false,
+    "model_fit_or_prediction_performed": false,
+    "evaluation_metrics_computed": false,
+    "target_authorization_created": false
+  },
+  "code_identity": {
+    "configs/multicity/next_experiment_feasibility.toml": {
+      "bytes": 3711,
+      "sha256": "1d7a459fc3184623a8f542ff948352328d38a822daa4268aa1c5d8d88c548c53"
+    },
+    "docs/NEXT_EXPERIMENT_PREREGISTRATION_DRAFT.md": {
+      "bytes": 10092,
+      "sha256": "09d82624b45c4e0c9a40a4a2f17ada70cde7bdcb8535c2f94d03139e7ae0311c"
+    },
+    "scripts/audit_next_experiment_city_feasibility.py": {
+      "bytes": 2998,
+      "sha256": "3b5d8d5431a34c9683b22006768d27708f4055a52dbc1bf6431bee4609a6ef53"
+    },
+    "src/la_heat/grid.py": {
+      "bytes": 2739,
+      "sha256": "a875c023ac4d981b005f26317a905815f581437b77e6da979d0fcb249f534848"
+    },
+    "src/la_heat/inventory.py": {
+      "bytes": 16519,
+      "sha256": "466e3f592821c35020e9209222519202478573772a160f422bb3b7947ea82d9b"
+    },
+    "src/la_heat/multicity/geography.py": {
+      "bytes": 33879,
+      "sha256": "ec6d9d2a57f6ff085a50c1ec5570108c00e5abfeef202d99bcd31c7003656b38"
+    },
+    "src/la_heat/multicity/next_experiment_feasibility.py": {
+      "bytes": 42460,
+      "sha256": "343bfff04c6ddd75651c7b50663e5b4cde818a32b09596657c1032ca089147e7"
+    },
+    "src/la_heat/multicity/source_footprints.py": {
+      "bytes": 91900,
+      "sha256": "208710c307c69b78cd1dd2205297fdb66718534644cd83e56798b34347ccab41"
+    },
+    "src/la_heat/multicity/worldcover_eligible_support_evidence_v1.py": {
+      "bytes": 39651,
+      "sha256": "e4e316526bcde1bca5bb838010219faef4bf13cedcbb36cc3ecc746467ff1913"
+    },
+    "src/la_heat/provenance.py": {
+      "bytes": 4679,
+      "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "next_safe_stage": "lock_final_unseen_city_set_and_protocol",
+  "commit_sha256": "450ecd604000fcec7f3958e9a15013c74f69c52fddd656e9786c703c62838922"
+}

@@ -1,6 +1,6 @@
 # Project handoff
 
-Last updated: 2026-08-12 Asia/Shanghai
+Last updated: 2026-08-13 Asia/Shanghai
 
 ## Project summary
 
@@ -123,6 +123,16 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     completed all 64 overpasses and three city compiles; the frozen evaluator,
     report, post-hoc QA audit, and public Atlas release all authenticated. No
     target dashboard or worker is currently required.
+23. The follow-up M3 experiment's target-blind, label-free city feasibility
+    audit is complete and authenticated. Seattle, Denver, Atlanta, and Miami
+    all passed, so no replacement city was used. The audit found 177/175/173/128
+    primary Census tracts and 54/31/28/30 eligible independent 2025 Landsat
+    dates, respectively; every selected tract had positive WorldCover valid
+    non-water support. The terminal record is
+    `manifests/multicity/next_experiment/METADATA_FEASIBILITY_AUDIT.json`, commit
+    `450ecd604000fcec7f3958e9a15013c74f69c52fddd656e9786c703c62838922`.
+    It read no new-city Landsat asset href, thermal or QA value, target table,
+    model, prediction, or evaluation metric.
 
 ## Frozen scientific decisions
 
@@ -158,6 +168,10 @@ Still prohibited:
 - refitting, recalibrating, or selecting models from external outcomes;
 - replacing the frozen confirmatory result with a post-hoc sensitivity result;
 - claiming successful cross-city confirmation or calibrated uncertainty.
+- reading any Seattle, Denver, Atlanta, or Miami Landsat asset href, thermal or
+  QA value, or target table;
+- building their predictors, fitting M3, or creating predictions until a new
+  experiment protocol and staged permissions explicitly authorize each step.
 
 The single active control record is
 `manifests/multicity/ACTIVE_STAGE.json`. Historical numbered transition modules
@@ -169,8 +183,9 @@ The public predictor phase is complete: static/calendar/Daymet reached `84 / 84`
 Sentinel reached `516 / 516`, and the final table is 136,941 rows by 46 frozen
 features. Do not rebuild or re-import these products.
 
-The exact tracked stage is `external_evaluation_complete_inconclusive_sample_size`.
-The complete target claim contains 64 overpasses and three city compiles. The
+The exact tracked stage is `metadata_feasibility_complete_primary_set_feasible`.
+Its frozen predecessor remains the completed three-city external evaluation:
+the target claim contains 64 overpasses and three city compiles. The
 evaluation used 11,207 QA-valid rows across 28 city-dates and 180 spatial
 blocks. M2 reduced equal-city/equal-date MAE from 9.738 °C to 6.922 °C, a 28.9%
 improvement with a 95% crossed-bootstrap interval of 14.1% to 43.5%.
@@ -217,6 +232,20 @@ Do not refit or recalibrate the committed model, rescore the completed external
 claim, or reinterpret the post-hoc sensitivity as confirmatory. The prediction
 commit preceded the single combined external claim, and all three city compiles
 and the one-time evaluation have authenticated.
+
+The new experiment has now advanced only through city feasibility. The selected
+unseen-city set is Seattle, Denver, Atlanta, and Miami. Reauthenticate that audit
+without network access using:
+
+```powershell
+.\.venv\Scripts\python scripts\audit_next_experiment_city_feasibility.py --project-root . --check-only
+```
+
+The next safe task is to review and append-only lock the final unseen-city set
+and the source-only M3 development protocol. That lock must define the exact M3
+level/anomaly estimators, source-city cross-validation, ST_QA selection rule,
+uncertainty method, ablations, metrics, gates, and output schemas before any new
+city predictor or target workflow is authorized.
 
 Authenticate the completed gates with:
 

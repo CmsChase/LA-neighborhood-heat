@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "next-experiment-metadata-feasibility-v1",
+  "state": "complete_city_feasibility_audit",
+  "generated_at_utc": "2026-08-13T05:27:30.242347+00:00",
+  "experiment_id": "multicity_m3_level_anomaly_v1",
+  "config_sha256": "1d7a459fc3184623a8f542ff948352328d38a822daa4268aa1c5d8d88c548c53",
+  "city": {
+    "id": "seattle_wa",
+    "name": "Seattle",
+    "state_fips": "53",
+    "census_place_geoid": "5363000",
+    "timezone": "America/Los_Angeles",
+    "target_grid_crs": "EPSG:32610",
+    "tier": "primary",
+    "replacement_order": null
+  },
+  "passes": true,
+  "failure_codes": [],
+  "census": {
+    "passed": true,
+    "place_source": "esri_census2020_place_mirror",
+    "tract_source": "esri_census2020_tract_mirror",
+    "bbox_wgs84": [
+      -122.459788929646,
+      47.4821556020025,
+      -122.219836852884,
+      47.7352856127686
+    ],
+    "tract_candidate_count": 224,
+    "primary_tract_count": 177,
+    "primary_geoid_unique": true,
+    "primary_geometry_valid": true,
+    "outputs": {
+      "city_boundary": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/city_boundary.parquet",
+        "bytes": 26969,
+        "sha256": "200041506077336e74f9956e0407496b4ce66c97bb5401aa36427906f42e02f8",
+        "rows": 1,
+        "schema_sha256": "a263767165e1033548d4368b03e52a80d798c039670b1f189e99e49e3d134374",
+        "geometry_semantic_sha256": "5ddd4f9ef127a3b08b07b21dc13b5bfc12b914fd6fa4b35ffe8218658ba7a9c1"
+      },
+      "tract_candidates": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/tract_candidates.parquet",
+        "bytes": 391496,
+        "sha256": "e86bf9007991086e0dc11537789f5259af0d8352a9ee4040b97340260249f28d",
+        "rows": 224,
+        "schema_sha256": "37716cf0dadb1b70d72e72f3b1db20cbe90502c0587804200c38193e9c1737b0",
+        "geometry_semantic_sha256": "0ad680e8082ba7ac336ecad6cd9d543d7bfea089cff8b6524a0ff5ef08c87084"
+      },
+      "primary_tracts": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/primary_tracts.parquet",
+        "bytes": 236964,
+        "sha256": "c4b6ca2adf655d51181dabaf6a522859e7fd4c4e273116ebd4f1d1c55029fb7e",
+        "rows": 177,
+        "schema_sha256": "ad67cbc21f4d53fe7dbb12abb4554a256b073ba7b3b6fc2b2fa084fd717898a2",
+        "geometry_semantic_sha256": "062f20cfb9c233ae1ec1466a9bafa61ad37030c5d138b894316049eef0e4e363"
+      }
+    },
+    "raw_responses": {
+      "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/place/layer_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/place/layer_metadata.json",
+        "bytes": 251132,
+        "sha256": "01e5d0ce684d02688998c8135b731388dae072763f52f2f328386df3931d1de2"
+      },
+      "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/place/arcgis_item_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/place/arcgis_item_metadata.json",
+        "bytes": 10760,
+        "sha256": "30b5da4a26fd66fc731743f6b1c05b14c32c21114971faf0c2c52635d141736c"
+      },
+      "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/place/query_count.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/place/query_count.json",
+        "bytes": 13,
+        "sha256": "d69644a1a9ecbdcfd8118e1e521938e57f852c506462b7e1f0da1e3df0bf0e9d"
+      },
+      "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/place/features.geojson": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/place/features.geojson",
+        "bytes": 37547,
+        "sha256": "da0c9a2576059b673a4ec7d5c9bb0d027fe99b7407241563d96e4ebc22f8efc0"
+      },
+      "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/tract/layer_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/tract/layer_metadata.json",
+        "bytes": 279594,
+        "sha256": "9481d69ddf9feb2aa5e357f89e0371a0e14eb3fdc058c3f3d04f27a0914e5a29"
+      },
+      "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/tract/arcgis_item_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/tract/arcgis_item_metadata.json",
+        "bytes": 11397,
+        "sha256": "43bed253a861df6b9ae14e83871b731503e4534a01b633919d4bb2e748bb376c"
+      },
+      "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/tract/query_count.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/tract/query_count.json",
+        "bytes": 13,
+        "sha256": "e9e0755731a9fbd252443186b5d8e76bd3556396c6e66ad3fdcd991257e84c50"
+      },
+      "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/tract/features_0000.geojson": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/census/raw/tract/features_0000.geojson",
+        "bytes": 905388,
+        "sha256": "d7f186074ebc5a0630e99e4bd8c9ad1fdc7e83c4d0b025ef252891ff73d96bef"
+      }
+    }
+  },
+  "landsat": {
+    "passed": true,
+    "failure_codes": [],
+    "query": {
+      "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "query": {
+        "collections": [
+          "landsat-c2-l2"
+        ],
+        "bbox": [
+          -122.459788929646,
+          47.4821556020025,
+          -122.219836852884,
+          47.7352856127686
+        ],
+        "datetime": "2025-03-01T08:00:00Z/2025-12-01T08:00:00Z",
+        "limit": 1000,
+        "fields": {
+          "include": [
+            "id",
+            "collection",
+            "geometry",
+            "bbox",
+            "properties.datetime",
+            "properties.platform",
+            "properties.landsat:wrs_path",
+            "properties.landsat:wrs_row",
+            "properties.landsat:collection_category",
+            "properties.landsat:correction"
+          ],
+          "exclude": [
+            "assets",
+            "links"
+          ]
+        },
+        "query": {
+          "landsat:collection_category": {
+            "eq": "T1"
+          },
+          "landsat:correction": {
+            "eq": "L2SP"
+          }
+        }
+      },
+      "query_sha256": "a780e7077892e2618028733d00490127bac0c9d4f218f48836dd332af0794ccf",
+      "page_count": 1,
+      "query_response_items": 54,
+      "unique_items": 54,
+      "duplicate_items": 0,
+      "pagination_exhausted": true,
+      "assets_excluded": true
+    },
+    "metadata_item_count": 54,
+    "physical_overpass_count": 54,
+    "eligible_unique_physical_date_count": 54,
+    "eligible_unique_physical_dates": [
+      "2025-03-05",
+      "2025-03-06",
+      "2025-03-13",
+      "2025-03-14",
+      "2025-03-21",
+      "2025-03-22",
+      "2025-03-29",
+      "2025-03-30",
+      "2025-04-07",
+      "2025-04-14",
+      "2025-04-15",
+      "2025-04-22",
+      "2025-04-23",
+      "2025-04-30",
+      "2025-05-01",
+      "2025-05-08",
+      "2025-05-09",
+      "2025-05-17",
+      "2025-05-24",
+      "2025-05-25",
+      "2025-06-02",
+      "2025-06-09",
+      "2025-06-10",
+      "2025-06-17",
+      "2025-06-18",
+      "2025-06-25",
+      "2025-06-26",
+      "2025-07-03",
+      "2025-07-04",
+      "2025-07-11",
+      "2025-07-12",
+      "2025-07-19",
+      "2025-07-20",
+      "2025-07-27",
+      "2025-07-28",
+      "2025-08-04",
+      "2025-08-05",
+      "2025-08-12",
+      "2025-08-13",
+      "2025-08-20",
+      "2025-08-21",
+      "2025-08-28",
+      "2025-08-29",
+      "2025-09-05",
+      "2025-09-22",
+      "2025-09-30",
+      "2025-10-07",
+      "2025-10-08",
+      "2025-10-15",
+      "2025-10-16",
+      "2025-11-01",
+      "2025-11-08",
+      "2025-11-09",
+      "2025-11-24"
+    ],
+    "minimum_required": 16,
+    "minimum_union_coverage_fraction": 0.98,
+    "ambiguous_overpass_count": 0,
+    "platform_item_counts": {
+      "landsat-8": 26,
+      "landsat-9": 28
+    },
+    "outputs": {
+      "metadata_items": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/landsat/landsat_metadata_items.parquet",
+        "bytes": 24299,
+        "sha256": "a314f3e618a54b347049a92d7c5f1115cee8ba90828b4014b17f9a519357816e",
+        "rows": 54,
+        "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+        "geometry_semantic_sha256": "a4eb7edd2f6c88f9857838a1592d867e3cd0e71fd2c95e61bc70ab6e93d37840"
+      },
+      "physical_overpasses": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/landsat/physical_overpasses.parquet",
+        "bytes": 10807,
+        "sha256": "d08a7755bc790f921dbf9dfb110f23e4fda8403a426235ec1a1bc895aab6a92a",
+        "rows": 54,
+        "schema_sha256": "7dbdfa8db59e64c8418573677c1d346468309e04bf2ddae7ae04eaa21415d170",
+        "semantic_sha256": "c1e60294818cc4fe2df852369b12618338d603ad0cbf493fb35c074e194e48b1"
+      }
+    },
+    "raw_responses": {
+      "data/raw/multicity/next_experiment_feasibility/seattle_wa/landsat/raw/stac_page_001.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/landsat/raw/stac_page_001.json",
+        "bytes": 59360,
+        "sha256": "ec9652d2eb34557c38d0a1bc360b86f0ae95c39a064632db334b6900083e64c9"
+      }
+    },
+    "access_contract": {
+      "stac_fields_excluded_assets": true,
+      "stac_item_assets_returned": false,
+      "landsat_asset_hrefs_read": false,
+      "landsat_target_or_qa_values_read": false
+    }
+  },
+  "worldcover": {
+    "passed": true,
+    "failure_codes": [],
+    "item_count": 1,
+    "items": [
+      {
+        "item_id": "ESA_WorldCover_10m_2020_v100_N45W123",
+        "tile_id": "N45W123",
+        "asset": {
+          "path": "data/raw/multicity/next_experiment_feasibility/worldcover_cache/assets_by_sha256/23215fe3a58611134d202bff0ea68f6d86b90aaafd13b5248a64c2ff1e1e7a9e.tif",
+          "bytes": 62472903,
+          "sha256": "23215fe3a58611134d202bff0ea68f6d86b90aaafd13b5248a64c2ff1e1e7a9e"
+        },
+        "schema": {
+          "crs": "EPSG:4326",
+          "shape": [
+            36000,
+            36000
+          ],
+          "resolution": [
+            8.333333333333333e-05,
+            8.333333333333333e-05
+          ],
+          "dtype": "uint8",
+          "nodata": 0.0,
+          "city_window_only_validation": true
+        }
+      }
+    ],
+    "query": {
+      "query_sha256": "8d59bba695163f78d2edbe0012984bd9323bfd000a78577d56156773f5f8d279",
+      "raw_response": {
+        "path": "data/raw/multicity/next_experiment_feasibility/worldcover/seattle_wa/stac_search.json",
+        "bytes": 5210,
+        "sha256": "93615cb631b8fe2fae3765962c30cf57982b56e0346e78b7131a31e9341b82be"
+      }
+    },
+    "grid": {
+      "crs": "EPSG:32610",
+      "shape": [
+        939,
+        608
+      ],
+      "resolution_m": 30.0,
+      "sha256": "95d4746da85a0e95a88daf3f76fc34f2b4dfbba51d9801363a38809e547dd8bc"
+    },
+    "tract_count": 177,
+    "total_eligible_cell_count": 240562,
+    "all_tracts_positive_zone_and_eligible": true,
+    "denominator_invariant_across_dates": true,
+    "identities": {
+      "zone_raster_sha256": "0a0ef5e33207bb51087ea59d5be139932bbebb0892a171a9a691c09a2498c8f5",
+      "worldcover_class_raster_sha256": "693242475f410f155de7c483acf2527a02c5204a0b177c5265e4ec2012502769",
+      "eligible_mask_sha256": "0b29da10656726ba314b0c1c607ba9913440813a8e8a651444c70610bbdcbd0d",
+      "city_support_identity_sha256": "a360ac25e182c0056ea885fbdf1f1a4335ccc44587ae576f9702f5609036f92a"
+    },
+    "output": {
+      "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/worldcover/tract_eligible_support.parquet",
+      "bytes": 25052,
+      "sha256": "e2c513d7b5808ccfa741bbbc0e8aa571d9b4cd148437f050583f587065585f52",
+      "rows": 177,
+      "schema_sha256": "cf0a06ca952ea52cbb5cc9c55d1a7ca61d9b993e7b48c3262a97960a4641d1a9",
+      "semantic_sha256": "4f314958fffec42402381c2060540fd65f3d491f4ae0bbc27223aa8e4b2c991b"
+    },
+    "access_contract": {
+      "worldcover_static_class_values_read": true,
+      "worldcover_stac_item_assets_read": true,
+      "worldcover_unsigned_map_asset_hrefs_read": true,
+      "worldcover_signed_map_asset_urls_persisted": false,
+      "landsat_target_or_qa_values_read": false
+    }
+  },
+  "access_contract": {
+    "public_census_geometry_read": true,
+    "worldcover_static_support_values_read": true,
+    "worldcover_stac_item_assets_read": true,
+    "worldcover_unsigned_map_asset_hrefs_read": true,
+    "worldcover_unsigned_map_asset_hrefs_persisted_in_ignored_raw_evidence": true,
+    "worldcover_map_asset_http_requests_allowed_on_cache_miss": true,
+    "worldcover_sas_token_requests_allowed_on_azure_cache_miss": true,
+    "worldcover_signed_map_asset_urls_persisted": false,
+    "landsat_stac_metadata_read": true,
+    "landsat_stac_fields_excluded_assets": true,
+    "landsat_stac_item_assets_returned": false,
+    "new_candidate_landsat_asset_hrefs_read": false,
+    "new_candidate_landsat_asset_sign_calls": 0,
+    "new_candidate_landsat_asset_http_requests": 0,
+    "new_candidate_thermal_values_read": false,
+    "new_candidate_target_qa_values_read": false,
+    "new_candidate_target_tables_read": false,
+    "new_candidate_values_opened_marker_created": false,
+    "predictor_construction_performed": false,
+    "model_fit_or_prediction_performed": false,
+    "evaluation_metrics_computed": false,
+    "target_authorization_created": false
+  },
+  "code_identity": {
+    "configs/multicity/next_experiment_feasibility.toml": {
+      "bytes": 3711,
+      "sha256": "1d7a459fc3184623a8f542ff948352328d38a822daa4268aa1c5d8d88c548c53"
+    },
+    "docs/NEXT_EXPERIMENT_PREREGISTRATION_DRAFT.md": {
+      "bytes": 10092,
+      "sha256": "09d82624b45c4e0c9a40a4a2f17ada70cde7bdcb8535c2f94d03139e7ae0311c"
+    },
+    "scripts/audit_next_experiment_city_feasibility.py": {
+      "bytes": 2998,
+      "sha256": "3b5d8d5431a34c9683b22006768d27708f4055a52dbc1bf6431bee4609a6ef53"
+    },
+    "src/la_heat/grid.py": {
+      "bytes": 2739,
+      "sha256": "a875c023ac4d981b005f26317a905815f581437b77e6da979d0fcb249f534848"
+    },
+    "src/la_heat/inventory.py": {
+      "bytes": 16519,
+      "sha256": "466e3f592821c35020e9209222519202478573772a160f422bb3b7947ea82d9b"
+    },
+    "src/la_heat/multicity/geography.py": {
+      "bytes": 33879,
+      "sha256": "ec6d9d2a57f6ff085a50c1ec5570108c00e5abfeef202d99bcd31c7003656b38"
+    },
+    "src/la_heat/multicity/next_experiment_feasibility.py": {
+      "bytes": 42460,
+      "sha256": "343bfff04c6ddd75651c7b50663e5b4cde818a32b09596657c1032ca089147e7"
+    },
+    "src/la_heat/multicity/source_footprints.py": {
+      "bytes": 91900,
+      "sha256": "208710c307c69b78cd1dd2205297fdb66718534644cd83e56798b34347ccab41"
+    },
+    "src/la_heat/multicity/worldcover_eligible_support_evidence_v1.py": {
+      "bytes": 39651,
+      "sha256": "e4e316526bcde1bca5bb838010219faef4bf13cedcbb36cc3ecc746467ff1913"
+    },
+    "src/la_heat/provenance.py": {
+      "bytes": 4679,
+      "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "commit_sha256": "50d2635e1ace42f98cb0d32e45466215653b0e2b05c7e68fa9fd5391126a2052"
+}

@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "next-experiment-metadata-feasibility-v1",
+  "state": "complete_city_feasibility_audit",
+  "generated_at_utc": "2026-08-13T05:29:19.678358+00:00",
+  "experiment_id": "multicity_m3_level_anomaly_v1",
+  "config_sha256": "1d7a459fc3184623a8f542ff948352328d38a822daa4268aa1c5d8d88c548c53",
+  "city": {
+    "id": "denver_co",
+    "name": "Denver",
+    "state_fips": "08",
+    "census_place_geoid": "0820000",
+    "timezone": "America/Denver",
+    "target_grid_crs": "EPSG:32613",
+    "tier": "primary",
+    "replacement_order": null
+  },
+  "passes": true,
+  "failure_codes": [],
+  "census": {
+    "passed": true,
+    "place_source": "esri_census2020_place_mirror",
+    "tract_source": "esri_census2020_tract_mirror",
+    "bbox_wgs84": [
+      -105.109934123118,
+      39.6143173945159,
+      -104.599591036789,
+      39.9141844636653
+    ],
+    "tract_candidate_count": 458,
+    "primary_tract_count": 175,
+    "primary_geoid_unique": true,
+    "primary_geometry_valid": true,
+    "outputs": {
+      "city_boundary": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/census/city_boundary.parquet",
+        "bytes": 60764,
+        "sha256": "ce17a88a4ed511d5a78a537212398fc8cd004fa25ba1a130697ced997560245f",
+        "rows": 1,
+        "schema_sha256": "a263767165e1033548d4368b03e52a80d798c039670b1f189e99e49e3d134374",
+        "geometry_semantic_sha256": "7344e7011db34463b8e7b8a6d83dfba64d961401f5516f2b81e24a025036e53e"
+      },
+      "tract_candidates": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/census/tract_candidates.parquet",
+        "bytes": 1115848,
+        "sha256": "3720e195cba6cd73d8f6119a41daa310709757322bf2ac1037d5249401982f01",
+        "rows": 458,
+        "schema_sha256": "37716cf0dadb1b70d72e72f3b1db20cbe90502c0587804200c38193e9c1737b0",
+        "geometry_semantic_sha256": "03bab2b6b6e8b2a2e53135796f262082a37f4c0920608df5a85c3cadae168e26"
+      },
+      "primary_tracts": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/census/primary_tracts.parquet",
+        "bytes": 462852,
+        "sha256": "e772c12d9663ddd8318f9b0c43788dc2f61f1b2f5a5a598f6cc2f5ab708e3aa7",
+        "rows": 175,
+        "schema_sha256": "ad67cbc21f4d53fe7dbb12abb4554a256b073ba7b3b6fc2b2fa084fd717898a2",
+        "geometry_semantic_sha256": "6baeb4209221930d8ae3f12278685217966c0d16d6c0f132a0deb251c9216ca2"
+      }
+    },
+    "raw_responses": {
+      "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/place/layer_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/place/layer_metadata.json",
+        "bytes": 251132,
+        "sha256": "01e5d0ce684d02688998c8135b731388dae072763f52f2f328386df3931d1de2"
+      },
+      "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/place/arcgis_item_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/place/arcgis_item_metadata.json",
+        "bytes": 10760,
+        "sha256": "30b5da4a26fd66fc731743f6b1c05b14c32c21114971faf0c2c52635d141736c"
+      },
+      "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/place/query_count.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/place/query_count.json",
+        "bytes": 11,
+        "sha256": "6aea6dfe6561984cdc5c54ead84d47d2cf29e48253ae282aef237404adad4661"
+      },
+      "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/place/features.geojson": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/place/features.geojson",
+        "bytes": 127969,
+        "sha256": "ea87ed3494d778c61ad9032e5374894cfb5e5e62f5ff79e72cc789a9dfc9a6bf"
+      },
+      "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/tract/layer_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/tract/layer_metadata.json",
+        "bytes": 279594,
+        "sha256": "9481d69ddf9feb2aa5e357f89e0371a0e14eb3fdc058c3f3d04f27a0914e5a29"
+      },
+      "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/tract/arcgis_item_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/tract/arcgis_item_metadata.json",
+        "bytes": 11397,
+        "sha256": "43bed253a861df6b9ae14e83871b731503e4534a01b633919d4bb2e748bb376c"
+      },
+      "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/tract/query_count.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/tract/query_count.json",
+        "bytes": 13,
+        "sha256": "b63d9b81d7cb1bb920726fbc17c373e858d80a875df3056bf731ca2aa1a61545"
+      },
+      "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/tract/features_0000.geojson": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/census/raw/tract/features_0000.geojson",
+        "bytes": 2517443,
+        "sha256": "f116dd12068f9d24300478cb55ce10102a35cc74216d05d5d9ff14b7c8fa43fc"
+      }
+    }
+  },
+  "landsat": {
+    "passed": true,
+    "failure_codes": [],
+    "query": {
+      "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "query": {
+        "collections": [
+          "landsat-c2-l2"
+        ],
+        "bbox": [
+          -105.109934123118,
+          39.6143173945159,
+          -104.599591036789,
+          39.9141844636653
+        ],
+        "datetime": "2025-03-01T07:00:00Z/2025-12-01T07:00:00Z",
+        "limit": 1000,
+        "fields": {
+          "include": [
+            "id",
+            "collection",
+            "geometry",
+            "bbox",
+            "properties.datetime",
+            "properties.platform",
+            "properties.landsat:wrs_path",
+            "properties.landsat:wrs_row",
+            "properties.landsat:collection_category",
+            "properties.landsat:correction"
+          ],
+          "exclude": [
+            "assets",
+            "links"
+          ]
+        },
+        "query": {
+          "landsat:collection_category": {
+            "eq": "T1"
+          },
+          "landsat:correction": {
+            "eq": "L2SP"
+          }
+        }
+      },
+      "query_sha256": "b5206795ad3dd9a90febe68ece1ba38e6caf8544edaddd5a1e2a1c448e04fcac",
+      "page_count": 1,
+      "query_response_items": 97,
+      "unique_items": 97,
+      "duplicate_items": 0,
+      "pagination_exhausted": true,
+      "assets_excluded": true
+    },
+    "metadata_item_count": 97,
+    "physical_overpass_count": 66,
+    "eligible_unique_physical_date_count": 31,
+    "eligible_unique_physical_dates": [
+      "2025-03-03",
+      "2025-03-11",
+      "2025-03-19",
+      "2025-03-27",
+      "2025-04-12",
+      "2025-04-20",
+      "2025-04-28",
+      "2025-05-14",
+      "2025-05-22",
+      "2025-05-30",
+      "2025-06-07",
+      "2025-06-15",
+      "2025-06-23",
+      "2025-07-01",
+      "2025-07-09",
+      "2025-07-17",
+      "2025-07-25",
+      "2025-08-02",
+      "2025-08-10",
+      "2025-08-18",
+      "2025-08-26",
+      "2025-09-03",
+      "2025-09-11",
+      "2025-09-19",
+      "2025-09-27",
+      "2025-10-05",
+      "2025-10-29",
+      "2025-11-06",
+      "2025-11-14",
+      "2025-11-22",
+      "2025-11-30"
+    ],
+    "minimum_required": 16,
+    "minimum_union_coverage_fraction": 0.98,
+    "ambiguous_overpass_count": 0,
+    "platform_item_counts": {
+      "landsat-8": 48,
+      "landsat-9": 49
+    },
+    "outputs": {
+      "metadata_items": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/landsat/landsat_metadata_items.parquet",
+        "bytes": 32909,
+        "sha256": "8283e4339905d4d99e2a7188e62bd5d9d74ef49a9838a656ff6686a75a13f53f",
+        "rows": 97,
+        "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+        "geometry_semantic_sha256": "2a1593f5f2e14be165c88481379b7c85cb7a0dc9b8129599391f8101d25eff1c"
+      },
+      "physical_overpasses": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/landsat/physical_overpasses.parquet",
+        "bytes": 12506,
+        "sha256": "9ab35b000ec6963085c75ccc29b23157c3a0d1168e17df9f8b5ae09711cf7140",
+        "rows": 66,
+        "schema_sha256": "7dbdfa8db59e64c8418573677c1d346468309e04bf2ddae7ae04eaa21415d170",
+        "semantic_sha256": "6b406ccbe5e8d79faa38f6e49f88dda83589d288dac5d0e12326a695a051bf49"
+      }
+    },
+    "raw_responses": {
+      "data/raw/multicity/next_experiment_feasibility/denver_co/landsat/raw/stac_page_001.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/landsat/raw/stac_page_001.json",
+        "bytes": 106285,
+        "sha256": "164ae9d484573baf9d59d15d4947e0ebb9d62b91401bbb83c290a48db591999b"
+      }
+    },
+    "access_contract": {
+      "stac_fields_excluded_assets": true,
+      "stac_item_assets_returned": false,
+      "landsat_asset_hrefs_read": false,
+      "landsat_target_or_qa_values_read": false
+    }
+  },
+  "worldcover": {
+    "passed": true,
+    "failure_codes": [],
+    "item_count": 2,
+    "items": [
+      {
+        "item_id": "ESA_WorldCover_10m_2020_v100_N39W105",
+        "tile_id": "N39W105",
+        "asset": {
+          "path": "data/raw/multicity/next_experiment_feasibility/worldcover_cache/assets_by_sha256/90713f783ad2f4f11b65e7d7b587862a63e5e2cecea6189705bba51183e89859.tif",
+          "bytes": 49416522,
+          "sha256": "90713f783ad2f4f11b65e7d7b587862a63e5e2cecea6189705bba51183e89859"
+        },
+        "schema": {
+          "crs": "EPSG:4326",
+          "shape": [
+            36000,
+            36000
+          ],
+          "resolution": [
+            8.333333333333333e-05,
+            8.333333333333333e-05
+          ],
+          "dtype": "uint8",
+          "nodata": 0.0,
+          "city_window_only_validation": true
+        }
+      },
+      {
+        "item_id": "ESA_WorldCover_10m_2020_v100_N39W108",
+        "tile_id": "N39W108",
+        "asset": {
+          "path": "data/raw/multicity/next_experiment_feasibility/worldcover_cache/assets_by_sha256/67a1f712a1f8cb26d6bf4c9f0fd74febbe79dc3dfa5a1ea7aced072648ee22dd.tif",
+          "bytes": 89364681,
+          "sha256": "67a1f712a1f8cb26d6bf4c9f0fd74febbe79dc3dfa5a1ea7aced072648ee22dd"
+        },
+        "schema": {
+          "crs": "EPSG:4326",
+          "shape": [
+            36000,
+            36000
+          ],
+          "resolution": [
+            8.333333333333333e-05,
+            8.333333333333333e-05
+          ],
+          "dtype": "uint8",
+          "nodata": 0.0,
+          "city_window_only_validation": true
+        }
+      }
+    ],
+    "query": {
+      "query_sha256": "7957872d54204aae25911436fff5ae97ea5e7dc5a80775068879822995901a7a",
+      "raw_response": {
+        "path": "data/raw/multicity/next_experiment_feasibility/worldcover/denver_co/stac_search.json",
+        "bytes": 10134,
+        "sha256": "929e5f5aadee591ae5cbf90f001be8504c7121d87fa61f35699ca11db4f2f92c"
+      }
+    },
+    "grid": {
+      "crs": "EPSG:32613",
+      "shape": [
+        1112,
+        1457
+      ],
+      "resolution_m": 30.0,
+      "sha256": "cf00e2e9b0f8dec44d2230c86ddb3dc3b25c5d633152dc139d656def4109c679"
+    },
+    "tract_count": 175,
+    "total_eligible_cell_count": 317531,
+    "all_tracts_positive_zone_and_eligible": true,
+    "denominator_invariant_across_dates": true,
+    "identities": {
+      "zone_raster_sha256": "720265b5dc98749d63087d41e2232039f6007f58afb7e3b3b4e5641d7d98651c",
+      "worldcover_class_raster_sha256": "6a12e5f7a7c89fa7ee447956f7855bfc0a5b6c8f9c1f3595c786822771e8a2c4",
+      "eligible_mask_sha256": "022a1d00b10a411b5e49b2f5d500ef9fe62cba31c246a1c5a39411d9adecece5",
+      "city_support_identity_sha256": "a259e5b84774ad9845ba28ff1b38cc953ab1fbb66f50df64057502177c30e761"
+    },
+    "output": {
+      "path": "data/raw/multicity/next_experiment_feasibility/denver_co/worldcover/tract_eligible_support.parquet",
+      "bytes": 25036,
+      "sha256": "406bb03d17013a67c57d06fbb1943561c43ec63a45e29d0afcd1e8b7ab805f62",
+      "rows": 175,
+      "schema_sha256": "cf0a06ca952ea52cbb5cc9c55d1a7ca61d9b993e7b48c3262a97960a4641d1a9",
+      "semantic_sha256": "2608c73784b2a195923bebe87ee1f226af7effa1ce9f239fd2aa9b659c0159f3"
+    },
+    "access_contract": {
+      "worldcover_static_class_values_read": true,
+      "worldcover_stac_item_assets_read": true,
+      "worldcover_unsigned_map_asset_hrefs_read": true,
+      "worldcover_signed_map_asset_urls_persisted": false,
+      "landsat_target_or_qa_values_read": false
+    }
+  },
+  "access_contract": {
+    "public_census_geometry_read": true,
+    "worldcover_static_support_values_read": true,
+    "worldcover_stac_item_assets_read": true,
+    "worldcover_unsigned_map_asset_hrefs_read": true,
+    "worldcover_unsigned_map_asset_hrefs_persisted_in_ignored_raw_evidence": true,
+    "worldcover_map_asset_http_requests_allowed_on_cache_miss": true,
+    "worldcover_sas_token_requests_allowed_on_azure_cache_miss": true,
+    "worldcover_signed_map_asset_urls_persisted": false,
+    "landsat_stac_metadata_read": true,
+    "landsat_stac_fields_excluded_assets": true,
+    "landsat_stac_item_assets_returned": false,
+    "new_candidate_landsat_asset_hrefs_read": false,
+    "new_candidate_landsat_asset_sign_calls": 0,
+    "new_candidate_landsat_asset_http_requests": 0,
+    "new_candidate_thermal_values_read": false,
+    "new_candidate_target_qa_values_read": false,
+    "new_candidate_target_tables_read": false,
+    "new_candidate_values_opened_marker_created": false,
+    "predictor_construction_performed": false,
+    "model_fit_or_prediction_performed": false,
+    "evaluation_metrics_computed": false,
+    "target_authorization_created": false
+  },
+  "code_identity": {
+    "configs/multicity/next_experiment_feasibility.toml": {
+      "bytes": 3711,
+      "sha256": "1d7a459fc3184623a8f542ff948352328d38a822daa4268aa1c5d8d88c548c53"
+    },
+    "docs/NEXT_EXPERIMENT_PREREGISTRATION_DRAFT.md": {
+      "bytes": 10092,
+      "sha256": "09d82624b45c4e0c9a40a4a2f17ada70cde7bdcb8535c2f94d03139e7ae0311c"
+    },
+    "scripts/audit_next_experiment_city_feasibility.py": {
+      "bytes": 2998,
+      "sha256": "3b5d8d5431a34c9683b22006768d27708f4055a52dbc1bf6431bee4609a6ef53"
+    },
+    "src/la_heat/grid.py": {
+      "bytes": 2739,
+      "sha256": "a875c023ac4d981b005f26317a905815f581437b77e6da979d0fcb249f534848"
+    },
+    "src/la_heat/inventory.py": {
+      "bytes": 16519,
+      "sha256": "466e3f592821c35020e9209222519202478573772a160f422bb3b7947ea82d9b"
+    },
+    "src/la_heat/multicity/geography.py": {
+      "bytes": 33879,
+      "sha256": "ec6d9d2a57f6ff085a50c1ec5570108c00e5abfeef202d99bcd31c7003656b38"
+    },
+    "src/la_heat/multicity/next_experiment_feasibility.py": {
+      "bytes": 42460,
+      "sha256": "343bfff04c6ddd75651c7b50663e5b4cde818a32b09596657c1032ca089147e7"
+    },
+    "src/la_heat/multicity/source_footprints.py": {
+      "bytes": 91900,
+      "sha256": "208710c307c69b78cd1dd2205297fdb66718534644cd83e56798b34347ccab41"
+    },
+    "src/la_heat/multicity/worldcover_eligible_support_evidence_v1.py": {
+      "bytes": 39651,
+      "sha256": "e4e316526bcde1bca5bb838010219faef4bf13cedcbb36cc3ecc746467ff1913"
+    },
+    "src/la_heat/provenance.py": {
+      "bytes": 4679,
+      "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "commit_sha256": "b7df97d83a30ee70f0bb0ad54a4c86fd092a0963d708b5fa27a106823bd83ffe"
+}

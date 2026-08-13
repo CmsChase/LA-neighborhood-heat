@@ -1,0 +1,368 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "next-experiment-metadata-feasibility-v1",
+  "state": "complete_city_feasibility_audit",
+  "generated_at_utc": "2026-08-13T05:32:44.687800+00:00",
+  "experiment_id": "multicity_m3_level_anomaly_v1",
+  "config_sha256": "1d7a459fc3184623a8f542ff948352328d38a822daa4268aa1c5d8d88c548c53",
+  "city": {
+    "id": "miami_fl",
+    "name": "Miami",
+    "state_fips": "12",
+    "census_place_geoid": "1245000",
+    "timezone": "America/New_York",
+    "target_grid_crs": "EPSG:32617",
+    "tier": "primary",
+    "replacement_order": null
+  },
+  "passes": true,
+  "failure_codes": [],
+  "census": {
+    "passed": true,
+    "place_source": "esri_census2020_place_mirror",
+    "tract_source": "esri_census2020_tract_mirror",
+    "bbox_wgs84": [
+      -80.3186107166442,
+      25.7090466685473,
+      -80.1321816622881,
+      25.8557907074626
+    ],
+    "tract_candidate_count": 234,
+    "primary_tract_count": 128,
+    "primary_geoid_unique": true,
+    "primary_geometry_valid": true,
+    "outputs": {
+      "city_boundary": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/census/city_boundary.parquet",
+        "bytes": 26668,
+        "sha256": "5bf9147386d8e613d217c3761cff8350c829b43536947309e3ee4e6e26511b3b",
+        "rows": 1,
+        "schema_sha256": "a263767165e1033548d4368b03e52a80d798c039670b1f189e99e49e3d134374",
+        "geometry_semantic_sha256": "49891941b65e1b677c5eef0512f7113db6a46f2aa32b676ca506c702aad96126"
+      },
+      "tract_candidates": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/census/tract_candidates.parquet",
+        "bytes": 279591,
+        "sha256": "6654f7f476e427e0fbd27e2a0c84a6ca715a594dfccb95c3be81272dbbad2aba",
+        "rows": 234,
+        "schema_sha256": "37716cf0dadb1b70d72e72f3b1db20cbe90502c0587804200c38193e9c1737b0",
+        "geometry_semantic_sha256": "d66f9e0fc9924be42d077a5dbf98e1b60b938d52ffbd0a1087400f5fd51e24f4"
+      },
+      "primary_tracts": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/census/primary_tracts.parquet",
+        "bytes": 133751,
+        "sha256": "5202c2a85edd5fb0dd29fd9a6c1983149dedc024e298e1a06e55eb7e1fa050d4",
+        "rows": 128,
+        "schema_sha256": "ad67cbc21f4d53fe7dbb12abb4554a256b073ba7b3b6fc2b2fa084fd717898a2",
+        "geometry_semantic_sha256": "b83791b2c364fb29eb590b946c8bcd29d472d2bfa9561b67b7103634bdc9f5e2"
+      }
+    },
+    "raw_responses": {
+      "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/place/layer_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/place/layer_metadata.json",
+        "bytes": 251132,
+        "sha256": "01e5d0ce684d02688998c8135b731388dae072763f52f2f328386df3931d1de2"
+      },
+      "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/place/arcgis_item_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/place/arcgis_item_metadata.json",
+        "bytes": 10760,
+        "sha256": "30b5da4a26fd66fc731743f6b1c05b14c32c21114971faf0c2c52635d141736c"
+      },
+      "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/place/query_count.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/place/query_count.json",
+        "bytes": 11,
+        "sha256": "6aea6dfe6561984cdc5c54ead84d47d2cf29e48253ae282aef237404adad4661"
+      },
+      "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/place/features.geojson": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/place/features.geojson",
+        "bytes": 36925,
+        "sha256": "a369d29570f82c745de79813c053099c5d5231d496231e7505f5866b707ab6b4"
+      },
+      "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/tract/layer_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/tract/layer_metadata.json",
+        "bytes": 279594,
+        "sha256": "9481d69ddf9feb2aa5e357f89e0371a0e14eb3fdc058c3f3d04f27a0914e5a29"
+      },
+      "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/tract/arcgis_item_metadata.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/tract/arcgis_item_metadata.json",
+        "bytes": 11397,
+        "sha256": "43bed253a861df6b9ae14e83871b731503e4534a01b633919d4bb2e748bb376c"
+      },
+      "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/tract/query_count.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/tract/query_count.json",
+        "bytes": 13,
+        "sha256": "5eacd6b30688288f4a8c87cba261d2ac3bbe7f6ce580ba299a7f5ffd91d8c77e"
+      },
+      "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/tract/features_0000.geojson": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/census/raw/tract/features_0000.geojson",
+        "bytes": 639697,
+        "sha256": "521f741e3aa4c45c5657c2075acf4d927979138a5f389b1c0c8235fa48b2ac00"
+      }
+    }
+  },
+  "landsat": {
+    "passed": true,
+    "failure_codes": [],
+    "query": {
+      "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "query": {
+        "collections": [
+          "landsat-c2-l2"
+        ],
+        "bbox": [
+          -80.3186107166442,
+          25.7090466685473,
+          -80.1321816622881,
+          25.8557907074626
+        ],
+        "datetime": "2025-03-01T05:00:00Z/2025-12-01T05:00:00Z",
+        "limit": 1000,
+        "fields": {
+          "include": [
+            "id",
+            "collection",
+            "geometry",
+            "bbox",
+            "properties.datetime",
+            "properties.platform",
+            "properties.landsat:wrs_path",
+            "properties.landsat:wrs_row",
+            "properties.landsat:collection_category",
+            "properties.landsat:correction"
+          ],
+          "exclude": [
+            "assets",
+            "links"
+          ]
+        },
+        "query": {
+          "landsat:collection_category": {
+            "eq": "T1"
+          },
+          "landsat:correction": {
+            "eq": "L2SP"
+          }
+        }
+      },
+      "query_sha256": "cc01bb273f4cc4711ffafffcbe176a6764b1fb4bd240fd158adef3cee1b31ca3",
+      "page_count": 1,
+      "query_response_items": 30,
+      "unique_items": 30,
+      "duplicate_items": 0,
+      "pagination_exhausted": true,
+      "assets_excluded": true
+    },
+    "metadata_item_count": 30,
+    "physical_overpass_count": 30,
+    "eligible_unique_physical_date_count": 30,
+    "eligible_unique_physical_dates": [
+      "2025-03-05",
+      "2025-03-13",
+      "2025-03-21",
+      "2025-04-06",
+      "2025-04-14",
+      "2025-04-22",
+      "2025-04-30",
+      "2025-05-08",
+      "2025-05-16",
+      "2025-05-24",
+      "2025-06-09",
+      "2025-06-17",
+      "2025-06-25",
+      "2025-07-03",
+      "2025-07-11",
+      "2025-07-19",
+      "2025-07-27",
+      "2025-08-04",
+      "2025-08-12",
+      "2025-08-20",
+      "2025-08-28",
+      "2025-09-05",
+      "2025-09-13",
+      "2025-09-29",
+      "2025-10-07",
+      "2025-10-15",
+      "2025-10-31",
+      "2025-11-08",
+      "2025-11-16",
+      "2025-11-24"
+    ],
+    "minimum_required": 16,
+    "minimum_union_coverage_fraction": 0.98,
+    "ambiguous_overpass_count": 0,
+    "platform_item_counts": {
+      "landsat-8": 17,
+      "landsat-9": 13
+    },
+    "outputs": {
+      "metadata_items": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/landsat/landsat_metadata_items.parquet",
+        "bytes": 20170,
+        "sha256": "be08c66975edae196eff3f58a08756f0e0ef32daad5c4876eee6444c1471f8e0",
+        "rows": 30,
+        "schema_sha256": "e2171d2dd16e355499b4c669a78decc19ad429b33bf56b341d0142515efd98cb",
+        "geometry_semantic_sha256": "f795dfbdb8e8bc1f7761c1c68210a86e01d73bae749fd6dcaf6272c695a06b80"
+      },
+      "physical_overpasses": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/landsat/physical_overpasses.parquet",
+        "bytes": 9360,
+        "sha256": "79419480240f0f4a25e0061d98297fb4bf5fb74bf4a1aa6dc7cbaa94d32b08f6",
+        "rows": 30,
+        "schema_sha256": "7dbdfa8db59e64c8418573677c1d346468309e04bf2ddae7ae04eaa21415d170",
+        "semantic_sha256": "c075872604061f43f57b7c1dfd7f6f05d1d531a95e8013a1e6e5132e727dcfa4"
+      }
+    },
+    "raw_responses": {
+      "data/raw/multicity/next_experiment_feasibility/miami_fl/landsat/raw/stac_page_001.json": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/landsat/raw/stac_page_001.json",
+        "bytes": 33014,
+        "sha256": "4424e7296d628b9b1e01f0386b0f08da5f41022e200c44dbc22cf29b6662ef72"
+      }
+    },
+    "access_contract": {
+      "stac_fields_excluded_assets": true,
+      "stac_item_assets_returned": false,
+      "landsat_asset_hrefs_read": false,
+      "landsat_target_or_qa_values_read": false
+    }
+  },
+  "worldcover": {
+    "passed": true,
+    "failure_codes": [],
+    "item_count": 1,
+    "items": [
+      {
+        "item_id": "ESA_WorldCover_10m_2020_v100_N24W081",
+        "tile_id": "N24W081",
+        "asset": {
+          "path": "data/raw/multicity/next_experiment_feasibility/worldcover_cache/assets_by_sha256/40f280a0ccbcd9d4add8d2b382c72b0dcea43ebf323723a0af819ad357a0e128.tif",
+          "bytes": 27378748,
+          "sha256": "40f280a0ccbcd9d4add8d2b382c72b0dcea43ebf323723a0af819ad357a0e128"
+        },
+        "schema": {
+          "crs": "EPSG:4326",
+          "shape": [
+            36000,
+            36000
+          ],
+          "resolution": [
+            8.333333333333333e-05,
+            8.333333333333333e-05
+          ],
+          "dtype": "uint8",
+          "nodata": 0.0,
+          "city_window_only_validation": true
+        }
+      }
+    ],
+    "query": {
+      "query_sha256": "741a1a5d7953fbed30ea55afe7b7d5424af8d2d7d969a894c147401c3692a42d",
+      "raw_response": {
+        "path": "data/raw/multicity/next_experiment_feasibility/worldcover/miami_fl/stac_search.json",
+        "bytes": 5234,
+        "sha256": "fad19303856e69f555913eb93f1b7712130f3fa7279f36a0303d995f9c9cb11b"
+      }
+    },
+    "grid": {
+      "crs": "EPSG:32617",
+      "shape": [
+        545,
+        625
+      ],
+      "resolution_m": 30.0,
+      "sha256": "1147acf5481ef49198f86ce2b127237dd0b79b9a80cbd83f26fa3d7f462c7252"
+    },
+    "tract_count": 128,
+    "total_eligible_cell_count": 97210,
+    "all_tracts_positive_zone_and_eligible": true,
+    "denominator_invariant_across_dates": true,
+    "identities": {
+      "zone_raster_sha256": "b5ee847702a72d441dd01c035748f5a6a7567911d829b008b581effa30825304",
+      "worldcover_class_raster_sha256": "61522f2f28fcb90d0ba6d1f66ebac3d767cc8d84d22e05dbfcb9016245fb8d54",
+      "eligible_mask_sha256": "816df546d34f3a846bcd043dc487420a7265a1aa4bf84d382e6aa11d0573b7b3",
+      "city_support_identity_sha256": "7b534d90b4c0188919d14775642ff2f1936e3ac9685079447f1981d1db5293cd"
+    },
+    "output": {
+      "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/worldcover/tract_eligible_support.parquet",
+      "bytes": 20365,
+      "sha256": "f96827f837553238083b30777b9048be74587fa6531ce06dd5c945f48bb84787",
+      "rows": 128,
+      "schema_sha256": "cf0a06ca952ea52cbb5cc9c55d1a7ca61d9b993e7b48c3262a97960a4641d1a9",
+      "semantic_sha256": "d09c8c5be3cf3de8b4e00110cdda5ca7e32df26b77e14882b93cce2ff7e0de64"
+    },
+    "access_contract": {
+      "worldcover_static_class_values_read": true,
+      "worldcover_stac_item_assets_read": true,
+      "worldcover_unsigned_map_asset_hrefs_read": true,
+      "worldcover_signed_map_asset_urls_persisted": false,
+      "landsat_target_or_qa_values_read": false
+    }
+  },
+  "access_contract": {
+    "public_census_geometry_read": true,
+    "worldcover_static_support_values_read": true,
+    "worldcover_stac_item_assets_read": true,
+    "worldcover_unsigned_map_asset_hrefs_read": true,
+    "worldcover_unsigned_map_asset_hrefs_persisted_in_ignored_raw_evidence": true,
+    "worldcover_map_asset_http_requests_allowed_on_cache_miss": true,
+    "worldcover_sas_token_requests_allowed_on_azure_cache_miss": true,
+    "worldcover_signed_map_asset_urls_persisted": false,
+    "landsat_stac_metadata_read": true,
+    "landsat_stac_fields_excluded_assets": true,
+    "landsat_stac_item_assets_returned": false,
+    "new_candidate_landsat_asset_hrefs_read": false,
+    "new_candidate_landsat_asset_sign_calls": 0,
+    "new_candidate_landsat_asset_http_requests": 0,
+    "new_candidate_thermal_values_read": false,
+    "new_candidate_target_qa_values_read": false,
+    "new_candidate_target_tables_read": false,
+    "new_candidate_values_opened_marker_created": false,
+    "predictor_construction_performed": false,
+    "model_fit_or_prediction_performed": false,
+    "evaluation_metrics_computed": false,
+    "target_authorization_created": false
+  },
+  "code_identity": {
+    "configs/multicity/next_experiment_feasibility.toml": {
+      "bytes": 3711,
+      "sha256": "1d7a459fc3184623a8f542ff948352328d38a822daa4268aa1c5d8d88c548c53"
+    },
+    "docs/NEXT_EXPERIMENT_PREREGISTRATION_DRAFT.md": {
+      "bytes": 10092,
+      "sha256": "09d82624b45c4e0c9a40a4a2f17ada70cde7bdcb8535c2f94d03139e7ae0311c"
+    },
+    "scripts/audit_next_experiment_city_feasibility.py": {
+      "bytes": 2998,
+      "sha256": "3b5d8d5431a34c9683b22006768d27708f4055a52dbc1bf6431bee4609a6ef53"
+    },
+    "src/la_heat/grid.py": {
+      "bytes": 2739,
+      "sha256": "a875c023ac4d981b005f26317a905815f581437b77e6da979d0fcb249f534848"
+    },
+    "src/la_heat/inventory.py": {
+      "bytes": 16519,
+      "sha256": "466e3f592821c35020e9209222519202478573772a160f422bb3b7947ea82d9b"
+    },
+    "src/la_heat/multicity/geography.py": {
+      "bytes": 33879,
+      "sha256": "ec6d9d2a57f6ff085a50c1ec5570108c00e5abfeef202d99bcd31c7003656b38"
+    },
+    "src/la_heat/multicity/next_experiment_feasibility.py": {
+      "bytes": 42460,
+      "sha256": "343bfff04c6ddd75651c7b50663e5b4cde818a32b09596657c1032ca089147e7"
+    },
+    "src/la_heat/multicity/source_footprints.py": {
+      "bytes": 91900,
+      "sha256": "208710c307c69b78cd1dd2205297fdb66718534644cd83e56798b34347ccab41"
+    },
+    "src/la_heat/multicity/worldcover_eligible_support_evidence_v1.py": {
+      "bytes": 39651,
+      "sha256": "e4e316526bcde1bca5bb838010219faef4bf13cedcbb36cc3ecc746467ff1913"
+    },
+    "src/la_heat/provenance.py": {
+      "bytes": 4679,
+      "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "commit_sha256": "a228401aebba1bd6bb2c3622dce8f59cbaf1c8e6f37ed7f4e9f337ac9e20c95a"
+}
