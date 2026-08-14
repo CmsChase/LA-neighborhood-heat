@@ -1,0 +1,56 @@
+# Runtime-only settings for the resumable M3 source-development workstation UI.
+# Scientific choices come exclusively from the authenticated M3 protocol lock
+# and its source-acquisition amendment; this file grants no data access.
+
+schema_version = 1
+algorithm_version = "m3-source-development-runtime-v1"
+
+[inputs]
+protocol_lock = "manifests/multicity/next_experiment/M3_DEVELOPMENT_PROTOCOL_LOCK.json"
+source_acquisition_amendment = "manifests/multicity/next_experiment/M3_SOURCE_ACQUISITION_AMENDMENT.json"
+expanded_source_inventory = "manifests/multicity/next_experiment/M3_SOURCE_EXPANDED_INVENTORY.json"
+execution_authorization = "manifests/multicity/next_experiment/M3_SOURCE_QA_EXECUTION_AUTHORIZATION.json"
+
+[runtime]
+database = "data/interim/multicity/m3_source_development/runtime/tasks.sqlite"
+control = "data/interim/multicity/m3_source_development/runtime/control.json"
+status = "data/interim/multicity/m3_source_development/runtime/status.json"
+log = "data/interim/multicity/m3_source_development/runtime/worker.log"
+cache_root = "data/interim/multicity/m3_source_development/landsat_cache"
+qa_output_root = "data/interim/multicity/m3_source_development/qa_candidates"
+completion_root = "manifests/multicity/next_experiment/source_development"
+
+[office_mode]
+download_workers = 2
+compute_workers = 1
+raster_window_size = 512
+gdal_threads = 1
+numeric_library_threads = 1
+network_timeout_seconds = 20
+network_recheck_seconds = 20
+lease_seconds = 900
+heartbeat_seconds = 30
+retry_base_seconds = 5
+retry_max_seconds = 300
+
+[limits]
+allowed_download_workers = [1, 2]
+compute_workers_fixed = 1
+raster_window_size_fixed = 512
+signed_urls_may_be_persisted = false
+credentials_may_be_persisted = false
+offline_phase_network_requests_allowed = false
+blind_test_city_assets_allowed = false
+
+[dashboard]
+host = "127.0.0.1"
+port = 8772
+open_browser = true
+auto_restart_worker = true
+maximum_restart_delay_seconds = 60
+
+[migration]
+export_directory = "exports/M3_SOURCE_DEVELOPMENT_OFFICE"
+require_paused = true
+require_zero_running_tasks = true
+require_sqlite_wal_checkpoint = true

@@ -1,0 +1,149 @@
+# Descriptive source-acquisition amendment. This file and any lock built from
+# it grant no permission to query metadata, open Landsat assets, rebuild
+# targets, construct predictors, fit models, select a candidate, or score.
+
+[amendment]
+schema_version = 1
+id = "multicity_m3_source_acquisition_amendment_v1"
+status = "draft_not_locked"
+parent_experiment_id = "multicity_m3_level_anomaly_development_v1"
+scope = "source_acquisition_universe_only"
+reason = "the_authenticated_existing_none_threshold_support_cannot_meet_the_locked_inner_validation_gate"
+model_candidate_space_changed = false
+st_qa_candidate_space_changed = false
+selection_objective_or_gate_changed = false
+uncertainty_or_evaluation_changed = false
+blind_test_city_cohort_changed = false
+
+[anchors.m3_protocol_lock]
+path = "manifests/multicity/next_experiment/M3_DEVELOPMENT_PROTOCOL_LOCK.json"
+file_sha256 = "b5819ec9ceb8ff0256dcdd5fc7e774c90945db0bccf2f9a5003d59af055c1309"
+commit_sha256 = "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8"
+required_state = "locked_before_new_source_analysis"
+
+[anchors.historical_support]
+path = "reports/tables/multicity_external_posthoc_qa/posthoc_qa_summary.json"
+file_sha256 = "ff53fbe1779a386fb9fdb92ef7d803069a0955abee70cc4a53b2352016ce2d15"
+commit_sha256 = "3b6dfc2c41bcc0b61c6667df4b5413ec1838dc0cfc5d277fba33bfaa1574fe63"
+analysis_class = "non_confirmatory_posthoc_read_only_qa"
+
+[anchors.previous_target_plan]
+path = "manifests/multicity/targets/TARGET_BUILD_PLAN.json"
+file_sha256 = "00fa094ccf81066e01f5952aa2b42724f2176704c5353b3f92cb330939bc5a5c"
+commit_sha256 = "65a90338c9bb96bf2ade17e13d33f561adb78a891f40fdfdf3ce71ddb2843a63"
+required_state = "prepared_target_blind_builder_not_authorized"
+
+[anchors.previous_predictor_inventory]
+path = "manifests/multicity/predictors/PORTABLE_PREDICTOR_INVENTORY.json"
+file_sha256 = "191ac137f688f07b362c0a606544b7d6d4f84703a206b7b42a5fd7f722e4cb68"
+commit_sha256 = "6d0c26d8c1e23a28d7d855aebf1957801c2e76513070700a61122b96f579f2ab"
+required_state = "complete_target_blind_portable_predictor_inventory"
+
+[anchors.previous_inventory_config]
+path = "configs/multicity/portable_predictor_build.toml"
+file_sha256 = "75ae67d49573991856da6e807c04a52867e5ab44e618095448dbf5a4aed7fdce"
+
+[preflight]
+locked_st_qa_candidate_ids = ["none", "3k", "4k", "6k"]
+finite_thresholds_kelvin = [3.0, 4.0, 6.0]
+none_is_unthresholded_maximum_valid_pixel_set = true
+finite_threshold_valid_pixel_sets_are_subsets_of_none = true
+tract_and_date_support_are_monotone_in_valid_pixels = true
+minimum_usable_dates_per_inner_validation_city = 8
+current_inventory_passes_locked_gate = false
+failing_city_ids = ["houston_tx", "chicago_il"]
+
+[[preflight.authenticated_city_support]]
+city_id = "phoenix_az"
+planned_date_count = 22
+none_usable_date_count = 21
+
+[[preflight.authenticated_city_support]]
+city_id = "houston_tx"
+planned_date_count = 21
+none_usable_date_count = 4
+
+[[preflight.authenticated_city_support]]
+city_id = "chicago_il"
+planned_date_count = 21
+none_usable_date_count = 3
+
+[query_contract]
+metadata_query_not_authorized_by_this_amendment = true
+metadata_query_must_be_separately_authorized = true
+landsat_collection = "landsat-c2-l2"
+sensors = ["landsat-8", "landsat-9"]
+warm_season_months = [5, 6, 7, 8, 9, 10]
+maximum_physical_overpass_span_minutes = 15
+minimum_city_union_coverage_fraction = 0.98
+reuse_previous_metadata_fields_and_properties_exactly = true
+reuse_previous_physical_overpass_grouping_exactly = true
+include_every_qualifying_physical_overpass = true
+exclude_assets_from_metadata_query = true
+persist_asset_hrefs = false
+qa_dependent_date_or_scene_selection = false
+date_or_scene_reselection_after_query = false
+
+[retained_inventory.los_angeles_ca]
+mode = "retain_authenticated_existing_inventory_exactly"
+start_date = "2020-05-01"
+end_date = "2024-10-31"
+expected_existing_overpass_count = 90
+expected_existing_scene_count = 177
+
+[retained_inventory.phoenix_az]
+mode = "retain_authenticated_existing_inventory_exactly"
+start_date = "2025-05-01"
+end_date = "2025-10-31"
+expected_existing_overpass_count = 22
+expected_existing_scene_count = 44
+
+[expanded_inventory.houston_tx]
+mode = "replace_existing_2025_slice_with_complete_fixed_window_query"
+start_date = "2020-05-01"
+end_date = "2025-10-31"
+include_all_qualifying_overpasses = true
+
+[expanded_inventory.chicago_il]
+mode = "replace_existing_2025_slice_with_complete_fixed_window_query"
+start_date = "2020-05-01"
+end_date = "2025-10-31"
+include_all_qualifying_overpasses = true
+
+[stop_rule]
+evaluate_only_after_the_complete_expanded_none_candidate_is_rebuilt = true
+required_none_usable_dates_per_source_city = 8
+if_any_source_city_fails_state = "source_support_failed"
+if_all_source_cities_pass_next_stage = "separately_authorize_source_only_cache_prefetch_and_offline_qa_rebuild"
+adaptive_year_extension_after_failure = false
+city_substitution_after_failure = false
+support_threshold_relaxation_after_failure = false
+model_or_st_qa_selection_after_failure = false
+
+[permissions]
+query_public_metadata = false
+read_landsat_asset_hrefs = false
+read_landsat_thermal_or_target_qa_values = false
+read_raw_or_processed_target_tables = false
+create_values_opened_or_access_started_marker = false
+build_or_extend_predictors = false
+prefetch_landsat_cache = false
+rebuild_source_targets = false
+fit_models = false
+select_model_or_st_qa = false
+predict_or_score = false
+read_blind_test_landsat_metadata_assets_or_values = false
+
+[access_audit]
+authenticated_committed_historical_json_read = true
+network_requests_performed = false
+landsat_stac_metadata_read = false
+landsat_asset_hrefs_read = false
+landsat_thermal_or_target_qa_values_read = false
+raw_or_processed_target_tables_read = false
+predictors_read_or_built = false
+model_fit_selection_prediction_or_scoring_performed = false
+values_opened_or_access_started_marker_created = false
+
+[next_stage]
+safe_action = "independently_review_then_append_only_lock_this_amendment_before_separate_metadata_query_authorization"

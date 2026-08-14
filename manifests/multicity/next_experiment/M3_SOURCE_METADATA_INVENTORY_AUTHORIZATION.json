@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-metadata-inventory-v1",
+  "state": "source_metadata_inventory_authorized",
+  "source_acquisition_amendment": {
+    "path": "manifests/multicity/next_experiment/M3_SOURCE_ACQUISITION_AMENDMENT.json",
+    "bytes": 7849,
+    "sha256": "0445c1badf6d16896b7c392ea5e1666ca89656d3ec37274a2623fc30fde7925f",
+    "commit_sha256": "de9f6d240926ddeddc32cafe7ca247b036fc17e3471f00b1a13c407cab697344"
+  },
+  "source_city_ids": [
+    "los_angeles_ca",
+    "phoenix_az",
+    "houston_tx",
+    "chicago_il"
+  ],
+  "retained_city_ids": [
+    "los_angeles_ca",
+    "phoenix_az"
+  ],
+  "metadata_query_city_ids": [
+    "houston_tx",
+    "chicago_il"
+  ],
+  "query_contract": {
+    "metadata_query_not_authorized_by_this_amendment": true,
+    "metadata_query_must_be_separately_authorized": true,
+    "landsat_collection": "landsat-c2-l2",
+    "sensors": [
+      "landsat-8",
+      "landsat-9"
+    ],
+    "warm_season_months": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "maximum_physical_overpass_span_minutes": 15,
+    "minimum_city_union_coverage_fraction": 0.98,
+    "reuse_previous_metadata_fields_and_properties_exactly": true,
+    "reuse_previous_physical_overpass_grouping_exactly": true,
+    "include_every_qualifying_physical_overpass": true,
+    "exclude_assets_from_metadata_query": true,
+    "persist_asset_hrefs": false,
+    "qa_dependent_date_or_scene_selection": false,
+    "date_or_scene_reselection_after_query": false
+  },
+  "expanded_inventory": {
+    "houston_tx": {
+      "mode": "replace_existing_2025_slice_with_complete_fixed_window_query",
+      "start_date": "2020-05-01",
+      "end_date": "2025-10-31",
+      "include_all_qualifying_overpasses": true
+    },
+    "chicago_il": {
+      "mode": "replace_existing_2025_slice_with_complete_fixed_window_query",
+      "start_date": "2020-05-01",
+      "end_date": "2025-10-31",
+      "include_all_qualifying_overpasses": true
+    }
+  },
+  "permissions": {
+    "read_authenticated_existing_la_phoenix_metadata": true,
+    "read_houston_chicago_public_geography": true,
+    "query_houston_chicago_public_landsat_stac_metadata": true,
+    "persist_assets_excluded_public_metadata_pages": true,
+    "write_expanded_source_inventory": true,
+    "query_other_source_or_blind_test_cities": false,
+    "request_or_read_landsat_item_assets": false,
+    "read_or_persist_landsat_asset_hrefs": false,
+    "sign_landsat_asset_hrefs": false,
+    "read_landsat_thermal_or_target_qa_values": false,
+    "read_raw_or_processed_target_tables": false,
+    "build_predictors": false,
+    "prefetch_landsat_assets": false,
+    "rebuild_targets": false,
+    "fit_select_predict_or_score": false,
+    "create_values_opened_or_access_started_marker": false
+  },
+  "code_identity": {
+    "metadata_inventory_module": {
+      "path": "src/la_heat/multicity/m3_source_metadata_inventory_v1.py",
+      "bytes": 38999,
+      "sha256": "63dbcfee3b818c5dd21e19bdd3f562c49cb1dd557cb61c0bee1d76c07c5c831c"
+    },
+    "metadata_inventory_script": {
+      "path": "scripts/stage_m3_source_metadata_inventory_v1.py",
+      "bytes": 3724,
+      "sha256": "5fc729a655cf94001557314eddb2c4d8029a8c80cf529f3b83127f88c7564a2c"
+    },
+    "configs/multicity/experiment.toml": {
+      "path": "configs/multicity/experiment.toml",
+      "bytes": 5765,
+      "sha256": "fd5330d83bf292204f05dc0aa64e0a535e45523060dd926e3a9b42f8969e5349"
+    },
+    "src/la_heat/inventory.py": {
+      "path": "src/la_heat/inventory.py",
+      "bytes": 16519,
+      "sha256": "466e3f592821c35020e9209222519202478573772a160f422bb3b7947ea82d9b"
+    },
+    "src/la_heat/multicity/config.py": {
+      "path": "src/la_heat/multicity/config.py",
+      "bytes": 12655,
+      "sha256": "bebe7ef2c610b55b6b5fe72692ee517241a510785458d87832e0cf58d4e4897b"
+    },
+    "src/la_heat/multicity/portable_predictor_inventory.py": {
+      "path": "src/la_heat/multicity/portable_predictor_inventory.py",
+      "bytes": 22062,
+      "sha256": "ec645342b049884236ad36369831ce4f791b24e35f9ff928c928599f581ac5e7"
+    },
+    "src/la_heat/multicity/source_footprints.py": {
+      "path": "src/la_heat/multicity/source_footprints.py",
+      "bytes": 91900,
+      "sha256": "208710c307c69b78cd1dd2205297fdb66718534644cd83e56798b34347ccab41"
+    },
+    "src/la_heat/provenance.py": {
+      "path": "src/la_heat/provenance.py",
+      "bytes": 4679,
+      "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+    }
+  },
+  "access_audit": {
+    "network_requests_performed_by_authorization": false,
+    "landsat_metadata_read_by_authorization": false,
+    "landsat_item_assets_or_hrefs_read_by_authorization": false,
+    "thermal_qa_predictor_or_target_values_read_by_authorization": false,
+    "model_fit_selection_prediction_or_scoring_performed": false
+  },
+  "next_safe_stage": "run_exact_houston_chicago_assets_excluded_metadata_query",
+  "commit_sha256": "5055d0bf603207b980253726a65650e68bf34450608c2ce2b05733827412da5a"
+}

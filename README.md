@@ -84,6 +84,15 @@ target build, evaluation, and Atlas-release paths are implemented and covered
 by synthetic tests. These preparations do not authorize a later stage by
 themselves; synthetic metrics are not research evidence.
 
+A separate follow-up M3 experiment is now prepared but paused. Its locked
+source-support amendment expands Houston and Chicago to complete 2020–2025 warm
+seasons; the assets-excluded metadata inventory contains 318 overpasses and 525
+unique city-scenes across the four source cities. `RUN_M3_SOURCE_DEVELOPMENT.cmd`
+opens a low-load localhost runner for the authorized online cache and subsequent
+offline four-candidate QA rebuild. Nested LOSO and all Seattle/Denver/Atlanta/
+Miami targets remain locked. See
+[`docs/M3_SOURCE_DEVELOPMENT_RUNNER.md`](docs/M3_SOURCE_DEVELOPMENT_RUNNER.md).
+
 ## Local setup
 
 Python pipeline:

@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-qa-two-phase-authorization-v1",
+  "state": "source_qa_two_phase_execution_authorized",
+  "m3_protocol_lock_commit_sha256": "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8",
+  "source_acquisition_amendment_commit_sha256": "de9f6d240926ddeddc32cafe7ca247b036fc17e3471f00b1a13c407cab697344",
+  "expanded_source_inventory_commit_sha256": "0d407dbbfb2e3e9fb83421790553dbe12ba6592f3d03579333c38b7498f8dce0",
+  "inputs": {
+    "m3_protocol_lock": {
+      "path": "manifests/multicity/next_experiment/M3_DEVELOPMENT_PROTOCOL_LOCK.json",
+      "bytes": 27501,
+      "sha256": "b5819ec9ceb8ff0256dcdd5fc7e774c90945db0bccf2f9a5003d59af055c1309",
+      "commit_sha256": "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8"
+    },
+    "source_acquisition_amendment": {
+      "path": "manifests/multicity/next_experiment/M3_SOURCE_ACQUISITION_AMENDMENT.json",
+      "bytes": 7849,
+      "sha256": "0445c1badf6d16896b7c392ea5e1666ca89656d3ec37274a2623fc30fde7925f",
+      "commit_sha256": "de9f6d240926ddeddc32cafe7ca247b036fc17e3471f00b1a13c407cab697344"
+    },
+    "expanded_source_inventory": {
+      "path": "manifests/multicity/next_experiment/M3_SOURCE_EXPANDED_INVENTORY.json",
+      "bytes": 335800,
+      "sha256": "c067d51ac0f5ea2174c777c3668a737ad796680e229b393a5203a98d07bb88a2",
+      "commit_sha256": "0d407dbbfb2e3e9fb83421790553dbe12ba6592f3d03579333c38b7498f8dce0"
+    }
+  },
+  "source_city_ids": [
+    "los_angeles_ca",
+    "phoenix_az",
+    "houston_tx",
+    "chicago_il"
+  ],
+  "blind_test_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "expected_overpass_count": 318,
+  "expected_unique_city_scene_count": 525,
+  "required_landsat_assets": [
+    "lwir11",
+    "qa_pixel",
+    "qa",
+    "cdist",
+    "qa_radsat"
+  ],
+  "qa_candidate_ids": [
+    "none",
+    "3k",
+    "4k",
+    "6k"
+  ],
+  "runtime_contract": {
+    "download_workers_allowed": [
+      1,
+      2
+    ],
+    "compute_workers": 1,
+    "raster_window_size": 512,
+    "raster_window_size_is_hard_streaming_limit": false,
+    "offline_execution_granularity": "one_complete_physical_overpass",
+    "signed_urls_credentials_or_cookies_may_be_persisted": false,
+    "retry_and_resume_from_content_commits": true
+  },
+  "online_predownload_permissions": {
+    "hydrate_frozen_source_scene_asset_hrefs": true,
+    "read_exact_five_source_landsat_assets": true,
+    "write_verified_local_aligned_cache": true,
+    "aggregate_targets_or_apply_qa_candidates": false,
+    "read_blind_test_city_assets_or_values": false
+  },
+  "offline_qa_permissions": {
+    "requires_authenticated_global_cache": true,
+    "network_or_href_hydration_allowed": false,
+    "read_verified_local_source_cache": true,
+    "rebuild_none_3k_4k_6k_candidates": true,
+    "fit_select_predict_or_score": false
+  },
+  "blind_test_target_access_authorized": false,
+  "model_fit_or_selection_authorized": false,
+  "predictor_build_or_read_authorized": false,
+  "source_cache_access_started_marker": "data/interim/multicity/m3_source_development/SOURCE_CACHE_ACCESS_STARTED.json",
+  "source_landsat_cache_completion": "manifests/multicity/next_experiment/source_development/SOURCE_LANDSAT_CACHE_COMPLETE.json",
+  "source_qa_candidates_completion": "manifests/multicity/next_experiment/source_development/SOURCE_QA_CANDIDATES_COMPLETE.json",
+  "code_identity": {
+    "configs/multicity/m3_source_development_runner.toml": {
+      "path": "configs/multicity/m3_source_development_runner.toml",
+      "bytes": 2084,
+      "sha256": "f0e95c90f320a3b9be0983c2e51d7907b036683813551f099d41c2b0b9b11e26"
+    },
+    "configs/research.toml": {
+      "path": "configs/research.toml",
+      "bytes": 5416,
+      "sha256": "a2d4f7300d8a264c77c3ddc15a730546945a2d7f6ed253ff2f49e352102c60b9"
+    },
+    "src/la_heat/aligned_landsat.py": {
+      "path": "src/la_heat/aligned_landsat.py",
+      "bytes": 7787,
+      "sha256": "3335bf7d0be863a211fe3d6e3359d8e066af3ff67fa254876d14077c37cab894"
+    },
+    "src/la_heat/mosaic.py": {
+      "path": "src/la_heat/mosaic.py",
+      "bytes": 7419,
+      "sha256": "1f7a14941bd7909f801f78fe6dac9998ca530d98ab9059c4407d4d6fd2c44e77"
+    },
+    "src/la_heat/target_aggregation.py": {
+      "path": "src/la_heat/target_aggregation.py",
+      "bytes": 9884,
+      "sha256": "3429015352f83b4b54f9f1a3e14e571555f9eb736d71a7f8031b2e84a17b2425"
+    },
+    "src/la_heat/multicity/m3_source_asset_cache.py": {
+      "path": "src/la_heat/multicity/m3_source_asset_cache.py",
+      "bytes": 34637,
+      "sha256": "72bf5fb71a69e3ab9f098859f0d22a69a2812d168d0e71355e8392cb01678d1d"
+    },
+    "src/la_heat/multicity/m3_source_development_runtime.py": {
+      "path": "src/la_heat/multicity/m3_source_development_runtime.py",
+      "bytes": 16611,
+      "sha256": "a3ad38adb8349b157d9a5823251e9a3e78ba38667caabd45b890f9f7c407dee8"
+    },
+    "src/la_heat/multicity/m3_source_development_worker.py": {
+      "path": "src/la_heat/multicity/m3_source_development_worker.py",
+      "bytes": 11299,
+      "sha256": "0ff26673b858d1d4a01124a08dd65069c09af949b4ab6c2372dd23dba2fa73ee"
+    },
+    "src/la_heat/multicity/m3_source_development_engine.py": {
+      "path": "src/la_heat/multicity/m3_source_development_engine.py",
+      "bytes": 49054,
+      "sha256": "013d90e7c0a88eb43657cfb062c7e00da3b6c9e22b5d49862891dd62ea1b1464"
+    },
+    "src/la_heat/multicity/m3_source_offline_qa.py": {
+      "path": "src/la_heat/multicity/m3_source_offline_qa.py",
+      "bytes": 7456,
+      "sha256": "9a1a8b64738ded3d56a4d55133c194dc953f867738100e8c2074fa8719263317"
+    },
+    "src/la_heat/multicity/m3_source_qa_authorization.py": {
+      "path": "src/la_heat/multicity/m3_source_qa_authorization.py",
+      "bytes": 11648,
+      "sha256": "dcb0772c5d5a6844acfb7033582fb7e372a200f27519971b8bad5652527ef096"
+    },
+    "scripts/run_m3_source_development_worker.py": {
+      "path": "scripts/run_m3_source_development_worker.py",
+      "bytes": 2430,
+      "sha256": "003343da6538c3ae99a751b1ba7e09186d1cef7bd8f24e477d42799ca0334ee8"
+    },
+    "scripts/authorize_m3_source_qa_execution.py": {
+      "path": "scripts/authorize_m3_source_qa_execution.py",
+      "bytes": 1524,
+      "sha256": "f5750bab13bbeb3277fb5b9364e818c2254d4c385105867807f34eb5538b3b43"
+    }
+  },
+  "access_audit": {
+    "authorization_read_landsat_item_assets_or_hrefs": false,
+    "authorization_read_landsat_thermal_or_qa_values": false,
+    "authorization_read_target_or_predictor_tables": false,
+    "authorization_fit_selected_predicted_or_scored": false,
+    "authorization_created_access_marker_or_cache": false,
+    "blind_test_city_asset_or_value_accessed": false
+  },
+  "next_safe_stage": "run_online_source_cache_then_authenticated_offline_qa_rebuild",
+  "claim_id": "2655d53078a1f43e0185a5b8f0d2f2a85c5309c484775f06ec182e9c4739e110",
+  "commit_sha256": "0d055e077f21164f87427056535f6debcd0b49ce77a8a68988c9d015b9361208"
+}

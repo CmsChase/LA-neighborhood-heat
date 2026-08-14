@@ -141,6 +141,15 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     uncertainty and abstention selection, evaluation gates, and the 21-column
     prediction schema. The candidate space is locked, but no winning M3 model
     has been selected, no source-only selection has run, and no new value was read.
+25. A pre-access source-acquisition amendment proved that the old source support
+    could not satisfy the locked eight-date inner-city gate, then fixed a complete
+    2020-2025 warm-season expansion for Houston and Chicago without selecting on
+    QA outcomes. The assets-excluded public metadata inventory is complete: 318
+    source overpasses and 525 unique city-scenes (Los Angeles 90/177, Phoenix
+    22/44, Houston 102/200, Chicago 104/104). The two-phase cache/offline-QA
+    authorization is authenticated, and its 3,474-task durable queue is initialized
+    and paused. No Landsat asset href or pixel was opened by these preparation
+    steps; the four blind-test cities remain sealed.
 
 ## Frozen scientific decisions
 
@@ -175,6 +184,8 @@ Completed and authenticated:
 - the frozen external evaluation, six-figure evidence package, and verified Atlas release.
 - the target-blind four-city feasibility audit and append-only M3 development
   protocol lock.
+- the append-only source-acquisition amendment, Houston/Chicago assets-excluded
+  metadata expansion, and source-cache/offline-QA execution authorization.
 
 Still prohibited:
 
@@ -183,8 +194,8 @@ Still prohibited:
 - claiming successful cross-city confirmation or calibrated uncertainty.
 - reading any Seattle, Denver, Atlanta, or Miami Landsat asset href, thermal or
   QA value, or target table;
-- rebuilding source ST_QA/target aggregates or running nested LOSO, M3 fitting,
-  or model/QA selection before a separate source-only authorization;
+- running nested LOSO, M3 fitting, or model/QA selection; the current permit
+  stops after the four source ST_QA candidate tables are rebuilt;
 - building new-city predictors, fitting the final M3, or creating predictions
   until later staged permissions explicitly authorize each step.
 
@@ -198,8 +209,11 @@ The public predictor phase is complete: static/calendar/Daymet reached `84 / 84`
 Sentinel reached `516 / 516`, and the final table is 136,941 rows by 46 frozen
 features. Do not rebuild or re-import these products.
 
-The exact tracked stage is
-`m3_development_protocol_locked_before_new_source_analysis`.
+The exact tracked stage is `m3_source_development_ready_paused`. The control
+page is <http://127.0.0.1:8772/> and the durable runtime status is
+`data/interim/multicity/m3_source_development/runtime/status.json`. The queue
+contains 3,151 online cache tasks followed by 323 offline QA tasks. Dynamic
+progress belongs only in that ignored runtime status, not in tracked documents.
 Its frozen predecessor remains the completed three-city external evaluation:
 the target claim contains 64 overpasses and three city compiles. The
 evaluation used 11,207 QA-valid rows across 28 city-dates and 180 spatial
@@ -258,11 +272,23 @@ can be reauthenticated without network access using:
 .\.venv\Scripts\python scripts\lock_multicity_m3_development_protocol.py --project-root . --check-only
 ```
 
-The next safe task is to separately authorize the source-only pixel-level ST_QA
-rebuild and nested whole-city LOSO selection. That stage may use only the four
-source cities and must keep Seattle, Denver, Atlanta, and Miami targets sealed.
-The formal final M3 model specification remains unlocked until source-only
-selection completes.
+The next safe task is to run the already-authorized online source cache, then
+authenticate it and run the offline pixel-level ST_QA rebuild. Start with
+`RUN_M3_SOURCE_DEVELOPMENT.cmd`; choose one download worker for minimum load or
+two for the office-laptop default. The runner uses only Los Angeles, Phoenix,
+Houston, and Chicago. It cannot start nested LOSO or access Seattle, Denver,
+Atlanta, or Miami targets. After `SOURCE_QA_CANDIDATES_COMPLETE`, extend the
+needed public predictor rows and issue a separate nested-LOSO authorization.
+The final M3 model specification remains unlocked until source-only selection.
+
+Reauthenticate the current follow-up gates without downloading pixels using:
+
+```powershell
+.\.venv\Scripts\python scripts\audit_m3_source_support_and_stage_amendment.py --project-root . --check-only
+.\.venv\Scripts\python scripts\stage_m3_source_metadata_inventory_v1.py --project-root . --check-authorization
+.\.venv\Scripts\python scripts\stage_m3_source_metadata_inventory_v1.py --project-root . --check-inventory
+.\.venv\Scripts\python scripts\authorize_m3_source_qa_execution.py --project-root . --check-only
+```
 
 Authenticate the completed gates with:
 
@@ -308,6 +334,13 @@ tables. Its focused test set is:
   source-selection, uncertainty, risk, and evaluation contract
 - `manifests/multicity/next_experiment/M3_DEVELOPMENT_PROTOCOL_LOCK.json` —
   append-only M3 development protocol lock
+- `docs/M3_SOURCE_DEVELOPMENT_RUNNER.md` — low-load online/offline runner guide
+- `manifests/multicity/next_experiment/M3_SOURCE_ACQUISITION_AMENDMENT.json` —
+  fixed pre-access source-support expansion
+- `manifests/multicity/next_experiment/M3_SOURCE_EXPANDED_INVENTORY.json` —
+  authenticated 318-overpass source inventory
+- `manifests/multicity/next_experiment/M3_SOURCE_QA_EXECUTION_AUTHORIZATION.json` —
+  two-phase source-cache and offline-QA permit
 - `docs/MULTICITY_SYNTHETIC_SMOKE.md` — deterministic non-evidence rehearsal
 - `docs/DECISION_LOG.md` — detailed historical decisions
 - `docs/DATA_MANIFEST.csv` — public-data provenance
