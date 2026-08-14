@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": "2026-08-consolidated",
-  "stage_id": "next_experiment_city_feasibility",
-  "state": "metadata_feasibility_complete_primary_set_feasible",
-  "next_safe_stage": "review_and_lock_final_unseen_city_set_and_m3_source_only_protocol",
-  "summary": "The prior Phoenix-Houston-Chicago result remains frozen and inconclusive. A separate target-blind feasibility audit selected Seattle, Denver, Atlanta, and Miami without replacements; all four passed Census, WorldCover non-water support, and at least 16 independent Landsat-metadata dates. No new-city Landsat target asset or value was opened.",
+  "revision": "2026-08-m3-protocol-locked",
+  "stage_id": "next_experiment_m3_development_protocol_lock",
+  "state": "m3_development_protocol_locked_before_new_source_analysis",
+  "next_safe_stage": "separately_authorize_source_only_qa_rebuild_and_nested_loso",
+  "summary": "The prior Phoenix-Houston-Chicago result remains frozen and inconclusive. The follow-up experiment selected Seattle, Denver, Atlanta, and Miami through a target-blind feasibility audit, then append-only locked the M3 candidate space and source-only selection protocol. No winning M3 specification has been selected, no source-only analysis has run, and no new-city Landsat target asset or value was opened.",
   "permissions": {
     "read_public_predictor_sources": true,
     "build_predictor": false,
@@ -17,7 +17,11 @@
     "read_new_candidate_landsat_asset_hrefs": false,
     "read_new_candidate_targets": false,
     "build_next_experiment_predictors": false,
-    "fit_next_experiment_model": false
+    "fit_next_experiment_model": false,
+    "read_m3_source_target_or_qa_values": false,
+    "reprocess_m3_source_targets": false,
+    "fit_m3_source_models": false,
+    "select_m3_model_or_st_qa": false
   },
   "locks": {
     "portable_predictor_contract_locked": true,
@@ -34,7 +38,10 @@
     "external_target_values_read": true,
     "external_prediction_commit_exists": true,
     "next_experiment_feasibility_complete": true,
-    "next_experiment_protocol_locked": false,
+    "next_experiment_protocol_locked": true,
+    "next_experiment_candidate_space_locked": true,
+    "next_experiment_model_spec_locked": false,
+    "next_experiment_selected_model_winner_locked": false,
     "new_candidate_targets_sealed": true
   },
   "inputs": {
@@ -75,6 +82,9 @@
     ],
     "next_experiment_feasibility": "manifests/multicity/next_experiment/METADATA_FEASIBILITY_AUDIT.json",
     "next_experiment_feasibility_commit_sha256": "450ecd604000fcec7f3958e9a15013c74f69c52fddd656e9786c703c62838922",
+    "next_experiment_m3_development_config": "configs/multicity/m3_development_protocol_v1.toml",
+    "next_experiment_m3_development_protocol_lock": "manifests/multicity/next_experiment/M3_DEVELOPMENT_PROTOCOL_LOCK.json",
+    "next_experiment_m3_development_protocol_lock_commit_sha256": "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8",
     "next_experiment_selected_unseen_city_ids": [
       "seattle_wa",
       "denver_co",
@@ -152,9 +162,14 @@
       "atlanta_ga": 28,
       "miami_fl": 30
     },
-    "next_experiment_protocol_locked": false,
+    "next_experiment_protocol_locked": true,
+    "next_experiment_candidate_space_locked": true,
+    "next_experiment_model_spec_locked": false,
+    "next_experiment_selected_model_winner_locked": false,
+    "next_experiment_source_development_authorized": false,
+    "next_experiment_source_development_complete": false,
     "next_experiment_target_access_authorized": false,
-    "next_action": "review_and_lock_final_unseen_city_set_and_m3_source_only_protocol"
+    "next_action": "separately_authorize_source_only_qa_rebuild_and_nested_loso"
   },
   "prepared_post_return_tools": {
     "one_click_import": "IMPORT_SENTINEL_RESULTS.cmd",

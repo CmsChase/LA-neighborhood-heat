@@ -1,6 +1,6 @@
 # Project handoff
 
-Last updated: 2026-08-13 Asia/Shanghai
+Last updated: 2026-08-14 Asia/Shanghai
 
 ## Project summary
 
@@ -133,12 +133,23 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     `450ecd604000fcec7f3958e9a15013c74f69c52fddd656e9786c703c62838922`.
     It read no new-city Landsat asset href, thermal or QA value, target table,
     model, prediction, or evaluation metric.
+24. The follow-up experiment's append-only M3 development protocol is locked in
+    `manifests/multicity/next_experiment/M3_DEVELOPMENT_PROTOCOL_LOCK.json`,
+    commit `dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8`.
+    It freezes the four source and four blind-test cities, B1/M2-L and four M3
+    candidates, pixel-level ST_QA candidate rules, nested whole-city LOSO,
+    uncertainty and abstention selection, evaluation gates, and the 21-column
+    prediction schema. The candidate space is locked, but no winning M3 model
+    has been selected, no source-only selection has run, and no new value was read.
 
 ## Frozen scientific decisions
 
-- M2 is the only primary transfer model and uses all 46 frozen predictors.
-- B1 remains only as a 23-feature weather/calendar diagnostic baseline. It is
-  not a deployment or model-selection candidate.
+- For the completed Phoenix-Houston-Chicago experiment, M2 is the only primary
+  transfer model and uses all 46 frozen predictors.
+- In the follow-up experiment, M3 is a locked candidate family awaiting
+  source-only selection; it does not revise the completed M2 result.
+- B1 remains a fixed 23-feature weather/calendar benchmark. It is not a
+  deployment or model-selection candidate.
 - All four cities use the new same-adapter Census 2020 geography and WorldCover
   2020 v100 valid non-water support.
 - Los Angeles keeps the same 1,096 GEOIDs, but its new zone assignment differs
@@ -162,6 +173,8 @@ Completed and authenticated:
 - authenticate the completed frozen model fit and committed external predictions;
 - the one indivisible Phoenix-Houston-Chicago target claim;
 - the frozen external evaluation, six-figure evidence package, and verified Atlas release.
+- the target-blind four-city feasibility audit and append-only M3 development
+  protocol lock.
 
 Still prohibited:
 
@@ -170,8 +183,10 @@ Still prohibited:
 - claiming successful cross-city confirmation or calibrated uncertainty.
 - reading any Seattle, Denver, Atlanta, or Miami Landsat asset href, thermal or
   QA value, or target table;
-- building their predictors, fitting M3, or creating predictions until a new
-  experiment protocol and staged permissions explicitly authorize each step.
+- rebuilding source ST_QA/target aggregates or running nested LOSO, M3 fitting,
+  or model/QA selection before a separate source-only authorization;
+- building new-city predictors, fitting the final M3, or creating predictions
+  until later staged permissions explicitly authorize each step.
 
 The single active control record is
 `manifests/multicity/ACTIVE_STAGE.json`. Historical numbered transition modules
@@ -183,7 +198,8 @@ The public predictor phase is complete: static/calendar/Daymet reached `84 / 84`
 Sentinel reached `516 / 516`, and the final table is 136,941 rows by 46 frozen
 features. Do not rebuild or re-import these products.
 
-The exact tracked stage is `metadata_feasibility_complete_primary_set_feasible`.
+The exact tracked stage is
+`m3_development_protocol_locked_before_new_source_analysis`.
 Its frozen predecessor remains the completed three-city external evaluation:
 the target claim contains 64 overpasses and three city compiles. The
 evaluation used 11,207 QA-valid rows across 28 city-dates and 180 spatial
@@ -233,19 +249,20 @@ claim, or reinterpret the post-hoc sensitivity as confirmatory. The prediction
 commit preceded the single combined external claim, and all three city compiles
 and the one-time evaluation have authenticated.
 
-The new experiment has now advanced only through city feasibility. The selected
-unseen-city set is Seattle, Denver, Atlanta, and Miami. Reauthenticate that audit
-without network access using:
+The selected unseen-city set is Seattle, Denver, Atlanta, and Miami. The
+target-blind feasibility audit and the append-only M3 development protocol lock
+can be reauthenticated without network access using:
 
 ```powershell
 .\.venv\Scripts\python scripts\audit_next_experiment_city_feasibility.py --project-root . --check-only
+.\.venv\Scripts\python scripts\lock_multicity_m3_development_protocol.py --project-root . --check-only
 ```
 
-The next safe task is to review and append-only lock the final unseen-city set
-and the source-only M3 development protocol. That lock must define the exact M3
-level/anomaly estimators, source-city cross-validation, ST_QA selection rule,
-uncertainty method, ablations, metrics, gates, and output schemas before any new
-city predictor or target workflow is authorized.
+The next safe task is to separately authorize the source-only pixel-level ST_QA
+rebuild and nested whole-city LOSO selection. That stage may use only the four
+source cities and must keep Seattle, Denver, Atlanta, and Miami targets sealed.
+The formal final M3 model specification remains unlocked until source-only
+selection completes.
 
 Authenticate the completed gates with:
 
@@ -287,6 +304,10 @@ tables. Its focused test set is:
 - `docs/MULTICITY_METHODS_AND_EVIDENCE.md` — continuation gates and evidence contract
 - `docs/NEXT_EXPERIMENT_PREREGISTRATION_DRAFT.md` — recommended failure-driven
   follow-up design; draft only, with no new target authorization
+- `configs/multicity/m3_development_protocol_v1.toml` — locked M3 candidate,
+  source-selection, uncertainty, risk, and evaluation contract
+- `manifests/multicity/next_experiment/M3_DEVELOPMENT_PROTOCOL_LOCK.json` —
+  append-only M3 development protocol lock
 - `docs/MULTICITY_SYNTHETIC_SMOKE.md` — deterministic non-evidence rehearsal
 - `docs/DECISION_LOG.md` — detailed historical decisions
 - `docs/DATA_MANIFEST.csv` — public-data provenance
