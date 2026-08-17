@@ -14,6 +14,7 @@ import json
 import math
 import os
 import secrets
+import sqlite3
 import subprocess
 import sys
 import threading
@@ -27,6 +28,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Final, Protocol
 
+from la_heat.model_run_queue import ModelRunQueue
 from la_heat.multicity.m3_source_development_runtime import runtime_readiness
 
 PROJECT_ROOT: Final = Path(__file__).resolve().parents[3]
@@ -39,6 +41,7 @@ STATUS_FILENAME: Final = "status.json"
 CONTROL_FILENAME: Final = "control.json"
 ENGINE_LOG_FILENAME: Final = "worker.log"
 DASHBOARD_LOCK_FILENAME: Final = "dashboard.lock"
+TASK_DATABASE_FILENAME: Final = "tasks.sqlite"
 WORKER_RELATIVE_PATH: Final = Path("scripts/run_m3_source_development_worker.py")
 
 PHASE_CHOICES: Final = ("online_predownload", "offline_qa_rebuild")
@@ -95,6 +98,19 @@ def _atomic_json(payload: Mapping[str, Any], path: Path) -> None:
         encoding="utf-8",
     )
     os.replace(temporary, path)
+
+
+def _pause_durable_queue(runtime: Path) -> None:
+    """Mirror the UI pause request into the worker's durable queue state."""
+
+    database = runtime / TASK_DATABASE_FILENAME
+    if not database.is_file():
+        return
+    with sqlite3.connect(database) as connection:
+        rows = connection.execute("SELECT run_id FROM model_runs").fetchall()
+    if len(rows) != 1:
+        raise RuntimeError("M3 runtime database must contain exactly one run.")
+    ModelRunQueue(database).set_desired_state(str(rows[0][0]), "paused")
 
 
 def _count(value: object) -> int:
@@ -802,6 +818,7 @@ class M3SourceDevelopmentSupervisor:
                 compute_workers=settings["compute_workers"],
                 window_size=settings["window_size"],
             )
+            _pause_durable_queue(self.runtime)
             self._next_launch = None
             self._event("已请求安全暂停；当前任务完成后停止领取新任务。")
             self._condition.notify_all()

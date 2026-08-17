@@ -11,6 +11,7 @@ from pathlib import Path
 import pytest
 import requests
 
+from la_heat.model_run_queue import ModelRunQueue, TaskSpec
 from la_heat.multicity.m3_source_development_dashboard import (
     CONTROL_FILENAME,
     DEFAULT_PORT,
@@ -19,6 +20,7 @@ from la_heat.multicity.m3_source_development_dashboard import (
     STATUS_FILENAME,
     M3SourceDevelopmentSupervisor,
     _configure_project_temp,
+    _pause_durable_queue,
     build_worker_command,
     create_server,
     normalize_engine_status,
@@ -98,6 +100,21 @@ def test_dashboard_temp_is_forced_inside_project(
     assert expected.is_dir()
     for name in ("TEMP", "TMP", "TMPDIR"):
         assert Path(os.environ[name]) == expected
+
+
+def test_pause_request_reaches_the_durable_worker_queue(tmp_path: Path) -> None:
+    runtime = _runtime(tmp_path)
+    runtime.mkdir(parents=True)
+    queue = ModelRunQueue(runtime / "tasks.sqlite")
+    queue.initialize_run(
+        "m3-run",
+        [TaskSpec(task_id="one", kind="download_asset", payload={})],
+    )
+    queue.set_desired_state("m3-run", "running")
+
+    _pause_durable_queue(runtime)
+
+    assert queue.get_desired_state("m3-run") == "paused"
 
 
 def test_status_normalizes_network_and_three_progress_groups() -> None:
