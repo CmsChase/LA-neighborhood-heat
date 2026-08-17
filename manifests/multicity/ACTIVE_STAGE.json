@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": "2026-08-m3-source-cache-ready",
-  "stage_id": "next_experiment_m3_source_cache_and_offline_qa",
-  "state": "m3_source_development_ready_paused",
-  "next_safe_stage": "run_online_source_cache_then_authenticated_offline_qa_rebuild",
-  "summary": "The prior Phoenix-Houston-Chicago result remains frozen and inconclusive. The follow-up M3 candidate space remains locked with no selected winner. A pre-access amendment expanded Houston and Chicago to fixed 2020-2025 warm seasons, an assets-excluded metadata inventory authenticated 318 source overpasses and 525 unique city-scenes, and a two-phase source-cache/offline-QA authorization is ready but paused. Seattle, Denver, Atlanta, and Miami target assets and values remain sealed.",
+  "revision": "2026-08-m3-source-asset-repair-blocked",
+  "stage_id": "next_experiment_m3_source_asset_repair",
+  "state": "m3_source_development_paused_upstream_asset_integrity_blocker",
+  "next_safe_stage": "obtain_exact_original_three_source_assets_or_wait_for_planetary_computer_restoration",
+  "summary": "The prior Phoenix-Houston-Chicago result remains frozen and inconclusive. The follow-up M3 candidate space remains locked with no selected winner. The authorized source cache is safely paused because three frozen Planetary Computer source blobs contain persistent HTML error payloads instead of the official GeoTIFF bytes. An append-only incident and exact-three-asset repair authorization preserve the evidence and permit repair only from original files matching the official product identity and MD5. Existing valid cache remains intact; Seattle, Denver, Atlanta, and Miami assets, predictors, QA, and targets remain sealed.",
   "permissions": {
     "read_public_predictor_sources": true,
     "build_predictor": false,
@@ -43,6 +43,9 @@
     "next_experiment_source_acquisition_amendment_locked": true,
     "next_experiment_expanded_source_inventory_complete": true,
     "next_experiment_source_qa_execution_authorized": true,
+    "next_experiment_source_asset_repair_incident_frozen": true,
+    "next_experiment_source_asset_repair_authorized": true,
+    "next_experiment_source_asset_repair_complete": false,
     "next_experiment_source_landsat_cache_complete": false,
     "next_experiment_source_qa_candidates_complete": false,
     "next_experiment_model_spec_locked": false,
@@ -98,6 +101,10 @@
     "next_experiment_expanded_source_inventory_commit_sha256": "0d407dbbfb2e3e9fb83421790553dbe12ba6592f3d03579333c38b7498f8dce0",
     "next_experiment_source_qa_execution_authorization": "manifests/multicity/next_experiment/M3_SOURCE_QA_EXECUTION_AUTHORIZATION.json",
     "next_experiment_source_qa_execution_authorization_commit_sha256": "0d055e077f21164f87427056535f6debcd0b49ce77a8a68988c9d015b9361208",
+    "next_experiment_source_asset_repair_incident": "manifests/multicity/next_experiment/source_development/M3_SOURCE_ASSET_REPAIR_V1_INCIDENT.json",
+    "next_experiment_source_asset_repair_incident_commit_sha256": "cddd5a13e05edf416af118d5bd54d3e44dd9790bdc9914c330276a0b04d07807",
+    "next_experiment_source_asset_repair_authorization": "manifests/multicity/next_experiment/M3_SOURCE_ASSET_REPAIR_V1_AUTHORIZATION.json",
+    "next_experiment_source_asset_repair_authorization_commit_sha256": "49bc9d41c5db8c774604f13486976ff8c298b15546c5ab1603e52baf55763917",
     "next_experiment_selected_unseen_city_ids": [
       "seattle_wa",
       "denver_co",
@@ -189,8 +196,10 @@
     "next_experiment_runtime_status": "data/interim/multicity/m3_source_development/runtime/status.json",
     "next_experiment_runtime_status_is_authoritative": true,
     "next_experiment_dashboard_url": "http://127.0.0.1:8772/",
-    "next_experiment_source_cache_access_started": false,
-    "next_action": "run_online_source_cache_then_authenticated_offline_qa_rebuild"
+    "next_experiment_source_cache_access_started": true,
+    "next_experiment_source_asset_repair_blocked": true,
+    "next_experiment_source_asset_repair_affected_asset_count": 3,
+    "next_action": "obtain_exact_original_three_source_assets_or_wait_for_planetary_computer_restoration"
   },
   "prepared_post_return_tools": {
     "one_click_import": "IMPORT_SENTINEL_RESULTS.cmd",

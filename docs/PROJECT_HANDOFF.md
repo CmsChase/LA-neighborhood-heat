@@ -209,11 +209,20 @@ The public predictor phase is complete: static/calendar/Daymet reached `84 / 84`
 Sentinel reached `516 / 516`, and the final table is 136,941 rows by 46 frozen
 features. Do not rebuild or re-import these products.
 
-The exact tracked stage is `m3_source_development_ready_paused`. The control
+The exact tracked stage is
+`m3_source_development_paused_upstream_asset_integrity_blocker`. The control
 page is <http://127.0.0.1:8772/> and the durable runtime status is
 `data/interim/multicity/m3_source_development/runtime/status.json`. The queue
 contains 3,151 online cache tasks followed by 323 offline QA tasks. Dynamic
 progress belongs only in that ignored runtime status, not in tracked documents.
+The queue is deliberately paused with no active leases. Exactly three frozen
+source assets are blocked because their Planetary Computer blobs contain a
+persistent 12,351-byte HTML error payload rather than GeoTIFF bytes. The
+append-only repair incident and authorization preserve this fact and permit
+only the exact original product files whose official MD5 values match. Do not
+resume repeated downloads, substitute a later processing version, or relax the
+source inventory. Existing valid cache contents remain intact, and no blind
+city was accessed.
 Its frozen predecessor remains the completed three-city external evaluation:
 the target claim contains 64 overpasses and three city compiles. The
 evaluation used 11,207 QA-valid rows across 28 city-dates and 180 spatial
@@ -272,14 +281,23 @@ can be reauthenticated without network access using:
 .\.venv\Scripts\python scripts\lock_multicity_m3_development_protocol.py --project-root . --check-only
 ```
 
-The next safe task is to run the already-authorized online source cache, then
-authenticate it and run the offline pixel-level ST_QA rebuild. Start with
-`RUN_M3_SOURCE_DEVELOPMENT.cmd`; choose one download worker for minimum load or
-two for the office-laptop default. The runner uses only Los Angeles, Phoenix,
-Houston, and Chicago. It cannot start nested LOSO or access Seattle, Denver,
-Atlanta, or Miami targets. After `SOURCE_QA_CANDIDATES_COMPLETE`, extend the
-needed public predictor rows and issue a separate nested-LOSO authorization.
-The final M3 model specification remains unlocked until source-only selection.
+The next safe task is to obtain the three exact original GeoTIFFs through an
+authorized USGS/AWS source, or wait for Planetary Computer to restore those
+same bytes. The repair runner must verify product identity, TIFF magic, and the
+official MD5 before it writes any cache content. Only after the repair
+completion authenticates may the original online queue resume, finalize its
+cache, and automatically hand off to the offline pixel-level ST_QA rebuild.
+The runner uses only Los Angeles, Phoenix, Houston, and Chicago. It cannot start
+nested LOSO or access Seattle, Denver, Atlanta, or Miami assets, predictors,
+QA, or targets. The final M3 model specification remains unlocked until a
+later source-only selection authorization and completion.
+
+Reauthenticate the incident and exact-three-asset repair permit with:
+
+```powershell
+.\.venv\Scripts\python scripts\repair_m3_source_assets_v1.py --project-root . --check-incident
+.\.venv\Scripts\python scripts\repair_m3_source_assets_v1.py --project-root . --check-authorization
+```
 
 Reauthenticate the current follow-up gates without downloading pixels using:
 

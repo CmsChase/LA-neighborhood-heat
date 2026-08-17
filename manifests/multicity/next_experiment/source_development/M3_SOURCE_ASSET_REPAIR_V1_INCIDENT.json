@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-asset-repair-v1",
+  "state": "source_asset_repair_incident_frozen",
+  "m3_protocol_lock_commit_sha256": "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8",
+  "source_acquisition_amendment_commit_sha256": "de9f6d240926ddeddc32cafe7ca247b036fc17e3471f00b1a13c407cab697344",
+  "expanded_source_inventory_commit_sha256": "0d407dbbfb2e3e9fb83421790553dbe12ba6592f3d03579333c38b7498f8dce0",
+  "source_qa_execution_authorization_commit_sha256": "0d055e077f21164f87427056535f6debcd0b49ce77a8a68988c9d015b9361208",
+  "scene_plan_commit_sha256": "d1dd58038e76f7e3dbf2249fbe77e59762739ec20deda74248541272545d6538",
+  "runtime_task_plan": {
+    "run_id": "m3-source-development-v1-0d407dbbfb2e3e9f",
+    "schema_version": 1,
+    "task_plan_sha256": "2cbf37305abd20a8b1cb4ee6e364c4793380bed2cf9aa2dc9f2cf19a2972c3cf",
+    "task_count": 3474,
+    "observed_desired_state": "paused",
+    "observed_running_task_count": 0,
+    "observed_active_lease_count": 0,
+    "incident_task_ids": [
+      "asset-fbc58c59c2016ea1ba39-lwir11",
+      "asset-fbc58c59c2016ea1ba39-qa_radsat",
+      "asset-6ce2f4b84ff3a6da60d2-qa_radsat"
+    ]
+  },
+  "inputs": {
+    "m3_protocol_lock": {
+      "path": "manifests/multicity/next_experiment/M3_DEVELOPMENT_PROTOCOL_LOCK.json",
+      "bytes": 27501,
+      "sha256": "b5819ec9ceb8ff0256dcdd5fc7e774c90945db0bccf2f9a5003d59af055c1309",
+      "commit_sha256": "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8"
+    },
+    "source_acquisition_amendment": {
+      "path": "manifests/multicity/next_experiment/M3_SOURCE_ACQUISITION_AMENDMENT.json",
+      "bytes": 7849,
+      "sha256": "0445c1badf6d16896b7c392ea5e1666ca89656d3ec37274a2623fc30fde7925f",
+      "commit_sha256": "de9f6d240926ddeddc32cafe7ca247b036fc17e3471f00b1a13c407cab697344"
+    },
+    "expanded_source_inventory": {
+      "path": "manifests/multicity/next_experiment/M3_SOURCE_EXPANDED_INVENTORY.json",
+      "bytes": 335800,
+      "sha256": "c067d51ac0f5ea2174c777c3668a737ad796680e229b393a5203a98d07bb88a2",
+      "commit_sha256": "0d407dbbfb2e3e9fb83421790553dbe12ba6592f3d03579333c38b7498f8dce0"
+    },
+    "source_qa_execution_authorization": {
+      "path": "manifests/multicity/next_experiment/M3_SOURCE_QA_EXECUTION_AUTHORIZATION.json",
+      "bytes": 6963,
+      "sha256": "3a56406aa8e52196d3c7d14e239c507acb157a2f82fc80e560f9084340c6cec2",
+      "commit_sha256": "0d055e077f21164f87427056535f6debcd0b49ce77a8a68988c9d015b9361208"
+    },
+    "source_cache_scene_plan": {
+      "path": "data/interim/multicity/m3_source_development/landsat_cache/SCENE_PLAN.json",
+      "bytes": 131840,
+      "sha256": "4f14b6ec52e1ffa5b0d08ff7e93bf4889dd1b1424a764fd81c2c4e0ad0644f8e",
+      "commit_sha256": "d1dd58038e76f7e3dbf2249fbe77e59762739ec20deda74248541272545d6538"
+    }
+  },
+  "affected_asset_count": 3,
+  "affected_assets": [
+    {
+      "city_id": "chicago_il",
+      "scene_id": "LC08_L2SP_023031_20220727_02_T1",
+      "asset": "lwir11",
+      "task_id": "asset-fbc58c59c2016ea1ba39-lwir11",
+      "task_snapshot": {
+        "task_id": "asset-fbc58c59c2016ea1ba39-lwir11",
+        "kind": "download_asset",
+        "payload_json_sha256": "4e89f15026ab4411f122f342e177c5e32518c90d7a286b91e8b84dce8528150d",
+        "status": "pending",
+        "attempt": 76,
+        "claim_generation": 76,
+        "error_type": "RasterioIOError",
+        "updated_at_epoch_seconds": 1786987066.0807362,
+        "updated_at_utc": "2026-08-17T17:17:46.080736+00:00",
+        "lease_owner": null,
+        "lease_expires_at": null
+      },
+      "cache_absence": {
+        "output_path": "data/interim/multicity/m3_source_development/landsat_cache/cities/chicago_il/scenes/LC08_L2SP_023031_20220727_02_T1/assets/lwir11.tif",
+        "output_present": false,
+        "content_commit_path": "data/interim/multicity/m3_source_development/landsat_cache/cities/chicago_il/scenes/LC08_L2SP_023031_20220727_02_T1/assets/lwir11.CONTENT_COMMIT.json",
+        "content_commit_present": false,
+        "temporary_part_count": 0
+      },
+      "bad_blob_safe_fingerprint": {
+        "classification": "html_error_payload_not_tiff",
+        "bytes": 12351,
+        "md5": "026f674f002b9f986882187962eb21cb",
+        "sha256": "fa44d1717e6a4e9a4b814f3d5e84c02e261762f43ffa54f43ec3e2095b30a354",
+        "first_four_bytes_hex": "3c21444f",
+        "observation_source": "prior_read_only_upstream_blob_diagnostic"
+      }
+    },
+    {
+      "city_id": "chicago_il",
+      "scene_id": "LC08_L2SP_023031_20220727_02_T1",
+      "asset": "qa_radsat",
+      "task_id": "asset-fbc58c59c2016ea1ba39-qa_radsat",
+      "task_snapshot": {
+        "task_id": "asset-fbc58c59c2016ea1ba39-qa_radsat",
+        "kind": "download_asset",
+        "payload_json_sha256": "42aa8ff0c12dad0e43bc29b7aa99e7a8e3f9ca3a20aa49184bf76f1f30ea0075",
+        "status": "pending",
+        "attempt": 75,
+        "claim_generation": 75,
+        "error_type": "RasterioIOError",
+        "updated_at_epoch_seconds": 1786987068.8630638,
+        "updated_at_utc": "2026-08-17T17:17:48.863064+00:00",
+        "lease_owner": null,
+        "lease_expires_at": null
+      },
+      "cache_absence": {
+        "output_path": "data/interim/multicity/m3_source_development/landsat_cache/cities/chicago_il/scenes/LC08_L2SP_023031_20220727_02_T1/assets/qa_radsat.tif",
+        "output_present": false,
+        "content_commit_path": "data/interim/multicity/m3_source_development/landsat_cache/cities/chicago_il/scenes/LC08_L2SP_023031_20220727_02_T1/assets/qa_radsat.CONTENT_COMMIT.json",
+        "content_commit_present": false,
+        "temporary_part_count": 0
+      },
+      "bad_blob_safe_fingerprint": {
+        "classification": "html_error_payload_not_tiff",
+        "bytes": 12351,
+        "md5": "026f674f002b9f986882187962eb21cb",
+        "sha256": "fa44d1717e6a4e9a4b814f3d5e84c02e261762f43ffa54f43ec3e2095b30a354",
+        "first_four_bytes_hex": "3c21444f",
+        "observation_source": "prior_read_only_upstream_blob_diagnostic"
+      }
+    },
+    {
+      "city_id": "houston_tx",
+      "scene_id": "LC09_L2SP_025040_20220514_02_T1",
+      "asset": "qa_radsat",
+      "task_id": "asset-6ce2f4b84ff3a6da60d2-qa_radsat",
+      "task_snapshot": {
+        "task_id": "asset-6ce2f4b84ff3a6da60d2-qa_radsat",
+        "kind": "download_asset",
+        "payload_json_sha256": "e5605ed17b6274f3829a442ef42343ba7ea18e7528eea55587d57b88dee857c4",
+        "status": "pending",
+        "attempt": 45,
+        "claim_generation": 45,
+        "error_type": "RasterioIOError",
+        "updated_at_epoch_seconds": 1786987069.5508285,
+        "updated_at_utc": "2026-08-17T17:17:49.550828+00:00",
+        "lease_owner": null,
+        "lease_expires_at": null
+      },
+      "cache_absence": {
+        "output_path": "data/interim/multicity/m3_source_development/landsat_cache/cities/houston_tx/scenes/LC09_L2SP_025040_20220514_02_T1/assets/qa_radsat.tif",
+        "output_present": false,
+        "content_commit_path": "data/interim/multicity/m3_source_development/landsat_cache/cities/houston_tx/scenes/LC09_L2SP_025040_20220514_02_T1/assets/qa_radsat.CONTENT_COMMIT.json",
+        "content_commit_present": false,
+        "temporary_part_count": 0
+      },
+      "bad_blob_safe_fingerprint": {
+        "classification": "html_error_payload_not_tiff",
+        "bytes": 12351,
+        "md5": "4d711b5ab112bc8ee744f42e2d726e43",
+        "sha256": "aec44631077762c51f42df01a8b54036b7f4338c6f45d9359e93c0f821fc5274",
+        "first_four_bytes_hex": "3c21444f",
+        "observation_source": "prior_read_only_upstream_blob_diagnostic"
+      }
+    }
+  ],
+  "affected_asset_set_sha256": "fb27aa76bdb074c40ab02fba7b602d432592012742734c895c12f84592630318",
+  "remote_locator_or_response_payload_persisted": false,
+  "alternative_asset_bytes_or_values_read_by_incident_builder": false,
+  "cache_or_queue_modified_by_incident_builder": false,
+  "blind_test_city_accessed": false,
+  "next_safe_stage": "create_independent_source_asset_repair_authorization",
+  "commit_sha256": "cddd5a13e05edf416af118d5bd54d3e44dd9790bdc9914c330276a0b04d07807"
+}
