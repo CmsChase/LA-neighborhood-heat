@@ -81,7 +81,15 @@ CODE_PATHS: Final = (
     "src/la_heat/multicity/m3_source_asset_repair_v1.py",
     "scripts/repair_m3_source_assets_v1.py",
     "src/la_heat/multicity/m3_source_asset_cache.py",
+    "src/la_heat/multicity/m3_source_development_runtime.py",
+    "src/la_heat/multicity/target_processor.py",
     "src/la_heat/aligned_landsat.py",
+)
+
+_QUEUE_OBSERVATION_KEYS: Final = (
+    "observed_desired_state",
+    "observed_running_task_count",
+    "observed_active_lease_count",
 )
 
 _TIFF_MAGICS: Final = (
@@ -298,6 +306,17 @@ def _queue_snapshot(
                 (run_id,),
             ).fetchone()[0]
         )
+        active_leases = int(
+            connection.execute(
+                """
+                SELECT COUNT(*)
+                FROM model_run_tasks
+                WHERE run_id = ?
+                  AND (lease_owner IS NOT NULL OR lease_expires_at IS NOT NULL)
+                """,
+                (run_id,),
+            ).fetchone()[0]
+        )
         incident_rows: list[sqlite3.Row] = []
         for task_id in incident_task_ids:
             row = connection.execute(
@@ -330,15 +349,22 @@ def _queue_snapshot(
         or observed_rows != expected_rows
     ):
         raise M3SourceAssetRepairError("The frozen SQLite task plan drifted.")
-    if require_paused and (str(run["desired_state"]) != "paused" or running != 0):
+    if require_paused and (
+        str(run["desired_state"]) != "paused"
+        or running != 0
+        or active_leases != 0
+    ):
         raise M3SourceAssetRepairError(
-            "Repair requires the original queue to be paused with no running task."
+            "Repair requires the original queue to be paused with no running task or lease."
         )
     binding = {
         "run_id": run_id,
         "schema_version": schema_version,
         "task_plan_sha256": expected_sha256,
         "task_count": len(expected_rows),
+        "observed_desired_state": str(run["desired_state"]),
+        "observed_running_task_count": running,
+        "observed_active_lease_count": active_leases,
     }
     snapshots: list[dict[str, Any]] = []
     for row in incident_rows:
@@ -371,14 +397,16 @@ def _queue_binding(
     *,
     require_paused: bool,
 ) -> dict[str, Any]:
-    binding, snapshots = _queue_snapshot(
+    observed, snapshots = _queue_snapshot(
         settings,
         inventory,
         require_paused=require_paused,
     )
     if snapshots:
         raise AssertionError("Queue binding unexpectedly captured incident tasks.")
-    return binding
+    return {
+        key: value for key, value in observed.items() if key not in _QUEUE_OBSERVATION_KEYS
+    }
 
 
 def _task_id(spec: RepairAsset) -> str:
@@ -758,6 +786,19 @@ def authenticate_source_asset_repair_incident(
         plan,
     ) = _authenticated_foundations(root)
     queue = _queue_binding(settings, inventory, require_paused=False)
+    observed_runtime = observed.get("runtime_task_plan")
+    if not isinstance(observed_runtime, Mapping):
+        raise M3SourceAssetRepairError("Repair incident has no runtime observation.")
+    frozen_observation = {
+        key: observed_runtime.get(key) for key in _QUEUE_OBSERVATION_KEYS
+    }
+    if frozen_observation != {
+        "observed_desired_state": "paused",
+        "observed_running_task_count": 0,
+        "observed_active_lease_count": 0,
+    }:
+        raise M3SourceAssetRepairError("Repair incident was not frozen at a zero-lease pause.")
+    queue.update(frozen_observation)
     raw_assets = observed.get("affected_assets")
     if not isinstance(raw_assets, list):
         raise M3SourceAssetRepairError("Repair incident has no affected assets.")
@@ -990,6 +1031,7 @@ def _validate_official_file(source_root: Path, spec: RepairAsset) -> tuple[Path,
     return path, {
         "bytes": path.stat().st_size,
         "official_md5": observed_md5,
+        "sha256": sha256_file(path),
         "tiff_magic_hex": magic.hex(),
     }
 
@@ -1027,6 +1069,23 @@ def _validate_signed_pc_href(canonical_href: str, signed_href: str) -> None:
 
 
 @contextmanager
+def _repair_temporary_directory(
+    settings: RunnerSettings,
+    *,
+    prefix: str,
+) -> Iterator[Path]:
+    temporary_parent = settings.cache_root / ".repair_tmp"
+    temporary_parent.mkdir(parents=True, exist_ok=True)
+    if temporary_parent.is_symlink():
+        raise M3SourceAssetRepairError("Repair temporary root must not be a symlink.")
+    with tempfile.TemporaryDirectory(
+        prefix=prefix,
+        dir=temporary_parent,
+    ) as temporary:
+        yield Path(temporary)
+
+
+@contextmanager
 def _download_restored_pc_sources(
     settings: RunnerSettings,
     *,
@@ -1034,15 +1093,10 @@ def _download_restored_pc_sources(
     signer: Callable[[str], str],
     get: Callable[..., Any],
 ) -> Iterator[Path]:
-    temporary_parent = settings.cache_root / ".repair_tmp"
-    temporary_parent.mkdir(parents=True, exist_ok=True)
-    if temporary_parent.is_symlink():
-        raise M3SourceAssetRepairError("Repair temporary root must not be a symlink.")
-    with tempfile.TemporaryDirectory(
+    with _repair_temporary_directory(
+        settings,
         prefix="m3-source-repair-v1-",
-        dir=temporary_parent,
-    ) as temporary:
-        source_root = Path(temporary)
+    ) as source_root:
         hrefs_by_scene: dict[str, Mapping[str, str]] = {}
         for spec in REPAIR_ASSETS:
             hrefs = hrefs_by_scene.get(spec.scene_id)
@@ -1155,6 +1209,11 @@ def _completion_payload(
                     length=64,
                     label="Cache content commit",
                 ),
+                "reference_alignment_commit_sha256": _require_digest(
+                    content.get("commit_sha256"),
+                    length=64,
+                    label="Reference alignment commit",
+                ),
             }
         )
     payload: dict[str, Any] = {
@@ -1176,6 +1235,7 @@ def _completion_payload(
         "source_mode": source_mode,
         "repaired_asset_count": len(records),
         "repaired_assets": records,
+        "each_live_cache_commit_matched_exact_md5_reference_alignment": True,
         "queue_or_task_plan_mutated": False,
         "unrelated_valid_cache_deleted_or_replaced": False,
         "signed_url_token_credential_or_source_path_persisted": False,
@@ -1282,7 +1342,10 @@ def run_source_asset_repair(
             get=get,
         )
 
-    with source_context as source_root:
+    with source_context as source_root, _repair_temporary_directory(
+        settings,
+        prefix="m3-source-repair-reference-v1-",
+    ) as reference_root:
         validated = {
             (spec.scene_id, spec.asset): _validate_official_file(source_root, spec)
             for spec in REPAIR_ASSETS
@@ -1294,9 +1357,30 @@ def run_source_asset_repair(
                 raise M3SourceAssetRepairError("Repair authorization changed during execution.")
             _assert_live_binding(settings, inventory, authorization)
 
+        reference_commits: dict[tuple[str, str], dict[str, Any]] = {}
+        for spec in REPAIR_ASSETS:
+            source_path, input_record = validated[(spec.scene_id, spec.asset)]
+            gate()
+            reference = cache_asset_from_href(
+                reference_root,
+                plan,
+                spec.scene_id,
+                spec.asset,
+                str(source_path),
+                before_value_access=gate,
+                signer=lambda value: value,
+            )
+            _path_after, input_after = _validate_official_file(source_root, spec)
+            if input_after != input_record:
+                raise M3SourceAssetRepairError(
+                    f"Official input changed during reference alignment for "
+                    f"{spec.scene_id}/{spec.asset}."
+                )
+            reference_commits[(spec.scene_id, spec.asset)] = dict(reference)
+
         content_commits: list[dict[str, Any]] = []
         for spec in REPAIR_ASSETS:
-            source_path, _input_record = validated[(spec.scene_id, spec.asset)]
+            source_path, input_record = validated[(spec.scene_id, spec.asset)]
             gate()
             commit = cache_asset_from_href(
                 settings.cache_root,
@@ -1307,6 +1391,13 @@ def run_source_asset_repair(
                 before_value_access=gate,
                 signer=lambda value: value,
             )
+            _path_after, input_after = _validate_official_file(source_root, spec)
+            reference = reference_commits[(spec.scene_id, spec.asset)]
+            if input_after != input_record or dict(commit) != reference:
+                raise M3SourceAssetRepairError(
+                    f"Live cache does not match the exact-MD5 reference alignment for "
+                    f"{spec.scene_id}/{spec.asset}."
+                )
             content_commits.append(dict(commit))
 
     _assert_live_binding(settings, inventory, authorization)

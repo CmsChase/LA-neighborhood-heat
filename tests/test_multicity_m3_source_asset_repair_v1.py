@@ -9,6 +9,7 @@ from typing import Any
 
 import pytest
 
+from la_heat.model_run_queue import ModelRunQueue, TaskSpec
 from la_heat.multicity import m3_source_asset_repair_v1 as repair
 from la_heat.multicity.m3_source_development_runtime import RunnerSettings
 from la_heat.provenance import canonical_sha256
@@ -79,6 +80,12 @@ def _wire_frozen_fixture(
         "task_plan_sha256": "3" * 64,
         "task_count": 3,
     }
+    observed_queue = {
+        **queue,
+        "observed_desired_state": "paused",
+        "observed_running_task_count": 0,
+        "observed_active_lease_count": 0,
+    }
     plan_rows = [
         (
             repair._task_id(spec),
@@ -141,7 +148,7 @@ def _wire_frozen_fixture(
         repair,
         "_queue_snapshot",
         lambda _settings, _inventory, *, require_paused, incident_task_ids=(): (
-            queue,
+            observed_queue,
             snapshots if incident_task_ids else [],
         ),
     )
@@ -259,6 +266,26 @@ def test_incident_authorization_and_local_repair_are_append_only(
     assert not completion_path.exists()
 
     third.write_bytes(contents[(frozen_specs[2].scene_id, frozen_specs[2].asset)])
+
+    def mismatched_live_cache(*args: Any, **kwargs: Any) -> dict[str, Any]:
+        result = fake_cache_asset(*args, **kwargs)
+        if Path(args[0]).resolve() == settings.cache_root.resolve():
+            result = {**result, "commit_sha256": "f" * 64}
+        return result
+
+    monkeypatch.setattr(repair, "cache_asset_from_href", mismatched_live_cache)
+    with pytest.raises(repair.M3SourceAssetRepairError, match="reference alignment"):
+        repair.run_source_asset_repair(
+            root,
+            source_mode="official_original_directory",
+            source_directory=source_root,
+            authorization_path=authorization_path,
+            completion_path=completion_path,
+        )
+    assert not completion_path.exists()
+
+    local_cache_calls.clear()
+    monkeypatch.setattr(repair, "cache_asset_from_href", fake_cache_asset)
     completion = repair.run_source_asset_repair(
         root,
         source_mode="official_original_directory",
@@ -266,7 +293,7 @@ def test_incident_authorization_and_local_repair_are_append_only(
         authorization_path=authorization_path,
         completion_path=completion_path,
     )
-    assert len(local_cache_calls) == 3
+    assert len(local_cache_calls) == 6
     assert completion["repaired_asset_count"] == 3
     assert (
         completion["source_asset_repair_incident_commit_sha256"]
@@ -294,3 +321,58 @@ def test_signed_pc_href_may_add_query_but_not_change_identity() -> None:
             canonical,
             "https://example.invalid/landsat-c2/PRODUCT/PRODUCT_QA_RADSAT.TIF?sig=x",
         )
+
+
+def test_queue_pause_gate_rejects_a_non_null_lease(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    settings = _settings(tmp_path)
+    run_id = "repair-lease-fixture"
+    queue = ModelRunQueue(settings.database)
+    queue.initialize_run(
+        run_id,
+        [TaskSpec(task_id="one", kind="download_asset", payload={"value": 1})],
+    )
+    with repair.sqlite3.connect(settings.database) as connection:
+        rows = [
+            (
+                str(row[0]),
+                str(row[1]),
+                str(row[2]),
+            )
+            for row in connection.execute(
+                "SELECT task_id, kind, payload_json FROM model_run_tasks ORDER BY plan_index"
+            )
+        ]
+        connection.execute(
+            """
+            UPDATE model_run_tasks
+            SET status = 'running', lease_owner = 'stale-owner', lease_expires_at = 1.0
+            WHERE run_id = ? AND task_id = 'one'
+            """,
+            (run_id,),
+        )
+    monkeypatch.setattr(repair, "source_run_id", lambda _inventory: run_id)
+    monkeypatch.setattr(
+        repair,
+        "_expected_task_plan",
+        lambda _inventory: (rows, repair.hashlib.sha256(repair._json_text([
+            {"task_id": task_id, "kind": kind, "payload_json": payload_json}
+            for task_id, kind, payload_json in rows
+        ]).encode("utf-8")).hexdigest()),
+    )
+
+    with pytest.raises(repair.M3SourceAssetRepairError, match="no running task or lease"):
+        repair._queue_snapshot(
+            settings,
+            {},
+            require_paused=True,
+        )
+    observed, _snapshots = repair._queue_snapshot(
+        settings,
+        {},
+        require_paused=False,
+    )
+    assert observed["observed_running_task_count"] == 1
+    assert observed["observed_active_lease_count"] == 1
