@@ -1,0 +1,1950 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-predictor-daymet-order-repair-v1",
+  "state": "m3_source_predictor_daymet_order_repair_authorized",
+  "parent_authorization": {
+    "path": "manifests/multicity/next_experiment/M3_SOURCE_PREDICTOR_EXTENSION_V1_AUTHORIZATION.json",
+    "bytes": 30005,
+    "sha256": "e561546afd092e7dbd83e79c64a0ccc90b1141fb380889edb8037b7c38093191",
+    "commit_sha256": "22f6f417faea2aaeb7f0c04d182ae45616f3cacf416ea904e58ed2c699987019"
+  },
+  "incident": {
+    "classification": "correct_six_daymet_variables_passed_in_wrong_order",
+    "parent_worker_order": [
+      "dayl",
+      "prcp",
+      "srad",
+      "tmax",
+      "tmin",
+      "vp"
+    ],
+    "cmr_parser_required_order": [
+      "tmax",
+      "tmin",
+      "prcp",
+      "srad",
+      "vp",
+      "dayl"
+    ],
+    "same_variable_set": true,
+    "queue_database": {
+      "path": "data/interim/multicity/m3_source_predictor_extension_v1/runtime/tasks.sqlite",
+      "bytes": 77824,
+      "sha256": "4e680af1c7b9a0a77930c311ac79ba9d839857c9e13741adf2463db743946cdf"
+    },
+    "status": {
+      "path": "data/interim/multicity/m3_source_predictor_extension_v1/runtime/status.json",
+      "bytes": 2383,
+      "sha256": "7b978b79b4a5d7bd98bc3396dd6bcd3f69bb2a337021ef1f74a3c0c61fdb2352"
+    },
+    "status_reported_task_plan_sha256": "6133d008f93849033c658725d771a79221cc7c24473757d0d90a0881a5699a12",
+    "status_plan_is_stale_relative_to_sqlite_internal_hash": true,
+    "status_task_plan_semantics": "parent_canonical_plan_digest_not_sqlite_model_runs_task_plan_sha256",
+    "authoritative_sqlite_task_plan_sha256": "d21c5c74ca562d29e71375350029a4e44c17088497494203bc8d1844a1cec712",
+    "queue_snapshot": {
+      "run_id": "m3-source-predictor-extension-v1-22f6f417faea2aae",
+      "task_plan_sha256": "d21c5c74ca562d29e71375350029a4e44c17088497494203bc8d1844a1cec712",
+      "parent_canonical_task_plan_sha256": "6133d008f93849033c658725d771a79221cc7c24473757d0d90a0881a5699a12",
+      "derived_sqlite_task_plan_sha256": "d21c5c74ca562d29e71375350029a4e44c17088497494203bc8d1844a1cec712",
+      "task_plan": [
+        {
+          "plan_index": 0,
+          "task_id": "freeze-key-universe",
+          "kind": "freeze_key_universe",
+          "payload": {
+            "key_universe_sha256": "c1ec42870b77afe5d692d276c0dc1311d5bc890f5a83d231406662eaf5e07177"
+          }
+        },
+        {
+          "plan_index": 1,
+          "task_id": "static-houston_tx",
+          "kind": "authenticate_static_reuse",
+          "payload": {
+            "city_id": "houston_tx"
+          }
+        },
+        {
+          "plan_index": 2,
+          "task_id": "static-chicago_il",
+          "kind": "authenticate_static_reuse",
+          "payload": {
+            "city_id": "chicago_il"
+          }
+        },
+        {
+          "plan_index": 3,
+          "task_id": "daymet-metadata-houston_tx-2020",
+          "kind": "acquire_daymet_metadata",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2020
+          }
+        },
+        {
+          "plan_index": 4,
+          "task_id": "daymet-metadata-houston_tx-2021",
+          "kind": "acquire_daymet_metadata",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2021
+          }
+        },
+        {
+          "plan_index": 5,
+          "task_id": "daymet-metadata-houston_tx-2022",
+          "kind": "acquire_daymet_metadata",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2022
+          }
+        },
+        {
+          "plan_index": 6,
+          "task_id": "daymet-metadata-houston_tx-2023",
+          "kind": "acquire_daymet_metadata",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2023
+          }
+        },
+        {
+          "plan_index": 7,
+          "task_id": "daymet-metadata-houston_tx-2024",
+          "kind": "acquire_daymet_metadata",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2024
+          }
+        },
+        {
+          "plan_index": 8,
+          "task_id": "daymet-metadata-chicago_il-2020",
+          "kind": "acquire_daymet_metadata",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2020
+          }
+        },
+        {
+          "plan_index": 9,
+          "task_id": "daymet-metadata-chicago_il-2021",
+          "kind": "acquire_daymet_metadata",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2021
+          }
+        },
+        {
+          "plan_index": 10,
+          "task_id": "daymet-metadata-chicago_il-2022",
+          "kind": "acquire_daymet_metadata",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2022
+          }
+        },
+        {
+          "plan_index": 11,
+          "task_id": "daymet-metadata-chicago_il-2023",
+          "kind": "acquire_daymet_metadata",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2023
+          }
+        },
+        {
+          "plan_index": 12,
+          "task_id": "daymet-metadata-chicago_il-2024",
+          "kind": "acquire_daymet_metadata",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2024
+          }
+        },
+        {
+          "plan_index": 13,
+          "task_id": "daymet-subset-houston_tx-2020-tmax",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2020,
+            "variable": "tmax"
+          }
+        },
+        {
+          "plan_index": 14,
+          "task_id": "daymet-subset-houston_tx-2020-tmin",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2020,
+            "variable": "tmin"
+          }
+        },
+        {
+          "plan_index": 15,
+          "task_id": "daymet-subset-houston_tx-2020-prcp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2020,
+            "variable": "prcp"
+          }
+        },
+        {
+          "plan_index": 16,
+          "task_id": "daymet-subset-houston_tx-2020-srad",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2020,
+            "variable": "srad"
+          }
+        },
+        {
+          "plan_index": 17,
+          "task_id": "daymet-subset-houston_tx-2020-vp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2020,
+            "variable": "vp"
+          }
+        },
+        {
+          "plan_index": 18,
+          "task_id": "daymet-subset-houston_tx-2020-dayl",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2020,
+            "variable": "dayl"
+          }
+        },
+        {
+          "plan_index": 19,
+          "task_id": "daymet-subset-houston_tx-2021-tmax",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2021,
+            "variable": "tmax"
+          }
+        },
+        {
+          "plan_index": 20,
+          "task_id": "daymet-subset-houston_tx-2021-tmin",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2021,
+            "variable": "tmin"
+          }
+        },
+        {
+          "plan_index": 21,
+          "task_id": "daymet-subset-houston_tx-2021-prcp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2021,
+            "variable": "prcp"
+          }
+        },
+        {
+          "plan_index": 22,
+          "task_id": "daymet-subset-houston_tx-2021-srad",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2021,
+            "variable": "srad"
+          }
+        },
+        {
+          "plan_index": 23,
+          "task_id": "daymet-subset-houston_tx-2021-vp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2021,
+            "variable": "vp"
+          }
+        },
+        {
+          "plan_index": 24,
+          "task_id": "daymet-subset-houston_tx-2021-dayl",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2021,
+            "variable": "dayl"
+          }
+        },
+        {
+          "plan_index": 25,
+          "task_id": "daymet-subset-houston_tx-2022-tmax",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2022,
+            "variable": "tmax"
+          }
+        },
+        {
+          "plan_index": 26,
+          "task_id": "daymet-subset-houston_tx-2022-tmin",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2022,
+            "variable": "tmin"
+          }
+        },
+        {
+          "plan_index": 27,
+          "task_id": "daymet-subset-houston_tx-2022-prcp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2022,
+            "variable": "prcp"
+          }
+        },
+        {
+          "plan_index": 28,
+          "task_id": "daymet-subset-houston_tx-2022-srad",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2022,
+            "variable": "srad"
+          }
+        },
+        {
+          "plan_index": 29,
+          "task_id": "daymet-subset-houston_tx-2022-vp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2022,
+            "variable": "vp"
+          }
+        },
+        {
+          "plan_index": 30,
+          "task_id": "daymet-subset-houston_tx-2022-dayl",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2022,
+            "variable": "dayl"
+          }
+        },
+        {
+          "plan_index": 31,
+          "task_id": "daymet-subset-houston_tx-2023-tmax",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2023,
+            "variable": "tmax"
+          }
+        },
+        {
+          "plan_index": 32,
+          "task_id": "daymet-subset-houston_tx-2023-tmin",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2023,
+            "variable": "tmin"
+          }
+        },
+        {
+          "plan_index": 33,
+          "task_id": "daymet-subset-houston_tx-2023-prcp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2023,
+            "variable": "prcp"
+          }
+        },
+        {
+          "plan_index": 34,
+          "task_id": "daymet-subset-houston_tx-2023-srad",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2023,
+            "variable": "srad"
+          }
+        },
+        {
+          "plan_index": 35,
+          "task_id": "daymet-subset-houston_tx-2023-vp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2023,
+            "variable": "vp"
+          }
+        },
+        {
+          "plan_index": 36,
+          "task_id": "daymet-subset-houston_tx-2023-dayl",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2023,
+            "variable": "dayl"
+          }
+        },
+        {
+          "plan_index": 37,
+          "task_id": "daymet-subset-houston_tx-2024-tmax",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2024,
+            "variable": "tmax"
+          }
+        },
+        {
+          "plan_index": 38,
+          "task_id": "daymet-subset-houston_tx-2024-tmin",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2024,
+            "variable": "tmin"
+          }
+        },
+        {
+          "plan_index": 39,
+          "task_id": "daymet-subset-houston_tx-2024-prcp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2024,
+            "variable": "prcp"
+          }
+        },
+        {
+          "plan_index": 40,
+          "task_id": "daymet-subset-houston_tx-2024-srad",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2024,
+            "variable": "srad"
+          }
+        },
+        {
+          "plan_index": 41,
+          "task_id": "daymet-subset-houston_tx-2024-vp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2024,
+            "variable": "vp"
+          }
+        },
+        {
+          "plan_index": 42,
+          "task_id": "daymet-subset-houston_tx-2024-dayl",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "houston_tx",
+            "year": 2024,
+            "variable": "dayl"
+          }
+        },
+        {
+          "plan_index": 43,
+          "task_id": "daymet-subset-chicago_il-2020-tmax",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2020,
+            "variable": "tmax"
+          }
+        },
+        {
+          "plan_index": 44,
+          "task_id": "daymet-subset-chicago_il-2020-tmin",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2020,
+            "variable": "tmin"
+          }
+        },
+        {
+          "plan_index": 45,
+          "task_id": "daymet-subset-chicago_il-2020-prcp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2020,
+            "variable": "prcp"
+          }
+        },
+        {
+          "plan_index": 46,
+          "task_id": "daymet-subset-chicago_il-2020-srad",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2020,
+            "variable": "srad"
+          }
+        },
+        {
+          "plan_index": 47,
+          "task_id": "daymet-subset-chicago_il-2020-vp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2020,
+            "variable": "vp"
+          }
+        },
+        {
+          "plan_index": 48,
+          "task_id": "daymet-subset-chicago_il-2020-dayl",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2020,
+            "variable": "dayl"
+          }
+        },
+        {
+          "plan_index": 49,
+          "task_id": "daymet-subset-chicago_il-2021-tmax",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2021,
+            "variable": "tmax"
+          }
+        },
+        {
+          "plan_index": 50,
+          "task_id": "daymet-subset-chicago_il-2021-tmin",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2021,
+            "variable": "tmin"
+          }
+        },
+        {
+          "plan_index": 51,
+          "task_id": "daymet-subset-chicago_il-2021-prcp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2021,
+            "variable": "prcp"
+          }
+        },
+        {
+          "plan_index": 52,
+          "task_id": "daymet-subset-chicago_il-2021-srad",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2021,
+            "variable": "srad"
+          }
+        },
+        {
+          "plan_index": 53,
+          "task_id": "daymet-subset-chicago_il-2021-vp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2021,
+            "variable": "vp"
+          }
+        },
+        {
+          "plan_index": 54,
+          "task_id": "daymet-subset-chicago_il-2021-dayl",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2021,
+            "variable": "dayl"
+          }
+        },
+        {
+          "plan_index": 55,
+          "task_id": "daymet-subset-chicago_il-2022-tmax",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2022,
+            "variable": "tmax"
+          }
+        },
+        {
+          "plan_index": 56,
+          "task_id": "daymet-subset-chicago_il-2022-tmin",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2022,
+            "variable": "tmin"
+          }
+        },
+        {
+          "plan_index": 57,
+          "task_id": "daymet-subset-chicago_il-2022-prcp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2022,
+            "variable": "prcp"
+          }
+        },
+        {
+          "plan_index": 58,
+          "task_id": "daymet-subset-chicago_il-2022-srad",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2022,
+            "variable": "srad"
+          }
+        },
+        {
+          "plan_index": 59,
+          "task_id": "daymet-subset-chicago_il-2022-vp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2022,
+            "variable": "vp"
+          }
+        },
+        {
+          "plan_index": 60,
+          "task_id": "daymet-subset-chicago_il-2022-dayl",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2022,
+            "variable": "dayl"
+          }
+        },
+        {
+          "plan_index": 61,
+          "task_id": "daymet-subset-chicago_il-2023-tmax",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2023,
+            "variable": "tmax"
+          }
+        },
+        {
+          "plan_index": 62,
+          "task_id": "daymet-subset-chicago_il-2023-tmin",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2023,
+            "variable": "tmin"
+          }
+        },
+        {
+          "plan_index": 63,
+          "task_id": "daymet-subset-chicago_il-2023-prcp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2023,
+            "variable": "prcp"
+          }
+        },
+        {
+          "plan_index": 64,
+          "task_id": "daymet-subset-chicago_il-2023-srad",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2023,
+            "variable": "srad"
+          }
+        },
+        {
+          "plan_index": 65,
+          "task_id": "daymet-subset-chicago_il-2023-vp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2023,
+            "variable": "vp"
+          }
+        },
+        {
+          "plan_index": 66,
+          "task_id": "daymet-subset-chicago_il-2023-dayl",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2023,
+            "variable": "dayl"
+          }
+        },
+        {
+          "plan_index": 67,
+          "task_id": "daymet-subset-chicago_il-2024-tmax",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2024,
+            "variable": "tmax"
+          }
+        },
+        {
+          "plan_index": 68,
+          "task_id": "daymet-subset-chicago_il-2024-tmin",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2024,
+            "variable": "tmin"
+          }
+        },
+        {
+          "plan_index": 69,
+          "task_id": "daymet-subset-chicago_il-2024-prcp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2024,
+            "variable": "prcp"
+          }
+        },
+        {
+          "plan_index": 70,
+          "task_id": "daymet-subset-chicago_il-2024-srad",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2024,
+            "variable": "srad"
+          }
+        },
+        {
+          "plan_index": 71,
+          "task_id": "daymet-subset-chicago_il-2024-vp",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2024,
+            "variable": "vp"
+          }
+        },
+        {
+          "plan_index": 72,
+          "task_id": "daymet-subset-chicago_il-2024-dayl",
+          "kind": "acquire_daymet_subset",
+          "payload": {
+            "city_id": "chicago_il",
+            "year": 2024,
+            "variable": "dayl"
+          }
+        },
+        {
+          "plan_index": 73,
+          "task_id": "sentinel-inventory-houston_tx",
+          "kind": "build_sentinel_inventory",
+          "payload": {
+            "city_id": "houston_tx",
+            "target_dates_sha256": "0928cf8443da1f8f075976d74ff0b077525dbaf3f15030738750594a2eb79c9b"
+          }
+        },
+        {
+          "plan_index": 74,
+          "task_id": "sentinel-inventory-chicago_il",
+          "kind": "build_sentinel_inventory",
+          "payload": {
+            "city_id": "chicago_il",
+            "target_dates_sha256": "ce0833d83229bdc3498ed25c6cb1d81f2cd1f8dd16b3b9ca6091b36dff02b073"
+          }
+        },
+        {
+          "plan_index": 75,
+          "task_id": "sentinel-cache-houston_tx",
+          "kind": "acquire_sentinel_cache",
+          "payload": {
+            "city_id": "houston_tx"
+          }
+        },
+        {
+          "plan_index": 76,
+          "task_id": "sentinel-cache-chicago_il",
+          "kind": "acquire_sentinel_cache",
+          "payload": {
+            "city_id": "chicago_il"
+          }
+        },
+        {
+          "plan_index": 77,
+          "task_id": "acquisition-complete",
+          "kind": "finalize_acquisition",
+          "payload": {
+            "extension_city_ids": [
+              "houston_tx",
+              "chicago_il"
+            ]
+          }
+        },
+        {
+          "plan_index": 78,
+          "task_id": "build-extension-houston_tx",
+          "kind": "build_extension_city",
+          "payload": {
+            "city_id": "houston_tx"
+          }
+        },
+        {
+          "plan_index": 79,
+          "task_id": "build-extension-chicago_il",
+          "kind": "build_extension_city",
+          "payload": {
+            "city_id": "chicago_il"
+          }
+        },
+        {
+          "plan_index": 80,
+          "task_id": "compile-source-los_angeles_ca",
+          "kind": "compile_source_city",
+          "payload": {
+            "city_id": "los_angeles_ca"
+          }
+        },
+        {
+          "plan_index": 81,
+          "task_id": "compile-source-phoenix_az",
+          "kind": "compile_source_city",
+          "payload": {
+            "city_id": "phoenix_az"
+          }
+        },
+        {
+          "plan_index": 82,
+          "task_id": "compile-source-houston_tx",
+          "kind": "compile_source_city",
+          "payload": {
+            "city_id": "houston_tx"
+          }
+        },
+        {
+          "plan_index": 83,
+          "task_id": "compile-source-chicago_il",
+          "kind": "compile_source_city",
+          "payload": {
+            "city_id": "chicago_il"
+          }
+        },
+        {
+          "plan_index": 84,
+          "task_id": "source-predictors-46-complete",
+          "kind": "finalize_predictors",
+          "payload": {
+            "source_city_ids": [
+              "los_angeles_ca",
+              "phoenix_az",
+              "houston_tx",
+              "chicago_il"
+            ],
+            "feature_count": 46
+          }
+        }
+      ],
+      "task_states": [
+        {
+          "plan_index": 0,
+          "task_id": "freeze-key-universe",
+          "kind": "freeze_key_universe",
+          "status": "complete",
+          "attempt": 1,
+          "claim_generation": 1,
+          "error_type": null,
+          "result": {
+            "files": [
+              {
+                "bytes": 14013,
+                "path": "data/interim/multicity/m3_source_predictor_extension_v1/components/SOURCE_KEY_UNIVERSE.json",
+                "sha256": "a738400a5a903b88f50ba8103b7e6bfc4d71f798af0ea4baa5b1a2cfbb139a82"
+              }
+            ],
+            "state": "source_predictor_key_universe_frozen"
+          }
+        },
+        {
+          "plan_index": 1,
+          "task_id": "static-houston_tx",
+          "kind": "authenticate_static_reuse",
+          "status": "complete",
+          "attempt": 1,
+          "claim_generation": 1,
+          "error_type": null,
+          "result": {
+            "city_id": "houston_tx",
+            "files": [],
+            "state": "authenticated_static_reuse",
+            "tract_count": 651,
+            "tract_geoid_set_sha256": "ab11f9a3577746049f359e167238087d192a09638b4a6c6b2f28777f0995f21c"
+          }
+        },
+        {
+          "plan_index": 2,
+          "task_id": "static-chicago_il",
+          "kind": "authenticate_static_reuse",
+          "status": "complete",
+          "attempt": 1,
+          "claim_generation": 1,
+          "error_type": null,
+          "result": {
+            "city_id": "chicago_il",
+            "files": [],
+            "state": "authenticated_static_reuse",
+            "tract_count": 780,
+            "tract_geoid_set_sha256": "f439606dc725955ea007008d8a79729fd875b99471e28bc08acf1ddd173c881a"
+          }
+        },
+        {
+          "plan_index": 3,
+          "task_id": "daymet-metadata-houston_tx-2020",
+          "kind": "acquire_daymet_metadata",
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError",
+          "result": null
+        },
+        {
+          "plan_index": 4,
+          "task_id": "daymet-metadata-houston_tx-2021",
+          "kind": "acquire_daymet_metadata",
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError",
+          "result": null
+        },
+        {
+          "plan_index": 5,
+          "task_id": "daymet-metadata-houston_tx-2022",
+          "kind": "acquire_daymet_metadata",
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError",
+          "result": null
+        },
+        {
+          "plan_index": 6,
+          "task_id": "daymet-metadata-houston_tx-2023",
+          "kind": "acquire_daymet_metadata",
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError",
+          "result": null
+        },
+        {
+          "plan_index": 7,
+          "task_id": "daymet-metadata-houston_tx-2024",
+          "kind": "acquire_daymet_metadata",
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError",
+          "result": null
+        },
+        {
+          "plan_index": 8,
+          "task_id": "daymet-metadata-chicago_il-2020",
+          "kind": "acquire_daymet_metadata",
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError",
+          "result": null
+        },
+        {
+          "plan_index": 9,
+          "task_id": "daymet-metadata-chicago_il-2021",
+          "kind": "acquire_daymet_metadata",
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError",
+          "result": null
+        },
+        {
+          "plan_index": 10,
+          "task_id": "daymet-metadata-chicago_il-2022",
+          "kind": "acquire_daymet_metadata",
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError",
+          "result": null
+        },
+        {
+          "plan_index": 11,
+          "task_id": "daymet-metadata-chicago_il-2023",
+          "kind": "acquire_daymet_metadata",
+          "status": "pending",
+          "attempt": 4,
+          "claim_generation": 4,
+          "error_type": "SourceFootprintError",
+          "result": null
+        },
+        {
+          "plan_index": 12,
+          "task_id": "daymet-metadata-chicago_il-2024",
+          "kind": "acquire_daymet_metadata",
+          "status": "pending",
+          "attempt": 4,
+          "claim_generation": 4,
+          "error_type": "SourceFootprintError",
+          "result": null
+        },
+        {
+          "plan_index": 13,
+          "task_id": "daymet-subset-houston_tx-2020-tmax",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 14,
+          "task_id": "daymet-subset-houston_tx-2020-tmin",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 15,
+          "task_id": "daymet-subset-houston_tx-2020-prcp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 16,
+          "task_id": "daymet-subset-houston_tx-2020-srad",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 17,
+          "task_id": "daymet-subset-houston_tx-2020-vp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 18,
+          "task_id": "daymet-subset-houston_tx-2020-dayl",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 19,
+          "task_id": "daymet-subset-houston_tx-2021-tmax",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 20,
+          "task_id": "daymet-subset-houston_tx-2021-tmin",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 21,
+          "task_id": "daymet-subset-houston_tx-2021-prcp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 22,
+          "task_id": "daymet-subset-houston_tx-2021-srad",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 23,
+          "task_id": "daymet-subset-houston_tx-2021-vp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 24,
+          "task_id": "daymet-subset-houston_tx-2021-dayl",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 25,
+          "task_id": "daymet-subset-houston_tx-2022-tmax",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 26,
+          "task_id": "daymet-subset-houston_tx-2022-tmin",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 27,
+          "task_id": "daymet-subset-houston_tx-2022-prcp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 28,
+          "task_id": "daymet-subset-houston_tx-2022-srad",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 29,
+          "task_id": "daymet-subset-houston_tx-2022-vp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 30,
+          "task_id": "daymet-subset-houston_tx-2022-dayl",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 31,
+          "task_id": "daymet-subset-houston_tx-2023-tmax",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 32,
+          "task_id": "daymet-subset-houston_tx-2023-tmin",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 33,
+          "task_id": "daymet-subset-houston_tx-2023-prcp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 34,
+          "task_id": "daymet-subset-houston_tx-2023-srad",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 35,
+          "task_id": "daymet-subset-houston_tx-2023-vp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 36,
+          "task_id": "daymet-subset-houston_tx-2023-dayl",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 37,
+          "task_id": "daymet-subset-houston_tx-2024-tmax",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 38,
+          "task_id": "daymet-subset-houston_tx-2024-tmin",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 39,
+          "task_id": "daymet-subset-houston_tx-2024-prcp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 40,
+          "task_id": "daymet-subset-houston_tx-2024-srad",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 41,
+          "task_id": "daymet-subset-houston_tx-2024-vp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 42,
+          "task_id": "daymet-subset-houston_tx-2024-dayl",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 43,
+          "task_id": "daymet-subset-chicago_il-2020-tmax",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 44,
+          "task_id": "daymet-subset-chicago_il-2020-tmin",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 45,
+          "task_id": "daymet-subset-chicago_il-2020-prcp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 46,
+          "task_id": "daymet-subset-chicago_il-2020-srad",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 47,
+          "task_id": "daymet-subset-chicago_il-2020-vp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 48,
+          "task_id": "daymet-subset-chicago_il-2020-dayl",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 49,
+          "task_id": "daymet-subset-chicago_il-2021-tmax",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 50,
+          "task_id": "daymet-subset-chicago_il-2021-tmin",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 51,
+          "task_id": "daymet-subset-chicago_il-2021-prcp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 52,
+          "task_id": "daymet-subset-chicago_il-2021-srad",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 53,
+          "task_id": "daymet-subset-chicago_il-2021-vp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 54,
+          "task_id": "daymet-subset-chicago_il-2021-dayl",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 55,
+          "task_id": "daymet-subset-chicago_il-2022-tmax",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 56,
+          "task_id": "daymet-subset-chicago_il-2022-tmin",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 57,
+          "task_id": "daymet-subset-chicago_il-2022-prcp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 58,
+          "task_id": "daymet-subset-chicago_il-2022-srad",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 59,
+          "task_id": "daymet-subset-chicago_il-2022-vp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 60,
+          "task_id": "daymet-subset-chicago_il-2022-dayl",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 61,
+          "task_id": "daymet-subset-chicago_il-2023-tmax",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 62,
+          "task_id": "daymet-subset-chicago_il-2023-tmin",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 63,
+          "task_id": "daymet-subset-chicago_il-2023-prcp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 64,
+          "task_id": "daymet-subset-chicago_il-2023-srad",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 65,
+          "task_id": "daymet-subset-chicago_il-2023-vp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 66,
+          "task_id": "daymet-subset-chicago_il-2023-dayl",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 67,
+          "task_id": "daymet-subset-chicago_il-2024-tmax",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 68,
+          "task_id": "daymet-subset-chicago_il-2024-tmin",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 69,
+          "task_id": "daymet-subset-chicago_il-2024-prcp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 70,
+          "task_id": "daymet-subset-chicago_il-2024-srad",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 71,
+          "task_id": "daymet-subset-chicago_il-2024-vp",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 72,
+          "task_id": "daymet-subset-chicago_il-2024-dayl",
+          "kind": "acquire_daymet_subset",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 73,
+          "task_id": "sentinel-inventory-houston_tx",
+          "kind": "build_sentinel_inventory",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 74,
+          "task_id": "sentinel-inventory-chicago_il",
+          "kind": "build_sentinel_inventory",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 75,
+          "task_id": "sentinel-cache-houston_tx",
+          "kind": "acquire_sentinel_cache",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 76,
+          "task_id": "sentinel-cache-chicago_il",
+          "kind": "acquire_sentinel_cache",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 77,
+          "task_id": "acquisition-complete",
+          "kind": "finalize_acquisition",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 78,
+          "task_id": "build-extension-houston_tx",
+          "kind": "build_extension_city",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 79,
+          "task_id": "build-extension-chicago_il",
+          "kind": "build_extension_city",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 80,
+          "task_id": "compile-source-los_angeles_ca",
+          "kind": "compile_source_city",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 81,
+          "task_id": "compile-source-phoenix_az",
+          "kind": "compile_source_city",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 82,
+          "task_id": "compile-source-houston_tx",
+          "kind": "compile_source_city",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 83,
+          "task_id": "compile-source-chicago_il",
+          "kind": "compile_source_city",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        },
+        {
+          "plan_index": 84,
+          "task_id": "source-predictors-46-complete",
+          "kind": "finalize_predictors",
+          "status": "pending",
+          "attempt": 0,
+          "claim_generation": 0,
+          "error_type": null,
+          "result": null
+        }
+      ],
+      "desired_state": "paused",
+      "schema_version": 1,
+      "counts": {
+        "pending": 82,
+        "running": 0,
+        "complete": 3,
+        "quarantined": 0,
+        "total": 85
+      },
+      "active_lease_count": 0,
+      "completed_tasks": [
+        {
+          "task_id": "freeze-key-universe",
+          "kind": "freeze_key_universe",
+          "plan_index": 0,
+          "attempt": 1,
+          "claim_generation": 1,
+          "result": {
+            "files": [
+              {
+                "bytes": 14013,
+                "path": "data/interim/multicity/m3_source_predictor_extension_v1/components/SOURCE_KEY_UNIVERSE.json",
+                "sha256": "a738400a5a903b88f50ba8103b7e6bfc4d71f798af0ea4baa5b1a2cfbb139a82"
+              }
+            ],
+            "state": "source_predictor_key_universe_frozen"
+          }
+        },
+        {
+          "task_id": "static-houston_tx",
+          "kind": "authenticate_static_reuse",
+          "plan_index": 1,
+          "attempt": 1,
+          "claim_generation": 1,
+          "result": {
+            "city_id": "houston_tx",
+            "files": [],
+            "state": "authenticated_static_reuse",
+            "tract_count": 651,
+            "tract_geoid_set_sha256": "ab11f9a3577746049f359e167238087d192a09638b4a6c6b2f28777f0995f21c"
+          }
+        },
+        {
+          "task_id": "static-chicago_il",
+          "kind": "authenticate_static_reuse",
+          "plan_index": 2,
+          "attempt": 1,
+          "claim_generation": 1,
+          "result": {
+            "city_id": "chicago_il",
+            "files": [],
+            "state": "authenticated_static_reuse",
+            "tract_count": 780,
+            "tract_geoid_set_sha256": "f439606dc725955ea007008d8a79729fd875b99471e28bc08acf1ddd173c881a"
+          }
+        }
+      ],
+      "daymet_metadata_tasks": [
+        {
+          "task_id": "daymet-metadata-houston_tx-2020",
+          "plan_index": 3,
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError"
+        },
+        {
+          "task_id": "daymet-metadata-houston_tx-2021",
+          "plan_index": 4,
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError"
+        },
+        {
+          "task_id": "daymet-metadata-houston_tx-2022",
+          "plan_index": 5,
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError"
+        },
+        {
+          "task_id": "daymet-metadata-houston_tx-2023",
+          "plan_index": 6,
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError"
+        },
+        {
+          "task_id": "daymet-metadata-houston_tx-2024",
+          "plan_index": 7,
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError"
+        },
+        {
+          "task_id": "daymet-metadata-chicago_il-2020",
+          "plan_index": 8,
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError"
+        },
+        {
+          "task_id": "daymet-metadata-chicago_il-2021",
+          "plan_index": 9,
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError"
+        },
+        {
+          "task_id": "daymet-metadata-chicago_il-2022",
+          "plan_index": 10,
+          "status": "pending",
+          "attempt": 5,
+          "claim_generation": 5,
+          "error_type": "SourceFootprintError"
+        },
+        {
+          "task_id": "daymet-metadata-chicago_il-2023",
+          "plan_index": 11,
+          "status": "pending",
+          "attempt": 4,
+          "claim_generation": 4,
+          "error_type": "SourceFootprintError"
+        },
+        {
+          "task_id": "daymet-metadata-chicago_il-2024",
+          "plan_index": 12,
+          "status": "pending",
+          "attempt": 4,
+          "claim_generation": 4,
+          "error_type": "SourceFootprintError"
+        }
+      ],
+      "running_tasks": []
+    },
+    "acquisition_file_count": 0
+  },
+  "repair_contract": {
+    "fetch_argument_order": [
+      "tmax",
+      "tmin",
+      "prcp",
+      "srad",
+      "vp",
+      "dayl"
+    ],
+    "persisted_granule_order": [
+      "dayl",
+      "prcp",
+      "srad",
+      "tmax",
+      "tmin",
+      "vp"
+    ],
+    "override_only_acquire_daymet_metadata": true,
+    "same_database_run_id_and_task_plan": true,
+    "initialize_rebuild_reset_rewrite_or_unquarantine_allowed": false,
+    "maximum_active_tasks": 1,
+    "download_workers": 1,
+    "compute_workers": 1
+  },
+  "permissions": {
+    "continue_parent_source_predictor_scope": true,
+    "read_or_write_blind_city_asset_predictor_qa_or_target": false,
+    "read_landsat_thermal_qa_or_any_target_value": false,
+    "fit_select_predict_score_or_choose_model_or_qa": false,
+    "change_city_year_key_feature_source_host_or_window": false,
+    "modify_parent_authorization_or_hash_bound_files": false,
+    "rebuild_reset_rewrite_or_delete_existing_queue_or_cache": false
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "src/la_heat/multicity/m3_source_predictor_daymet_order_repair_v1.py",
+        "bytes": 58267,
+        "sha256": "d7aea518eeeb29e33b76913edbf4431fb0ef64b6e34aacd61b8b11833f897a0e"
+      },
+      {
+        "path": "scripts/authorize_m3_source_predictor_daymet_order_repair_v1.py",
+        "bytes": 2749,
+        "sha256": "48ea6924bc4a4ebbce036ff12ed875f3bc3cb1a5d5fd6e2b7c1ad5e317c800d9"
+      },
+      {
+        "path": "scripts/run_m3_source_predictor_daymet_order_repair_v1.py",
+        "bytes": 2857,
+        "sha256": "e063b802569ae846847fab868fbe7f39d929d2befb4464f92c296f23ca7759bf"
+      }
+    ],
+    "set_sha256": "b06afc217b814c875136b38af36591e21e860a3c670045459d9469be4a091f42"
+  },
+  "authorization_access_audit": {
+    "network_or_href_reads": 0,
+    "predictor_qa_or_target_values_read": false,
+    "blind_test_city_accessed": false,
+    "queue_or_cache_modified": false,
+    "model_fit_select_predict_or_score_performed": false
+  },
+  "next_safe_stage": "resume_same_predictor_queue_with_daymet_order_repair_runner",
+  "commit_sha256": "366f94697d13048d00fa121b69983b45fc96d9247c90f460d591209cdad25a76"
+}
