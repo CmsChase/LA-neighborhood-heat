@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-predictor-sentinel-geometry-filter-v1",
+  "state": "m3_source_predictor_sentinel_geometry_filter_authorized",
+  "bbox_repair_authorization_commit_sha256": "e375ecb33138b5c56dbd46c5841379fc3f3aaea0709d1155ed14db10dccf3c46",
+  "incident": {
+    "city_id": "houston_tx",
+    "classification": "bbox_only_stac_item_has_invalid_geometry",
+    "item_id": "S2B_MSIL2A_20230720T165849_R069_T15RTN_20230721T000753",
+    "observed_error_type": "ValueError",
+    "queue_snapshot": {
+      "run_id": "m3-source-predictor-extension-v1-22f6f417faea2aae",
+      "desired_state": "paused",
+      "sqlite_task_plan_sha256": "d21c5c74ca562d29e71375350029a4e44c17088497494203bc8d1844a1cec712",
+      "counts": {
+        "complete": 74,
+        "pending": 11,
+        "running": 0,
+        "quarantined": 0
+      },
+      "active_lease_count": 0,
+      "houston_inventory_task": {
+        "task_id": "sentinel-inventory-houston_tx",
+        "status": "pending",
+        "attempt": 7,
+        "claim_generation": 7,
+        "error_type": "APIError",
+        "lease_owner": null,
+        "lease_expires_at": null
+      }
+    }
+  },
+  "repair_contract": {
+    "server_discovery_geometry": "exact_authenticated_aoi_envelope",
+    "local_prefilter_geometry": "exact_authenticated_aoi",
+    "invalid_or_nonintersecting_bbox_only_items_retained": false,
+    "parent_scientific_selection_unchanged": true
+  },
+  "permissions": {
+    "houston_source_sentinel_metadata_read": true,
+    "blind_city_access": false,
+    "target_or_landsat_value_read": false,
+    "model_fit_select_predict_or_score": false
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "src/la_heat/multicity/m3_source_predictor_sentinel_geometry_filter_v1.py",
+        "bytes": 12089,
+        "sha256": "4df5d820ce72c928694d6c30826c2807272607198ace4fc6072ebf9e56f55ab9"
+      },
+      {
+        "path": "scripts/run_m3_source_predictor_sentinel_geometry_filter_v1.py",
+        "bytes": 1718,
+        "sha256": "208704e508f2b87f3b52dc96362900ed71e22f57ad68e17dcd90104999d049e6"
+      }
+    ],
+    "set_sha256": "baac650fe0d1e5552df835d477852dd2aaf0388020f907a846b5751ffdca2177"
+  },
+  "next_safe_stage": "execute_filtered_houston_inventory_once",
+  "commit_sha256": "0e0b0534b5f7dbe54e11c59b40b2d6f4047621e3acf06fe613b0b90e42ccf78d"
+}
