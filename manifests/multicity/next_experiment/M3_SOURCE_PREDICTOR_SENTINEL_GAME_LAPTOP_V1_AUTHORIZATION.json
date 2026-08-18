@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-predictor-sentinel-game-laptop-v1",
+  "state": "m3_source_predictor_sentinel_game_laptop_authorized",
+  "parent_authorization_commit_sha256": "22f6f417faea2aaeb7f0c04d182ae45616f3cacf416ea904e58ed2c699987019",
+  "daymet_order_repair_authorization_commit_sha256": "366f94697d13048d00fa121b69983b45fc96d9247c90f460d591209cdad25a76",
+  "cross_utm_authorization_commit_sha256": "ca54e26d6a358ea5abd673a7ec3bf7bf8726d0a67b67a7a1e572447c2889844b",
+  "migration_snapshot": {
+    "run_id": "m3-source-predictor-extension-v1-22f6f417faea2aae",
+    "desired_state": "paused",
+    "sqlite_task_plan_sha256": "d21c5c74ca562d29e71375350029a4e44c17088497494203bc8d1844a1cec712",
+    "counts": {
+      "complete": 75,
+      "pending": 10,
+      "running": 0,
+      "quarantined": 0
+    },
+    "active_lease_count": 0,
+    "sentinel_cache_tasks": [
+      {
+        "task_id": "sentinel-cache-chicago_il",
+        "status": "pending",
+        "attempt": 10,
+        "claim_generation": 10,
+        "error_type": "WarpOperationError",
+        "lease_owner": null,
+        "lease_expires_at": null
+      },
+      {
+        "task_id": "sentinel-cache-houston_tx",
+        "status": "pending",
+        "attempt": 11,
+        "claim_generation": 11,
+        "error_type": "InterruptedForMigration",
+        "lease_owner": null,
+        "lease_expires_at": null
+      }
+    ]
+  },
+  "runtime_contract": {
+    "download_threads_per_acquisition": 4,
+    "active_acquisitions": 1,
+    "compute_workers": 1,
+    "native_compute_threads": 1,
+    "same_sqlite_run_and_task_plan": true,
+    "queue_rebuild_reset_or_rewrite_allowed": false,
+    "old_machine_concurrent_execution_allowed": false
+  },
+  "permissions": {
+    "source_sentinel_value_read": true,
+    "blind_city_access": false,
+    "target_or_landsat_value_read": false,
+    "model_fit_select_predict_or_score": false
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "src/la_heat/multicity/m3_source_predictor_sentinel_game_laptop_v1.py",
+        "bytes": 13435,
+        "sha256": "6dcecbd1a2517155d6ca4b269ebf3f34dd649d777b208ac8f4c8641a65d24f3e"
+      },
+      {
+        "path": "scripts/run_m3_source_predictor_sentinel_game_laptop_v1.py",
+        "bytes": 2175,
+        "sha256": "50911c2bbb1546f473ca695ba579f60fa72b761f749a888af89a5aeba88012ea"
+      },
+      {
+        "path": "START_M3_PREDICTOR_GAME_LAPTOP.cmd",
+        "bytes": 779,
+        "sha256": "cf14b4871a74d0d0012ffe88429a57db8d50c9cb135c838aacb8804fa3ef3369"
+      }
+    ],
+    "set_sha256": "a66fe8318050bf8e432607c19e29860c9e46df39de0e51eeeedddb99d8cc7145"
+  },
+  "next_safe_stage": "copy_verified_bundle_then_run_start_cmd_on_one_machine",
+  "commit_sha256": "8310bd4822363a681330441b8494954a0b7b427f00f8e8075230480cbf9bfe83"
+}
