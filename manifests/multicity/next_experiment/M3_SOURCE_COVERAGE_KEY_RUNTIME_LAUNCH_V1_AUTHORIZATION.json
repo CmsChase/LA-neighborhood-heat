@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-coverage-key-runtime-launch-v1",
+  "state": "m3_source_coverage_key_runtime_launch_authorized",
+  "launch_scope": "bypass_idempotent_prepare_and_use_existing_runtime_permit",
+  "parent_repair_authorization_commit_sha256": "3496e3c96483f2fdd78aa6d9368d0896eb05bfca083d71f2b724df9abcbc3145",
+  "v2_run_id": "m3-source-integrity-v2-8fcfbcd308bec8e2",
+  "v2_task_plan_sha256": "f7d8f092db682d5345586269ba5c56ae7125fabf854bcbc1994aae6af644dd79",
+  "paused_semantic_queue_snapshot": {
+    "run_id": "m3-source-integrity-v2-8fcfbcd308bec8e2",
+    "schema_version": 1,
+    "task_plan_sha256": "f7d8f092db682d5345586269ba5c56ae7125fabf854bcbc1994aae6af644dd79",
+    "desired_state": "paused",
+    "counts": {
+      "pending": 322,
+      "running": 0,
+      "complete": 524,
+      "quarantined": 0,
+      "total": 846
+    },
+    "counts_by_kind": {
+      "compile_qa_city": {
+        "pending": 4,
+        "running": 0,
+        "complete": 0,
+        "quarantined": 0,
+        "total": 4
+      },
+      "finalize_logical_cache": {
+        "pending": 0,
+        "running": 0,
+        "complete": 1,
+        "quarantined": 0,
+        "total": 1
+      },
+      "finalize_qa_candidates": {
+        "pending": 1,
+        "running": 0,
+        "complete": 0,
+        "quarantined": 0,
+        "total": 1
+      },
+      "finalize_retained_scene": {
+        "pending": 0,
+        "running": 0,
+        "complete": 523,
+        "quarantined": 0,
+        "total": 523
+      },
+      "qa_overpass": {
+        "pending": 317,
+        "running": 0,
+        "complete": 0,
+        "quarantined": 0,
+        "total": 317
+      }
+    },
+    "active_lease_count": 0,
+    "first_qa_task": {
+      "task_id": "qa-b7293fc5e647cc0bc489",
+      "kind": "qa_overpass",
+      "payload": {
+        "acquired_utc_max": "2020-05-16T18:28:09.326842+00:00",
+        "acquired_utc_min": "2020-05-16T18:27:45.431567+00:00",
+        "city_id": "los_angeles_ca",
+        "grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "inventory_mode": "retained_authenticated_existing",
+        "ordinal": 1,
+        "overpass_id": "landsat-8_20200516T182745Z",
+        "platform": "landsat-8",
+        "qa_candidate_ids": [
+          "none",
+          "3k",
+          "4k",
+          "6k"
+        ],
+        "relationship_sha256": "6f5ac0850fd02e3aa9ed75198ce15f25b7c235e20da103b82f2de0d75e7f19f0",
+        "scene_ids": [
+          "LC08_L2SP_041036_20200516_02_T1",
+          "LC08_L2SP_041037_20200516_02_T1"
+        ],
+        "source_lock_sha256": "c5223a618cf91d5ed1a6032f0a2b8f75828a2068fdbc7239d80fe5a0f76db282",
+        "target_context_commit_sha256": "7a5ea718833c4c860f68399cf89b63987dfbb13cf0bccf7330ae8b2d64e078fe",
+        "target_date": "2020-05-16",
+        "union_city_coverage_fraction": 0.9999999999999986,
+        "wrs_path_rows": [
+          "041/036",
+          "041/037"
+        ]
+      },
+      "payload_sha256": "0a5d6e459378708616775b6238a6950d32e7960bf2157267a7f4991c0c3d36f7",
+      "status": "pending",
+      "attempt": 3,
+      "available_at": 1787015787.5783193,
+      "lease_owner": null,
+      "lease_expires_at": null,
+      "claim_generation": 3,
+      "result_json": null,
+      "error_type": "ValueError",
+      "plan_index": 524,
+      "updated_at": 1787015767.5783193
+    }
+  },
+  "incident_evidence": {
+    "database_hash_transition_is_evidence_only": true,
+    "before_prepare_database_record": {
+      "path": "data/interim/multicity/m3_source_development_v2/runtime/tasks.sqlite",
+      "bytes": 815104,
+      "sha256": "869b3b2ab50afa44d1c6fcdba6a083566b5ad2f7cc2626e5b492ced28adfc85b"
+    },
+    "after_prepare_database_record": {
+      "path": "data/interim/multicity/m3_source_development_v2/runtime/tasks.sqlite",
+      "bytes": 815104,
+      "sha256": "72dee20b87e5c94c43a8e6efe382b48cfcc6aa55048b4bc0da90d7612617d6d8"
+    },
+    "database_size_unchanged": true,
+    "semantic_snapshot_exactly_unchanged": true,
+    "transaction_cause": {
+      "classification": "idempotent_queue_initialization_changed_sqlite_bytes_only",
+      "prepare_worker_call": {
+        "path": "src/la_heat/multicity/m3_source_development_worker_v2.py",
+        "bytes": 9874,
+        "sha256": "9037f87c25bbc9609505e2e64c0acff0e833df65a3b5610037932aec57692d0a",
+        "line": 303
+      },
+      "runtime_queue_open": {
+        "path": "src/la_heat/multicity/m3_source_development_runtime_v2.py",
+        "bytes": 14553,
+        "sha256": "63fe0f15a7c854ad5a7bd7805cdf89c2b490796185fd2e383bff2938de9ffb9d",
+        "line": 341
+      },
+      "runtime_idempotent_initialize": {
+        "path": "src/la_heat/multicity/m3_source_development_runtime_v2.py",
+        "bytes": 14553,
+        "sha256": "63fe0f15a7c854ad5a7bd7805cdf89c2b490796185fd2e383bff2938de9ffb9d",
+        "line": 343
+      },
+      "queue_wal_schema_initialization": {
+        "path": "src/la_heat/model_run_queue.py",
+        "bytes": 32757,
+        "sha256": "e2d09ae259272ecee1fc38ab7a68158ccc0edaf87fc7bd8d7153c32e122764c6",
+        "line": 229
+      },
+      "semantic_task_or_run_row_change_observed": false
+    },
+    "failed_canary_stdout": {
+      "path": "data/interim/multicity/m3_source_development_v2/runtime/qa-repair-worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "failed_canary_stderr": {
+      "path": "data/interim/multicity/m3_source_development_v2/runtime/qa-repair-worker.err.log",
+      "bytes": 1880,
+      "sha256": "735b3839bed6b02763f8f440ab92f8f786b616e0f3553d8910fdca1baeb93e2b"
+    },
+    "failed_before_raster_value_access": true
+  },
+  "inputs": {
+    "parent_repair_authorization": {
+      "path": "manifests/multicity/next_experiment/M3_SOURCE_COVERAGE_KEY_REPAIR_V1_AUTHORIZATION.json",
+      "bytes": 13936,
+      "sha256": "9b5f40bf578f10831680014e96eaea8d3eb98b284b0735a668d49f8f1a47f382",
+      "commit_sha256": "3496e3c96483f2fdd78aa6d9368d0896eb05bfca083d71f2b724df9abcbc3145"
+    }
+  },
+  "permissions": {
+    "authenticate_parent_repair_via_nonterminal_runtime_permit": true,
+    "skip_prepare_worker_v2_and_initialize_source_runtime_v2": true,
+    "reuse_existing_queue_without_rebuild_reset_or_task_rewrite": true,
+    "modify_task_plan_or_rebuild_reset_rewrite_queue": false,
+    "execute_only_existing_317_qa_four_city_compile_and_final_tasks": true,
+    "bind_launch_amendment_to_new_base_lock_and_final_completion": true,
+    "treat_old_and_new_database_hashes_as_incident_evidence_only": true,
+    "modify_parent_repair_authorization_or_hash_bound_code": false,
+    "modify_completed_logical_tasks_or_physical_cache": false,
+    "network_or_href_reads": false,
+    "blind_city_asset_predictor_qa_or_target_access": false,
+    "predictor_read_or_build": false,
+    "fit_select_predict_or_score": false,
+    "change_year_city_candidate_or_support_gate": false
+  },
+  "runtime_contract": {
+    "compute_workers": 1,
+    "download_workers": 0,
+    "network_requests_allowed": false,
+    "href_reads_allowed": false,
+    "existing_run_id": "m3-source-integrity-v2-8fcfbcd308bec8e2",
+    "existing_task_plan_sha256": "f7d8f092db682d5345586269ba5c56ae7125fabf854bcbc1994aae6af644dd79",
+    "expected_task_count": 846,
+    "worker_lock_acquired_before_runtime_permit_factory_and_running_state": true,
+    "prepare_worker_v2_or_initialize_source_runtime_v2_allowed": false,
+    "model_run_queue_schema_open_after_all_permits_authenticated": true,
+    "task_plan_rebuild_reset_or_rewrite_allowed": false,
+    "pre_running_factory_failure_leaves_queue_unchanged": true,
+    "post_running_state_exception_restores_paused_state": true
+  },
+  "code_identity": {
+    "src/la_heat/multicity/m3_source_coverage_key_runtime_launch_v1.py": {
+      "path": "src/la_heat/multicity/m3_source_coverage_key_runtime_launch_v1.py",
+      "bytes": 20452,
+      "sha256": "6646c0bb6709765268cd5ef98e4136cc80b99d454b08c7dd57a501b5a0936ef7"
+    },
+    "src/la_heat/multicity/m3_source_development_engine_coverage_key_runtime_launch_v1.py": {
+      "path": "src/la_heat/multicity/m3_source_development_engine_coverage_key_runtime_launch_v1.py",
+      "bytes": 7843,
+      "sha256": "2188c389d1621bea1e62878d8bed7bd794e0595b2c9272bbb3eaa0a784d6ef64"
+    },
+    "scripts/authorize_m3_source_coverage_key_runtime_launch_v1.py": {
+      "path": "scripts/authorize_m3_source_coverage_key_runtime_launch_v1.py",
+      "bytes": 3644,
+      "sha256": "efe8219e9885ccf495e533c58f3dbdf497180594ff3be3fd29233a48e095d9bf"
+    },
+    "scripts/run_m3_source_coverage_key_runtime_launch_v1.py": {
+      "path": "scripts/run_m3_source_coverage_key_runtime_launch_v1.py",
+      "bytes": 3511,
+      "sha256": "3246d167019eab8d5441555ada6030779aa0cc6594a24aeab10612987bbf29f7"
+    }
+  },
+  "cause_code_identity": {
+    "src/la_heat/multicity/m3_source_development_worker_v2.py": {
+      "path": "src/la_heat/multicity/m3_source_development_worker_v2.py",
+      "bytes": 9874,
+      "sha256": "9037f87c25bbc9609505e2e64c0acff0e833df65a3b5610037932aec57692d0a"
+    },
+    "src/la_heat/multicity/m3_source_development_runtime_v2.py": {
+      "path": "src/la_heat/multicity/m3_source_development_runtime_v2.py",
+      "bytes": 14553,
+      "sha256": "63fe0f15a7c854ad5a7bd7805cdf89c2b490796185fd2e383bff2938de9ffb9d"
+    },
+    "src/la_heat/model_run_queue.py": {
+      "path": "src/la_heat/model_run_queue.py",
+      "bytes": 32757,
+      "sha256": "e2d09ae259272ecee1fc38ab7a68158ccc0edaf87fc7bd8d7153c32e122764c6"
+    }
+  },
+  "access_audit": {
+    "authorization_read_landsat_or_qa_raster_values": false,
+    "authorization_read_predictor_or_target_values": false,
+    "authorization_accessed_blind_city_data": false,
+    "authorization_modified_queue_cache_or_existing_manifest": false,
+    "authorization_fit_selected_predicted_or_scored": false
+  },
+  "next_safe_stage": "launch_existing_offline_qa_queue_without_prepare_worker_or_runtime_initialize",
+  "claim_id": "c1f7c1e3f20c6134a06e9b3b26247694ffc3528a7f10de1e51e7d763e2793f6f",
+  "commit_sha256": "a888f055d0ef715cd914204ce4b6385f125478f9978880d715e05baee9c3877f"
+}
