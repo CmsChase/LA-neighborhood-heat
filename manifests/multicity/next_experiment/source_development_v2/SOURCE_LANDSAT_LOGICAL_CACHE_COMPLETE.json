@@ -1,0 +1,19 @@
+{
+  "schema_version": 2,
+  "algorithm_version": "m3-source-integrity-overlay-v2",
+  "state": "source_landsat_logical_cache_complete",
+  "claim_id": "a64f3dd0958f3b4d94f097580fb0f6fe301469775885490534f908091b08d0a8",
+  "authorization_commit_sha256": "8fcfbcd308bec8e218252389a39b746e7785f076f03e47f3298e3d9f13fc0677",
+  "logical_overlay_commit_sha256": "a82f25e76078bab521cc7ceed2cac5dadd775d9f0f8d0aaf431bb8b61df63572",
+  "physical_scene_plan_commit_sha256": "d1dd58038e76f7e3dbf2249fbe77e59762739ec20deda74248541272545d6538",
+  "logical_global_cache_commit_sha256": "948a87a94ab462fdafdb7a6d68d7e060d5b98e6ff00b7edc06ef17202a8cb6aa",
+  "overpass_count": 317,
+  "scene_count": 523,
+  "content_count": 2615,
+  "physical_raster_files_copied_or_modified": false,
+  "old_queue_or_cache_mutated": false,
+  "network_or_href_read": false,
+  "blind_test_city_accessed": false,
+  "model_fit_or_selection_performed": false,
+  "commit_sha256": "4834d19192e1cb3c61013577bb50d61f5376e3d0ba8b8088f8442611cdf474c7"
+}
