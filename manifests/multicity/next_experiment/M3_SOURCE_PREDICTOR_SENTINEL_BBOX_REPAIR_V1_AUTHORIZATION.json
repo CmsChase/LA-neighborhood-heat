@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-predictor-sentinel-bbox-repair-v1",
+  "state": "m3_source_predictor_sentinel_bbox_repair_authorized",
+  "parent_authorization_commit_sha256": "22f6f417faea2aaeb7f0c04d182ae45616f3cacf416ea904e58ed2c699987019",
+  "daymet_order_repair_authorization_commit_sha256": "366f94697d13048d00fa121b69983b45fc96d9247c90f460d591209cdad25a76",
+  "incident": {
+    "classification": "planetary_computer_stac_request_geometry_too_large",
+    "city_id": "houston_tx",
+    "http_status": 413,
+    "error_type": "APIError",
+    "queue_snapshot": {
+      "run_id": "m3-source-predictor-extension-v1-22f6f417faea2aae",
+      "desired_state": "paused",
+      "sqlite_task_plan_sha256": "d21c5c74ca562d29e71375350029a4e44c17088497494203bc8d1844a1cec712",
+      "counts": {
+        "complete": 74,
+        "pending": 11,
+        "running": 0,
+        "quarantined": 0
+      },
+      "active_lease_count": 0,
+      "houston_inventory_task": {
+        "task_id": "sentinel-inventory-houston_tx",
+        "status": "pending",
+        "attempt": 7,
+        "claim_generation": 7,
+        "error_type": "APIError",
+        "lease_owner": null,
+        "lease_expires_at": null
+      }
+    }
+  },
+  "repair_contract": {
+    "discovery_query_geometry": "exact_authenticated_aoi_envelope",
+    "scientific_selection_geometry": "exact_authenticated_aoi",
+    "target_dates_or_features_changed": false,
+    "queue_rebuild_reset_or_rewrite_allowed": false
+  },
+  "permissions": {
+    "houston_source_sentinel_metadata_read": true,
+    "blind_city_access": false,
+    "target_or_landsat_value_read": false,
+    "model_fit_select_predict_or_score": false
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "src/la_heat/multicity/m3_source_predictor_sentinel_bbox_repair_v1.py",
+        "bytes": 14685,
+        "sha256": "c0cef9796ae400e96b1b4dfeaf5d8e1e56a70ef7f0b6070ce42804fc5acae064"
+      },
+      {
+        "path": "scripts/run_m3_source_predictor_sentinel_bbox_repair_v1.py",
+        "bytes": 1658,
+        "sha256": "650b52bac4bcd170c472c533ff8c654f26db23959d9c8fc478a7928f8916054b"
+      }
+    ],
+    "set_sha256": "0f627056d23d153809e8d7346679e6de826be112f4d15de71b767eeba025f901"
+  },
+  "next_safe_stage": "build_houston_inventory_once_then_resume_same_queue",
+  "commit_sha256": "e375ecb33138b5c56dbd46c5841379fc3f3aaea0709d1155ed14db10dccf3c46"
+}
