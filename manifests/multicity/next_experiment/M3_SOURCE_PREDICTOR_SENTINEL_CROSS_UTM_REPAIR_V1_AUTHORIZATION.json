@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-predictor-sentinel-cross-utm-repair-v1",
+  "state": "m3_source_predictor_sentinel_cross_utm_repair_authorized",
+  "daymet_order_repair_authorization_commit_sha256": "366f94697d13048d00fa121b69983b45fc96d9247c90f460d591209cdad25a76",
+  "geometry_filter_completion_commit_sha256": "5f0d68ffdf984fa95a182ae7be445640c64bc02273284b720abd495784626e35",
+  "incident": {
+    "queue_snapshot": {
+      "run_id": "m3-source-predictor-extension-v1-22f6f417faea2aae",
+      "desired_state": "paused",
+      "sqlite_task_plan_sha256": "d21c5c74ca562d29e71375350029a4e44c17088497494203bc8d1844a1cec712",
+      "counts": {
+        "complete": 75,
+        "pending": 10,
+        "running": 0,
+        "quarantined": 0
+      },
+      "active_lease_count": 0,
+      "sentinel_cache_tasks": [
+        {
+          "task_id": "sentinel-cache-chicago_il",
+          "status": "pending",
+          "attempt": 10,
+          "claim_generation": 10,
+          "error_type": "WarpOperationError",
+          "lease_owner": null,
+          "lease_expires_at": null
+        },
+        {
+          "task_id": "sentinel-cache-houston_tx",
+          "status": "pending",
+          "attempt": 10,
+          "claim_generation": 10,
+          "error_type": "ValueError",
+          "lease_owner": null,
+          "lease_expires_at": null
+        }
+      ]
+    },
+    "houston_cause": "utm14_assets_rejected_by_utm15_native_crs_equality",
+    "houston_cross_utm_item_count": 443,
+    "chicago_cause": "transient_remote_gdal_warp_operation_error"
+  },
+  "repair_contract": {
+    "allowed_crs_transform": "EPSG:32614_to_EPSG:32615_only",
+    "cross_crs_phase_check_applicable": false,
+    "native_resolution_and_north_up_checks_retained": true,
+    "warp_operation_max_attempts_per_asset": 3,
+    "resampling_or_scientific_parameters_changed": false,
+    "queue_rebuild_reset_or_rewrite_allowed": false
+  },
+  "permissions": {
+    "source_sentinel_value_read": true,
+    "blind_city_access": false,
+    "target_or_landsat_value_read": false,
+    "model_fit_select_predict_or_score": false
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "src/la_heat/multicity/m3_source_predictor_sentinel_cross_utm_repair_v1.py",
+        "bytes": 15171,
+        "sha256": "91abffbd9fa019a2925d3efd5b9cdb6c927d1d7fe81eb003a12df3e92073c1cf"
+      },
+      {
+        "path": "scripts/run_m3_source_predictor_sentinel_cross_utm_repair_v1.py",
+        "bytes": 2016,
+        "sha256": "a6db82d7a0b478c908b654c90a8c0f083553dad125107bc6fb11e8a5e48326e0"
+      }
+    ],
+    "set_sha256": "83b5d08fdba17db5ad125b095b30651073fff13ea8a356de6d992d0e5675a78a"
+  },
+  "next_safe_stage": "resume_same_predictor_queue_with_cross_utm_runner",
+  "commit_sha256": "ca54e26d6a358ea5abd673a7ec3bf7bf8726d0a67b67a7a1e572447c2889844b"
+}
