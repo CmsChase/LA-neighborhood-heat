@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-predictor-sentinel-bbox-repair-v1",
+  "state": "source_predictor_sentinel_bbox_repair_complete",
+  "authorization_commit_sha256": "e375ecb33138b5c56dbd46c5841379fc3f3aaea0709d1155ed14db10dccf3c46",
+  "city_id": "houston_tx",
+  "sentinel_inventory_commit_sha256": "1d184aaf2bba22e53a732ef10048bddc2e942b792cbad8868b8cef749501525b",
+  "sentinel_inventory": {
+    "path": "data/interim/multicity/m3_source_predictor_extension_v1/acquisition/sentinel/houston_tx/INVENTORY_COMPLETE.json",
+    "bytes": 667711,
+    "sha256": "7aa926bcfd552417a96790f0ac291761cb27c28ce28614dd8cd689478efe223e",
+    "commit_sha256": "1d184aaf2bba22e53a732ef10048bddc2e942b792cbad8868b8cef749501525b"
+  },
+  "discovery_query_geometry": "exact_authenticated_aoi_envelope",
+  "scientific_selection_geometry": "exact_authenticated_aoi",
+  "queue_mutated": false,
+  "blind_city_accessed": false,
+  "target_or_landsat_values_read": false,
+  "model_fit_select_predict_or_score_performed": false,
+  "next_safe_stage": "resume_same_daymet_repair_runner_online_acquisition",
+  "commit_sha256": "2f2dad9ac31478912c80fbfd9eb68277305959cd9458924124bbd0a0f9e03b3f"
+}
