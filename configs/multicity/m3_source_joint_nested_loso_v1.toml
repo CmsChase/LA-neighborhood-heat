@@ -1,0 +1,127 @@
+# Pre-value executable contract for source-only joint ST_QA + M3 selection.
+# This file is code/configuration only.  It grants no permission to open a
+# predictor or QA-target parquet, fit a model, select a winner, or access a
+# blind-test city.
+
+schema_version = 1
+algorithm_version = "m3-source-joint-nested-loso-v1"
+
+[inputs]
+protocol_lock = "manifests/multicity/next_experiment/M3_DEVELOPMENT_PROTOCOL_LOCK.json"
+protocol_lock_commit_sha256 = "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8"
+source_qa_completion = "manifests/multicity/next_experiment/source_development_v2/SOURCE_QA_CANDIDATES_COMPLETE.json"
+source_qa_completion_commit_sha256 = "f3276d7254c71c642c8300edacacd1a3caa7c3e279a7dc820c9de5928cdac1d4"
+source_qa_city_root = "data/interim/multicity/m3_source_development_v2/qa_candidates/cities"
+source_predictors_completion = "manifests/multicity/next_experiment/source_predictor_extension_v1/SOURCE_PREDICTORS_46_COMPLETE.json"
+source_predictors_required_state = "source_predictors_46_complete"
+source_predictor_table_columns = "keys_plus_exact_46_without_city_centroid"
+city_context_feature = "city_centroid_latitude_deg"
+city_context_algorithm = "authenticate_census_place_city_boundary;project_to_locked_target_grid_crs;unary_union;centroid;transform_centroid_to_epsg4326;take_latitude"
+city_context_assembly = "mechanically_repeat_authenticated_city_value_by_city_id_after_authorization"
+
+[outputs]
+root = "data/processed/multicity/m3_source_joint_nested_loso_v1"
+values_opened_marker = "data/interim/multicity/m3_source_joint_nested_loso_v1/VALUES_OPENED.json"
+joint_stage = "data/processed/multicity/m3_source_joint_nested_loso_v1/JOINT_NESTED_LOSO_STAGE_COMPLETE.json"
+source_uq_stage = "data/processed/multicity/m3_source_joint_nested_loso_v1/SOURCE_UQ_SELECTION_COMPLETE.json"
+source_risk_stage = "data/processed/multicity/m3_source_joint_nested_loso_v1/SOURCE_RISK_SELECTION_COMPLETE.json"
+completion = "manifests/multicity/next_experiment/source_joint_nested_loso_v1/SOURCE_NESTED_LOSO_COMPLETE.json"
+
+[cohorts]
+source_city_ids = ["los_angeles_ca", "phoenix_az", "houston_tx", "chicago_il"]
+blind_test_city_ids = ["seattle_wa", "denver_co", "atlanta_ga", "miami_fl"]
+outer_holdout_unit = "one_complete_source_city"
+inner_holdout_unit = "one_complete_city_from_the_three_outer_training_cities"
+
+[selection]
+joint_configuration_count = 16
+outer_fold_count = 4
+inner_city_count_per_outer_fold = 3
+minimum_usable_dates_per_inner_validation_city = 8
+minimum_total_usable_inner_validation_city_dates = 30
+primary_objective = "equal_city_equal_date_m3_absolute_lst_mae"
+primary_objective_round_decimal_places = 12
+overall_retention = "retained_finite_model_rows_divided_by_all_frozen_predictor_rows_on_usable_dates"
+outer_scores_select_final_configuration = false
+final_selection = "repeat_whole_city_loso_on_all_four_sources_then_refit_selected_configuration_on_all_four_sources"
+pre_value_complexity_disambiguation = "fewer_anomaly_leaves_first_then_stronger_ridge_regularization"
+
+[selection.tie_break]
+order = [
+  "higher_minimum_usable_dates_across_inner_validation_cities",
+  "higher_total_usable_city_dates",
+  "higher_overall_tract_date_retention",
+  "more_lenient_st_qa_none_then_6k_then_4k_then_3k",
+  "lower_m3_complexity_rank",
+  "joint_candidate_id_lexicographic_ascending",
+]
+
+[[qa_candidates]]
+id = "none"
+leniency_rank = 4
+
+[[qa_candidates]]
+id = "3k"
+leniency_rank = 1
+
+[[qa_candidates]]
+id = "4k"
+leniency_rank = 2
+
+[[qa_candidates]]
+id = "6k"
+leniency_rank = 3
+
+[[m3_candidates]]
+candidate_id = "level_ridge_alpha_1__anomaly_hgb_leaves_15"
+level_alpha = 1.0
+anomaly_max_leaf_nodes = 15
+complexity_rank = 2
+
+[[m3_candidates]]
+candidate_id = "level_ridge_alpha_1__anomaly_hgb_leaves_31"
+level_alpha = 1.0
+anomaly_max_leaf_nodes = 31
+complexity_rank = 4
+
+[[m3_candidates]]
+candidate_id = "level_ridge_alpha_10__anomaly_hgb_leaves_15"
+level_alpha = 10.0
+anomaly_max_leaf_nodes = 15
+complexity_rank = 1
+
+[[m3_candidates]]
+candidate_id = "level_ridge_alpha_10__anomaly_hgb_leaves_31"
+level_alpha = 10.0
+anomaly_max_leaf_nodes = 31
+complexity_rank = 3
+
+[source_only_uq]
+selection_unit = "outer_held_source_city_as_pseudo_test"
+source_oof_residuals_only = true
+density_weighted_candidate_requires_all_protocol_stability_and_benefit_gates = true
+fallback_method = "unweighted_cross_conformal"
+blind_predictors_allowed = false
+
+[source_only_risk]
+selection_unit = "outer_held_source_city_as_pseudo_test"
+candidate_methods = ["learned_error", "interval_width", "ensemble_sd"]
+fallback_method = "none_accept_all"
+blind_predictors_allowed = false
+
+[completion]
+implementation_status = "final_completion_disabled_until_executable_source_uq_and_risk_stages"
+joint_selection_stage_required = true
+source_uq_selection_stage_required = true
+source_risk_selection_stage_required = true
+completion_may_not_claim_final_source_selection_before_all_three_stages = true
+
+[permissions]
+authorization_may_read_json_metadata_and_code_only = true
+authorization_may_read_predictor_or_qa_parquet = false
+source_predictor_and_qa_values_require_append_only_authorization = true
+fit_select_predict_or_score_before_authorization = false
+source_only_fit_after_authorization = true
+blind_city_asset_predictor_qa_or_target_access = false
+network_or_href_reads = false
+change_year_city_candidate_support_or_tie_break = false

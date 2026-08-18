@@ -1,0 +1,96 @@
+# Append-only source-only predictor extension for the authenticated M3 QA dates.
+
+schema_version = 1
+algorithm_version = "m3-source-predictor-extension-v1"
+
+[anchors]
+m3_protocol_lock = "manifests/multicity/next_experiment/M3_DEVELOPMENT_PROTOCOL_LOCK.json"
+m3_protocol_lock_commit_sha256 = "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8"
+source_integrity_authorization = "manifests/multicity/next_experiment/M3_SOURCE_INTEGRITY_V2_AUTHORIZATION.json"
+source_integrity_authorization_commit_sha256 = "8fcfbcd308bec8e218252389a39b746e7785f076f03e47f3298e3d9f13fc0677"
+source_qa_completion = "manifests/multicity/next_experiment/source_development_v2/SOURCE_QA_CANDIDATES_COMPLETE.json"
+source_qa_completion_commit_sha256 = "f3276d7254c71c642c8300edacacd1a3caa7c3e279a7dc820c9de5928cdac1d4"
+portable_predictor_contract = "manifests/multicity/reviews/portable_predictor_contract/PORTABLE_PREDICTOR_CONTRACT.json"
+portable_predictor_contract_commit_sha256 = "b92be8575e836157daa39e94f6720e01802c41143a396ba1a97fad5f40499bd1"
+portable_predictor_inventory = "manifests/multicity/predictors/PORTABLE_PREDICTOR_INVENTORY.json"
+portable_predictor_inventory_commit_sha256 = "6d0c26d8c1e23a28d7d855aebf1957801c2e76513070700a61122b96f579f2ab"
+base_components_completion = "data/processed/multicity/portable_predictors/components/COMPONENTS_COMPLETE.json"
+base_components_completion_sha256 = "cbe5443b6237b1735e6f08a6f2573bb669f7da632f1b93a96ab5c5315f4f6484"
+base_components_completion_bytes = 2550
+existing_predictors_46_completion = "data/processed/multicity/portable_predictors/components/PREDICTORS_ALL_46_COMPLETE.json"
+existing_predictors_46_completion_commit_sha256 = "ae4c583b8392b237978743e1742c4f9403826ece74e06de7fb1f84f3a72802ae"
+qa_output_root = "data/interim/multicity/m3_source_development_v2/qa_candidates"
+existing_predictor_root = "data/processed/multicity/portable_predictors/components"
+
+[scope]
+source_city_ids = ["los_angeles_ca", "phoenix_az", "houston_tx", "chicago_il"]
+extension_city_ids = ["houston_tx", "chicago_il"]
+blind_test_city_ids = ["seattle_wa", "denver_co", "atlanta_ga", "miami_fl"]
+extension_years = [2020, 2021, 2022, 2023, 2024]
+logical_overpass_count = 317
+feature_count = 46
+extension_row_count = 116691
+
+[scope.houston_tx]
+extension_date_count = 81
+all_date_count = 102
+tract_count = 651
+extension_row_count = 52731
+all_row_count = 66402
+static_provenance = "data/processed/multicity/portable_predictors/components/houston_tx/static_features_provenance.json"
+static_provenance_commit_sha256 = "e966027aa724cf4555a1717d05a70dc3a13fc9c6767d999fd1636da32e4be96e"
+
+[scope.chicago_il]
+extension_date_count = 82
+all_date_count = 103
+tract_count = 780
+extension_row_count = 63960
+all_row_count = 80340
+static_provenance = "data/processed/multicity/portable_predictors/components/chicago_il/static_features_provenance.json"
+static_provenance_commit_sha256 = "9b32147df2a15d00d45bfb46788bffd0543d71dc97d6fbc50568ae6512a1e23e"
+
+[runtime]
+authorization = "manifests/multicity/next_experiment/M3_SOURCE_PREDICTOR_EXTENSION_V1_AUTHORIZATION.json"
+database = "data/interim/multicity/m3_source_predictor_extension_v1/runtime/tasks.sqlite"
+control = "data/interim/multicity/m3_source_predictor_extension_v1/runtime/control.json"
+status = "data/interim/multicity/m3_source_predictor_extension_v1/runtime/status.json"
+log = "data/interim/multicity/m3_source_predictor_extension_v1/runtime/worker.log"
+worker_lock = "data/interim/multicity/m3_source_predictor_extension_v1/runtime/worker.lock"
+acquisition_root = "data/interim/multicity/m3_source_predictor_extension_v1/acquisition"
+component_root = "data/interim/multicity/m3_source_predictor_extension_v1/components"
+output_root = "data/processed/multicity/m3_source_predictor_extension_v1"
+completion_root = "manifests/multicity/next_experiment/source_predictor_extension_v1"
+acquisition_completion = "manifests/multicity/next_experiment/source_predictor_extension_v1/SOURCE_PREDICTOR_ACQUISITION_COMPLETE.json"
+predictor_completion = "manifests/multicity/next_experiment/source_predictor_extension_v1/SOURCE_PREDICTORS_46_COMPLETE.json"
+
+[execution]
+compute_workers = 1
+download_workers = 1
+maximum_active_tasks = 1
+lease_seconds = 900
+heartbeat_seconds = 30
+retry_base_seconds = 5
+retry_max_seconds = 300
+anonymous_daymet_dap_first = true
+earthdata_token_optional_fallback = true
+credential_persistence_allowed = false
+planetary_computer_signed_url_persistence_allowed = false
+
+[limits.online_acquisition]
+network_requests_allowed = true
+href_reads_allowed = true
+official_daymet_hosts = ["cmr.earthdata.nasa.gov", "opendap.earthdata.nasa.gov", "data.ornldaac.earthdata.nasa.gov"]
+official_sentinel_hosts = ["planetarycomputer.microsoft.com", "*.blob.core.windows.net"]
+
+[limits.offline_assembly]
+network_requests_allowed = false
+href_reads_allowed = false
+
+[limits.global]
+blind_test_city_access_allowed = false
+landsat_thermal_or_qa_value_reads_allowed = false
+target_value_reads_allowed = false
+model_fit_select_predict_or_score_allowed = false
+old_queue_or_cache_mutation_allowed = false
+existing_predictor_mutation_allowed = false
+year_city_feature_or_key_universe_change_allowed = false
