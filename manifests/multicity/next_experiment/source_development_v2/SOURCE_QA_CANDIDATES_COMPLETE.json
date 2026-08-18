@@ -1,0 +1,113 @@
+{
+  "schema_version": 2,
+  "algorithm_version": "m3-source-development-engine-v2",
+  "state": "source_qa_candidates_complete",
+  "claim_id": "a64f3dd0958f3b4d94f097580fb0f6fe301469775885490534f908091b08d0a8",
+  "m3_protocol_lock_commit_sha256": "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8",
+  "source_acquisition_amendment_commit_sha256": "de9f6d240926ddeddc32cafe7ca247b036fc17e3471f00b1a13c407cab697344",
+  "expanded_source_inventory_commit_sha256": "0d407dbbfb2e3e9fb83421790553dbe12ba6592f3d03579333c38b7498f8dce0",
+  "source_integrity_availability_amendment_commit_sha256": "43f72b3ce67f27aa9fa68ba9f49a287beb9ef555cf073ad9d8f8255d2c21f697",
+  "source_integrity_logical_overlay_commit_sha256": "1051593e5f87541dc21fdfc99df327605b429adb00de0dd851efa9340b44a673",
+  "integrity_execution_authorization_commit_sha256": "8fcfbcd308bec8e218252389a39b746e7785f076f03e47f3298e3d9f13fc0677",
+  "physical_scene_plan_commit_sha256": "d1dd58038e76f7e3dbf2249fbe77e59762739ec20deda74248541272545d6538",
+  "execution_overlay_commit_sha256": "a82f25e76078bab521cc7ceed2cac5dadd775d9f0f8d0aaf431bb8b61df63572",
+  "logical_global_cache_commit_sha256": "948a87a94ab462fdafdb7a6d68d7e060d5b98e6ff00b7edc06ef17202a8cb6aa",
+  "source_city_ids": [
+    "los_angeles_ca",
+    "phoenix_az",
+    "houston_tx",
+    "chicago_il"
+  ],
+  "candidate_ids": [
+    "none",
+    "3k",
+    "4k",
+    "6k"
+  ],
+  "overpass_count": 317,
+  "city_commits": [
+    {
+      "city_id": "los_angeles_ca",
+      "commit_sha256": "2afef9760e284241889f6e24541d05eb8d8dd9b37a659148ee5baa530501a88c"
+    },
+    {
+      "city_id": "phoenix_az",
+      "commit_sha256": "42322b6a8428a565c2d308a97039889f0a975c640acf804c848414d806618c6a"
+    },
+    {
+      "city_id": "houston_tx",
+      "commit_sha256": "23e343dc173e82a844e6da4473260a819b665c454daaf5a00a62bb3151848504"
+    },
+    {
+      "city_id": "chicago_il",
+      "commit_sha256": "077a2025d5641428a6569a7fd4695ba77ec20d6338757a499dcec564ea57ab7b"
+    }
+  ],
+  "usable_date_counts": {
+    "los_angeles_ca": {
+      "none": 65,
+      "3k": 63,
+      "4k": 65,
+      "6k": 65
+    },
+    "phoenix_az": {
+      "none": 21,
+      "3k": 21,
+      "4k": 21,
+      "6k": 21
+    },
+    "houston_tx": {
+      "none": 22,
+      "3k": 15,
+      "4k": 20,
+      "6k": 22
+    },
+    "chicago_il": {
+      "none": 27,
+      "3k": 14,
+      "4k": 26,
+      "6k": 27
+    }
+  },
+  "support_gate": {
+    "minimum_usable_dates_per_city": 8,
+    "minimum_total_usable_city_dates": 30,
+    "none_candidate_counts": {
+      "los_angeles_ca": 65,
+      "phoenix_az": 21,
+      "houston_tx": 22,
+      "chicago_il": 27
+    },
+    "per_city_passed": true,
+    "total_passed": true,
+    "passed": true
+  },
+  "decision": "eligible_for_separate_nested_loso_authorization",
+  "offline_audit": {
+    "network_requests_performed": 0,
+    "href_reads_performed": 0,
+    "physical_cache_mutated": false,
+    "old_queue_or_cache_mutated": false,
+    "blind_test_city_accessed": false,
+    "predictor_values_read_or_built": false,
+    "model_fit_selection_prediction_or_scoring_performed": false
+  },
+  "nested_loso_performed": false,
+  "model_fit_performed": false,
+  "model_or_st_qa_selected": false,
+  "next_safe_stage": "separately_authorize_nested_source_loso_fit_and_selection",
+  "coverage_key_repair_algorithm_version": "m3-source-coverage-key-repair-v1",
+  "coverage_key_repair_authorization_commit_sha256": "3496e3c96483f2fdd78aa6d9368d0896eb05bfca083d71f2b724df9abcbc3145",
+  "coverage_key_adapter": {
+    "input_key": "source_coverage",
+    "output_key": "_source_coverage",
+    "array_values_changed": false
+  },
+  "coverage_key_runtime_launch_algorithm_version": "m3-source-coverage-key-runtime-launch-v1",
+  "coverage_key_runtime_launch_authorization_commit_sha256": "a888f055d0ef715cd914204ce4b6385f125478f9978880d715e05baee9c3877f",
+  "prepare_worker_v2_or_initialize_source_runtime_v2_performed": false,
+  "model_run_queue_schema_open_after_all_permits_authenticated": true,
+  "task_plan_rebuilt_reset_or_rewritten": false,
+  "database_hash_transition_used_as_runtime_input": false,
+  "commit_sha256": "f3276d7254c71c642c8300edacacd1a3caa7c3e279a7dc820c9de5928cdac1d4"
+}
