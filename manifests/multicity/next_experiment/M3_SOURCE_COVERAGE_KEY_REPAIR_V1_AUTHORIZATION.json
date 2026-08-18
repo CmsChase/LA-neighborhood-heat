@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-coverage-key-repair-v1",
+  "state": "m3_source_coverage_key_repair_authorized",
+  "repair_scope": "rename_one_authenticated_in_memory_mapping_key_only",
+  "parent_v2_authorization_commit_sha256": "8fcfbcd308bec8e218252389a39b746e7785f076f03e47f3298e3d9f13fc0677",
+  "logical_cache_completion_commit_sha256": "4834d19192e1cb3c61013577bb50d61f5376e3d0ba8b8088f8442611cdf474c7",
+  "logical_global_cache_commit_sha256": "948a87a94ab462fdafdb7a6d68d7e060d5b98e6ff00b7edc06ef17202a8cb6aa",
+  "v2_run_id": "m3-source-integrity-v2-8fcfbcd308bec8e2",
+  "v2_task_plan_sha256": "f7d8f092db682d5345586269ba5c56ae7125fabf854bcbc1994aae6af644dd79",
+  "initial_paused_queue_snapshot": {
+    "run_id": "m3-source-integrity-v2-8fcfbcd308bec8e2",
+    "schema_version": 1,
+    "task_plan_sha256": "f7d8f092db682d5345586269ba5c56ae7125fabf854bcbc1994aae6af644dd79",
+    "desired_state": "paused",
+    "counts": {
+      "pending": 322,
+      "running": 0,
+      "complete": 524,
+      "quarantined": 0,
+      "total": 846
+    },
+    "counts_by_kind": {
+      "compile_qa_city": {
+        "pending": 4,
+        "running": 0,
+        "complete": 0,
+        "quarantined": 0,
+        "total": 4
+      },
+      "finalize_logical_cache": {
+        "pending": 0,
+        "running": 0,
+        "complete": 1,
+        "quarantined": 0,
+        "total": 1
+      },
+      "finalize_qa_candidates": {
+        "pending": 1,
+        "running": 0,
+        "complete": 0,
+        "quarantined": 0,
+        "total": 1
+      },
+      "finalize_retained_scene": {
+        "pending": 0,
+        "running": 0,
+        "complete": 523,
+        "quarantined": 0,
+        "total": 523
+      },
+      "qa_overpass": {
+        "pending": 317,
+        "running": 0,
+        "complete": 0,
+        "quarantined": 0,
+        "total": 317
+      }
+    },
+    "active_lease_count": 0,
+    "first_qa_task": {
+      "task_id": "qa-b7293fc5e647cc0bc489",
+      "kind": "qa_overpass",
+      "payload": {
+        "acquired_utc_max": "2020-05-16T18:28:09.326842+00:00",
+        "acquired_utc_min": "2020-05-16T18:27:45.431567+00:00",
+        "city_id": "los_angeles_ca",
+        "grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "inventory_mode": "retained_authenticated_existing",
+        "ordinal": 1,
+        "overpass_id": "landsat-8_20200516T182745Z",
+        "platform": "landsat-8",
+        "qa_candidate_ids": [
+          "none",
+          "3k",
+          "4k",
+          "6k"
+        ],
+        "relationship_sha256": "6f5ac0850fd02e3aa9ed75198ce15f25b7c235e20da103b82f2de0d75e7f19f0",
+        "scene_ids": [
+          "LC08_L2SP_041036_20200516_02_T1",
+          "LC08_L2SP_041037_20200516_02_T1"
+        ],
+        "source_lock_sha256": "c5223a618cf91d5ed1a6032f0a2b8f75828a2068fdbc7239d80fe5a0f76db282",
+        "target_context_commit_sha256": "7a5ea718833c4c860f68399cf89b63987dfbb13cf0bccf7330ae8b2d64e078fe",
+        "target_date": "2020-05-16",
+        "union_city_coverage_fraction": 0.9999999999999986,
+        "wrs_path_rows": [
+          "041/036",
+          "041/037"
+        ]
+      },
+      "payload_sha256": "0a5d6e459378708616775b6238a6950d32e7960bf2157267a7f4991c0c3d36f7",
+      "status": "pending",
+      "attempt": 3,
+      "available_at": 1787015787.5783193,
+      "lease_owner": null,
+      "lease_expires_at": null,
+      "claim_generation": 3,
+      "result_json": null,
+      "error_type": "ValueError",
+      "plan_index": 524,
+      "updated_at": 1787015767.5783193
+    }
+  },
+  "incident_evidence": {
+    "status": {
+      "schema_version": 2,
+      "algorithm_version": "m3-source-development-runtime-v2",
+      "state": "paused",
+      "run_id": "m3-source-integrity-v2-8fcfbcd308bec8e2",
+      "desired_state": "paused",
+      "counts": {
+        "pending": 322,
+        "running": 0,
+        "complete": 524,
+        "quarantined": 0,
+        "total": 846
+      },
+      "counts_by_kind": {
+        "compile_qa_city": {
+          "pending": 4,
+          "running": 0,
+          "complete": 0,
+          "quarantined": 0,
+          "total": 4
+        },
+        "finalize_logical_cache": {
+          "pending": 0,
+          "running": 0,
+          "complete": 1,
+          "quarantined": 0,
+          "total": 1
+        },
+        "finalize_qa_candidates": {
+          "pending": 1,
+          "running": 0,
+          "complete": 0,
+          "quarantined": 0,
+          "total": 1
+        },
+        "finalize_retained_scene": {
+          "pending": 0,
+          "running": 0,
+          "complete": 523,
+          "quarantined": 0,
+          "total": 523
+        },
+        "qa_overpass": {
+          "pending": 317,
+          "running": 0,
+          "complete": 0,
+          "quarantined": 0,
+          "total": 317
+        }
+      },
+      "active_task_ids": [],
+      "download_workers": 0,
+      "compute_workers": 1,
+      "raster_window_size": 512,
+      "network_allowed": false,
+      "href_reads_allowed": false,
+      "physical_cache_read_only": true,
+      "original_queue_read_only": true,
+      "blind_test_targets_sealed": true,
+      "active_phase": "offline_qa_rebuild",
+      "phase": "qa_overpass",
+      "phase_complete": 0,
+      "phase_total": 322,
+      "retry_count": 32,
+      "last_error_type": "ValueError",
+      "network_request_count": 0,
+      "updated_at_utc": "2026-08-18T01:16:14.096781Z"
+    },
+    "status_file": {
+      "path": "data/interim/multicity/m3_source_development_v2/runtime/status.json",
+      "bytes": 1616,
+      "sha256": "bce1124361b57c06da020c4d6cdc74443f776b88c181cafe2605acaaac4c0554"
+    },
+    "qa_worker_log": {
+      "path": "data/interim/multicity/m3_source_development_v2/runtime/qa-worker.log",
+      "bytes": 1616,
+      "sha256": "bce1124361b57c06da020c4d6cdc74443f776b88c181cafe2605acaaac4c0554"
+    },
+    "qa_worker_stderr": {
+      "path": "data/interim/multicity/m3_source_development_v2/runtime/qa-worker.err.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "first_qa_task": {
+      "task_id": "qa-b7293fc5e647cc0bc489",
+      "kind": "qa_overpass",
+      "payload": {
+        "acquired_utc_max": "2020-05-16T18:28:09.326842+00:00",
+        "acquired_utc_min": "2020-05-16T18:27:45.431567+00:00",
+        "city_id": "los_angeles_ca",
+        "grid_sha256": "4da18ab2311181d9e4fb2c47a257a708da2ba4083cd642499d75a3437ce8b5bc",
+        "inventory_mode": "retained_authenticated_existing",
+        "ordinal": 1,
+        "overpass_id": "landsat-8_20200516T182745Z",
+        "platform": "landsat-8",
+        "qa_candidate_ids": [
+          "none",
+          "3k",
+          "4k",
+          "6k"
+        ],
+        "relationship_sha256": "6f5ac0850fd02e3aa9ed75198ce15f25b7c235e20da103b82f2de0d75e7f19f0",
+        "scene_ids": [
+          "LC08_L2SP_041036_20200516_02_T1",
+          "LC08_L2SP_041037_20200516_02_T1"
+        ],
+        "source_lock_sha256": "c5223a618cf91d5ed1a6032f0a2b8f75828a2068fdbc7239d80fe5a0f76db282",
+        "target_context_commit_sha256": "7a5ea718833c4c860f68399cf89b63987dfbb13cf0bccf7330ae8b2d64e078fe",
+        "target_date": "2020-05-16",
+        "union_city_coverage_fraction": 0.9999999999999986,
+        "wrs_path_rows": [
+          "041/036",
+          "041/037"
+        ]
+      },
+      "payload_sha256": "0a5d6e459378708616775b6238a6950d32e7960bf2157267a7f4991c0c3d36f7",
+      "status": "pending",
+      "attempt": 3,
+      "available_at": 1787015787.5783193,
+      "lease_owner": null,
+      "lease_expires_at": null,
+      "claim_generation": 3,
+      "result_json": null,
+      "error_type": "ValueError",
+      "plan_index": 524,
+      "updated_at": 1787015767.5783193
+    },
+    "coverage_key_mismatch": {
+      "classification": "in_memory_mapping_key_compatibility_failure",
+      "producer_key": "source_coverage",
+      "consumer_key": "_source_coverage",
+      "expected_exception_type": "ValueError",
+      "expected_exception_message": "Aligned scene lacks assets: ['_source_coverage']",
+      "producer_assignment": {
+        "path": "src/la_heat/multicity/m3_source_integrity_v2.py",
+        "bytes": 46772,
+        "sha256": "07a1f77ce5df1155342479aa555e46508ce1bc8eb5efa449eb060750de713488",
+        "line": 864,
+        "statement": "arrays[\"source_coverage\"] = coverage"
+      },
+      "consumer_contract": {
+        "path": "src/la_heat/aligned_landsat.py",
+        "bytes": 7787,
+        "sha256": "3335bf7d0be863a211fe3d6e3359d8e066af3ff67fa254876d14077c37cab894",
+        "coverage_key_line": 25,
+        "value_error_line": 48
+      },
+      "offline_qa_call_path": {
+        "path": "src/la_heat/multicity/m3_source_offline_qa.py",
+        "bytes": 7456,
+        "sha256": "9a1a8b64738ded3d56a4d55133c194dc953f867738100e8c2074fa8719263317",
+        "decode_call_line": 100
+      },
+      "tiff_bytes_or_values_read_to_build_evidence": false
+    }
+  },
+  "inputs": {
+    "parent_v2_authorization": {
+      "path": "manifests/multicity/next_experiment/M3_SOURCE_INTEGRITY_V2_AUTHORIZATION.json",
+      "bytes": 901646,
+      "sha256": "7a736e1734a3e3970625d444fbc16a3a70e98b7e5da986e929e97a72b2cdf2bd",
+      "commit_sha256": "8fcfbcd308bec8e218252389a39b746e7785f076f03e47f3298e3d9f13fc0677"
+    },
+    "logical_cache_completion": {
+      "path": "manifests/multicity/next_experiment/source_development_v2/SOURCE_LANDSAT_LOGICAL_CACHE_COMPLETE.json",
+      "bytes": 1002,
+      "sha256": "a70747d9b3e64b38b7ff0d366edc084c287658fc940e4408699218c4bc691761",
+      "commit_sha256": "4834d19192e1cb3c61013577bb50d61f5376e3d0ba8b8088f8442611cdf474c7"
+    },
+    "logical_global_cache_commit": {
+      "path": "data/interim/multicity/m3_source_development_v2/logical_cache/LOGICAL_GLOBAL_CACHE_COMMIT.json",
+      "bytes": 99214,
+      "sha256": "c453e85312097278bd5693c8d0138b7374390a60667a4e06e24eed8c6fe58cca",
+      "commit_sha256": "948a87a94ab462fdafdb7a6d68d7e060d5b98e6ff00b7edc06ef17202a8cb6aa"
+    },
+    "incident_queue_database": {
+      "path": "data/interim/multicity/m3_source_development_v2/runtime/tasks.sqlite",
+      "bytes": 815104,
+      "sha256": "869b3b2ab50afa44d1c6fcdba6a083566b5ad2f7cc2626e5b492ced28adfc85b"
+    }
+  },
+  "source_city_ids": [
+    "los_angeles_ca",
+    "phoenix_az",
+    "houston_tx",
+    "chicago_il"
+  ],
+  "blind_test_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "required_landsat_assets": [
+    "lwir11",
+    "qa_pixel",
+    "qa",
+    "cdist",
+    "qa_radsat"
+  ],
+  "qa_candidate_ids": [
+    "none",
+    "3k",
+    "4k",
+    "6k"
+  ],
+  "adapter_contract": {
+    "call_existing_authenticated_load_retained_scene_arrays_first": true,
+    "required_input_keys": [
+      "lwir11",
+      "qa_pixel",
+      "qa",
+      "cdist",
+      "qa_radsat",
+      "source_coverage"
+    ],
+    "required_output_keys": [
+      "lwir11",
+      "qa_pixel",
+      "qa",
+      "cdist",
+      "qa_radsat",
+      "_source_coverage"
+    ],
+    "remove_key": "source_coverage",
+    "insert_key": "_source_coverage",
+    "coverage_array_object_copied_or_modified": false,
+    "any_raster_array_value_inspected_or_changed_by_adapter": false
+  },
+  "permissions": {
+    "resume_existing_v2_queue_without_rebuild_or_reset": true,
+    "execute_only_existing_317_qa_four_city_compile_and_final_tasks": true,
+    "rename_legacy_coverage_key_in_memory_after_authenticated_loader": true,
+    "write_existing_v2_qa_output_and_completion_paths": true,
+    "modify_old_v2_authorization_or_logical_cache_commits": false,
+    "modify_physical_cache_or_completed_logical_tasks": false,
+    "network_or_href_reads": false,
+    "blind_city_asset_predictor_qa_or_target_access": false,
+    "predictor_read_or_build": false,
+    "fit_select_predict_or_score": false,
+    "change_year_city_candidate_or_support_gate": false
+  },
+  "runtime_contract": {
+    "compute_workers": 1,
+    "download_workers": 0,
+    "network_requests_allowed": false,
+    "href_reads_allowed": false,
+    "existing_run_id": "m3-source-integrity-v2-8fcfbcd308bec8e2",
+    "existing_task_plan_sha256": "f7d8f092db682d5345586269ba5c56ae7125fabf854bcbc1994aae6af644dd79",
+    "initial_completed_tasks_preserved": 524,
+    "initial_pending_tasks_preserved": 322,
+    "queue_rebuild_reset_or_task_rewrite_allowed": false
+  },
+  "code_identity": {
+    "src/la_heat/multicity/m3_source_coverage_key_repair_v1.py": {
+      "path": "src/la_heat/multicity/m3_source_coverage_key_repair_v1.py",
+      "bytes": 32966,
+      "sha256": "2db7e914c4c72d860f71e2762ceef1f6647021e09676ad88c8ab1d3d0f1ac44b"
+    },
+    "src/la_heat/multicity/m3_source_development_engine_coverage_key_repair_v1.py": {
+      "path": "src/la_heat/multicity/m3_source_development_engine_coverage_key_repair_v1.py",
+      "bytes": 14320,
+      "sha256": "851a8c126143a97b26d14fd6bd30e485a2448a06fd3c497d937302603758f9ee"
+    },
+    "scripts/authorize_m3_source_coverage_key_repair_v1.py": {
+      "path": "scripts/authorize_m3_source_coverage_key_repair_v1.py",
+      "bytes": 3370,
+      "sha256": "97a1c32b283dc34fe38c0b9bdf73d06d7af43f96a3f63d0ff06e76bf60b459d8"
+    },
+    "scripts/run_m3_source_coverage_key_repair_v1.py": {
+      "path": "scripts/run_m3_source_coverage_key_repair_v1.py",
+      "bytes": 2952,
+      "sha256": "4e3c2cb6ac39f37f0b8c4d9fe6d4ab91f0120bfd7891b9f1dd048d03ec47df70"
+    }
+  },
+  "access_audit": {
+    "authorization_read_landsat_or_qa_raster_values": false,
+    "authorization_read_predictor_or_target_values": false,
+    "authorization_accessed_blind_city_data": false,
+    "authorization_modified_queue_cache_or_existing_manifest": false,
+    "authorization_fit_selected_predicted_or_scored": false
+  },
+  "next_safe_stage": "start_repair_wrapper_for_existing_offline_qa_queue",
+  "claim_id": "58a20dfca878213025ab8e7d3fc77baaec40c70b49ea0176068f2fe6c8f73807",
+  "commit_sha256": "3496e3c96483f2fdd78aa6d9368d0896eb05bfca083d71f2b724df9abcbc3145"
+}
