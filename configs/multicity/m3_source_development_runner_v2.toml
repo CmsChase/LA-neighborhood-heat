@@ -1,0 +1,39 @@
+# Independent, offline-only continuation for the authenticated integrity overlay.
+
+schema_version = 2
+algorithm_version = "m3-source-development-runtime-v2"
+
+[inputs]
+protocol_lock = "manifests/multicity/next_experiment/M3_DEVELOPMENT_PROTOCOL_LOCK.json"
+source_acquisition_amendment = "manifests/multicity/next_experiment/M3_SOURCE_ACQUISITION_AMENDMENT.json"
+expanded_source_inventory = "manifests/multicity/next_experiment/M3_SOURCE_EXPANDED_INVENTORY.json"
+integrity_execution_authorization = "manifests/multicity/next_experiment/M3_SOURCE_INTEGRITY_V2_AUTHORIZATION.json"
+
+[runtime]
+original_database = "data/interim/multicity/m3_source_development/runtime/tasks.sqlite"
+database = "data/interim/multicity/m3_source_development_v2/runtime/tasks.sqlite"
+control = "data/interim/multicity/m3_source_development_v2/runtime/control.json"
+status = "data/interim/multicity/m3_source_development_v2/runtime/status.json"
+log = "data/interim/multicity/m3_source_development_v2/runtime/worker.log"
+physical_cache_root = "data/interim/multicity/m3_source_development/landsat_cache"
+logical_cache_root = "data/interim/multicity/m3_source_development_v2/logical_cache"
+qa_output_root = "data/interim/multicity/m3_source_development_v2/qa_candidates"
+completion_root = "manifests/multicity/next_experiment/source_development_v2"
+
+[office_mode]
+download_workers = 0
+compute_workers = 1
+raster_window_size = 512
+lease_seconds = 900
+heartbeat_seconds = 30
+retry_base_seconds = 5
+retry_max_seconds = 300
+
+[limits]
+network_requests_allowed = false
+href_reads_allowed = false
+physical_cache_mutation_allowed = false
+original_queue_mutation_allowed = false
+blind_test_city_access_allowed = false
+predictor_read_or_build_allowed = false
+fit_select_predict_or_score_allowed = false
