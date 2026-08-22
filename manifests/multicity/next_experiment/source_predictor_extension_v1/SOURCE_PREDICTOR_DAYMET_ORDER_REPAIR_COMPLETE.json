@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-predictor-daymet-order-repair-v1",
+  "state": "source_predictor_daymet_order_repair_complete",
+  "repair_authorization_commit_sha256": "366f94697d13048d00fa121b69983b45fc96d9247c90f460d591209cdad25a76",
+  "repair_acquisition_completion_commit_sha256": "9e7ba8e1211b9542c8bc698dae41767c9059a8bb7eef8bd494b1975c6e5a5a50",
+  "parent_predictor_completion_commit_sha256": "1bf16d8b6a9e9cbac04d1681213f0a783ee3610049f815f87692dbf2442aaa3f",
+  "parent_predictor_completion": {
+    "path": "manifests/multicity/next_experiment/source_predictor_extension_v1/SOURCE_PREDICTORS_46_COMPLETE.json",
+    "bytes": 22529,
+    "sha256": "47c32c3b7bd4575f06fbe688d3576b19b2d6138315b2aa95ed940cb5ca4c67cd",
+    "commit_sha256": "1bf16d8b6a9e9cbac04d1681213f0a783ee3610049f815f87692dbf2442aaa3f"
+  },
+  "terminal_queue_snapshot_sha256": "cc6ef25cc490ec5ea2631381a76581e96c70c43b5e7a1bf358c6a8a833972ade",
+  "audit": {
+    "offline_network_requests": 0,
+    "offline_href_reads": 0,
+    "blind_test_city_accessed": false,
+    "target_or_landsat_values_read": false,
+    "model_fit_select_predict_or_score_performed": false,
+    "old_predictor_or_runtime_mutated": false
+  },
+  "next_safe_stage": "bind_both_parent_and_repair_completions_before_joint_authorization",
+  "commit_sha256": "f5018f94c8932450797fb86bc8ff45f00406e5710462820c4357daf4ce0f1a20"
+}

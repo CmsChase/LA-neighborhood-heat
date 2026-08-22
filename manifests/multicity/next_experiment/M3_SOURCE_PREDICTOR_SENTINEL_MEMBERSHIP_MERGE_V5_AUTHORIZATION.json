@@ -1,0 +1,51 @@
+{
+  "algorithm_version": "m3-sentinel-membership-merge-repair-v5",
+  "code_identity": {
+    "files": [
+      {
+        "bytes": 7778,
+        "path": "RESUME_M3_SENTINEL_MEMBERSHIP_MERGE_V5.py",
+        "sha256": "100e0a6945f84d8895a41ebcff258cb4ac42d11bea49cbac84cfdd68cdf48989"
+      },
+      {
+        "bytes": 662,
+        "path": "RESUME_M3_SENTINEL_MEMBERSHIP_MERGE_V5.cmd",
+        "sha256": "ad080e3d37b1507356ed52c3c9ca21af828ad4017fdd6f1251b09a5d91e2272e"
+      }
+    ]
+  },
+  "commit_sha256": "6428dc6bb6cc30b38eb445c9e1277347c984e73beb07783fb486447943a1f148",
+  "parent_predictor_authorization_commit_sha256": "22f6f417faea2aaeb7f0c04d182ae45616f3cacf416ea904e58ed2c699987019",
+  "parent_runtime_fastpath_authorization_commit_sha256": "21d9bd91a9f3c943cc2580289e60a3526f92f4f8f1ca8d34a5caf70f53e53b83",
+  "permissions": {
+    "blind_city_access": false,
+    "model_fit_select_predict_or_score": false,
+    "source_sentinel_value_read": true,
+    "target_or_landsat_value_read": false
+  },
+  "repair_contract": {
+    "acquisition_local_date_constant_within_physical_acquisition": true,
+    "join_keys": [
+      "physical_acquisition_id",
+      "acquisition_local_date"
+    ],
+    "left_unique_key": [
+      "target_date",
+      "physical_acquisition_id"
+    ],
+    "merge_values_or_output_order_changed": false,
+    "new_validation": "many_to_many",
+    "observed_error_type": "MergeError",
+    "old_invalid_validation": "one_to_many",
+    "queue_initialize_rebuild_reset_rewrite_or_delete_allowed": false,
+    "right_unique_key": [
+      "tract_geoid",
+      "physical_acquisition_id"
+    ],
+    "same_sqlite_queue_and_existing_cache": true
+  },
+  "run_id": "m3-source-predictor-extension-v1-22f6f417faea2aae",
+  "schema_version": 1,
+  "sqlite_task_plan_sha256": "d21c5c74ca562d29e71375350029a4e44c17088497494203bc8d1844a1cec712",
+  "state": "m3_source_predictor_sentinel_membership_merge_repair_authorized"
+}

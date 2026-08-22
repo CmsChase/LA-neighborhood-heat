@@ -1,0 +1,19 @@
+{
+  "algorithm_version": "m3-sentinel-membership-merge-repair-v5",
+  "authenticated_compiled_outputs_may_be_resumed_without_reapplying_join": true,
+  "authorization_commit_sha256": "6428dc6bb6cc30b38eb445c9e1277347c984e73beb07783fb486447943a1f148",
+  "blind_city_accessed": false,
+  "commit_sha256": "7ea02bb68342d5a7e329cfb311d6356b18a12cafba286aea703fd6d3247b9ce5",
+  "membership_merge_repair_application_count_this_process": 0,
+  "model_fit_select_predict_or_score_performed": false,
+  "parent_v4_completion": {
+    "bytes": 900,
+    "path": "manifests/multicity/next_experiment/source_development_v2/SOURCE_PREDICTOR_SENTINEL_RUNTIME_FASTPATH_V4_COMPLETE.json",
+    "sha256": "973ac7f0f5af698bbc5912ad9ef4e43fc788c52aa9df84cc9fcd0118899e68a7"
+  },
+  "parent_v4_completion_commit_sha256": "3636abe9dd2627c583b26659c24f9b8598d7177c4e89be29d101d64c73ed960e",
+  "queue_or_cache_rebuilt_reset_rewritten_or_deleted": false,
+  "schema_version": 1,
+  "state": "m3_source_predictor_sentinel_membership_merge_repair_complete",
+  "target_or_landsat_values_read": false
+}

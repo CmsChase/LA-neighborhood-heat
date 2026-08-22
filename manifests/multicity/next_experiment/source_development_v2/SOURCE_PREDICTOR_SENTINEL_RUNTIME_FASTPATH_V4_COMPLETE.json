@@ -1,0 +1,17 @@
+{
+  "algorithm_version": "m3-sentinel-runtime-fastpath-v4",
+  "authorization_commit_sha256": "21d9bd91a9f3c943cc2580289e60a3526f92f4f8f1ca8d34a5caf70f53e53b83",
+  "blind_city_accessed": false,
+  "commit_sha256": "3636abe9dd2627c583b26659c24f9b8598d7177c4e89be29d101d64c73ed960e",
+  "model_fit_select_predict_or_score_performed": false,
+  "parent_v3_completion": {
+    "bytes": 712,
+    "path": "manifests/multicity/next_experiment/source_development_v2/SOURCE_PREDICTOR_SENTINEL_2X4_HOTFIX_V3_COMPLETE.json",
+    "sha256": "51f4eb2af044633162e33d007dc9a412558edfaab03d4207fbfc3e27a010b130"
+  },
+  "parent_v3_completion_commit_sha256": "acd8826f05977ee90625581512c738f010850c43b09bef2820fa3bba29902732",
+  "queue_or_cache_rebuilt_reset_rewritten_or_deleted": false,
+  "schema_version": 1,
+  "state": "m3_source_predictor_sentinel_runtime_fastpath_complete",
+  "target_or_landsat_values_read": false
+}

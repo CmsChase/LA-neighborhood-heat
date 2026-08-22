@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-predictor-sentinel-game-laptop-v1",
+  "state": "source_predictor_sentinel_game_laptop_acquisition_complete",
+  "authorization_commit_sha256": "8310bd4822363a681330441b8494954a0b7b427f00f8e8075230480cbf9bfe83",
+  "parent_completion_commit_sha256": "9e7ba8e1211b9542c8bc698dae41767c9059a8bb7eef8bd494b1975c6e5a5a50",
+  "parent_completion": {
+    "path": "manifests/multicity/next_experiment/source_predictor_extension_v1/SOURCE_PREDICTOR_DAYMET_ORDER_REPAIR_ACQUISITION_COMPLETE.json",
+    "bytes": 5197,
+    "sha256": "85b428bd934427675602cf4b09f5fbb2c9d41214d203ef644689d0ccfc8e4e57",
+    "commit_sha256": "9e7ba8e1211b9542c8bc698dae41767c9059a8bb7eef8bd494b1975c6e5a5a50"
+  },
+  "download_threads_per_acquisition": 4,
+  "active_acquisitions": 1,
+  "blind_city_accessed": false,
+  "target_or_landsat_values_read": false,
+  "next_safe_stage": "offline_assembly",
+  "commit_sha256": "43f9852f1f6dff76dbba4fc9558a842df22ba2d2c4190019cf01b732afe43b95"
+}

@@ -117,6 +117,7 @@ def test_support_gate_rejects_total_below_30_or_any_city_below_8(
             predict_func=lambda model, frame: frame.loc[:, joint.KEY_COLUMNS].assign(
                 m3_prediction_c=0.0
             ),
+            diagnostic_func=None,
         )
 
 
@@ -146,7 +147,11 @@ def test_nested_joint_selection_never_fits_a_held_city() -> None:
         )
 
     result = joint.joint_nested_whole_city_loso(
-        predictors, targets, fit_func=fake_fit, predict_func=fake_predict
+        predictors,
+        targets,
+        fit_func=fake_fit,
+        predict_func=fake_predict,
+        diagnostic_func=None,
     )
     assert len(result.candidate_metrics) == 16
     assert len(result.outer_inner_candidate_metrics) == 64
@@ -210,7 +215,7 @@ def test_formal_predictor_context_is_added_only_from_authenticated_mapping() -> 
         joint.add_authenticated_city_context(added, context)
 
 
-def test_readiness_waits_without_opening_or_statting_any_parquet(
+def test_readiness_authenticates_metadata_without_opening_or_statting_any_parquet(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     root = Path(__file__).resolve().parents[1]
@@ -221,7 +226,8 @@ def test_readiness_waits_without_opening_or_statting_any_parquet(
     monkeypatch.setattr(pd, "read_parquet", forbidden)
     monkeypatch.setattr(joint, "_authenticate_bound_parquet", forbidden)
     readiness = joint.joint_loso_readiness(root)
-    assert readiness["state"] == "waiting_for_source_predictors_46_complete"
+    assert readiness["state"] == "ready_for_independent_joint_nested_loso_authorization"
+    assert readiness["ready"] is True
     assert readiness["parquet_files_opened_or_statted"] == 0
     assert readiness["model_fit_selection_prediction_or_scoring_performed"] is False
 
@@ -281,21 +287,44 @@ def test_source_uq_and_risk_selectors_use_frozen_fallbacks() -> None:
     assert risk["fallback_reason"]
 
 
-def test_completion_and_formal_authorization_fail_closed_until_real_uq_risk(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    with pytest.raises(joint.M3SourceJointLosoError, match="disabled"):
-        joint.build_source_nested_loso_completion(Path("unused"))
-    monkeypatch.setattr(
-        joint,
-        "joint_loso_readiness",
-        lambda root, config_path=joint.CONFIG_PATH: {
-            "ready": False,
-            "metadata_ready": True,
-        },
-    )
-    with pytest.raises(joint.M3SourceJointLosoError, match="disabled"):
-        joint.build_m3_source_joint_nested_loso_authorization(Path("unused"))
+def test_completion_requires_the_independent_authorization_and_all_stages(tmp_path: Path) -> None:
+    with pytest.raises(joint.M3SourceJointLosoError, match="authorization"):
+        joint.build_source_nested_loso_completion(tmp_path)
+
+
+def test_source_uq_and_risk_pseudo_test_runners_are_source_only() -> None:
+    predictors = _predictors()
+    oof = predictors.loc[:, joint.KEY_COLUMNS].copy()
+    oof["outer_city_id"] = oof["city_id"]
+    city_index = oof["city_id"].map(
+        {city: index for index, city in enumerate(joint.SOURCE_CITY_IDS)}
+    ).astype(float)
+    day = pd.to_datetime(oof["target_date"]).dt.day.astype(float)
+    oof["observed_lst_c"] = 25.0 + city_index + day / 10.0
+    oof["m3_prediction_c"] = oof["observed_lst_c"] + ((day.astype(int) % 3) - 1) / 2
+    oof["b1_prediction_c"] = oof["m3_prediction_c"] + 1.0
+    oof["m2_legacy_prediction_c"] = oof["m3_prediction_c"] + 0.5
+    oof["m3_ensemble_point_sd_c"] = 0.2 + day / 100.0
+    uq, reports, intervals = joint.source_uq_pseudo_tests(predictors, oof)
+    assert uq["selected_method"] in {
+        "unweighted_cross_conformal",
+        "density_ratio_clip_5",
+    }
+    assert reports[0]["outer_held_source_city_ids"] == list(joint.SOURCE_CITY_IDS)
+    assert set(intervals["city_id"]) == set(joint.SOURCE_CITY_IDS)
+    risk, candidates, ranked = joint.source_risk_pseudo_tests(predictors, oof, intervals)
+    assert risk["selected_method"] in {
+        "learned_error",
+        "interval_width",
+        "ensemble_sd",
+        "none_accept_all",
+    }
+    assert {row["method"] for row in candidates} == {
+        "learned_error",
+        "interval_width",
+        "ensemble_sd",
+    }
+    assert set(ranked["city_id"]) == set(joint.SOURCE_CITY_IDS)
 
 
 def test_source_and_runner_keep_value_reads_behind_formal_authentication() -> None:
@@ -308,4 +337,8 @@ def test_source_and_runner_keep_value_reads_behind_formal_authentication() -> No
         Path(__file__).resolve().parents[1] / "scripts/run_m3_source_joint_nested_loso_v1.py"
     ).read_text(encoding="utf-8")
     assert "create_m3_source_joint_nested_loso_authorization" not in runner
-    assert not (Path(__file__).resolve().parents[1] / joint.AUTHORIZATION_PATH).exists()
+    authorization = Path(__file__).resolve().parents[1] / joint.AUTHORIZATION_PATH
+    if authorization.exists():
+        assert joint.authenticate_m3_source_joint_nested_loso_authorization(
+            authorization.parents[3]
+        )["state"] == "m3_source_joint_nested_loso_v1_authorized"

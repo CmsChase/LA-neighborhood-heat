@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-predictor-daymet-order-repair-v1",
+  "state": "source_predictor_daymet_order_repair_acquisition_complete",
+  "repair_authorization_commit_sha256": "366f94697d13048d00fa121b69983b45fc96d9247c90f460d591209cdad25a76",
+  "parent_acquisition_completion_commit_sha256": "49fba6380e8f86a1c22c33dbee60651a1f98e544bc77bd2acc434cb6f1859593",
+  "parent_acquisition_completion": {
+    "path": "manifests/multicity/next_experiment/source_predictor_extension_v1/SOURCE_PREDICTOR_ACQUISITION_COMPLETE.json",
+    "bytes": 1893820,
+    "sha256": "cb53f0ae973a1215a0f7fd3a61497b558c3adb552bde06536f3425c09f8d1ce5",
+    "commit_sha256": "49fba6380e8f86a1c22c33dbee60651a1f98e544bc77bd2acc434cb6f1859593"
+  },
+  "online_terminal_counts": {
+    "pending": 7,
+    "running": 0,
+    "complete": 78,
+    "quarantined": 0,
+    "total": 85
+  },
+  "online_task_ids_sha256": "3148cea1f08dd317e31a3a037c5373e03665e76036b0f564228ee42fd7537ad9",
+  "daymet_metadata_markers": [
+    {
+      "city_id": "houston_tx",
+      "year": 2020,
+      "path": "data/interim/multicity/m3_source_predictor_extension_v1/acquisition/daymet/houston_tx/2020/GRANULES.json",
+      "bytes": 2302,
+      "sha256": "778635b75a2eebd635f7dfedf059eedb7d4d285dd319a9f775debb29bd9baf15",
+      "commit_sha256": "9a4f05a323cfd084b53bb362ce6f340128583f45bb5c1dc7dce8f07ded65e6b4"
+    },
+    {
+      "city_id": "houston_tx",
+      "year": 2021,
+      "path": "data/interim/multicity/m3_source_predictor_extension_v1/acquisition/daymet/houston_tx/2021/GRANULES.json",
+      "bytes": 2303,
+      "sha256": "199743bb28edfde39c3b2344c8cd2b65975763a0ad67908126b0ea0e2ac56913",
+      "commit_sha256": "0a50c2717d0c7fb2aa7ae723c582f60d9e5a594e55ea6be178f7df97b98622a5"
+    },
+    {
+      "city_id": "houston_tx",
+      "year": 2022,
+      "path": "data/interim/multicity/m3_source_predictor_extension_v1/acquisition/daymet/houston_tx/2022/GRANULES.json",
+      "bytes": 2303,
+      "sha256": "6a011c21d3c45fb324a149c00d28211d91d4894987e17ca6d03496882b316d9a",
+      "commit_sha256": "232fd58c8f43a3cc03c57048330212487c5ecc66a0d4fb677cdb4374f3fb3e10"
+    },
+    {
+      "city_id": "houston_tx",
+      "year": 2023,
+      "path": "data/interim/multicity/m3_source_predictor_extension_v1/acquisition/daymet/houston_tx/2023/GRANULES.json",
+      "bytes": 2302,
+      "sha256": "9e0de2e3aba66aded60784a04c3c42a18525b5cabb96f19c22a4e9f84609b335",
+      "commit_sha256": "c91a07921e1ddea9a1760f67d202f55de095b9f3b654abbc178c90fb1bc470c2"
+    },
+    {
+      "city_id": "houston_tx",
+      "year": 2024,
+      "path": "data/interim/multicity/m3_source_predictor_extension_v1/acquisition/daymet/houston_tx/2024/GRANULES.json",
+      "bytes": 2306,
+      "sha256": "7b99b73808b7a36f46b7db809eb91e80e9c9b71049c94ca25f4dbf78922ba5ee",
+      "commit_sha256": "58a0ae582e6aed2e73e3cfe623fd2f9032e63c224ab9bdac9cbbe7f3a475fab5"
+    },
+    {
+      "city_id": "chicago_il",
+      "year": 2020,
+      "path": "data/interim/multicity/m3_source_predictor_extension_v1/acquisition/daymet/chicago_il/2020/GRANULES.json",
+      "bytes": 2302,
+      "sha256": "d87d0afa0f86a21afcb3dbad7791f982056066080832d2acdbc1682fe92a64d7",
+      "commit_sha256": "9cff870861629e264050992e2adbf651f065aeb4b4209bc549f67d288aba5687"
+    },
+    {
+      "city_id": "chicago_il",
+      "year": 2021,
+      "path": "data/interim/multicity/m3_source_predictor_extension_v1/acquisition/daymet/chicago_il/2021/GRANULES.json",
+      "bytes": 2303,
+      "sha256": "13af1d1adc31203567d5896193944a525ba3ed75d557afdc155116ef5e9fdbda",
+      "commit_sha256": "e405fb758b07932d00646ad8b8bec16e5dfa5ef954d3bdf6a6683ccbe7019607"
+    },
+    {
+      "city_id": "chicago_il",
+      "year": 2022,
+      "path": "data/interim/multicity/m3_source_predictor_extension_v1/acquisition/daymet/chicago_il/2022/GRANULES.json",
+      "bytes": 2303,
+      "sha256": "c61f18d17201aa7a9e13502f60a82faa7f4c65be7e541cc0df4fff84602e3b46",
+      "commit_sha256": "15e4944cdaa05672d5e43e355d6eef642c3690e6bb578ec912d4cda64321172f"
+    },
+    {
+      "city_id": "chicago_il",
+      "year": 2023,
+      "path": "data/interim/multicity/m3_source_predictor_extension_v1/acquisition/daymet/chicago_il/2023/GRANULES.json",
+      "bytes": 2302,
+      "sha256": "27a9e086e7fc40c6eb6276cf8ef5c0201ec962dcbd0811dd4db9f48bd7dbb960",
+      "commit_sha256": "a4c6913a59f6ecb8469168fd020061b500fd500d9afcb5711daf736586b9fc55"
+    },
+    {
+      "city_id": "chicago_il",
+      "year": 2024,
+      "path": "data/interim/multicity/m3_source_predictor_extension_v1/acquisition/daymet/chicago_il/2024/GRANULES.json",
+      "bytes": 2306,
+      "sha256": "59f00fcfcfdf8078cdca4fb8519dec28302e980e6469494cb763f093c86ca1d5",
+      "commit_sha256": "8ebab9ecb6ab668ba9079b6c1a753bc1f8afd0e7f81908f123f4563650e4c041"
+    }
+  ],
+  "audit": {
+    "network_or_href_reads_during_authentication": 0,
+    "blind_test_city_accessed": false,
+    "target_or_landsat_values_read": false,
+    "model_fit_select_predict_or_score_performed": false
+  },
+  "next_safe_stage": "offline_assembly_with_same_daymet_order_repair_runner",
+  "commit_sha256": "9e7ba8e1211b9542c8bc698dae41767c9059a8bb7eef8bd494b1975c6e5a5a50"
+}

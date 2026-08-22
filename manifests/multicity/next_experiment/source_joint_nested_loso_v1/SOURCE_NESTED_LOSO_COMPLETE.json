@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-joint-nested-loso-v1",
+  "state": "source_nested_loso_complete",
+  "authorization_commit_sha256": "358c8f63f65932c1ac17914b95015ae59194c2a42adc0e40e765016d2b68d773",
+  "values_opened_commit_sha256": "98430ec34ee3548fe4c500af49261acd01b67cfecaeb125e2e8a38b38f49e5b3",
+  "m3_protocol_lock_commit_sha256": "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8",
+  "source_qa_candidates_completion_commit_sha256": "f3276d7254c71c642c8300edacacd1a3caa7c3e279a7dc820c9de5928cdac1d4",
+  "source_predictors_completion_commit_sha256": "1bf16d8b6a9e9cbac04d1681213f0a783ee3610049f815f87692dbf2442aaa3f",
+  "source_city_ids": [
+    "los_angeles_ca",
+    "phoenix_az",
+    "houston_tx",
+    "chicago_il"
+  ],
+  "blind_test_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "joint_configuration_count": 16,
+  "outer_fold_count": 4,
+  "selected_joint_candidate_id": "qa_4k__level_ridge_alpha_10__anomaly_hgb_leaves_31",
+  "selected_qa_id": "4k",
+  "selected_m3_candidate_id": "level_ridge_alpha_10__anomaly_hgb_leaves_31",
+  "selected_uq_method": "unweighted_cross_conformal",
+  "selected_risk_method": "none_accept_all",
+  "stage_commits": {
+    "joint_nested_loso": "dcd50c5c9cafb980c08d1131010897764b1e2c0470d52692fb3d138a73510ed7",
+    "source_uq_selection": "c781a5eeba86d56c5dee195d2f4389c1c901f9f8a7f0b8ee2dde69903a0b8f49",
+    "source_risk_selection": "0394c0696129bbc3129bacb8f1abab518761a1a4d011c63643a3d6c6cda0b13a"
+  },
+  "stage_artifacts": [
+    {
+      "path": "data/processed/multicity/m3_source_joint_nested_loso_v1/JOINT_NESTED_LOSO_STAGE_COMPLETE.json",
+      "bytes": 3469,
+      "sha256": "cf281c8b148bbe75a1d2bbb8e7da48a18824f867bdb00c519556f8626ea84828",
+      "role": "joint_nested_loso_stage"
+    },
+    {
+      "path": "data/processed/multicity/m3_source_joint_nested_loso_v1/SOURCE_UQ_SELECTION_COMPLETE.json",
+      "bytes": 1998,
+      "sha256": "ca0216e84e7697f422ca084d6408088eba062dd5cd1b0e31402ba84e9c3033f1",
+      "role": "source_uq_selection_stage"
+    },
+    {
+      "path": "data/processed/multicity/m3_source_joint_nested_loso_v1/SOURCE_RISK_SELECTION_COMPLETE.json",
+      "bytes": 2099,
+      "sha256": "9e2b07a7f8e28c19699d7b26f9874142b8064eff35a7209ac77f1a53dc72a765",
+      "role": "source_risk_selection_stage"
+    }
+  ],
+  "support_and_tie_break_frozen": true,
+  "source_only_selection_complete": true,
+  "audit": {
+    "authorization_authenticated_before_first_value_read": true,
+    "source_only_fit_select_predict_and_score": true,
+    "blind_test_city_accessed": false,
+    "blind_predictor_accessed": false,
+    "network_or_href_reads": 0,
+    "prediction_before_blind_target_boundary_preserved": true
+  },
+  "next_safe_stage": "authorize_blind_predictor_build_before_any_blind_value_read",
+  "commit_sha256": "207d45f8fdc7237f6347ed69b1c67733df353a3331e622707e93c4b3f21c34d3"
+}

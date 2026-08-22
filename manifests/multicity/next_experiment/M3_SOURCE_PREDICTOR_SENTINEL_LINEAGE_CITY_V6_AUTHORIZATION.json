@@ -1,0 +1,39 @@
+{
+  "algorithm_version": "m3-sentinel-lineage-city-repair-v6",
+  "code_identity": {
+    "files": [
+      {
+        "bytes": 6522,
+        "path": "RESUME_M3_SENTINEL_LINEAGE_CITY_V6.py",
+        "sha256": "4988f4d348e6ecfffe8e28584cd96959e1faac8aca806dfb734d82e905194406"
+      },
+      {
+        "bytes": 658,
+        "path": "RESUME_M3_SENTINEL_LINEAGE_CITY_V6.cmd",
+        "sha256": "135a59a80d05a0bf79872e7d6dae472a7ee89dc0e37ab54b5671d594bde97415"
+      }
+    ]
+  },
+  "commit_sha256": "a73c0574fe6ef0897f5c318961ab380452d2425773f8f1995bb9241d918f114e",
+  "parent_membership_merge_authorization_commit_sha256": "6428dc6bb6cc30b38eb445c9e1277347c984e73beb07783fb486447943a1f148",
+  "parent_predictor_authorization_commit_sha256": "22f6f417faea2aaeb7f0c04d182ae45616f3cacf416ea904e58ed2c699987019",
+  "permissions": {
+    "blind_city_access": false,
+    "model_fit_select_predict_or_score": false,
+    "source_sentinel_value_read": true,
+    "target_or_landsat_value_read": false
+  },
+  "repair_contract": {
+    "existing_city_id_must_equal_requested_city_id_for_every_row": true,
+    "observed_cause": "lineage_already_contains_city_id_before_canonical_insert",
+    "observed_error_type": "ValueError",
+    "operation": "drop_validated_duplicate_then_insert_same_value_at_column_zero",
+    "queue_initialize_rebuild_reset_rewrite_or_delete_allowed": false,
+    "row_count_values_or_output_order_changed": false,
+    "same_sqlite_queue_and_existing_cache": true
+  },
+  "run_id": "m3-source-predictor-extension-v1-22f6f417faea2aae",
+  "schema_version": 1,
+  "sqlite_task_plan_sha256": "d21c5c74ca562d29e71375350029a4e44c17088497494203bc8d1844a1cec712",
+  "state": "m3_source_predictor_sentinel_lineage_city_repair_authorized"
+}

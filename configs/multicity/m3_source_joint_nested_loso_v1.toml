@@ -110,7 +110,7 @@ fallback_method = "none_accept_all"
 blind_predictors_allowed = false
 
 [completion]
-implementation_status = "final_completion_disabled_until_executable_source_uq_and_risk_stages"
+implementation_status = "executable_source_uq_and_risk_pseudo_test_stages_code_bound"
 joint_selection_stage_required = true
 source_uq_selection_stage_required = true
 source_risk_selection_stage_required = true

@@ -22,6 +22,8 @@ from la_heat.multicity.m3_source_joint_nested_loso_v1 import (  # noqa: E402
     create_source_nested_loso_completion,
     joint_loso_readiness,
     run_authorized_joint_stage,
+    run_authorized_source_risk_stage,
+    run_authorized_source_uq_stage,
 )
 
 
@@ -31,6 +33,9 @@ def main() -> None:
     parser.add_argument("--authorization", type=Path, default=AUTHORIZATION_PATH)
     actions = parser.add_mutually_exclusive_group()
     actions.add_argument("--start-joint", action="store_true")
+    actions.add_argument("--start-uq", action="store_true")
+    actions.add_argument("--start-risk", action="store_true")
+    actions.add_argument("--start-all", action="store_true")
     actions.add_argument("--finalize", action="store_true")
     actions.add_argument("--check-completion", action="store_true")
     args = parser.parse_args()
@@ -38,6 +43,18 @@ def main() -> None:
     if args.start_joint:
         payload = run_authorized_joint_stage(args.project_root, args.authorization)
         mode = "joint_stage"
+    elif args.start_uq:
+        payload = run_authorized_source_uq_stage(args.project_root, args.authorization)
+        mode = "source_uq_stage"
+    elif args.start_risk:
+        payload = run_authorized_source_risk_stage(args.project_root, args.authorization)
+        mode = "source_risk_stage"
+    elif args.start_all:
+        run_authorized_joint_stage(args.project_root, args.authorization)
+        run_authorized_source_uq_stage(args.project_root, args.authorization)
+        run_authorized_source_risk_stage(args.project_root, args.authorization)
+        payload = create_source_nested_loso_completion(args.project_root)
+        mode = "all_stages"
     elif args.finalize:
         payload = create_source_nested_loso_completion(args.project_root)
         mode = "finalize"

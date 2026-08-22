@@ -27,16 +27,29 @@ from typing import Any, Final
 
 import numpy as np
 import pandas as pd
+from sklearn.metrics import roc_auc_score
 
 from la_heat.multicity.m3_development import (
+    B1_FEATURES,
     KEY_COLUMNS,
     M2_FEATURES,
     M3_CANDIDATES,
     M3Candidate,
+    build_b1_estimator,
+    build_m2_legacy_estimator,
+    build_risk_estimator,
+    build_risk_feature_matrix,
+    city_date_row_weights,
+    cross_fit_domain_probabilities,
+    density_ratios_from_probabilities,
+    density_stability_report,
+    finite_sample_test_atom_quantile,
     fit_m3_candidate,
     predict_m3,
+    risk_acceptance_flags,
     select_density_method,
     select_risk_method,
+    u0_cross_conformal_correction,
     validate_prediction_feature_frame,
 )
 from la_heat.multicity.m3_development_protocol_lock import (
@@ -77,6 +90,9 @@ RISK_STAGE_PATH: Final = Path(
 COMPLETION_PATH: Final = Path(
     "manifests/multicity/next_experiment/source_joint_nested_loso_v1/"
     "SOURCE_NESTED_LOSO_COMPLETE.json"
+)
+RUNTIME_STATUS_PATH: Final = Path(
+    "data/interim/multicity/m3_source_joint_nested_loso_v1/runtime/status.json"
 )
 
 EXPECTED_PROTOCOL_COMMIT: Final = "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8"
@@ -383,7 +399,7 @@ def _validate_config(config: Mapping[str, Any]) -> None:
         or completion
         != {
             "implementation_status": (
-                "final_completion_disabled_until_executable_source_uq_and_risk_stages"
+                "executable_source_uq_and_risk_pseudo_test_stages_code_bound"
             ),
             "joint_selection_stage_required": True,
             "source_uq_selection_stage_required": True,
@@ -581,8 +597,8 @@ def joint_loso_readiness(
     if predictor_completion != _authenticate_predictor_completion(root, predictor_path):
         raise M3SourceJointLosoError("Predictor metadata authentication disagreed.")
     return {
-        "state": "blocked_pending_executable_source_uq_and_risk_stages",
-        "ready": False,
+        "state": "ready_for_independent_joint_nested_loso_authorization",
+        "ready": True,
         "metadata_ready": True,
         "m3_protocol_lock_commit_sha256": EXPECTED_PROTOCOL_COMMIT,
         "source_qa_candidates_completion_commit_sha256": EXPECTED_QA_COMPLETION_COMMIT,
@@ -605,11 +621,6 @@ def build_m3_source_joint_nested_loso_authorization(
 
     root = Path(project_root).resolve()
     readiness = joint_loso_readiness(root, config_path=config_path)
-    if readiness.get("metadata_ready") is True:
-        raise M3SourceJointLosoError(
-            "Formal joint LOSO authorization is disabled until executable source-only "
-            "UQ and risk stages are code-bound before first value access."
-        )
     if readiness.get("ready") is not True:
         raise M3SourceJointLosoError("Source predictor completion is not ready.")
     code_identity = {relative: _file_record(root, root / relative) for relative in CODE_PATHS}
@@ -656,7 +667,7 @@ def build_m3_source_joint_nested_loso_authorization(
         },
         "completion_contract": {
             "implementation_status": (
-                "final_completion_disabled_until_executable_source_uq_and_risk_stages"
+                "executable_source_uq_and_risk_pseudo_test_stages_code_bound"
             ),
             "joint_stage_required": True,
             "source_only_uq_stage_required": True,
@@ -956,12 +967,56 @@ def _candidate_loso_metrics(
     }, combined
 
 
+def _outer_prediction_diagnostics(
+    prepared: PreparedQADataset,
+    outer_city: str,
+) -> pd.DataFrame:
+    """Fit source-only B1/M2 and M3 ensemble diagnostics for one pseudo-test city."""
+
+    training = prepared.frame["city_id"].ne(outer_city)
+    train_frame = prepared.frame.loc[training].reset_index(drop=True)
+    train_target = prepared.target.loc[training].reset_index(drop=True)
+    held = prepared.prediction_universe.loc[
+        prepared.prediction_universe["city_id"].eq(outer_city)
+    ].reset_index(drop=True)
+    weights = city_date_row_weights(train_frame)
+
+    b1 = build_b1_estimator()
+    b1.fit(
+        train_frame.loc[:, B1_FEATURES],
+        train_target,
+        model__sample_weight=weights,
+    )
+    m2 = build_m2_legacy_estimator()
+    m2.fit(
+        train_frame.loc[:, M2_FEATURES],
+        train_target,
+        model__sample_weight=weights,
+    )
+    result = held.loc[:, KEY_COLUMNS].copy()
+    result["b1_prediction_c"] = b1.predict(held.loc[:, B1_FEATURES])
+    result["m2_legacy_prediction_c"] = m2.predict(held.loc[:, M2_FEATURES])
+
+    ensemble = []
+    for candidate in M3_CANDIDATES:
+        fitted = fit_m3_candidate(train_frame, train_target, candidate)
+        ensemble.append(predict_m3(fitted, held)["m3_prediction_c"].to_numpy(dtype=float))
+    result["m3_ensemble_point_sd_c"] = np.std(np.vstack(ensemble), axis=0, ddof=0)
+    if not np.isfinite(result.iloc[:, len(KEY_COLUMNS) :].to_numpy(dtype=float)).all():
+        raise M3SourceJointLosoError("Outer diagnostic predictions are not finite.")
+    return result
+
+
 def joint_nested_whole_city_loso(
     predictors_with_context: pd.DataFrame,
     targets_by_qa: Mapping[str, pd.DataFrame],
     *,
     fit_func: Callable[[pd.DataFrame, pd.Series, M3Candidate], Any] = fit_m3_candidate,
     predict_func: Callable[[Any, pd.DataFrame], pd.DataFrame] = predict_m3,
+    diagnostic_func: Callable[[PreparedQADataset, str], pd.DataFrame] | None = (
+        _outer_prediction_diagnostics
+    ),
+    progress_callback: Callable[[Mapping[str, Any]], None] | None = None,
 ) -> JointNestedLosoResult:
     """Run leakage-free joint selection on four source cities in memory."""
 
@@ -978,6 +1033,8 @@ def joint_nested_whole_city_loso(
     outer_inner_rows: list[dict[str, Any]] = []
     outer_predictions: list[pd.DataFrame] = []
     for outer_city in SOURCE_CITY_IDS:
+        if progress_callback is not None:
+            progress_callback({"phase": "outer_inner_selection", "outer_city_id": outer_city})
         inner_cities = tuple(city for city in SOURCE_CITY_IDS if city != outer_city)
         inner_rows: list[dict[str, Any]] = []
         for configuration in JOINT_CONFIGURATIONS:
@@ -1019,6 +1076,21 @@ def joint_nested_whole_city_loso(
         )
         if len(predicted) != len(scored):
             raise M3SourceJointLosoError("Outer predictions lost eligible scoring rows.")
+        if diagnostic_func is not None:
+            diagnostics = diagnostic_func(development, outer_city)
+            predicted = predicted.merge(
+                diagnostics,
+                on=list(KEY_COLUMNS),
+                how="left",
+                validate="one_to_one",
+            )
+            diagnostic_columns = (
+                "b1_prediction_c",
+                "m2_legacy_prediction_c",
+                "m3_ensemble_point_sd_c",
+            )
+            if predicted.loc[:, diagnostic_columns].isna().any(axis=None):
+                raise M3SourceJointLosoError("Outer diagnostics lost eligible scoring rows.")
         predicted["outer_city_id"] = outer_city
         predicted["selected_joint_candidate_id"] = configuration.joint_candidate_id
         predicted["selected_qa_id"] = configuration.qa_id
@@ -1031,8 +1103,19 @@ def joint_nested_whole_city_loso(
                 "outer_equal_city_equal_date_mae_c": _equal_city_equal_date_mae(predicted),
             }
         )
+        if progress_callback is not None:
+            progress_callback({"phase": "outer_fold_complete", "outer_city_id": outer_city})
     final_rows: list[dict[str, Any]] = []
     for configuration in JOINT_CONFIGURATIONS:
+        if progress_callback is not None:
+            progress_callback(
+                {
+                    "phase": "final_configuration_loso",
+                    "joint_candidate_id": configuration.joint_candidate_id,
+                    "completed_configuration_count": len(final_rows),
+                    "total_configuration_count": len(JOINT_CONFIGURATIONS),
+                }
+            )
         row, _ = _candidate_loso_metrics(
             prepared_all[configuration.qa_id],
             SOURCE_CITY_IDS,
@@ -1226,6 +1309,31 @@ def _artifact_record(
     return record
 
 
+def _write_runtime_status(root: Path, **fields: Any) -> None:
+    destination = _inside(root, RUNTIME_STATUS_PATH, label="joint LOSO runtime status")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "schema_version": 1,
+        "algorithm_version": ALGORITHM_VERSION,
+        "blind_test_city_accessed": False,
+        "network_or_href_reads": 0,
+        **fields,
+    }
+    descriptor, temporary_name = tempfile.mkstemp(
+        prefix=f".{destination.name}.", suffix=".tmp", dir=destination.parent
+    )
+    temporary = Path(temporary_name)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
+            json.dump(payload, handle, indent=2, sort_keys=True)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, destination)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
 def run_authorized_joint_stage(
     project_root: str | Path,
     authorization_path: str | Path = AUTHORIZATION_PATH,
@@ -1244,9 +1352,24 @@ def run_authorized_joint_stage(
             state="joint_nested_loso_stage_complete",
             authorization_commit=str(authorization["commit_sha256"]),
         )
+    _write_runtime_status(
+        root,
+        state="running",
+        phase="joint_nested_loso",
+        authorization_commit_sha256=authorization["commit_sha256"],
+    )
     values_marker = create_values_opened_marker(root, authorization_path)
     predictors, targets = load_authorized_source_inputs(root, authorization_path)
-    result = joint_nested_whole_city_loso(predictors, targets)
+    result = joint_nested_whole_city_loso(
+        predictors,
+        targets,
+        progress_callback=lambda progress: _write_runtime_status(
+            root,
+            state="running",
+            authorization_commit_sha256=authorization["commit_sha256"],
+            **dict(progress),
+        ),
+    )
     output_root = _inside(
         root,
         "data/processed/multicity/m3_source_joint_nested_loso_v1/joint",
@@ -1354,6 +1477,14 @@ def run_authorized_joint_stage(
         }
     )
     _write_exclusive(stage, destination)
+    _write_runtime_status(
+        root,
+        state="stage_complete",
+        phase="joint_nested_loso",
+        authorization_commit_sha256=authorization["commit_sha256"],
+        stage_commit_sha256=stage["commit_sha256"],
+        next_safe_stage="source_uq_selection",
+    )
     return _authenticate_stage(
         root,
         destination,
@@ -1448,6 +1579,528 @@ def select_source_risk_method(candidates: Sequence[Mapping[str, Any]]) -> dict[s
             else None
         ),
     }
+
+
+def _equal_city_date_mean(frame: pd.DataFrame, value_column: str) -> float:
+    if frame.empty or value_column not in frame:
+        raise M3SourceJointLosoError(f"Cannot aggregate empty source metric: {value_column}")
+    date_values = frame.groupby(["city_id", "target_date"], observed=True)[value_column].mean()
+    return float(date_values.groupby(level="city_id").mean().mean())
+
+
+def _interval_score(
+    observed: np.ndarray,
+    lower: np.ndarray,
+    upper: np.ndarray,
+    *,
+    alpha: float = 0.10,
+) -> np.ndarray:
+    width = upper - lower
+    return width + (2.0 / alpha) * np.maximum(lower - observed, 0.0) + (
+        2.0 / alpha
+    ) * np.maximum(observed - upper, 0.0)
+
+
+def source_uq_pseudo_tests(
+    predictors_with_context: pd.DataFrame,
+    outer_oof_predictions: pd.DataFrame,
+) -> tuple[dict[str, Any], list[dict[str, Any]], pd.DataFrame]:
+    """Select source-only UQ using each held source city as a pseudo-test."""
+
+    predictors = _normalize_keys(predictors_with_context, label="source predictors")
+    predictions = _normalize_keys(outer_oof_predictions, label="outer OOF predictions")
+    required = {
+        *KEY_COLUMNS,
+        "outer_city_id",
+        "observed_lst_c",
+        "m3_prediction_c",
+    }
+    if (
+        not required <= set(predictions.columns)
+        or predictions.duplicated(list(KEY_COLUMNS)).any()
+        or set(predictions["outer_city_id"].astype(str)) != set(SOURCE_CITY_IDS)
+    ):
+        raise M3SourceJointLosoError("Outer OOF predictions are invalid for source UQ.")
+    date_universe = predictions.loc[:, ["city_id", "target_date"]].drop_duplicates()
+    universe = predictors.merge(
+        date_universe,
+        on=["city_id", "target_date"],
+        how="inner",
+        validate="many_to_one",
+    )
+    rows: list[pd.DataFrame] = []
+    all_source_weights: list[np.ndarray] = []
+    all_source_city: list[np.ndarray] = []
+    all_source_date: list[np.ndarray] = []
+    all_source_hits: list[np.ndarray] = []
+    all_test_hits: list[np.ndarray] = []
+    all_domain_labels: list[np.ndarray] = []
+    all_domain_probabilities: list[np.ndarray] = []
+    for outer_city in SOURCE_CITY_IDS:
+        domain = universe["city_id"].eq(outer_city).astype(int).to_numpy()
+        probability = cross_fit_domain_probabilities(universe, domain)
+        probability_by_key = universe.loc[:, KEY_COLUMNS].copy()
+        probability_by_key["domain_probability"] = probability[
+            "domain_probability"
+        ].to_numpy(dtype=float)
+        calibration = predictions.loc[predictions["city_id"].ne(outer_city)].merge(
+            probability_by_key,
+            on=list(KEY_COLUMNS),
+            how="left",
+            validate="one_to_one",
+        )
+        held = predictions.loc[predictions["city_id"].eq(outer_city)].merge(
+            probability_by_key,
+            on=list(KEY_COLUMNS),
+            how="left",
+            validate="one_to_one",
+        )
+        if calibration["domain_probability"].isna().any() or held[
+            "domain_probability"
+        ].isna().any():
+            raise M3SourceJointLosoError("Density probabilities lost source pseudo-test rows.")
+        ratios = density_ratios_from_probabilities(
+            calibration["domain_probability"], held["domain_probability"]
+        )
+        scores = np.abs(
+            calibration["observed_lst_c"].to_numpy(dtype=float)
+            - calibration["m3_prediction_c"].to_numpy(dtype=float)
+        )
+        base_weights = city_date_row_weights(calibration.loc[:, KEY_COLUMNS])
+        unweighted_correction = u0_cross_conformal_correction(
+            scores, calibration.loc[:, KEY_COLUMNS]
+        )
+        weighted_correction = finite_sample_test_atom_quantile(
+            scores,
+            base_weights * ratios["source_weight"],
+            calibration["city_id"],
+            calibration["target_date"],
+            calibration["tract_geoid"],
+            alpha=0.10,
+            test_weight=1.0,
+        )
+        observed = held["observed_lst_c"].to_numpy(dtype=float)
+        point = held["m3_prediction_c"].to_numpy(dtype=float)
+        held = held.loc[:, [*KEY_COLUMNS, "outer_city_id", "observed_lst_c", "m3_prediction_c"]]
+        held["uq_density_ratio_raw"] = ratios["test_raw"]
+        held["uq_density_ratio_clipped"] = ratios["test_weight"]
+        held["uq_weight_clip_hit"] = ratios["test_clip_hit"]
+        held["unweighted_correction_c"] = unweighted_correction
+        held["density_weighted_correction_c"] = weighted_correction
+        held["unweighted_lower_c"] = point - unweighted_correction
+        held["unweighted_upper_c"] = point + unweighted_correction
+        held["density_weighted_lower_c"] = point - weighted_correction
+        held["density_weighted_upper_c"] = point + weighted_correction
+        held["unweighted_covered"] = (observed >= held["unweighted_lower_c"]) & (
+            observed <= held["unweighted_upper_c"]
+        )
+        held["density_weighted_covered"] = (
+            observed >= held["density_weighted_lower_c"]
+        ) & (observed <= held["density_weighted_upper_c"])
+        held["unweighted_interval_score"] = _interval_score(
+            observed,
+            held["unweighted_lower_c"].to_numpy(dtype=float),
+            held["unweighted_upper_c"].to_numpy(dtype=float),
+        )
+        held["density_weighted_interval_score"] = _interval_score(
+            observed,
+            held["density_weighted_lower_c"].to_numpy(dtype=float),
+            held["density_weighted_upper_c"].to_numpy(dtype=float),
+        )
+        rows.append(held)
+        all_source_weights.append(base_weights * ratios["source_weight"])
+        all_source_city.append(calibration["city_id"].astype(str).to_numpy())
+        all_source_date.append(calibration["target_date"].astype(str).to_numpy())
+        all_source_hits.append(ratios["source_clip_hit"])
+        all_test_hits.append(ratios["test_clip_hit"])
+        all_domain_labels.append(domain)
+        all_domain_probabilities.append(probability["domain_probability"].to_numpy(dtype=float))
+    pseudo = pd.concat(rows, ignore_index=True).sort_values(
+        list(KEY_COLUMNS), kind="stable"
+    ).reset_index(drop=True)
+    weighted_wis = _equal_city_date_mean(pseudo, "density_weighted_interval_score")
+    unweighted_wis = _equal_city_date_mean(pseudo, "unweighted_interval_score")
+    city_coverages = {
+        city: float(group["density_weighted_covered"].mean())
+        for city, group in pseudo.groupby("city_id", observed=True)
+    }
+    report = density_stability_report(
+        np.concatenate(all_source_weights),
+        np.concatenate(all_source_city),
+        np.concatenate(all_source_date),
+        np.concatenate(all_source_hits),
+        np.concatenate(all_test_hits),
+        roc_auc=float(
+            roc_auc_score(
+                np.concatenate(all_domain_labels),
+                np.concatenate(all_domain_probabilities),
+            )
+        ),
+        pooled_coverage=float(pseudo["density_weighted_covered"].mean()),
+        city_coverages=city_coverages,
+        weighted_wis=weighted_wis,
+        unweighted_wis=unweighted_wis,
+        clip_upper=5.0,
+    )
+    report.update(
+        {
+            "outer_held_source_city_ids": list(SOURCE_CITY_IDS),
+            "blind_predictor_accessed": False,
+            "pseudo_test_rows": len(pseudo),
+            "per_city_coverage": city_coverages,
+        }
+    )
+    selection = select_source_uq_method([report])
+    weighted = selection["selected_method"] != "unweighted_cross_conformal"
+    prefix = "density_weighted" if weighted else "unweighted"
+    pseudo["uq_method"] = selection["selected_method"]
+    pseudo["m3_conformal_correction_c"] = pseudo[f"{prefix}_correction_c"]
+    pseudo["m3_lower_c"] = pseudo[f"{prefix}_lower_c"]
+    pseudo["m3_upper_c"] = pseudo[f"{prefix}_upper_c"]
+    pseudo["m3_interval_width_c"] = pseudo["m3_upper_c"] - pseudo["m3_lower_c"]
+    if not weighted:
+        pseudo["uq_density_ratio_raw"] = 1.0
+        pseudo["uq_density_ratio_clipped"] = 1.0
+        pseudo["uq_weight_clip_hit"] = False
+    return selection, [report], pseudo
+
+
+def source_risk_pseudo_tests(
+    predictors_with_context: pd.DataFrame,
+    outer_oof_predictions: pd.DataFrame,
+    uq_predictions: pd.DataFrame,
+) -> tuple[dict[str, Any], list[dict[str, Any]], pd.DataFrame]:
+    """Select a target-blind risk ranker using only held-source pseudo-tests."""
+
+    predictors = _normalize_keys(predictors_with_context, label="source predictors")
+    predictions = _normalize_keys(outer_oof_predictions, label="outer OOF predictions")
+    uq = _normalize_keys(uq_predictions, label="source UQ pseudo-test predictions")
+    diagnostics = predictions.merge(
+        uq.loc[
+            :,
+            [
+                *KEY_COLUMNS,
+                "m3_interval_width_c",
+                "uq_density_ratio_clipped",
+            ],
+        ],
+        on=list(KEY_COLUMNS),
+        how="inner",
+        validate="one_to_one",
+    )
+    aligned_predictors = diagnostics.loc[:, KEY_COLUMNS].merge(
+        predictors,
+        on=list(KEY_COLUMNS),
+        how="left",
+        validate="one_to_one",
+    )
+    risk_features = build_risk_feature_matrix(
+        aligned_predictors,
+        diagnostics,
+        diagnostics["uq_density_ratio_clipped"],
+    )
+    absolute_error = np.abs(
+        diagnostics["observed_lst_c"].to_numpy(dtype=float)
+        - diagnostics["m3_prediction_c"].to_numpy(dtype=float)
+    )
+    learned = np.full(len(diagnostics), np.nan, dtype=float)
+    for outer_city in SOURCE_CITY_IDS:
+        held = diagnostics["city_id"].eq(outer_city).to_numpy()
+        estimator = build_risk_estimator()
+        estimator.fit(
+            risk_features.loc[~held].reset_index(drop=True),
+            absolute_error[~held],
+            model__sample_weight=city_date_row_weights(
+                diagnostics.loc[~held, KEY_COLUMNS].reset_index(drop=True)
+            ),
+        )
+        learned[held] = estimator.predict(risk_features.loc[held])
+    if not np.isfinite(learned).all():
+        raise M3SourceJointLosoError("Learned source risk scores are not finite.")
+    method_scores = {
+        "learned_error": np.maximum(learned, 0.0),
+        "interval_width": diagnostics["m3_interval_width_c"].to_numpy(dtype=float),
+        "ensemble_sd": diagnostics["m3_ensemble_point_sd_c"].to_numpy(dtype=float),
+    }
+    baseline = diagnostics.loc[:, [*KEY_COLUMNS, "observed_lst_c", "m3_prediction_c"]].copy()
+    baseline["absolute_error_c"] = absolute_error
+    baseline_equal_city_mae = _equal_city_date_mean(baseline, "absolute_error_c")
+    candidate_reports: list[dict[str, Any]] = []
+    flags_by_method: dict[str, pd.DataFrame] = {}
+    for method, score in method_scores.items():
+        flags = risk_acceptance_flags(diagnostics.loc[:, KEY_COLUMNS], score)
+        evaluated = baseline.merge(flags, on=list(KEY_COLUMNS), validate="one_to_one")
+        accepted = evaluated.loc[evaluated["m3_accepted"]].copy()
+        accepted_equal_city_mae = _equal_city_date_mean(accepted, "absolute_error_c")
+        per_city_improvement: dict[str, float] = {}
+        retention_by_city: dict[str, float] = {}
+        for city in SOURCE_CITY_IDS:
+            city_all = evaluated.loc[evaluated["city_id"].eq(city)]
+            city_accepted = city_all.loc[city_all["m3_accepted"]]
+            all_mae = _equal_city_date_mean(city_all, "absolute_error_c")
+            accepted_mae = _equal_city_date_mean(city_accepted, "absolute_error_c")
+            per_city_improvement[city] = 1.0 - accepted_mae / all_mae
+            retention_by_city[city] = len(city_accepted) / len(city_all)
+        candidate_reports.append(
+            {
+                "method": method,
+                "equal_city_improvement": 1.0
+                - accepted_equal_city_mae / baseline_equal_city_mae,
+                "minimum_retention": min(retention_by_city.values()),
+                "per_city_improvement": per_city_improvement,
+                "retention_by_city": retention_by_city,
+                "accepted_equal_city_mae_c": accepted_equal_city_mae,
+                "baseline_equal_city_mae_c": baseline_equal_city_mae,
+                "outer_held_source_city_ids": list(SOURCE_CITY_IDS),
+                "blind_predictor_accessed": False,
+            }
+        )
+        flags_by_method[method] = flags
+    selection = select_source_risk_method(candidate_reports)
+    selected_method = str(selection["selected_method"])
+    result = diagnostics.loc[
+        :,
+        [
+            *KEY_COLUMNS,
+            "outer_city_id",
+            "observed_lst_c",
+            "m3_prediction_c",
+            "m3_interval_width_c",
+            "m3_ensemble_point_sd_c",
+        ],
+    ].copy()
+    if selected_method == "none_accept_all":
+        result["m3_predicted_absolute_error_c"] = np.nan
+        result["m3_risk_percentile_within_city_date"] = np.nan
+        result["m3_abstain"] = False
+        result["m3_accepted"] = True
+    else:
+        result = result.merge(
+            flags_by_method[selected_method],
+            on=list(KEY_COLUMNS),
+            how="inner",
+            validate="one_to_one",
+        )
+    result["risk_method"] = selected_method
+    return selection, candidate_reports, result
+
+
+def _stage_artifact_path(root: Path, payload: Mapping[str, Any], role: str) -> Path:
+    records = payload.get("artifacts")
+    if not isinstance(records, list):
+        raise M3SourceJointLosoError("Stage artifacts are missing.")
+    matches = [row for row in records if isinstance(row, Mapping) and row.get("role") == role]
+    if len(matches) != 1:
+        raise M3SourceJointLosoError(f"Stage artifact role is not unique: {role}")
+    return _inside(root, str(matches[0]["path"]), label=f"stage artifact {role}")
+
+
+def run_authorized_source_uq_stage(
+    project_root: str | Path,
+    authorization_path: str | Path = AUTHORIZATION_PATH,
+) -> dict[str, Any]:
+    root = Path(project_root).resolve()
+    authorization = authenticate_m3_source_joint_nested_loso_authorization(root, authorization_path)
+    joint_stage = _authenticate_stage(
+        root,
+        authorization["joint_stage_completion"],
+        state="joint_nested_loso_stage_complete",
+        authorization_commit=str(authorization["commit_sha256"]),
+    )
+    destination = _inside(root, authorization["source_uq_stage_completion"], label="UQ stage")
+    if destination.is_file():
+        return _authenticate_stage(
+            root,
+            destination,
+            state="source_uq_selection_complete",
+            authorization_commit=str(authorization["commit_sha256"]),
+        )
+    _write_runtime_status(
+        root,
+        state="running",
+        phase="source_uq_selection",
+        authorization_commit_sha256=authorization["commit_sha256"],
+    )
+    predictors, _ = load_authorized_source_inputs(root, authorization_path)
+    oof = pd.read_parquet(_stage_artifact_path(root, joint_stage, "outer_oof_predictions"))
+    selection, reports, pseudo = source_uq_pseudo_tests(predictors, oof)
+    output_root = _inside(
+        root,
+        "data/processed/multicity/m3_source_joint_nested_loso_v1/uq",
+        label="source UQ output root",
+    )
+    reports_path = output_root / "density_candidate_reports.json"
+    pseudo_path = output_root / "pseudo_test_intervals.parquet"
+    report_payload = _with_commit(
+        {
+            "schema_version": 1,
+            "algorithm_version": ALGORITHM_VERSION,
+            "state": "source_uq_candidate_reports",
+            "authorization_commit_sha256": authorization["commit_sha256"],
+            "reports": reports,
+            "selection": selection,
+        }
+    )
+    _write_exclusive(report_payload, reports_path)
+    _write_parquet_exclusive(pseudo, pseudo_path)
+    values_marker = _authenticate_values_marker(root, authorization)
+    stage = _with_commit(
+        {
+            "schema_version": 1,
+            "algorithm_version": ALGORITHM_VERSION,
+            "state": "source_uq_selection_complete",
+            "authorization_commit_sha256": authorization["commit_sha256"],
+            "values_opened_commit_sha256": values_marker["commit_sha256"],
+            "m3_protocol_lock_commit_sha256": EXPECTED_PROTOCOL_COMMIT,
+            "source_qa_candidates_completion_commit_sha256": EXPECTED_QA_COMPLETION_COMMIT,
+            "source_predictors_completion_commit_sha256": authorization[
+                "source_predictors_completion_commit_sha256"
+            ],
+            "source_city_ids": list(SOURCE_CITY_IDS),
+            "outer_held_source_city_ids": list(SOURCE_CITY_IDS),
+            **selection,
+            "joint_stage_commit_sha256": joint_stage["commit_sha256"],
+            "artifacts": [
+                _artifact_record(root, reports_path, role="source_uq_candidate_reports"),
+                _artifact_record(
+                    root,
+                    pseudo_path,
+                    role="source_uq_pseudo_test_predictions",
+                    rows=len(pseudo),
+                ),
+            ],
+            "audit": {
+                "blind_test_city_accessed": False,
+                "blind_predictor_accessed": False,
+                "network_or_href_reads": 0,
+            },
+            "next_safe_stage": "source_risk_selection",
+        }
+    )
+    _write_exclusive(stage, destination)
+    _write_runtime_status(
+        root,
+        state="stage_complete",
+        phase="source_uq_selection",
+        authorization_commit_sha256=authorization["commit_sha256"],
+        stage_commit_sha256=stage["commit_sha256"],
+        next_safe_stage="source_risk_selection",
+    )
+    return _authenticate_stage(
+        root,
+        destination,
+        state="source_uq_selection_complete",
+        authorization_commit=str(authorization["commit_sha256"]),
+    )
+
+
+def run_authorized_source_risk_stage(
+    project_root: str | Path,
+    authorization_path: str | Path = AUTHORIZATION_PATH,
+) -> dict[str, Any]:
+    root = Path(project_root).resolve()
+    authorization = authenticate_m3_source_joint_nested_loso_authorization(root, authorization_path)
+    joint_stage = _authenticate_stage(
+        root,
+        authorization["joint_stage_completion"],
+        state="joint_nested_loso_stage_complete",
+        authorization_commit=str(authorization["commit_sha256"]),
+    )
+    uq_stage = _authenticate_stage(
+        root,
+        authorization["source_uq_stage_completion"],
+        state="source_uq_selection_complete",
+        authorization_commit=str(authorization["commit_sha256"]),
+    )
+    destination = _inside(root, authorization["source_risk_stage_completion"], label="risk stage")
+    if destination.is_file():
+        return _authenticate_stage(
+            root,
+            destination,
+            state="source_risk_selection_complete",
+            authorization_commit=str(authorization["commit_sha256"]),
+        )
+    _write_runtime_status(
+        root,
+        state="running",
+        phase="source_risk_selection",
+        authorization_commit_sha256=authorization["commit_sha256"],
+    )
+    predictors, _ = load_authorized_source_inputs(root, authorization_path)
+    oof = pd.read_parquet(_stage_artifact_path(root, joint_stage, "outer_oof_predictions"))
+    uq_predictions = pd.read_parquet(
+        _stage_artifact_path(root, uq_stage, "source_uq_pseudo_test_predictions")
+    )
+    selection, reports, pseudo = source_risk_pseudo_tests(predictors, oof, uq_predictions)
+    output_root = _inside(
+        root,
+        "data/processed/multicity/m3_source_joint_nested_loso_v1/risk",
+        label="source risk output root",
+    )
+    reports_path = output_root / "risk_candidate_reports.json"
+    pseudo_path = output_root / "pseudo_test_risk.parquet"
+    report_payload = _with_commit(
+        {
+            "schema_version": 1,
+            "algorithm_version": ALGORITHM_VERSION,
+            "state": "source_risk_candidate_reports",
+            "authorization_commit_sha256": authorization["commit_sha256"],
+            "reports": reports,
+            "selection": selection,
+        }
+    )
+    _write_exclusive(report_payload, reports_path)
+    _write_parquet_exclusive(pseudo, pseudo_path)
+    values_marker = _authenticate_values_marker(root, authorization)
+    stage = _with_commit(
+        {
+            "schema_version": 1,
+            "algorithm_version": ALGORITHM_VERSION,
+            "state": "source_risk_selection_complete",
+            "authorization_commit_sha256": authorization["commit_sha256"],
+            "values_opened_commit_sha256": values_marker["commit_sha256"],
+            "m3_protocol_lock_commit_sha256": EXPECTED_PROTOCOL_COMMIT,
+            "source_qa_candidates_completion_commit_sha256": EXPECTED_QA_COMPLETION_COMMIT,
+            "source_predictors_completion_commit_sha256": authorization[
+                "source_predictors_completion_commit_sha256"
+            ],
+            "source_city_ids": list(SOURCE_CITY_IDS),
+            "outer_held_source_city_ids": list(SOURCE_CITY_IDS),
+            **selection,
+            "joint_stage_commit_sha256": joint_stage["commit_sha256"],
+            "source_uq_stage_commit_sha256": uq_stage["commit_sha256"],
+            "artifacts": [
+                _artifact_record(root, reports_path, role="source_risk_candidate_reports"),
+                _artifact_record(
+                    root,
+                    pseudo_path,
+                    role="source_risk_pseudo_test_predictions",
+                    rows=len(pseudo),
+                ),
+            ],
+            "audit": {
+                "blind_test_city_accessed": False,
+                "blind_predictor_accessed": False,
+                "network_or_href_reads": 0,
+            },
+            "next_safe_stage": "finalize_source_nested_loso",
+        }
+    )
+    _write_exclusive(stage, destination)
+    _write_runtime_status(
+        root,
+        state="stage_complete",
+        phase="source_risk_selection",
+        authorization_commit_sha256=authorization["commit_sha256"],
+        stage_commit_sha256=stage["commit_sha256"],
+        next_safe_stage="finalize_source_nested_loso",
+    )
+    return _authenticate_stage(
+        root,
+        destination,
+        state="source_risk_selection_complete",
+        authorization_commit=str(authorization["commit_sha256"]),
+    )
 
 
 def _validate_candidate_metric_rows(frame: pd.DataFrame, *, label: str) -> None:
@@ -1602,7 +2255,10 @@ def _authenticate_joint_stage_tables(
         "selected_joint_candidate_id",
         "selected_qa_id",
         "selected_m3_candidate_id",
+        "b1_prediction_c",
+        "m2_legacy_prediction_c",
         "m3_prediction_c",
+        "m3_ensemble_point_sd_c",
     }
     if (
         predictions.empty
@@ -1612,7 +2268,16 @@ def _authenticate_joint_stage_tables(
         or not predictions["city_id"].astype(str).eq(predictions["outer_city_id"].astype(str)).all()
         or predictions.duplicated(list(KEY_COLUMNS)).any()
         or not np.isfinite(
-            predictions.loc[:, ["m3_prediction_c", "observed_lst_c"]].to_numpy(dtype=float)
+            predictions.loc[
+                :,
+                [
+                    "b1_prediction_c",
+                    "m2_legacy_prediction_c",
+                    "m3_prediction_c",
+                    "m3_ensemble_point_sd_c",
+                    "observed_lst_c",
+                ],
+            ].to_numpy(dtype=float)
         ).all()
     ):
         raise M3SourceJointLosoError("Outer OOF prediction universe changed.")
@@ -1724,6 +2389,46 @@ def _authenticate_stage(
             and not payload.get("fallback_reason")
         ):
             raise M3SourceJointLosoError("Source UQ stage selection contract changed.")
+        if set(artifact_paths) != {
+            "source_uq_candidate_reports",
+            "source_uq_pseudo_test_predictions",
+        }:
+            raise M3SourceJointLosoError("Source UQ artifact roles changed.")
+        report_payload = _read_committed(
+            artifact_paths["source_uq_candidate_reports"], label="source UQ candidate reports"
+        )
+        reports = report_payload.get("reports")
+        if (
+            report_payload.get("state") != "source_uq_candidate_reports"
+            or report_payload.get("authorization_commit_sha256") != authorization_commit
+            or not isinstance(reports, list)
+            or len(reports) != 1
+            or select_source_uq_method(reports).get("selected_method") != method
+            or report_payload.get("selection", {}).get("selected_method") != method
+        ):
+            raise M3SourceJointLosoError("Source UQ candidate selection cannot be reproduced.")
+        pseudo = pd.read_parquet(artifact_paths["source_uq_pseudo_test_predictions"])
+        if (
+            artifact_records["source_uq_pseudo_test_predictions"].get("rows") != len(pseudo)
+            or pseudo.empty
+            or set(pseudo["city_id"].astype(str)) != set(SOURCE_CITY_IDS)
+            or not pseudo["uq_method"].astype(str).eq(method).all()
+            or pseudo.duplicated(list(KEY_COLUMNS)).any()
+            or not np.isfinite(
+                pseudo.loc[
+                    :,
+                    [
+                        "observed_lst_c",
+                        "m3_prediction_c",
+                        "m3_conformal_correction_c",
+                        "m3_lower_c",
+                        "m3_upper_c",
+                        "m3_interval_width_c",
+                    ],
+                ].to_numpy(dtype=float)
+            ).all()
+        ):
+            raise M3SourceJointLosoError("Source UQ pseudo-test artifact changed.")
     elif state == "source_risk_selection_complete":
         method = str(payload.get("selected_method", ""))
         if (
@@ -1740,6 +2445,36 @@ def _authenticate_stage(
             and not payload.get("fallback_reason")
         ):
             raise M3SourceJointLosoError("Source risk stage selection contract changed.")
+        if set(artifact_paths) != {
+            "source_risk_candidate_reports",
+            "source_risk_pseudo_test_predictions",
+        }:
+            raise M3SourceJointLosoError("Source risk artifact roles changed.")
+        report_payload = _read_committed(
+            artifact_paths["source_risk_candidate_reports"],
+            label="source risk candidate reports",
+        )
+        reports = report_payload.get("reports")
+        if (
+            report_payload.get("state") != "source_risk_candidate_reports"
+            or report_payload.get("authorization_commit_sha256") != authorization_commit
+            or not isinstance(reports, list)
+            or {str(row.get("method")) for row in reports}
+            != {"learned_error", "interval_width", "ensemble_sd"}
+            or select_source_risk_method(reports).get("selected_method") != method
+            or report_payload.get("selection", {}).get("selected_method") != method
+        ):
+            raise M3SourceJointLosoError("Source risk candidate selection cannot be reproduced.")
+        pseudo = pd.read_parquet(artifact_paths["source_risk_pseudo_test_predictions"])
+        if (
+            artifact_records["source_risk_pseudo_test_predictions"].get("rows") != len(pseudo)
+            or pseudo.empty
+            or set(pseudo["city_id"].astype(str)) != set(SOURCE_CITY_IDS)
+            or not pseudo["risk_method"].astype(str).eq(method).all()
+            or pseudo.duplicated(list(KEY_COLUMNS)).any()
+            or not pseudo["m3_accepted"].astype(bool).eq(~pseudo["m3_abstain"].astype(bool)).all()
+        ):
+            raise M3SourceJointLosoError("Source risk pseudo-test artifact changed.")
     return payload
 
 
@@ -1751,25 +2486,84 @@ def build_source_nested_loso_completion(
     uq_stage_path: str | Path = UQ_STAGE_PATH,
     risk_stage_path: str | Path = RISK_STAGE_PATH,
 ) -> dict[str, Any]:
-    """Fail closed until executable source-only UQ and risk stages are added.
+    """Build the final source-only selection after all three stages authenticate."""
 
-    The parameters are retained as the versioned runner interface, but a
-    committed joint-model artifact alone is not a complete M3 source
-    selection.  A later append-only implementation must replace this guard
-    only together with reproducible pseudo-test UQ/risk runners and semantic
-    stage authentication.
-    """
-
-    del (
-        project_root,
-        authorization_path,
-        joint_stage_path,
-        uq_stage_path,
-        risk_stage_path,
+    root = Path(project_root).resolve()
+    authorization = authenticate_m3_source_joint_nested_loso_authorization(
+        root, authorization_path
     )
-    raise M3SourceJointLosoError(
-        "SOURCE_NESTED_LOSO_COMPLETE is disabled until executable source-only "
-        "UQ and risk pseudo-test stages are implemented and authenticated."
+    authorization_commit = str(authorization["commit_sha256"])
+    joint = _authenticate_stage(
+        root,
+        joint_stage_path,
+        state="joint_nested_loso_stage_complete",
+        authorization_commit=authorization_commit,
+    )
+    uq = _authenticate_stage(
+        root,
+        uq_stage_path,
+        state="source_uq_selection_complete",
+        authorization_commit=authorization_commit,
+    )
+    risk = _authenticate_stage(
+        root,
+        risk_stage_path,
+        state="source_risk_selection_complete",
+        authorization_commit=authorization_commit,
+    )
+    if (
+        uq.get("joint_stage_commit_sha256") != joint.get("commit_sha256")
+        or risk.get("joint_stage_commit_sha256") != joint.get("commit_sha256")
+        or risk.get("source_uq_stage_commit_sha256") != uq.get("commit_sha256")
+    ):
+        raise M3SourceJointLosoError("Final source stage lineage changed.")
+    values_marker = _authenticate_values_marker(root, authorization)
+    stage_paths = {
+        "joint_nested_loso_stage": _inside(root, joint_stage_path, label="joint stage"),
+        "source_uq_selection_stage": _inside(root, uq_stage_path, label="UQ stage"),
+        "source_risk_selection_stage": _inside(root, risk_stage_path, label="risk stage"),
+    }
+    return _with_commit(
+        {
+            "schema_version": 1,
+            "algorithm_version": ALGORITHM_VERSION,
+            "state": "source_nested_loso_complete",
+            "authorization_commit_sha256": authorization_commit,
+            "values_opened_commit_sha256": values_marker["commit_sha256"],
+            "m3_protocol_lock_commit_sha256": EXPECTED_PROTOCOL_COMMIT,
+            "source_qa_candidates_completion_commit_sha256": EXPECTED_QA_COMPLETION_COMMIT,
+            "source_predictors_completion_commit_sha256": authorization[
+                "source_predictors_completion_commit_sha256"
+            ],
+            "source_city_ids": list(SOURCE_CITY_IDS),
+            "blind_test_city_ids": list(BLIND_TEST_CITY_IDS),
+            "joint_configuration_count": len(JOINT_CONFIGURATIONS),
+            "outer_fold_count": len(SOURCE_CITY_IDS),
+            "selected_joint_candidate_id": joint["selected_joint_candidate_id"],
+            "selected_qa_id": joint["selected_qa_id"],
+            "selected_m3_candidate_id": joint["selected_m3_candidate_id"],
+            "selected_uq_method": uq["selected_method"],
+            "selected_risk_method": risk["selected_method"],
+            "stage_commits": {
+                "joint_nested_loso": joint["commit_sha256"],
+                "source_uq_selection": uq["commit_sha256"],
+                "source_risk_selection": risk["commit_sha256"],
+            },
+            "stage_artifacts": [
+                _artifact_record(root, path, role=role) for role, path in stage_paths.items()
+            ],
+            "support_and_tie_break_frozen": True,
+            "source_only_selection_complete": True,
+            "audit": {
+                "authorization_authenticated_before_first_value_read": True,
+                "source_only_fit_select_predict_and_score": True,
+                "blind_test_city_accessed": False,
+                "blind_predictor_accessed": False,
+                "network_or_href_reads": 0,
+                "prediction_before_blind_target_boundary_preserved": True,
+            },
+            "next_safe_stage": "authorize_blind_predictor_build_before_any_blind_value_read",
+        }
     )
 
 
@@ -1781,7 +2575,16 @@ def create_source_nested_loso_completion(
     payload = build_source_nested_loso_completion(root)
     destination = _inside(root, completion_path, label="source nested LOSO completion")
     _write_exclusive(payload, destination)
-    return authenticate_source_nested_loso_completion(root, destination)
+    authenticated = authenticate_source_nested_loso_completion(root, destination)
+    _write_runtime_status(
+        root,
+        state="complete",
+        phase="source_nested_loso",
+        authorization_commit_sha256=authenticated["authorization_commit_sha256"],
+        completion_commit_sha256=authenticated["commit_sha256"],
+        next_safe_stage=authenticated["next_safe_stage"],
+    )
+    return authenticated
 
 
 def authenticate_source_nested_loso_completion(

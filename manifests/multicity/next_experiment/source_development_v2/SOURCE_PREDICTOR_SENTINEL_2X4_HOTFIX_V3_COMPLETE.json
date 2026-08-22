@@ -1,0 +1,16 @@
+{
+  "algorithm_version": "m3-sentinel-two-acquisition-hotfix-v3",
+  "blind_city_accessed": false,
+  "commit_sha256": "acd8826f05977ee90625581512c738f010850c43b09bef2820fa3bba29902732",
+  "hotfix_authorization_commit_sha256": "dd26477aa683478b4c8cfeb3ac85bca765fe0a5938dbd90d00b9dbcb8fab7d53",
+  "model_fit_select_predict_or_score_performed": false,
+  "parent_completion_commit_sha256": "f5018f94c8932450797fb86bc8ff45f00406e5710462820c4357daf4ce0f1a20",
+  "resource_audit": {
+    "active_acquisitions": 2,
+    "download_threads_per_acquisition": 4,
+    "native_compute_threads": 1
+  },
+  "schema_version": 1,
+  "state": "source_predictor_sentinel_2x4_hotfix_complete",
+  "target_or_landsat_values_read": false
+}

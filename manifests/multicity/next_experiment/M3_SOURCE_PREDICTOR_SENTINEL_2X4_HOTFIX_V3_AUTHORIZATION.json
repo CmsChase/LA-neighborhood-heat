@@ -1,0 +1,44 @@
+{
+  "algorithm_version": "m3-sentinel-two-acquisition-hotfix-v3",
+  "code_identity": {
+    "files": [
+      {
+        "bytes": 16123,
+        "path": "RESUME_M3_2X4_HOTFIX.py",
+        "sha256": "382ed9a0f0764800deec435ea1f57fe2859bcf9c6f8063a4f6dc85872fa5dbb1"
+      },
+      {
+        "bytes": 641,
+        "path": "RESUME_M3_2X4_HOTFIX.cmd",
+        "sha256": "ec7612c75230bc1640530fca85554cea87c38536a6c91f0cdc3458ca551be878"
+      }
+    ]
+  },
+  "commit_sha256": "dd26477aa683478b4c8cfeb3ac85bca765fe0a5938dbd90d00b9dbcb8fab7d53",
+  "parent_game_laptop_authorization_commit_sha256": "8310bd4822363a681330441b8494954a0b7b427f00f8e8075230480cbf9bfe83",
+  "permissions": {
+    "blind_city_access": false,
+    "model_fit_select_predict_or_score": false,
+    "source_sentinel_value_read": true,
+    "target_or_landsat_value_read": false
+  },
+  "resource_contract": {
+    "active_acquisitions": 2,
+    "download_threads_per_acquisition": 4,
+    "maximum_remote_asset_threads": 8,
+    "native_compute_threads": 1,
+    "queue_rebuild_reset_rewrite_or_delete_allowed": false,
+    "same_sqlite_queue_and_existing_cache": true,
+    "single_orphaned_claim_return_to_pending_after_worker_lock": true
+  },
+  "run_id": "m3-source-predictor-extension-v1-22f6f417faea2aae",
+  "schema_version": 1,
+  "scientific_contract": {
+    "cache_paths_and_commit_semantics_changed": false,
+    "inventory_items_dates_bands_grids_and_algorithms_changed": false,
+    "only_independent_acquisition_scheduling_changed": true,
+    "per_acquisition_processor_changed": false
+  },
+  "sqlite_task_plan_sha256": "d21c5c74ca562d29e71375350029a4e44c17088497494203bc8d1844a1cec712",
+  "state": "m3_source_predictor_sentinel_2x4_hotfix_authorized"
+}

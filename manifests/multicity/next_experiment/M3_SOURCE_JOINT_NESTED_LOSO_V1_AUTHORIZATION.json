@@ -1,0 +1,379 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-source-joint-nested-loso-v1",
+  "state": "m3_source_joint_nested_loso_v1_authorized",
+  "m3_protocol_lock_commit_sha256": "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8",
+  "source_qa_candidates_completion_commit_sha256": "f3276d7254c71c642c8300edacacd1a3caa7c3e279a7dc820c9de5928cdac1d4",
+  "source_predictors_completion_commit_sha256": "1bf16d8b6a9e9cbac04d1681213f0a783ee3610049f815f87692dbf2442aaa3f",
+  "source_city_ids": [
+    "los_angeles_ca",
+    "phoenix_az",
+    "houston_tx",
+    "chicago_il"
+  ],
+  "blind_test_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "source_predictor_tables": [
+    {
+      "city_id": "los_angeles_ca",
+      "path": "data/processed/multicity/m3_source_predictor_extension_v1/los_angeles_ca/predictors_46.parquet",
+      "bytes": 19371562,
+      "sha256": "a2afa506015cfcaa87ad9c9d3639cc35b7b1b18644e2fbca5dbd8b5bfbdcc1d7",
+      "rows": 98640,
+      "schema_sha256": "9e61fff7620a689370701933aad4dec4b2ceb0e9f1da4726631bfe84bc20acc3",
+      "semantic_sha256": "a43fc08e483cf4ac991f31f0caf16f2069a628251da3deb9ce9fb2ce9638303a",
+      "tract_geoid_set_sha256": "9f03592b471377fd3113671b19c2d3c11645c981e5d39c26f1c1ab955f2fb964"
+    },
+    {
+      "city_id": "phoenix_az",
+      "path": "data/processed/multicity/m3_source_predictor_extension_v1/phoenix_az/predictors_46.parquet",
+      "bytes": 1818492,
+      "sha256": "1200c0e745848ebcba3e0acd017d351498b3f78cc4ba7da12175f9d296a51db3",
+      "rows": 8250,
+      "schema_sha256": "9e61fff7620a689370701933aad4dec4b2ceb0e9f1da4726631bfe84bc20acc3",
+      "semantic_sha256": "f17d35e538575b7eeb7b5d8aec71f0a3276edc34114bc7993e3f5230cb754a9a",
+      "tract_geoid_set_sha256": "f198b74541f300a59bc565103da65e55b5d6a39a4e004e9816adcba42e2f8049"
+    },
+    {
+      "city_id": "houston_tx",
+      "path": "data/processed/multicity/m3_source_predictor_extension_v1/houston_tx/predictors_46.parquet",
+      "bytes": 13863296,
+      "sha256": "40114adece32e535dffc57e661ebd62dd3bb914039460a68c4db477627e974fc",
+      "rows": 66402,
+      "schema_sha256": "9e61fff7620a689370701933aad4dec4b2ceb0e9f1da4726631bfe84bc20acc3",
+      "semantic_sha256": "ff0074ab5665bacbe3b65b9eaa3438cb26224e8f29e25bf2924f0d392d54735f",
+      "tract_geoid_set_sha256": "ab11f9a3577746049f359e167238087d192a09638b4a6c6b2f28777f0995f21c"
+    },
+    {
+      "city_id": "chicago_il",
+      "path": "data/processed/multicity/m3_source_predictor_extension_v1/chicago_il/predictors_46.parquet",
+      "bytes": 15972243,
+      "sha256": "08aaee66690d6a5aa1bf6d54502c9418555d7c632bfb4f903d33f36189ba2c2b",
+      "rows": 80340,
+      "schema_sha256": "9e61fff7620a689370701933aad4dec4b2ceb0e9f1da4726631bfe84bc20acc3",
+      "semantic_sha256": "47939edb2f551387a18ec982468680a78ac304587ff19be87e1817ff5a31c602",
+      "tract_geoid_set_sha256": "f439606dc725955ea007008d8a79729fd875b99471e28bc08acf1ddd173c881a"
+    }
+  ],
+  "source_qa_target_tables": [
+    {
+      "city_id": "los_angeles_ca",
+      "qa_id": "none",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/los_angeles_ca/none/targets.parquet",
+      "sha256": "21599626268ded4944335e9837870e76d46cb8683dc2b21f5ce08e27e87e505b",
+      "bytes": 3534542,
+      "rows": 98640,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "34e12aa20b1cdb21712a9a01a465eb094870d426c5d8b706dc63ed01236ad9e8",
+      "city_completion_commit_sha256": "2afef9760e284241889f6e24541d05eb8d8dd9b37a659148ee5baa530501a88c"
+    },
+    {
+      "city_id": "los_angeles_ca",
+      "qa_id": "3k",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/los_angeles_ca/3k/targets.parquet",
+      "sha256": "d956d816c70a31333766728d4c32df2e6c187af78eeefd94d82f40f85c48ab81",
+      "bytes": 3305699,
+      "rows": 98640,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "cd030df9f9b75d6e0f95d3863cbaaa1ebdc811f0fe2278d303db5d6359f095b8",
+      "city_completion_commit_sha256": "2afef9760e284241889f6e24541d05eb8d8dd9b37a659148ee5baa530501a88c"
+    },
+    {
+      "city_id": "los_angeles_ca",
+      "qa_id": "4k",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/los_angeles_ca/4k/targets.parquet",
+      "sha256": "814857519cf341cd71dfbd30bbc47409452d7fade2fdf5fdce3cdc82a2c1d06d",
+      "bytes": 3532983,
+      "rows": 98640,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "67b48691382715acb598c41c5c2ccd2a0afbfb6fa86720ec8536fe54882e0f29",
+      "city_completion_commit_sha256": "2afef9760e284241889f6e24541d05eb8d8dd9b37a659148ee5baa530501a88c"
+    },
+    {
+      "city_id": "los_angeles_ca",
+      "qa_id": "6k",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/los_angeles_ca/6k/targets.parquet",
+      "sha256": "b013dc0e0c79a2f380c9d92e105c38ef92b4975c321a44303066a67ef84088fa",
+      "bytes": 3534516,
+      "rows": 98640,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "5a37b5317ada542ffb56be3ed6a55caa81fb712fe56ccc61e77be2f7da978d7b",
+      "city_completion_commit_sha256": "2afef9760e284241889f6e24541d05eb8d8dd9b37a659148ee5baa530501a88c"
+    },
+    {
+      "city_id": "phoenix_az",
+      "qa_id": "none",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/phoenix_az/none/targets.parquet",
+      "sha256": "112670b9a79a5bbd6b390e8db73e00efa77abd7be27a4147bd5a31fa94443abc",
+      "bytes": 575110,
+      "rows": 8250,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "d4032fce49888f7bc9a4d5e7d3ed66db7bcb123f6a72985b6bc8017c9957937d",
+      "city_completion_commit_sha256": "42322b6a8428a565c2d308a97039889f0a975c640acf804c848414d806618c6a"
+    },
+    {
+      "city_id": "phoenix_az",
+      "qa_id": "3k",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/phoenix_az/3k/targets.parquet",
+      "sha256": "72bf6c42d6c6e13b74bbb70c3c9703fe97442625bc1ee26d33da399e988ba8fe",
+      "bytes": 557038,
+      "rows": 8250,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "ec1ce867de96a346cec96c3b0f840e223ee73330ed255cc28372669a966e556b",
+      "city_completion_commit_sha256": "42322b6a8428a565c2d308a97039889f0a975c640acf804c848414d806618c6a"
+    },
+    {
+      "city_id": "phoenix_az",
+      "qa_id": "4k",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/phoenix_az/4k/targets.parquet",
+      "sha256": "7fe8d2c942379f31cc4a46f660604d83e4667bed8d798c2c2472d7b00fce2b2a",
+      "bytes": 569458,
+      "rows": 8250,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "7a969ee3bbad2b022b45fac24c4c03c0b7efc51f71446c8ab7fd41e012c3b149",
+      "city_completion_commit_sha256": "42322b6a8428a565c2d308a97039889f0a975c640acf804c848414d806618c6a"
+    },
+    {
+      "city_id": "phoenix_az",
+      "qa_id": "6k",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/phoenix_az/6k/targets.parquet",
+      "sha256": "1f5c034d87a749f091254f4435de057f99580acd3ab49babb682d07d5532eab8",
+      "bytes": 571505,
+      "rows": 8250,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "38b157ad78bbc6d3dd149247dec5d1a5aa8957896c93575ac89ae6b28321879f",
+      "city_completion_commit_sha256": "42322b6a8428a565c2d308a97039889f0a975c640acf804c848414d806618c6a"
+    },
+    {
+      "city_id": "houston_tx",
+      "qa_id": "none",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/houston_tx/none/targets.parquet",
+      "sha256": "a6852775e64a2ad9b019b0b42a0c93232ee7d6c313f20fa67e7a4ba74cb3a48a",
+      "bytes": 1311605,
+      "rows": 66402,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "5341539fe7b5bceec593632d2c98761c06e5fb133aabf652df87ee40c5951133",
+      "city_completion_commit_sha256": "23e343dc173e82a844e6da4473260a819b665c454daaf5a00a62bb3151848504"
+    },
+    {
+      "city_id": "houston_tx",
+      "qa_id": "3k",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/houston_tx/3k/targets.parquet",
+      "sha256": "5f352733c51ce9eebc6252d11ac06a3fb1407b8834bfb99a6a4d91de9ebce471",
+      "bytes": 768777,
+      "rows": 66402,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "72984f53d2ec6077385e24f9d6e729df518777d56c6589218a3154780e9f404c",
+      "city_completion_commit_sha256": "23e343dc173e82a844e6da4473260a819b665c454daaf5a00a62bb3151848504"
+    },
+    {
+      "city_id": "houston_tx",
+      "qa_id": "4k",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/houston_tx/4k/targets.parquet",
+      "sha256": "2b87e403ca996aec8fe51bddefa33c929d5d04d3d2cfe3684cd3a931197aedb3",
+      "bytes": 1243086,
+      "rows": 66402,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "b0663a6e838f7a565cfbab53760a19f4c0bcfea84fe6df9be042871557adda05",
+      "city_completion_commit_sha256": "23e343dc173e82a844e6da4473260a819b665c454daaf5a00a62bb3151848504"
+    },
+    {
+      "city_id": "houston_tx",
+      "qa_id": "6k",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/houston_tx/6k/targets.parquet",
+      "sha256": "adff2d4807f72a37d5d9a5749452471cbd1459e918b2e0c76ca13307adc36316",
+      "bytes": 1313267,
+      "rows": 66402,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "c97a6525dff1804f645401a3b94a0b3f3a27c8fbfa63a171351f57e1e4b89d35",
+      "city_completion_commit_sha256": "23e343dc173e82a844e6da4473260a819b665c454daaf5a00a62bb3151848504"
+    },
+    {
+      "city_id": "chicago_il",
+      "qa_id": "none",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/chicago_il/none/targets.parquet",
+      "sha256": "6b0ed3436743074f4dc66694056dd143cb32caef5783692985516abfc65bf7f7",
+      "bytes": 1348348,
+      "rows": 80340,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "9424e934f9fc4f4d6796471bf392d24e2bc349a8fcbcfe632b49fe60a13830e6",
+      "city_completion_commit_sha256": "077a2025d5641428a6569a7fd4695ba77ec20d6338757a499dcec564ea57ab7b"
+    },
+    {
+      "city_id": "chicago_il",
+      "qa_id": "3k",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/chicago_il/3k/targets.parquet",
+      "sha256": "449eba1223f66071f01dbb0757d4daa885130e1e1592340b0a6de84b7d056e12",
+      "bytes": 939573,
+      "rows": 80340,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "8adedebbd7905e3a82053c3432d78e4861017090d7b2ef53dbf96a700f2e9b6b",
+      "city_completion_commit_sha256": "077a2025d5641428a6569a7fd4695ba77ec20d6338757a499dcec564ea57ab7b"
+    },
+    {
+      "city_id": "chicago_il",
+      "qa_id": "4k",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/chicago_il/4k/targets.parquet",
+      "sha256": "92f9764cc962488b5b152a864b389582315750f22a0eae42d0e29c3d6d6a5e25",
+      "bytes": 1339949,
+      "rows": 80340,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "d68980f43200910ecebe4997365b9065ee48e01ba6e07f83d9ab44c6abd0c0b7",
+      "city_completion_commit_sha256": "077a2025d5641428a6569a7fd4695ba77ec20d6338757a499dcec564ea57ab7b"
+    },
+    {
+      "city_id": "chicago_il",
+      "qa_id": "6k",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/chicago_il/6k/targets.parquet",
+      "sha256": "c338258f994115d2b578734bd1e7dfdaf2ed2f5ac3199cc626854bb0d270426d",
+      "bytes": 1348583,
+      "rows": 80340,
+      "schema_sha256": "c961780ec1b12b10bdfc33a46a39f07bc4e5fde6388605f2dbdc52ef9243f5f6",
+      "semantic_sha256": "fad74498a16ac23563028c448f39ff3126395489d1bf5838a78db1411da04d40",
+      "city_completion_commit_sha256": "077a2025d5641428a6569a7fd4695ba77ec20d6338757a499dcec564ea57ab7b"
+    }
+  ],
+  "source_city_context": [
+    {
+      "city_id": "los_angeles_ca",
+      "city_centroid_latitude_deg": 34.107048384317594,
+      "algorithm": "authenticate_census_place_city_boundary;project_to_locked_target_grid_crs;unary_union;centroid;transform_centroid_to_epsg4326;take_latitude",
+      "geography_commit_sha256": "f6105bbc1060013c98e63eafca9ca227d4d8538cfc2fb91afd38f5c616e690e3",
+      "worldcover_support_commit_sha256": "4fc8323acc0eca002a6d8fc82f1cc9bca721076dd50b7027efe3a3769f0c685e",
+      "city_boundary_sha256": "4172d7e79a570d7a5775330d2ed9edce033a3d11e53aa8d24a8fd3379601304d",
+      "target_grid_crs": "EPSG:32611"
+    },
+    {
+      "city_id": "phoenix_az",
+      "city_centroid_latitude_deg": 33.57192303506353,
+      "algorithm": "authenticate_census_place_city_boundary;project_to_locked_target_grid_crs;unary_union;centroid;transform_centroid_to_epsg4326;take_latitude",
+      "geography_commit_sha256": "776d752cc8d51bc0b5c30da1d77fd5fa26b9e3ad17c259d5e0ddfe4592c10eee",
+      "worldcover_support_commit_sha256": "7eb0196636025ef307c7d0c9371139a3fb1b4161949b2751a24981a77fd3aa66",
+      "city_boundary_sha256": "17b53a054eb6cd70811476763e4c5034d848535e4157c520be55c927cf3f2ad9",
+      "target_grid_crs": "EPSG:32612"
+    },
+    {
+      "city_id": "houston_tx",
+      "city_centroid_latitude_deg": 29.785944491182008,
+      "algorithm": "authenticate_census_place_city_boundary;project_to_locked_target_grid_crs;unary_union;centroid;transform_centroid_to_epsg4326;take_latitude",
+      "geography_commit_sha256": "b72342417216ca354318167a3f5ccae8906df309ac071b4093c5ddf3745dbbfb",
+      "worldcover_support_commit_sha256": "e24427bcb4a3b049f971c370f0e7ff1f6653ad7f222f4028d2ba86dec86fbb91",
+      "city_boundary_sha256": "456e55c39ad4395c964b4329c256f996e8df5f99b548f49e733e3775655ac602",
+      "target_grid_crs": "EPSG:32615"
+    },
+    {
+      "city_id": "chicago_il",
+      "city_centroid_latitude_deg": 41.83696360585384,
+      "algorithm": "authenticate_census_place_city_boundary;project_to_locked_target_grid_crs;unary_union;centroid;transform_centroid_to_epsg4326;take_latitude",
+      "geography_commit_sha256": "8eb9427e9b599908e4f9c9fc04676a7962a8e1863a1603af9a581069954bed17",
+      "worldcover_support_commit_sha256": "9d5b54df7f6562ddc2bb1540cac36c4d61b866fcb9f8a49a7c2b4e7fee3b56ef",
+      "city_boundary_sha256": "cd5c0bbd2ead44f2fefc62a5896e36eef52abb40f894d2bbd282cdfe6da2815e",
+      "target_grid_crs": "EPSG:32616"
+    }
+  ],
+  "city_context_contract": {
+    "feature": "city_centroid_latitude_deg",
+    "counted_in_exact_46_predictors": false,
+    "algorithm": "authenticate_census_place_city_boundary;project_to_locked_target_grid_crs;unary_union;centroid;transform_centroid_to_epsg4326;take_latitude",
+    "assembly": "mechanically_repeat_authenticated_city_value_by_city_id",
+    "derive_estimate_or_read_from_target_in_joint_stage": false
+  },
+  "joint_configuration_ids": [
+    "qa_none__level_ridge_alpha_10__anomaly_hgb_leaves_15",
+    "qa_none__level_ridge_alpha_10__anomaly_hgb_leaves_31",
+    "qa_none__level_ridge_alpha_1__anomaly_hgb_leaves_15",
+    "qa_none__level_ridge_alpha_1__anomaly_hgb_leaves_31",
+    "qa_3k__level_ridge_alpha_10__anomaly_hgb_leaves_15",
+    "qa_3k__level_ridge_alpha_10__anomaly_hgb_leaves_31",
+    "qa_3k__level_ridge_alpha_1__anomaly_hgb_leaves_15",
+    "qa_3k__level_ridge_alpha_1__anomaly_hgb_leaves_31",
+    "qa_4k__level_ridge_alpha_10__anomaly_hgb_leaves_15",
+    "qa_4k__level_ridge_alpha_10__anomaly_hgb_leaves_31",
+    "qa_4k__level_ridge_alpha_1__anomaly_hgb_leaves_15",
+    "qa_4k__level_ridge_alpha_1__anomaly_hgb_leaves_31",
+    "qa_6k__level_ridge_alpha_10__anomaly_hgb_leaves_15",
+    "qa_6k__level_ridge_alpha_10__anomaly_hgb_leaves_31",
+    "qa_6k__level_ridge_alpha_1__anomaly_hgb_leaves_15",
+    "qa_6k__level_ridge_alpha_1__anomaly_hgb_leaves_31"
+  ],
+  "selection_contract": {
+    "outer_unit": "one_complete_source_city",
+    "inner_unit": "one_complete_city_from_three_outer_training_cities",
+    "held_city_rows_dates_fit_imputation_or_selection": false,
+    "minimum_usable_dates_per_inner_city": 8,
+    "minimum_total_usable_inner_city_dates": 30,
+    "primary_objective": "equal_city_equal_date_m3_absolute_lst_mae",
+    "primary_objective_round_decimal_places": 12,
+    "tie_break": [
+      "higher_minimum_usable_dates_across_inner_validation_cities",
+      "higher_total_usable_city_dates",
+      "higher_overall_tract_date_retention",
+      "more_lenient_st_qa_none_then_6k_then_4k_then_3k",
+      "lower_m3_complexity_rank",
+      "joint_candidate_id_lexicographic_ascending"
+    ],
+    "m3_complexity_rank": {
+      "level_ridge_alpha_10__anomaly_hgb_leaves_15": 1,
+      "level_ridge_alpha_1__anomaly_hgb_leaves_15": 2,
+      "level_ridge_alpha_10__anomaly_hgb_leaves_31": 3,
+      "level_ridge_alpha_1__anomaly_hgb_leaves_31": 4
+    },
+    "complexity_rank_frozen_before_value_access": true
+  },
+  "completion_contract": {
+    "implementation_status": "executable_source_uq_and_risk_pseudo_test_stages_code_bound",
+    "joint_stage_required": true,
+    "source_only_uq_stage_required": true,
+    "source_only_risk_stage_required": true,
+    "outer_held_source_pseudo_tests_only": true,
+    "density_fallback": "unweighted_cross_conformal",
+    "risk_fallback": "none_accept_all",
+    "completion_before_all_three_stages": false
+  },
+  "values_opened_marker": "data/interim/multicity/m3_source_joint_nested_loso_v1/VALUES_OPENED.json",
+  "joint_stage_completion": "data/processed/multicity/m3_source_joint_nested_loso_v1/JOINT_NESTED_LOSO_STAGE_COMPLETE.json",
+  "source_uq_stage_completion": "data/processed/multicity/m3_source_joint_nested_loso_v1/SOURCE_UQ_SELECTION_COMPLETE.json",
+  "source_risk_stage_completion": "data/processed/multicity/m3_source_joint_nested_loso_v1/SOURCE_RISK_SELECTION_COMPLETE.json",
+  "source_nested_loso_completion": "manifests/multicity/next_experiment/source_joint_nested_loso_v1/SOURCE_NESTED_LOSO_COMPLETE.json",
+  "code_identity": {
+    "configs/multicity/m3_source_joint_nested_loso_v1.toml": {
+      "path": "configs/multicity/m3_source_joint_nested_loso_v1.toml",
+      "bytes": 5336,
+      "sha256": "e70af63066e14457671edb05c4b9a81e43dc2f04000155159c9f291da2414445"
+    },
+    "src/la_heat/multicity/m3_source_joint_nested_loso_v1.py": {
+      "path": "src/la_heat/multicity/m3_source_joint_nested_loso_v1.py",
+      "bytes": 115193,
+      "sha256": "cd97938bd3f63bf91df2f446276392694a3ef6c1d193bf94541bcfee8dba677a"
+    },
+    "scripts/authorize_m3_source_joint_nested_loso_v1.py": {
+      "path": "scripts/authorize_m3_source_joint_nested_loso_v1.py",
+      "bytes": 2217,
+      "sha256": "d55c99866bb0928ce53b48b2870d03747aa6ee0c2cbdf9744886af40fa17d0e4"
+    },
+    "scripts/run_m3_source_joint_nested_loso_v1.py": {
+      "path": "scripts/run_m3_source_joint_nested_loso_v1.py",
+      "bytes": 3768,
+      "sha256": "2fd8c926dcd80612f097046b684359d3740efa88384f602c6d7cb1633f6c8ee5"
+    }
+  },
+  "permissions": {
+    "read_authenticated_source_predictor_and_qa_target_values": true,
+    "fit_select_predict_and_score_source_only": true,
+    "network_or_href_reads": false,
+    "blind_city_asset_predictor_qa_or_target_access": false,
+    "modify_input_predictor_or_qa_tables": false
+  },
+  "authorization_audit": {
+    "predictor_or_qa_parquet_opened_or_statted": 0,
+    "model_fit_selection_prediction_or_scoring_performed": false,
+    "blind_test_city_accessed": false,
+    "network_or_href_reads": 0
+  },
+  "claim_id": "1a6de580ab8746a4ae6247ba2c028ca68cf26f49419d35d0f00dfc3baf05bbc7",
+  "commit_sha256": "358c8f63f65932c1ac17914b95015ae59194c2a42adc0e40e765016d2b68d773"
+}

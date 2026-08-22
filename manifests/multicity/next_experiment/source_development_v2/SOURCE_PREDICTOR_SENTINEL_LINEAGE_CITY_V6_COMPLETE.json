@@ -1,0 +1,19 @@
+{
+  "algorithm_version": "m3-sentinel-lineage-city-repair-v6",
+  "authenticated_compiled_outputs_may_be_resumed_without_reapplying": true,
+  "authorization_commit_sha256": "a73c0574fe6ef0897f5c318961ab380452d2425773f8f1995bb9241d918f114e",
+  "blind_city_accessed": false,
+  "commit_sha256": "132ff4060abfd75e8bfa2c9e7e60d5eab2447e53f91e2290a2a83bca45e69b0d",
+  "lineage_city_repair_application_count_this_process": 0,
+  "model_fit_select_predict_or_score_performed": false,
+  "parent_v5_completion": {
+    "bytes": 1064,
+    "path": "manifests/multicity/next_experiment/source_development_v2/SOURCE_PREDICTOR_SENTINEL_MEMBERSHIP_MERGE_V5_COMPLETE.json",
+    "sha256": "dba4a620cb4cc6d306dcf8b33997cfde3064fa566d17d644d61e0bbb5ba3b0b9"
+  },
+  "parent_v5_completion_commit_sha256": "7ea02bb68342d5a7e329cfb311d6356b18a12cafba286aea703fd6d3247b9ce5",
+  "queue_or_cache_rebuilt_reset_rewritten_or_deleted": false,
+  "schema_version": 1,
+  "state": "m3_source_predictor_sentinel_lineage_city_repair_complete",
+  "target_or_landsat_values_read": false
+}
