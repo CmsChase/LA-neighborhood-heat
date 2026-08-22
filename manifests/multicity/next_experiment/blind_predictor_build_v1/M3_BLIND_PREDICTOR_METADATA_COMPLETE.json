@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-metadata-v1",
+  "state": "m3_blind_predictor_metadata_complete",
+  "authorization_commit_sha256": "a864254391a525e42fea5b8b3a721413fea2b3d90cea53034c9b5a52ba887dc3",
+  "parent_authorization_commit_sha256": "1a704fca3848471dfba16c28bf2dd2e282343af6ac2aa24e3cbbd2ef44d790f8",
+  "city_completions": [
+    {
+      "city_id": "seattle_wa",
+      "commit_sha256": "37f3ddd17234363f599efc4fe80bde20cf447a1da7f29ba1b2b5ae08fe8510bb"
+    },
+    {
+      "city_id": "denver_co",
+      "commit_sha256": "32f828da1a2442d10cc28d326d83d83761ffc27610f792e11e734b78c2ca44eb"
+    },
+    {
+      "city_id": "atlanta_ga",
+      "commit_sha256": "7192ed698e3de98da403cb304dc35f5bf70c5891234a320213b8d4aca4190a1e"
+    },
+    {
+      "city_id": "miami_fl",
+      "commit_sha256": "ec6f1312a2a768bd6b4a35290d29ceac415a03bc7500cd46105191bd8a195565"
+    }
+  ],
+  "city_count": 4,
+  "target_date_count": 143,
+  "predictor_key_count": 23667,
+  "audit": {
+    "public_metadata_only": true,
+    "stac_assets_or_links_read": false,
+    "predictor_values_read": false,
+    "landsat_asset_href_thermal_qa_or_target_access": false,
+    "model_fit_predict_score_or_evaluate": false
+  },
+  "next_safe_stage": "implement_and_authorize_public_predictor_value_acquisition",
+  "commit_sha256": "31dcc3f639ccd8a4af040be20dd5ced243cadf7a913b53639a9e7311b7966201"
+}

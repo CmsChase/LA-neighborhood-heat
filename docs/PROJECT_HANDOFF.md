@@ -1,6 +1,6 @@
 # Project handoff
 
-Last updated: 2026-08-14 Asia/Shanghai
+Last updated: 2026-08-22 Asia/Shanghai
 
 ## Project summary
 
@@ -150,6 +150,40 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     authorization is authenticated, and its 3,474-task durable queue is initialized
     and paused. No Landsat asset href or pixel was opened by these preparation
     steps; the four blind-test cities remain sealed.
+26. The source-only QA rebuild and support gate completed successfully. The
+    gaming-laptop predictor extension was returned and authenticated in the
+    primary project: four source cities, 253,632 tract-date keys, and exactly
+    46 predictors. The next-stage executable source-only UQ/risk pseudo-test
+    path passed 34 focused tests and lint. Independent append-only joint LOSO
+    authorization commit
+    `358c8f63f65932c1ac17914b95015ae59194c2a42adc0e40e765016d2b68d773`
+    was created without opening a predictor or QA Parquet. It permits only the
+    frozen 4 QA × 4 M3 nested whole-city LOSO and source-city pseudo-tests;
+    Seattle, Denver, Atlanta, and Miami remain sealed.
+27. The source-only nested whole-city LOSO, UQ, and risk stages completed and
+    authenticated under commit
+    `207d45f8fdc7237f6347ed69b1c67733df353a3331e622707e93c4b3f21c34d3`.
+    The frozen selection is QA `4k`, M3
+    `level_ridge_alpha_10__anomaly_hgb_leaves_31`, unweighted cross-conformal
+    UQ, and accept-all risk. Metadata-only parent authorization
+    `1a704fca3848471dfba16c28bf2dd2e282343af6ac2aa24e3cbbd2ef44d790f8`
+    freezes four blind cities, 143 target dates, 23,667 tract-date keys, and the
+    exact 46-predictor contract. It permits implementation and review only;
+    predictor values and network access remain prohibited until a reviewed
+    child runtime authorization is created.
+28. The blind-predictor support and public metadata substages are now complete.
+    Support commit
+    `aa0c35e626e84ab1e8a17e04b8c5da374c3fcd655a601c90b2e8256806d74dbd`
+    reconstructs the four canonical grids with zero network access. Metadata
+    commit `31dcc3f639ccd8a4af040be20dd5ced243cadf7a913b53639a9e7311b7966201`
+    freezes 23,667 predictor keys and assets-excluded Sentinel plus Daymet
+    granule metadata. Exact Sentinel inventory commit
+    `7052a02df4da25661ea29cb9b5862bd71921ce1e57017a73db87e8f9ca4b10d7`
+    selected 539 physical acquisitions (Seattle 150, Denver 157, Atlanta 157,
+    Miami 75) after reading only exact-item href metadata. No Sentinel/static
+    raster or Landsat/QA/target value was opened. The authorized 24-task Daymet
+    acquisition remains 0/24 because NASA returned 401 and no ephemeral
+    Earthdata token is present; it is not being retried automatically.
 
 ## Frozen scientific decisions
 
@@ -204,6 +238,17 @@ The single active control record is
 through V18 remain for provenance and must not be extended with V19/V20 files.
 
 ## Exact resume point
+
+Current resume point (supersedes the historical repair-blocker narrative
+retained below): blind support, keys, public metadata, and exact Sentinel
+inventories are complete at the commits in milestone 28. The next safe action
+is to implement, review, and independently authorize resumable Sentinel and
+static predictor-value acquisition. The already-authorized Daymet acquisition
+may resume only with an in-memory Earthdata token; do not persist the token or
+loop on 401. No blind-city Landsat asset href, thermal/QA value, target table,
+fit, prediction, or score is authorized.
+
+Historical pre-return context follows for provenance only.
 
 The public predictor phase is complete: static/calendar/Daymet reached `84 / 84`,
 Sentinel reached `516 / 516`, and the final table is 136,941 rows by 46 frozen

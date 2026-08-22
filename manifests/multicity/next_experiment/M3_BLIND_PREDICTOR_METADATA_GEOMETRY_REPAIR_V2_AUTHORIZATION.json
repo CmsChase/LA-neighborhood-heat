@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-metadata-geometry-repair-v2",
+  "state": "m3_blind_predictor_metadata_geometry_repair_authorized",
+  "previous_repair_authorization_commit_sha256": "bcec2155d54b2df588bb017ade87489c800747184253ae5def8ad5d3bd7abe68",
+  "incident": {
+    "error_type": "TypeError",
+    "message_class": "polygon_not_json_serializable_in_semantic_hash",
+    "public_metadata_queries_may_have_completed": true,
+    "landsat_qa_or_target_values_read": false
+  },
+  "repair": {
+    "operation": "canonicalize_geometry_as_normalized_wkb_hex_for_hash_only",
+    "output_file_bytes_unchanged": true
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/run_m3_blind_predictor_metadata_geometry_repair_v2.py",
+        "bytes": 1240,
+        "sha256": "e8f80cc13545ea790f714c5ab240cc1a7b69f2cc5f3d1682919e24ba5e3a5a8c"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_metadata_geometry_repair_v2.py",
+        "bytes": 5167,
+        "sha256": "e8c4dc61b00f62ecd63f8a5ed86bb6648816b00f180782898951099b13101fe7"
+      }
+    ],
+    "set_sha256": "29345cbe69e1f1fec5905a7ab88726e04ac7b451b84bbc5f5d0fc52009df2aa8"
+  },
+  "permissions": {
+    "resume_previous_repair": true,
+    "change_query_city_date_key_or_source_contract": false,
+    "read_predictor_landsat_qa_or_target_values": false
+  },
+  "commit_sha256": "5f45b2f6c3fa86d9ebf2001476e7863bd4c8fb1816046950db86f1ceb4612408"
+}

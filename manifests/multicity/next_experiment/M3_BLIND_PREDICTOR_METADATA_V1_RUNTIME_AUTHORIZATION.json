@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-metadata-v1",
+  "state": "m3_blind_predictor_metadata_runtime_authorized",
+  "parent_authorization_commit_sha256": "1a704fca3848471dfba16c28bf2dd2e282343af6ac2aa24e3cbbd2ef44d790f8",
+  "support_completion_commit_sha256": "aa0c35e626e84ab1e8a17e04b8c5da374c3fcd655a601c90b2e8256806d74dbd",
+  "blind_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "key_universe_sha256": "5c83a3aa6c2f23b1374603c128d3371e65f75db7f1d5fc3cf5100ba4751b2e11",
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/run_m3_blind_predictor_metadata_v1.py",
+        "bytes": 1480,
+        "sha256": "a4aa08826df8921736bca9ec72d4d92523cb8d411f5667db3a1d74641c3cf59a"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_build_authorization_v1.py",
+        "bytes": 13287,
+        "sha256": "3194b1ffb848be0e07dff80d0b9dbad31892e53d750adb413414d811e5a97c0f"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_metadata_v1.py",
+        "bytes": 14803,
+        "sha256": "e7ca20cbffa9c9b7aa6abc5a8caa7228bb63d075f30413f1d27aa7f514e0f636"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_support_v1.py",
+        "bytes": 17231,
+        "sha256": "bfaa8f81d35b00fdd60129ff603b4497023dd5153a8333383ce9fb349f7220d4"
+      },
+      {
+        "path": "src/la_heat/multicity/source_footprints.py",
+        "bytes": 91900,
+        "sha256": "208710c307c69b78cd1dd2205297fdb66718534644cd83e56798b34347ccab41"
+      },
+      {
+        "path": "src/la_heat/provenance.py",
+        "bytes": 4679,
+        "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+      }
+    ],
+    "set_sha256": "628299d54d28d34d52cbe640dc451f92261130b722ef63d1e030fae69bf9680c"
+  },
+  "network_contract": {
+    "https_get_hosts": [
+      "cmr.earthdata.nasa.gov"
+    ],
+    "https_post_hosts": [
+      "planetarycomputer.microsoft.com"
+    ],
+    "sentinel_collection": "sentinel-2-l2a",
+    "stac_assets_and_links_excluded": true,
+    "daymet_year": 2025,
+    "daymet_variables": [
+      "tmax",
+      "tmin",
+      "prcp",
+      "srad",
+      "vp",
+      "dayl"
+    ]
+  },
+  "write_roots": [
+    "data/interim/multicity/m3_blind_predictor_build_v1/metadata",
+    "data/processed/multicity/m3_blind_predictor_build_v1/inventory"
+  ],
+  "completion": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_METADATA_COMPLETE.json",
+  "permissions": {
+    "read_parent_bound_census_worldcover_support": true,
+    "read_public_sentinel_and_daymet_metadata": true,
+    "read_or_download_sentinel_daymet_static_predictor_values": false,
+    "read_landsat_asset_hrefs_thermal_qa_or_targets": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "next_safe_stage": "run_resumable_metadata_bootstrap",
+  "claim_id": "fdfb38e6be33a674f43830da3aeeed7beec0ccad765dd6f4bb91597b74e5e71a",
+  "commit_sha256": "a864254391a525e42fea5b8b3a721413fea2b3d90cea53034c9b5a52ba887dc3"
+}

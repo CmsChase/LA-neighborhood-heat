@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-support-v1",
+  "state": "m3_blind_predictor_support_complete",
+  "authorization_commit_sha256": "dd21a7cdff63638235a03328c9681048032bfec8a0758fd0eb31015b2fb9708c",
+  "parent_authorization_commit_sha256": "1a704fca3848471dfba16c28bf2dd2e282343af6ac2aa24e3cbbd2ef44d790f8",
+  "values_opened_commit_sha256": "686ddc1f9d7f776fd8de926eb7e25038956f2b1941375e36eaf2d5f7560ddb45",
+  "blind_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "city_completions": [
+    {
+      "city_id": "seattle_wa",
+      "commit_sha256": "4fc9853600cd263a71998805815bec1c959def01e082366564a9ce6cad9ae84d",
+      "outputs": {
+        "tract_zones_30m": {
+          "path": "data/processed/multicity/m3_blind_predictor_build_v1/support/seattle_wa/tract_zones_30m.tif",
+          "bytes": 32868,
+          "sha256": "e476a57df26c59407b9d913509ae660bf1d941952a1f5bc8d4f05b587fa6f783"
+        },
+        "eligible_mask_30m": {
+          "path": "data/processed/multicity/m3_blind_predictor_build_v1/support/seattle_wa/eligible_mask_30m.tif",
+          "bytes": 10894,
+          "sha256": "6536a52cae00f964073c03d3b67656678e8e768d212eabcc189dd667674539e8"
+        },
+        "tract_support": {
+          "path": "data/processed/multicity/m3_blind_predictor_build_v1/support/seattle_wa/tract_eligible_support.parquet",
+          "bytes": 25052,
+          "sha256": "e2c513d7b5808ccfa741bbbc0e8aa571d9b4cd148437f050583f587065585f52",
+          "rows": 177,
+          "schema_sha256": "cf0a06ca952ea52cbb5cc9c55d1a7ca61d9b993e7b48c3262a97960a4641d1a9",
+          "semantic_sha256": "4f314958fffec42402381c2060540fd65f3d491f4ae0bbc27223aa8e4b2c991b"
+        }
+      }
+    },
+    {
+      "city_id": "denver_co",
+      "commit_sha256": "aa04f0a2221a766a00ee3ab6230a379cd680f2f3bdbd4ec56dd1fce76ac439d3",
+      "outputs": {
+        "tract_zones_30m": {
+          "path": "data/processed/multicity/m3_blind_predictor_build_v1/support/denver_co/tract_zones_30m.tif",
+          "bytes": 69463,
+          "sha256": "b1e599c8b1260f9b7b28ed3683240960428134e1e6faadc29a67ff2a001f371b"
+        },
+        "eligible_mask_30m": {
+          "path": "data/processed/multicity/m3_blind_predictor_build_v1/support/denver_co/eligible_mask_30m.tif",
+          "bytes": 19233,
+          "sha256": "ef0b30873cb5bd2cce70a72d01c9ad01221bb0eea0cc07c0340ce312c7f6be20"
+        },
+        "tract_support": {
+          "path": "data/processed/multicity/m3_blind_predictor_build_v1/support/denver_co/tract_eligible_support.parquet",
+          "bytes": 25036,
+          "sha256": "406bb03d17013a67c57d06fbb1943561c43ec63a45e29d0afcd1e8b7ab805f62",
+          "rows": 175,
+          "schema_sha256": "cf0a06ca952ea52cbb5cc9c55d1a7ca61d9b993e7b48c3262a97960a4641d1a9",
+          "semantic_sha256": "2608c73784b2a195923bebe87ee1f226af7effa1ce9f239fd2aa9b659c0159f3"
+        }
+      }
+    },
+    {
+      "city_id": "atlanta_ga",
+      "commit_sha256": "c0e5424db3cb2fa601fbbcfdfdab3238c5c811dd0f884881f10bcaf0f6282ec4",
+      "outputs": {
+        "tract_zones_30m": {
+          "path": "data/processed/multicity/m3_blind_predictor_build_v1/support/atlanta_ga/tract_zones_30m.tif",
+          "bytes": 46823,
+          "sha256": "76425c05acbd207e3d6817104ba4dc8b30beabd94a74771936fa2a9d6ca57632"
+        },
+        "eligible_mask_30m": {
+          "path": "data/processed/multicity/m3_blind_predictor_build_v1/support/atlanta_ga/eligible_mask_30m.tif",
+          "bytes": 11801,
+          "sha256": "915c146db4c21d263c27bed25dc8894c2615a1b2f334f91dcf84dc27efe95c23"
+        },
+        "tract_support": {
+          "path": "data/processed/multicity/m3_blind_predictor_build_v1/support/atlanta_ga/tract_eligible_support.parquet",
+          "bytes": 24854,
+          "sha256": "b1b9aa2fa3d5733f65019dc4a30c44f9994257820cbf6a27cbd2e846f9c13164",
+          "rows": 173,
+          "schema_sha256": "cf0a06ca952ea52cbb5cc9c55d1a7ca61d9b993e7b48c3262a97960a4641d1a9",
+          "semantic_sha256": "8b52b8eb908e3cb3847aa888b8edc6dd0a212b3ef1bc668abdfef66b7b8f93da"
+        }
+      }
+    },
+    {
+      "city_id": "miami_fl",
+      "commit_sha256": "7a2abc819e14844172951e360a821e387b11d8f9c466825ba0f974ede4e651c8",
+      "outputs": {
+        "tract_zones_30m": {
+          "path": "data/processed/multicity/m3_blind_predictor_build_v1/support/miami_fl/tract_zones_30m.tif",
+          "bytes": 16657,
+          "sha256": "3704d813e8d46fe4e7d033db19fd54861564e5761b892456448fa6c7f9b75835"
+        },
+        "eligible_mask_30m": {
+          "path": "data/processed/multicity/m3_blind_predictor_build_v1/support/miami_fl/eligible_mask_30m.tif",
+          "bytes": 6008,
+          "sha256": "e3aaec330ece658ee73a18496ae16b3e0ffe921012dddaa7817a8162706d914a"
+        },
+        "tract_support": {
+          "path": "data/processed/multicity/m3_blind_predictor_build_v1/support/miami_fl/tract_eligible_support.parquet",
+          "bytes": 20365,
+          "sha256": "f96827f837553238083b30777b9048be74587fa6531ce06dd5c945f48bb84787",
+          "rows": 128,
+          "schema_sha256": "cf0a06ca952ea52cbb5cc9c55d1a7ca61d9b993e7b48c3262a97960a4641d1a9",
+          "semantic_sha256": "d09c8c5be3cf3de8b4e00110cdda5ca7e32df26b77e14882b93cce2ff7e0de64"
+        }
+      }
+    }
+  ],
+  "audit": {
+    "network_or_href_reads": 0,
+    "landsat_asset_href_thermal_qa_or_target_access": false,
+    "daymet_sentinel_or_other_predictor_source_access": false,
+    "model_fit_predict_score_or_evaluate": false,
+    "prediction_before_target_boundary_preserved": true
+  },
+  "next_safe_stage": "implement_and_authorize_public_predictor_acquisition_runtime",
+  "commit_sha256": "aa0c35e626e84ab1e8a17e04b8c5da374c3fcd655a601c90b2e8256806d74dbd"
+}

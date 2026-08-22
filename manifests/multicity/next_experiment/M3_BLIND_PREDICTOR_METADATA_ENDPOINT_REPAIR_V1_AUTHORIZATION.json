@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-metadata-endpoint-repair-v1",
+  "state": "m3_blind_predictor_metadata_endpoint_repair_authorized",
+  "parent_runtime_authorization_commit_sha256": "a864254391a525e42fea5b8b3a721413fea2b3d90cea53034c9b5a52ba887dc3",
+  "incident": {
+    "error_type": "AttributeError",
+    "failed_before_first_network_request": true,
+    "predictor_or_target_values_read": false,
+    "deterministic_key_table_may_exist": true
+  },
+  "repair": {
+    "operation": "inject_missing_source_footprints_endpoint_constant_only",
+    "name": "PLANETARY_COMPUTER_STAC_API",
+    "value": "https://planetarycomputer.microsoft.com/api/stac/v1"
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/run_m3_blind_predictor_metadata_endpoint_repair_v1.py",
+        "bytes": 1241,
+        "sha256": "88ffb057d53f2155939223e7a6877fc6ec9041446ccf15631f44d3fc3cca746f"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_metadata_endpoint_repair_v1.py",
+        "bytes": 4280,
+        "sha256": "ca5a159d81f87ce864b0e33f8bef6de8d4a2f9f617f772dd4d45f57952fc0b53"
+      }
+    ],
+    "set_sha256": "64e8f2abb1dff7fc9088797f4b413321a0ce0e3bb6c80ef6d9b6937148059684"
+  },
+  "permissions": {
+    "resume_original_metadata_runner": true,
+    "change_city_date_key_or_source_contract": false,
+    "read_predictor_landsat_qa_or_target_values": false
+  },
+  "commit_sha256": "bcec2155d54b2df588bb017ade87489c800747184253ae5def8ad5d3bd7abe68"
+}

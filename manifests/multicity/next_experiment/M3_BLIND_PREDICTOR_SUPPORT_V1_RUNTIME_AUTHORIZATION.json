@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-support-v1",
+  "state": "m3_blind_predictor_support_runtime_authorized",
+  "parent_authorization": {
+    "path": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_BUILD_V1_PARENT_AUTHORIZATION.json",
+    "bytes": 16963,
+    "sha256": "c2ae7b864067d54c8da8dea187b964d066300214ab02e70e0e48782ac83f19f4",
+    "commit_sha256": "1a704fca3848471dfba16c28bf2dd2e282343af6ac2aa24e3cbbd2ef44d790f8"
+  },
+  "blind_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "key_universe_sha256": "5c83a3aa6c2f23b1374603c128d3371e65f75db7f1d5fc3cf5100ba4751b2e11",
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/run_m3_blind_predictor_support_v1.py",
+        "bytes": 2222,
+        "sha256": "c77274aba50a4bb8821c7a01b55e044c28a398668f04b302f0fdcd5adc8fbe4c"
+      },
+      {
+        "path": "src/la_heat/grid.py",
+        "bytes": 2739,
+        "sha256": "a875c023ac4d981b005f26317a905815f581437b77e6da979d0fcb249f534848"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_build_authorization_v1.py",
+        "bytes": 13287,
+        "sha256": "3194b1ffb848be0e07dff80d0b9dbad31892e53d750adb413414d811e5a97c0f"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_support_v1.py",
+        "bytes": 17231,
+        "sha256": "bfaa8f81d35b00fdd60129ff603b4497023dd5153a8333383ce9fb349f7220d4"
+      },
+      {
+        "path": "src/la_heat/multicity/worldcover_eligible_support_evidence_v1.py",
+        "bytes": 39651,
+        "sha256": "e4e316526bcde1bca5bb838010219faef4bf13cedcbb36cc3ecc746467ff1913"
+      },
+      {
+        "path": "src/la_heat/provenance.py",
+        "bytes": 4679,
+        "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+      }
+    ],
+    "set_sha256": "01aec65f9ca3ad9ccf851eb4bb45dfb62c7b01f628a8db57466fda8e3a57b2d6"
+  },
+  "write_paths": {
+    "values_opened": "data/interim/multicity/m3_blind_predictor_build_v1/support/VALUES_OPENED.json",
+    "output_root": "data/processed/multicity/m3_blind_predictor_build_v1/support",
+    "completion": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SUPPORT_COMPLETE.json"
+  },
+  "permissions": {
+    "read_only_parent_bound_census_and_worldcover_support_values": true,
+    "write_only_new_support_runtime_and_outputs": true,
+    "network_or_href_reads": false,
+    "landsat_asset_href_thermal_qa_or_target_access": false,
+    "daymet_sentinel_or_other_predictor_source_access": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "authorization_audit": {
+    "census_or_worldcover_value_files_opened_or_statted": 0,
+    "network_or_href_reads": 0,
+    "landsat_asset_href_thermal_qa_or_target_access": false,
+    "model_fit_predict_score_or_evaluate": false
+  },
+  "next_safe_stage": "run_support_reconstruction_after_exact_runtime_authentication",
+  "claim_id": "fd4371d11f53249fd8e4e85102311dcb746d6f31304ac2e1e4d30484ac1aa5df",
+  "commit_sha256": "dd21a7cdff63638235a03328c9681048032bfec8a0758fd0eb31015b2fb9708c"
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-sentinel-inventory-v1",
+  "state": "m3_blind_predictor_sentinel_inventory_authorized",
+  "metadata_completion_commit_sha256": "31dcc3f639ccd8a4af040be20dd5ced243cadf7a913b53639a9e7311b7966201",
+  "blind_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/run_m3_blind_predictor_sentinel_inventory_v1.py",
+        "bytes": 1389,
+        "sha256": "3140158354dff2015435606d5f6664546c7b34de81ef4455fc2011bb84c6d1be"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_sentinel_inventory_v1.py",
+        "bytes": 10426,
+        "sha256": "21495b8ae8b539fb56927cc3746e984b6f32ac09ed7bb037b25f07723ec6d728"
+      },
+      {
+        "path": "src/la_heat/multicity/portable_sentinel_inventory.py",
+        "bytes": 32171,
+        "sha256": "33e74e57e5f49c0acdc6a2fde9a6ae0c0a8921e64e9f0153891d853c75eaf7ce"
+      },
+      {
+        "path": "src/la_heat/sentinel_inventory.py",
+        "bytes": 44198,
+        "sha256": "907fad7499dbaf4131f60dc7b65cade11d971081086aba779f18a63eb3229b5a"
+      },
+      {
+        "path": "src/la_heat/provenance.py",
+        "bytes": 4679,
+        "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+      }
+    ],
+    "set_sha256": "7b3da0780acf7e2dda221091f898273cfe43634164281c87c3ca520f0d348fa6"
+  },
+  "network_contract": {
+    "endpoint": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+    "collection": "sentinel-2-l2a",
+    "exact_item_id_queries_only": true,
+    "raster_asset_open_or_download": false,
+    "signed_urls_or_credentials_persisted": false
+  },
+  "permissions": {
+    "hydrate_exact_parent_bound_sentinel_item_ids": true,
+    "read_asset_href_metadata": true,
+    "open_or_download_sentinel_rasters": false,
+    "read_static_daymet_landsat_qa_or_target_values": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "output_root": "data/processed/multicity/m3_blind_predictor_build_v1/sentinel_inventory",
+  "raw_stac_root": "data/raw/multicity/m3_blind_predictor_build_v1/sentinel_stac",
+  "completion": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_INVENTORY_COMPLETE.json",
+  "claim_id": "57e96046c12bc9f2d6a488eea44d2cd90a06efb97a4f820f67dfc66c6132e484",
+  "commit_sha256": "90a3a29b0fd03865d62c46d6e4c2d4eb126af71dc9eb0fd6146ecc3280f574b0"
+}

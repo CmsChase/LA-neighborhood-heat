@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-daymet-acquisition-v1",
+  "state": "m3_blind_predictor_daymet_acquisition_authorized",
+  "metadata_completion_commit_sha256": "31dcc3f639ccd8a4af040be20dd5ced243cadf7a913b53639a9e7311b7966201",
+  "blind_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "year": 2025,
+  "variables": [
+    "tmax",
+    "tmin",
+    "prcp",
+    "srad",
+    "vp",
+    "dayl"
+  ],
+  "task_count": 24,
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/run_m3_blind_predictor_daymet_acquisition_v1.py",
+        "bytes": 1398,
+        "sha256": "ade438aedb0a60fb435bc9ff65fcce5e8baca58d5239d5d2fd97201af17ed4d0"
+      },
+      {
+        "path": "src/la_heat/daymet_grid.py",
+        "bytes": 59243,
+        "sha256": "8f0d4d02f778cbb856cd96d2b26ddea5974e53f4ed17c240c7e5fec8e21227a0"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_daymet_acquisition_v1.py",
+        "bytes": 11434,
+        "sha256": "4e56b06b7653e2243d71337e0c029814019d21973e361a4cc96b164407a043e8"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_metadata_v1.py",
+        "bytes": 14803,
+        "sha256": "e7ca20cbffa9c9b7aa6abc5a8caa7228bb63d075f30413f1d27aa7f514e0f636"
+      },
+      {
+        "path": "src/la_heat/provenance.py",
+        "bytes": 4679,
+        "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+      }
+    ],
+    "set_sha256": "b8bafa551b0da08d6a0c811d631a367e596b58b39f9ece536e0341a71a619cc0"
+  },
+  "network_contract": {
+    "scheme": "https",
+    "host": "opendap.earthdata.nasa.gov",
+    "direct_dap4_subsets_only": true,
+    "maximum_bytes_per_task": 1000000000,
+    "credentials_persisted": false
+  },
+  "permissions": {
+    "read_parent_bound_daymet_metadata": true,
+    "download_daymet_2025_subsets": true,
+    "read_sentinel_static_landsat_qa_or_target_values": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "output_root": "data/raw/multicity/m3_blind_predictor_build_v1/daymet",
+  "completion": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_DAYMET_ACQUISITION_COMPLETE.json",
+  "claim_id": "c5d25a294fa28f0ecabb68dc94627b8dc05ca533917711d053f5b5b579f10216",
+  "commit_sha256": "bbf7c4e1b24639d4ad4ff857c04492d296b51486cfbe0651142ac073c166c6ae"
+}

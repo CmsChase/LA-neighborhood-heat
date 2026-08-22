@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-sentinel-inventory-v1",
+  "state": "m3_blind_predictor_sentinel_inventory_complete",
+  "authorization_commit_sha256": "90a3a29b0fd03865d62c46d6e4c2d4eb126af71dc9eb0fd6146ecc3280f574b0",
+  "city_completions": [
+    {
+      "city_id": "seattle_wa",
+      "commit_sha256": "4035006fd9f05ec37f78f3edfa30ca05587e4526084034a8864eacaac06088ca",
+      "selected_physical_acquisitions": 150
+    },
+    {
+      "city_id": "denver_co",
+      "commit_sha256": "4fd68413759e750c559ffa21b2110e4f72cd57d579d7328c4eabcd122feb4856",
+      "selected_physical_acquisitions": 157
+    },
+    {
+      "city_id": "atlanta_ga",
+      "commit_sha256": "560e394fb3a154826805c02033592dc56c73571b37ed2a815e7eb7e0078aabf5",
+      "selected_physical_acquisitions": 157
+    },
+    {
+      "city_id": "miami_fl",
+      "commit_sha256": "57f6675051a7944fbe9e084914bbddafafe4a39b032a825e5af71ddb16929aa3",
+      "selected_physical_acquisitions": 75
+    }
+  ],
+  "audit": {
+    "asset_href_metadata_read": true,
+    "raster_assets_opened_or_downloaded": false,
+    "static_daymet_landsat_qa_or_target_values_read": false,
+    "model_fit_predict_score_or_evaluate": false
+  },
+  "next_safe_stage": "authorize_resumable_sentinel_raster_acquisition",
+  "commit_sha256": "7052a02df4da25661ea29cb9b5862bd71921ce1e57017a73db87e8f9ca4b10d7"
+}
