@@ -1,5 +1,9 @@
 # M3 source-development runner
 
+> **Historical workflow:** this source-development run and its later source-only
+> nested LOSO are complete. The commands below are retained for reproducibility,
+> not as the current experiment entry point. See `README.md` for current status.
+
 This runner prepares the source-only evidence needed by the locked follow-up
 experiment. It is intentionally separate from the completed Phoenix–Houston–
 Chicago evaluation and never opens Seattle, Denver, Atlanta, or Miami targets.
@@ -35,9 +39,10 @@ selection remains locked and requires a later, separate authorization.
 
 ## Start and pause
 
-From the repository root, double-click `RUN_M3_SOURCE_DEVELOPMENT.cmd`. The
-local control page opens at <http://127.0.0.1:8772/>. Nothing downloads until
-**Start / Continue** is pressed.
+Historically, the Windows helper now archived at
+`tools/windows/legacy/RUN_M3_SOURCE_DEVELOPMENT.cmd` opened the local control
+page at <http://127.0.0.1:8772/>. Nothing downloaded until
+**Start / Continue** was pressed.
 
 - Choose **1 download worker** for the lightest office-laptop load.
 - Choose **2 download workers** for faster network use.
@@ -62,8 +67,8 @@ files under the project data directory rather than the Windows system drive.
 
 ## Moving the paused job
 
-After the page reports paused and zero running tasks, double-click
-`PACKAGE_M3_SOURCE_DEVELOPMENT.cmd`. The migration builder checkpoints SQLite,
+After the page reports paused and zero running tasks, the historical helper
+`tools/windows/legacy/PACKAGE_M3_SOURCE_DEVELOPMENT.cmd` checkpoints SQLite,
 records file hashes, and creates a relocatable folder under
 `exports/M3_SOURCE_DEVELOPMENT_OFFICE`.
 Never run the same copied queue on two computers at once.

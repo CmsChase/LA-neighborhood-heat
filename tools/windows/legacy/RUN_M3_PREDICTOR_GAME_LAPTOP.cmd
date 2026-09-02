@@ -1,13 +1,14 @@
 @echo off
 setlocal
-cd /d "%~dp0"
+for %%I in ("%~dp0..\..\..") do set "PROJECT_ROOT=%%~fI"
+cd /d "%PROJECT_ROOT%"
 set "OMP_NUM_THREADS=1"
 set "MKL_NUM_THREADS=1"
 set "OPENBLAS_NUM_THREADS=1"
 set "NUMEXPR_NUM_THREADS=1"
 set "GDAL_NUM_THREADS=1"
-set "PYTHONPATH=%CD%\src;%CD%\.venv\Lib\site-packages"
-set "PYTHON=%CD%\exports\FINAL_RESULT\runtime\python\python.exe"
+set "PYTHONPATH=%PROJECT_ROOT%\src;%PROJECT_ROOT%\.venv\Lib\site-packages"
+set "PYTHON=%PROJECT_ROOT%\exports\FINAL_RESULT\runtime\python\python.exe"
 if not exist "%PYTHON%" goto :missing
 
 "%PYTHON%" scripts\authorize_m3_source_predictor_daymet_order_repair_v1.py --project-root . --check-acquisition >nul 2>nul
@@ -31,7 +32,7 @@ pause
 exit /b 0
 
 :missing
-echo Bundled Python runtime is missing. Copy the whole package folder.
+echo Bundled Python runtime is missing. This historical launcher requires the excluded transfer package.
 pause
 exit /b 1
 

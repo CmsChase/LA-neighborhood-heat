@@ -1,0 +1,10 @@
+line-length = 100
+target-version = "py312"
+
+[lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[lint.per-file-ignores]
+# This completed repair module is bound byte-for-byte by an append-only
+# authorization. Preserve it and scope the historical B010 exception exactly.
+"src/la_heat/multicity/m3_blind_predictor_metadata_endpoint_repair_v1.py" = ["B010"]

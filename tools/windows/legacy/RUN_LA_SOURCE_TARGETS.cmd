@@ -1,6 +1,7 @@
 @echo off
 setlocal
-cd /d "%~dp0"
+for %%I in ("%~dp0..\..\..") do set "PROJECT_ROOT=%%~fI"
+cd /d "%PROJECT_ROOT%"
 if not exist ".venv\Scripts\python.exe" (
   echo Python environment not found: .venv\Scripts\python.exe
   pause

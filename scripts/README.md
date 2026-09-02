@@ -42,7 +42,8 @@ plan and creates only a durable `paused_not_authorized` queue. It does not run a
 worker, hydrate a Landsat asset href, or read a target/QA value. A later
 protocol-issued authorization is required before any target execution.
 
-`IMPORT_SENTINEL_RESULTS.cmd` is the one-click Sentinel return entry point. It
+`tools/windows/legacy/IMPORT_SENTINEL_RESULTS.cmd` is the archived one-click
+Sentinel return entry point. It
 accepts a result ZIP, a copied `GAMING_LAPTOP_SENTINEL` folder, or an extracted
 result folder. Complete returns are authenticated, imported additively, given a
 formal return receipt, and passed through predictor readiness. A safe-paused

@@ -1,8 +1,10 @@
 # Los Angeles Neighborhood Surface Heat
 
-This repository contains one complete project: the research pipeline, frozen
-evidence, and the public interactive atlas for neighborhood-scale daytime
-land-surface temperature (LST) in Los Angeles.
+This repository contains the research pipeline, frozen evidence, and public
+interactive Atlas for neighborhood-scale daytime land-surface temperature
+(LST), beginning in Los Angeles and extending to target-blind cross-city tests.
+
+[![Python CI](https://github.com/CmsChase/LA-neighborhood-heat/actions/workflows/python-ci.yml/badge.svg)](https://github.com/CmsChase/LA-neighborhood-heat/actions/workflows/python-ci.yml)
 
 [Open the Los Angeles heat atlas](https://cmschase.github.io/LA-neighborhood-heat/)
 | [Open the authenticated four-city evaluation](https://cmschase.github.io/LA-neighborhood-heat/cities/)
@@ -29,6 +31,28 @@ The point estimate favors M2, but the prespecified 95% interval for relative
 MAE improvement was -10.13% to 58.46%. Because it crosses zero, the result is
 promising rather than protocol-confirmed.
 
+## Project status
+
+| Stage | Status | Result or boundary |
+|---|---|---|
+| Los Angeles 2025 holdout | Complete | M2 MAE was 30.53% lower than B1; the 95% interval crossed zero |
+| Phoenix–Houston–Chicago transfer | Complete | Overall MAE improved 28.9%, but the preregistered confirmation and reliability gates were not met |
+| M3 source-only development | Complete | Nested whole-city LOSO selected QA `4k` and the frozen M3 specification without using blind-city targets |
+| Seattle–Denver–Atlanta–Miami predictor build | In progress | Support, 23,667 keys, public metadata, and the exact 539-acquisition Sentinel inventory are complete |
+| Four-city blind evaluation | Sealed | No blind-city Landsat thermal, QA, or target value may be read before predictions are committed |
+
+The next permitted step is resumable acquisition of Sentinel-2 and static
+predictor values. Daymet acquisition is separately authorized but waits for an
+in-memory Earthdata token; credentials must never be committed. After all 46
+predictors are assembled, the frozen model will create and commit predictions
+before the one-time blind target evaluation is authorized.
+
+The machine-readable current state is
+[`manifests/multicity/ACTIVE_STAGE.json`](manifests/multicity/ACTIVE_STAGE.json).
+For a plain-language explanation of authorization, completion, and commit
+fingerprints, see [Provenance and scientific gates](docs/PROVENANCE.md). Older
+numbered transition files are historical records, not active entry points.
+
 ## Repository map
 
 | Path | Purpose |
@@ -41,102 +65,57 @@ promising rather than protocol-confirmed.
 | `docs/` | Protocols, decisions, data sources, status, and handoff |
 | `reports/` | Scientific reports, tables, and figures |
 | `tests/` | Scientific invariants and focused regression tests |
+| `tools/` | Optional operational helpers, including archived Windows launchers |
 | `data/`, `exports/` | Local generated data and evidence packages; not tracked |
 
 The old standalone Atlas repository has been merged into `atlas/`. It is no
 longer a separate codebase. The current website is built and deployed from
 this repository by GitHub Actions.
 
-## Current continuation
-
-The Los Angeles evaluation and the one-time Phoenix-Houston-Chicago transfer
-evaluation are complete. M2 reduced equal-city/equal-date MAE by 28.9% overall
-(95% crossed-bootstrap CI 14.1%–43.5%), but the preregistered confirmation was
-not met because only 28 city-dates were usable and Phoenix degraded. The
-reliability gate also failed.
-
-The active stage is recorded in
-[`manifests/multicity/ACTIVE_STAGE.json`](manifests/multicity/ACTIVE_STAGE.json).
-The earlier V7–V18 transition files are historical provenance; they are not the
-active workflow and no new numbered hotfix file should be created.
-
-The resumable static, calendar, and Daymet build is complete: all 84 work units
-produced 41 non-Sentinel predictors for 136,941 frozen rows. Its canonical
-outputs are:
-
-- `data/processed/multicity/portable_predictors/components/COMPONENTS_COMPLETE.json`
-- `data/processed/multicity/portable_predictors/components/predictors_static_calendar_daymet.parquet`
-
-The four-city Sentinel-2 predictor build and return are complete. All `516 / 516`
-durable units (511 physical acquisitions, four city compiles, and one final
-merge) authenticated after import. The final predictor table contains 136,941
-rows and 46 frozen features.
-
-The separately authorized Los Angeles source-target build and frozen model fit
-are complete. The model produced a committed, predictor-only set of 38,301
-predictions before any external target was opened. All 64 external overpasses,
-three city compiles, the frozen evaluation, six evidence figures, and the Atlas
-release subsequently authenticated without refitting or recalibration.
-
-The continuation-specific 5 km spatial partition is complete for all 2,902
-tracts. The frozen fit, predictor-only external publication, one-claim external
-target build, evaluation, and Atlas-release paths are implemented and covered
-by synthetic tests. These preparations do not authorize a later stage by
-themselves; synthetic metrics are not research evidence.
-
-A separate follow-up M3 experiment is now prepared but paused. Its locked
-source-support amendment expands Houston and Chicago to complete 2020–2025 warm
-seasons; the assets-excluded metadata inventory contains 318 overpasses and 525
-unique city-scenes across the four source cities. `RUN_M3_SOURCE_DEVELOPMENT.cmd`
-opens a low-load localhost runner for the authorized online cache and subsequent
-offline four-candidate QA rebuild. Nested LOSO and all Seattle/Denver/Atlanta/
-Miami targets remain locked. See
-[`docs/M3_SOURCE_DEVELOPMENT_RUNNER.md`](docs/M3_SOURCE_DEVELOPMENT_RUNNER.md).
-
 ## Local setup
 
-Python pipeline:
+Python 3.12–3.14 is supported. From the repository root:
 
-```powershell
+```text
 python -m venv .venv
-.\.venv\Scripts\python -m pip install --upgrade pip
-.\.venv\Scripts\python -m pip install -e ".[dev]"
 ```
 
-Atlas:
+Install and verify on macOS/Linux:
+
+```bash
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install -e ".[dev]"
+.venv/bin/python -m pytest -q --basetemp=.tmp/pytest
+.venv/bin/python -m ruff check .
+```
+
+Install and verify on Windows PowerShell:
 
 ```powershell
-Set-Location atlas
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
+.\.venv\Scripts\python.exe -m pytest -q --basetemp=.tmp/pytest
+.\.venv\Scripts\python.exe -m ruff check .
+```
+
+The public Atlas requires Node.js 22:
+
+```text
+cd atlas
 npm ci
+npm test
 npm run dev
 ```
 
-Rebuild or verify the compact display data from the repository root:
+See the cross-platform [reproduction guide](docs/REPRODUCING.md) for display-data
+verification, evidence export, generated-data boundaries, and optional
+historical Windows helpers.
 
-```powershell
-.\.venv\Scripts\python scripts\build_website_data.py
-.\.venv\Scripts\python scripts\build_website_data.py --verify-only
-```
-
-Build the compact, aggregate-only offline evidence package after a completed
-multicity evaluation, or reauthenticate an existing package:
-
-```powershell
-.\.venv\Scripts\python scripts\export_multicity_evidence.py --project-root .
-.\.venv\Scripts\python scripts\export_multicity_evidence.py --project-root . --check-only
-```
-
-The exporter deliberately excludes tract-level scored rows and targets, fitted
-model files, runtime databases, credentials, and signed asset URLs.
-
-Run focused tests for changed behavior during normal development. Run the full
-suite before a scientific release or a change to targets, features, splits,
-metrics, or frozen evidence:
-
-```powershell
-.\.venv\Scripts\python -m pytest -q
-.\.venv\Scripts\python -m ruff check .
-```
+One historical launcher, `START_M3_PREDICTOR_GAME_LAPTOP.cmd`, intentionally
+remains at the root because a completed authorization binds its exact path and
+SHA-256. It is provenance, not the normal setup path, and requires an excluded
+local transfer package. Other Windows-only launchers are archived under
+[`tools/windows/`](tools/windows/).
 
 ## Interpretation limits
 
@@ -148,7 +127,9 @@ metrics, or frozen evidence:
 - Feature importance is predictive association, not causation.
 - The completed 2025 holdout must not be retuned or presented as a second test.
 
-Start a new work session with the concise
+Start a new work session with
 [`docs/PROJECT_HANDOFF.md`](docs/PROJECT_HANDOFF.md). Detailed scientific
-decisions remain in [`docs/DECISION_LOG.md`](docs/DECISION_LOG.md), and source
-provenance is in [`docs/DATA_MANIFEST.csv`](docs/DATA_MANIFEST.csv).
+decisions remain in [`docs/DECISION_LOG.md`](docs/DECISION_LOG.md), source
+provenance is in [`docs/DATA_MANIFEST.csv`](docs/DATA_MANIFEST.csv), and the
+public-facing evidence model is summarized in
+[`docs/PROVENANCE.md`](docs/PROVENANCE.md).

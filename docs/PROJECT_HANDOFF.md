@@ -1,6 +1,6 @@
 # Project handoff
 
-Last updated: 2026-08-22 Asia/Shanghai
+Last updated: 2026-09-02 Asia/Shanghai
 
 ## Project summary
 
@@ -184,6 +184,16 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     raster or Landsat/QA/target value was opened. The authorized 24-task Daymet
     acquisition remains 0/24 because NASA returned 401 and no ephemeral
     Earthdata token is present; it is not being retried automatically.
+29. The public repository presentation is refreshed without changing the active
+    scientific boundary. The README now shows the completed source-only M3
+    selection, current blind-predictor stage, and prediction-before-target rule
+    in plain language. Cross-platform setup and provenance guides live in
+    `docs/REPRODUCING.md` and `docs/PROVENANCE.md`; Python CI runs the full suite
+    on Ubuntu and Windows with project-local temporary files. Completed Windows
+    launchers are archived under `tools/windows/legacy/`. The historical
+    `START_M3_PREDICTOR_GAME_LAPTOP.cmd` remains unchanged at the root because
+    its exact path and SHA-256 are bound by an append-only authorization. Ruff
+    and the complete pytest suite pass after the organization change.
 
 ## Frozen scientific decisions
 
@@ -240,7 +250,8 @@ through V18 remain for provenance and must not be extended with V19/V20 files.
 ## Exact resume point
 
 Current resume point (supersedes the historical repair-blocker narrative
-retained below): blind support, keys, public metadata, and exact Sentinel
+retained below): the public-repository organization milestone is complete and
+does not advance scientific permissions. Blind support, keys, public metadata, and exact Sentinel
 inventories are complete at the commits in milestone 28. The next safe action
 is to implement, review, and independently authorize resumable Sentinel and
 static predictor-value acquisition. The already-authorized Daymet acquisition

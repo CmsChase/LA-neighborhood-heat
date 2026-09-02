@@ -76,12 +76,10 @@ def test_v18_binds_phoenix_sentinel_as_the_eleventh_checkpoint() -> None:
     assert resume[-1] == transition.PHOENIX_SENTINEL_RESUME_CHECKPOINT_V18
 
 
-def test_v18_binds_source_evidence_config_and_moves_decision_to_v19() -> None:
+def test_v18_binds_source_evidence_config_and_hands_off_to_contract_decision() -> None:
     scope = evidence.expected_plan_authorization_scope()
     assert "configs/multicity/portable_predictor_source_evidence_v1.toml" in scope["code_paths"]
-    assert scope["next_gate"] == (
-        "publish_tracked_only_plan_v19_for_portable_predictor_contract_v3_decision"
-    )
+    assert scope["next_gate"] == "portable_predictor_contract_decision"
 
 
 def test_v18_status_parser_rejects_noncheckpoint_paths() -> None:

@@ -238,7 +238,7 @@
     "next_action": "authorize_and_run_resumable_sentinel_and_static_value_acquisition_while_daymet_waits_for_ephemeral_earthdata_token"
   },
   "prepared_post_return_tools": {
-    "one_click_import": "IMPORT_SENTINEL_RESULTS.cmd",
+    "one_click_import": "tools/windows/legacy/IMPORT_SENTINEL_RESULTS.cmd",
     "import_script": "scripts/import_portable_sentinel_results.py",
     "accepted_return_inputs": [
       "result_zip",
@@ -269,7 +269,7 @@
     "target_build_authorized": true,
     "target_build_authorization_scope": "source_complete_plus_one_combined_three_city_external_claim",
     "target_dashboard": null,
-    "target_dashboard_launcher": "RUN_THREE_CITY_EXTERNAL_TARGETS.cmd",
+    "target_dashboard_launcher": "tools/windows/legacy/RUN_THREE_CITY_EXTERNAL_TARGETS.cmd",
     "external_target_build_authorized": true,
     "transfer_model_core_implemented": true,
     "transfer_model_core": "src/la_heat/multicity/transfer_model.py",
