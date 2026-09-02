@@ -39,7 +39,7 @@ Windows PowerShell:
 Use the corresponding virtual-environment Python path for your platform:
 
 ```text
-python -m pytest -q --basetemp=.tmp/pytest
+python -m pytest -q --basetemp=.pytest-tmp
 python -m ruff check .
 ```
 

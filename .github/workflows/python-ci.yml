@@ -47,4 +47,4 @@ jobs:
       - name: Lint
         run: python -m ruff check .
       - name: Test
-        run: python -m pytest -q --basetemp=.tmp/pytest-ci
+        run: python -m pytest -q --basetemp=.pytest-tmp
