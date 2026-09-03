@@ -1,0 +1,3 @@
+# Rasterio 1.5.1 probes custom openers with a non-HTTPS test/test path.
+# The historical, provenance-bound HTTPS-only adapter is verified on 1.5.0.
+rasterio==1.5.0

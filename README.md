@@ -84,8 +84,9 @@ Install and verify on macOS/Linux:
 
 ```bash
 .venv/bin/python -m pip install --upgrade pip
-.venv/bin/python -m pip install -e ".[dev]"
-.venv/bin/python -m pytest -q --basetemp=.pytest-tmp
+.venv/bin/python -m pip install -c requirements-ci.txt -e ".[dev]"
+.venv/bin/python -c "from pathlib import Path; Path('.tmp').mkdir(exist_ok=True)"
+.venv/bin/python -m pytest -q --basetemp=.tmp/pytest-ci
 .venv/bin/python -m ruff check .
 ```
 
@@ -93,8 +94,9 @@ Install and verify on Windows PowerShell:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install --upgrade pip
-.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
-.\.venv\Scripts\python.exe -m pytest -q --basetemp=.pytest-tmp
+.\.venv\Scripts\python.exe -m pip install -c requirements-ci.txt -e ".[dev]"
+.\.venv\Scripts\python.exe -c "from pathlib import Path; Path('.tmp').mkdir(exist_ok=True)"
+.\.venv\Scripts\python.exe -m pytest -q --basetemp=.tmp/pytest-ci
 .\.venv\Scripts\python.exe -m ruff check .
 ```
 

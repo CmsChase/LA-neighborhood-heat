@@ -1,8 +1,8 @@
 # Reproducing and verifying the project
 
 This guide separates ordinary code verification from scientific regeneration.
-The public Atlas and automated tests do not require credentials or the ignored
-local raster cache.
+The public Atlas and default code tests do not require credentials or the ignored
+local raster cache. Real-data evidence audits are a separate, opt-in test lane.
 
 ## Requirements
 
@@ -24,14 +24,14 @@ macOS/Linux:
 
 ```bash
 .venv/bin/python -m pip install --upgrade pip
-.venv/bin/python -m pip install -e ".[dev]"
+.venv/bin/python -m pip install -c requirements-ci.txt -e ".[dev]"
 ```
 
 Windows PowerShell:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install --upgrade pip
-.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
+.\.venv\Scripts\python.exe -m pip install -c requirements-ci.txt -e ".[dev]"
 ```
 
 ## Test and lint
@@ -39,14 +39,34 @@ Windows PowerShell:
 Use the corresponding virtual-environment Python path for your platform:
 
 ```text
-python -m pytest -q --basetemp=.pytest-tmp
+python -c "from pathlib import Path; Path('.tmp').mkdir(exist_ok=True)"
+python -m pytest -q --basetemp=.tmp/pytest-ci
 python -m ruff check .
 ```
 
-GitHub Actions runs these checks on Ubuntu and Windows. The explicit base
+GitHub Actions runs these checks on Ubuntu and Windows with full Git history
+(some provenance tests inspect historical commits). The explicit base
 temporary directory keeps security-sensitive test artifacts inside the project
-boundary on every operating system. Tests use mocks where appropriate; they
+boundary and under the synthetic runner's required `.tmp/` namespace on every
+operating system. Create the parent first on a fresh clone. Tests use mocks where appropriate; they
 must not open a blind-city target or require a private credential.
+
+`requirements-ci.txt` fixes Rasterio at the tested 1.5.0 version. Version 1.5.1
+probes a custom opener with `test/test`, which the historical HTTPS-only adapter
+correctly rejects. The bound scientific adapter and its security rules are not
+modified to accommodate that probe.
+
+Tests that authenticate ignored research products are explicitly inventoried
+in `tests/conftest.py` and reported as skipped by default. This is not evidence
+that the scientific products passed authentication. On an authorized research
+workstation with those products already present, run them explicitly:
+
+```text
+python -m pytest -q --basetemp=.tmp/pytest-ci --run-local-evidence -m local_evidence
+```
+
+With this option, missing or changed evidence fails normally; there is no
+automatic download, replacement evidence, or bypass of the existing assertions.
 
 ## Atlas
 

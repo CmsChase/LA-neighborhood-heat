@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import shutil
 import threading
 import time
 from collections import Counter
@@ -19,7 +20,7 @@ from la_heat.sentinel_dashboard import (
     TransientSpatialSupportError,
     create_server,
 )
-from la_heat.sentinel_feature_builder import _pipeline_fingerprint
+from la_heat.sentinel_feature_builder import PIPELINE_FILES, _pipeline_fingerprint
 
 
 def _wait_until(predicate, *, timeout: float = 5.0) -> None:
@@ -821,7 +822,21 @@ def test_local_http_controls_require_same_origin_token(tmp_path: Path) -> None:
         thread.join(timeout=5)
 
 
-def test_dashboard_files_do_not_change_the_scientific_pipeline_sha() -> None:
+def test_dashboard_files_do_not_change_the_scientific_pipeline_sha(tmp_path: Path) -> None:
     project_root = Path(__file__).resolve().parents[1]
-    pipeline_sha, _ = _pipeline_fingerprint(project_root)
-    assert pipeline_sha == "de4f0e61a9717617a0f70b892f69b0f34022e68f7f04f26b7541cb1137c16797"
+    for relative in PIPELINE_FILES:
+        destination = tmp_path / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(project_root / relative, destination)
+    before, _ = _pipeline_fingerprint(tmp_path)
+    # Runtime versions legitimately differ across installations. Test the
+    # exclusion contract itself rather than one workstation's combined hash.
+    dashboard = tmp_path / "src/la_heat/sentinel_dashboard.py"
+    dashboard.write_text("# unrelated UI change\n", encoding="utf-8")
+    after, _ = _pipeline_fingerprint(tmp_path)
+    assert after == before
+    scientific_file = tmp_path / "src/la_heat/sentinel_features.py"
+    with scientific_file.open("a", encoding="utf-8") as handle:
+        handle.write("\n# scientific code identity change\n")
+    changed, _ = _pipeline_fingerprint(tmp_path)
+    assert changed != before

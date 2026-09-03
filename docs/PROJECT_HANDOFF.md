@@ -1,6 +1,6 @@
 # Project handoff
 
-Last updated: 2026-09-02 Asia/Shanghai
+Last updated: 2026-09-03 Asia/Shanghai
 
 ## Project summary
 
@@ -188,12 +188,19 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     scientific boundary. The README now shows the completed source-only M3
     selection, current blind-predictor stage, and prediction-before-target rule
     in plain language. Cross-platform setup and provenance guides live in
-    `docs/REPRODUCING.md` and `docs/PROVENANCE.md`; Python CI runs the full suite
+    `docs/REPRODUCING.md` and `docs/PROVENANCE.md`; Python CI runs public code tests
     on Ubuntu and Windows with project-local temporary files. Completed Windows
     launchers are archived under `tools/windows/legacy/`. The historical
     `START_M3_PREDICTOR_GAME_LAPTOP.cmd` remains unchanged at the root because
     its exact path and SHA-256 are bound by an append-only authorization. Ruff
-    and the complete pytest suite pass after the organization change.
+    and the complete pytest suite passed on the original workstation after the
+    organization change. Fresh-clone CI then exposed a missing temporary parent,
+    shallow Git history, ignored evidence dependencies, a runtime-specific test
+    hash, and Rasterio 1.5.1 opener incompatibility. The CI repair uses a direct
+    project-local `.tmp/pytest-ci` directory with its parent created first, full
+    history, an explicit opt-in local-evidence
+    test lane, an invariant-based hash test, and the tested Rasterio 1.5.0 version.
+    No scientific implementation, evidence bytes, or permissions were changed.
 
 ## Frozen scientific decisions
 

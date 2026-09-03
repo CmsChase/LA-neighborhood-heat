@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 import threading
 import time
@@ -17,7 +18,6 @@ from la_heat.multicity.external_target_dashboard import (
     create_server,
 )
 from la_heat.multicity.target_runtime import task_specs_from_target_plan
-from la_heat.multicity.target_transaction import stage_multicity_target_build_plan
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -31,7 +31,9 @@ class _Process:
 
 
 def _queue(root: Path) -> tuple[ModelRunQueue, str]:
-    plan = stage_multicity_target_build_plan(PROJECT_ROOT, check_only=True)
+    # Queue behavior uses the tracked plan as a fixture, not local raster evidence.
+    plan = json.loads((PROJECT_ROOT / "manifests/multicity/targets/TARGET_BUILD_PLAN.json")
+                      .read_text(encoding="utf-8"))
     queue = ModelRunQueue(root / DATABASE_RELATIVE_PATH)
     run_id = "external-dashboard-test"
     queue.initialize_run(
@@ -180,4 +182,3 @@ def test_http_ui_has_three_city_progress_and_protected_controls(tmp_path: Path) 
         thread.join(timeout=5)
         supervisor.close()
         assert queue.get_desired_state(run_id) == "paused"
-

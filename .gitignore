@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
-.pytest-tmp/
+.pytest-tmp*/
 .ruff_cache/
 .coverage
 htmlcov/

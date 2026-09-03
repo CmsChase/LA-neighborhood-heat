@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from threading import Lock
 
@@ -13,7 +14,6 @@ from la_heat.multicity.external_target_worker import (
     execute_external_queue,
 )
 from la_heat.multicity.target_runtime import task_specs_from_target_plan
-from la_heat.multicity.target_transaction import stage_multicity_target_build_plan
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -32,7 +32,9 @@ class _FakeEngine:
 def _queue_with_completed_source(
     project_root: Path, database: Path, *, complete_source: bool = True
 ) -> tuple[ModelRunQueue, str]:
-    plan = stage_multicity_target_build_plan(project_root, check_only=True)
+    # Queue behavior uses the tracked plan as a fixture, not local raster evidence.
+    plan = json.loads((project_root / "manifests/multicity/targets/TARGET_BUILD_PLAN.json")
+                      .read_text(encoding="utf-8"))
     queue = ModelRunQueue(database)
     run_id = "external-worker-test"
     queue.initialize_run(
