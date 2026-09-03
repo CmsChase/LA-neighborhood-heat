@@ -11,6 +11,8 @@ exports/
 tmp/
 .tmp/
 RUN_DISABLED_TRANSFERRED_OUT.txt
+# Optional restoration of the archived, path-bound historical launcher.
+/START_M3_PREDICTOR_GAME_LAPTOP.cmd
 /website/
 /website-github-pages/
 

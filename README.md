@@ -113,11 +113,8 @@ See the cross-platform [reproduction guide](docs/REPRODUCING.md) for display-dat
 verification, evidence export, generated-data boundaries, and optional
 historical Windows helpers.
 
-One historical launcher, `START_M3_PREDICTOR_GAME_LAPTOP.cmd`, intentionally
-remains at the root because a completed authorization binds its exact path and
-SHA-256. It is provenance, not the normal setup path, and requires an excluded
-local transfer package. Other Windows-only launchers are archived under
-[`tools/windows/`](tools/windows/).
+Historical Windows launchers are archived under
+[`tools/windows/`](tools/windows/); none is required for normal setup.
 
 ## Interpretation limits
 

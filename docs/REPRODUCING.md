@@ -118,5 +118,7 @@ follow the active authorization boundary in
 
 Completed workstation-transfer and dashboard launchers are preserved under
 `tools/windows/legacy/`. They document earlier runs and are not required for a
-new installation. `START_M3_PREDICTOR_GAME_LAPTOP.cmd` remains at the root only
-because an append-only authorization binds its exact historical path and hash.
+new installation. The path-bound `START_M3_PREDICTOR_GAME_LAPTOP.cmd` is archived
+there byte-for-byte too. For historical layout restoration only, follow
+[`tools/windows/README.md`](../tools/windows/README.md); existing runtime checks
+remain unchanged.

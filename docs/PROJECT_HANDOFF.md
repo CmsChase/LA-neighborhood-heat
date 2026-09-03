@@ -191,8 +191,12 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     `docs/REPRODUCING.md` and `docs/PROVENANCE.md`; Python CI runs public code tests
     on Ubuntu and Windows with project-local temporary files. Completed Windows
     launchers are archived under `tools/windows/legacy/`. The historical
-    `START_M3_PREDICTOR_GAME_LAPTOP.cmd` remains unchanged at the root because
-    its exact path and SHA-256 are bound by an append-only authorization. Ruff
+    `START_M3_PREDICTOR_GAME_LAPTOP.cmd` was initially retained at the root because
+    its exact path and SHA-256 are bound by an append-only authorization. It is
+    now archived byte-for-byte under `tools/windows/legacy/` as well; the Windows
+    tools guide documents optional restoration to its original, Git-ignored
+    local path. Historical authorization and runner code remain unchanged.
+    No root `.cmd` launchers remain tracked. Ruff
     and the complete pytest suite passed on the original workstation after the
     organization change. Fresh-clone CI then exposed a missing temporary parent,
     shallow Git history, ignored evidence dependencies, a runtime-specific test
