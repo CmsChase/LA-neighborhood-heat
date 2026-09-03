@@ -201,6 +201,9 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     history, an explicit opt-in local-evidence
     test lane, an invariant-based hash test, and the tested Rasterio 1.5.0 version.
     No scientific implementation, evidence bytes, or permissions were changed.
+    The clean-worktree check passed 1,624 tests with 52 explicitly skipped local
+    evidence audits and zero failures. Commit `a966661` then passed both Ubuntu
+    and Windows Python 3.12 jobs in GitHub Actions run `33698172511`.
 
 ## Frozen scientific decisions
 
