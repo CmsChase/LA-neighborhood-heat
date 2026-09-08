@@ -229,7 +229,16 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     Daymet, Landsat, QA, targets, fitting, prediction, scoring, or evaluation,
     and requires a one-static plus one-Sentinel canary before full acquisition.
     Authorization generation and authentication opened or statted zero value
-    files and made zero network reads. The canary has not started yet.
+    files and made zero network reads. At that authorization milestone, the
+    canary had not started.
+32. The required Sentinel/static canary completed successfully. It durably
+    finished exactly one static-source unit and one Seattle Sentinel physical
+    acquisition, leaving 551 of 553 work units. Its runtime completion commit is
+    `f77229430416c48013368e0652c288bbdcd007896f05a3fe394a250e73e10bdc`.
+    The post-canary status closes network permission and records no Daymet,
+    Landsat, QA, target, fit, prediction, score, or evaluation access. The next
+    safe step is to resume the same runner over the remaining 551 acquisition
+    units; do not rebuild or delete the two valid canary completions.
 
 ## Frozen scientific decisions
 
