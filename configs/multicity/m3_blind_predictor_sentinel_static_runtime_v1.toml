@@ -1,0 +1,22 @@
+[runtime]
+schema_version = 1
+algorithm_version = "m3-blind-predictor-sentinel-static-runtime-v1"
+download_threads = 2
+acquisition_concurrency = 1
+maximum_attempts = 3
+request_connect_timeout_seconds = 30
+request_read_timeout_seconds = 900
+maximum_single_static_download_bytes = 268435456
+maximum_total_static_download_bytes = 1073741824
+
+[canary]
+static_task_count = 1
+sentinel_acquisition_count = 1
+
+[paths]
+scope_authorization = "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ACQUISITION_V1_AUTHORIZATION.json"
+launch_authorization = "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_SENTINEL_STATIC_RUNTIME_LAUNCH_V1_AUTHORIZATION.json"
+runtime_root = "data/interim/multicity/m3_blind_predictor_build_v1/sentinel_static_acquisition_v1/runtime"
+output_root = "data/raw/multicity/m3_blind_predictor_build_v1/sentinel_static_acquisition_v1"
+completion = "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ACQUISITION_COMPLETE.json"
+

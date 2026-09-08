@@ -1,6 +1,6 @@
 # Project handoff
 
-Last updated: 2026-09-03 Asia/Shanghai
+Last updated: 2026-09-08 Asia/Shanghai
 
 ## Project summary
 
@@ -219,6 +219,17 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     It is a scope permit, not a launch permit: the next step must implement and
     review the resumable runner, then create a separate code-bound runtime-launch
     authorization before the first Sentinel/static value or network access.
+31. The exact resumable Sentinel/static acquisition runtime is implemented,
+    reviewed, and bound by append-only launch authorization
+    `ef99c4816e0153f04185fea9a27a1ed8661b6cf2dc6fe740d31e834d121f3ef7`.
+    Its frozen plan has 553 durable units: 539 exact Sentinel acquisitions and
+    14 static-source units across the four blind cities. The runtime permits at
+    most two asset-read threads and one active acquisition, authenticates the
+    permit immediately before each value or network read, never authorizes
+    Daymet, Landsat, QA, targets, fitting, prediction, scoring, or evaluation,
+    and requires a one-static plus one-Sentinel canary before full acquisition.
+    Authorization generation and authentication opened or statted zero value
+    files and made zero network reads. The canary has not started yet.
 
 ## Frozen scientific decisions
 

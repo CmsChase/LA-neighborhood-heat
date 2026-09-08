@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-sentinel-static-runtime-v1",
+  "state": "m3_blind_predictor_sentinel_static_runtime_launch_authorized",
+  "scope_authorization": {
+    "path": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ACQUISITION_V1_AUTHORIZATION.json",
+    "bytes": 11541,
+    "sha256": "64f1cfaa255fdbedb7217ed3ade77bdda2101d2911883070036d76e35e8bd316",
+    "commit_sha256": "2543bf7e29b6a76cc1099cd60f03644d669104c6597c0ed54db8e4cf3e83f633"
+  },
+  "blind_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "task_plan": {
+    "sentinel_acquisitions": 539,
+    "static_tasks": 14,
+    "total": 553,
+    "sha256": "dca49395b9add84ac79609e73c78ea47cee5587c2feaced26b655c5df13b4211"
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "configs/multicity/m3_blind_predictor_sentinel_static_runtime_v1.toml",
+        "bytes": 1010,
+        "sha256": "0bf23672a6b1ff2c4f32e271b3c16a80308cb442854ab5af6d451e0986f680e6"
+      },
+      {
+        "path": "scripts/run_m3_blind_predictor_sentinel_static_runtime_v1.py",
+        "bytes": 1606,
+        "sha256": "f0985a85f1b98d86a0f2e6c59a71b30a7b40c9b0ca956add797b39c64a78d766"
+      },
+      {
+        "path": "src/la_heat/grid.py",
+        "bytes": 2739,
+        "sha256": "a875c023ac4d981b005f26317a905815f581437b77e6da979d0fcb249f534848"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_sentinel_static_acquisition_authorization_v1.py",
+        "bytes": 17207,
+        "sha256": "a1307346b0efb31b55f68044f2d0b9900ba377b897dfaca4c00d91986630d387"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_sentinel_static_runtime_v1.py",
+        "bytes": 36326,
+        "sha256": "213b062e84a036d8252132d23c40936e4b700e4133f0711b0bfdd343ff3c1148"
+      },
+      {
+        "path": "src/la_heat/multicity/portable_predictor_components.py",
+        "bytes": 47033,
+        "sha256": "f62e5aa4b520094982fd00a2c59135244e0683570f45a4c630b2958e7a148a84"
+      },
+      {
+        "path": "src/la_heat/multicity/portable_predictor_source_evidence_v1.py",
+        "bytes": 93087,
+        "sha256": "7e2b4eaeb6a44b1f3198a21354ac59b5a5d2d4d3943461cac5bb313a59c96a82"
+      },
+      {
+        "path": "src/la_heat/multicity/portable_sentinel_build.py",
+        "bytes": 38775,
+        "sha256": "e1598523c5a29770346d5bc1bbcd213fa5c63a723e8e0be69469af65e910eab1"
+      },
+      {
+        "path": "src/la_heat/multicity/source_footprints.py",
+        "bytes": 91900,
+        "sha256": "208710c307c69b78cd1dd2205297fdb66718534644cd83e56798b34347ccab41"
+      },
+      {
+        "path": "src/la_heat/provenance.py",
+        "bytes": 4679,
+        "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+      },
+      {
+        "path": "src/la_heat/sentinel_feature_builder.py",
+        "bytes": 52291,
+        "sha256": "a28420a824fec5ea987bbff6fb7fbfd532e706144f0845154edd9706452bf13b"
+      },
+      {
+        "path": "src/la_heat/sentinel_features.py",
+        "bytes": 31379,
+        "sha256": "96610e4c3b805b49fd742f533b53f6957f8a9eee55f6253ef185ab82f5946160"
+      },
+      {
+        "path": "src/la_heat/static_features.py",
+        "bytes": 38171,
+        "sha256": "1908b190da1a70077d3ba7b99413cd68df2eca5e9bfad39488387180266e82b3"
+      }
+    ],
+    "set_sha256": "d6ac1df67fcf459c30e6383d87fb286fdc55d34db78b122fb0af110016396d90"
+  },
+  "config": {
+    "path": "configs/multicity/m3_blind_predictor_sentinel_static_runtime_v1.toml",
+    "bytes": 1010,
+    "sha256": "0bf23672a6b1ff2c4f32e271b3c16a80308cb442854ab5af6d451e0986f680e6",
+    "runtime": {
+      "schema_version": 1,
+      "algorithm_version": "m3-blind-predictor-sentinel-static-runtime-v1",
+      "download_threads": 2,
+      "acquisition_concurrency": 1,
+      "maximum_attempts": 3,
+      "request_connect_timeout_seconds": 30,
+      "request_read_timeout_seconds": 900,
+      "maximum_single_static_download_bytes": 268435456,
+      "maximum_total_static_download_bytes": 1073741824
+    },
+    "canary": {
+      "static_task_count": 1,
+      "sentinel_acquisition_count": 1
+    }
+  },
+  "permissions": {
+    "read_exact_scope_bound_sentinel_and_static_values": true,
+    "network_exact_scope_bound_sentinel_and_static_only": true,
+    "write_only_scope_bound_runtime_output_and_completion_paths": true,
+    "read_daymet_values_or_network": false,
+    "read_landsat_asset_href_thermal_qa_or_target": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "runtime_contract": {
+    "authenticate_before_each_value_or_network_read": true,
+    "resumable_durable_task_boundaries": true,
+    "do_not_rebuild_or_delete_valid_cache": true,
+    "maximum_download_threads": 2,
+    "maximum_active_acquisitions": 1,
+    "credentials_signed_urls_or_cookies_persisted": false,
+    "canary_must_precede_full_run": true,
+    "offline_assembly_not_authorized": true
+  },
+  "authorization_audit": {
+    "value_files_opened_or_statted": 0,
+    "network_or_href_reads": 0,
+    "daymet_landsat_qa_or_target_access": false,
+    "model_fit_predict_score_or_evaluate": false
+  },
+  "output_root": "data/raw/multicity/m3_blind_predictor_build_v1/sentinel_static_acquisition_v1",
+  "runtime_root": "data/interim/multicity/m3_blind_predictor_build_v1/sentinel_static_acquisition_v1/runtime",
+  "completion": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ACQUISITION_COMPLETE.json",
+  "next_safe_stage": "run_one_static_plus_one_sentinel_canary_then_resume_full_acquisition",
+  "run_id": "m3-blind-sentinel-static-v1-e17f1ef6f35fdb47",
+  "claim_id": "36fba03e230cde45fa960c9867edd7f2d6bc8d9b0dd9aa0c96be3616c3cad221",
+  "commit_sha256": "ef99c4816e0153f04185fea9a27a1ed8661b6cf2dc6fe740d31e834d121f3ef7"
+}
