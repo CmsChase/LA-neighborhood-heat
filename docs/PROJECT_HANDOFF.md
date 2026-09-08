@@ -208,6 +208,17 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     The clean-worktree check passed 1,624 tests with 52 explicitly skipped local
     evidence audits and zero failures. Commit `a966661` then passed both Ubuntu
     and Windows Python 3.12 jobs in GitHub Actions run `33698172511`.
+30. Independent blind-city Sentinel/static acquisition scope authorization
+    `2543bf7e29b6a76cc1099cd60f03644d669104c6597c0ed54db8e4cf3e83f633`
+    is append-only and authenticated. It freezes Seattle, Denver, Atlanta, and
+    Miami; 143 dates and 23,667 keys; 539 exact Sentinel acquisitions; the 18
+    static plus 5 lagged-Sentinel features; fixed NLCD, SRTM, and GSHHG sources;
+    output paths; and low-load concurrency limits. Its builder was tested under
+    guards that reject opening or statting CSV, Parquet, TIFF, and ZIP files.
+    Therefore this milestone performed zero predictor-value and network reads.
+    It is a scope permit, not a launch permit: the next step must implement and
+    review the resumable runner, then create a separate code-bound runtime-launch
+    authorization before the first Sentinel/static value or network access.
 
 ## Frozen scientific decisions
 

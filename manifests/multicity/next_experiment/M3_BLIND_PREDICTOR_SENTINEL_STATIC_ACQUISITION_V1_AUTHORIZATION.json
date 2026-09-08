@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-sentinel-static-acquisition-auth-v1",
+  "state": "m3_blind_predictor_sentinel_static_acquisition_scope_authorized",
+  "parent_authorization": {
+    "path": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_BUILD_V1_PARENT_AUTHORIZATION.json",
+    "bytes": 16963,
+    "sha256": "c2ae7b864067d54c8da8dea187b964d066300214ab02e70e0e48782ac83f19f4",
+    "commit_sha256": "1a704fca3848471dfba16c28bf2dd2e282343af6ac2aa24e3cbbd2ef44d790f8"
+  },
+  "prerequisites": {
+    "support_completion": {
+      "path": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SUPPORT_COMPLETE.json",
+      "bytes": 5871,
+      "sha256": "c3320205095d2bd5fd740d22b6fb2b4f345ca9e5297ea7eb2605e53bb69aa9fd",
+      "commit_sha256": "aa0c35e626e84ab1e8a17e04b8c5da374c3fcd655a601c90b2e8256806d74dbd"
+    },
+    "metadata_completion": {
+      "path": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_METADATA_COMPLETE.json",
+      "bytes": 1426,
+      "sha256": "63f3f2ec97653daf8317b89ba8c0856bd1dbfd301443bf2165a76f612b3bc6b7",
+      "commit_sha256": "31dcc3f639ccd8a4af040be20dd5ced243cadf7a913b53639a9e7311b7966201"
+    },
+    "sentinel_inventory_completion": {
+      "path": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_INVENTORY_COMPLETE.json",
+      "bytes": 1403,
+      "sha256": "7d4b69ceab388b38dac861a541300e8c520c0477bc99c8dfde74b8afe0550051",
+      "commit_sha256": "7052a02df4da25661ea29cb9b5862bd71921ce1e57017a73db87e8f9ca4b10d7"
+    },
+    "water_distance_freeze": {
+      "path": "manifests/multicity/reviews/portable_water_distance/WATER_DISTANCE_FREEZE_DECISION_V2.json",
+      "bytes": 18541,
+      "sha256": "a25a8712d28bc3b6ccee3e5711f31d92d6e5996047f88635c49ba26bb74afb4b",
+      "commit_sha256": "2416e9b4cdc0c823fb6bcfdc501f2c298f3afa09b8fbd70ed6371f3aac868a51"
+    }
+  },
+  "blind_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "city_scope": [
+    {
+      "city_id": "seattle_wa",
+      "metadata": {
+        "path": "data/processed/multicity/m3_blind_predictor_build_v1/inventory/seattle_wa/METADATA_COMPLETE.json",
+        "bytes": 4807,
+        "sha256": "54fb36b2dd725dfd0f0367e8220fb878674114a1044ede58527ecb20e9ceb775",
+        "commit_sha256": "37f3ddd17234363f599efc4fe80bde20cf447a1da7f29ba1b2b5ae08fe8510bb"
+      },
+      "bbox_wgs84": [
+        -122.459788929646,
+        47.4821556020025,
+        -122.219836852884,
+        47.7352856127686
+      ],
+      "sentinel_physical_acquisitions": 150,
+      "srtm_tile_ids": [
+        "N47W123"
+      ]
+    },
+    {
+      "city_id": "denver_co",
+      "metadata": {
+        "path": "data/processed/multicity/m3_blind_predictor_build_v1/inventory/denver_co/METADATA_COMPLETE.json",
+        "bytes": 4800,
+        "sha256": "690caf80678399fbcb7321153cc00b264a161f561ded0731802248631f413516",
+        "commit_sha256": "32f828da1a2442d10cc28d326d83d83761ffc27610f792e11e734b78c2ca44eb"
+      },
+      "bbox_wgs84": [
+        -105.109934123118,
+        39.6143173945159,
+        -104.599591036789,
+        39.9141844636653
+      ],
+      "sentinel_physical_acquisitions": 157,
+      "srtm_tile_ids": [
+        "N39W106",
+        "N39W105"
+      ]
+    },
+    {
+      "city_id": "atlanta_ga",
+      "metadata": {
+        "path": "data/processed/multicity/m3_blind_predictor_build_v1/inventory/atlanta_ga/METADATA_COMPLETE.json",
+        "bytes": 4803,
+        "sha256": "9ef172e8748ebc6ffc3634db42ff438f1f8ca14698f6ddc5b8375860bc218472",
+        "commit_sha256": "7192ed698e3de98da403cb304dc35f5bf70c5891234a320213b8d4aca4190a1e"
+      },
+      "bbox_wgs84": [
+        -84.5508582479855,
+        33.6478144139134,
+        -84.2895641745692,
+        33.8868294635696
+      ],
+      "sentinel_physical_acquisitions": 157,
+      "srtm_tile_ids": [
+        "N33W085"
+      ]
+    },
+    {
+      "city_id": "miami_fl",
+      "metadata": {
+        "path": "data/processed/multicity/m3_blind_predictor_build_v1/inventory/miami_fl/METADATA_COMPLETE.json",
+        "bytes": 4793,
+        "sha256": "ad3b53431a75ce3ca9f81c858151e0ed156f62181b6e65ad34393f6aeafa839b",
+        "commit_sha256": "ec6f1312a2a768bd6b4a35290d29ceac415a03bc7500cd46105191bd8a195565"
+      },
+      "bbox_wgs84": [
+        -80.3186107166442,
+        25.7090466685473,
+        -80.1321816622881,
+        25.8557907074626
+      ],
+      "sentinel_physical_acquisitions": 75,
+      "srtm_tile_ids": [
+        "N25W081"
+      ]
+    }
+  ],
+  "key_universe": {
+    "target_date_count": 143,
+    "tract_date_row_count": 23667,
+    "sha256": "5c83a3aa6c2f23b1374603c128d3371e65f75db7f1d5fc3cf5100ba4751b2e11"
+  },
+  "predictor_scope": {
+    "static_feature_count": 18,
+    "static_feature_names": [
+      "nlcd_open_water_fraction",
+      "nlcd_developed_open_fraction",
+      "nlcd_developed_low_fraction",
+      "nlcd_developed_high_fraction",
+      "nlcd_barren_fraction",
+      "nlcd_forest_fraction",
+      "nlcd_shrub_grass_fraction",
+      "nlcd_agriculture_fraction",
+      "nlcd_wetland_fraction",
+      "impervious_mean_fraction",
+      "impervious_p90_fraction",
+      "impervious_at_least_50_fraction",
+      "elevation_mean_m",
+      "elevation_std_m",
+      "slope_mean_degrees",
+      "slope_p90_degrees",
+      "gshhg_ocean_great_lakes_shore_distance_mean_km",
+      "gshhg_ocean_great_lakes_shore_distance_p10_km"
+    ],
+    "sentinel_feature_count": 5,
+    "sentinel_feature_names": [
+      "sentinel_ndvi_lag60",
+      "sentinel_evi_lag60",
+      "sentinel_ndwi_lag60",
+      "sentinel_ndbi_lag60",
+      "sentinel_albedo_proxy_lag60"
+    ],
+    "sentinel_reflectance_bands": [
+      "B02",
+      "B03",
+      "B04",
+      "B08",
+      "B8A",
+      "B11",
+      "B12"
+    ],
+    "sentinel_qa_asset": "SCL",
+    "sentinel_product_metadata_asset": "product-metadata",
+    "lag_window_days_before_target_inclusive": [
+      60,
+      1
+    ]
+  },
+  "source_contract": {
+    "sentinel": {
+      "provider": "Microsoft Planetary Computer",
+      "collection": "sentinel-2-l2a",
+      "allowed_hosts": [
+        "planetarycomputer.microsoft.com",
+        "*.blob.core.windows.net"
+      ],
+      "selected_physical_acquisition_count": 539,
+      "only_inventory_bound_asset_hrefs": true
+    },
+    "nlcd": {
+      "endpoint": "https://www.mrlc.gov/geoserver/ows",
+      "coverage_ids": [
+        "mrlc_download__NLCD_2016_Land_Cover_L48",
+        "mrlc_download__NLCD_2016_Impervious_L48"
+      ],
+      "native_crs": "EPSG:5070",
+      "native_resolution_m": 30,
+      "source_halo_pixels": 2
+    },
+    "terrain": {
+      "url_prefix": "https://opentopography.s3.sdsc.edu/raster/SRTM_GL1/SRTM_GL1_srtm/",
+      "dataset": "NASA SRTM Global 1 arc second V003",
+      "only_frozen_tile_ids": true
+    },
+    "water_distance": {
+      "archive_path": "data/raw/multicity/water_distance/gshhg-shp-2.3.7.zip",
+      "archive_bytes": 149157845,
+      "archive_sha256": "8dbbe7e071e77e9e75f2d639239099ebca8d5c16d6a07df8169729d49f15cf41",
+      "network_allowed": false
+    }
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/authorize_m3_blind_predictor_sentinel_static_acquisition_v1.py",
+        "bytes": 2002,
+        "sha256": "aed1f00b86bf4dbfeeb775a6a2033c1f7a693a7e20691e69b443125489af58c3"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_build_authorization_v1.py",
+        "bytes": 13287,
+        "sha256": "3194b1ffb848be0e07dff80d0b9dbad31892e53d750adb413414d811e5a97c0f"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_sentinel_inventory_v1.py",
+        "bytes": 10426,
+        "sha256": "21495b8ae8b539fb56927cc3746e984b6f32ac09ed7bb037b25f07723ec6d728"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_sentinel_static_acquisition_authorization_v1.py",
+        "bytes": 17207,
+        "sha256": "a1307346b0efb31b55f68044f2d0b9900ba377b897dfaca4c00d91986630d387"
+      },
+      {
+        "path": "src/la_heat/multicity/portable_predictor_components.py",
+        "bytes": 47033,
+        "sha256": "f62e5aa4b520094982fd00a2c59135244e0683570f45a4c630b2958e7a148a84"
+      },
+      {
+        "path": "src/la_heat/multicity/portable_predictor_source_evidence_v1.py",
+        "bytes": 93087,
+        "sha256": "7e2b4eaeb6a44b1f3198a21354ac59b5a5d2d4d3943461cac5bb313a59c96a82"
+      },
+      {
+        "path": "src/la_heat/multicity/portable_sentinel_build.py",
+        "bytes": 38775,
+        "sha256": "e1598523c5a29770346d5bc1bbcd213fa5c63a723e8e0be69469af65e910eab1"
+      },
+      {
+        "path": "src/la_heat/provenance.py",
+        "bytes": 4679,
+        "sha256": "3bbbff60c7b00a9a8e69db651ede03745961a26e09890b5c2c76da09fef406b7"
+      },
+      {
+        "path": "src/la_heat/sentinel_feature_builder.py",
+        "bytes": 52291,
+        "sha256": "a28420a824fec5ea987bbff6fb7fbfd532e706144f0845154edd9706452bf13b"
+      },
+      {
+        "path": "src/la_heat/sentinel_features.py",
+        "bytes": 31379,
+        "sha256": "96610e4c3b805b49fd742f533b53f6957f8a9eee55f6253ef185ab82f5946160"
+      }
+    ],
+    "set_sha256": "01903b923063a2dc5797fd25bebce415e3ee3c77798d7d4accb9d2818b2c611a"
+  },
+  "write_scope": {
+    "output_root": "data/raw/multicity/m3_blind_predictor_build_v1/sentinel_static_acquisition_v1",
+    "runtime_root": "data/interim/multicity/m3_blind_predictor_build_v1/sentinel_static_acquisition_v1/runtime",
+    "completion": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ACQUISITION_COMPLETE.json",
+    "append_only_completions": true,
+    "partial_files_must_not_be_treated_as_complete": true
+  },
+  "limits": {
+    "maximum_compute_workers": 1,
+    "maximum_download_workers": 2,
+    "maximum_active_acquisitions": 2,
+    "maximum_single_static_download_bytes": 268435456,
+    "maximum_total_static_download_bytes": 1073741824
+  },
+  "permissions": {
+    "sentinel_and_static_scope_frozen": true,
+    "sentinel_and_static_value_or_network_read_now": false,
+    "runtime_launch_child_authorization_required_before_first_value_or_network_read": true,
+    "daymet_value_or_network_read": false,
+    "landsat_asset_href_thermal_qa_or_target_access": false,
+    "model_fit_predict_score_or_evaluate": false,
+    "prediction_before_target_boundary_preserved": true
+  },
+  "authorization_audit": {
+    "sentinel_or_static_raster_opened_or_statted": 0,
+    "network_or_href_reads": 0,
+    "daymet_landsat_qa_or_target_values_read": false,
+    "model_fit_predict_score_or_evaluate": false
+  },
+  "required_runtime_launch_contract": {
+    "bind_exact_executable_and_config_hashes": true,
+    "authenticate_this_authorization_before_every_value_or_network_read": true,
+    "resume_without_queue_rebuild_or_cache_delete": true,
+    "no_signed_urls_or_credentials_persisted": true,
+    "offline_assembly_requires_separate_phase_authentication": true
+  },
+  "next_safe_stage": "implement_review_and_authorize_exact_resumable_sentinel_static_runtime_launch",
+  "claim_id": "672392cabf3dcfb243be52cb8cd87058f58a85a835f150ce7c065ad931fb50da",
+  "commit_sha256": "2543bf7e29b6a76cc1099cd60f03644d669104c6597c0ed54db8e4cf3e83f633"
+}
