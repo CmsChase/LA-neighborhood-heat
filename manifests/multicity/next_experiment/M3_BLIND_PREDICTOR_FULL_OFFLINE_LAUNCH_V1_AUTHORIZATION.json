@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-full-offline-launch-v1",
+  "state": "m3_blind_predictor_full_four_city_offline_assembly_authorized",
+  "canary_completion": {
+    "path": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ASSEMBLY_CANARY_COMPLETE.json",
+    "bytes": 1404,
+    "sha256": "047743331aecc077d6e399023eb1db407acde7c7fc61b08b24ae69211ff403d2",
+    "commit_sha256": "f57d39827b9abc7d36126aeec4285fce6996f017cbf3f5786017b32b3be9694e"
+  },
+  "runner_authorization": {
+    "path": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_STATIC_TILE_SCOPE_REPAIR_V1_AUTHORIZATION.json",
+    "bytes": 1948,
+    "sha256": "bb3501d774ab6e34146847e42c65f7159c86cc0fa2aef374dff4fa02b12654ff",
+    "commit_sha256": "fb87086fda0b1be1c44e3cd7ea51d9754b70b249372e06f87eb272836254d426"
+  },
+  "blind_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/run_m3_blind_predictor_full_offline_launch_v1.py",
+        "bytes": 1017,
+        "sha256": "42b1575a0dbf4749dcd566752b8de065349ff116261ef3fd30ea44c0020ac8e6"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_full_offline_launch_v1.py",
+        "bytes": 4775,
+        "sha256": "777cdbedee812a12cc359b2945055cbc51757dea4bc7c1c54bf222d3ba8168d2"
+      }
+    ],
+    "set_sha256": "feefccb142cbf8b9ed5588e9246468b31ee6ec35f46e2c230c7df769c0bf327f"
+  },
+  "permissions": {
+    "resume_full_four_city_sentinel_static_offline_assembly": true,
+    "reuse_authenticated_canary_outputs": true,
+    "network_or_href_reads": false,
+    "read_daymet_landsat_qa_or_target_values": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "runtime_contract": {
+    "same_runtime_and_output_roots": true,
+    "durable_city_and_gshhg_chunk_boundaries": true,
+    "network_and_href_read_count": 0,
+    "blind_targets_sealed": true
+  },
+  "authorization_audit": {
+    "predictor_value_files_opened_or_statted": 0,
+    "network_or_href_reads": 0
+  },
+  "next_safe_stage": "run_full_four_city_offline_assembly",
+  "claim_id": "6f00b10b7da4d2132f34dd7a1b34ce8dc7d1b0c64ae9a547c6421407741fe44e",
+  "commit_sha256": "f747e91f6dce4f643fa2573d0324b27ad9efda08fa08cd30e27fb49993c9c1d3"
+}

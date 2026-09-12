@@ -79,6 +79,13 @@ compile and static base, with no recomputation, zero network/href reads, and
 blind targets sealed. The next safe stage is to review and create a separate
 full four-city offline launch authorization. The full run is not yet allowed.
 
+The full four-city offline launch is now independently authorized by
+`f747e91f6dce4f643fa2573d0324b27ad9efda08fa08cd30e27fb49993c9c1d3`.
+It binds the corrected canary and the complete repair chain, permits only the
+same local runtime/output roots, and retains zero network/href reads and sealed
+targets. Run only through
+`scripts/run_m3_blind_predictor_full_offline_launch_v1.py --run`.
+
 ## Completed milestones
 
 1. The Los Angeles development study, frozen 2025 evaluation, evidence package,
