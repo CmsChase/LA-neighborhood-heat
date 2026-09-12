@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-canary-counter-repair-v1",
+  "state": "m3_blind_sentinel_static_offline_assembly_canary_complete",
+  "authorization_commit_sha256": "3233717968fa90a03e73c7e880b3a4e9167f07da025870e767faed3ed187f5e6",
+  "supersedes_canary_commit_sha256": "5dbd2524b6f00f71d40d97ff143343e986b363ccab09275316a6eb2ebc685f59",
+  "city_id": "miami_fl",
+  "sentinel_city_compile": true,
+  "static_base": true,
+  "gshhg_completed_chunk_count": 1,
+  "gshhg_chunk_count": 1,
+  "gshhg_chunk": {
+    "path": "data/interim/multicity/m3_blind_predictor_build_v1/sentinel_static_assembly_v1/runtime/components/miami_fl/static/gshhg_distance_chunks/distance_chunk_00001_of_00001.parquet",
+    "rows": 97210,
+    "bytes": 1571161,
+    "sha256": "c1f2d79bc798e6519b3f671b0e02232a62d791afcd0904767d7ab2e4174a3407",
+    "schema_columns": [
+      "flat_index",
+      "tract_geoid",
+      "distance_km"
+    ]
+  },
+  "network_request_count": 0,
+  "href_read_count": 0,
+  "blind_targets_sealed": true,
+  "daymet_landsat_qa_or_target_access": false,
+  "model_fit_predict_score_or_evaluate": false,
+  "existing_outputs_modified_or_recomputed": false,
+  "full_assembly_started": false,
+  "next_safe_stage": "authorize_launch_of_full_four_city_offline_assembly",
+  "commit_sha256": "f57d39827b9abc7d36126aeec4285fce6996f017cbf3f5786017b32b3be9694e"
+}

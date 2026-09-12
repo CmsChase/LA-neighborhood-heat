@@ -72,6 +72,13 @@ That repair is now authorized by
 It may only authenticate the existing chunk and write a new corrected canary
 completion; it cannot recompute outputs or launch the full assembly.
 
+The corrected canary completion is authenticated at
+`f57d39827b9abc7d36126aeec4285fce6996f017cbf3f5786017b32b3be9694e`.
+It verifies the existing 97,210-row Miami GSHHG chunk as 1/1, plus the Sentinel
+compile and static base, with no recomputation, zero network/href reads, and
+blind targets sealed. The next safe stage is to review and create a separate
+full four-city offline launch authorization. The full run is not yet allowed.
+
 ## Completed milestones
 
 1. The Los Angeles development study, frozen 2025 evaluation, evidence package,
