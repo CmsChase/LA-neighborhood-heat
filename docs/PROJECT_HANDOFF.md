@@ -58,6 +58,15 @@ Static tile-scope repair authorization
 replaces only that false cardinality assumption. Retry through
 `scripts/run_m3_blind_predictor_static_tile_scope_repair_v1.py --canary`.
 
+That canary's computation completed: Miami Sentinel outputs, static base, and
+the sole `distance_chunk_00001_of_00001.parquet` are durable, with zero network
+or href reads and targets sealed. Its manifest commit is
+`5dbd2524b6f00f71d40d97ff143343e986b363ccab09275316a6eb2ebc685f59`,
+but the manifest records `gshhg_completed_chunk_count: 0` because the writer
+looked up the wrong progress key. Do not start the full run. The next task is a
+narrow append-only provenance-counter repair that authenticates the actual
+1/1 chunk without recomputing the canary.
+
 ## Completed milestones
 
 1. The Los Angeles development study, frozen 2025 evaluation, evidence package,
