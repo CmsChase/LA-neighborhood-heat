@@ -67,6 +67,11 @@ looked up the wrong progress key. Do not start the full run. The next task is a
 narrow append-only provenance-counter repair that authenticates the actual
 1/1 chunk without recomputing the canary.
 
+That repair is now authorized by
+`3233717968fa90a03e73c7e880b3a4e9167f07da025870e767faed3ed187f5e6`.
+It may only authenticate the existing chunk and write a new corrected canary
+completion; it cannot recompute outputs or launch the full assembly.
+
 ## Completed milestones
 
 1. The Los Angeles development study, frozen 2025 evaluation, evidence package,

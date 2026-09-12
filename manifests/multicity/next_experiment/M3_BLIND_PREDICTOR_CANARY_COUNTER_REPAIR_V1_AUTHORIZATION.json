@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-canary-counter-repair-v1",
+  "state": "m3_blind_predictor_canary_counter_repair_authorized",
+  "parent_authorization": {
+    "path": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_STATIC_TILE_SCOPE_REPAIR_V1_AUTHORIZATION.json",
+    "bytes": 1948,
+    "sha256": "bb3501d774ab6e34146847e42c65f7159c86cc0fa2aef374dff4fa02b12654ff",
+    "commit_sha256": "fb87086fda0b1be1c44e3cd7ea51d9754b70b249372e06f87eb272836254d426"
+  },
+  "incident_evidence": {
+    "old_canary": {
+      "path": "data/interim/multicity/m3_blind_predictor_build_v1/sentinel_static_assembly_v1/runtime/CANARY_COMPLETE.json",
+      "bytes": 574,
+      "sha256": "f2f52ed75b3bbfd84a3d21c111a667224674dfa48b35f75a64148421dd4d7513",
+      "commit_sha256": "5dbd2524b6f00f71d40d97ff143343e986b363ccab09275316a6eb2ebc685f59"
+    },
+    "distance_progress": {
+      "path": "data/interim/multicity/m3_blind_predictor_build_v1/sentinel_static_assembly_v1/runtime/components/miami_fl/static/gshhg_distance_progress.json",
+      "bytes": 746,
+      "sha256": "aa002b2bbb74af34703e2f3009205fd8533c8fa66fe14100ca81152e73388d1c",
+      "commit_sha256": "7f5f44336f2166c2023e3fa0c288c1d9976ea63ccb47e4e3d7ec81d2226ca39a"
+    },
+    "wrong_field": "completed_chunks",
+    "canonical_field": "completed_chunk_indices",
+    "recorded_count": 0,
+    "expected_count_after_file_authentication": 1
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/repair_m3_blind_predictor_canary_counter_v1.py",
+        "bytes": 1031,
+        "sha256": "177c29944f9dc9690abb52f0bcd2d0b031134a0b7002035457ed360468fb7596"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_canary_counter_repair_v1.py",
+        "bytes": 8595,
+        "sha256": "4915cc4c99c228db69effae164723a8ba8c93254e5a1f0986c3aa021918654e3"
+      }
+    ],
+    "set_sha256": "98f0827695788bad690f7168c165d0fad43230201d3f15a55f79f4c87f63c0bf"
+  },
+  "permissions": {
+    "read_only_recorded_gshhg_chunk": true,
+    "write_new_append_only_corrected_canary_completion": true,
+    "modify_or_recompute_existing_outputs": false,
+    "network_or_href_reads": false,
+    "read_daymet_landsat_qa_or_target_values": false,
+    "fit_predict_score_or_evaluate": false,
+    "start_full_assembly": false
+  },
+  "authorization_audit": {
+    "parquet_chunks_opened_or_statted": 0,
+    "network_or_href_reads": 0,
+    "blind_targets_sealed": true
+  },
+  "completion": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ASSEMBLY_CANARY_COMPLETE.json",
+  "next_safe_stage": "authenticate_existing_chunk_and_write_corrected_canary_completion",
+  "claim_id": "fdd03863d0b9fc8474c28a8c57f900be822cafa4d9fbd54d782f16d388614b16",
+  "commit_sha256": "3233717968fa90a03e73c7e880b3a4e9167f07da025870e767faed3ed187f5e6"
+}

@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "revision": "2026-09-m3-blind-offline-canary-compute-complete-counter-repair-pending",
+  "revision": "2026-09-m3-blind-canary-counter-repair-authorized",
   "stage_id": "next_experiment_m3_blind_predictor_build",
-  "state": "m3_blind_predictor_offline_canary_compute_complete_formal_counter_repair_pending",
-  "next_safe_stage": "authorize_and_apply_canary_chunk_counter_provenance_repair",
+  "state": "m3_blind_predictor_canary_counter_repair_authorized_not_applied",
+  "next_safe_stage": "apply_canary_chunk_counter_provenance_repair",
   "summary": "The Miami offline canary completed its Sentinel compile, static base, and the only GSHHG distance chunk (1/1). Sentinel features, audit, and lineage outputs exist; runtime reports network and href reads zero and keeps blind targets sealed. Membership repair b44c0cf8098137945c60d993f2c4e2b890a4a9c71da86cff29b4a146d0c89ff7, lineage-city repair 8c0d87761adf3c5cd2d588bcc39a44a1db5626035ec1300d90c5122fe2a4c751, and static tile-scope repair fb87086fda0b1be1c44e3cd7ea51d9754b70b249372e06f87eb272836254d426 were applied successfully. The canary manifest incorrectly records zero completed GSHHG chunks because it reads the wrong progress field, while the durable file is distance_chunk_00001_of_00001.parquet. Full assembly must not start until an append-only provenance counter repair authenticates the actual 1/1 state.",
   "permissions": {
     "read_public_predictor_sources": true,
@@ -263,13 +263,15 @@
     "next_experiment_blind_sentinel_static_offline_assembly_canary_compute_complete": true,
     "next_experiment_blind_sentinel_static_offline_assembly_canary_manifest_commit_sha256": "5dbd2524b6f00f71d40d97ff143343e986b363ccab09275316a6eb2ebc685f59",
     "next_experiment_blind_sentinel_static_offline_assembly_canary_counter_repair_pending": true,
+    "next_experiment_blind_sentinel_static_canary_counter_repair_authorization": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_CANARY_COUNTER_REPAIR_V1_AUTHORIZATION.json",
+    "next_experiment_blind_sentinel_static_canary_counter_repair_authorization_commit_sha256": "3233717968fa90a03e73c7e880b3a4e9167f07da025870e767faed3ed187f5e6",
     "next_experiment_blind_daymet_acquisition_authorized": true,
     "next_experiment_blind_daymet_acquisition_complete_count": 0,
     "next_experiment_blind_daymet_acquisition_total_count": 24,
     "next_experiment_blind_daymet_blocker": "earthdata_token_missing_after_official_endpoint_401",
     "next_experiment_blind_predictor_raster_value_reads": "authorized_sentinel_static_acquisition_complete_553_of_553",
     "next_experiment_blind_landsat_qa_or_target_value_reads": 0,
-    "next_action": "authorize_and_apply_canary_chunk_counter_provenance_repair"
+    "next_action": "apply_canary_chunk_counter_provenance_repair"
   },
   "prepared_post_return_tools": {
     "one_click_import": "tools/windows/legacy/IMPORT_SENTINEL_RESULTS.cmd",
