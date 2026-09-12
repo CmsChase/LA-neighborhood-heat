@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": "2026-09-m3-blind-sentinel-static-canary-complete",
+  "revision": "2026-09-m3-blind-sentinel-static-acquisition-complete",
   "stage_id": "next_experiment_m3_blind_predictor_build",
-  "state": "m3_blind_predictor_sentinel_static_canary_complete_full_acquisition_not_started",
-  "next_safe_stage": "resume_remaining_551_sentinel_static_acquisition_tasks",
-  "summary": "The frozen source selection remains commit 207d45f8fdc7237f6347ed69b1c67733df353a3331e622707e93c4b3f21c34d3. Independent Sentinel/static scope authorization 2543bf7e29b6a76cc1099cd60f03644d669104c6597c0ed54db8e4cf3e83f633 and code-bound runtime-launch authorization ef99c4816e0153f04185fea9a27a1ed8661b6cf2dc6fe740d31e834d121f3ef7 bind the reviewed 553-task resumable runner. The required canary completed and authenticated under runtime commit f77229430416c48013368e0652c288bbdcd007896f05a3fe394a250e73e10bdc: exactly one static unit and one Seattle Sentinel acquisition are durable, leaving 551 tasks. Network permission is closed at the boundary; Daymet, Landsat, QA, targets, fitting, prediction, scoring, and evaluation were not accessed. The next safe action is the same-run resumable full Sentinel/static acquisition. Daymet remains separately blocked at 0/24 pending an ephemeral Earthdata token.",
+  "state": "m3_blind_predictor_sentinel_static_acquisition_complete_offline_assembly_not_authorized",
+  "next_safe_stage": "create_review_and_authorize_offline_sentinel_static_assembly",
+  "summary": "The frozen source selection remains commit 207d45f8fdc7237f6347ed69b1c67733df353a3331e622707e93c4b3f21c34d3. Independent Sentinel/static scope authorization 2543bf7e29b6a76cc1099cd60f03644d669104c6597c0ed54db8e4cf3e83f633 and code-bound runtime-launch authorization ef99c4816e0153f04185fea9a27a1ed8661b6cf2dc6fe740d31e834d121f3ef7 bind the reviewed 553-task resumable runner. Acquisition completion 33cf3e03ba8bbc1c1de5abb6c976ca50cbeb2a93ea8207e24e520d7c9f30f2c2 authenticates all 14 static tasks and all 539 Sentinel physical acquisitions: Seattle 150, Denver 157, Atlanta 157, and Miami 75. The terminal state has zero pending/running work, no worker, and network permission closed. Daymet, Landsat, QA, targets, fitting, prediction, scoring, and evaluation were not accessed. Offline Sentinel/static assembly has not been authorized or started. Daymet remains separately blocked at 0/24 pending an ephemeral Earthdata token.",
   "permissions": {
     "read_public_predictor_sources": true,
     "build_predictor": false,
@@ -59,6 +59,7 @@
     "next_experiment_blind_predictor_runtime_authorized": true,
     "next_experiment_blind_sentinel_static_runtime_launch_authorized": true,
     "next_experiment_blind_sentinel_static_canary_complete": true,
+    "next_experiment_blind_sentinel_static_acquisition_complete": true,
     "new_candidate_targets_sealed": true
   },
   "inputs": {
@@ -120,6 +121,8 @@
     "next_experiment_blind_sentinel_static_scope_authorization_commit_sha256": "2543bf7e29b6a76cc1099cd60f03644d669104c6597c0ed54db8e4cf3e83f633",
     "next_experiment_blind_sentinel_static_runtime_launch_authorization": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_SENTINEL_STATIC_RUNTIME_LAUNCH_V1_AUTHORIZATION.json",
     "next_experiment_blind_sentinel_static_runtime_launch_authorization_commit_sha256": "ef99c4816e0153f04185fea9a27a1ed8661b6cf2dc6fe740d31e834d121f3ef7",
+    "next_experiment_blind_sentinel_static_acquisition_completion": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ACQUISITION_COMPLETE.json",
+    "next_experiment_blind_sentinel_static_acquisition_completion_commit_sha256": "33cf3e03ba8bbc1c1de5abb6c976ca50cbeb2a93ea8207e24e520d7c9f30f2c2",
     "next_experiment_selected_unseen_city_ids": [
       "seattle_wa",
       "denver_co",
@@ -241,15 +244,15 @@
     "next_experiment_blind_sentinel_static_runtime_launch_authorization_commit_sha256": "ef99c4816e0153f04185fea9a27a1ed8661b6cf2dc6fe740d31e834d121f3ef7",
     "next_experiment_blind_sentinel_static_canary_complete": true,
     "next_experiment_blind_sentinel_static_canary_commit_sha256": "f77229430416c48013368e0652c288bbdcd007896f05a3fe394a250e73e10bdc",
-    "next_experiment_blind_sentinel_static_task_complete_count": 2,
+    "next_experiment_blind_sentinel_static_task_complete_count": 553,
     "next_experiment_blind_sentinel_static_task_total_count": 553,
     "next_experiment_blind_daymet_acquisition_authorized": true,
     "next_experiment_blind_daymet_acquisition_complete_count": 0,
     "next_experiment_blind_daymet_acquisition_total_count": 24,
     "next_experiment_blind_daymet_blocker": "earthdata_token_missing_after_official_endpoint_401",
-    "next_experiment_blind_predictor_raster_value_reads": "canary_only_one_static_unit_plus_one_sentinel_acquisition",
+    "next_experiment_blind_predictor_raster_value_reads": "authorized_sentinel_static_acquisition_complete_553_of_553",
     "next_experiment_blind_landsat_qa_or_target_value_reads": 0,
-    "next_action": "resume_remaining_551_sentinel_static_acquisition_tasks"
+    "next_action": "create_review_and_authorize_offline_sentinel_static_assembly"
   },
   "prepared_post_return_tools": {
     "one_click_import": "tools/windows/legacy/IMPORT_SENTINEL_RESULTS.cmd",

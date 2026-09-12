@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-sentinel-static-runtime-v1",
+  "state": "m3_blind_predictor_sentinel_static_acquisition_complete",
+  "authorization_commit_sha256": "ef99c4816e0153f04185fea9a27a1ed8661b6cf2dc6fe740d31e834d121f3ef7",
+  "task_count": 553,
+  "counts": {
+    "pending": 0,
+    "running": 0,
+    "complete": 553,
+    "total": 553
+  },
+  "audit": {
+    "blind_targets_sealed": true,
+    "daymet_landsat_qa_or_target_access": false,
+    "model_fit_predict_score_or_evaluate": false,
+    "credentials_signed_urls_or_cookies_persisted": false
+  },
+  "next_safe_stage": "authorize_offline_sentinel_static_assembly",
+  "commit_sha256": "33cf3e03ba8bbc1c1de5abb6c976ca50cbeb2a93ea8207e24e520d7c9f30f2c2"
+}

@@ -1,6 +1,6 @@
 # Project handoff
 
-Last updated: 2026-09-08 Asia/Shanghai
+Last updated: 2026-09-12 Asia/Shanghai
 
 ## Project summary
 
@@ -239,6 +239,15 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
     Landsat, QA, target, fit, prediction, score, or evaluation access. The next
     safe step is to resume the same runner over the remaining 551 acquisition
     units; do not rebuild or delete the two valid canary completions.
+33. Blind-city Sentinel/static acquisition is complete and independently
+    reauthenticated. Completion commit
+    `33cf3e03ba8bbc1c1de5abb6c976ca50cbeb2a93ea8207e24e520d7c9f30f2c2`
+    binds all 553 durable units: 14/14 static tasks and 539/539 Sentinel
+    physical acquisitions (Seattle 150, Denver 157, Atlanta 157, Miami 75).
+    The terminal runtime has zero pending/running tasks, no worker, network
+    permission closed, and no Daymet, Landsat, QA, target, fit, prediction,
+    score, or evaluation access. Offline Sentinel/static assembly is not yet
+    authorized and has not started.
 
 ## Frozen scientific decisions
 
