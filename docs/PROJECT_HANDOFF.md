@@ -16,6 +16,22 @@ Public atlas: `https://cmschase.github.io/LA-neighborhood-heat/`
 
 The website source is `atlas/`. The old standalone atlas repository is archived.
 
+## Active M3 blind-predictor stage
+
+The four blind cities' 553 Sentinel/static acquisitions are complete and
+authenticated. The independent, code-bound offline assembly permit is
+`3311d3876dcbe9da53646a5127832616de0d67bd82e19907c6ed843b1565eaaf`.
+It allows local assembly of 18 static plus 5 lagged Sentinel features only;
+network/href reads are zero and Daymet, Landsat, QA, targets, fitting,
+prediction, and scoring remain inaccessible. The next safe action is only the
+Miami canary:
+
+```powershell
+.\.venv\Scripts\python scripts\run_m3_blind_predictor_sentinel_static_assembly_v1.py --project-root . --canary
+```
+
+Do not start the full offline run until this canary has been authenticated.
+
 ## Completed milestones
 
 1. The Los Angeles development study, frozen 2025 evaluation, evidence package,

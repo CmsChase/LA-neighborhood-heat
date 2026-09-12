@@ -1,0 +1,19 @@
+[runtime]
+schema_version = 1
+algorithm_version = "m3-blind-predictor-sentinel-static-assembly-v1"
+distance_chunk_size = 100000
+network_allowed = false
+href_reads_allowed = false
+
+[canary]
+city_id = "miami_fl"
+sentinel_city_compile = true
+static_base = true
+gshhg_distance_chunks = 1
+
+[paths]
+authorization = "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ASSEMBLY_V1_AUTHORIZATION.json"
+acquisition_completion = "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ACQUISITION_COMPLETE.json"
+runtime_root = "data/interim/multicity/m3_blind_predictor_build_v1/sentinel_static_assembly_v1/runtime"
+output_root = "data/processed/multicity/m3_blind_predictor_build_v1/sentinel_static_assembly_v1"
+completion = "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ASSEMBLY_COMPLETE.json"

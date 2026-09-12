@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-sentinel-static-assembly-v1",
+  "state": "m3_blind_predictor_sentinel_static_offline_assembly_authorized",
+  "acquisition_completion": {
+    "path": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ACQUISITION_COMPLETE.json",
+    "bytes": 765,
+    "sha256": "e998165fd2943753b15b28fce0a131199ed9721dd02816369ea11f18ecc08db1",
+    "commit_sha256": "33cf3e03ba8bbc1c1de5abb6c976ca50cbeb2a93ea8207e24e520d7c9f30f2c2"
+  },
+  "blind_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "outputs": {
+    "static_feature_count": 18,
+    "sentinel_feature_count": 5,
+    "daymet_feature_count": 0,
+    "tract_date_key_count": 23667
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "configs/multicity/m3_blind_predictor_sentinel_static_assembly_v1.toml",
+        "bytes": 896,
+        "sha256": "f5d43f1b4b044c4504bce16b2216baf1a769b22d7f4762d78f7f244e8598d608"
+      },
+      {
+        "path": "scripts/run_m3_blind_predictor_sentinel_static_assembly_v1.py",
+        "bytes": 1087,
+        "sha256": "23908ad41c4da30af26605efc284343c8376ecbde792136eb2f8a44423001f44"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_sentinel_static_assembly_v1.py",
+        "bytes": 16256,
+        "sha256": "1a5c4b76b95f2450c8470c92533f6877300016de6e7c35677fb9f6d9f24339b8"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_sentinel_static_runtime_v1.py",
+        "bytes": 36326,
+        "sha256": "213b062e84a036d8252132d23c40936e4b700e4133f0711b0bfdd343ff3c1148"
+      },
+      {
+        "path": "src/la_heat/multicity/portable_predictor_components.py",
+        "bytes": 47033,
+        "sha256": "f62e5aa4b520094982fd00a2c59135244e0683570f45a4c630b2958e7a148a84"
+      },
+      {
+        "path": "src/la_heat/multicity/portable_sentinel_build.py",
+        "bytes": 38775,
+        "sha256": "e1598523c5a29770346d5bc1bbcd213fa5c63a723e8e0be69469af65e910eab1"
+      },
+      {
+        "path": "src/la_heat/sentinel_features.py",
+        "bytes": 31379,
+        "sha256": "96610e4c3b805b49fd742f533b53f6957f8a9eee55f6253ef185ab82f5946160"
+      },
+      {
+        "path": "src/la_heat/static_features.py",
+        "bytes": 38171,
+        "sha256": "1908b190da1a70077d3ba7b99413cd68df2eca5e9bfad39488387180266e82b3"
+      }
+    ],
+    "set_sha256": "824d586fe576227797b06642be4f437bd37af4bf320f67ffa46e136b7ef39e0d"
+  },
+  "config": {
+    "path": "configs/multicity/m3_blind_predictor_sentinel_static_assembly_v1.toml",
+    "bytes": 896,
+    "sha256": "f5d43f1b4b044c4504bce16b2216baf1a769b22d7f4762d78f7f244e8598d608",
+    "values": {
+      "runtime": {
+        "schema_version": 1,
+        "algorithm_version": "m3-blind-predictor-sentinel-static-assembly-v1",
+        "distance_chunk_size": 100000,
+        "network_allowed": false,
+        "href_reads_allowed": false
+      },
+      "canary": {
+        "city_id": "miami_fl",
+        "sentinel_city_compile": true,
+        "static_base": true,
+        "gshhg_distance_chunks": 1
+      },
+      "paths": {
+        "authorization": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ASSEMBLY_V1_AUTHORIZATION.json",
+        "acquisition_completion": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ACQUISITION_COMPLETE.json",
+        "runtime_root": "data/interim/multicity/m3_blind_predictor_build_v1/sentinel_static_assembly_v1/runtime",
+        "output_root": "data/processed/multicity/m3_blind_predictor_build_v1/sentinel_static_assembly_v1",
+        "completion": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ASSEMBLY_COMPLETE.json"
+      }
+    }
+  },
+  "permissions": {
+    "read_completed_scope_bound_sentinel_and_static_values": true,
+    "write_offline_assembly_runtime_and_outputs": true,
+    "network_or_href_reads": false,
+    "read_daymet_landsat_qa_or_target_values": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "runtime_contract": {
+    "authenticate_before_each_task_value_read": true,
+    "network_and_href_read_count": 0,
+    "resumable_city_and_distance_chunk_boundaries": true,
+    "canary_required_before_full_run": true,
+    "blind_targets_remain_sealed": true
+  },
+  "authorization_access_audit": {
+    "predictor_value_files_opened_or_statted": 0,
+    "network_or_href_reads": 0,
+    "daymet_landsat_qa_or_target_values_read": false,
+    "model_fit_predict_score_or_evaluate": false
+  },
+  "runtime_root": "data/interim/multicity/m3_blind_predictor_build_v1/sentinel_static_assembly_v1/runtime",
+  "output_root": "data/processed/multicity/m3_blind_predictor_build_v1/sentinel_static_assembly_v1",
+  "completion": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ASSEMBLY_COMPLETE.json",
+  "next_safe_stage": "run_offline_assembly_canary_only",
+  "run_id": "m3-blind-offline-assembly-v1-d0b49300651339d4",
+  "claim_id": "7304d3ffe5de6aa27704d2b5f4533f6a96f3626def50cd6e60cbd4cf7663564b",
+  "commit_sha256": "3311d3876dcbe9da53646a5127832616de0d67bd82e19907c6ed843b1565eaaf"
+}
