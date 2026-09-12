@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-sentinel-lineage-city-repair-v1",
+  "state": "m3_blind_predictor_sentinel_lineage_city_repair_authorized",
+  "parent_repair_authorization": {
+    "path": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_SENTINEL_MEMBERSHIP_REPAIR_V1_AUTHORIZATION.json",
+    "bytes": 2186,
+    "sha256": "4da211b1455e0270532cadf8c9fe856a94d837bd4106d4a0fa320d5811b501a3",
+    "commit_sha256": "b44c0cf8098137945c60d993f2c4e2b890a4a9c71da86cff29b4a146d0c89ff7"
+  },
+  "incident": {
+    "phase": "offline_assembly_canary",
+    "city_id": "miami_fl",
+    "error_type": "ValueError",
+    "cause": "lineage already contains the correct city_id before canonical insert",
+    "operation": "validate all existing values, drop duplicate, reinsert same value"
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/run_m3_blind_predictor_sentinel_lineage_city_repair_v1.py",
+        "bytes": 1091,
+        "sha256": "1d2f1c283d0ec1137609d4668b376d6ba37e89c572c1d627e8794d8f98bbde6a"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_sentinel_lineage_city_repair_v1.py",
+        "bytes": 5840,
+        "sha256": "09180d41e6d2d16eebca82ba43b2c4dc57b3ca7ea4a44b9db518d1cf4bc89c43"
+      }
+    ],
+    "set_sha256": "abb760acf1826a130a2f7f6e2aec5d31c2934038a020089da5819a4c3e47bbe8"
+  },
+  "permissions": {
+    "apply_only_validated_duplicate_city_column_repair": true,
+    "reuse_parent_value_read_and_output_permissions": true,
+    "network_or_href_reads": false,
+    "read_daymet_landsat_qa_or_target_values": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "audit": {
+    "value_files_opened_or_statted_while_authorizing": 0
+  },
+  "next_safe_stage": "retry_canary_through_lineage_city_repair_runner",
+  "claim_id": "5fc7185814d8a3779478d6f086ddfdb6e140a0a37dfd5125063260a335743792",
+  "commit_sha256": "8c0d87761adf3c5cd2d588bcc39a44a1db5626035ec1300d90c5122fe2a4c751"
+}

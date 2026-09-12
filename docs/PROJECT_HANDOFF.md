@@ -42,6 +42,16 @@ allows only that exact merge-validation correction. Retry with:
 Do not use the parent runner directly or start the full offline run until this
 repaired canary has been authenticated.
 
+That retry passed membership expansion and then found an already-present,
+identical `city_id` column. Lineage-city repair authorization
+`8c0d87761adf3c5cd2d588bcc39a44a1db5626035ec1300d90c5122fe2a4c751`
+allows only validation, removal, and identical canonical reinsertion. The next
+command is:
+
+```powershell
+.\.venv\Scripts\python scripts\run_m3_blind_predictor_sentinel_lineage_city_repair_v1.py --project-root . --canary
+```
+
 ## Completed milestones
 
 1. The Los Angeles development study, frozen 2025 evaluation, evidence package,
