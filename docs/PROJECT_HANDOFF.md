@@ -52,6 +52,12 @@ command is:
 .\.venv\Scripts\python scripts\run_m3_blind_predictor_sentinel_lineage_city_repair_v1.py --project-root . --canary
 ```
 
+The next stop showed Miami correctly has one, not two, frozen SRTM tiles.
+Static tile-scope repair authorization
+`fb87086fda0b1be1c44e3cd7ea51d9754b70b249372e06f87eb272836254d426`
+replaces only that false cardinality assumption. Retry through
+`scripts/run_m3_blind_predictor_static_tile_scope_repair_v1.py --canary`.
+
 ## Completed milestones
 
 1. The Los Angeles development study, frozen 2025 evaluation, evidence package,

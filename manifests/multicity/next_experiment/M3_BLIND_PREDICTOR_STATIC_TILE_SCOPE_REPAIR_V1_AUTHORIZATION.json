@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-static-tile-scope-repair-v1",
+  "state": "m3_blind_predictor_static_tile_scope_repair_authorized",
+  "parent_authorization": {
+    "path": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_SENTINEL_LINEAGE_CITY_REPAIR_V1_AUTHORIZATION.json",
+    "bytes": 2016,
+    "sha256": "cdb1f75282845b3e55d38003994bfd1b139df9bcccdab41a3d8ace3fd71fe853",
+    "commit_sha256": "8c0d87761adf3c5cd2d588bcc39a44a1db5626035ec1300d90c5122fe2a4c751"
+  },
+  "incident": {
+    "city_id": "miami_fl",
+    "error_type": "M3BlindAssemblyError",
+    "false_assumption": "every city requires exactly two SRTM tiles",
+    "repair": "use only the exact acquired terrain paths frozen by city scope"
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/run_m3_blind_predictor_static_tile_scope_repair_v1.py",
+        "bytes": 1083,
+        "sha256": "3d47962b1a98dfe568be03c8244167b6fb4c188b1eaef805e582e9618ffe72a6"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_static_tile_scope_repair_v1.py",
+        "bytes": 5949,
+        "sha256": "cc7859b8c684724ebc4615b8d3dddc3a3baed5abc1f6ac878d6b382b4f0c03e0"
+      }
+    ],
+    "set_sha256": "912871221333ea9875e62c2ee7df7502d8bf7eb2173f690380bc4228b3539ca7"
+  },
+  "permissions": {
+    "replace_only_static_source_tile_cardinality_check": true,
+    "reuse_parent_value_read_and_output_permissions": true,
+    "network_or_href_reads": false,
+    "read_daymet_landsat_qa_or_target_values": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "audit": {
+    "value_files_opened_or_statted_while_authorizing": 0
+  },
+  "next_safe_stage": "retry_canary_through_static_tile_scope_repair_runner",
+  "claim_id": "e75361345871ac5a6c85a9a10e2742a9fabaa1516ec3f9a6b124a90086241b64",
+  "commit_sha256": "fb87086fda0b1be1c44e3cd7ea51d9754b70b249372e06f87eb272836254d426"
+}
