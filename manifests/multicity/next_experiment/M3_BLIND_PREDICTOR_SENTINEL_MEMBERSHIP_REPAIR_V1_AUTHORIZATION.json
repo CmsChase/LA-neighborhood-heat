@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-sentinel-membership-repair-v1",
+  "state": "m3_blind_predictor_sentinel_membership_repair_authorized",
+  "parent_authorization": {
+    "path": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ASSEMBLY_V1_AUTHORIZATION.json",
+    "bytes": 5345,
+    "sha256": "4023f9a8e4f8e00b9709a81c58ba148f612e32c91cc47d9a0b655d9732b6a6a9",
+    "commit_sha256": "3311d3876dcbe9da53646a5127832616de0d67bd82e19907c6ed843b1565eaaf"
+  },
+  "incident": {
+    "phase": "offline_assembly_canary",
+    "city_id": "miami_fl",
+    "error_type": "pandas.errors.MergeError",
+    "old_validation": "one_to_many",
+    "new_validation": "many_to_many",
+    "join_keys": [
+      "physical_acquisition_id",
+      "acquisition_local_date"
+    ],
+    "reason": "one physical acquisition legitimately belongs to multiple target-date windows"
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/run_m3_blind_predictor_sentinel_membership_repair_v1.py",
+        "bytes": 1094,
+        "sha256": "f6d81b2437d7152c10e1a1e87a7865b129c924e8eb31ff9ff1dc9ad1774de334"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_sentinel_membership_repair_v1.py",
+        "bytes": 6170,
+        "sha256": "6d561977ff0b335e5a881bd454fc242ba73de7c3c1902c4ba5ea24ec2be9140b"
+      }
+    ],
+    "set_sha256": "1de76ca781ffc458b3da4ad3569046c1afd80ee0e6c94612a8f9c2850772e14c"
+  },
+  "permissions": {
+    "apply_only_exact_membership_merge_validation_repair": true,
+    "reuse_parent_value_read_and_output_permissions": true,
+    "network_or_href_reads": false,
+    "read_daymet_landsat_qa_or_target_values": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "audit": {
+    "value_files_opened_or_statted_while_authorizing": 0,
+    "network_or_href_reads": 0,
+    "blind_targets_sealed": true
+  },
+  "next_safe_stage": "retry_parent_offline_canary_through_narrow_repair_runner",
+  "claim_id": "61a556a4e440c7b1b1773ea249671eb5acb2c612acb122432bebb07ea95e0ee6",
+  "commit_sha256": "b44c0cf8098137945c60d993f2c4e2b890a4a9c71da86cff29b4a146d0c89ff7"
+}

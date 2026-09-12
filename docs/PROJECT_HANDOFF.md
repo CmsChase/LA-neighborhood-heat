@@ -30,7 +30,17 @@ Miami canary:
 .\.venv\Scripts\python scripts\run_m3_blind_predictor_sentinel_static_assembly_v1.py --project-root . --canary
 ```
 
-Do not start the full offline run until this canary has been authenticated.
+The first canary exposed a legitimate many-to-many target-window membership
+join and stopped before publishing feature outputs. Repair authorization
+`b44c0cf8098137945c60d993f2c4e2b890a4a9c71da86cff29b4a146d0c89ff7`
+allows only that exact merge-validation correction. Retry with:
+
+```powershell
+.\.venv\Scripts\python scripts\run_m3_blind_predictor_sentinel_membership_repair_v1.py --project-root . --canary
+```
+
+Do not use the parent runner directly or start the full offline run until this
+repaired canary has been authenticated.
 
 ## Completed milestones
 
