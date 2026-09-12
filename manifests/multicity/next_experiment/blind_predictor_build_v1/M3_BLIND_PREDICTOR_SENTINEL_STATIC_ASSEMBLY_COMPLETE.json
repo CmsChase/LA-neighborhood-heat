@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-sentinel-static-assembly-v1",
+  "state": "m3_blind_predictor_sentinel_static_assembly_complete",
+  "authorization_commit_sha256": "3311d3876dcbe9da53646a5127832616de0d67bd82e19907c6ed843b1565eaaf",
+  "cities": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "city_count": 4,
+  "static_feature_count": 18,
+  "sentinel_feature_count": 5,
+  "tract_date_key_count": 23667,
+  "network_request_count": 0,
+  "href_read_count": 0,
+  "blind_targets_sealed": true,
+  "daymet_landsat_qa_or_target_access": false,
+  "model_fit_predict_score_or_evaluate": false,
+  "result_commits": {
+    "seattle_wa/sentinel_compile": "1ed2510f669d734ecd55b347272d453fcfdfcbe8d727f5c2becc496fac4731ea",
+    "seattle_wa/static_base": "acaab7e4f47e1009c2ad0d45deea3f73971530ab03e01e850162fcc61da5c356",
+    "seattle_wa/gshhg_distance": "ae0fb57275b3c2e3213600b623af3b6bf5f1dc231e1ba569a50be338626ee15c",
+    "seattle_wa/static_finalize": "13830e6859d27ab1ffe4bc76911d22e73fcd080362d76e6c58ed14422ef4a910",
+    "denver_co/sentinel_compile": "70e6a43044f118cdda1072c764eb3fe7e22112eb32c18b8afa9a0a8a5017cdab",
+    "denver_co/static_base": "830206091997c37466015e8aadcaaa987f3d5820208d95b8a887bb25ad9c7065",
+    "denver_co/gshhg_distance": "732780ca309b00c37db192156df6d84f8f91de8fbfeb1269d3e21f82db7dd163",
+    "denver_co/static_finalize": "883b073664e12c0699ad9b497bbaa8a0b347d7019c4697b2f2e60cfd335af14d",
+    "atlanta_ga/sentinel_compile": "79e43f35fe607624f92cac77e0a24bf6b72eae9fb42d829bc345c80f0bce7b12",
+    "atlanta_ga/static_base": "edbd3538d2f33464584588ea024cca37be765738d7332a5be69b457759fcc16e",
+    "atlanta_ga/gshhg_distance": "cda9e30889bc6a7b62caaed459afefce658e63a9cfef327ae7942fdae8b4ca2e",
+    "atlanta_ga/static_finalize": "b460b2b5105912286c46ec535d8aa657cac3c918ad2ba67197c4e94268c05997",
+    "miami_fl/sentinel_compile": "bc6a69590c7f2b596f142f52fe4ca7bf5037d1acbfeeca6b4bcc5e5e3ccea5b5",
+    "miami_fl/static_base": "bb3e4455e4e93bed9e969ee20429ca7ad3283bd8bbdc12bce895361a89b9779a",
+    "miami_fl/gshhg_distance": "175f29d627b2b88f0c102638bb288adf0523c6f93ed05f811ec24755175dd86a",
+    "miami_fl/static_finalize": "439698fc34f8e881fd6481bff834849d0d02e566fc201abd802d60dfa1eea6c8"
+  },
+  "commit_sha256": "bc56348b43c12f2d9e17cf67831190e47f1e3c49df1ad90caecd2f0b1a623f42"
+}

@@ -86,6 +86,17 @@ same local runtime/output roots, and retains zero network/href reads and sealed
 targets. Run only through
 `scripts/run_m3_blind_predictor_full_offline_launch_v1.py --run`.
 
+The full four-city offline Sentinel/static assembly is complete and
+authenticated at
+`bc56348b43c12f2d9e17cf67831190e47f1e3c49df1ad90caecd2f0b1a623f42`.
+All 16 city tasks and all 12 GSHHG chunks completed. Static output rows are
+177/175/173/128 and Sentinel tract-date rows are 9,558/5,425/4,844/3,840 for
+Seattle/Denver/Atlanta/Miami, each with exactly 18 static and 5 Sentinel model
+features. Network/href reads were zero and blind targets remained sealed.
+The next dependency is the already-authorized 24-task blind Daymet acquisition,
+which remains blocked until an ephemeral Earthdata token is supplied; never
+persist that token in tracked files.
+
 ## Completed milestones
 
 1. The Los Angeles development study, frozen 2025 evaluation, evidence package,
