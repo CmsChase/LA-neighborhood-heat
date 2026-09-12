@@ -16,6 +16,9 @@ LOCAL_EVIDENCE_MODULES = {
     "test_multicity_source_target_authorization.py": "completed portable predictor products",
     "test_multicity_m3_development_protocol_lock.py": "historical evaluation and QA evidence",
     "test_multicity_m3_source_metadata_inventory_v1.py": "previous local overpass inventories",
+    "test_multicity_m3_blind_predictor_sentinel_static_acquisition_authorization_v1.py": (
+        "blind-city support, metadata, and Sentinel inventory completions"
+    ),
 }
 
 # Function-level entries keep each module's synthetic tests in public CI.
@@ -37,6 +40,9 @@ LOCAL_EVIDENCE_TESTS = {
     },
     "test_multicity_m3_blind_predictor_sentinel_inventory_v1.py": {
         "test_sentinel_inventory_authorization_is_raster_blind",
+    },
+    "test_multicity_m3_blind_predictor_sentinel_static_runtime_v1.py": {
+        "test_launch_authorization_is_exact_and_value_free",
     },
     "test_multicity_m3_development_protocol_lock.py": {
         "test_build_is_value_blind_and_freezes_candidates_not_winner",
