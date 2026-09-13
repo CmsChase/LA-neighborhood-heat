@@ -73,12 +73,16 @@ evaluation occurred.
 Independent prediction authorization
 `9c22ff5a3bd2c8b016c47281207da8b0779c3e1b1b48f1438a51e37399b8958d`
 was created and pushed before the first predictor/model value read. The frozen
-source-selected M3 model then produced all 23,667 four-city predictions. The
-immutable completion is
-`4d90bca2ae6aa28233a05e3e0419b165e8c11844843bb93489b4c4d74837f20b`.
-It includes the frozen unweighted 90% cross-conformal intervals and the frozen
-`none_accept_all` risk decision. No fit, retraining, retuning, network/href read,
-or blind Landsat thermal, QA, or target read occurred. The prediction-before-
+source-selected M3 model then produced all 23,667 four-city point predictions.
+Review found that v1 completion
+`4d90bca2ae6aa28233a05e3e0419b165e8c11844843bb93489b4c4d74837f20b`
+contained 14 rather than the protocol-exact 21 columns, so it is retained only
+as a superseded audit record. Append-only repair authorization
+`1213ab79192bb2f22736bcc886473fc61589c6eafa8ec4dff73ba34b08bef4e8`
+allowed source-only fitting of the already-frozen B1, legacy M2, and four-member
+M3 diagnostic ensemble. The corrected 21-column predictions authenticate at
+`295ccca0ea0239cf6eb5633b736a7565abbac3cc47992bae6bcbc9ba4d6f74ac`.
+No blind Landsat thermal, QA, or target read occurred. The prediction-before-
 target boundary remains intact. The next safe stage is a new independent blind
 target-access and evaluation authorization; do not open target values before it
 authenticates.

@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": "2026-09-m3-blind-predictions-committed",
+  "revision": "2026-09-m3-blind-predictions-v2-exact-schema-committed",
   "stage_id": "next_experiment_m3_blind_prediction",
   "state": "m3_blind_predictions_committed",
   "next_safe_stage": "create_independent_blind_target_access_and_evaluation_authorization",
-  "summary": "Four-city target-blind prediction completion 4d90bca2ae6aa28233a05e3e0419b165e8c11844843bb93489b4c4d74837f20 authenticates 23,667 unique tract-date predictions: Seattle 9,558, Denver 5,425, Atlanta 4,844, and Miami 3,840. The frozen source-selected M3 model, unweighted 90% cross-conformal correction, and none_accept_all risk rule were applied without fitting, retraining, retuning, network/href reads, or access to blind Landsat thermal, QA, or target values. The prediction-before-target boundary remains intact. Any target access and evaluation now require a separate independent authorization.",
+  "summary": "Append-only v2 prediction completion 295ccca0ea0239cf6eb5633b736a7565abbac3cc47992bae6bcbc9ba4d6f74ac supersedes the retained 14-column v1 audit record and authenticates the protocol-exact 21-column output for all 23,667 blind-city tract-date rows. The repair added frozen source-only B1, legacy M2, four-member M3 ensemble, and full UQ/risk diagnostics before target access. No blind Landsat thermal, QA, or target value was read and the prediction-before-target boundary remains intact. Any target access and evaluation require a separate independent authorization.",
   "permissions": {
     "read_public_predictor_sources": true,
     "build_predictor": false,
@@ -303,7 +303,9 @@
     "next_experiment_blind_predictor_raster_value_reads": "authorized_sentinel_static_acquisition_complete_553_of_553",
     "next_experiment_blind_landsat_qa_or_target_value_reads": 0,
     "next_experiment_blind_prediction_authorization_commit_sha256": "9c22ff5a3bd2c8b016c47281207da8b0779c3e1b1b48f1438a51e37399b8958d",
-    "next_experiment_blind_prediction_completion_commit_sha256": "4d90bca2ae6aa28233a05e3e0419b165e8c11844843bb93489b4c4d74837f20b",
+    "next_experiment_blind_prediction_v1_superseded_completion_commit_sha256": "4d90bca2ae6aa28233a05e3e0419b165e8c11844843bb93489b4c4d74837f20b",
+    "next_experiment_blind_prediction_v2_repair_authorization_commit_sha256": "1213ab79192bb2f22736bcc886473fc61589c6eafa8ec4dff73ba34b08bef4e8",
+    "next_experiment_blind_prediction_completion_commit_sha256": "295ccca0ea0239cf6eb5633b736a7565abbac3cc47992bae6bcbc9ba4d6f74ac",
     "next_action": "create_independent_blind_target_access_and_evaluation_authorization"
   },
   "prepared_post_return_tools": {
