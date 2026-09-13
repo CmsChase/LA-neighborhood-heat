@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-target-v1",
+  "state": "m3_blind_target_authorized",
+  "claim": "one_indivisible_combined_four_city_target_claim",
+  "prediction_completion_commit_sha256": "295ccca0ea0239cf6eb5633b736a7565abbac3cc47992bae6bcbc9ba4d6f74ac",
+  "spatial_blocks_completion_commit_sha256": "7e9e3025161a5d5688a439a491d0283aad20363441023a3af5abf6f79bb9fdfa",
+  "qa_candidate_id": "4k",
+  "qa_threshold_kelvin": 4.0,
+  "city_count": 4,
+  "eligible_date_count": 143,
+  "cities": [
+    {
+      "city_id": "seattle_wa",
+      "feasibility_commit_sha256": "50d2635e1ace42f98cb0d32e45466215653b0e2b05c7e68fa9fd5391126a2052",
+      "physical_overpasses": {
+        "path": "data/raw/multicity/next_experiment_feasibility/seattle_wa/landsat/physical_overpasses.parquet",
+        "bytes": 10807,
+        "sha256": "d08a7755bc790f921dbf9dfb110f23e4fda8403a426235ec1a1bc895aab6a92a",
+        "rows": 54,
+        "schema_sha256": "7dbdfa8db59e64c8418573677c1d346468309e04bf2ddae7ae04eaa21415d170",
+        "semantic_sha256": "c1e60294818cc4fe2df852369b12618338d603ad0cbf493fb35c074e194e48b1"
+      },
+      "eligible_date_count": 54
+    },
+    {
+      "city_id": "denver_co",
+      "feasibility_commit_sha256": "b7df97d83a30ee70f0bb0ad54a4c86fd092a0963d708b5fa27a106823bd83ffe",
+      "physical_overpasses": {
+        "path": "data/raw/multicity/next_experiment_feasibility/denver_co/landsat/physical_overpasses.parquet",
+        "bytes": 12506,
+        "sha256": "9ab35b000ec6963085c75ccc29b23157c3a0d1168e17df9f8b5ae09711cf7140",
+        "rows": 66,
+        "schema_sha256": "7dbdfa8db59e64c8418573677c1d346468309e04bf2ddae7ae04eaa21415d170",
+        "semantic_sha256": "6b406ccbe5e8d79faa38f6e49f88dda83589d288dac5d0e12326a695a051bf49"
+      },
+      "eligible_date_count": 31
+    },
+    {
+      "city_id": "atlanta_ga",
+      "feasibility_commit_sha256": "1af0b4f57b487c5bec3b744bf1909539ca618d86e3caf7314533d346f434ea77",
+      "physical_overpasses": {
+        "path": "data/raw/multicity/next_experiment_feasibility/atlanta_ga/landsat/physical_overpasses.parquet",
+        "bytes": 9817,
+        "sha256": "e6e0b30d6a549755fe399b03d7bb89a327544ad80a5bfd6b6e1faa874432ab69",
+        "rows": 32,
+        "schema_sha256": "7dbdfa8db59e64c8418573677c1d346468309e04bf2ddae7ae04eaa21415d170",
+        "semantic_sha256": "894b167c5d55d1ad62e7ec39b339a531dde89213a1ec9b71e3a3088287f16bc5"
+      },
+      "eligible_date_count": 28
+    },
+    {
+      "city_id": "miami_fl",
+      "feasibility_commit_sha256": "a228401aebba1bd6bb2c3622dce8f59cbaf1c8e6f37ed7f4e9f337ac9e20c95a",
+      "physical_overpasses": {
+        "path": "data/raw/multicity/next_experiment_feasibility/miami_fl/landsat/physical_overpasses.parquet",
+        "bytes": 9360,
+        "sha256": "79419480240f0f4a25e0061d98297fb4bf5fb74bf4a1aa6dc7cbaa94d32b08f6",
+        "rows": 30,
+        "schema_sha256": "7dbdfa8db59e64c8418573677c1d346468309e04bf2ddae7ae04eaa21415d170",
+        "semantic_sha256": "c075872604061f43f57b7c1dfd7f6f05d1d531a95e8013a1e6e5132e727dcfa4"
+      },
+      "eligible_date_count": 30
+    }
+  ],
+  "code": [
+    {
+      "path": "src/la_heat/multicity/m3_blind_target_v1.py",
+      "bytes": 16355,
+      "sha256": "02944399f996813af62fd66ff080e1e84fdb246ac775012b076d78bb34be840c"
+    },
+    {
+      "path": "src/la_heat/multicity/target_processor.py",
+      "bytes": 8063,
+      "sha256": "d4be2f33ab0e3dbdbdc6678b82c3d83a51f71cfa94e2711f9a379ea1fffa59e6"
+    },
+    {
+      "path": "src/la_heat/multicity/m3_source_offline_qa.py",
+      "bytes": 7456,
+      "sha256": "9a1a8b64738ded3d56a4d55133c194dc953f867738100e8c2074fa8719263317"
+    },
+    {
+      "path": "src/la_heat/target_aggregation.py",
+      "bytes": 9884,
+      "sha256": "3429015352f83b4b54f9f1a3e14e571555f9eb736d71a7f8031b2e84a17b2425"
+    },
+    {
+      "path": "src/la_heat/aligned_landsat.py",
+      "bytes": 7787,
+      "sha256": "3335bf7d0be863a211fe3d6e3359d8e066af3ff67fa254876d14077c37cab894"
+    },
+    {
+      "path": "src/la_heat/mosaic.py",
+      "bytes": 7419,
+      "sha256": "1f7a14941bd7909f801f78fe6dac9998ca530d98ab9059c4407d4d6fd2c44e77"
+    },
+    {
+      "path": "scripts/authorize_m3_blind_target_v1.py",
+      "bytes": 1352,
+      "sha256": "797f59e8ae80435827fa409d02910f23952f886b604e02c1020424184b416575"
+    },
+    {
+      "path": "scripts/run_m3_blind_target_v1.py",
+      "bytes": 1041,
+      "sha256": "ab5c55d1bef4cc9da2f1990b02db77013cd404296b5a8b72a679bcc2278a2ac2"
+    },
+    {
+      "path": "configs/research.toml",
+      "bytes": 5416,
+      "sha256": "a2d4f7300d8a264c77c3ddc15a730546945a2d7f6ed253ff2f49e352102c60b9"
+    }
+  ],
+  "values_opened_marker": "data/interim/multicity/m3_blind_target_v1/VALUES_OPENED.json",
+  "permissions": {
+    "hydrate_exact_frozen_landsat_scene_hrefs": true,
+    "read_lwir11_qa_pixel_qa_cdist_and_qa_radsat": true,
+    "apply_locked_4k_qa_and_tract_aggregation": true,
+    "write_resumable_overpass_and_combined_target_tables": true,
+    "network_reads": true,
+    "change_city_date_qa_support_model_uq_or_risk": false,
+    "fit_retrain_retune_or_select": false,
+    "score_or_evaluate_before_target_completion_authentication": false
+  },
+  "next_safe_stage": "open_combined_claim_and_run_resumable_target_build",
+  "commit_sha256": "87794fd56b68711f3fe5499f130aae9ef61fcfeb98beffba238cc522a4299601"
+}
