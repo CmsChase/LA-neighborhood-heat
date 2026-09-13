@@ -29,12 +29,15 @@ The 24-task blind Daymet acquisition has parent authorization
 `bbf7c4e1b24639d4ad4ff857c04492d296b51486cfbe0651142ac073c166c6ae`.
 Its independent bearer adapter is authorized at
 `71ef9df08f29cd5110af060e315645f617f7c9e00963c561d7194948217b78ea`.
-The adapter accepts an Earthdata token only from the current process
-environment, adds it only for HTTPS requests to the locked Earthdata OPeNDAP
-host, refuses redirects, and clears it after the run. The token must never be
-stored in a file, command line, log, manifest, or Git artifact. The next safe
-stage is to commit and push this authorization, then run the acquisition with
-the ephemeral credential.
+All 24 frozen city-variable subsets completed and authenticate at
+`e3269d965a97c88a43db82c61fa8930a19bf6aa00873efb981317817f84cba1a`.
+The adapter accepted the Earthdata token only from the process environment,
+sent it only to the locked HTTPS Earthdata OPeNDAP host, refused redirects,
+cleared it after the run, and did not persist credentials or URLs. Sentinel,
+static, Landsat, QA, targets, fitting, prediction, and scoring were not read or
+performed under this permit. The next safe stage is a new independent
+authorization for offline Daymet compilation into the blind predictor schema;
+that stage has not started.
 
 ## Completed milestones
 

@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-daymet-acquisition-v1",
+  "state": "m3_blind_predictor_daymet_acquisition_complete",
+  "authorization_commit_sha256": "bbf7c4e1b24639d4ad4ff857c04492d296b51486cfbe0651142ac073c166c6ae",
+  "task_count": 24,
+  "outputs": [
+    {
+      "city_id": "seattle_wa",
+      "variable": "tmax",
+      "commit_sha256": "fce847850260589e50bb022ef3289af6c7a91abd3ec89e9f40ae52d4d5b56cbe"
+    },
+    {
+      "city_id": "seattle_wa",
+      "variable": "tmin",
+      "commit_sha256": "f468b772a40b8b6ddca4ac46803e519723fd37fb40cd4cb5a9e7bbe826ecfc36"
+    },
+    {
+      "city_id": "seattle_wa",
+      "variable": "prcp",
+      "commit_sha256": "3f124cb89d03842f4ea86e8758122ef31c5ad39b66351231cbfadc2e48fc9f30"
+    },
+    {
+      "city_id": "seattle_wa",
+      "variable": "srad",
+      "commit_sha256": "ed3a35ce304326e78bbb4a2804ce3e2d546c93238e8f7dbe78793aa46a215832"
+    },
+    {
+      "city_id": "seattle_wa",
+      "variable": "vp",
+      "commit_sha256": "3f03ff87b151de66c66d2b0b63a797b2825c714676ba3bf750f93871fef42186"
+    },
+    {
+      "city_id": "seattle_wa",
+      "variable": "dayl",
+      "commit_sha256": "548a3731704fefea31fdfd4a3bf0e3a04db2e510c001f98ad55853ae494e8e61"
+    },
+    {
+      "city_id": "denver_co",
+      "variable": "tmax",
+      "commit_sha256": "2584177b539839d006d9323d8c6905f4a3135a4ab5a8d2a651c1eeeb177e55ec"
+    },
+    {
+      "city_id": "denver_co",
+      "variable": "tmin",
+      "commit_sha256": "3afa7a12d3aab583c0192525076d9c66b7dc61cf9b67fd61ea22c827dd77475a"
+    },
+    {
+      "city_id": "denver_co",
+      "variable": "prcp",
+      "commit_sha256": "4f1ab76340cf082df3e04dccfaaa1c3c0752158cb86fefcf0bda753cad680346"
+    },
+    {
+      "city_id": "denver_co",
+      "variable": "srad",
+      "commit_sha256": "3f3431358621d52479ea91f59c23480e0dca5f630935c7195c68481cf378ecc6"
+    },
+    {
+      "city_id": "denver_co",
+      "variable": "vp",
+      "commit_sha256": "8f4f57d571470643fe0cff4df559507803dd75b664ac22db1bb5eb1039e7ddd0"
+    },
+    {
+      "city_id": "denver_co",
+      "variable": "dayl",
+      "commit_sha256": "d1c6df63e19d6338265330375de141642d4bece3b2fdf51d9815d5268b5050e1"
+    },
+    {
+      "city_id": "atlanta_ga",
+      "variable": "tmax",
+      "commit_sha256": "eea00619bbefd212053f85465c8cda62148ad8e5973a30853c04f11e0dfd00f2"
+    },
+    {
+      "city_id": "atlanta_ga",
+      "variable": "tmin",
+      "commit_sha256": "7c86eb9f6229ffaa31bd4977f9ba3e6262ea121d3ab6ea21b411719ba67fbff2"
+    },
+    {
+      "city_id": "atlanta_ga",
+      "variable": "prcp",
+      "commit_sha256": "05c5cc604f5400551b48c0f1721b5c75d65e1a28f8fe622132c5be5299440bc9"
+    },
+    {
+      "city_id": "atlanta_ga",
+      "variable": "srad",
+      "commit_sha256": "f3da52c7e164978906c7bf9fa1d0450ee45646a068c531aab4f0ba36599671fb"
+    },
+    {
+      "city_id": "atlanta_ga",
+      "variable": "vp",
+      "commit_sha256": "3d484952ae174ed770766111d289cbfddb169c42abf0365f2855b9b765e7b568"
+    },
+    {
+      "city_id": "atlanta_ga",
+      "variable": "dayl",
+      "commit_sha256": "101056e3509affcdb59ebbfa3814c2ef196f597dde33da5e4c0fee49acfc8b4c"
+    },
+    {
+      "city_id": "miami_fl",
+      "variable": "tmax",
+      "commit_sha256": "2499bf3b1f0e3246e3e666f0537e765e3c08ac0b59936b3c2afddc876ce569a4"
+    },
+    {
+      "city_id": "miami_fl",
+      "variable": "tmin",
+      "commit_sha256": "82a89e054706e6166744decb193a649b558f8687c0030800ab1122406312781d"
+    },
+    {
+      "city_id": "miami_fl",
+      "variable": "prcp",
+      "commit_sha256": "7cd0ee68c1adf17555fbf06eecaa9690c1600a42304473102102e58b4fac481d"
+    },
+    {
+      "city_id": "miami_fl",
+      "variable": "srad",
+      "commit_sha256": "84b826fdf0db6c5292f0b5e49e68cb2ddab7cb2daa9a2aa1f3c07012815e2871"
+    },
+    {
+      "city_id": "miami_fl",
+      "variable": "vp",
+      "commit_sha256": "61beadbcefe2085d0c80f2de24b10b46dfce86a393346b56ca646617130a6731"
+    },
+    {
+      "city_id": "miami_fl",
+      "variable": "dayl",
+      "commit_sha256": "3ae26806fc739077018cfda67e5b55c31c52e5584ea8dfc6eab22cf81ce221fd"
+    }
+  ],
+  "audit": {
+    "credentials_or_urls_persisted": false,
+    "sentinel_static_landsat_qa_or_target_values_read": false,
+    "model_fit_predict_score_or_evaluate": false
+  },
+  "next_safe_stage": "authorize_offline_daymet_compilation_or_next_public_predictor_acquisition",
+  "commit_sha256": "e3269d965a97c88a43db82c61fa8930a19bf6aa00873efb981317817f84cba1a"
+}
