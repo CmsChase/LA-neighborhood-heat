@@ -61,6 +61,17 @@ requires preserving these NaNs without filling or dropping rows and records
 their counts. Resume only through
 `scripts/run_m3_blind_predictor_daymet_support_repair_v1.py --run`.
 
+The full four-city predictor compilation is now complete and authenticated at
+`efd100881992273fd17101b6687e84a9a24cb00d52726eec489ba9b2331b3661`.
+It contains 23,667 unique tract-date rows with the exact 46-feature schema:
+9,558 Seattle, 5,425 Denver, 4,844 Atlanta, and 3,840 Miami. The completion
+records 228 rows with all 21 Daymet features missing and 1,907 rows with all
+five Sentinel features missing; no row was dropped or imputed. Network/href
+reads were zero, blind targets stayed sealed, and no fit, prediction, score, or
+evaluation occurred. The next stage requires a separate prediction
+authorization that binds the frozen source-selected model and these predictor
+outputs before any prediction; it has not started.
+
 ## Completed milestones
 
 1. The Los Angeles development study, frozen 2025 evaluation, evidence package,
