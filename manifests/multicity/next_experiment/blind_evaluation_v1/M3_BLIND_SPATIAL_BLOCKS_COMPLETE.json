@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-5km-spatial-blocks-v1",
+  "state": "m3_blind_spatial_blocks_complete",
+  "authorization_commit_sha256": "9f1364e108c4a4e61083779908e9fe7184f5a747e9e7aee2cee19d8620953e7c",
+  "prediction_completion_commit_sha256": "295ccca0ea0239cf6eb5633b736a7565abbac3cc47992bae6bcbc9ba4d6f74ac",
+  "block_size_km": 5.0,
+  "cities": {
+    "seattle_wa": {
+      "tract_count": 177,
+      "spatial_block_count": 18,
+      "semantic_sha256": "009005cd7961124f31edaea0a7a120732cd6ab813b966c1eda2cb9fee8ee1a5f"
+    },
+    "denver_co": {
+      "tract_count": 175,
+      "spatial_block_count": 20,
+      "semantic_sha256": "b1306508e899d6728ae52c67be72863def09f9b8f18b237b207e0551a9010692"
+    },
+    "atlanta_ga": {
+      "tract_count": 173,
+      "spatial_block_count": 21,
+      "semantic_sha256": "5beaaced04be9fb379849cf5e6f3ca6c4fd44bebb48350580b57e1b5dddd07f2"
+    },
+    "miami_fl": {
+      "tract_count": 128,
+      "spatial_block_count": 10,
+      "semantic_sha256": "3646ac334c95eaf0bccc6bf5c303f73f965041ed5671c468202aebd88841adeb"
+    }
+  },
+  "output": {
+    "path": "data/processed/multicity/m3_blind_evaluation_v1/tract_spatial_blocks.parquet",
+    "bytes": 10556,
+    "sha256": "a318b1950b7719cfb7163be16d79471956e6b85c2fc8fc8998c4846c7f12e6ba",
+    "rows": 653,
+    "semantic_sha256": "ab57be33d21fedd72aec901e86a52de0ae5826f8464399595af42ee48223577a"
+  },
+  "audit": {
+    "target_or_qa_values_read": false,
+    "network_or_href_reads": 0,
+    "prediction_before_target_boundary_preserved": true
+  },
+  "next_safe_stage": "authorize_one_combined_four_city_target_claim",
+  "commit_sha256": "7e9e3025161a5d5688a439a491d0283aad20363441023a3af5abf6f79bb9fdfa"
+}
