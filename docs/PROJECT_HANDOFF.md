@@ -43,6 +43,14 @@ authenticated static/Sentinel/Daymet/support inputs and writes one resumable
 prediction, and scoring remain forbidden. The next safe action is to run
 `scripts/run_m3_blind_predictor_daymet_compilation_v1.py --run`.
 
+The first launch stopped before producing a city output because the upstream
+static/Sentinel parquet records omit a path and are relative to their locked
+city directories. Path-only repair authorization
+`aed45c08882a122eda3fb55d724ea6092a6d84b9fb04d426520a7c3e1b5ed3da`
+retains the original byte/hash checks and changes no scientific value, key,
+schema, or feature. Resume only through
+`scripts/run_m3_blind_predictor_daymet_path_repair_v1.py --run`.
+
 ## Completed milestones
 
 1. The Los Angeles development study, frozen 2025 evaluation, evidence package,

@@ -279,8 +279,22 @@ def _load_static_sentinel(root: Path, city_id: str) -> tuple[pd.DataFrame, pd.Da
         != completion["result_commits"][f"{city_id}/sentinel_compile"]
     ):
         raise M3BlindDaymetCompilationError("Static/Sentinel city lineage changed.")
-    static_path = _verify_output(root, static_marker["output_files"]["static_features.parquet"])
-    sentinel_path = _verify_output(root, sentinel_marker["outputs"]["sentinel_features.parquet"])
+    static_path = _inside(
+        root, assembled.OUTPUT_ROOT / "static" / city_id / "static_features.parquet"
+    )
+    sentinel_path = _inside(
+        root, assembled.OUTPUT_ROOT / "sentinel" / city_id / "sentinel_features.parquet"
+    )
+    for path, record in (
+        (static_path, static_marker["output_files"]["static_features.parquet"]),
+        (sentinel_path, sentinel_marker["outputs"]["sentinel_features.parquet"]),
+    ):
+        if (
+            not path.is_file()
+            or path.stat().st_size != record.get("bytes")
+            or sha256_file(path) != record.get("sha256")
+        ):
+            raise M3BlindDaymetCompilationError("Static/Sentinel value file changed.")
     return pd.read_parquet(static_path), pd.read_parquet(sentinel_path)
 
 
