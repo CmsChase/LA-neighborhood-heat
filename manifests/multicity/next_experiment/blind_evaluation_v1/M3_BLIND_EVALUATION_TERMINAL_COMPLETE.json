@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-evaluation-terminal-repair-v1",
+  "state": "m3_blind_evaluation_terminal_complete",
+  "authorization_commit_sha256": "65c2c91472896e1553ab97a2d5d2cd14d7a16d68447ac8399638f5d9c85585be",
+  "parent_evaluation_completion_commit_sha256": "6574750d633b580afd9fedb4b06cf99cd78c414956450a92bb3ea9e99113559f",
+  "publish_repair_completion_commit_sha256": "30930187801558964ef52e665a5aab3c1c5876bd965d1e0f8946aeb2d789cad0",
+  "corrected_summary": {
+    "path": "data/processed/multicity/m3_blind_evaluation_v1/summary_v2.json",
+    "bytes": 1827,
+    "sha256": "c3cef739d1ed05529439857bd97494e8fc501950f6fa04960705fe7e01d3a750"
+  },
+  "conclusion": {
+    "state": "inconclusive_sample_size",
+    "point_prediction_success": false,
+    "reliability_success": false
+  },
+  "audit": {
+    "all_parent_output_bytes_and_semantics_authenticated": true,
+    "numeric_metrics_bootstrap_gates_and_conclusion_changed": false,
+    "network_or_href_reads": 0,
+    "fit_retrain_recalibrate_retune_or_select": false
+  },
+  "next_safe_stage": "commit_and_publish_terminal_blind_result",
+  "commit_sha256": "383742cb17674c508e8a7dfe853caa163ab2bd8d0816e150e6f4d966e2334a26"
+}

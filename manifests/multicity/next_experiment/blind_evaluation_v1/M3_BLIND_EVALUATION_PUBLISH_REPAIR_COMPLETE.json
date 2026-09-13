@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-evaluation-publish-repair-v1",
+  "state": "m3_blind_evaluation_publish_repair_complete",
+  "authorization_commit_sha256": "81bcb998fa2ec5c1589ca2fb391188e276dc2d2076aad6674295f3bb4e95bb0b",
+  "parent_evaluation_completion_commit_sha256": "6574750d633b580afd9fedb4b06cf99cd78c414956450a92bb3ea9e99113559f",
+  "next_safe_stage": "publish_exact_blind_result",
+  "commit_sha256": "30930187801558964ef52e665a5aab3c1c5876bd965d1e0f8946aeb2d789cad0"
+}

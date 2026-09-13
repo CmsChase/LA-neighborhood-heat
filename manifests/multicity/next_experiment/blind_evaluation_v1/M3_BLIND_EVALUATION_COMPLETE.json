@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-evaluation-v1",
+  "state": "m3_blind_evaluation_complete",
+  "authorization_commit_sha256": "3ce0eca0de3367c0a64dac9df3f2bb68aa78f8ed2e12e5dea2c352b9b5ca8616",
+  "prediction_completion_commit_sha256": "295ccca0ea0239cf6eb5633b736a7565abbac3cc47992bae6bcbc9ba4d6f74ac",
+  "target_completion_commit_sha256": "55839671f2b28e5c725c5d9601e7d0e2d6ae8a916d7b9880c94e65b2fd99e901",
+  "outputs": {
+    "scored_rows.parquet": {
+      "path": "data/processed/multicity/m3_blind_evaluation_v1/scored_rows.parquet",
+      "bytes": 929925,
+      "sha256": "db378396a5fcd32bd4ef5b625fb76e03467ed653ab42b0e1100a7c770d834533",
+      "rows": 9502,
+      "semantic_sha256": "ea3440f5e7d07850572cc59ef3a0d87b8886283a5027e4881692e0029a1618cd"
+    },
+    "date_metrics.parquet": {
+      "path": "data/processed/multicity/m3_blind_evaluation_v1/date_metrics.parquet",
+      "bytes": 29071,
+      "sha256": "71badc36c9e21d9c4b1cfba301a3adff6fd60ca55cda96d17e3b938eac432336",
+      "rows": 66,
+      "semantic_sha256": "7500238e5c6c486086424da40b029e02eac8df40324b29f5b36b183b5c99e5ca"
+    },
+    "city_metrics.parquet": {
+      "path": "data/processed/multicity/m3_blind_evaluation_v1/city_metrics.parquet",
+      "bytes": 10853,
+      "sha256": "987fce4774484483448e3045b86e4fc01474a2759bff92357cbcc7c84eb150cd",
+      "rows": 4,
+      "semantic_sha256": "efdbbb27422e50b38e01cfe63f7bb1465636871148842f10cc3cfc1ea20d052d"
+    },
+    "risk_coverage.parquet": {
+      "path": "data/processed/multicity/m3_blind_evaluation_v1/risk_coverage.parquet",
+      "bytes": 6487,
+      "sha256": "408349249dc3bf7e9347d6d025fa99dd165d37d33ea249424364845aba7070a6",
+      "rows": 50,
+      "semantic_sha256": "76d0e9adc359a538a626bdf2adfd0c85fa8943fa753362a381bdccd4c51e3d37"
+    },
+    "summary.json": {
+      "path": "data/processed/multicity/m3_blind_evaluation_v1/summary.json",
+      "bytes": 1830,
+      "sha256": "6a4e6e0a0f5ae104b276b7ffbf5c9680a8a2bc6ff3eb015b7299d748ea05e9de"
+    },
+    "crossed_bootstrap.json": {
+      "path": "data/processed/multicity/m3_blind_evaluation_v1/crossed_bootstrap.json",
+      "bytes": 1224,
+      "sha256": "8137d618f1bbd319b341c88cea463c0467987bd7c749dff374dbc94ae4189bb3"
+    }
+  },
+  "conclusion": {
+    "state": "inconclusive_sample_size",
+    "point_prediction_success": false,
+    "reliability_success": false
+  },
+  "audit": {
+    "network_or_href_reads": 0,
+    "fit_retrain_recalibrate_retune_or_select": false,
+    "target_completion_authenticated_before_scoring": true,
+    "frozen_bootstrap_iterations": 10000,
+    "frozen_bootstrap_seed": 20260816
+  },
+  "next_safe_stage": "publish_exact_blind_result_without_rescue_analysis",
+  "commit_sha256": "6574750d633b580afd9fedb4b06cf99cd78c414956450a92bb3ea9e99113559f"
+}
