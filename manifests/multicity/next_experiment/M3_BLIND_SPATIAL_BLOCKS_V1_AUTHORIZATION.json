@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-5km-spatial-blocks-v1",
+  "state": "m3_blind_spatial_blocks_authorized",
+  "prediction_completion_commit_sha256": "295ccca0ea0239cf6eb5633b736a7565abbac3cc47992bae6bcbc9ba4d6f74ac",
+  "support_completion_commit_sha256": "aa0c35e626e84ab1e8a17e04b8c5da374c3fcd655a601c90b2e8256806d74dbd",
+  "city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "tract_counts": {
+    "seattle_wa": 177,
+    "denver_co": 175,
+    "atlanta_ga": 173,
+    "miami_fl": 128
+  },
+  "block_size_km": 5.0,
+  "spatial_crs": "EPSG:5070",
+  "code": [
+    {
+      "path": "src/la_heat/multicity/m3_blind_spatial_blocks_v1.py",
+      "bytes": 8239,
+      "sha256": "c0b98867bab82550440598904917b8ab178737012f90651ccfd82b2879903baa"
+    },
+    {
+      "path": "scripts/authorize_m3_blind_spatial_blocks_v1.py",
+      "bytes": 1299,
+      "sha256": "89edc5209de733233b2850122039cf2f5f87479f668e718e970fa16db90a0030"
+    },
+    {
+      "path": "scripts/run_m3_blind_spatial_blocks_v1.py",
+      "bytes": 944,
+      "sha256": "4c780ff498762c4390bc316dc65294e68b430d574b80e523e4f31dd4dab10f0a"
+    }
+  ],
+  "permissions": {
+    "read_public_tract_geometry": true,
+    "write_target_independent_spatial_blocks": true,
+    "read_landsat_hrefs_thermal_qa_or_targets": false,
+    "fit_predict_score_or_evaluate": false,
+    "network_or_href_reads": false
+  },
+  "next_safe_stage": "freeze_blind_spatial_blocks_before_target_authorization",
+  "commit_sha256": "9f1364e108c4a4e61083779908e9fe7184f5a747e9e7aee2cee19d8620953e7c"
+}
