@@ -2,13 +2,22 @@ from __future__ import annotations
 
 import importlib.util
 import sys
+import tomllib
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
+from la_heat.multicity.m3_development import (
+    M3_CANDIDATES,
+    SENTINEL_FEATURES,
+    STATIC_FEATURES,
+    build_m3_estimators,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 RUNNER = ROOT / "experiments" / "m3_relative_temperature" / "run.py"
+CONTRACT = ROOT / "experiments" / "m3_relative_temperature" / "fixed_contract.toml"
 SPEC = importlib.util.spec_from_file_location("m3_relative_temperature", RUNNER)
 assert SPEC is not None and SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
@@ -53,3 +62,33 @@ def test_city_groups_are_disjoint() -> None:
     assert not set(config["experiment"]["source_cities"]) & set(
         config["experiment"]["opened_stress_cities"]
     )
+
+
+def test_fixed_contract_matches_implemented_anomaly_estimator() -> None:
+    with CONTRACT.open("rb") as handle:
+        contract = tomllib.load(handle)
+    model = build_m3_estimators(M3_CANDIDATES[-1])[1].named_steps["model"]
+
+    assert contract["model"]["complete_features"] == list(STATIC_FEATURES)
+    assert contract["model"]["median_imputed_features"] == list(SENTINEL_FEATURES)
+    for name in (
+        "loss",
+        "learning_rate",
+        "max_iter",
+        "max_leaf_nodes",
+        "min_samples_leaf",
+        "l2_regularization",
+        "early_stopping",
+        "random_state",
+    ):
+        assert contract["model"][name] == model.get_params()[name]
+
+
+def test_fixed_contract_forbids_scope_expansion() -> None:
+    with CONTRACT.open("rb") as handle:
+        contract = tomllib.load(handle)
+
+    assert contract["contract"]["absolute_temperature_claim_allowed"] is False
+    assert contract["contract"]["new_city_data_allowed"] is False
+    assert contract["contract"]["hyperparameter_search_allowed"] is False
+    assert contract["next_audit"]["opened_historical_stress_values_used"] is False

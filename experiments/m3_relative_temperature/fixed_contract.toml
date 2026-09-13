@@ -1,0 +1,99 @@
+[contract]
+id = "m3_relative_temperature_fixed_v1"
+status = "fixed_posthoc_development_contract"
+fixed_on = "2026-09-13"
+research_role = "development_not_confirmation"
+claim = "neighborhood_relative_land_surface_temperature_within_the_same_city_and_date"
+absolute_temperature_claim_allowed = false
+new_city_data_allowed = false
+hyperparameter_search_allowed = false
+
+[data]
+development_city_ids = ["los_angeles_ca", "phoenix_az", "houston_tx", "chicago_il"]
+opened_historical_stress_city_ids = ["seattle_wa", "denver_co", "atlanta_ga", "miami_fl"]
+opened_historical_stress_role = "descriptive_only"
+minimum_predictor_tracts_per_city_date = 20
+
+[target]
+name = "observed_spatial_anomaly_c"
+definition = "target_lst_c_minus_median_target_lst_c_within_scored_city_date"
+
+[model]
+id = "M3_RELATIVE_V1"
+estimator = "HistGradientBoostingRegressor"
+loss = "absolute_error"
+learning_rate = 0.05
+max_iter = 300
+max_leaf_nodes = 31
+min_samples_leaf = 50
+l2_regularization = 1.0
+early_stopping = false
+random_state = 20260813
+sample_weight = "equal_city_then_equal_date_then_equal_tract"
+complete_features = [
+  "nlcd_open_water_fraction",
+  "nlcd_developed_open_fraction",
+  "nlcd_developed_low_fraction",
+  "nlcd_developed_high_fraction",
+  "nlcd_barren_fraction",
+  "nlcd_forest_fraction",
+  "nlcd_shrub_grass_fraction",
+  "nlcd_agriculture_fraction",
+  "nlcd_wetland_fraction",
+  "impervious_mean_fraction",
+  "impervious_p90_fraction",
+  "impervious_at_least_50_fraction",
+  "elevation_mean_m",
+  "elevation_std_m",
+  "slope_mean_degrees",
+  "slope_p90_degrees",
+  "gshhg_ocean_great_lakes_shore_distance_mean_km",
+  "gshhg_ocean_great_lakes_shore_distance_p10_km",
+]
+median_imputed_features = [
+  "sentinel_ndvi_lag60",
+  "sentinel_evi_lag60",
+  "sentinel_ndwi_lag60",
+  "sentinel_ndbi_lag60",
+  "sentinel_albedo_proxy_lag60",
+]
+
+[prediction]
+raw_output = "raw_spatial_anomaly_c"
+centering = "subtract_median_raw_prediction_over_complete_frozen_predictor_tract_universe_within_city_date"
+published_output = "relative_lst_anomaly_c"
+absolute_level_must_not_be_added = true
+
+[comparator]
+id = "B1"
+definition = "same_fold_refit_then_city_date_centered_prediction"
+same_scoring_rows_required = true
+
+[evaluation]
+primary_metric = "anomaly_mae_c"
+secondary_metrics = ["median_city_spearman", "hotspot_average_precision", "hotspot_recall"]
+hotspot_fraction = 0.20
+bootstrap = "paired_hierarchical_city_then_date"
+bootstrap_iterations = 10000
+bootstrap_seed = 20260913
+
+[development_gate]
+minimum_aggregate_relative_anomaly_mae_improvement = 0.10
+maximum_any_city_anomaly_mae_degradation_c = 0.05
+require_positive_aggregate_spearman_change = true
+require_positive_bootstrap_lower_bound_c = true
+
+[next_audit]
+id = "fixed_source_leave_one_year_out_stability_v1"
+uses_existing_source_data_only = true
+split = "hold_one_calendar_year_out_within_each_source_city"
+refit_fixed_model_per_fold = true
+refit_fixed_b1_per_fold = true
+model_selection_allowed = false
+opened_historical_stress_values_used = false
+
+[stop_rules]
+stop_if_fixed_source_year_audit_fails_gate = true
+stop_before_new_city_acquisition = true
+stop_before_absolute_level_modeling = true
+

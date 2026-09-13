@@ -52,11 +52,12 @@ Spearman than B1. This is development evidence, not a new blind claim. See
 `experiments/m3_relative_temperature/`.
 
 `ACTIVE_STAGE.json` now records this completed development review. The next safe
-research task is to define one fixed relative-temperature and applicability
-contract before any new fit. Do not resume historical queues, acquire a new
-city, or enlarge the model search. The opened Seattle, Denver, Atlanta, and
-Miami cohort may be used only as development stress-test evidence, never as
-another blind confirmation.
+research task is now fixed in `experiments/m3_relative_temperature/fixed_contract.toml`.
+It contains one anomaly-only 31-leaf HGB, no level model, no candidate search,
+and a source-only leave-one-year-out stability audit. Do not resume historical
+queues, acquire a new city, or enlarge the model search. The opened Seattle,
+Denver, Atlanta, and Miami cohort may be used only as development stress-test
+evidence, never as another blind confirmation.
 
 ## Project summary
 
