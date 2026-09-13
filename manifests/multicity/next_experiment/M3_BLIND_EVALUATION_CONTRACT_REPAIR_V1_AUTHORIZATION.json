@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-evaluation-contract-repair-v1",
+  "state": "m3_blind_evaluation_contract_repair_authorized",
+  "parent_authorization_commit_sha256": "3ce0eca0de3367c0a64dac9df3f2bb68aa78f8ed2e12e5dea2c352b9b5ca8616",
+  "incident": {
+    "exception_type": "ExternalEvaluationError",
+    "exception_message": "Frozen external evaluator contract changed",
+    "metrics_computed": false,
+    "evaluation_outputs_written": 0,
+    "cause": "legacy_three_city_validator_hard_codes_minimum_total_city_dates_30"
+  },
+  "code": [
+    {
+      "path": "src/la_heat/multicity/m3_blind_evaluation_contract_repair_v1.py",
+      "bytes": 7712,
+      "sha256": "846337079a23aa38e62ed24ba8c30dd244298d379a253655d42ef66537f3c894"
+    },
+    {
+      "path": "scripts/authorize_m3_blind_evaluation_contract_repair_v1.py",
+      "bytes": 1309,
+      "sha256": "84b6bd3f750f473c863c931730f5b006b69f6d4f77fa9f920e7434923b69ea98"
+    },
+    {
+      "path": "scripts/run_m3_blind_evaluation_contract_repair_v1.py",
+      "bytes": 740,
+      "sha256": "86e38700a676aed3211adcb4ba27da62438e97dbed501a3c741e3f2788fd4792"
+    }
+  ],
+  "exact_contract": {
+    "minimum_total_usable_city_dates": 40,
+    "minimum_usable_dates_per_blind_test_city": 8,
+    "bootstrap_iterations": 10000,
+    "bootstrap_seed": 20260816,
+    "minimum_relative_mae_improvement": 0.1,
+    "require_ci_lower_above_zero": true,
+    "require_no_city_point_degradation": true
+  },
+  "permissions": {
+    "replace_legacy_contract_shape_validation_only": true,
+    "run_parent_frozen_evaluation": true,
+    "change_metric_gate_seed_prediction_target_or_scoring_logic": false,
+    "fit_retrain_recalibrate_retune_or_select": false
+  },
+  "next_safe_stage": "run_parent_evaluation_with_exact_m3_contract_validator",
+  "commit_sha256": "2b775eda05dabfa90e4182ee3a279f35a0630d19dd9847357f563a6d9a50a9d7"
+}
