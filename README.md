@@ -38,14 +38,15 @@ promising rather than protocol-confirmed.
 | Los Angeles 2025 holdout | Complete | M2 MAE was 30.53% lower than B1; the 95% interval crossed zero |
 | Phoenix–Houston–Chicago transfer | Complete | Overall MAE improved 28.9%, but the preregistered confirmation and reliability gates were not met |
 | M3 source-only development | Complete | Nested whole-city LOSO selected QA `4k` and the frozen M3 specification without using blind-city targets |
-| Seattle–Denver–Atlanta–Miami predictor build | In progress | Support, 23,667 keys, public metadata, and the exact 539-acquisition Sentinel inventory are complete |
-| Four-city blind evaluation | Sealed | No blind-city Landsat thermal, QA, or target value may be read before predictions are committed |
+| Seattle–Denver–Atlanta–Miami predictor build | Complete | All 46 predictors and the frozen M3 predictions were authenticated before target access |
+| Four-city blind evaluation | Complete; not confirmed | M3 MAE 5.8343 °C versus B1 at 3.8032 °C; all primary gates failed and Miami had only four usable dates |
 
-The next permitted step is resumable acquisition of Sentinel-2 and static
-predictor values. Daymet acquisition is separately authorized but waits for an
-in-memory Earthdata token; credentials must never be committed. After all 46
-predictors are assembled, the frozen model will create and commit predictions
-before the one-time blind target evaluation is authorized.
+The one-time M3 blind evaluation is complete. Its protocol state is
+`inconclusive_sample_size`, and its observed point estimate and full bootstrap
+interval disfavor M3. See the
+[M3 four-city blind-evaluation report](reports/M3_BLIND_EVALUATION_REPORT.md).
+These four cities must not be reused as a new blind test or used for
+confirmatory retuning.
 
 The machine-readable current state is
 [`manifests/multicity/ACTIVE_STAGE.json`](manifests/multicity/ACTIVE_STAGE.json).

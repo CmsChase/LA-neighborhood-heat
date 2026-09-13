@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-evaluation-report-v1",
+  "state": "complete",
+  "analysis_scope": "frozen_m3_four_city_blind_evaluation_only",
+  "source_records": {
+    "evaluation_completion": {
+      "path": "manifests/multicity/next_experiment/blind_evaluation_v1/M3_BLIND_EVALUATION_COMPLETE.json",
+      "sha256": "58cc07c9b804788b42c22d01cc4a0982b7f4dea6e7f7b61f8f34d510d1a49d78",
+      "commit_sha256": "6574750d633b580afd9fedb4b06cf99cd78c414956450a92bb3ea9e99113559f"
+    },
+    "terminal_completion": {
+      "path": "manifests/multicity/next_experiment/blind_evaluation_v1/M3_BLIND_EVALUATION_TERMINAL_COMPLETE.json",
+      "sha256": "ba1a256ba77353c0e0883a3b83ba4976bdee3fcd86bb444df13113d3bce54437",
+      "commit_sha256": "383742cb17674c508e8a7dfe853caa163ab2bd8d0816e150e6f4d966e2334a26"
+    },
+    "corrected_summary": {
+      "path": "data/processed/multicity/m3_blind_evaluation_v1/summary_v2.json",
+      "bytes": 1827,
+      "sha256": "c3cef739d1ed05529439857bd97494e8fc501950f6fa04960705fe7e01d3a750"
+    },
+    "city_metrics": {
+      "path": "data/processed/multicity/m3_blind_evaluation_v1/city_metrics.parquet",
+      "bytes": 10853,
+      "sha256": "987fce4774484483448e3045b86e4fc01474a2759bff92357cbcc7c84eb150cd",
+      "semantic_sha256": "efdbbb27422e50b38e01cfe63f7bb1465636871148842f10cc3cfc1ea20d052d"
+    },
+    "crossed_bootstrap": {
+      "path": "data/processed/multicity/m3_blind_evaluation_v1/crossed_bootstrap.json",
+      "bytes": 1224,
+      "sha256": "8137d618f1bbd319b341c88cea463c0467987bd7c749dff374dbc94ae4189bb3"
+    },
+    "risk_coverage": {
+      "path": "data/processed/multicity/m3_blind_evaluation_v1/risk_coverage.parquet",
+      "bytes": 6487,
+      "sha256": "408349249dc3bf7e9347d6d025fa99dd165d37d33ea249424364845aba7070a6",
+      "semantic_sha256": "76d0e9adc359a538a626bdf2adfd0c85fa8943fa753362a381bdccd4c51e3d37"
+    }
+  },
+  "reported_result": {
+    "state": "inconclusive_sample_size",
+    "b1_equal_city_equal_date_mae_c": 3.80321107270321,
+    "m3_equal_city_equal_date_mae_c": 5.834311779901703,
+    "relative_mae_improvement_fraction": -0.5340489045628611,
+    "bootstrap_ci_lower": -0.7580792638496231,
+    "bootstrap_ci_upper": -0.32608397254925325,
+    "point_prediction_success": false,
+    "reliability_success": false
+  },
+  "scientific_contract": {
+    "prediction_commit_preceded_target_access": true,
+    "models_refit_recalibrated_retuned_or_selected": false,
+    "four_city_claim_is_indivisible": true,
+    "opened_cities_must_not_be_reused_as_blind_test": true,
+    "negative_and_inconclusive_result_reported_without_rescue": true
+  },
+  "output": {
+    "path": "M3_BLIND_EVALUATION_REPORT.md",
+    "path_base": "report_directory",
+    "bytes": 5189,
+    "sha256": "aaa46e1083ce91a42d0ff0b1f554727bafd5cabb37ee1495baf744833260e5ff"
+  },
+  "commit_sha256": "477c65395009a878a2e72f5ae7e5b69ef89c091fba71b3d6a7b8367713fdc024"
+}

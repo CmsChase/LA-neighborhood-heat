@@ -6,6 +6,9 @@ authenticated source tables, never from manual edits.
 
 ## Authoritative reports
 
+- [`M3_BLIND_EVALUATION_REPORT.md`](M3_BLIND_EVALUATION_REPORT.md): the frozen
+  Seattle–Denver–Atlanta–Miami M3 confirmation result, failed gates, and
+  interpretation boundary.
 - [`FINAL_EVALUATION_REPORT.md`](FINAL_EVALUATION_REPORT.md): the one-time
   held-out 2025 result and its required uncertainty limitation.
 - [`DEVELOPMENT_REPORT.md`](DEVELOPMENT_REPORT.md): grouped development

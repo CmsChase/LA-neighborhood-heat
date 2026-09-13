@@ -9,7 +9,7 @@ history is intentionally separated from the short project landing page.
 |---|---|
 | What was tested and why? | [RESEARCH_PROTOCOL.md](RESEARCH_PROTOCOL.md) |
 | How does data move through the project? | [PIPELINE_DIAGRAM.md](PIPELINE_DIAGRAM.md) |
-| What is the current scientific result? | [PROJECT_STATUS.md](PROJECT_STATUS.md) and [the final report](../reports/FINAL_EVALUATION_REPORT.md) |
+| What is the current scientific result? | [PROJECT_STATUS.md](PROJECT_STATUS.md), the [Los Angeles final report](../reports/FINAL_EVALUATION_REPORT.md), and the [M3 four-city blind report](../reports/M3_BLIND_EVALUATION_REPORT.md) |
 | What should a new contributor do next? | [PROJECT_HANDOFF.md](PROJECT_HANDOFF.md) |
 | Why was a material choice made? | [DECISION_LOG.md](DECISION_LOG.md) |
 | Where did each external dataset come from? | [DATA_MANIFEST.csv](DATA_MANIFEST.csv) |
