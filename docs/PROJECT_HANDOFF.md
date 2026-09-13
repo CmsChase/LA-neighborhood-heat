@@ -54,10 +54,16 @@ Spearman than B1. This is development evidence, not a new blind claim. See
 `ACTIVE_STAGE.json` now records this completed development review. The next safe
 research task is now fixed in `experiments/m3_relative_temperature/fixed_contract.toml`.
 It contains one anomaly-only 31-leaf HGB, no level model, no candidate search,
-and a source-only leave-one-year-out stability audit. Do not resume historical
-queues, acquire a new city, or enlarge the model search. The opened Seattle,
-Denver, Atlanta, and Miami cohort may be used only as development stress-test
-evidence, never as another blind confirmation.
+and a source-only leave-one-year-out stability audit. That 18-fold audit is now
+complete on 132 city-dates and 96,061 rows. M3-relative achieved 1.0241 C
+anomaly MAE versus B1 1.6008 C (36.0% improvement); the paired hierarchical
+bootstrap interval for B1 minus M3 was [0.1832, 0.8616] C and all fixed gates
+passed. This checks temporal stability, not unseen-city transfer, because most
+folds retain other years from the held city. The next safe step is to fit the
+single fixed development model on all four source cities. Do not resume
+historical queues, acquire a new city, or enlarge the model search. The opened
+Seattle, Denver, Atlanta, and Miami cohort may be used only as development
+stress-test evidence, never as another blind confirmation.
 
 ## Project summary
 

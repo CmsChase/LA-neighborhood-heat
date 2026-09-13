@@ -23,3 +23,15 @@ Run from the repository root:
 
 The runner performs no fitting, download, or network access. Generated outputs
 go to the ignored `exports/M3_RELATIVE_TEMPERATURE_REVIEW/` directory.
+
+After the fixed contract was committed, its source-only temporal stability
+audit was run with:
+
+```powershell
+.\.venv\Scripts\python.exe experiments\m3_relative_temperature\year_stability.py
+```
+
+This runner fits the single fixed M3-relative model and B1 in 18 leave-one-year-
+out folds. Fold outputs are cached under the ignored
+`exports/M3_RELATIVE_TEMPERATURE_YEAR_STABILITY/` directory. It performs no
+network access, new-city acquisition, or model selection.

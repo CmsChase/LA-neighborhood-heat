@@ -18,6 +18,12 @@ from la_heat.multicity.m3_development import (
 ROOT = Path(__file__).resolve().parents[1]
 RUNNER = ROOT / "experiments" / "m3_relative_temperature" / "run.py"
 CONTRACT = ROOT / "experiments" / "m3_relative_temperature" / "fixed_contract.toml"
+YEAR_RUNNER = ROOT / "experiments" / "m3_relative_temperature" / "year_stability.py"
+YEAR_SPEC = importlib.util.spec_from_file_location("m3_relative_year_stability", YEAR_RUNNER)
+assert YEAR_SPEC is not None and YEAR_SPEC.loader is not None
+YEAR_MODULE = importlib.util.module_from_spec(YEAR_SPEC)
+sys.modules[YEAR_SPEC.name] = YEAR_MODULE
+YEAR_SPEC.loader.exec_module(YEAR_MODULE)
 SPEC = importlib.util.spec_from_file_location("m3_relative_temperature", RUNNER)
 assert SPEC is not None and SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
@@ -92,3 +98,14 @@ def test_fixed_contract_forbids_scope_expansion() -> None:
     assert contract["contract"]["new_city_data_allowed"] is False
     assert contract["contract"]["hyperparameter_search_allowed"] is False
     assert contract["next_audit"]["opened_historical_stress_values_used"] is False
+
+
+def test_year_fold_ids_are_sorted_and_unique() -> None:
+    frame = pd.DataFrame(
+        {
+            "city_id": ["b", "a", "a", "b"],
+            "target_date": ["2024-01-01", "2025-01-01", "2025-02-01", "2023-01-01"],
+        }
+    )
+
+    assert YEAR_MODULE.fold_ids(frame) == [("a", 2025), ("b", 2023), ("b", 2024)]
