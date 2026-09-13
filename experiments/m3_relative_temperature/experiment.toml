@@ -1,0 +1,21 @@
+[experiment]
+name = "m3_relative_temperature_existing_eight_city_review"
+analysis_role = "post_hoc_development_not_confirmation"
+source_cities = ["los_angeles_ca", "phoenix_az", "houston_tx", "chicago_il"]
+opened_stress_cities = ["seattle_wa", "denver_co", "atlanta_ga", "miami_fl"]
+source_m3_variant = "A"
+hotspot_fraction = 0.20
+bootstrap_iterations = 10000
+bootstrap_seed = 20260913
+
+[inputs]
+source_predictions = "exports/M3_SOURCE_LEVEL_2X2/predictions.parquet"
+opened_scored_rows = "data/processed/multicity/m3_blind_evaluation_v1/scored_rows.parquet"
+
+[outputs]
+directory = "exports/M3_RELATIVE_TEMPERATURE_REVIEW"
+
+[development_gate]
+minimum_relative_anomaly_mae_improvement = 0.10
+maximum_city_anomaly_mae_degradation_c = 0.05
+require_positive_spearman_change_in_each_role = true

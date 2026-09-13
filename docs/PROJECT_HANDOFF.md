@@ -38,11 +38,25 @@ exception by 0.0099 C. Source LOSO and previously opened-city results retain
 their different historical roles, so this combined screen is directional,
 not a new confirmation estimate.
 
-`ACTIVE_STAGE.json` now records this terminal diagnostic state. The next safe
-research task is a compact relative-temperature/applicability experiment using
-only already available data. Do not resume historical queues or acquire a new
-city. The opened Seattle, Denver, Atlanta, and Miami cohort may be used only as
-development stress-test evidence, never as another blind confirmation.
+That screen has now been replaced by a harmonized, reproducible relative-
+temperature review. Without refitting or network access, it recomputed both
+evidence roles from row-level predictions using the same city-date centering.
+Across the four source cities, M3 reduced anomaly MAE from 1.6965 C to 1.3606 C
+(19.8%); across the four opened historical stress cities it reduced anomaly MAE
+from 1.4007 C to 0.9976 C (28.8%). Paired city/date hierarchical bootstrap 95%
+intervals for B1 minus M3 were [0.0886, 0.5828] C and [0.1835, 0.7355] C,
+respectively. Seven of eight cities improved; Phoenix degraded by 0.0097 C.
+The fixed development gate passed, but LA and Phoenix still had lower M3
+Spearman than B1. This is development evidence, not a new blind claim. See
+`docs/M3_RELATIVE_TEMPERATURE_REVIEW.zh-CN.md` and
+`experiments/m3_relative_temperature/`.
+
+`ACTIVE_STAGE.json` now records this completed development review. The next safe
+research task is to define one fixed relative-temperature and applicability
+contract before any new fit. Do not resume historical queues, acquire a new
+city, or enlarge the model search. The opened Seattle, Denver, Atlanta, and
+Miami cohort may be used only as development stress-test evidence, never as
+another blind confirmation.
 
 ## Project summary
 
