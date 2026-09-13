@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-target-joint-cell-repair-v1",
+  "state": "m3_blind_target_joint_cell_repair_authorized",
+  "parent_authorization_commit_sha256": "87794fd56b68711f3fe5499f130aae9ef61fcfeb98beffba238cc522a4299601",
+  "values_opened_commit_sha256": "52a3492f618809f0a33482498006f55d1fe6a48dd597c13819880fa5d52b1076",
+  "incident": {
+    "exception_type": "ValueError",
+    "exception_message": "No joint geographic cell meets the minimum tract count.",
+    "completed_overpasses": {
+      "seattle_wa": 54,
+      "denver_co": 0,
+      "atlanta_ga": 0,
+      "miami_fl": 0
+    }
+  },
+  "code": [
+    {
+      "path": "src/la_heat/multicity/m3_blind_target_joint_cell_repair_v1.py",
+      "bytes": 8895,
+      "sha256": "da8108443f4e6d0b23eac5ab3dd0d7b598a641b1051a5f7bddd3ffa65e8e72f9"
+    },
+    {
+      "path": "scripts/authorize_m3_blind_target_joint_cell_repair_v1.py",
+      "bytes": 1308,
+      "sha256": "f5439c485a0ab32333ef44ad17cf86e79f4e066f0c597930763754715871205f"
+    },
+    {
+      "path": "scripts/run_m3_blind_target_joint_cell_repair_v1.py",
+      "bytes": 751,
+      "sha256": "f841a61349cf458fa5e35dd295b4cff24327eec30095f94d731f3fa844671b96"
+    }
+  ],
+  "repair_semantics": {
+    "exact_exception_only": "No joint geographic cell meets the minimum tract count.",
+    "coverage_pass": false,
+    "relative_anomaly_and_hotspot_withheld": true,
+    "absolute_target_preserved": true,
+    "minimum_joint_cell_tracts_changed": false
+  },
+  "permissions": {
+    "resume_same_combined_four_city_claim": true,
+    "reuse_completed_seattle_overpasses": true,
+    "convert_exact_empty_eligible_joint_cell_exception_to_gate_failure": true,
+    "change_threshold_city_date_qa_prediction_or_model": false,
+    "score_or_evaluate_before_target_completion_authentication": false
+  },
+  "next_safe_stage": "resume_parent_target_runner_with_exact_exception_repair",
+  "commit_sha256": "2dc5797de4f542ac9de7bc19c764fe693fec66951b9f924ae0a78e9fa89e259b"
+}
