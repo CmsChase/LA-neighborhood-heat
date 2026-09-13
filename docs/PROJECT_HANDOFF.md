@@ -35,9 +35,13 @@ The adapter accepted the Earthdata token only from the process environment,
 sent it only to the locked HTTPS Earthdata OPeNDAP host, refused redirects,
 cleared it after the run, and did not persist credentials or URLs. Sentinel,
 static, Landsat, QA, targets, fitting, prediction, and scoring were not read or
-performed under this permit. The next safe stage is a new independent
-authorization for offline Daymet compilation into the blind predictor schema;
-that stage has not started.
+performed under this permit. Independent offline compilation authorization
+`378bfea1bd3bca1f9c9cf24ef23f243f01b1eb38c5b3630353b6f1f34e660484`
+binds both upstream completions and the exact compiler code. It permits only
+authenticated static/Sentinel/Daymet/support inputs and writes one resumable
+46-feature output per city. Network/href reads, Landsat, QA, targets, fitting,
+prediction, and scoring remain forbidden. The next safe action is to run
+`scripts/run_m3_blind_predictor_daymet_compilation_v1.py --run`.
 
 ## Completed milestones
 

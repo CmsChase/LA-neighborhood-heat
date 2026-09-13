@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-daymet-compilation-v1",
+  "state": "m3_blind_predictor_daymet_offline_compilation_authorized",
+  "inputs": {
+    "parent_authorization": {
+      "path": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_BUILD_V1_PARENT_AUTHORIZATION.json",
+      "bytes": 16963,
+      "sha256": "c2ae7b864067d54c8da8dea187b964d066300214ab02e70e0e48782ac83f19f4",
+      "commit_sha256": "1a704fca3848471dfba16c28bf2dd2e282343af6ac2aa24e3cbbd2ef44d790f8"
+    },
+    "sentinel_static_completion": {
+      "path": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_SENTINEL_STATIC_ASSEMBLY_COMPLETE.json",
+      "bytes": 2403,
+      "sha256": "72755fe650124be12571461d38b8f490d65001799a60d51793dd05751bf056ad",
+      "commit_sha256": "bc56348b43c12f2d9e17cf67831190e47f1e3c49df1ad90caecd2f0b1a623f42"
+    },
+    "daymet_acquisition_completion": {
+      "path": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTOR_DAYMET_ACQUISITION_COMPLETE.json",
+      "bytes": 4601,
+      "sha256": "e58c1cd3cb11555f5b27aadc2082609394f2aa0c9f2102a1dd1b560b5601f359",
+      "commit_sha256": "e3269d965a97c88a43db82c61fa8930a19bf6aa00873efb981317817f84cba1a"
+    }
+  },
+  "blind_city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "expected": {
+    "row_count": 23667,
+    "feature_count": 46,
+    "required_columns": [
+      "city_id",
+      "tract_geoid",
+      "target_date",
+      "nlcd_open_water_fraction",
+      "nlcd_developed_open_fraction",
+      "nlcd_developed_low_fraction",
+      "nlcd_developed_high_fraction",
+      "nlcd_barren_fraction",
+      "nlcd_forest_fraction",
+      "nlcd_shrub_grass_fraction",
+      "nlcd_agriculture_fraction",
+      "nlcd_wetland_fraction",
+      "impervious_mean_fraction",
+      "impervious_p90_fraction",
+      "impervious_at_least_50_fraction",
+      "elevation_mean_m",
+      "elevation_std_m",
+      "slope_mean_degrees",
+      "slope_p90_degrees",
+      "gshhg_ocean_great_lakes_shore_distance_mean_km",
+      "gshhg_ocean_great_lakes_shore_distance_p10_km",
+      "calendar_doy_sin",
+      "calendar_doy_cos",
+      "daymet_dayl_s_mean_prev_1d",
+      "daymet_prcp_mm_sum_prev_1d",
+      "daymet_srad_w_m2_mean_prev_1d",
+      "daymet_tmax_c_mean_prev_1d",
+      "daymet_tmin_c_mean_prev_1d",
+      "daymet_vp_pa_mean_prev_1d",
+      "daymet_srad_energy_mj_m2_sum_prev_1d",
+      "daymet_dayl_s_mean_prev_3d",
+      "daymet_prcp_mm_sum_prev_3d",
+      "daymet_srad_w_m2_mean_prev_3d",
+      "daymet_tmax_c_mean_prev_3d",
+      "daymet_tmin_c_mean_prev_3d",
+      "daymet_vp_pa_mean_prev_3d",
+      "daymet_srad_energy_mj_m2_sum_prev_3d",
+      "daymet_dayl_s_mean_prev_7d",
+      "daymet_prcp_mm_sum_prev_7d",
+      "daymet_srad_w_m2_mean_prev_7d",
+      "daymet_tmax_c_mean_prev_7d",
+      "daymet_tmin_c_mean_prev_7d",
+      "daymet_vp_pa_mean_prev_7d",
+      "daymet_srad_energy_mj_m2_sum_prev_7d",
+      "sentinel_ndvi_lag60",
+      "sentinel_evi_lag60",
+      "sentinel_ndwi_lag60",
+      "sentinel_ndbi_lag60",
+      "sentinel_albedo_proxy_lag60"
+    ],
+    "city_count": 4
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/run_m3_blind_predictor_daymet_compilation_v1.py",
+        "bytes": 1246,
+        "sha256": "37d5f2de7cea1acce12192ea71c44a7f320ae9e38701841bfb16ee984918bb8f"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_daymet_compilation_v1.py",
+        "bytes": 20446,
+        "sha256": "aada8769e6e50d408dba23d57ee6e1de07a5d3775d0da88b78093bdb384dcd1a"
+      },
+      {
+        "path": "src/la_heat/calendar_features.py",
+        "bytes": 6243,
+        "sha256": "53814e4ef5d0cd048086bdb3fe54eacfbb2a4414e8f08fb288cdceb30b35c942"
+      },
+      {
+        "path": "src/la_heat/daymet_feature_stage.py",
+        "bytes": 35081,
+        "sha256": "8fb62c272cdda7569b1e609f939ea3c92cbdcfeb8767af08ad4e2c0903460a14"
+      },
+      {
+        "path": "src/la_heat/daymet_grid.py",
+        "bytes": 59243,
+        "sha256": "8f0d4d02f778cbb856cd96d2b26ddea5974e53f4ed17c240c7e5fec8e21227a0"
+      }
+    ],
+    "set_sha256": "19ab912d1685613702d13bcbbf1bdbbd7e4bbba776becbbbc19f886312faa805"
+  },
+  "permissions": {
+    "read_authenticated_static_sentinel_daymet_and_support_values": true,
+    "write_predictors_46_and_daymet_audits": true,
+    "network_or_href_reads": false,
+    "read_landsat_qa_or_target_values": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "runtime_contract": {
+    "authenticate_before_each_city_value_read": true,
+    "one_resumable_task_per_city": true,
+    "network_and_href_read_count": 0,
+    "blind_targets_remain_sealed": true,
+    "sentinel_window_ends_before_target_date": true
+  },
+  "authorization_access_audit": {
+    "predictor_or_raster_value_files_opened_or_statted": 0,
+    "network_or_href_reads": 0,
+    "landsat_qa_or_target_values_read": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "output_root": "data/processed/multicity/m3_blind_predictor_build_v1/predictors_46_v1",
+  "completion": "manifests/multicity/next_experiment/blind_predictor_build_v1/M3_BLIND_PREDICTORS_46_COMPLETE.json",
+  "next_safe_stage": "run_offline_four_city_daymet_compilation",
+  "run_id": "m3-blind-predictors-46-v1-3472bdd20400ac7c",
+  "claim_id": "8225a049552c4ba16f38711e2a9c4e1af7658f0f609bb8b6f204a8352e891bc0",
+  "commit_sha256": "378bfea1bd3bca1f9c9cf24ef23f243f01b1eb38c5b3630353b6f1f34e660484"
+}
