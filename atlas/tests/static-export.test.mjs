@@ -187,3 +187,36 @@ test("keeps authentication distinct from scientific confirmation", async () => {
   assert.match(page, /ASSET_BASE_PATH/);
   assert.match(page, /Source record/);
 });
+
+test("exports the authenticated M3 four-city blind-result summary", async () => {
+  const html = await readFile(
+    new URL("../out/m3/index.html", import.meta.url),
+    "utf8",
+  );
+  const renderedText = html.replaceAll("<!-- -->", "");
+  const sourceSummary = new URL(
+    "../public/evidence/m3/m3-blind-evaluation-summary.json",
+    import.meta.url,
+  );
+  const exportedSummary = new URL(
+    "../out/evidence/m3/m3-blind-evaluation-summary.json",
+    import.meta.url,
+  );
+
+  assert.match(html, /A result,/);
+  assert.match(html, /not a victory/);
+  assert.match(html, /Not confirmed/);
+  assert.match(renderedText, /53\.4%/);
+  assert.match(renderedText, /5\.83°/);
+  assert.match(renderedText, /3\.80°/);
+  assert.match(html, /−75\.8%/);
+  assert.match(html, /−32\.6%/);
+  assert.match(html, /Seattle/);
+  assert.match(html, /Denver/);
+  assert.match(html, /Atlanta/);
+  assert.match(html, /Miami/);
+  assert.match(html, /Five honest failures/);
+  assert.match(html, /Models changed after opening/);
+  assert.match(html, /None/);
+  assert.equal(await sha256(sourceSummary), await sha256(exportedSummary));
+});

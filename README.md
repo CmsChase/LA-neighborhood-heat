@@ -7,7 +7,8 @@ interactive Atlas for neighborhood-scale daytime land-surface temperature
 [![Python CI](https://github.com/CmsChase/LA-neighborhood-heat/actions/workflows/python-ci.yml/badge.svg)](https://github.com/CmsChase/LA-neighborhood-heat/actions/workflows/python-ci.yml)
 
 [Open the Los Angeles heat atlas](https://cmschase.github.io/LA-neighborhood-heat/)
-| [Open the authenticated four-city evaluation](https://cmschase.github.io/LA-neighborhood-heat/cities/)
+| [Open the M3 four-city blind result](https://cmschase.github.io/LA-neighborhood-heat/m3/)
+| [Open the earlier transfer study](https://cmschase.github.io/LA-neighborhood-heat/cities/)
 
 ## Research question
 

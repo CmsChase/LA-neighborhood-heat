@@ -1,0 +1,112 @@
+export const M3_BLIND_RESULT = {
+  state: "inconclusive_sample_size",
+  label: "Not confirmed",
+  model: "M3",
+  baseline: "B1",
+  support: {
+    rows: 9502,
+    cityDates: 66,
+    spatialBlocks: 68,
+  },
+  primary: {
+    b1MaeC: 3.80321107270321,
+    m3MaeC: 5.834311779901703,
+    relativeImprovementPercent: -53.40489045628611,
+    bootstrapLowerPercent: -75.80792638496231,
+    bootstrapUpperPercent: -32.608397254925325,
+    bootstrapReplicates: 10000,
+    bootstrapSeed: 20260816,
+  },
+  reliability: {
+    intervalCoveragePercent: 71.15344138076195,
+    retentionPercent: 100,
+    acceptedMaeC: 6.82675789103987,
+    intervalWidthC: 20.813005,
+  },
+  cities: [
+    {
+      id: "seattle_wa",
+      code: "SEA",
+      name: "Seattle",
+      dates: 25,
+      rows: 3601,
+      blocks: 18,
+      b1MaeC: 3.430344,
+      m3MaeC: 1.669585,
+      deltaC: -1.760759,
+      coveragePercent: 99.9445,
+      medianSpearman: 0.622477,
+    },
+    {
+      id: "denver_co",
+      code: "DEN",
+      name: "Denver",
+      dates: 24,
+      rows: 3674,
+      blocks: 20,
+      b1MaeC: 3.899283,
+      m3MaeC: 13.200425,
+      deltaC: 9.301142,
+      coveragePercent: 30.3756,
+      medianSpearman: 0.610875,
+    },
+    {
+      id: "atlanta_ga",
+      code: "ATL",
+      name: "Atlanta",
+      dates: 13,
+      rows: 1873,
+      blocks: 21,
+      b1MaeC: 4.31496,
+      m3MaeC: 5.246591,
+      deltaC: 0.931632,
+      coveragePercent: 90.6567,
+      medianSpearman: 0.864716,
+    },
+    {
+      id: "miami_fl",
+      code: "MIA",
+      name: "Miami",
+      dates: 4,
+      rows: 354,
+      blocks: 9,
+      b1MaeC: 3.568257,
+      m3MaeC: 3.220645,
+      deltaC: -0.347612,
+      coveragePercent: 98.3051,
+      medianSpearman: 0.50961,
+    },
+  ],
+  gates: [
+    {
+      name: "Sample size",
+      detail: "Miami supplied 4 usable dates; the frozen minimum was 8 per city.",
+    },
+    {
+      name: "≥10% MAE improvement",
+      detail: "The observed change was −53.40% improvement: M3 was worse.",
+    },
+    {
+      name: "Confidence bound above zero",
+      detail: "The complete 95% interval stayed below zero.",
+    },
+    {
+      name: "No city degradation",
+      detail: "Denver and Atlanta both degraded relative to B1.",
+    },
+    {
+      name: "Reliability",
+      detail: "Overall interval coverage was 71.15%; the reliability gate failed.",
+    },
+  ],
+  commits: {
+    predictions:
+      "295ccca0ea0239cf6eb5633b736a7565abbac3cc47992bae6bcbc9ba4d6f74ac",
+    targets:
+      "55839671f2b28e5c725c5d9601e7d0e2d6ae8a916d7b9880c94e65b2fd99e901",
+    evaluation:
+      "6574750d633b580afd9fedb4b06cf99cd78c414956450a92bb3ea9e99113559f",
+    terminal:
+      "383742cb17674c508e8a7dfe853caa163ab2bd8d0816e150e6f4d966e2334a26",
+  },
+} as const;

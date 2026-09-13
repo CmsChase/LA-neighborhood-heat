@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "state": "inconclusive_sample_size",
+  "cities": ["seattle_wa", "denver_co", "atlanta_ga", "miami_fl"],
+  "support": {
+    "rows": 9502,
+    "cityDates": 66,
+    "spatialBlocks": 68
+  },
+  "primary": {
+    "b1EqualCityEqualDateMaeC": 3.80321107270321,
+    "m3EqualCityEqualDateMaeC": 5.834311779901703,
+    "relativeMaeImprovementFraction": -0.5340489045628611,
+    "bootstrapCiLower": -0.7580792638496231,
+    "bootstrapCiUpper": -0.32608397254925325
+  },
+  "gates": {
+    "sampleSize": false,
+    "relativeImprovementAtLeast10Percent": false,
+    "bootstrapCiLowerAboveZero": false,
+    "noCityPointDegradation": false,
+    "reliability": false
+  },
+  "audit": {
+    "predictionCommitPrecededTargetAccess": true,
+    "modelsRefitRecalibratedOrRetuned": false
+  },
+  "terminalCommitSha256": "383742cb17674c508e8a7dfe853caa163ab2bd8d0816e150e6f4d966e2334a26"
+}
