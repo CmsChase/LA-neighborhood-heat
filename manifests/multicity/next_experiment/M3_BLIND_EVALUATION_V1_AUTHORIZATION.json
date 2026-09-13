@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-evaluation-v1",
+  "state": "m3_blind_evaluation_authorized",
+  "claim": "one_indivisible_four_city_frozen_blind_evaluation",
+  "city_ids": [
+    "seattle_wa",
+    "denver_co",
+    "atlanta_ga",
+    "miami_fl"
+  ],
+  "manifests": {
+    "prediction": {
+      "path": "manifests/multicity/next_experiment/blind_prediction_v2/M3_BLIND_PREDICTIONS_COMMITTED.json",
+      "bytes": 3266,
+      "sha256": "4ab66392d6e7ef15e474d7ed8d569616712d4d4fd21efd8771923b18585203df",
+      "commit_sha256": "295ccca0ea0239cf6eb5633b736a7565abbac3cc47992bae6bcbc9ba4d6f74ac"
+    },
+    "target": {
+      "path": "manifests/multicity/next_experiment/blind_evaluation_v1/M3_BLIND_TARGETS_COMPLETE.json",
+      "bytes": 2851,
+      "sha256": "14e736b64f522ce48b7048f1d1a28b1395db8e0ae7df8a011a43210d1bf847cb",
+      "commit_sha256": "55839671f2b28e5c725c5d9601e7d0e2d6ae8a916d7b9880c94e65b2fd99e901"
+    },
+    "durable_resume": {
+      "path": "manifests/multicity/next_experiment/blind_evaluation_v1/M3_BLIND_TARGET_DURABLE_RESUME_COMPLETE.json",
+      "bytes": 651,
+      "sha256": "60afbfb7598a02b33a566a7bea82326dd7bb54b684a4896a83bcca2f0b92218a",
+      "commit_sha256": "ac313aa87ef68b4d2a7ec8803cf904f5881ed8017b552199342c63117983d31b"
+    },
+    "spatial_blocks": {
+      "path": "manifests/multicity/next_experiment/blind_evaluation_v1/M3_BLIND_SPATIAL_BLOCKS_COMPLETE.json",
+      "bytes": 1713,
+      "sha256": "03e0c7f8755af71888d62e7731ab9604c6a18c50e6eee7ebf285317e833473ea",
+      "commit_sha256": "7e9e3025161a5d5688a439a491d0283aad20363441023a3af5abf6f79bb9fdfa"
+    },
+    "protocol": {
+      "path": "manifests/multicity/next_experiment/M3_DEVELOPMENT_PROTOCOL_LOCK.json",
+      "bytes": 27501,
+      "sha256": "b5819ec9ceb8ff0256dcdd5fc7e774c90945db0bccf2f9a5003d59af055c1309",
+      "commit_sha256": "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8"
+    }
+  },
+  "prediction_columns": [
+    "city_id",
+    "tract_geoid",
+    "target_date",
+    "b1_prediction_c",
+    "m2_legacy_prediction_c",
+    "m3_level_prediction_c",
+    "m3_anomaly_prediction_c",
+    "m3_prediction_c",
+    "m3_conformal_correction_c",
+    "m3_lower_c",
+    "m3_upper_c",
+    "m3_interval_width_c",
+    "m3_ensemble_point_sd_c",
+    "uq_method",
+    "uq_density_ratio_raw",
+    "uq_density_ratio_clipped",
+    "uq_weight_clip_hit",
+    "m3_predicted_absolute_error_c",
+    "m3_risk_percentile_within_city_date",
+    "m3_abstain",
+    "m3_accepted"
+  ],
+  "evaluation_contract": {
+    "primary_comparison": "M3_vs_B1",
+    "legacy_comparison": "M2_legacy_vs_B1_secondary_only",
+    "primary_metric": "one_minus_equal_city_equal_date_mae_m3_divided_by_equal_city_equal_date_mae_b1",
+    "minimum_relative_mae_improvement": 0.1,
+    "require_crossed_bootstrap_ci_lower_above_zero": true,
+    "require_no_blind_test_city_point_degradation": true,
+    "minimum_total_usable_city_dates": 40,
+    "minimum_usable_dates_per_blind_test_city": 8,
+    "bootstrap_iterations": 10000,
+    "bootstrap_method": "city_stratified_crossed_complete_date_x_5km_spatial_block",
+    "bootstrap_seed": 20260816,
+    "confidence_level": 0.95,
+    "all_tables_require_row_date_and_spatial_block_counts": true,
+    "secondary_metrics": [
+      "per_city_equal_date_mae",
+      "rmse",
+      "signed_error",
+      "spatial_anomaly_mae",
+      "per_date_spearman",
+      "top20_hotspot_average_precision_precision_recall",
+      "interval_coverage",
+      "interval_width",
+      "wis",
+      "risk_coverage"
+    ],
+    "reliability_gates": {
+      "overall_coverage_lower": 0.85,
+      "overall_coverage_upper": 0.95,
+      "minimum_per_city_coverage": 0.8,
+      "minimum_per_city_retention": 0.6,
+      "minimum_accepted_set_mae_improvement_vs_all_predictions": 0.1
+    }
+  },
+  "code": [
+    {
+      "path": "src/la_heat/multicity/m3_blind_evaluation_v1.py",
+      "bytes": 16354,
+      "sha256": "cf9585bb9d726113cf796d6b0d40f8259633899dce2b6b2668b34fba7def31fb"
+    },
+    {
+      "path": "src/la_heat/multicity/external_evaluation.py",
+      "bytes": 49328,
+      "sha256": "419364c6a0f77e9393a5500b8adbfcfe70b6494c30861ed8fbf82a4053795e89"
+    },
+    {
+      "path": "scripts/authorize_m3_blind_evaluation_v1.py",
+      "bytes": 1304,
+      "sha256": "91623011f59546f0ead545b07a76d18ebc944f4da2b1574707dce84c79b8e5ab"
+    },
+    {
+      "path": "scripts/run_m3_blind_evaluation_v1.py",
+      "bytes": 711,
+      "sha256": "59c0833439252defdf7756e265c20d154a46b4a7fa320af16a154cf424b0a47b"
+    }
+  ],
+  "permissions": {
+    "read_authenticated_prediction_target_and_spatial_block_values": true,
+    "compute_frozen_primary_secondary_reliability_and_bootstrap_metrics": true,
+    "write_append_only_evaluation_outputs_and_completion": true,
+    "fit_retrain_recalibrate_retune_or_select": false,
+    "change_city_date_qa_support_gate_metric_seed_or_threshold": false,
+    "network_or_href_reads": false
+  },
+  "next_safe_stage": "run_one_time_frozen_four_city_evaluation",
+  "commit_sha256": "3ce0eca0de3367c0a64dac9df3f2bb68aa78f8ed2e12e5dea2c352b9b5ca8616"
+}
