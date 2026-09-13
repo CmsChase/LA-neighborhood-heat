@@ -1,3 +1,6 @@
+import numpy as np
+import pandas as pd
+
 from la_heat.multicity import m3_blind_predictor_daymet_compilation_v1 as compilation
 
 
@@ -26,3 +29,19 @@ def test_authorization_is_offline_and_does_not_open_values(monkeypatch, tmp_path
         ]
         == 0
     )
+
+
+def test_result_validation_preserves_rowwise_complete_daymet_gaps(monkeypatch) -> None:
+    columns = list(compilation.REQUIRED_COLUMNS)
+    frame = pd.DataFrame(np.zeros((2, len(columns))), columns=columns)
+    frame["city_id"] = "test_city"
+    frame["tract_geoid"] = ["1", "2"]
+    frame["target_date"] = pd.to_datetime(["2025-01-01", "2025-01-01"])
+    frame.loc[0, list(compilation.DAYMET_FEATURES)] = np.nan
+    monkeypatch.setitem(compilation.EXPECTED_CITY_COUNTS, "test_city", {"row_count": 2})
+
+    audit = compilation._validate_result(frame, "test_city")
+
+    assert audit["daymet_missing_row_count"] == 1
+    assert audit["daymet_missing_cell_count"] == 21
+    assert audit["rows_dropped_or_imputed"] == 0

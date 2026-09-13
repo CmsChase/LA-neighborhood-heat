@@ -51,6 +51,16 @@ retains the original byte/hash checks and changes no scientific value, key,
 schema, or feature. Resume only through
 `scripts/run_m3_blind_predictor_daymet_path_repair_v1.py --run`.
 
+That retry reached the semantic gate and showed Seattle has 108 complete-key
+rows (two tracts across 54 dates) with all 21 Daymet features missing because
+the coastal Daymet grid has no valid cell there. All other gates passed. The
+frozen protocol already specifies source-fold median imputation plus a missing
+indicator, so support-repair authorization
+`1fcee278574e99ee14976b10d0c82bb7dbc083ff9a18d267c4b4cb0b6c2e4698`
+requires preserving these NaNs without filling or dropping rows and records
+their counts. Resume only through
+`scripts/run_m3_blind_predictor_daymet_support_repair_v1.py --run`.
+
 ## Completed milestones
 
 1. The Los Angeles development study, frozen 2025 evaluation, evidence package,

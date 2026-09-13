@@ -339,6 +339,32 @@ def _status(root: Path, permit: Mapping[str, Any], **changes: Any) -> None:
     atomic_json(payload, _inside(root, STATUS_PATH))
 
 
+def _validate_result(result: pd.DataFrame, city_id: str) -> dict[str, int]:
+    expected = EXPECTED_CITY_COUNTS[city_id]
+    fixed = result.loc[:, [*STATIC_FEATURES, *CALENDAR_FEATURES]].to_numpy(dtype=float)
+    daymet_values = result.loc[:, DAYMET_FEATURES].to_numpy(dtype=float)
+    daymet_missing = np.isnan(daymet_values).sum(axis=1)
+    sentinel_missing = result.loc[:, SENTINEL_FEATURES].isna().sum(axis=1)
+    if (
+        len(result) != expected["row_count"]
+        or tuple(result.columns) != REQUIRED_COLUMNS
+        or result.duplicated(["city_id", "tract_geoid", "target_date"]).any()
+        or not np.isfinite(fixed).all()
+        or np.isinf(daymet_values).any()
+        or not np.isin(daymet_missing, [0, len(DAYMET_FEATURES)]).all()
+        or not sentinel_missing.isin([0, len(SENTINEL_FEATURES)]).all()
+    ):
+        raise M3BlindDaymetCompilationError("Compiled predictor semantics changed.")
+    return {
+        "daymet_missing_row_count": int((daymet_missing == len(DAYMET_FEATURES)).sum()),
+        "daymet_missing_cell_count": int(daymet_missing.sum()),
+        "sentinel_missing_row_count": int(
+            sentinel_missing.eq(len(SENTINEL_FEATURES)).sum()
+        ),
+        "rows_dropped_or_imputed": 0,
+    }
+
+
 def _build_city(root: Path, permit: Mapping[str, Any], city_id: str) -> dict[str, Any]:
     marker_path = _inside(root, OUTPUT_ROOT / city_id / "CITY_PREDICTORS_46_COMPLETE.json")
     if marker_path.is_file():
@@ -392,17 +418,7 @@ def _build_city(root: Path, permit: Mapping[str, Any], city_id: str) -> dict[str
     result = result.loc[:, REQUIRED_COLUMNS].sort_values(
         ["city_id", "target_date", "tract_geoid"], kind="stable"
     ).reset_index(drop=True)
-    expected = EXPECTED_CITY_COUNTS[city_id]
-    base = result.loc[:, [*STATIC_FEATURES, *CALENDAR_FEATURES, *DAYMET_FEATURES]]
-    sentinel_missing = result.loc[:, SENTINEL_FEATURES].isna()
-    if (
-        len(result) != expected["row_count"]
-        or tuple(result.columns) != REQUIRED_COLUMNS
-        or result.duplicated(["city_id", "tract_geoid", "target_date"]).any()
-        or not np.isfinite(base.to_numpy(dtype=float)).all()
-        or not sentinel_missing.nunique(axis=1).eq(1).all()
-    ):
-        raise M3BlindDaymetCompilationError("Compiled predictor semantics changed.")
+    missingness = _validate_result(result, city_id)
     context = _city_context(root, contract, str(support.grid.crs))
     output_dir = marker_path.parent
     output_path = output_dir / "predictors_46.parquet"
@@ -433,6 +449,7 @@ def _build_city(root: Path, permit: Mapping[str, Any], city_id: str) -> dict[str
             "feature_names": list(FEATURE_NAMES),
             "required_columns": list(REQUIRED_COLUMNS),
             "city_context": context,
+            "predictor_support": missingness,
             "output": output,
             "audit_outputs": audit_records,
             "audit": {
@@ -470,6 +487,22 @@ def run(project_root: str | Path) -> dict[str, Any]:
             "required_columns": list(REQUIRED_COLUMNS),
             "city_outputs": [marker["output"] for marker in markers],
             "city_context": [marker["city_context"] for marker in markers],
+            "predictor_support": {
+                "daymet_missing_row_count": sum(
+                    marker["predictor_support"]["daymet_missing_row_count"]
+                    for marker in markers
+                ),
+                "daymet_missing_cell_count": sum(
+                    marker["predictor_support"]["daymet_missing_cell_count"]
+                    for marker in markers
+                ),
+                "sentinel_missing_row_count": sum(
+                    marker["predictor_support"]["sentinel_missing_row_count"]
+                    for marker in markers
+                ),
+                "rows_dropped_or_imputed": 0,
+                "deferred_imputation": "frozen_source_fit_training_fold_median_plus_indicator",
+            },
             "city_completion_commits": {
                 marker["city_id"]: marker["commit_sha256"] for marker in markers
             },

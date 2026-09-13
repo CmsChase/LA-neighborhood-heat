@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": "2026-09-m3-blind-daymet-path-repair-authorized",
+  "revision": "2026-09-m3-blind-daymet-support-repair-authorized",
   "stage_id": "next_experiment_m3_blind_predictor_build",
-  "state": "m3_blind_predictor_daymet_city_local_path_repair_authorized",
-  "next_safe_stage": "resume_offline_compilation_through_path_repair_runner",
-  "summary": "The first offline compilation launch stopped before producing any city output because upstream static/Sentinel parquet records omit a path and are relative to their locked city directories. Path-only repair authorization aed45c08882a122eda3fb55d724ea6092a6d84b9fb04d426520a7c3e1b5ed3da binds the corrected code, resolves only the two locked filenames from each city directory, and retains original byte/hash validation. It changes no scientific value, key, schema, or feature. Network/href reads, Landsat, QA, targets, fitting, prediction, scoring, and evaluation remain forbidden.",
+  "state": "m3_blind_predictor_daymet_support_repair_authorized",
+  "next_safe_stage": "resume_offline_compilation_through_support_repair_runner",
+  "summary": "Path resolution is repaired. The next semantic gate showed Seattle has 108 complete-key rows (two tracts across 54 dates) with all 21 Daymet fields missing because no valid Daymet cell covers their coastal eligible-land support; all other semantic gates passed. Support repair authorization 1fcee278574e99ee14976b10d0c82bb7dbc083ff9a18d267c4b4cb0b6c2e4698 requires preserving rowwise all-21-or-zero Daymet missingness without filling or dropping rows, for later handling by the frozen source-fit median imputer plus missing indicator. Network/href reads, Landsat, QA, targets, fitting, prediction, scoring, and evaluation remain forbidden.",
   "permissions": {
     "read_public_predictor_sources": true,
     "build_predictor": false,
@@ -68,6 +68,7 @@
     "next_experiment_blind_daymet_acquisition_complete": true,
     "next_experiment_blind_daymet_offline_compilation_authorized": true,
     "next_experiment_blind_daymet_path_repair_authorized": true,
+    "next_experiment_blind_daymet_support_repair_authorized": true,
     "new_candidate_targets_sealed": true
   },
   "inputs": {
@@ -147,6 +148,8 @@
     "next_experiment_blind_daymet_compilation_authorization_commit_sha256": "378bfea1bd3bca1f9c9cf24ef23f243f01b1eb38c5b3630353b6f1f34e660484",
     "next_experiment_blind_daymet_path_repair_authorization": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_DAYMET_PATH_REPAIR_V1_AUTHORIZATION.json",
     "next_experiment_blind_daymet_path_repair_authorization_commit_sha256": "aed45c08882a122eda3fb55d724ea6092a6d84b9fb04d426520a7c3e1b5ed3da",
+    "next_experiment_blind_daymet_support_repair_authorization": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_DAYMET_SUPPORT_REPAIR_V1_AUTHORIZATION.json",
+    "next_experiment_blind_daymet_support_repair_authorization_commit_sha256": "1fcee278574e99ee14976b10d0c82bb7dbc083ff9a18d267c4b4cb0b6c2e4698",
     "next_experiment_selected_unseen_city_ids": [
       "seattle_wa",
       "denver_co",
@@ -293,7 +296,7 @@
     "next_experiment_blind_daymet_blocker": null,
     "next_experiment_blind_predictor_raster_value_reads": "authorized_sentinel_static_acquisition_complete_553_of_553",
     "next_experiment_blind_landsat_qa_or_target_value_reads": 0,
-    "next_action": "resume_offline_compilation_through_path_repair_runner"
+    "next_action": "resume_offline_compilation_through_support_repair_runner"
   },
   "prepared_post_return_tools": {
     "one_click_import": "tools/windows/legacy/IMPORT_SENTINEL_RESULTS.cmd",
