@@ -1,0 +1,57 @@
+[experiment]
+name = "m3_source_level_mechanism_2x2"
+analysis_role = "post_hoc_source_only_mechanism_diagnostic"
+qa_id = "4k"
+source_cities = [
+  "los_angeles_ca",
+  "phoenix_az",
+  "houston_tx",
+  "chicago_il",
+]
+opened_cities_excluded = [
+  "seattle_wa",
+  "denver_co",
+  "atlanta_ga",
+  "miami_fl",
+]
+level_ridge_alpha = 10.0
+anomaly_max_leaf_nodes = 31
+expected_original_m3_mae_c = 4.579558805988182
+reproduction_tolerance_c = 0.00000001
+
+[inputs]
+predictor_template = "data/processed/multicity/m3_source_predictor_extension_v1/{city_id}/predictors_46.parquet"
+target_template = "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/{city_id}/4k/targets.parquet"
+source_predictor_completion = "manifests/multicity/next_experiment/source_predictor_extension_v1/SOURCE_PREDICTORS_46_COMPLETE.json"
+
+[outputs]
+directory = "exports/M3_SOURCE_LEVEL_2X2"
+
+[decision]
+minimum_relative_mae_improvement = 0.10
+maximum_city_mae_degradation_c = 0.0
+require_anomaly_mae_not_worse_than_b1 = true
+
+[[variants]]
+id = "A"
+label = "original"
+include_elevation = true
+level_aggregation = "selected_training_support"
+
+[[variants]]
+id = "B"
+label = "consistent_support"
+include_elevation = true
+level_aggregation = "complete_predictor_support"
+
+[[variants]]
+id = "C"
+label = "without_elevation"
+include_elevation = false
+level_aggregation = "selected_training_support"
+
+[[variants]]
+id = "D"
+label = "without_elevation_consistent_support"
+include_elevation = false
+level_aggregation = "complete_predictor_support"

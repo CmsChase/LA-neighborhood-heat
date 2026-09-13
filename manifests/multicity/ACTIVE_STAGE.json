@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": "2026-09-m3-blind-predictions-v2-exact-schema-committed",
-  "stage_id": "next_experiment_m3_blind_prediction",
-  "state": "m3_blind_predictions_committed",
-  "next_safe_stage": "create_independent_blind_target_access_and_evaluation_authorization",
-  "summary": "Append-only v2 prediction completion 295ccca0ea0239cf6eb5633b736a7565abbac3cc47992bae6bcbc9ba4d6f74ac supersedes the retained 14-column v1 audit record and authenticates the protocol-exact 21-column output for all 23,667 blind-city tract-date rows. The repair added frozen source-only B1, legacy M2, four-member M3 ensemble, and full UQ/risk diagnostics before target access. No blind Landsat thermal, QA, or target value was read and the prediction-before-target boundary remains intact. Any target access and evaluation require a separate independent authorization.",
+  "revision": "2026-09-m3-source-level-2x2-complete",
+  "stage_id": "m3_source_level_mechanism_2x2",
+  "state": "complete_no_variant_qualified",
+  "next_safe_stage": "develop_relative_temperature_or_applicability_with_existing_data_only",
+  "summary": "The fixed source-only 2x2 diagnostic completed on 132 city-dates and 96,061 QA-4K rows with no network or new-city access. B1 MAE was 3.6578 C; A/B/C/D were 4.5796/4.7568/5.0814/5.1595 C. No variant qualified, so the complex zero-shot absolute-temperature route is paused. Aggregate anomaly MAE was 1.3631 C versus B1 1.7146 C. Any continuation must use already available cities to study relative temperature or applicability; Seattle, Denver, Atlanta, and Miami cannot become a new blind claim.",
   "permissions": {
     "read_public_predictor_sources": true,
     "build_predictor": false,
@@ -22,6 +22,7 @@
     "reprocess_m3_source_targets": true,
     "fit_m3_source_models": true,
     "select_m3_model_or_st_qa": true,
+    "run_m3_source_level_2x2_diagnostic": true,
     "implement_m3_blind_predictor_runner_without_value_access": true,
     "read_m3_blind_predictor_values": true,
     "predict_m3_blind_from_frozen_source_model": true,
@@ -73,6 +74,8 @@
     "next_experiment_blind_predictors_46_complete": true,
     "next_experiment_blind_prediction_authorized": true,
     "next_experiment_blind_predictions_committed": true,
+    "m3_source_level_2x2_design_fixed": true,
+    "m3_source_level_2x2_complete": true,
     "new_candidate_targets_sealed": true
   },
   "inputs": {
@@ -306,7 +309,7 @@
     "next_experiment_blind_prediction_v1_superseded_completion_commit_sha256": "4d90bca2ae6aa28233a05e3e0419b165e8c11844843bb93489b4c4d74837f20b",
     "next_experiment_blind_prediction_v2_repair_authorization_commit_sha256": "1213ab79192bb2f22736bcc886473fc61589c6eafa8ec4dff73ba34b08bef4e8",
     "next_experiment_blind_prediction_completion_commit_sha256": "295ccca0ea0239cf6eb5633b736a7565abbac3cc47992bae6bcbc9ba4d6f74ac",
-    "next_action": "create_independent_blind_target_access_and_evaluation_authorization"
+    "next_action": "develop_relative_temperature_or_applicability_with_existing_data_only"
   },
   "prepared_post_return_tools": {
     "one_click_import": "tools/windows/legacy/IMPORT_SENTINEL_RESULTS.cmd",

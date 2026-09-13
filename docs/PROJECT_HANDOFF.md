@@ -2,6 +2,48 @@
 
 Last updated: 2026-09-13 Asia/Shanghai
 
+## Current research review milestone (supersedes stale resume notes below)
+
+The M3 four-city evaluation and public result are complete in the current
+`7955c7b` checkout. See `reports/M3_BLIND_EVALUATION_REPORT.md` and terminal
+completion `383742cb17674c508e8a7dfe853caa163ab2bd8d0816e150e6f4d966e2334a26`.
+M3 failed its primary comparison: MAE 5.8343 C versus B1 3.8032 C over 9,502
+rows, 66 city-dates, and 68 blocks. The four opened cities cannot provide
+another blind confirmation or confirmatory retuning.
+
+A read-only research review is recorded in `docs/M3_FAILURE_REVIEW.zh-CN.md`.
+Its reproducible local diagnostics are in `exports/M3_FAILURE_REVIEW/` (ignored).
+The frozen level model has a positive elevation coefficient of 0.0088051 C/m;
+Denver's approximately 1,630 m city median is well beyond the approximately
+371 m maximum QA-4K training city-date median. Its centered elevation term is
+approximately +12.94 C, making level extrapolation the leading mechanism to
+test, not a proven causal explanation. Source outer OOF already favored B1
+(4.2059 C versus M3 5.2259 C; 96,904 rows, 134 city-dates, 254 blocks).
+The review also identified training/prediction aggregation-support mismatch
+and the absence of a B1 performance requirement for model promotion.
+
+The approved fixed source-only 2-by-2 diagnostic is now implemented and
+complete. It used only QA-4K data already on disk for LA, Phoenix, Houston, and
+Chicago, with Ridge alpha 10 and the 31-leaf anomaly model fixed. Variant A
+exactly reproduced the historical fixed-candidate MAE of 4.5795588 C. On the
+same 132 city-dates and 96,061 rows, B1 achieved 3.6578 C; A/B/C/D achieved
+4.5796/4.7568/5.0814/5.1595 C. No variant passed the fixed development gate.
+Aggregate anomaly MAE remained informative at 1.3631 C versus B1 1.7146 C,
+although Phoenix alone was slightly worse than B1 on that secondary metric.
+The absolute-temperature route is paused under its predefined stop rule.
+An immediate no-refit screen across all eight already available cities found
+lower M3 anomaly MAE in seven of eight cities; equal-city descriptive means
+were 1.1804 C for fixed-spec M3 and 1.5576 C for B1. Phoenix was the lone
+exception by 0.0099 C. Source LOSO and previously opened-city results retain
+their different historical roles, so this combined screen is directional,
+not a new confirmation estimate.
+
+`ACTIVE_STAGE.json` now records this terminal diagnostic state. The next safe
+research task is a compact relative-temperature/applicability experiment using
+only already available data. Do not resume historical queues or acquire a new
+city. The opened Seattle, Denver, Atlanta, and Miami cohort may be used only as
+development stress-test evidence, never as another blind confirmation.
+
 ## Project summary
 
 This repository contains a completed Los Angeles neighborhood-scale historical
