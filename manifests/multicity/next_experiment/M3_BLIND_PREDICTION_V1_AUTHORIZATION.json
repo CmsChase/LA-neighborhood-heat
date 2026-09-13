@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-prediction-v1",
+  "state": "m3_blind_prediction_authorized",
+  "source_nested_loso_completion_commit_sha256": "207d45f8fdc7237f6347ed69b1c67733df353a3331e622707e93c4b3f21c34d3",
+  "blind_predictors_completion_commit_sha256": "efd100881992273fd17101b6687e84a9a24cb00d52726eec489ba9b2331b3661",
+  "selected_joint_candidate_id": "qa_4k__level_ridge_alpha_10__anomaly_hgb_leaves_31",
+  "selected_qa_id": "4k",
+  "selected_m3_candidate_id": "level_ridge_alpha_10__anomaly_hgb_leaves_31",
+  "selected_uq_method": "unweighted_cross_conformal",
+  "selected_risk_method": "none_accept_all",
+  "model_record": {
+    "path": "data/processed/multicity/m3_source_joint_nested_loso_v1/joint/selected_source_model.pkl",
+    "bytes": 1108551,
+    "sha256": "6f4739b7afe6a4d4873d2e151c340420db463f3ec4251ba89438dabd7683d5b2",
+    "role": "selected_source_model"
+  },
+  "oof_record": {
+    "path": "data/processed/multicity/m3_source_joint_nested_loso_v1/joint/outer_oof_predictions.parquet",
+    "bytes": 5287563,
+    "sha256": "bee6a0c6491531c24987e40b63bdacd91be139a55a039bc948baa7d7eae0d345",
+    "role": "outer_oof_predictions",
+    "rows": 96904
+  },
+  "blind_predictor_records": [
+    {
+      "sha256": "69b683d113f893e1b9a78c3c334f49134dd81f4e988dc9eb65b582f9f2baac3c",
+      "bytes": 1889254,
+      "rows": 9558,
+      "schema_sha256": "ed9280f7d358331bc3eb14071182405768aa73eb6371c646117507ecb8981480",
+      "path": "data/processed/multicity/m3_blind_predictor_build_v1/predictors_46_v1/seattle_wa/predictors_46.parquet",
+      "semantic_sha256": "a11afc508722327b369e4e6c428355f046bc30bde7bc507e4e6cece964ba1b00"
+    },
+    {
+      "sha256": "1c53b8aae4569834bded1c5a855ba8e2d69a7deecb1c715d8ea0c32d49d1b46b",
+      "bytes": 1147375,
+      "rows": 5425,
+      "schema_sha256": "ed9280f7d358331bc3eb14071182405768aa73eb6371c646117507ecb8981480",
+      "path": "data/processed/multicity/m3_blind_predictor_build_v1/predictors_46_v1/denver_co/predictors_46.parquet",
+      "semantic_sha256": "22db3c959fa5cd310c60cb720380a079df9b428e447b37127d4404c94cfe9346"
+    },
+    {
+      "sha256": "f3ec2673a4ac0b6a1d0896341aa8054d9d332fbc4ed5e29953b2155af1345a2e",
+      "bytes": 1052874,
+      "rows": 4844,
+      "schema_sha256": "ed9280f7d358331bc3eb14071182405768aa73eb6371c646117507ecb8981480",
+      "path": "data/processed/multicity/m3_blind_predictor_build_v1/predictors_46_v1/atlanta_ga/predictors_46.parquet",
+      "semantic_sha256": "d5b10ba4f7eac2b7a3690ac1db533d67a22f39b75ab262ec6d0ed5469d634e85"
+    },
+    {
+      "sha256": "5dcd28d89d80add388d56966b52454c52636a7505fe838d7c6222b3e4ecdda3a",
+      "bytes": 751133,
+      "rows": 3840,
+      "schema_sha256": "ed9280f7d358331bc3eb14071182405768aa73eb6371c646117507ecb8981480",
+      "path": "data/processed/multicity/m3_blind_predictor_build_v1/predictors_46_v1/miami_fl/predictors_46.parquet",
+      "semantic_sha256": "decf737dfee7da2baf51f96f5a9d8f7178e6a1b0ccf82cb1b68c758fa10bff73"
+    }
+  ],
+  "city_context": [
+    {
+      "city_id": "seattle_wa",
+      "city_centroid_latitude_deg": 47.61994099765098,
+      "algorithm": "authenticate_census_place_city_boundary;project_to_locked_target_grid_crs;unary_union;centroid;transform_centroid_to_epsg4326;take_latitude",
+      "checkpoint_commit_sha256": "50d2635e1ace42f98cb0d32e45466215653b0e2b05c7e68fa9fd5391126a2052",
+      "city_boundary_sha256": "200041506077336e74f9956e0407496b4ce66c97bb5401aa36427906f42e02f8",
+      "target_grid_crs": "EPSG:32610"
+    },
+    {
+      "city_id": "denver_co",
+      "city_centroid_latitude_deg": 39.76198814803848,
+      "algorithm": "authenticate_census_place_city_boundary;project_to_locked_target_grid_crs;unary_union;centroid;transform_centroid_to_epsg4326;take_latitude",
+      "checkpoint_commit_sha256": "b7df97d83a30ee70f0bb0ad54a4c86fd092a0963d708b5fa27a106823bd83ffe",
+      "city_boundary_sha256": "ce17a88a4ed511d5a78a537212398fc8cd004fa25ba1a130697ced997560245f",
+      "target_grid_crs": "EPSG:32613"
+    },
+    {
+      "city_id": "atlanta_ga",
+      "city_centroid_latitude_deg": 33.76278922175765,
+      "algorithm": "authenticate_census_place_city_boundary;project_to_locked_target_grid_crs;unary_union;centroid;transform_centroid_to_epsg4326;take_latitude",
+      "checkpoint_commit_sha256": "1af0b4f57b487c5bec3b744bf1909539ca618d86e3caf7314533d346f434ea77",
+      "city_boundary_sha256": "6f5157a9063cf967a2b1deeaa499130b38f6ce78efc01d84a988d6f737352b52",
+      "target_grid_crs": "EPSG:32616"
+    },
+    {
+      "city_id": "miami_fl",
+      "city_centroid_latitude_deg": 25.77523219065055,
+      "algorithm": "authenticate_census_place_city_boundary;project_to_locked_target_grid_crs;unary_union;centroid;transform_centroid_to_epsg4326;take_latitude",
+      "checkpoint_commit_sha256": "a228401aebba1bd6bb2c3622dce8f59cbaf1c8e6f37ed7f4e9f337ac9e20c95a",
+      "city_boundary_sha256": "5bf9147386d8e613d217c3761cff8350c829b43536947309e3ee4e6e26511b3b",
+      "target_grid_crs": "EPSG:32617"
+    }
+  ],
+  "code": [
+    {
+      "path": "src/la_heat/multicity/m3_blind_prediction_v1.py",
+      "bytes": 17368,
+      "sha256": "5cd2fd3421f4cdc5ea465743e7d4ba050a73fd2ed4c63f063a3279df5fc594ce"
+    },
+    {
+      "path": "scripts/authorize_m3_blind_prediction_v1.py",
+      "bytes": 1307,
+      "sha256": "ed9eb60c61fa34fff5282cc48b28abde2a58161ceec0ba16f2b292b4a4979e6c"
+    },
+    {
+      "path": "scripts/run_m3_blind_prediction_v1.py",
+      "bytes": 983,
+      "sha256": "a99d448464b21a40af863c28add544e7275c4afdb6ee3b7016c94e3be8da8a02"
+    }
+  ],
+  "permissions": {
+    "read_frozen_source_model_and_oof_residuals": true,
+    "read_completed_blind_predictor_values": true,
+    "write_target_blind_predictions": true,
+    "fit_retrain_retune_or_select": false,
+    "read_blind_landsat_hrefs_thermal_qa_or_targets": false,
+    "network_or_href_reads": false,
+    "score_or_evaluate_against_blind_targets": false
+  },
+  "output_contract": {
+    "city_ids": [
+      "seattle_wa",
+      "denver_co",
+      "atlanta_ga",
+      "miami_fl"
+    ],
+    "row_count": 23667,
+    "columns": [
+      "city_id",
+      "tract_geoid",
+      "target_date",
+      "m3_level_prediction_c",
+      "m3_anomaly_prediction_c",
+      "m3_prediction_c",
+      "m3_conformal_correction_c",
+      "m3_lower_c",
+      "m3_upper_c",
+      "m3_interval_width_c",
+      "uq_method",
+      "risk_method",
+      "m3_abstain",
+      "m3_accepted"
+    ],
+    "prediction_before_target_boundary": true
+  },
+  "next_safe_stage": "run_offline_blind_prediction_before_any_target_access",
+  "commit_sha256": "9c22ff5a3bd2c8b016c47281207da8b0779c3e1b1b48f1438a51e37399b8958d"
+}
