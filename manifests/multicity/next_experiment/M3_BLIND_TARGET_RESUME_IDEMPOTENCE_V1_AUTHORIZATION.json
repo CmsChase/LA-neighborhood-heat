@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-target-resume-idempotence-v1",
+  "state": "m3_blind_target_resume_idempotence_authorized",
+  "joint_repair_authorization_commit_sha256": "2dc5797de4f542ac9de7bc19c764fe693fec66951b9f924ae0a78e9fa89e259b",
+  "incident": {
+    "exception_type": "M3BlindPredictionError",
+    "exception_message": "Append-only artifact exists: D:\\HuaweiMoveData\\Users\\haora\\Documents\\ISEF\\data\\interim\\multicity\\m3_blind_target_v1\\cities\\seattle_wa\\targets_4k.parquet",
+    "existing_seattle_output": {
+      "path": "data/interim/multicity/m3_blind_target_v1/cities/seattle_wa/targets_4k.parquet",
+      "bytes": 295362,
+      "sha256": "ddb8c7b1444592f32d4b42de4e2bdda8e2756171a2073863e59f96c183b7872f",
+      "rows": 9558,
+      "semantic_sha256": "e51f9f7d370653b8fa1bf5a1664167503e64c5db1b0d85839ca0e94e7065951c"
+    }
+  },
+  "code": [
+    {
+      "path": "src/la_heat/multicity/m3_blind_target_resume_idempotence_v1.py",
+      "bytes": 6426,
+      "sha256": "ffe34dc99d1328394b9b3540a31cc433b9fb40d561ccebfdc6fc91e7865c4764"
+    },
+    {
+      "path": "scripts/authorize_m3_blind_target_resume_idempotence_v1.py",
+      "bytes": 1308,
+      "sha256": "1d4ba27fe8de3220147d32be3960e34a9f5614b25164d83fb6a0d08c28d90075"
+    },
+    {
+      "path": "scripts/run_m3_blind_target_resume_idempotence_v1.py",
+      "bytes": 746,
+      "sha256": "cebc977eded3a2225a77f0de774fcca720816e48763a2bb2b5032bcf8bb45535"
+    }
+  ],
+  "permissions": {
+    "resume_same_combined_claim": true,
+    "skip_existing_city_table_only_on_exact_semantic_match": true,
+    "overwrite_delete_or_change_existing_artifact": false,
+    "change_threshold_city_date_qa_prediction_or_model": false
+  },
+  "next_safe_stage": "resume_joint_cell_repair_with_exact_match_city_skip",
+  "commit_sha256": "8419a7b5ce301cc7426f71d665fcacf19055607a0c76dfcea3ed711a6602fe30"
+}
