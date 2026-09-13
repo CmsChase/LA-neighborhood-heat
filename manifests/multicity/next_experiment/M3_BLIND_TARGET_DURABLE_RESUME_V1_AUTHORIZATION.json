@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-target-durable-resume-v1",
+  "state": "m3_blind_target_durable_resume_authorized",
+  "parent_authorization_commit_sha256": "87794fd56b68711f3fe5499f130aae9ef61fcfeb98beffba238cc522a4299601",
+  "joint_repair_authorization_commit_sha256": "2dc5797de4f542ac9de7bc19c764fe693fec66951b9f924ae0a78e9fa89e259b",
+  "idempotence_authorization_commit_sha256": "8419a7b5ce301cc7426f71d665fcacf19055607a0c76dfcea3ed711a6602fe30",
+  "minimum_completed_overpasses": {
+    "seattle_wa": 54,
+    "denver_co": 15,
+    "atlanta_ga": 0,
+    "miami_fl": 0
+  },
+  "code": [
+    {
+      "path": "src/la_heat/multicity/m3_blind_target_durable_resume_v1.py",
+      "bytes": 7897,
+      "sha256": "219f4eae33390e449025557c84c798b974e2d2b525b1d78fd376288f5c8c96c6"
+    },
+    {
+      "path": "scripts/authorize_m3_blind_target_durable_resume_v1.py",
+      "bytes": 1312,
+      "sha256": "ba2e772e7e88b84cba8674264f322d20ce1b4959bb51f9532dff9afe33970804"
+    },
+    {
+      "path": "scripts/run_m3_blind_target_durable_resume_v1.py",
+      "bytes": 738,
+      "sha256": "af4841ab0c2665c07ed918fa8b34a050617d5ed57b262135d9e7b650538a69a2"
+    }
+  ],
+  "permissions": {
+    "resume_same_combined_claim_with_monotonic_progress": true,
+    "retry_uncommitted_transient_network_failure": true,
+    "withhold_relative_endpoints_when_no_joint_cell_is_eligible": true,
+    "skip_existing_parquet_only_on_exact_semantic_match": true,
+    "overwrite_delete_or_regress_progress": false,
+    "change_threshold_city_date_qa_prediction_or_model": false
+  },
+  "next_safe_stage": "resume_until_parent_target_completion",
+  "commit_sha256": "15fb1e8691f58bf044317dab37f1f6c7a3797d4131f83f76c0fce3b5178c5a95"
+}
