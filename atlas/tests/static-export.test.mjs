@@ -94,101 +94,26 @@ test("keeps hero annotations on-screen and distinguishes tract taps from map dra
   );
 });
 
-test("exports a release consistent with the generated four-city payload", async () => {
-  const html = await readFile(
+test("uses one continuous story for current and legacy research routes", async () => {
+  const current = await readFile(
+    new URL("../out/m3/index.html", import.meta.url),
+    "utf8",
+  );
+  const legacy = await readFile(
     new URL("../out/cities/index.html", import.meta.url),
     "utf8",
   );
-  const dataContract = await readFile(
-    new URL("../app/cities/comparison-data.ts", import.meta.url),
-    "utf8",
-  );
-  const generatedResults = await readFile(
-    new URL("../app/cities/generated-results.ts", import.meta.url),
-    "utf8",
-  );
-  const renderedText = html.replace(/<!--[\s\S]*?-->/g, "");
 
-  assert.match(html, /One frozen model contract/);
-  assert.match(html, /aria-label="Scrollable four-city performance table"/);
-  assert.match(html, /Los Angeles/);
-  assert.match(html, /Phoenix/);
-  assert.match(html, /Houston/);
-  assert.match(html, /Chicago/);
-  assert.match(html, /cities\[\*\]\.results/);
-  assert.match(dataContract, /state: "preview"/);
-  assert.match(dataContract, /claimId: null/);
-  assert.match(dataContract, /externalConfirmation: null/);
-  assert.match(dataContract, /evidenceFigures: \[\]/);
-  assert.equal((dataContract.match(/^\s{6}results: null,/gm) ?? []).length, 4);
-  assert.match(
-    dataContract,
-    /Preview releases cannot contain a claim ID or result values/,
-  );
-  assert.match(dataContract, /historical_source_reference/);
-  assert.match(dataContract, /authenticated_external_confirmation/);
-  const isPreview = /GENERATED_VERIFIED_RELEASE: unknown = null/.test(
-    generatedResults,
-  );
-  if (isPreview) {
-    assert.match(html, /no real fit has occurred yet/);
-    assert.match(html, /Preview · targets sealed/);
-    assert.match(html, /Result slots are intentionally empty/);
-    assert.match(html, /External targets sealed/);
-    assert.match(html, /No cross-city outcome values are bundled/);
-    assert.doesNotMatch(html, /Six views\. One frozen claim\./);
-  } else {
-    assert.match(html, /Authenticated record · outcome inconclusive/);
-    assert.match(html, /Evidence record authenticated/);
-    assert.match(html, /Six views\. One inconclusive claim\./);
-    assert.match(html, /inconclusive_sample_size/);
-    assert.match(renderedText, /28\.9%/);
-    assert.match(
-      renderedText,
-      /95% bootstrap CI:\s*14\.1%\s*to\s*43\.5%/,
-    );
-    assert.match(html, /Point-confirmation gate/);
-    assert.match(html, /Reliability gate/);
-    assert.match(
-      renderedText,
-      /28 city-dates[\s\S]*?11,207 rows[\s\S]*?180 blocks/,
-    );
-    assert.match(html, /AUTHENTICATED · NOT CONFIRMED/);
-    assert.match(html, /Authenticated does not mean confirmed\./);
-    assert.doesNotMatch(html, /Result slots are intentionally empty/);
+  for (const html of [current, legacy]) {
+    assert.match(html, /The whole research line/);
+    assert.match(html, /The first transfer study/);
+    assert.match(html, /The harder M3 blind test/);
+    assert.match(html, /Diagnose before expanding/);
+    assert.match(html, /The narrower result/);
   }
 });
 
-test("keeps authentication distinct from scientific confirmation", async () => {
-  const page = await readFile(
-    new URL("../app/cities/page.tsx", import.meta.url),
-    "utf8",
-  );
-  const panel = await readFile(
-    new URL("../app/cities/ComparisonPanel.tsx", import.meta.url),
-    "utf8",
-  );
-
-  assert.match(page, /data\.release\.state === "verified"/);
-  assert.match(page, /Authenticated record · outcome inconclusive/);
-  assert.match(
-    page,
-    /Los Angeles remains the historical source[\s\S]*?reference/,
-  );
-  assert.match(page, /outcome\.cohortState/);
-  assert.match(page, /outcome\.relativeMaeImprovementPercent/);
-  assert.match(page, /outcome\.pointPredictionGatePassed/);
-  assert.match(page, /outcome\.reliabilityGatePassed/);
-  assert.match(panel, /The evidence is authenticated\. The outcome is inconclusive\./);
-  assert.match(panel, /Authenticated metric record/);
-  assert.match(panel, /Historical LA reference/);
-  assert.match(page, /data\.evidenceFigures\.map/);
-  assert.match(page, /Six views\. One inconclusive claim\./);
-  assert.match(page, /ASSET_BASE_PATH/);
-  assert.match(page, /Source record/);
-});
-
-test("exports the authenticated M3 four-city blind-result summary", async () => {
+test("exports the complete M3 research line without rewriting the blind result", async () => {
   const html = await readFile(
     new URL("../out/m3/index.html", import.meta.url),
     "utf8",
@@ -203,9 +128,9 @@ test("exports the authenticated M3 four-city blind-result summary", async () => 
     import.meta.url,
   );
 
-  assert.match(html, /A result,/);
-  assert.match(html, /not a victory/);
-  assert.match(html, /Not confirmed/);
+  assert.match(html, /The model failed/);
+  assert.match(html, /The signal narrowed/);
+  assert.match(html, /A result, not a victory/);
   assert.match(renderedText, /53\.4%/);
   assert.match(renderedText, /5\.83°/);
   assert.match(renderedText, /3\.80°/);
@@ -216,7 +141,11 @@ test("exports the authenticated M3 four-city blind-result summary", async () => 
   assert.match(html, /Atlanta/);
   assert.match(html, /Miami/);
   assert.match(html, /Five honest failures/);
-  assert.match(html, /Models changed after opening/);
-  assert.match(html, /None/);
+  assert.match(renderedText, /\+13\.20°C/);
+  assert.match(renderedText, /19\.8%/);
+  assert.match(renderedText, /28\.8%/);
+  assert.match(renderedText, /36%/);
+  assert.match(html, /Absolute-temperature route stopped/);
+  assert.match(html, /development result/);
   assert.equal(await sha256(sourceSummary), await sha256(exportedSummary));
 });

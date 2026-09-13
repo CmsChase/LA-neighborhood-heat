@@ -68,6 +68,15 @@ Do not resume historical queues, acquire a new city, or enlarge the model
 search. The opened Seattle, Denver, Atlanta, and Miami cohort may be used only
 as development stress-test evidence, never as another blind confirmation.
 
+The public research narrative is now consolidated into one continuous page at
+`/m3/`: the earlier Phoenix/Houston/Chicago transfer, the four-city blind M3
+failure, the Denver mechanism diagnosis, and the relative-temperature
+development result appear in chronological order without changing their
+scientific roles. The legacy `/cities/` route reuses the same page so old links
+remain valid instead of preserving a competing summary. The Los Angeles
+interactive atlas remains at `/`. The GitHub Pages export, evidence hashes,
+both routes, and the merged narrative are covered by `atlas/tests/static-export.test.mjs`.
+
 ## Project summary
 
 This repository contains a completed Los Angeles neighborhood-scale historical

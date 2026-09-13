@@ -7,9 +7,9 @@ const repositoryRoot =
   "https://github.com/CmsChase/LA-neighborhood-heat/blob/main";
 
 export const metadata: Metadata = {
-  title: "M3 four-city blind result · Surface Heat Atlas",
+  title: "The M3 research story · Surface Heat Atlas",
   description:
-    "The authenticated Seattle, Denver, Atlanta, and Miami M3 blind evaluation: not confirmed, with every prespecified gate reported.",
+    "One continuous record from early transfer evidence through the failed M3 blind test, mechanism diagnosis, and the narrower relative-temperature result.",
 };
 
 function signed(value: number, digits = 2) {
@@ -28,14 +28,15 @@ export default function M3ResultPage() {
         <Link className="wordmark" href="/">
           <span>M3</span> Surface Heat Atlas
         </Link>
-        <nav aria-label="M3 result navigation">
-          <a href="#result">Result</a>
-          <a href="#cities">Cities</a>
-          <a href="#gates">Gates</a>
-          <a href="#integrity">Integrity</a>
+        <nav aria-label="M3 research-story navigation">
+          <a href="#story">Story</a>
+          <a href="#earlier-transfer">First transfer</a>
+          <a href="#blind-result">Blind result</a>
+          <a href="#diagnosis">Diagnosis</a>
+          <a href="#relative">Relative signal</a>
         </nav>
-        <Link className="header-tag" href="/cities">
-          Earlier transfer study
+        <Link className="header-tag" href="/">
+          LA interactive atlas
         </Link>
       </header>
 
@@ -43,22 +44,23 @@ export default function M3ResultPage() {
         <div className={styles.heroGrid} aria-hidden="true" />
         <div className={styles.heroCopy}>
           <span className={styles.recordBadge}>
-            <i /> Authenticated · one-time blind evaluation
+            <i /> One continuous research record · 2025–2026
           </span>
-          <span className="eyebrow light">Seattle · Denver · Atlanta · Miami</span>
+          <span className="eyebrow light">Eight cities · three experiments · one honest turn</span>
           <h1>
-            A result,
+            The model failed.
             <br />
-            <em>not a victory.</em>
+            <em>The signal narrowed.</em>
           </h1>
           <p>
-            The frozen M3 model met four cities it had never seen. It did not
-            outperform the legal baseline—and the experiment reports that
-            answer without moving the goalposts.
+            Early transfer looked promising. A harder blind test rejected M3 as
+            an absolute-temperature model. Diagnosis then found a smaller,
+            repeatable result: neighborhood heat patterns within the same city
+            and day.
           </p>
           <div className={styles.heroActions}>
-            <a className={styles.primaryAction} href="#result">
-              Read the result <span>↓</span>
+            <a className={styles.primaryAction} href="#story">
+              Follow the full line <span>↓</span>
             </a>
             <a
               className={styles.textAction}
@@ -71,29 +73,126 @@ export default function M3ResultPage() {
           </div>
         </div>
 
-        <aside className={styles.verdictCard} aria-label="M3 blind-test verdict">
-          <span>Protocol verdict</span>
-          <strong>{result.label}</strong>
-          <code>{result.state}</code>
+        <aside className={styles.verdictCard} aria-label="Current M3 research conclusion">
+          <span>Current conclusion</span>
+          <strong>One route stopped. One narrowed.</strong>
+          <code>absolute: rejected · relative: development signal</code>
           <div className={styles.verdictRule} />
           <p>
-            M3 recorded higher error than B1. Miami also fell below the frozen
-            minimum number of usable dates.
+            The blind failure remains unchanged. The later relative-temperature
+            work uses existing data only and is development evidence—not a new
+            confirmation claim.
           </p>
           <dl>
             <div>
-              <dt>Primary gates passed</dt>
+              <dt>Absolute blind gates</dt>
               <dd>0 / 5</dd>
             </div>
             <div>
-              <dt>Models changed after opening</dt>
-              <dd>None</dd>
+              <dt>Relative source improvement</dt>
+              <dd>{result.relative.source.improvementPercent}%</dd>
             </div>
           </dl>
         </aside>
       </section>
 
-      <section className={styles.resultBand} id="result">
+      <section className={styles.storySection} id="story">
+        <div className={styles.storyHeading}>
+          <span className="eyebrow">The whole research line</span>
+          <h2>One question became more precise.</h2>
+          <p>
+            Each stage keeps the previous result intact. A promising estimate
+            became an inconclusive transfer, then a failed blind claim, then a
+            mechanism diagnosis, and finally a narrower development target.
+          </p>
+        </div>
+        <ol className={styles.storyLine}>
+          <li>
+            <span>01</span>
+            <small>Los Angeles</small>
+            <strong>Learn neighborhood heat</strong>
+            <p>The original atlas established the local historical hindcast.</p>
+          </li>
+          <li>
+            <span>02</span>
+            <small>Phoenix · Houston · Chicago</small>
+            <strong>First transfer</strong>
+            <p>A positive aggregate estimate, but too little support for confirmation.</p>
+          </li>
+          <li>
+            <span>03</span>
+            <small>Source-only development</small>
+            <strong>Build M3</strong>
+            <p>Separate city-day level from neighborhood spatial anomaly.</p>
+          </li>
+          <li>
+            <span>04</span>
+            <small>Seattle · Denver · Atlanta · Miami</small>
+            <strong>Blind test fails</strong>
+            <p>Absolute error rises 53.4%; all five gates fail.</p>
+          </li>
+          <li>
+            <span>05</span>
+            <small>Failure analysis</small>
+            <strong>Find the fracture</strong>
+            <p>Denver exposes level and elevation extrapolation failure.</p>
+          </li>
+          <li>
+            <span>06</span>
+            <small>Existing data only</small>
+            <strong>Narrow the claim</strong>
+            <p>Relative neighborhood differences survive; absolute temperature does not.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section className={styles.earlierTransfer} id="earlier-transfer">
+        <div>
+          <span className="eyebrow light">01 · The first transfer study</span>
+          <h2>Promising direction, insufficient confirmation.</h2>
+          <p>
+            The earlier frozen model moved from Los Angeles to Phoenix, Houston,
+            and Chicago. Its aggregate point estimate improved over B1, but the
+            point and reliability gates still failed. That result motivated the
+            stricter M3 experiment; it did not validate cross-city use.
+          </p>
+        </div>
+        <dl className={styles.transferNumbers}>
+          <div>
+            <dt>MAE improvement</dt>
+            <dd>{result.earlierTransfer.relativeMaeImprovementPercent.toFixed(1)}%</dd>
+          </div>
+          <div>
+            <dt>95% bootstrap interval</dt>
+            <dd>
+              {result.earlierTransfer.bootstrapLowerPercent.toFixed(1)}–
+              {result.earlierTransfer.bootstrapUpperPercent.toFixed(1)}%
+            </dd>
+          </div>
+          <div>
+            <dt>Evidence support</dt>
+            <dd>
+              {result.earlierTransfer.cityDates} dates ·{" "}
+              {result.earlierTransfer.rows.toLocaleString()} rows
+            </dd>
+          </div>
+          <div>
+            <dt>Scientific verdict</dt>
+            <dd>Inconclusive</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section className={styles.blindIntro} id="blind-result">
+        <span className="eyebrow">02 · The harder M3 blind test</span>
+        <h2>A result, not a victory.</h2>
+        <p>
+          The frozen M3 model met four genuinely unseen cities. It lost to B1,
+          and that failed absolute-temperature result remains the primary answer.
+        </p>
+      </section>
+
+      <section className={styles.resultBand}>
         <div className={styles.resultLead}>
           <span>Primary comparison</span>
           <strong>53.4%</strong>
@@ -160,7 +259,7 @@ export default function M3ResultPage() {
       <section className={styles.section} id="cities">
         <div className={styles.sectionHeading}>
           <div>
-            <span className="eyebrow">01 · City by city</span>
+            <span className="eyebrow">03 · Blind result, city by city</span>
             <h2>The aggregate hides a fracture.</h2>
           </div>
           <p>
@@ -232,7 +331,7 @@ export default function M3ResultPage() {
 
       <section className={styles.gateSection} id="gates">
         <div className={styles.gateIntro}>
-          <span className="eyebrow light">02 · Prespecified decision</span>
+          <span className="eyebrow light">04 · Prespecified decision</span>
           <h2>
             Five gates.
             <br />
@@ -260,7 +359,7 @@ export default function M3ResultPage() {
       <section className={styles.reliabilitySection}>
         <div className={styles.sectionHeading}>
           <div>
-            <span className="eyebrow">03 · Reliability</span>
+            <span className="eyebrow">05 · Reliability</span>
             <h2>Uncertainty did not travel cleanly.</h2>
           </div>
           <p>
@@ -306,7 +405,7 @@ export default function M3ResultPage() {
 
       <section className={styles.integritySection} id="integrity">
         <div className={styles.integrityHeading}>
-          <span className="eyebrow light">04 · Experimental integrity</span>
+          <span className="eyebrow light">06 · Experimental integrity</span>
           <h2>The answer arrived after the prediction was sealed.</h2>
           <p>
             This ordering is the experiment. The targets cannot flow backward
@@ -357,25 +456,140 @@ export default function M3ResultPage() {
         </div>
       </section>
 
+      <section className={styles.diagnosisSection} id="diagnosis">
+        <div className={styles.sectionHeading}>
+          <div>
+            <span className="eyebrow">07 · Diagnose before expanding</span>
+            <h2>Denver revealed a level problem.</h2>
+          </div>
+          <p>
+            M3 overestimated Denver on every usable date. Once each city-day&apos;s
+            overall temperature was removed, much of the neighborhood pattern
+            remained. That split the failed task into two distinct questions.
+          </p>
+        </div>
+        <div className={styles.diagnosisGrid}>
+          <article className={styles.diagnosisLead}>
+            <span>Denver absolute bias</span>
+            <strong>+{result.diagnosis.denverMeanBiasC.toFixed(2)}°C</strong>
+            <p>Systematically too hot across all 24 valid dates.</p>
+          </article>
+          <article>
+            <span>Neighborhood anomaly error</span>
+            <strong>{result.diagnosis.denverAnomalyMaeC.toFixed(2)}°C</strong>
+            <p>After removing the city-day level.</p>
+          </article>
+          <article>
+            <span>Elevation extrapolation</span>
+            <strong>{result.diagnosis.denverElevationM.toLocaleString()} m</strong>
+            <p>
+              Denver versus about {result.diagnosis.maximumTrainingCityElevationM} m
+              at the top of the training city-level range.
+            </p>
+          </article>
+          <article>
+            <span>Estimated elevation term</span>
+            <strong>+{result.diagnosis.denverElevationContributionC.toFixed(2)}°C</strong>
+            <p>Close to the observed bias magnitude; mechanism, not a correction.</p>
+          </article>
+        </div>
+        <div className={styles.mechanismVerdict}>
+          <span>Fixed 2×2 mechanism test</span>
+          <p>
+            B1 reached <strong>{result.diagnosis.sourceB1MaeC.toFixed(2)}°C</strong> MAE;
+            the best absolute M3 variant reached{" "}
+            <strong>{result.diagnosis.bestAbsoluteVariantMaeC.toFixed(2)}°C</strong>.
+            Changing elevation and aggregation support did not rescue the route.
+          </p>
+          <b>Absolute-temperature route stopped</b>
+        </div>
+      </section>
+
+      <section className={styles.relativeSection} id="relative">
+        <div className={styles.relativeHeading}>
+          <span className="eyebrow light">08 · The narrower result</span>
+          <h2>Predict the pattern, not the city&apos;s thermometer.</h2>
+          <p>
+            With absolute level removed, the same fixed spatial model estimates
+            whether a neighborhood is hotter or cooler than its city on that day.
+            No new city was added and no second blind claim was made.
+          </p>
+        </div>
+        <div className={styles.relativeCards}>
+          <article>
+            <span>Whole-city source LOSO</span>
+            <strong>{result.relative.source.improvementPercent}%</strong>
+            <p>lower anomaly MAE than B1</p>
+            <dl>
+              <div><dt>B1</dt><dd>{result.relative.source.b1MaeC.toFixed(2)}°</dd></div>
+              <div><dt>M3-relative</dt><dd>{result.relative.source.m3MaeC.toFixed(2)}°</dd></div>
+            </dl>
+            <small>
+              95% B1−M3 CI {result.relative.source.bootstrapLowerC.toFixed(2)} to{" "}
+              {result.relative.source.bootstrapUpperC.toFixed(2)}°C
+            </small>
+          </article>
+          <article>
+            <span>Opened historical stress set</span>
+            <strong>{result.relative.openedStress.improvementPercent}%</strong>
+            <p>lower anomaly MAE than B1</p>
+            <dl>
+              <div><dt>B1</dt><dd>{result.relative.openedStress.b1MaeC.toFixed(2)}°</dd></div>
+              <div><dt>M3-relative</dt><dd>{result.relative.openedStress.m3MaeC.toFixed(2)}°</dd></div>
+            </dl>
+            <small>
+              Development stress evidence only · 7 of 8 cities improved overall
+            </small>
+          </article>
+          <article>
+            <span>Fixed year stability</span>
+            <strong>{result.relative.yearStability.improvementPercent}%</strong>
+            <p>lower anomaly MAE across {result.relative.yearStability.folds} folds</p>
+            <dl>
+              <div><dt>B1</dt><dd>{result.relative.yearStability.b1MaeC.toFixed(2)}°</dd></div>
+              <div><dt>M3-relative</dt><dd>{result.relative.yearStability.m3MaeC.toFixed(2)}°</dd></div>
+            </dl>
+            <small>Temporal stability, not unseen-city confirmation</small>
+          </article>
+        </div>
+        <div className={styles.fixedModelStrip}>
+          <div>
+            <span>Fixed development model</span>
+            <strong>{result.relative.fixedModel.featureCount} spatial features</strong>
+          </div>
+          <p>
+            {result.relative.fixedModel.trainingRows.toLocaleString()} source rows ·{" "}
+            {result.relative.fixedModel.cityDates} city-dates ·{" "}
+            {result.relative.fixedModel.predictionKeys.toLocaleString()} verified prediction keys
+          </p>
+          <a
+            href={repositoryRoot + "/docs/M3_RELATIVE_TEMPERATURE_REVIEW.zh-CN.md"}
+            rel="noreferrer"
+            target="_blank"
+          >
+            Read the complete review ↗
+          </a>
+        </div>
+      </section>
+
       <section className={styles.finalNote}>
-        <span>What this means</span>
-        <h2>M3 is not confirmed for cross-city use.</h2>
+        <span>Where the line ends</span>
+        <h2>Absolute M3 failed. Relative M3 is a development result.</h2>
         <p>
-          Future development may learn from this result, but any new
-          confirmation claim requires a new model contract and a genuinely
-          untouched cohort. Landsat surface temperature remains a clear-sky
-          surface-heat proxy—not air temperature, exposure, illness, or
-          causation.
+          The project now has a useful narrower model, not a rescued blind test.
+          Any future confirmation still requires a genuinely untouched cohort.
+          Landsat LST is a clear-sky surface-heat proxy—not air temperature,
+          exposure, illness, or causation.
         </p>
       </section>
 
       <footer className={styles.footer}>
         <div>
-          <strong>M3 four-city blind evaluation</strong>
-          <span>Seattle · Denver · Atlanta · Miami</span>
+          <strong>The M3 research record</strong>
+          <span>Los Angeles to eight-city development</span>
         </div>
         <p>
-          Authenticated evidence · unsuccessful scientific confirmation ·{" "}
+          One continuous line · failure preserved · narrower result labeled ·{" "}
           <Link href="/">Return to the Los Angeles atlas.</Link>
         </p>
       </footer>
