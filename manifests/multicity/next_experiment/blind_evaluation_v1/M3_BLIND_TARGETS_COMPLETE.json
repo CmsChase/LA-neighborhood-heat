@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-target-v1",
+  "state": "m3_blind_targets_complete",
+  "authorization_commit_sha256": "87794fd56b68711f3fe5499f130aae9ef61fcfeb98beffba238cc522a4299601",
+  "values_opened_commit_sha256": "52a3492f618809f0a33482498006f55d1fe6a48dd597c13819880fa5d52b1076",
+  "prediction_completion_commit_sha256": "295ccca0ea0239cf6eb5633b736a7565abbac3cc47992bae6bcbc9ba4d6f74ac",
+  "qa_candidate_id": "4k",
+  "city_count": 4,
+  "date_count": 143,
+  "usable_date_count": 66,
+  "target_available_rows": 10453,
+  "cities": [
+    {
+      "city_id": "seattle_wa",
+      "date_count": 54,
+      "usable_date_count": 25,
+      "target_available_rows": 3956,
+      "output": {
+        "path": "data/interim/multicity/m3_blind_target_v1/cities/seattle_wa/targets_4k.parquet",
+        "bytes": 295362,
+        "sha256": "ddb8c7b1444592f32d4b42de4e2bdda8e2756171a2073863e59f96c183b7872f",
+        "rows": 9558,
+        "semantic_sha256": "e51f9f7d370653b8fa1bf5a1664167503e64c5db1b0d85839ca0e94e7065951c"
+      }
+    },
+    {
+      "city_id": "denver_co",
+      "date_count": 31,
+      "usable_date_count": 24,
+      "target_available_rows": 3780,
+      "output": {
+        "path": "data/interim/multicity/m3_blind_target_v1/cities/denver_co/targets_4k.parquet",
+        "bytes": 272962,
+        "sha256": "79b4d2b6be96e8664813070c5ac2309ba98f238cd0aa98842a39805f108b2500",
+        "rows": 5425,
+        "semantic_sha256": "08bc5b98047cad240251f72fce8bd296cde1c5614c7560cf28a3ac171334ed66"
+      }
+    },
+    {
+      "city_id": "atlanta_ga",
+      "date_count": 28,
+      "usable_date_count": 13,
+      "target_available_rows": 2078,
+      "output": {
+        "path": "data/interim/multicity/m3_blind_target_v1/cities/atlanta_ga/targets_4k.parquet",
+        "bytes": 179638,
+        "sha256": "2ec08145d923b8dd19bfd037da04195f0bb4d4ffd3db3925283ef92fc7dfd831",
+        "rows": 4844,
+        "semantic_sha256": "df9232bce693024d30af705605a7e29b2e75e9ff29c1aca67e88bceb928e39aa"
+      }
+    },
+    {
+      "city_id": "miami_fl",
+      "date_count": 30,
+      "usable_date_count": 4,
+      "target_available_rows": 639,
+      "output": {
+        "path": "data/interim/multicity/m3_blind_target_v1/cities/miami_fl/targets_4k.parquet",
+        "bytes": 86100,
+        "sha256": "5e0654f9f1f87f67773b292a4ccad0273b11fea8305114eafdc0029942631a41",
+        "rows": 3840,
+        "semantic_sha256": "f765e7839905a6d71d0cfc4f08c8e3b629722213fdb00463aa465d474b3254dd"
+      }
+    }
+  ],
+  "audit": {
+    "prediction_committed_before_target_values_opened": true,
+    "retuning_after_target_access": false,
+    "target_completion_authenticated_before_scoring": true
+  },
+  "next_safe_stage": "authenticate_completion_then_run_frozen_evaluation",
+  "commit_sha256": "55839671f2b28e5c725c5d9601e7d0e2d6ae8a916d7b9880c94e65b2fd99e901"
+}

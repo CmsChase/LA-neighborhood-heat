@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-target-durable-resume-v1",
+  "state": "m3_blind_target_durable_resume_complete",
+  "authorization_commit_sha256": "15fb1e8691f58bf044317dab37f1f6c7a3797d4131f83f76c0fce3b5178c5a95",
+  "parent_target_completion_commit_sha256": "55839671f2b28e5c725c5d9601e7d0e2d6ae8a916d7b9880c94e65b2fd99e901",
+  "final_completed_overpasses": {
+    "seattle_wa": 54,
+    "denver_co": 31,
+    "atlanta_ga": 28,
+    "miami_fl": 30
+  },
+  "next_safe_stage": "authenticate_target_completion_then_authorize_frozen_evaluation",
+  "commit_sha256": "ac313aa87ef68b4d2a7ec8803cf904f5881ed8017b552199342c63117983d31b"
+}
