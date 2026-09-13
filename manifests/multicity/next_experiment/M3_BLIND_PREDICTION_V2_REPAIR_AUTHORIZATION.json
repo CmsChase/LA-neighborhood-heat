@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-prediction-v2-exact-schema-repair",
+  "state": "m3_blind_prediction_v2_repair_authorized",
+  "incident": {
+    "v1_completion_commit_sha256": "4d90bca2ae6aa28233a05e3e0419b165e8c11844843bb93489b4c4d74837f20b",
+    "observed_column_count": 14,
+    "required_column_count": 21,
+    "disposition": "retain_v1_as_superseded_audit_record"
+  },
+  "protocol_commit_sha256": "dfa2cd5231f5153ef92a100bafc6a32cd2798cb5f10c5a8b6ebbd759086bbee8",
+  "source_authorization_commit_sha256": "358c8f63f65932c1ac17914b95015ae59194c2a42adc0e40e765016d2b68d773",
+  "code": [
+    {
+      "path": "src/la_heat/multicity/m3_blind_prediction_v1.py",
+      "bytes": 17368,
+      "sha256": "5cd2fd3421f4cdc5ea465743e7d4ba050a73fd2ed4c63f063a3279df5fc594ce"
+    },
+    {
+      "path": "src/la_heat/multicity/m3_blind_prediction_v2.py",
+      "bytes": 12607,
+      "sha256": "d95090d11d4e5dfa95954bc6076980c679e102f07f26712134b7a9caaf8be86e"
+    },
+    {
+      "path": "scripts/authorize_m3_blind_prediction_v2.py",
+      "bytes": 1306,
+      "sha256": "8991a2bf67fcc3c717e9453cd8474b848a57bf272b3fb0cc89eeada19868985b"
+    },
+    {
+      "path": "scripts/run_m3_blind_prediction_v2.py",
+      "bytes": 983,
+      "sha256": "c1fc3d5b33cc161749114c8a014a5167730c8f9816602f787c4663c03985b33a"
+    }
+  ],
+  "permissions": {
+    "reread_authorized_source_predictors_and_selected_4k_targets": true,
+    "fit_frozen_b1_m2_and_four_member_m3_diagnostic_ensemble": true,
+    "reuse_v1_frozen_m3_point_predictions_and_uq_correction": true,
+    "write_exact_21_column_predictions": true,
+    "change_selected_qa_model_uq_or_risk": false,
+    "read_blind_landsat_hrefs_thermal_qa_or_targets": false,
+    "network_or_href_reads": false,
+    "score_or_evaluate_blind_targets": false
+  },
+  "output_contract": {
+    "columns": [
+      "city_id",
+      "tract_geoid",
+      "target_date",
+      "b1_prediction_c",
+      "m2_legacy_prediction_c",
+      "m3_level_prediction_c",
+      "m3_anomaly_prediction_c",
+      "m3_prediction_c",
+      "m3_conformal_correction_c",
+      "m3_lower_c",
+      "m3_upper_c",
+      "m3_interval_width_c",
+      "m3_ensemble_point_sd_c",
+      "uq_method",
+      "uq_density_ratio_raw",
+      "uq_density_ratio_clipped",
+      "uq_weight_clip_hit",
+      "m3_predicted_absolute_error_c",
+      "m3_risk_percentile_within_city_date",
+      "m3_abstain",
+      "m3_accepted"
+    ],
+    "row_count": 23667,
+    "city_ids": [
+      "seattle_wa",
+      "denver_co",
+      "atlanta_ga",
+      "miami_fl"
+    ],
+    "prediction_before_target_boundary": true
+  },
+  "next_safe_stage": "run_v2_exact_schema_repair_before_target_authorization",
+  "commit_sha256": "1213ab79192bb2f22736bcc886473fc61589c6eafa8ec4dff73ba34b08bef4e8"
+}
