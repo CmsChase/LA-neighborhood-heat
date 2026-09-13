@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-evaluation-bootstrap-defaults-repair-v1",
+  "state": "m3_blind_evaluation_bootstrap_defaults_repair_authorized",
+  "contract_repair_authorization_commit_sha256": "2b775eda05dabfa90e4182ee3a279f35a0630d19dd9847357f563a6d9a50a9d7",
+  "incident": {
+    "exception_type": "ExternalEvaluationError",
+    "exception_message": "Frozen bootstrap parameters cannot be changed",
+    "row_date_city_metrics_computed_in_memory": true,
+    "bootstrap_computed": false,
+    "evaluation_outputs_written": 0,
+    "cause": "legacy_function_default_seed_captured_as_20260728_at_import_time"
+  },
+  "exact_bootstrap_arguments": {
+    "iterations": 10000,
+    "seed": 20260816,
+    "confidence_level": 0.95
+  },
+  "code": [
+    {
+      "path": "src/la_heat/multicity/m3_blind_evaluation_bootstrap_defaults_repair_v1.py",
+      "bytes": 6923,
+      "sha256": "5154f9d0fccbb8a7aa6b41bf62b47060d4042dda75e924464af007bb51a36e7d"
+    },
+    {
+      "path": "scripts/authorize_m3_blind_evaluation_bootstrap_defaults_repair_v1.py",
+      "bytes": 1315,
+      "sha256": "8b6ca0ee9d13fdb7f812cc41bcfa08d8c9668dbf410e6b8ff1f027b1a48f42a6"
+    },
+    {
+      "path": "scripts/run_m3_blind_evaluation_bootstrap_defaults_repair_v1.py",
+      "bytes": 762,
+      "sha256": "0e76a4c7464f7b23a3f44c30d6bb8307b22fde1e7404bce9f4ad0d51b8e74839"
+    }
+  ],
+  "permissions": {
+    "explicitly_forward_frozen_bootstrap_arguments": true,
+    "reuse_identical_crossed_bootstrap_algorithm": true,
+    "change_bootstrap_method_seed_iterations_confidence_or_gate": false,
+    "fit_retrain_recalibrate_retune_or_select": false
+  },
+  "next_safe_stage": "rerun_frozen_evaluation_with_explicit_bootstrap_arguments",
+  "commit_sha256": "86e9417068d53ece66f48d63e04b59433e3acdb6fd4ce6e53b94f6b72e0ad713"
+}
