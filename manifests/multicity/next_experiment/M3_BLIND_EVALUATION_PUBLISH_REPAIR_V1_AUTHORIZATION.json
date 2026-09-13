@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-evaluation-publish-repair-v1",
+  "state": "m3_blind_evaluation_publish_repair_authorized",
+  "bootstrap_repair_authorization_commit_sha256": "86e9417068d53ece66f48d63e04b59433e3acdb6fd4ce6e53b94f6b72e0ad713",
+  "incident": {
+    "exception_type": "TypeError",
+    "exception_message": "canonical_frame_sha256() missing 1 required keyword-only argument: sort_by",
+    "metrics_and_bootstrap_computed_in_memory": true,
+    "partial_output": {
+      "path": "data/processed/multicity/m3_blind_evaluation_v1/scored_rows.parquet",
+      "bytes": 929925,
+      "sha256": "db378396a5fcd32bd4ef5b625fb76e03467ed653ab42b0e1100a7c770d834533",
+      "rows": 9502,
+      "semantic_sha256": "ea3440f5e7d07850572cc59ef3a0d87b8886283a5027e4881692e0029a1618cd"
+    },
+    "other_evaluation_outputs_written": 0
+  },
+  "semantic_sort_keys": {
+    "scored_rows": [
+      "city_id",
+      "target_date",
+      "tract_geoid"
+    ],
+    "date_metrics": [
+      "city_id",
+      "target_date"
+    ],
+    "city_metrics": [
+      "city_id"
+    ],
+    "risk_coverage": [
+      "cohort_id",
+      "coverage_fraction"
+    ]
+  },
+  "code": [
+    {
+      "path": "src/la_heat/multicity/m3_blind_evaluation_publish_repair_v1.py",
+      "bytes": 8968,
+      "sha256": "628b846699e5703211f29acafb846565d11711b181450e3c5fe24a9b00bcc23b"
+    },
+    {
+      "path": "scripts/authorize_m3_blind_evaluation_publish_repair_v1.py",
+      "bytes": 1307,
+      "sha256": "4af20371b25c9243d7a425b9969e1162f0bc34fbed59234dbc8d77a49ddc7e71"
+    },
+    {
+      "path": "scripts/run_m3_blind_evaluation_publish_repair_v1.py",
+      "bytes": 744,
+      "sha256": "7668617088efa57a91655a5284d03d1226ea9322b8959ae33341e7cd08484faf"
+    }
+  ],
+  "permissions": {
+    "reuse_partial_scored_rows_only_on_exact_semantic_match": true,
+    "write_remaining_append_only_outputs": true,
+    "supply_frozen_semantic_sort_keys": true,
+    "overwrite_delete_or_change_existing_output": false,
+    "change_metric_bootstrap_gate_prediction_target_or_model": false
+  },
+  "next_safe_stage": "rerun_and_publish_identical_frozen_evaluation",
+  "commit_sha256": "81bcb998fa2ec5c1589ca2fb391188e276dc2d2076aad6674295f3bb4e95bb0b"
+}
