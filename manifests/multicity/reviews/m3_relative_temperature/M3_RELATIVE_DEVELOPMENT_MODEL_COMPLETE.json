@@ -1,0 +1,88 @@
+{
+  "absolute_temperature_output": false,
+  "artifacts": [
+    {
+      "bytes": 511856,
+      "path": "exports/M3_RELATIVE_TEMPERATURE_MODEL_V1/m3_relative_v1.joblib",
+      "sha256": "6efc960f7c08f292c3a6a056cd43f544ef5016de3ee337966a9dbd67cfbc59d2"
+    },
+    {
+      "bytes": 2317456,
+      "path": "exports/M3_RELATIVE_TEMPERATURE_MODEL_V1/source_predictions.parquet",
+      "sha256": "bf1423443b837bde808a6ec1cce65191d678c26a6c4b666fdd5b813706643b61"
+    }
+  ],
+  "city_date_prediction_medians_zero": true,
+  "completed_at": "2026-09-13T10:01:21.196169+00:00",
+  "contract": {
+    "path": "experiments/m3_relative_temperature/fixed_contract.toml",
+    "sha256": "06bd41847b2053e7c0490e2c92c664efa31219dc906b3ba4b2625505df33c66d"
+  },
+  "contract_id": "m3_relative_temperature_fixed_v1",
+  "feature_count": 23,
+  "inputs": [
+    {
+      "city_id": "los_angeles_ca",
+      "path": "data/processed/multicity/m3_source_predictor_extension_v1/los_angeles_ca/predictors_46.parquet",
+      "role": "predictors",
+      "sha256": "a2afa506015cfcaa87ad9c9d3639cc35b7b1b18644e2fbca5dbd8b5bfbdcc1d7"
+    },
+    {
+      "city_id": "los_angeles_ca",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/los_angeles_ca/4k/targets.parquet",
+      "role": "qa_4k_targets",
+      "sha256": "814857519cf341cd71dfbd30bbc47409452d7fade2fdf5fdce3cdc82a2c1d06d"
+    },
+    {
+      "city_id": "phoenix_az",
+      "path": "data/processed/multicity/m3_source_predictor_extension_v1/phoenix_az/predictors_46.parquet",
+      "role": "predictors",
+      "sha256": "1200c0e745848ebcba3e0acd017d351498b3f78cc4ba7da12175f9d296a51db3"
+    },
+    {
+      "city_id": "phoenix_az",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/phoenix_az/4k/targets.parquet",
+      "role": "qa_4k_targets",
+      "sha256": "7fe8d2c942379f31cc4a46f660604d83e4667bed8d798c2c2472d7b00fce2b2a"
+    },
+    {
+      "city_id": "houston_tx",
+      "path": "data/processed/multicity/m3_source_predictor_extension_v1/houston_tx/predictors_46.parquet",
+      "role": "predictors",
+      "sha256": "40114adece32e535dffc57e661ebd62dd3bb914039460a68c4db477627e974fc"
+    },
+    {
+      "city_id": "houston_tx",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/houston_tx/4k/targets.parquet",
+      "role": "qa_4k_targets",
+      "sha256": "2b87e403ca996aec8fe51bddefa33c929d5d04d3d2cfe3684cd3a931197aedb3"
+    },
+    {
+      "city_id": "chicago_il",
+      "path": "data/processed/multicity/m3_source_predictor_extension_v1/chicago_il/predictors_46.parquet",
+      "role": "predictors",
+      "sha256": "08aaee66690d6a5aa1bf6d54502c9418555d7c632bfb4f903d33f36189ba2c2b"
+    },
+    {
+      "city_id": "chicago_il",
+      "path": "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/chicago_il/4k/targets.parquet",
+      "role": "qa_4k_targets",
+      "sha256": "92f9764cc962488b5b152a864b389582315750f22a0eae42d0e29c3d6d6a5e25"
+    }
+  ],
+  "model_role": "development_not_confirmation",
+  "new_city_data_accessed": false,
+  "opened_historical_stress_values_accessed": false,
+  "prediction_row_count": 253632,
+  "reload_prediction_check": "passed",
+  "schema_version": 1,
+  "state": "complete",
+  "training_city_dates": 132,
+  "training_city_ids": [
+    "chicago_il",
+    "houston_tx",
+    "los_angeles_ca",
+    "phoenix_az"
+  ],
+  "training_rows": 96061
+}

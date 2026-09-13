@@ -35,3 +35,15 @@ This runner fits the single fixed M3-relative model and B1 in 18 leave-one-year-
 out folds. Fold outputs are cached under the ignored
 `exports/M3_RELATIVE_TEMPERATURE_YEAR_STABILITY/` directory. It performs no
 network access, new-city acquisition, or model selection.
+
+After that audit passed, the fixed development model was fitted with:
+
+```powershell
+.\.venv\Scripts\python.exe experiments\m3_relative_temperature\fit_final.py
+```
+
+The ignored model bundle and source predictions are written under
+`exports/M3_RELATIVE_TEMPERATURE_MODEL_V1/`. The tracked completion record is
+`manifests/multicity/reviews/m3_relative_temperature/M3_RELATIVE_DEVELOPMENT_MODEL_COMPLETE.json`.
+The fit script records input and artifact hashes and verifies predictions after
+reloading the serialized model; it does not report training-set performance.

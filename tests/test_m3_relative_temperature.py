@@ -24,6 +24,12 @@ assert YEAR_SPEC is not None and YEAR_SPEC.loader is not None
 YEAR_MODULE = importlib.util.module_from_spec(YEAR_SPEC)
 sys.modules[YEAR_SPEC.name] = YEAR_MODULE
 YEAR_SPEC.loader.exec_module(YEAR_MODULE)
+FINAL_RUNNER = ROOT / "experiments" / "m3_relative_temperature" / "fit_final.py"
+FINAL_SPEC = importlib.util.spec_from_file_location("m3_relative_fit_final", FINAL_RUNNER)
+assert FINAL_SPEC is not None and FINAL_SPEC.loader is not None
+FINAL_MODULE = importlib.util.module_from_spec(FINAL_SPEC)
+sys.modules[FINAL_SPEC.name] = FINAL_MODULE
+FINAL_SPEC.loader.exec_module(FINAL_MODULE)
 SPEC = importlib.util.spec_from_file_location("m3_relative_temperature", RUNNER)
 assert SPEC is not None and SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
@@ -109,3 +115,26 @@ def test_year_fold_ids_are_sorted_and_unique() -> None:
     )
 
     assert YEAR_MODULE.fold_ids(frame) == [("a", 2025), ("b", 2023), ("b", 2024)]
+
+
+def test_relative_prediction_is_centered_within_city_date() -> None:
+    class FixedPredictionModel:
+        def predict(self, frame: pd.DataFrame) -> np.ndarray:
+            assert len(frame) == 3
+            return np.array([1.0, 2.0, 4.0])
+
+    frame = pd.DataFrame(
+        {
+            "city_id": ["city"] * 3,
+            "tract_geoid": ["1", "2", "3"],
+            "target_date": ["2025-01-01"] * 3,
+            **{name: [0.0, 0.0, 0.0] for name in STATIC_FEATURES},
+            **{name: [0.0, 0.0, 0.0] for name in SENTINEL_FEATURES},
+        }
+    )
+
+    result = FINAL_MODULE.predict_relative(
+        FixedPredictionModel(), frame, minimum_tracts_per_city_date=3
+    )
+
+    assert result["relative_lst_anomaly_c"].tolist() == [-1.0, 0.0, 2.0]

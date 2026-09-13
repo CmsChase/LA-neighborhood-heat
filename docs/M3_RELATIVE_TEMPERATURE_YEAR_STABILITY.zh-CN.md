@@ -32,6 +32,12 @@ Chicago、Houston、LA 的城市级异常 MAE 分别改善 0.6403、0.8894、
 契约，用全部四个源城市拟合一个开发版 M3-relative 模型。它仍不能产生新的
 盲测声明，也不得用于恢复绝对温度 level 模块。
 
+该开发版模型现已完成：使用 96,061 个评分训练行、132 个城市—日期和 23 个
+固定空间特征。序列化模型重载后在完整 253,632 个源预测键上复算成功，每个
+城市—日期的相对预测中位数均为零。模型 SHA-256 为
+`6efc960f7c08f292c3a6a056cd43f544ef5016de3ee337966a9dbd67cfbc59d2`；
+正式完成记录位于
+`manifests/multicity/reviews/m3_relative_temperature/M3_RELATIVE_DEVELOPMENT_MODEL_COMPLETE.json`。
+
 可复现实现为 `experiments/m3_relative_temperature/year_stability.py`；本地缓存
 和结果位于 ignored 的 `exports/M3_RELATIVE_TEMPERATURE_YEAR_STABILITY/`。
-

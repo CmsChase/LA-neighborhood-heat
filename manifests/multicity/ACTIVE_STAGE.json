@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "revision": "2026-09-m3-relative-temperature-year-stability-complete",
-  "stage_id": "m3_relative_temperature_source_year_stability",
-  "state": "complete_fixed_gate_passed",
-  "next_safe_stage": "fit_fixed_m3_relative_development_model_on_all_source_cities",
+  "revision": "2026-09-m3-relative-temperature-development-model-complete",
+  "stage_id": "m3_relative_temperature_development_model_fit",
+  "state": "complete",
+  "next_safe_stage": "publish_relative_temperature_development_result_or_plan_future_independent_confirmation",
   "summary": "A no-refit, no-network review harmonized city-date centering across existing row-level predictions. M3 reduced anomaly MAE versus B1 by 19.8% on four source-city LOSO folds and 28.8% on four opened historical stress cities; paired hierarchical bootstrap 95% intervals for B1 minus M3 were positive in both roles. Seven of eight cities improved and Phoenix degraded by only 0.0097 C, so the fixed development gate passed. This is post-hoc development evidence, not confirmation. Absolute-temperature modeling remains paused; next define one fixed relative-temperature/applicability contract without new cities or broader search.",
   "permissions": {
     "read_public_predictor_sources": true,
@@ -81,6 +81,7 @@
     "m3_relative_temperature_fixed_contract": true,
     "m3_relative_temperature_year_stability_complete": true,
     "m3_relative_temperature_year_stability_gate_passed": true,
+    "m3_relative_temperature_development_model_complete": true,
     "new_candidate_targets_sealed": true
   },
   "inputs": {
@@ -323,7 +324,11 @@
     "m3_relative_temperature_year_stability_report": "docs/M3_RELATIVE_TEMPERATURE_YEAR_STABILITY.zh-CN.md",
     "m3_relative_temperature_year_stability_anomaly_mae_b1_c": 1.600763191331519,
     "m3_relative_temperature_year_stability_anomaly_mae_m3_c": 1.0240580284960634,
-    "next_action": "fit_fixed_m3_relative_development_model_on_all_source_cities"
+    "m3_relative_temperature_development_model_completion": "manifests/multicity/reviews/m3_relative_temperature/M3_RELATIVE_DEVELOPMENT_MODEL_COMPLETE.json",
+    "m3_relative_temperature_development_model_sha256": "6efc960f7c08f292c3a6a056cd43f544ef5016de3ee337966a9dbd67cfbc59d2",
+    "m3_relative_temperature_development_model_training_rows": 96061,
+    "m3_relative_temperature_development_model_prediction_keys": 253632,
+    "next_action": "publish_relative_temperature_development_result_or_plan_future_independent_confirmation"
   },
   "prepared_post_return_tools": {
     "one_click_import": "tools/windows/legacy/IMPORT_SENTINEL_RESULTS.cmd",
