@@ -1,6 +1,6 @@
 # Project handoff
 
-Last updated: 2026-09-12 Asia/Shanghai
+Last updated: 2026-09-13 Asia/Shanghai
 
 ## Project summary
 
@@ -16,7 +16,7 @@ Public atlas: `https://cmschase.github.io/LA-neighborhood-heat/`
 
 The website source is `atlas/`. The old standalone atlas repository is archived.
 
-## Active M3 blind-predictor stage
+## Active M3 blind-prediction stage
 
 The full four-city offline Sentinel/static assembly is complete and
 authenticated at
@@ -68,9 +68,20 @@ It contains 23,667 unique tract-date rows with the exact 46-feature schema:
 records 228 rows with all 21 Daymet features missing and 1,907 rows with all
 five Sentinel features missing; no row was dropped or imputed. Network/href
 reads were zero, blind targets stayed sealed, and no fit, prediction, score, or
-evaluation occurred. The next stage requires a separate prediction
-authorization that binds the frozen source-selected model and these predictor
-outputs before any prediction; it has not started.
+evaluation occurred.
+
+Independent prediction authorization
+`9c22ff5a3bd2c8b016c47281207da8b0779c3e1b1b48f1438a51e37399b8958d`
+was created and pushed before the first predictor/model value read. The frozen
+source-selected M3 model then produced all 23,667 four-city predictions. The
+immutable completion is
+`4d90bca2ae6aa28233a05e3e0419b165e8c11844843bb93489b4c4d74837f20b`.
+It includes the frozen unweighted 90% cross-conformal intervals and the frozen
+`none_accept_all` risk decision. No fit, retraining, retuning, network/href read,
+or blind Landsat thermal, QA, or target read occurred. The prediction-before-
+target boundary remains intact. The next safe stage is a new independent blind
+target-access and evaluation authorization; do not open target values before it
+authenticates.
 
 ## Completed milestones
 

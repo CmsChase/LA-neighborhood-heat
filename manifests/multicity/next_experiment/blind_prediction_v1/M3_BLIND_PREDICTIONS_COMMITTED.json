@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-prediction-v1",
+  "state": "m3_blind_predictions_committed",
+  "authorization_commit_sha256": "9c22ff5a3bd2c8b016c47281207da8b0779c3e1b1b48f1438a51e37399b8958d",
+  "source_nested_loso_completion_commit_sha256": "207d45f8fdc7237f6347ed69b1c67733df353a3331e622707e93c4b3f21c34d3",
+  "blind_predictors_completion_commit_sha256": "efd100881992273fd17101b6687e84a9a24cb00d52726eec489ba9b2331b3661",
+  "city_count": 4,
+  "row_count": 23667,
+  "output_columns": [
+    "city_id",
+    "tract_geoid",
+    "target_date",
+    "m3_level_prediction_c",
+    "m3_anomaly_prediction_c",
+    "m3_prediction_c",
+    "m3_conformal_correction_c",
+    "m3_lower_c",
+    "m3_upper_c",
+    "m3_interval_width_c",
+    "uq_method",
+    "risk_method",
+    "m3_abstain",
+    "m3_accepted"
+  ],
+  "selected_joint_candidate_id": "qa_4k__level_ridge_alpha_10__anomaly_hgb_leaves_31",
+  "uq_method": "unweighted_cross_conformal",
+  "conformal_probability": 0.9,
+  "conformal_correction_c": 10.406502466453304,
+  "risk_method": "none_accept_all",
+  "city_outputs": [
+    {
+      "path": "data/processed/multicity/m3_blind_prediction_v1/seattle_wa/predictions.parquet",
+      "bytes": 357147,
+      "sha256": "c6d10cb2381c23b48441f50241a40f33fc8075679b135728f3d59a0037818445",
+      "rows": 9558,
+      "city_id": "seattle_wa",
+      "semantic_sha256": "5731275dd8221284f3febc674d5ddda8e5710b9154ab82e6e6f018ffb5e5b1f5"
+    },
+    {
+      "path": "data/processed/multicity/m3_blind_prediction_v1/denver_co/predictions.parquet",
+      "bytes": 219591,
+      "sha256": "ae7d6cf5332c85a4da53924c19608b69aa14120925dd4fcf0d9952cd3b3a6287",
+      "rows": 5425,
+      "city_id": "denver_co",
+      "semantic_sha256": "94ad9f342ea78358a115b44726e4ce827a6de3403267bcf227253c175238b4a3"
+    },
+    {
+      "path": "data/processed/multicity/m3_blind_prediction_v1/atlanta_ga/predictions.parquet",
+      "bytes": 196785,
+      "sha256": "f8d519bfd37b5fe473cc40a73487d013be6158897b563fb971016b65696e4e5b",
+      "rows": 4844,
+      "city_id": "atlanta_ga",
+      "semantic_sha256": "10f545bdede8f32b6fcf31978b3c22eba0118e6587c13fdbaf241bf0e1308263"
+    },
+    {
+      "path": "data/processed/multicity/m3_blind_prediction_v1/miami_fl/predictions.parquet",
+      "bytes": 154354,
+      "sha256": "52cf494ed9ee488fcd06f802237c5c0b7ab86c6ec46c08efe0a39b5cd9a04c37",
+      "rows": 3840,
+      "city_id": "miami_fl",
+      "semantic_sha256": "6c121d6de15da9c02dc5cc6dc8c82e484648a9fc0446cfd286d44c8530d0c277"
+    }
+  ],
+  "audit": {
+    "network_requests": 0,
+    "href_reads": 0,
+    "model_fit_retrain_retune_or_select": false,
+    "blind_landsat_thermal_qa_or_target_values_read": false,
+    "prediction_before_target_boundary_preserved": true
+  },
+  "next_safe_stage": "authorize_blind_target_access_and_evaluation_separately",
+  "commit_sha256": "4d90bca2ae6aa28233a05e3e0419b165e8c11844843bb93489b4c4d74837f20b"
+}
