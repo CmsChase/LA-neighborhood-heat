@@ -18,74 +18,6 @@ The website source is `atlas/`. The old standalone atlas repository is archived.
 
 ## Active M3 blind-predictor stage
 
-The four blind cities' 553 Sentinel/static acquisitions are complete and
-authenticated. The independent, code-bound offline assembly permit is
-`3311d3876dcbe9da53646a5127832616de0d67bd82e19907c6ed843b1565eaaf`.
-It allows local assembly of 18 static plus 5 lagged Sentinel features only;
-network/href reads are zero and Daymet, Landsat, QA, targets, fitting,
-prediction, and scoring remain inaccessible. The next safe action is only the
-Miami canary:
-
-```powershell
-.\.venv\Scripts\python scripts\run_m3_blind_predictor_sentinel_static_assembly_v1.py --project-root . --canary
-```
-
-The first canary exposed a legitimate many-to-many target-window membership
-join and stopped before publishing feature outputs. Repair authorization
-`b44c0cf8098137945c60d993f2c4e2b890a4a9c71da86cff29b4a146d0c89ff7`
-allows only that exact merge-validation correction. Retry with:
-
-```powershell
-.\.venv\Scripts\python scripts\run_m3_blind_predictor_sentinel_membership_repair_v1.py --project-root . --canary
-```
-
-Do not use the parent runner directly or start the full offline run until this
-repaired canary has been authenticated.
-
-That retry passed membership expansion and then found an already-present,
-identical `city_id` column. Lineage-city repair authorization
-`8c0d87761adf3c5cd2d588bcc39a44a1db5626035ec1300d90c5122fe2a4c751`
-allows only validation, removal, and identical canonical reinsertion. The next
-command is:
-
-```powershell
-.\.venv\Scripts\python scripts\run_m3_blind_predictor_sentinel_lineage_city_repair_v1.py --project-root . --canary
-```
-
-The next stop showed Miami correctly has one, not two, frozen SRTM tiles.
-Static tile-scope repair authorization
-`fb87086fda0b1be1c44e3cd7ea51d9754b70b249372e06f87eb272836254d426`
-replaces only that false cardinality assumption. Retry through
-`scripts/run_m3_blind_predictor_static_tile_scope_repair_v1.py --canary`.
-
-That canary's computation completed: Miami Sentinel outputs, static base, and
-the sole `distance_chunk_00001_of_00001.parquet` are durable, with zero network
-or href reads and targets sealed. Its manifest commit is
-`5dbd2524b6f00f71d40d97ff143343e986b363ccab09275316a6eb2ebc685f59`,
-but the manifest records `gshhg_completed_chunk_count: 0` because the writer
-looked up the wrong progress key. Do not start the full run. The next task is a
-narrow append-only provenance-counter repair that authenticates the actual
-1/1 chunk without recomputing the canary.
-
-That repair is now authorized by
-`3233717968fa90a03e73c7e880b3a4e9167f07da025870e767faed3ed187f5e6`.
-It may only authenticate the existing chunk and write a new corrected canary
-completion; it cannot recompute outputs or launch the full assembly.
-
-The corrected canary completion is authenticated at
-`f57d39827b9abc7d36126aeec4285fce6996f017cbf3f5786017b32b3be9694e`.
-It verifies the existing 97,210-row Miami GSHHG chunk as 1/1, plus the Sentinel
-compile and static base, with no recomputation, zero network/href reads, and
-blind targets sealed. The next safe stage is to review and create a separate
-full four-city offline launch authorization. The full run is not yet allowed.
-
-The full four-city offline launch is now independently authorized by
-`f747e91f6dce4f643fa2573d0324b27ad9efda08fa08cd30e27fb49993c9c1d3`.
-It binds the corrected canary and the complete repair chain, permits only the
-same local runtime/output roots, and retains zero network/href reads and sealed
-targets. Run only through
-`scripts/run_m3_blind_predictor_full_offline_launch_v1.py --run`.
-
 The full four-city offline Sentinel/static assembly is complete and
 authenticated at
 `bc56348b43c12f2d9e17cf67831190e47f1e3c49df1ad90caecd2f0b1a623f42`.
@@ -93,9 +25,16 @@ All 16 city tasks and all 12 GSHHG chunks completed. Static output rows are
 177/175/173/128 and Sentinel tract-date rows are 9,558/5,425/4,844/3,840 for
 Seattle/Denver/Atlanta/Miami, each with exactly 18 static and 5 Sentinel model
 features. Network/href reads were zero and blind targets remained sealed.
-The next dependency is the already-authorized 24-task blind Daymet acquisition,
-which remains blocked until an ephemeral Earthdata token is supplied; never
-persist that token in tracked files.
+The 24-task blind Daymet acquisition has parent authorization
+`bbf7c4e1b24639d4ad4ff857c04492d296b51486cfbe0651142ac073c166c6ae`.
+Its independent bearer adapter is authorized at
+`71ef9df08f29cd5110af060e315645f617f7c9e00963c561d7194948217b78ea`.
+The adapter accepts an Earthdata token only from the current process
+environment, adds it only for HTTPS requests to the locked Earthdata OPeNDAP
+host, refuses redirects, and clears it after the run. The token must never be
+stored in a file, command line, log, manifest, or Git artifact. The next safe
+stage is to commit and push this authorization, then run the acquisition with
+the ephemeral credential.
 
 ## Completed milestones
 

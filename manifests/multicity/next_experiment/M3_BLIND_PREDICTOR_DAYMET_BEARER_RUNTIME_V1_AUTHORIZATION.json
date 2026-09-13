@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "m3-blind-predictor-daymet-bearer-runtime-v1",
+  "state": "m3_blind_predictor_daymet_ephemeral_bearer_runtime_authorized",
+  "parent_authorization": {
+    "path": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_DAYMET_ACQUISITION_V1_AUTHORIZATION.json",
+    "bytes": 2441,
+    "sha256": "001be7d13a453a54af16ab75778c72fd210f35b92d619f6aaee2126d9229c750",
+    "commit_sha256": "bbf7c4e1b24639d4ad4ff857c04492d296b51486cfbe0651142ac073c166c6ae"
+  },
+  "code_identity": {
+    "files": [
+      {
+        "path": "scripts/run_m3_blind_predictor_daymet_bearer_runtime_v1.py",
+        "bytes": 1021,
+        "sha256": "08586091f123bb92973b3deb54090bd156fc468f50a682ade72dd5419ffc5985"
+      },
+      {
+        "path": "src/la_heat/multicity/m3_blind_predictor_daymet_bearer_runtime_v1.py",
+        "bytes": 6219,
+        "sha256": "43ca0b8709302a923e8b0310a874f7ebeaeecad4b7a2380aa1a6bdce2dfe25fb"
+      }
+    ],
+    "set_sha256": "c4651acf06b8e4b43fdf66bf07a38dae09049562fd9c1defc76975d2a3bd0f5b"
+  },
+  "credential_contract": {
+    "environment_variable": "M3_EARTHDATA_EPHEMERAL_TOKEN",
+    "read_only_at_request_time": true,
+    "persisted_to_file_log_manifest_or_output": false,
+    "printed_or_returned": false,
+    "removed_from_process_environment_after_run": true
+  },
+  "network_contract": {
+    "scheme": "https",
+    "host": "opendap.earthdata.nasa.gov",
+    "authorization_header_only": true,
+    "redirects_allowed": false
+  },
+  "permissions": {
+    "resume_parent_authorized_24_daymet_tasks": true,
+    "read_sentinel_static_landsat_qa_or_target_values": false,
+    "fit_predict_score_or_evaluate": false
+  },
+  "authorization_audit": {
+    "credential_read": false,
+    "network_requests": 0,
+    "credential_persisted_or_printed": false
+  },
+  "next_safe_stage": "run_daymet_acquisition_with_ephemeral_environment_token",
+  "claim_id": "0aa4e0251f6813d7dd08b74420f819e5e1066bcc822909dda3b4ff53bfb2349a",
+  "commit_sha256": "71ef9df08f29cd5110af060e315645f617f7c9e00963c561d7194948217b78ea"
+}

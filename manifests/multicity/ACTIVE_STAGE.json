@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": "2026-09-m3-blind-sentinel-static-offline-assembly-complete",
+  "revision": "2026-09-m3-blind-daymet-bearer-runtime-authorized",
   "stage_id": "next_experiment_m3_blind_predictor_build",
-  "state": "m3_blind_predictor_sentinel_static_offline_assembly_complete_daymet_blocked",
-  "next_safe_stage": "provide_ephemeral_earthdata_token_then_resume_authorized_blind_daymet_acquisition",
-  "summary": "Full four-city offline Sentinel/static assembly completion bc56348b43c12f2d9e17cf67831190e47f1e3c49df1ad90caecd2f0b1a623f42 authenticates all 16 city tasks and all 12 GSHHG distance chunks. Seattle, Denver, Atlanta, and Miami contain 177/175/173/128 static rows and 9,558/5,425/4,844/3,840 Sentinel tract-date rows, with exactly 18 static and 5 Sentinel model features. Network and href reads were zero; Daymet, Landsat, QA, targets, fitting, prediction, scoring, and evaluation were not accessed. The next dependency is the separately authorized 24-task blind Daymet acquisition, blocked pending an ephemeral Earthdata token.",
+  "state": "m3_blind_predictor_daymet_ephemeral_bearer_runtime_authorized",
+  "next_safe_stage": "commit_push_authorization_then_run_24_task_daymet_acquisition_with_ephemeral_token",
+  "summary": "Full four-city offline Sentinel/static assembly completion bc56348b43c12f2d9e17cf67831190e47f1e3c49df1ad90caecd2f0b1a623f42 remains authenticated. Parent Daymet authorization bbf7c4e1b24639d4ad4ff857c04492d296b51486cfbe0651142ac073c166c6ae and independent bearer runtime authorization 71ef9df08f29cd5110af060e315645f617f7c9e00963c561d7194948217b78ea permit only the 24 frozen 2025 Daymet acquisitions. The credential is read only from the current process environment, sent only to the locked HTTPS Earthdata OPeNDAP host, never persisted or printed, and removed after the run. Sentinel/static/Landsat/QA/targets and all fitting remain outside this permit.",
   "permissions": {
     "read_public_predictor_sources": true,
     "build_predictor": false,
@@ -64,6 +64,7 @@
     "next_experiment_blind_sentinel_membership_repair_authorized": true,
     "next_experiment_blind_sentinel_lineage_city_repair_authorized": true,
     "next_experiment_blind_static_tile_scope_repair_authorized": true,
+    "next_experiment_blind_daymet_bearer_runtime_authorized": true,
     "new_candidate_targets_sealed": true
   },
   "inputs": {
@@ -135,6 +136,8 @@
     "next_experiment_blind_sentinel_lineage_city_repair_authorization_commit_sha256": "8c0d87761adf3c5cd2d588bcc39a44a1db5626035ec1300d90c5122fe2a4c751",
     "next_experiment_blind_static_tile_scope_repair_authorization": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_STATIC_TILE_SCOPE_REPAIR_V1_AUTHORIZATION.json",
     "next_experiment_blind_static_tile_scope_repair_authorization_commit_sha256": "fb87086fda0b1be1c44e3cd7ea51d9754b70b249372e06f87eb272836254d426",
+    "next_experiment_blind_daymet_bearer_runtime_authorization": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_DAYMET_BEARER_RUNTIME_V1_AUTHORIZATION.json",
+    "next_experiment_blind_daymet_bearer_runtime_authorization_commit_sha256": "71ef9df08f29cd5110af060e315645f617f7c9e00963c561d7194948217b78ea",
     "next_experiment_selected_unseen_city_ids": [
       "seattle_wa",
       "denver_co",
@@ -275,12 +278,13 @@
     "next_experiment_blind_sentinel_static_canary_counter_repair_authorization": "manifests/multicity/next_experiment/M3_BLIND_PREDICTOR_CANARY_COUNTER_REPAIR_V1_AUTHORIZATION.json",
     "next_experiment_blind_sentinel_static_canary_counter_repair_authorization_commit_sha256": "3233717968fa90a03e73c7e880b3a4e9167f07da025870e767faed3ed187f5e6",
     "next_experiment_blind_daymet_acquisition_authorized": true,
+    "next_experiment_blind_daymet_bearer_runtime_authorized": true,
     "next_experiment_blind_daymet_acquisition_complete_count": 0,
     "next_experiment_blind_daymet_acquisition_total_count": 24,
-    "next_experiment_blind_daymet_blocker": "earthdata_token_missing_after_official_endpoint_401",
+    "next_experiment_blind_daymet_blocker": null,
     "next_experiment_blind_predictor_raster_value_reads": "authorized_sentinel_static_acquisition_complete_553_of_553",
     "next_experiment_blind_landsat_qa_or_target_value_reads": 0,
-    "next_action": "provide_ephemeral_earthdata_token_then_resume_authorized_blind_daymet_acquisition"
+    "next_action": "commit_push_bearer_authorization_then_run_authorized_blind_daymet_acquisition"
   },
   "prepared_post_return_tools": {
     "one_click_import": "tools/windows/legacy/IMPORT_SENTINEL_RESULTS.cmd",
