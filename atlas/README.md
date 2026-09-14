@@ -2,16 +2,26 @@
 
 An interactive, read-only atlas comparing observed Landsat land-surface
 temperature with two frozen model predictions across Los Angeles census tracts
-in the held-out 2025 evaluation.
+in the held-out 2025 evaluation. The original Los Angeles experience remains
+the public homepage; a separate four-city view presents the opened 2025 M3
+evaluation.
 
-Live site:
-<https://cmschase.github.io/LA-neighborhood-heat/>
+Live site: <https://cmschase.github.io/LA-neighborhood-heat/>
 
-The atlas now lives in `atlas/` of the same repository as the research
-pipeline. The former standalone repository is retained only as an archived
-historical snapshot.
+## Public routes
 
-## What the atlas shows
+- `/` — the complete Los Angeles Surface Heat Atlas;
+- `/four-cities/` — switchable tract maps for Seattle, Denver, Atlanta, and
+  Miami;
+- `/m3/` — the research story and M3 blind-test interpretation;
+- `/cities/` — compatibility route for older links.
+
+The homepage links to the four-city atlas. The four-city maps present frozen,
+already-opened stress-test results; they do not recompute metrics or turn the
+failed M3 absolute-temperature comparison into a new claim. Land-surface
+temperature is not air temperature, exposure, illness, or causation.
+
+## What the Los Angeles atlas shows
 
 - synchronized observed, predicted, and residual tract maps;
 - an oversized equal-square homepage mosaic of the fixed September 3 M2
@@ -40,11 +50,27 @@ Neighborhood labels come from the commit-pinned
 under its MIT license. They are assigned to census tracts by maximum mapped-area
 overlap and remain display metadata; the evaluated unit is still the tract.
 
+## Four-city display export
+
+Regenerate the compact display payload from the frozen local inputs:
+
+```bash
+python scripts/export_four_city_atlas.py --project-root .
+```
+
+The exporter reads the existing M3 blind-evaluation rows and fixed Census tract
+geometries. Do not edit `atlas/public/data/four-city-atlas.json` by hand.
+
+Files under `public/data/` are compact display exports authenticated against
+the frozen evaluations. They are presentation inputs and must not be edited by
+hand.
+
 ## Local verification
 
 Requires Node.js 22 or newer.
 
 ```bash
+cd atlas
 npm ci
 GITHUB_PAGES=true \
 NEXT_PUBLIC_BASE_PATH=/LA-neighborhood-heat \
@@ -52,10 +78,6 @@ NEXT_PUBLIC_SITE_URL=https://cmschase.github.io/LA-neighborhood-heat/ \
 npm test
 npm run lint
 ```
-
-Files under `public/data/` are a compact display export authenticated against
-the frozen evaluation. They are presentation inputs and must not be edited by
-hand.
 
 Pushes to `main` are built, tested, and deployed automatically through GitHub
 Actions.

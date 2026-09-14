@@ -864,8 +864,9 @@ function App() {
           <a href="#performance">Performance</a>
           <a href="#method">Method</a>
           <Link href="/m3">Research story</Link>
+          <Link href="/four-cities">Four-city atlas</Link>
         </nav>
-        <Link className="header-tag" href="/m3">From transfer to M3</Link>
+        <Link className="header-tag" href="/four-cities">Explore four cities</Link>
       </header>
 
       <section className="hero" id="top">

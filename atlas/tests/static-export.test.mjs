@@ -149,3 +149,45 @@ test("exports the complete M3 research line without rewriting the blind result",
   assert.match(html, /development result/);
   assert.equal(await sha256(sourceSummary), await sha256(exportedSummary));
 });
+
+test("keeps the LA homepage and exports the separate four-city atlas", async () => {
+  const homepage = await readFile(
+    new URL("../out/index.html", import.meta.url),
+    "utf8",
+  );
+  const fourCityPage = await readFile(
+    new URL("../out/four-cities/index.html", import.meta.url),
+    "utf8",
+  );
+  const sourcePayload = new URL(
+    "../public/data/four-city-atlas.json",
+    import.meta.url,
+  );
+  const exportedPayload = new URL(
+    "../out/data/four-city-atlas.json",
+    import.meta.url,
+  );
+  const payload = JSON.parse(await readFile(sourcePayload, "utf8"));
+  const scripts = (
+    await walk(fileURLToPath(new URL("../out/_next/static", import.meta.url)))
+  ).filter((path) => path.endsWith(".js"));
+  const javascript = (
+    await Promise.all(scripts.map((path) => readFile(path, "utf8")))
+  ).join("\n");
+
+  assert.match(homepage, /LA Surface Heat Atlas/);
+  assert.ok(javascript.includes("Four-city atlas"));
+  assert.ok(javascript.includes("/four-cities"));
+  assert.match(fourCityPage, /Four City Surface Heat Atlas/);
+  assert.match(fourCityPage, /Loading the four city Atlas/);
+  assert.equal(await sha256(sourcePayload), await sha256(exportedPayload));
+  assert.equal(payload.state, "opened-blind-evaluation-display-only");
+  assert.deepEqual(
+    payload.cities.map(({ id }) => id),
+    ["seattle_wa", "denver_co", "atlanta_ga", "miami_fl"],
+  );
+  assert.equal(
+    payload.cities.reduce((total, city) => total + city.metrics.rows, 0),
+    9502,
+  );
+});
