@@ -1,0 +1,50 @@
+[experiment]
+id = "la_spatial_residual_forward_v1"
+role = "iterative_local_historical_development_not_independent_confirmation"
+city_id = "los_angeles_ca"
+allowed_years = [2020, 2021, 2022, 2023, 2024]
+outer_test_years = [2022, 2023, 2024]
+primary_comparator = "relative_current_23"
+candidate_id = "current_plus_coarse_spatial_residual"
+hotspot_fraction = 0.20
+seed = 20260914
+threads = 4
+
+[diagnostic]
+residual_source = "strict-forward out-of-fold predictions inside each outer training window; neighbor structure evaluated separately per date"
+minimum_oof_years = 2
+nearest_neighbors = 6
+minimum_cross_year_tract_bias_spearman = 0.15
+minimum_within_year_neighbor_residual_spearman = 0.10
+outer_test_values_used_to_choose_spatial_scale = false
+
+[spatial_correction]
+geometry = "public LA tract centroids in EPSG:3310"
+scope = "local Los Angeles development only"
+basis = ["x", "y", "x2", "xy", "y2"]
+normalization = "mean and standard deviation over the fixed complete LA tract geography"
+ridge_alpha = 1000.0
+fit_intercept = false
+regularization_selection = "fixed before residual diagnosis; no search"
+tract_id_as_predictor = false
+historical_target_statistics_as_predictors = false
+neighbor_observations_read_at_prediction = false
+
+[base_model]
+definition = "unchanged relative_current_23 from la_local_forward_accuracy_v1"
+absolute_level = "unchanged fold-specific B1 complete-support city-date median"
+base_model_refit_or_tuned_from_outer_test = false
+
+[promotion]
+minimum_active_candidate_test_years = 2
+minimum_relative_mae_improvement = 0.05
+maximum_test_year_mae_degradation_c = 0.05
+maximum_support_centered_mae_degradation_c = 0.05
+maximum_absolute_mae_degradation_c = 0.05
+maximum_hotspot_recall_degradation = 0.02
+require_positive_crossed_bootstrap_lower_bound = true
+bootstrap_iterations = 2000
+
+[outputs]
+directory = "exports/LA_SPATIAL_RESIDUAL"
+report = "docs/LA_SPATIAL_RESIDUAL_DEVELOPMENT.zh-CN.md"

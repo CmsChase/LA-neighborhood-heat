@@ -1,0 +1,50 @@
+[experiment]
+id = "la_residual_diagnostics_v1"
+role = "bounded_reused_year_exploration_not_independent_confirmation"
+city_id = "los_angeles_ca"
+years = [2022, 2023, 2024]
+model = "unchanged relative_current_23 strict-forward OOF"
+train_model = false
+acquire_data = false
+change_qa_threshold = false
+seed = 20260914
+
+[inputs]
+oof = "exports/LA_SPATIAL_RESIDUAL/forward_oof.parquet"
+target_quality = "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/los_angeles_ca/4k/targets.parquet"
+predictors = "data/processed/multicity/m3_source_predictor_extension_v1/los_angeles_ca/predictors_46.parquet"
+tract_geometry = "data/interim/targets/primary_tract_manifest.parquet"
+
+[neighbor_check]
+neighbors = 6
+permutation_repetitions = 200
+statistic = "median across dates of Spearman(own signed residual, mean residual of six nearest other tracts)"
+shuffle = "within each date, residuals randomly reassigned among observed tract positions"
+
+[quality]
+numeric_fields = [
+  "median_st_uncertainty_k",
+  "p90_st_uncertainty_k",
+  "median_cloud_distance_km",
+  "valid_fraction",
+  "source_scene_count",
+]
+categorical_fields = ["platform", "overpass_id", "source_scene_ids"]
+diagnostic_role_only = true
+
+[weather]
+prefix = "daymet_"
+source_resolution = "Daymet native 1 km grid, eligible-land weighted to tract"
+availability = "complete 1/3/7 civil-day windows ending target day minus 1"
+target_day_or_post_overpass_weather_available = false
+
+[signal_rule]
+minimum_variable_dates_per_year = 5
+minimum_absolute_year_median_spearman = 0.10
+minimum_absolute_overall_median_spearman = 0.15
+require_same_direction_all_years = true
+selection_role = "choose one next-information recommendation only; not model promotion"
+
+[outputs]
+directory = "exports/LA_RESIDUAL_DIAGNOSTICS"
+report = "docs/LA_RESIDUAL_DIAGNOSTICS.zh-CN.md"

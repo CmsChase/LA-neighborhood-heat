@@ -1,0 +1,44 @@
+[experiment]
+id = "la_local_forward_accuracy_v1"
+role = "posthoc_local_historical_development_not_confirmation"
+city_id = "los_angeles_ca"
+target = "QA4K tract LST minus scored-city-date median"
+allowed_years = [2020, 2021, 2022, 2023, 2024]
+outer_test_years = [2022, 2023, 2024]
+inner_validation = "immediately preceding year; all earlier years train"
+outer_validation = "strict forward year; all earlier years train"
+candidate_ids = ["relative_current_23", "relative_stable_18", "relative_stable_blend"]
+diagnostic_baselines = ["zero_anomaly", "historical_tract_median"]
+primary_comparator = "relative_current_23"
+hotspot_fraction = 0.20
+seed = 20260913
+threads = 4
+
+[models]
+loss = "absolute_error"
+max_iter = 300
+learning_rate = 0.05
+max_leaf_nodes = 31
+min_samples_leaf = 50
+l2_regularization = 1.0
+early_stopping = false
+stable_blend_current_weight = 0.50
+
+[selection]
+metric = "equal-date scored-subset-centered relative MAE"
+ties = "candidate order"
+final_artifact_choice = "validate on 2024 after training through 2023, then refit through 2024"
+tract_id_or_target_history_as_candidate_feature = false
+
+[promotion]
+minimum_relative_mae_improvement = 0.05
+maximum_test_year_mae_degradation_c = 0.05
+maximum_support_centered_mae_degradation_c = 0.05
+maximum_absolute_mae_degradation_c = 0.05
+maximum_hotspot_recall_degradation = 0.02
+require_positive_crossed_bootstrap_lower_bound = true
+bootstrap_iterations = 2000
+
+[outputs]
+directory = "exports/LA_LOCAL_FORWARD_ACCURACY"
+report = "docs/LA_LOCAL_FORWARD_ACCURACY.zh-CN.md"

@@ -41,6 +41,7 @@ promising rather than protocol-confirmed.
 | M3 source-only development | Complete | Nested whole-city LOSO selected QA `4k` and the frozen M3 specification without using blind-city targets |
 | Seattle–Denver–Atlanta–Miami predictor build | Complete | All 46 predictors and the frozen M3 predictions were authenticated before target access |
 | Four-city blind evaluation | Complete; not confirmed | M3 MAE 5.8343 °C versus B1 at 3.8032 °C; all primary gates failed and Miami had only four usable dates |
+| LA local relative-accuracy optimization | Complete; model search paused | The existing 23-feature relative model remains the stage default; strict-forward 2022–2024 development MAE was 0.9531 °C and no tested candidate passed the fixed 5% upgrade gate |
 
 The one-time M3 blind evaluation is complete. Its protocol state is
 `inconclusive_sample_size`, and its observed point estimate and full bootstrap
@@ -48,6 +49,12 @@ interval disfavor M3. See the
 [M3 four-city blind-evaluation report](reports/M3_BLIND_EVALUATION_REPORT.md).
 These four cities must not be reused as a new blind test or used for
 confirmatory retuning.
+
+The local relative-accuracy work is a separate development task, not a later
+point on the original LA holdout or cross-city score curve. Its retained model,
+rejected candidates, absolute-output boundary, and local-only artifact inventory
+are recorded in the
+[LA model-optimization stage summary](docs/LA_MODEL_OPTIMIZATION_STAGE_SUMMARY.zh-CN.md).
 
 The machine-readable current state is
 [`manifests/multicity/ACTIVE_STAGE.json`](manifests/multicity/ACTIVE_STAGE.json).

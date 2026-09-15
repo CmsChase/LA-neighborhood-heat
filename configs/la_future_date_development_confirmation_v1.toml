@@ -1,0 +1,140 @@
+[protocol]
+id = "la-future-date-development-confirmation-v1"
+state = "complete_draft_collection_not_authorized"
+city_id = "los_angeles_ca"
+primary_claim = "historical reconstruction of within-LA neighborhood relative land-surface temperature"
+secondary_claim = "absolute land-surface temperature"
+operational_realtime_claim_allowed = false
+realtime_claim_unlock = "Every dynamic input must have evidence that its exact version was published before the prediction origin."
+new_data_download_authorized = false
+model_training_authorized = false
+target_read_authorized = false
+
+[historical_roles]
+training_and_development_start_year = 2020
+training_and_development_end_year = 2024
+usable_historical_dates = 65
+training_dates_2020_2021 = 16
+reused_development_dates_2022_2024 = 49
+unused_qa_eligible_dates_2020_2024 = 0
+la_2025_remains_frozen = true
+historical_dates_may_not_be_relabelled_as_independent_confirmation = true
+
+[acquisition_frame]
+warm_season_months = [5, 6, 7, 8, 9, 10]
+include_every_physical_overpass_meeting_pre_target_sensor_geography_and_time_rules = true
+physical_overpass_is_indivisible_between_batches = true
+retain_failed_qa_dates_and_reasons = true
+qa_rule_may_not_change_to_reach_sample_size = true
+performance_dependent_stopping_forbidden = true
+stop_only_at_end_of_warm_season_checkpoint = true
+
+[development_batch]
+role = "candidate_development_not_confirmation"
+assignment = "First arriving eligible physical overpasses after a separately authorized start date."
+minimum_usable_dates = 30
+minimum_usable_dates_per_warm_season_month = 3
+minimum_usable_dates_per_platform_when_both_landsat_8_and_9_operate = 8
+extend_by_complete_warm_seasons_if_qa_count_or_coverage_gate_is_not_met = true
+may_open_targets_after_default_predictions_and_batch_inventory_are_committed = true
+may_diagnose_and_select_one_bounded_candidate = true
+may_prove_upgrade = false
+
+[confirmation_batch]
+role = "one_time_independent_confirmation"
+assignment = "All eligible physical overpasses after the development batch closes and the final candidate, default comparator, preprocessing, predictions, and analysis protocol are frozen."
+minimum_usable_dates_planning_target = 106
+minimum_usable_dates_absolute_floor = 30
+minimum_usable_dates_per_warm_season_month = 3
+minimum_usable_dates_per_platform_when_both_landsat_8_and_9_operate = 8
+target_values_and_target_qa_sealed_until_prediction_commit = true
+one_primary_evaluation_only = true
+candidate_selection_or_refit_after_target_open_forbidden = true
+confirmation_dates_may_not_be_reused_to_prove_a_revised_candidate = true
+
+[target_and_predictor_retention]
+complete_fixed_prediction_tract_universe_required = true
+fixed_eligible_land_mask_and_identity_required = true
+per_scene_pixel_temperature_required = true
+per_scene_valid_and_quality_masks_required = true
+scene_and_overpass_lineage_required = true
+observation_geometry_if_available_required = true
+all_eligible_and_failed_date_inventory_required = true
+predictor_source_item_and_version_required = true
+predictor_retrieval_timestamp_required = true
+predictor_publication_timestamp_if_available_required = true
+missing_publication_timestamp_claim = "historical reconstruction only"
+
+[qa_and_scoring]
+qa_candidate = "4k"
+minimum_valid_pixel_fraction = 0.60
+minimum_valid_pixels_per_tract = 20
+minimum_tract_footprint_fraction = 0.90
+minimum_date_tract_retention_fraction = 0.50
+eligible_land_denominator_must_remain_fixed = true
+primary_metric = "mean across dates of within-date tract MAE for relative LST"
+primary_independent_unit = "physical overpass date"
+spatial_dependence_unit = "fixed 5 km spatial block"
+tract_date_rows_are_not_independent_samples = true
+relative_center = "median over the complete fixed prediction tract universe before joining QA-scored rows"
+absolute_temperature_metric_is_secondary = true
+hotspot_top20_and_complete_support_centering_are_secondary = true
+
+[upgrade_decision]
+comparator = "existing default 23-feature relative model"
+minimum_relative_mae_improvement_fraction = 0.05
+paired_date_by_spatial_block_interval_lower_bound_must_exceed_celsius = 0.0
+one_time_primary_decision = true
+new_candidate_requires_prediction_time_legal_evidence_from_development_batch = true
+spatial_correction_or_tmax_transformation_precommitted = false
+broad_model_search_allowed = false
+
+[sample_size_evidence]
+historical_default_date_macro_mae_c = 0.9530809315964125
+five_percent_effect_c = 0.04765404657982063
+historical_dates = 49
+historical_spatial_blocks = 71
+within_date_six_neighbor_residual_spearman_median = 0.890
+observed_paired_daily_gain_sd_spatial_candidate_c = 0.013845720534917583
+observed_paired_daily_gain_sd_local_selected_c = 0.13510854361819322
+observed_paired_daily_gain_sd_tmax_candidate_c = 0.17097655766512423
+planning_daily_gain_sd_c = 0.15
+planning_adjacent_date_correlation = 0.15
+alpha_two_sided = 0.05
+power = 0.80
+planning_required_confirmation_dates = 106
+uncertainty = "The variance and serial-correlation estimates use only 49 repeatedly used development dates and depend on the as-yet-unknown candidate."
+
+sample_size_scenarios = [
+  { daily_gain_sd_c = 0.10, adjacent_date_correlation = 0.00, dates = 35 },
+  { daily_gain_sd_c = 0.10, adjacent_date_correlation = 0.15, dates = 47 },
+  { daily_gain_sd_c = 0.10, adjacent_date_correlation = 0.30, dates = 65 },
+  { daily_gain_sd_c = 0.15, adjacent_date_correlation = 0.00, dates = 78 },
+  { daily_gain_sd_c = 0.15, adjacent_date_correlation = 0.15, dates = 106 },
+  { daily_gain_sd_c = 0.15, adjacent_date_correlation = 0.30, dates = 145 },
+  { daily_gain_sd_c = 0.20, adjacent_date_correlation = 0.00, dates = 139 },
+  { daily_gain_sd_c = 0.20, adjacent_date_correlation = 0.15, dates = 188 },
+  { daily_gain_sd_c = 0.20, adjacent_date_correlation = 0.30, dates = 257 },
+]
+
+[feasibility]
+historical_physical_dates_per_warm_season = 18.0
+historical_qa_usable_fraction = 0.7222222222222222
+historical_usable_dates_per_warm_season = 13.0
+recent_2022_2024_usable_dates_per_warm_season = 16.333333333333332
+development_30_date_estimated_warm_seasons = [1.84, 2.31]
+central_confirmation_106_date_estimated_warm_seasons = [6.49, 8.15]
+combined_136_date_estimated_warm_seasons = [8.33, 10.46]
+current_project_timeline_feasible = false
+timeline_field_scope = "Feasibility only under the stated central planning scenario and an ordinary single-cycle deadline; not a prerequisite for current-stage completion or a fixed waiting period."
+decision = "The current optimization stage is complete with the existing model and completed negative results. Re-estimate future collection needs only if a clear new research question, new information, or new validation condition is authorized."
+
+[evidence_inputs]
+spatial_oof = "exports/LA_SPATIAL_RESIDUAL/forward_oof.parquet"
+spatial_oof_sha256 = "4914d3e5a2106db27c2e7ce8350f832f5dd9e16c5686e54e6df998178541f974"
+tmax_oof = "exports/LA_TMAX_GRADIENT/forward_oof.parquet"
+tmax_oof_sha256 = "8b0b1c8cdde34a5a933209eaa4415c28034190393c4033b6d807facab9152c4c"
+local_oof = "exports/LA_LOCAL_FORWARD_ACCURACY/forward_oof.parquet"
+local_oof_sha256 = "9daebc641b2fb7ee425200958eac9c6f832521bc61854eb263741abf14077942"
+residual_diagnostic = "exports/LA_RESIDUAL_DIAGNOSTICS/summary.json"
+residual_diagnostic_sha256 = "1b08418570029a12d5160362360dd04280bc1eaf5d3401e4ad61054294406808"

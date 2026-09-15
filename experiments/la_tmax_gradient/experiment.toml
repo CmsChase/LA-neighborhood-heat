@@ -1,0 +1,65 @@
+[experiment]
+id = "la_dminus1_tmax_gradient_forward_v1"
+role = "adaptive_reused_year_local_historical_development_not_independent_confirmation"
+city_id = "los_angeles_ca"
+allowed_years = [2020, 2021, 2022, 2023, 2024]
+outer_test_years = [2022, 2023, 2024]
+primary_comparator = "relative_current_23"
+candidate_id = "relative_current_23_plus_dminus1_tmax_gradient"
+hotspot_fraction = 0.20
+seed = 20260914
+threads = 4
+
+[gradient]
+source_field = "daymet_tmax_c_mean_prev_1d"
+feature_name = "daymet_tmax_c_mean_prev_1d_city_gradient"
+definition = "tract d-1 Tmax minus same-date median over the complete fixed 1096-tract LA prediction universe"
+is_spatial_derivative = false
+centering_uses_scored_subset = false
+centering_uses_target_or_qa = false
+test_date_predictor_values_allowed = true
+missing_policy = "abort on current frozen inputs; no imputation parameter is fitted because missing count is zero"
+future_missing_parameter_source = "training fold only; requires a new contract"
+
+[time_contract]
+audit = "daymet source start and end for prev_1d must both equal target date minus one day"
+calendar_observation_precedes_target = true
+publication_before_target_proven = false
+claim = "historical hindcast reconstruction only; not an operational real-time forecast"
+
+[candidate]
+feature_count = 24
+base_feature_count = 23
+changed_features = ["daymet_tmax_c_mean_prev_1d_city_gradient"]
+algorithm_and_hyperparameters = "exact clone of relative_current_23 estimator"
+training_weights = "unchanged city_date_row_weights"
+extra_candidates_or_search = false
+weather_window_search = false
+interaction_search = false
+gradient_scale_search = false
+
+[absolute_output]
+level_model = "unchanged fold-specific B1 complete-support city-date level"
+candidate_absolute = "frozen B1 level plus candidate relative output"
+candidate_relative_changes_absolute_output = true
+
+[promotion]
+minimum_relative_mae_improvement = 0.05
+maximum_test_year_mae_degradation_c = 0.05
+maximum_support_centered_mae_degradation_c = 0.05
+maximum_absolute_mae_degradation_c = 0.05
+maximum_hotspot_recall_degradation = 0.02
+require_positive_crossed_bootstrap_lower_bound = true
+bootstrap_iterations = 2000
+
+[stopping]
+pass = "save candidate and reproduction evidence; require an independent future year"
+fail = "keep current model default and stop this fixed d-1 Tmax gradient route"
+no_followup_transform_or_window_search_on_same_years = true
+
+[inputs]
+daymet_audit = "data/processed/multicity/portable_predictors/components/los_angeles_ca/daymet_feature_audit.parquet"
+
+[outputs]
+directory = "exports/LA_TMAX_GRADIENT"
+report = "docs/LA_TMAX_GRADIENT_DEVELOPMENT.zh-CN.md"

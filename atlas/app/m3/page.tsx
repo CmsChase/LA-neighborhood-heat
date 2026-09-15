@@ -141,7 +141,7 @@ export default function M3ResultPage() {
             <span>06</span>
             <small>Existing data only</small>
             <strong>Narrow the claim</strong>
-            <p>Relative neighborhood differences survive; absolute temperature does not.</p>
+            <p>Relative neighborhood differences remain a development result; cross-city absolute transfer failed.</p>
           </li>
         </ol>
       </section>
@@ -576,8 +576,11 @@ export default function M3ResultPage() {
         <span>Where the line ends</span>
         <h2>Absolute M3 failed. Relative M3 is a development result.</h2>
         <p>
-          The project now has a useful narrower model, not a rescued blind test.
-          Any future confirmation still requires a genuinely untouched cohort.
+          The existing 23-feature relative model remains the stage default and
+          model search is paused. Existing absolute-temperature outputs are
+          retained with their original limits; this result does not rescue the
+          failed cross-city blind test. Any future confirmation still requires
+          a genuinely untouched cohort.
           Landsat LST is a clear-sky surface-heat proxy—not air temperature,
           exposure, illness, or causation.
         </p>

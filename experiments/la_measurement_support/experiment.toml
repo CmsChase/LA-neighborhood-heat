@@ -1,0 +1,85 @@
+[experiment]
+name = "la_measurement_support_sensitivity_v1"
+purpose = "Measure sensitivity of existing LA tract targets to changing valid-pixel composition; no model training or selection."
+city_id = "los_angeles_ca"
+development_years = [2022, 2023, 2024]
+qa_candidate = "4k"
+new_data_allowed = false
+model_training_allowed = false
+model_selection_allowed = false
+la_2025_allowed = false
+external_city_targets_allowed = false
+
+[inputs]
+forward_oof = "exports/LA_SPATIAL_RESIDUAL/forward_oof.parquet"
+forward_oof_sha256 = "4914d3e5a2106db27c2e7ce8350f832f5dd9e16c5686e54e6df998178541f974"
+target_summary = "data/interim/multicity/m3_source_development_v2/qa_candidates/cities/los_angeles_ca/4k/targets.parquet"
+target_summary_sha256 = "814857519cf341cd71dfbd30bbc47409452d7fade2fdf5fdce3cdc82a2c1d06d"
+physical_cache_plan = "data/interim/multicity/m3_source_development/landsat_cache/SCENE_PLAN.json"
+physical_cache_plan_sha256 = "4f14b6ec52e1ffa5b0d08ff7e93bf4889dd1b1424a764fd81c2c4e0ad0644f8e"
+integrity_authorization = "manifests/multicity/next_experiment/M3_SOURCE_INTEGRITY_V2_AUTHORIZATION.json"
+integrity_authorization_sha256 = "7a736e1734a3e3970625d444fbc16a3a70e98b7e5da986e929e97a72b2cdf2bd"
+runner_config = "configs/multicity/m3_source_development_runner_v2.toml"
+runner_config_sha256 = "dcb50c963f3df35de5a78374efe239260310e8809b6053518dc87e75f3342f38"
+research_config = "configs/research.toml"
+research_config_sha256 = "a2d4f7300d8a264c77c3ddc15a730546945a2d7f6ed253ff2f49e352102c60b9"
+logical_cache_completion = "manifests/multicity/next_experiment/source_development_v2/SOURCE_LANDSAT_LOGICAL_CACHE_COMPLETE.json"
+logical_cache_completion_sha256 = "a70747d9b3e64b38b7ff0d366edc084c287658fc940e4408699218c4bc691761"
+qa_completion = "manifests/multicity/next_experiment/source_development_v2/SOURCE_QA_CANDIDATES_COMPLETE.json"
+qa_completion_sha256 = "81879ad8daca1b2a52a2b70e282104775bdcba26cdf6c42de5d1b7a824748c62"
+target_contexts = "manifests/multicity/targets/TARGET_CONTEXTS.json"
+target_contexts_sha256 = "181a1b94ba7d94ed0af641ead3c5541131a3fb261e236ee917a5f40c1417d906"
+
+[date_pairing]
+date_universe = "exact distinct target_date values in forward_oof"
+within_year_only = true
+order = "ascending"
+algorithm = "greedy_nonoverlapping_consecutive; pair next two dates when gap <= maximum_gap_days, otherwise discard earlier date"
+maximum_gap_days = 16
+expected_pairs = 23
+expected_paired_dates = 46
+require_same_wrs_path_row_set = true
+
+[common_support]
+definition = "eligible_land AND qa4k_valid_on_first_date AND qa4k_valid_on_second_date"
+same_grid_locations_used_for_both_dates = true
+minimum_fraction_of_fixed_eligible_land = 0.60
+minimum_pixels_per_tract = 20
+original_qa_and_eligible_land_denominator_unchanged = true
+common_support_is_sensitivity_not_truth = true
+
+[analysis]
+prediction_column = "relative_current_23_relative_support"
+original_target_column = "target_lst_c"
+require_tract_scored_on_both_dates_of_pair = true
+center_original_and_common_targets_on_same_retained_tract_set = true
+center_predictions_on_same_retained_tract_set = true
+within_date_center = "median"
+primary_sensitivity = "mean across dates of spatial-block-weighted mean absolute difference between common-support and original relative targets"
+secondary = [
+  "change in current-model relative MAE on identical retained rows",
+  "absolute target shift",
+  "retained tract-date fraction",
+  "retained dates and spatial blocks",
+  "eligible-support latitude/longitude centroid shift",
+]
+uncertainty_unit = "date; all spatial blocks within a date remain together"
+bootstrap_replicates = 2000
+bootstrap_seed = 20260914
+
+[feasibility_stop]
+minimum_overall_retained_original_scored_fraction = 0.70
+minimum_each_year_retained_original_scored_fraction = 0.60
+minimum_retained_dates = 40
+minimum_spatial_block_fraction = 0.80
+stop_if_any_gate_fails = true
+
+[decision]
+worth_prioritizing_if_primary_at_least_celsius = 0.20
+and_at_least_two_years_at_least_celsius = 0.15
+reason = "A 0.20 C support-induced relative shift is about one fifth of the current model's roughly 0.95 C relative MAE and is large enough to alter interpretation."
+no_rule_changes_after_results = true
+
+[outputs]
+directory = "exports/LA_MEASUREMENT_SUPPORT_DIAGNOSTIC"
+report = "docs/LA_MEASUREMENT_SUPPORT_DIAGNOSTIC.zh-CN.md"

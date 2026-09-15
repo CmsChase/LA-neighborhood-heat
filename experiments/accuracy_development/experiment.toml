@@ -1,0 +1,32 @@
+[experiment]
+id = "source_relative_accuracy_development"
+role = "posthoc_development_not_confirmation"
+user_direction = "2026-09-13 request for a more accurate model supersedes explanation-only pause"
+target = "QA4K city-date median-centered daytime Landsat LST Celsius"
+source_cities = ["chicago_il", "houston_tx", "los_angeles_ca", "phoenix_az"]
+excluded_cities = ["seattle_wa", "denver_co", "atlanta_ga", "miami_fl"]
+candidate_ids = ["relative_static", "B1", "relative_context", "relative_blend"]
+selection = "inner whole-city equal-city equal-date anomaly MAE, ties favor candidate order"
+outer_validation = "nested leave-one-source-city-out"
+qa_id = "4k"
+primary_comparator = "relative_static"
+seed = 20260913
+threads = 4
+
+[models]
+loss = "absolute_error"
+max_iter = 300
+learning_rate = 0.05
+max_leaf_nodes = 31
+min_samples_leaf = 50
+l2_regularization = 1.0
+early_stopping = false
+
+[promotion]
+minimum_relative_mae_improvement = 0.10
+maximum_city_mae_degradation_c = 0.0
+require_positive_crossed_bootstrap_lower_bound = true
+bootstrap_iterations = 2000
+
+[outputs]
+directory = "exports/RELATIVE_ACCURACY_DEVELOPMENT"

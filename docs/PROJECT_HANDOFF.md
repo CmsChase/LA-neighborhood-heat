@@ -1,6 +1,303 @@
 # Project handoff
 
-Last updated: 2026-09-13 Asia/Shanghai
+Last updated: 2026-09-14 Asia/Shanghai
+
+## Current direction: LA model-optimization stage complete (2026-09-14)
+
+This stage is closed and model search is paused. The existing 23-feature
+relative-temperature specification remains the stage default; no candidate was
+promoted and no model was retrained during closure. Existing absolute-temperature
+outputs remain available under their original contracts and limitations. In
+particular, the standalone 23-feature relative artifact does not contain an
+absolute city-day level, while the LA strict-forward development diagnostic
+formed its secondary absolute output by adding a fold-refit B1 level.
+
+The concise, score-separated record is
+`docs/LA_MODEL_OPTIMIZATION_STAGE_SUMMARY.zh-CN.md`. It distinguishes LA local
+strict-forward development, four-source whole-city LOSO, the separate frozen
+46-feature M2 LA 2025 holdout, and the separate full-M3 four-city blind test;
+their scores must not be presented as a continuous upgrade curve. The final
+relative model contract, completion record, local ignored artifact and
+reproduction entry are cross-referenced there.
+
+All permissions in `manifests/multicity/ACTIVE_STAGE.json` remain false. LA 2025
+stays frozen, opened external cities cannot become new blind tests, and no new
+target may be read without a new explicit authorization. Future date counts and
+collection durations in the planning protocol are scenario estimates under
+specific variance, serial-correlation and QA-yield assumptions. They are not a
+prerequisite for completing this stage and do not prescribe a fixed waiting
+period. Model optimization may restart only for a clear new research question,
+new prediction-time-legal information, or genuinely new validation conditions.
+
+Sections below are chronological evidence records, not active instructions.
+
+## Planning record: future LA date protocol complete; collection not authorized (2026-09-14)
+
+The next-date development and independent-confirmation protocol is documented
+in `docs/LA_FUTURE_DATE_DEVELOPMENT_CONFIRMATION_PROTOCOL.zh-CN.md`, with a
+machine-readable draft at
+`configs/la_future_date_development_confirmation_v1.toml`. The draft does not
+authorize downloading data, reading new targets, or fitting a model. Its
+sample-size and elapsed-season values are planning scenarios only; the current
+stage has now closed independently of any future collection.
+
+## Completed record: LA measurement-support diagnosis (2026-09-14)
+
+Model search is paused. The one-shot, read-only diagnostic in
+`experiments/la_measurement_support/` tested whether changing valid-pixel
+composition under the unchanged QA4K target contract materially changes LA
+relative temperature. Its pairing, exact common-support rule, coverage gates,
+0.20 C priority threshold, and stopping rule were written before pixel values
+were read. It acquired no data, fitted no model, changed neither QA nor the
+eligible-land denominator, and read neither LA 2025 nor external-city targets.
+
+The local cache was sufficient: 177 georeferenced scenes over 90 dates retain
+surface temperature, QA_PIXEL, ST_QA, cloud distance, QA_RADSAT, source
+coverage, fixed tract zones, and fixed eligible land. Valid-pixel locations are
+not present in the tract summary but were reconstructed exactly from the
+authenticated rasters. Rebuilding each original tract target from its own-date
+pixel mask matched the formal target table with maximum absolute difference
+0.0 C.
+
+The fixed common-support comparison retained 41,106 of 44,571 paired scored
+rows (92.23%), 46 dates, and 69 of 71 spatial blocks. Annual retention was
+93.40%, 94.38%, and 89.15% for 2022--2024. The equal-date/equal-block mean
+absolute change in relative target was only 0.01339 C, with date-bootstrap 95%
+interval [0.00897, 0.01834] C; annual values were 0.01165, 0.01288, and
+0.01572 C. The unchanged model's matched-row relative MAE changed from 1.11001
+to 1.11172 C under the sensitivity target. No year approached the prespecified
+0.15 C annual threshold, so changing valid-pixel support is not a priority under
+this fixed mechanism. This does not rule out all measurement error or establish
+weather causation.
+
+The 44,571-row pairing denominator is not the full 47,142-row OOF set. The
+2,571-row difference is exactly the three dates left unpaired by the locked
+greedy, nonoverlapping adjacent-date rule: 1,085 rows on 2022-09-03, 787 on
+2023-05-17, and 699 on 2023-10-24. The common-support gate is the later step
+from 44,571 to 41,106 rows. Consequently the diagnostic applies only to support
+composition on the 46 paired same-WRS dates, not the three unpaired dates or
+dates that had already failed the original date QA.
+
+There is no untouched QA-eligible LA date in 2020--2024: the 16 usable dates in
+2020--2021 entered training, and all 49 usable dates in 2022--2024 have been
+reused for development. Dates that failed the locked date QA cannot be relabeled
+to create an independent set. LA 2025 remains frozen. The next safe research
+stage is therefore to preregister prospective, complete LA date cohorts: one
+new development cohort if a single scientifically motivated dynamic candidate
+is proposed, followed by a nonoverlapping one-time confirmation cohort. Each
+cohort should accumulate at least 30 usable dates under unchanged QA and retain
+pixel masks, observation geometry/quality, and verifiable predictor publication
+times. Do not restart spatial correction, Tmax-window search, or broader model
+search. See `docs/LA_MEASUREMENT_SUPPORT_DIAGNOSTIC.zh-CN.md`; machine-readable
+evidence is under `exports/LA_MEASUREMENT_SUPPORT_DIAGNOSTIC/`.
+
+## Completed record: fixed LA d-1 Tmax-gradient route stopped (2026-09-14)
+
+The single adaptive candidate in `experiments/la_tmax_gradient/` is complete.
+It added exactly one feature to the unchanged 23-feature relative HGB:
+tract d-1 Daymet Tmax minus the same-date median over the complete fixed 1,096-
+tract LA prediction universe. This is a city-background temperature difference,
+not a spatial derivative. The median was computed before joining QA/scored rows
+and used neither targets nor QA. The prior dynamic train-fold median imputation,
+model algorithm, hyperparameters, weights, forward splits, target, and scoring
+definitions were unchanged; there was no candidate or weather-window search.
+
+The local Daymet audit covers 98,640 rows and 90 dates. Every prev_1d source
+start and end equals target date minus one day, and the one-day windows are
+complete, so there is no calendar offset. No publication/release timestamp is
+available to prove pre-target product release. The feature therefore supports
+historical hindcast reconstruction only, not an operational real-time forecast
+claim.
+
+The same 47,142 QA4K rows, 49 dates, and 71 blocks were tested strictly forward:
+2022 trained on 2020--2021, 2023 on 2020--2022, and 2024 on 2020--2023. Relative
+MAE changed from 0.95308 C to 0.93850 C, a 1.53% improvement, below the fixed 5%
+gate. The paired date x block gain interval was [-0.02978, 0.06772] C. The
+candidate worsened 2022 by 0.02166 C, improved 2023 by only 0.00106 C, and
+improved 2024 by 0.06945 C, so the gain is not stable across years. Full-support
+centered relative MAE changed from 0.97985 to 0.96735 C, hotspot recall from
+0.68439 to 0.68012, and B1-level-anchored absolute MAE from 1.84858 to 1.82772 C.
+Secondary non-degradation checks passed, but the 5% primary gate and positive
+bootstrap lower-bound check failed.
+
+The experiment is closed under its stopping rule. No full-history candidate
+model was fitted or saved, the existing 23-feature model remains default, and
+the d-1 Tmax gradient must not be replaced with another window, transformation,
+or interaction using the same outer years. This failure rejects only this fixed
+candidate, not all weather information. The result is adaptive development
+evidence because 2022--2024 residuals selected the feature; forward fitting does
+not remove that adaptation. No LA 2025 or external-city target was read, no data
+was acquired, and QA was not changed. See
+`docs/LA_TMAX_GRADIENT_DEVELOPMENT.zh-CN.md`; generated evidence is under
+`exports/LA_TMAX_GRADIENT/`.
+
+## Completed record: bounded LA residual diagnosis (2026-09-14)
+
+The read-only diagnostic in `experiments/la_residual_diagnostics/` is complete.
+It reused the fixed 47,142 strict-forward OOF rows from 49 dates and 71 spatial
+blocks in 2022--2024. It did not fit or select a model, acquire data, change QA4K
+or its scoring cohort, or read LA 2025 or external-city targets. Because these
+years have already informed development, this is exploratory evidence rather
+than a new independent confirmation, and tract-date rows were not treated as
+independent replicates.
+
+The six-neighbor statistic is now explicit: within each date it is the Spearman
+correlation between each observed tract's signed OOF residual and the mean
+residual among its six nearest other observed tracts. There are no self edges or
+duplicate neighbors within a focal tract, although neighbor sets overlap. The
+observed median date correlation is 0.890. In 200 within-date permutations that
+reassigned residuals among observed tract positions while retaining the graph
+and missingness, the median was -0.002 and the 95% range was [-0.018, 0.013].
+The spatial pattern is therefore not explained by the obvious computational
+artifact, but this does not identify a physical mechanism or reopen spatial
+model tuning.
+
+Signed residual decomposition does not support a fixed-neighborhood correction.
+The city-date mean signed-error magnitude averages 0.240 C, while the within-date
+centered residual MAE remains 0.947 C. A tract's all-date median residual maps
+only 8.3% of total residual variance, and annual tract patterns have pairwise
+Spearman 0.165, 0.351, and 0.158; block-level values are 0.070, 0.251, and
+-0.173. This is consistent with strong date-specific spatial fields and weak
+long-term persistence, and the prior fixed coarse spatial candidate remains
+stopped.
+
+Existing target-scene quality fields do not provide a cross-year-consistent
+explanation of absolute errors. Median/p90 uncertainty, cloud distance, and
+valid fraction all miss the prespecified signal rule; source-scene count and
+footprint fraction are constant. Landsat platform is confounded with date,
+each overpass/scene set is unique to a date, and view/sun geometry is absent.
+These fields remain diagnostic-only and may not be used to filter the scoring
+set or as predictors.
+
+All 21 existing Daymet fields are approximately 1 km tract summaries whose
+windows end at d-1. Three pass the prespecified cross-year direction rule. The
+two day-length windows are redundant stable-location proxies and should not be
+used after the spatial-route stop. The actionable signal is d-1 maximum
+temperature: its within-date residual Spearman medians are 0.232, 0.129, and
+0.325 for 2022, 2023, and 2024, its median within-date SD is 1.97 C, and it is
+not in the current 18-static + 5-lagged-Sentinel relative model.
+
+The single evidence-based recommendation is therefore A: if the user authorizes
+another fit, freeze one candidate that adds only a train-fold-defined,
+train-standardized within-LA `daymet_tmax_c_mean_prev_1d` gradient to the current
+relative model. Keep the current model as default and the absolute level model
+fixed; reuse the same forward splits, rows, weights, centering, and 5% promotion
+gate, with no search over weather windows, models, or spatial scales. Do not add
+day length. Any result would remain iterative development evidence requiring a
+future independent year. See `docs/LA_RESIDUAL_DIAGNOSTICS.zh-CN.md`; generated
+outputs are under `exports/LA_RESIDUAL_DIAGNOSTICS/`.
+
+## Completed record: LA coarse spatial-residual experiment stopped (2026-09-14)
+
+The bounded experiment in `experiments/la_spatial_residual/` is complete. It is
+explicitly iterative development evidence, not an independent confirmation,
+because the prior 2022--2024 results informed its design. The historical/global
+feature registry still forbids raw coordinates. A documented LA-local exception
+allowed only a five-term quadratic basis of public EPSG:3310 tract centroids in
+a residual corrector; the existing 23-feature model and B1 absolute level were
+unchanged. Ridge alpha 1000, six-neighbor diagnostics, thresholds, and stopping
+rules were fixed before residual inspection. No LA 2025 or external-city target
+was read.
+
+Each outer training window used only strict-forward OOF residuals from years
+inside that window. Per-date local residual structure was strong (median fixed
+six-neighbor Spearman 0.867--0.869), but same-tract annual bias was not reliably
+stable: 2021 versus 2022 Spearman was 0.0439, and the full-history median across
+year pairs was 0.1631. Only the 2024 outer fold passed the diagnostic, fewer than
+the two active years required for promotion. On the same 47,142 rows, 49 dates,
+and 71 blocks, the candidate relative MAE was 0.95313 C versus 0.95308 C for the
+existing model (-0.005% improvement). The paired date x block interval was
+[-0.00556, 0.00503] C. Hotspot recall moved 0.6844 to 0.6862, full-support MAE
+0.97985 to 0.97864 C, and absolute MAE 1.84858 to 1.84860 C. Promotion failed;
+the existing model remains default, and this spatial-correction route stops
+without further scale or regularization tuning.
+
+The failure does not establish an accuracy ceiling. Strong within-date spatial
+residual agreement argues against purely independent noise, while weak cross-
+year tract persistence argues against a fixed neighborhood correction. The next
+useful information is target-before-date local weather gradients and atmospheric
+or acquisition context, plus an audit of existing uncertainty, cloud-distance,
+and valid-support fields to distinguish a missing dynamic spatial field from
+spatially correlated measurement/support error. Do not start a new model search
+or reuse the same outer years to tune spatial scale. See
+`docs/LA_SPATIAL_RESIDUAL_DEVELOPMENT.zh-CN.md`; generated outputs are under
+`exports/LA_SPATIAL_RESIDUAL/`.
+
+## Completed record: Los Angeles strict-forward local accuracy (2026-09-13)
+
+The user explicitly prioritized improving relative neighborhood LST accuracy
+in already observed cities, beginning with Los Angeles, while retaining an
+absolute-temperature output. This does not reopen LA 2025 and does not treat
+the failed cross-city absolute transfer as a local accuracy ceiling.
+
+The fixed bounded experiment in `experiments/la_local_accuracy/` is complete.
+It used only LA QA4K observations and predictors from 2020–2024. Outer tests
+were the complete 2022, 2023, and 2024 years; each candidate choice used the
+immediately preceding year and trained only on still earlier years, after
+which the chosen candidate was refit on every year strictly before the outer
+test. Fold preprocessing was train-only. No tract-date rows were randomly
+split, and neither LA 2025 nor any external-city target was read.
+
+The three candidates were fixed before fitting: the existing 23-feature
+relative HGB, an 18-feature stable-spatial HGB without lagged Sentinel, and a
+fixed 1:1 blend. The training-period tract median anomaly was evaluated only
+as a diagnostic baseline; tract ID and target history never entered candidate
+features. Across 47,142 scored rows, 49 independent dates, and 71 fixed 5 km
+blocks, the forward selected procedure reached 0.94151 C relative MAE versus
+0.95308 C for the refit existing model (1.21% improvement). Its paired date x
+block gain interval was [-0.03009, 0.05046] C. The fixed 5% promotion threshold
+and positive lower-bound checks failed. Hotspot recall, full-support centering,
+and anchored absolute MAE did not materially degrade, but the model is not a
+reliable upgrade and the existing relative model remains the default.
+
+The main useful result is structural: the train-only tract-history diagnostic
+reached 0.94694 C versus 2.01023 C for zero anomaly, and the descriptive median
+pairwise date Spearman was 0.8185 across 2,080 date pairs. Stable neighborhood
+structure is therefore strong, but simply removing/shrinking Sentinel did not
+capture it reliably. The next evidence-based small experiment should add a
+target-free spatial smooth or hierarchical structure to the same fixed
+strict-forward LA validation, without tract ID or historical target statistics
+as candidate features. Do not repeat the completed candidate set or expand to
+new cities. See `docs/LA_LOCAL_FORWARD_ACCURACY.zh-CN.md`; generated outputs are
+under `exports/LA_LOCAL_FORWARD_ACCURACY/`.
+
+## Completed record: relative accuracy development (2026-09-13)
+
+The user resumed accuracy development and explicitly prioritized relative
+neighborhood temperature while retaining absolute-temperature outputs. This
+supersedes the earlier explanation-only pause. The fixed, source-only experiment
+is in `experiments/accuracy_development/`; runtime status is
+`exports/RELATIVE_ACCURACY_DEVELOPMENT/status.json`. It compares the existing
+23-feature relative HGB, B1, a 46-feature weather-context relative HGB, and a fixed
+blend using nested whole-city validation. No opened stress-city values or LA 2025
+enter this experiment. Old frozen results and models remain historical evidence.
+
+Completed on 96,061 rows, 132 city-dates (254 spatial blocks). The fixed blend
+has descriptive source LOSO anomaly MAE 1.34269 C versus existing relative
+1.36059 C. The nested selection procedure achieves 1.35615 C (0.33% gain),
+with paired crossed date/block gain interval [-0.01666, 0.02373] C. Chicago
+worsens by 0.08209 C, and hotspot recall falls from 0.46065 to 0.44366.
+The fixed promotion gate failed: do not call this a reliable improved model.
+Anchored absolute MAE is 3.56578 C for the selected procedure versus B1
+3.65776 C; absolute improvement was secondary and not independently confirmed.
+
+Full-source relative_blend is saved as a research candidate under
+`exports/RELATIVE_ACCURACY_DEVELOPMENT/development_model.joblib`, with signature
+and model hash in provenance/model metadata. `predict.py --city los_angeles_ca`
+exported 98,640 complete-support historical prediction rows with relative,
+anchored absolute and B1 absolute columns. These fitted-source outputs are not
+validation estimates. Use nested_oof.parquet for validation. Five focused tests,
+touched Python lint, baseline reproduction, finite outputs, complete-support
+centering and model reload checks passed.
+
+See generated `docs/M3_RELATIVE_ACCURACY_DEVELOPMENT.zh-CN.md` for results and
+hotspot diagnostics. Source experiment checkpoints are resumable, but no further
+candidate changes should be made against these results. Next resolve whether
+the practical priority is improved local accuracy in an observed city or transfer
+to an unseen city; those require different validation. Adding existing weather
+features alone has not delivered a reliable upgrade. The prior explanation review
+in `docs/M3_EXPLANATORY_REASSESSMENT.zh-CN.md` remains historical analysis, not
+the current instruction to stop model development.
 
 ## Current research review milestone (supersedes stale resume notes below)
 
@@ -91,7 +388,7 @@ Public atlas: `https://cmschase.github.io/LA-neighborhood-heat/`
 
 The website source is `atlas/`. The old standalone atlas repository is archived.
 
-## Active M3 blind-prediction stage
+## Historical M3 blind-prediction stage (closed)
 
 The full four-city offline Sentinel/static assembly is complete and
 authenticated at
@@ -447,7 +744,7 @@ The single active control record is
 `manifests/multicity/ACTIVE_STAGE.json`. Historical numbered transition modules
 through V18 remain for provenance and must not be extended with V19/V20 files.
 
-## Exact resume point
+## Historical resume point (closed)
 
 Current resume point (supersedes the historical repair-blocker narrative
 retained below): the public-repository organization milestone is complete and
