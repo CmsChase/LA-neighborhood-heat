@@ -8,6 +8,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 from affine import Affine
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +34,8 @@ def test_contract_locks_one_shot_read_only_scope_and_thresholds() -> None:
 
 def test_completed_result_authenticates_original_pixel_reconstruction() -> None:
     path = ROOT / "exports" / "LA_MEASUREMENT_SUPPORT_DIAGNOSTIC" / "summary.json"
+    if not path.exists():
+        pytest.skip("requires the gitignored LA measurement-support result")
     summary = json.loads(path.read_text(encoding="utf-8"))
     assert summary["state"] == "complete"
     assert summary["inventory"][

@@ -6,6 +6,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 RUN_PATH = ROOT / "experiments" / "la_spatial_residual" / "run.py"
@@ -17,6 +18,9 @@ SPEC.loader.exec_module(RUN)
 
 
 def test_basis_contract_has_only_five_target_free_terms() -> None:
+    support_path = ROOT / "data" / "interim" / "targets" / "primary_tract_manifest.parquet"
+    if not support_path.exists():
+        pytest.skip("requires the gitignored LA tract-support manifest")
     basis, metadata = RUN.load_spatial_basis()
     assert basis.shape == (1096, 6)
     assert basis.tract_geoid.nunique() == 1096

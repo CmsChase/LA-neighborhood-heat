@@ -7,6 +7,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 RUN_PATH = ROOT / "experiments" / "la_tmax_gradient" / "run.py"
@@ -38,6 +39,17 @@ def test_gradient_uses_complete_prediction_support_not_scored_subset() -> None:
 
 
 def test_daymet_audit_proves_calendar_dminus1_but_not_publication_time() -> None:
+    predictor_path = (
+        ROOT
+        / "data"
+        / "processed"
+        / "multicity"
+        / "m3_source_predictor_extension_v1"
+        / "los_angeles_ca"
+        / "predictors_46.parquet"
+    )
+    if not predictor_path.exists():
+        pytest.skip("requires the gitignored LA source-predictor artifact")
     with RUN.CONFIG_PATH.open("rb") as handle:
         config = tomllib.load(handle)
     prior = RUN.load_module("la_tmax_test_prior", RUN.PRIOR_RUN_PATH)

@@ -6,6 +6,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 RUN_PATH = ROOT / "experiments" / "la_residual_diagnostics" / "run.py"
@@ -19,6 +20,9 @@ SPEC.loader.exec_module(RUN)
 def test_neighbor_topology_excludes_self_and_duplicates() -> None:
     import tomllib
 
+    support_path = ROOT / "data" / "interim" / "targets" / "primary_tract_manifest.parquet"
+    if not support_path.exists():
+        pytest.skip("requires the gitignored LA tract-support manifest")
     with RUN.CONFIG_PATH.open("rb") as handle:
         config = tomllib.load(handle)
     geoids, neighbors, metadata = RUN.load_neighbors(config)

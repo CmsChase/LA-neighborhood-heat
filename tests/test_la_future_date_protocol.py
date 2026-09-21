@@ -6,6 +6,7 @@ from pathlib import Path
 from statistics import NormalDist
 
 import pandas as pd
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL = ROOT / "configs" / "la_future_date_development_confirmation_v1.toml"
@@ -43,10 +44,10 @@ def test_central_sample_size_is_reproducible_from_locked_assumptions() -> None:
 
 
 def test_measurement_support_pairing_denominator_gap_is_exactly_three_dates() -> None:
-    rows = pd.read_parquet(
-        ROOT / "exports" / "LA_SPATIAL_RESIDUAL" / "forward_oof.parquet",
-        columns=["target_date", "tract_geoid"],
-    )
+    path = ROOT / "exports" / "LA_SPATIAL_RESIDUAL" / "forward_oof.parquet"
+    if not path.exists():
+        pytest.skip("requires the gitignored LA spatial-residual evidence artifact")
+    rows = pd.read_parquet(path, columns=["target_date", "tract_geoid"])
     rows["target_date"] = pd.to_datetime(rows.target_date).dt.strftime("%Y-%m-%d")
     expected = {
         "2022-09-03": 1085,
