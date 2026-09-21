@@ -656,12 +656,22 @@ def build_previous_60_day_composites(
         raise ValueError("Tract GEOIDs must be non-empty and unique.")
 
     members = membership.copy()
+    members["physical_acquisition_id"] = members["physical_acquisition_id"].astype(str)
     members["target_date"] = _civil_series(members["target_date"], field="target_date")
     members["acquisition_local_date"] = _civil_series(
         members["acquisition_local_date"], field="acquisition_local_date"
     )
     if members.duplicated(["target_date", "physical_acquisition_id"]).any():
         raise ValueError("Membership has duplicate target/acquisition keys.")
+    member_date_counts = members.groupby("physical_acquisition_id", observed=True)[
+        "acquisition_local_date"
+    ].nunique()
+    if (member_date_counts != 1).any():
+        invalid_ids = member_date_counts.loc[member_date_counts != 1].index.tolist()[:5]
+        raise ValueError(
+            "Membership maps a physical acquisition to multiple local dates: "
+            f"{invalid_ids}"
+        )
     if not set(members["target_date"]).issubset(set(normalized_targets)):
         raise ValueError("Membership contains an undeclared target date.")
     computed_lag = (members["target_date"] - members["acquisition_local_date"]).dt.days
@@ -687,6 +697,31 @@ def build_previous_60_day_composites(
     acquisition["physical_acquisition_id"] = acquisition[
         "physical_acquisition_id"
     ].astype(str)
+    acquisition_date_counts = acquisition.groupby(
+        "physical_acquisition_id", observed=True
+    )["acquisition_local_date"].nunique()
+    if (acquisition_date_counts != 1).any():
+        invalid_ids = acquisition_date_counts.loc[
+            acquisition_date_counts != 1
+        ].index.tolist()[:5]
+        raise ValueError(
+            "Acquisition table maps a physical acquisition to multiple local dates: "
+            f"{invalid_ids}"
+        )
+    member_dates = members.drop_duplicates("physical_acquisition_id").set_index(
+        "physical_acquisition_id"
+    )["acquisition_local_date"]
+    acquisition_dates = acquisition.drop_duplicates("physical_acquisition_id").set_index(
+        "physical_acquisition_id"
+    )["acquisition_local_date"]
+    common_ids = member_dates.index.intersection(acquisition_dates.index)
+    date_mismatch = member_dates.loc[common_ids] != acquisition_dates.loc[common_ids]
+    if date_mismatch.any():
+        invalid_ids = common_ids[date_mismatch.to_numpy()].tolist()[:5]
+        raise ValueError(
+            "Membership and acquisition table disagree on acquisition local date: "
+            f"{invalid_ids}"
+        )
     for physical_id in membership_ids:
         acquisition_tracts = set(
             acquisition.loc[
@@ -707,7 +742,10 @@ def build_previous_60_day_composites(
         acquisition,
         on=["physical_acquisition_id", "acquisition_local_date"],
         how="left",
-        validate="one_to_many",
+        # One physical acquisition may legally belong to several target-date
+        # windows, while each acquisition has one row per tract.  The checks
+        # above constrain both sides before allowing that intended expansion.
+        validate="many_to_many",
         indicator=True,
     )
     if (lineage["_merge"] != "both").any():

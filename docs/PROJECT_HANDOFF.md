@@ -1,6 +1,722 @@
 # Project handoff
 
-Last updated: 2026-09-14 Asia/Shanghai
+Last updated: 2026-09-21 Asia/Shanghai
+
+## Current resume point: U.S. model optimization formally complete
+
+The U.S. model-optimization stage is closed and model search is paused. The
+fixed Colorado source-addition comparison found an 8.39% aggregate absolute-MAE
+point improvement (4.5251°C to 4.1454°C), but Houston degraded by 0.6816°C,
+Phoenix by 0.9581°C, and the paired expanded-minus-baseline 95% interval
+[-1.9995, 0.8773]°C crossed zero. The fixed 0.25°C city guard failed, so the
+decision remains `no_upgrade` and the existing four-source model remains the
+cross-city default. The existing 23-feature LA relative model remains the local
+development default. This is evidence of mixed local benefit, not proof that
+new data are useless or that precision has reached a ceiling.
+
+No later work re-evaluated Seattle, Denver, Atlanta or Miami, so their opened
+blind results and failure interpretation remain unchanged. LA 2025 remains
+closed to retuning or a second confirmation claim. All training, target-read,
+external-target and acquisition permissions are false in the single active
+stage record. The next direction is recorded only as a possible separately
+authorized Chengdu pilot-area surface-heat and public-space feasibility study;
+no Chengdu data, model, map or outreach has begun.
+
+The release summary is `docs/US_MODEL_OPTIMIZATION_STAGE_SUMMARY.zh-CN.md`;
+the fixed experiment report is
+`docs/COLORADO_SOURCE_ADDITION_FIXED_V1.zh-CN.md`. The Atlas `/m3/` page reads
+the tracked compact `atlas/public/data/colorado-source-addition.json`, generated
+from the ignored local machine results by
+`scripts/export_colorado_source_addition_atlas.py`. GitHub does not contain the
+raw science data, target rows, acquisition caches, fitted model binaries or
+paired row-level predictions under ignored `data/` and `exports/`. Their local
+hashes are recorded, but no independent backup of all ignored artifacts has
+been confirmed; the Git repository alone is not a full local-evidence backup.
+
+## Current resume point: fixed Colorado source-addition experiment complete; no upgrade
+
+The user authorized one fixed comparison after Colorado predictor-input acceptance.
+The preregistered contract held QA (`4k`), the selected M3 specification
+(`level_ridge_alpha_10__anomaly_hgb_leaves_31`), all features, preprocessing and
+scoring rows fixed. For each original source city holdout, baseline training used
+the other three original sources and expanded training used those same three plus
+Colorado. No candidate search was performed.
+
+Across the same 96,061 held-out rows and 132 original-source city-dates, equal-city/
+equal-date absolute MAE changed from **4.5251°C to 4.1454°C** (8.39% point
+improvement), but the fixed upgrade decision is **`no_upgrade`**. Chicago improved
+by 2.7786°C and LA by 0.3797°C, while Houston degraded by 0.6816°C and Phoenix by
+0.9581°C. The maximum degradation exceeded the preregistered 0.25°C city guard;
+the paired hierarchical bootstrap interval for expanded-minus-baseline MAE was
+[-1.9995, 0.8773]°C. Relative MAE also worsened from 1.3606°C to 1.4061°C.
+The existing four-source model remains the default.
+
+Verification is complete. The focused Colorado source-addition tests and Ruff
+checks pass, and the full repository test suite passes when pytest's base
+temporary directory is placed under the repository `.tmp` tree, as required by
+the project's path-containment and synthetic-smoke safety contracts. A default
+Windows system temporary directory on `C:` causes path-policy failures because
+this checkout is on `D:`; those failures are environmental rather than model or
+experiment regressions. A regression test now explicitly preserves the LA 2025
+lock without accidentally filtering Phoenix's authenticated 2025 source-
+development cohort.
+
+The held-Colorado development diagnostic from the original-four model was
+13.4843°C absolute MAE and +13.4843°C bias, versus 0.9671°C relative MAE. This
+supports the existing diagnosis that Colorado failure is primarily city-level,
+but is not causal or independent-confirmation evidence. LA 2025 and all four
+external-city targets remained unopened; network use was zero. All temporary
+target/model permissions are closed. Results and fitted comparison artifacts are
+ignored under `exports/COLORADO_SOURCE_ADDITION_FIXED_V1/`; the Chinese report is
+`docs/COLORADO_SOURCE_ADDITION_FIXED_V1.zh-CN.md`. Do not tune city weights or
+model parameters against these same results. A new model question or independent
+confirmation condition is required before more optimization.
+
+## Current resume point: Colorado official predictor inputs accepted; no model work started
+
+The bounded official Sentinel build finished all **404/404** physical acquisitions
+needed by the 46 calibration-cleared dates. The persistent batch checkpoint records
+55,925,390,302 bytes of GET response bodies, 64,985.4 seconds (18.05 h) of
+acquisition work, 1.416 GB peak process RSS, and 105.89 GB minimum observed free
+disk. There were 424 attempts, including transient failures that were recovered;
+403 successful attempts were made in this formal run and one previously certified
+sample cache supplied the 404th acquisition.
+
+The first offline compilation attempt failed after acquisition completion because
+`build_previous_60_day_composites` incorrectly required membership keys to be
+one-to-many. A physical Sentinel acquisition is legitimately shared by several
+target-date d-60:d-1 windows, while also having one row per tract. The merge now
+uses constrained many-to-many expansion only after checking that each physical ID
+has one local acquisition date on each side and that those dates agree. Forty
+focused tests and lint pass. Re-running from authenticated caches completed in
+about 17 seconds and did not re-download imagery.
+
+Formal input acceptance is complete for **46 dates × 110 tracts = 5,060 rows**.
+All 46 existing model features are finite and non-missing on those rows: 18 static,
+2 calendar, 21 Daymet and 5 Sentinel. They connect to **4,140** existing
+source-development label keys; only keys were inspected, not temperature values.
+The complete master table still preserves all **47 × 110 = 5,170 rows**.
+`2021-10-18` remains `calibration_blocked`, with all 110 rows retained, 41
+non-Sentinel features present, five Sentinel features uncomputed, and 95 existing
+label keys recorded separately. Normal Sentinel observation-missing rows among the
+46 accepted dates are zero.
+
+Ignored local evidence is under
+`exports/SOURCE_CITY_PREDICTOR_TRIAL/official_2020/colorado_springs_co/`:
+`OFFICIAL_PREDICTOR_INPUT_ACCEPTANCE.json` and
+`official_predictor_inputs_46_with_blocked_date.parquet`. The accepted table SHA-256
+is `9c9d0ef4b22c9ffa1a1b370e99f6716e718abfe51ef3aa4dd42ae8a871e07cc2`.
+`ACTIVE_STAGE.json` is closed with all temporary permissions false. The data are
+ready for a separately authorized fixed-model experiment limited to the 46 accepted
+dates; no model was trained or scored, and the blocked date was not silently
+removed or imputed.
+
+## Current resume point: Colorado official Sentinel batch safely paused
+
+The batch later reached 176 authenticated new acquisitions and stopped after two `WarpOperationError` attempts on `sentinel-2a|2024-06-01T17:39:11.024000Z|R98|GS2A_20240601T173911_046713`. The checkpoint has 184 attempts, 24.462 GB GET bodies and 9.50 h cumulative acquisition time. The user requested automatic recovery. The existing resume entry now permits up to six cumulative attempts per acquisition for the frozen transient error types, with 5/15/30/60/120 s backoff and serial reads after the first attempt. Attempt counts are read from the persistent checkpoint, so restarting cannot reset the cap. It also writes a worker PID marker and automatically repairs an orphaned `running` stage only when that PID is no longer alive. Scientific errors, calibration gaps, 80 GB/24 h cumulative limits, 30 GiB disk floor and abnormal per-acquisition network volume still stop. Tests and lint pass. Run the same `official_sentinel_resume` command once; transient failures are now handled automatically within the bounded run.
+
+After another long local run, the worker was no longer present but `ACTIVE_STAGE.json` was left in `running_colorado_official_sentinel_batch_only`, so the resume entry correctly refused to start a duplicate. The frozen checkpoint and plan still match. The orphaned state was recovered to `paused_colorado_official_sentinel_batch`, all temporary permissions were closed, and resume remains preauthorized. The checkpoint now records 153 attempts, 148 authenticated attempts, 20,629,008,416 GET bytes and 29,280.034 s cumulative acquisition time. The latest acquisition in the checkpoint authenticated successfully. Re-run the same `official_sentinel_resume` command; it will reuse these caches.
+
+The latest resume reached 41 authenticated new acquisitions and stopped on the first attempt for `sentinel-2a|2021-04-18T17:39:01.024000Z|R98|GS2A_20210418T173901_030411` with `ProxyError`. The checkpoint now has 44 attempts: 41 authenticated and three transient failures (two Warp failures whose serial retries succeeded, plus this Proxy failure), 5.842 GB GET bodies and 2.49 h cumulative acquisition time. `ProxyError` is now included in the same persistent two-attempt rule, so this acquisition has one serial retry remaining. Focused tests and lint pass; stage remains paused with permissions closed.
+
+The resumed official batch later reached 13 authenticated new acquisitions, then stopped safely on `sentinel-2a|2020-07-02T17:39:11.024000Z|R98|GS2A_20200702T173911_026264` with `WarpOperationError`. The checkpoint records 14 attempts, 13 authenticated, 1.822 GB GET response bodies and 1.45 h acquisition wall time. The formal batch retry list had accidentally omitted `WarpOperationError`, although the older bounded remote-read helper already classified it as retryable. The formal runner now gives this acquisition its one remaining serial retry (`download_threads=1`) and counts prior failed attempts from the persistent checkpoint, so it cannot loop. Tests and lint pass. The worker is stopped, `ACTIVE_STAGE.json` is paused, permissions are closed, and all authenticated caches remain intact. No composite or 46-feature acceptance was claimed.
+
+The user preauthorized later local resume of this same frozen batch. From the project root, run `.\.venv\Scripts\python.exe -m experiments.source_city_predictor_trial official_sentinel_resume`. This one command checks the paused stage, frozen plan/checkpoint SHA, cumulative 80 GB network and 24 h wall caps, and 30 GiB disk floor; it sets TEMP/TMP to D:, opens only predictor permissions, resumes authenticated caches, then closes permissions on exit. `2021-10-18` remains calibration-blocked. If the batch completes, the 46-date output still needs formal acceptance and key-only label overlap before any model experiment.
+
+## Current resume point: Colorado official Sentinel batch running
+
+The user authorized the formal build for the 46 calibrated Colorado Springs dates on the frozen official 2020 support. `ACTIVE_STAGE.json` is open only for public predictor reads and building this batch. The frozen plan SHA-256 is `d231955e92497c894c23c4ed1a334506ec576a76386c69dbbc1ed4da464bfc22`. The command `python -m experiments.source_city_predictor_trial official_sentinel_batch` started on 2026-09-18 with TEMP/TMP on D:. It resumes authenticated acquisition caches. `exports/SOURCE_CITY_PREDICTOR_TRIAL/official_2020/colorado_springs_co/sentinel_batch_progress.json` is the authoritative cumulative checkpoint for network bytes, wall time, attempts, memory and observed temporary space. The runner enforces 80 GB new GET bodies, 24 h cumulative acquisition wall time, 30 GiB D: free floor and a per-acquisition 4× sample-tier anomaly stop. The first two new acquisitions completed with authenticated caches, 269,253,471 GET bytes and 259.4 s acquisition time. A thread heartbeat called `Colorado Sentinel batch monitor` checks the ongoing worker and resumes from the same checkpoint if needed; routine progress stays quiet. On terminal completion or safe stop, audit the 46 date outputs, key-only label overlap, close ACTIVE_STAGE and remove that heartbeat. No target value read, model fit, scoring, commit or push is authorized. The 2021-10-18 date remains calibration-blocked.
+
+## Current resume point: Colorado official Sentinel batch authorized by user; local gate update blocked before execution
+
+The user explicitly authorized the bounded official Colorado Springs Sentinel batch for the 46 calibration-cleared dates, with an 80 GB new-network-response cap and 24 h batch wall-clock cap. The current execution environment's automatic safety review rejected the required write that would change the existing `ACTIVE_STAGE.json` batch gate from closed to open. The repository guard therefore remained closed and the batch did not start. A dry planning invocation stopped immediately in `_official_preflight` with `Official predictor preparation stage is closed`; no Sentinel acquisition, target read, model work, commit, or push occurred in this attempt.
+
+Pre-run checks found about 102.37 GB free on D: and 7.53 GB free on C:, while the system TEMP path is on C:. A D:-resident temporary directory was created at `data/runtime/colorado_official_sentinel/tmp`; when execution is possible, TEMP/TMP should be redirected there and a remaining-D:-space stop line should be recorded before starting. The official runtime cache currently contains only the two previously certified sample acquisitions, so the handoff's 403 remaining clean-date acquisitions has not been reduced by this attempt. The 47-date/5,170-key 41-feature table and the 2021-10-18 calibration block remain unchanged. The input is not yet ready for the next fixed-model experiment because the five Sentinel features for the 46 clear dates have not been built and accepted.
+
+## Current resume point: Colorado official 41-feature preparation complete; full Sentinel batch closed
+
+On the official 2020 110-tract support and 47 target-usable dates, the full **5,170 prediction keys** are frozen; only key-level correspondence was checked against **4,235 existing source-development labels**, without reading temperature values. The 18 static, 2 calendar and 21 Daymet features were rebuilt on official geometry from authenticated raw caches and are complete on all 5,170 rows/47 dates with zero missing. Mirror-derived tract aggregates were not promoted. Machine summary (ignored local artifact): `exports/SOURCE_CITY_PREDICTOR_TRIAL/official_2020/colorado_springs_co/preparation_summary.json` SHA-256 `b4d3877444ff1a3efc88db8c2d538dc2982a23ab45439d98ac7b2561501c463d`; 41-feature table is `official_non_sentinel_41.parquet` in the same directory.
+
+The official Sentinel inventory matches the frozen 416 physical acquisitions/1,643 items. Full XML/STAC identity and BOA audit: 1,036 complete conversions, 606 pre-04.00 products not requiring a new offset, **one** N0400 missing-offset product, zero read/identity failures. Dependency table shows only **2021-10-18** blocked; 46 dates are calibration-cleared but **not yet synthesized**. Two preselected calibrated resource samples (one/four items) produced authenticated official-support caches. For clean-date work, **403 acquisitions remain** after excluding blocked-date-only work and reusing authentic caches. Item-count-stratified 0.5–2× engineering scenarios: **17.51–70.03 GB GET**, **4.42–17.68 h**, **0.05–0.19 GB persistent derived cache**; two samples observed process peak about 0.69 GB (decimal) and did not establish a general temporary-disk maximum. About 110.08 GB disk was free at planning. `sentinel_batch_plan.json` contains per-acquisition dependencies, cache status, bounds and a resumable entrypoint that remains permission-locked. No full Sentinel batch, new target read, model fit or score occurred. §8 of the Colorado formal contract records the full evidence and caveats. ACTIVE_STAGE temporary permissions are closed; a separate batch authorization is needed. Charlotte stays paused; official/mirror geometry equivalence remains failed, while official ZIPs are the authorized new support basis. No commit or push.
+
+## Previous resume point: Colorado official-support QA/target screen complete; predictors not built
+
+User explicitly authorized a documented support revision after the mirror-equivalence
+gate failed. **Do not reinterpret the failed zero-difference gate as passing:**
+the 2020 Census ZIPs are now the new official geometry basis, and the 500
+official/mirror 30 m difference cells remain recorded. The old six-date mirror
+labels, Daymet/static/Sentinel features and caches are exploratory only.
+Charlotte remains paused.
+
+The official Colorado support was rebuilt for the same 110 tract GEOIDs:
+431,376 fixed eligible 30 m land cells, 92 changed tract denominators, no zero
+denominators. The candidate catalog was independently re-queried under the
+same rule; it still has 80 dates and identical contributing scenes (2020–24
+counts 12/10/15/23/20). All 80 dates were recomputed on official support:
+**47 passed QA, 33 failed QA, 0 remain technical** after one bounded network
+retry. Only the 47 QA-pass dates had thermal values read; all 47 passed the
+unchanged target support gate, yielding **4,235 development labels**, with
+5/7/9/16/10 dates and 449/628/776/1431/951 labels by year. All 47 output
+tables retain 110 rows and their unchanged official fixed denominator; 4,235
+label keys cover 22 geometry-only 5 km blocks. These are not independent
+confirmation data and not yet a complete 46-feature training table.
+
+The ignored machine evidence is
+`exports/SOURCE_CITY_QA_PILOT/official_2020/colorado_springs_co/`
+(`official_catalog.json` SHA-256
+`f0fe3c29effcec908f2b5859e66a0c60b22f3c3ca286fde7244f9340e38f76f2`,
+`qa_summary.json` SHA-256
+`268b02110d09a77efc2b855f273c5db8a2145a634cb7f45b2687566f32a79f19`),
+`exports/SOURCE_CITY_TARGET_AVAILABILITY/official_2020/colorado_springs_co/summary.json`
+(SHA-256 `e01e662cfc35573b459def276257082141c823b89299f9cc23eb121942d8834b`),
+and `exports/SOURCE_CITY_PREDICTOR_TRIAL/official_2020/colorado_springs_co/budget.json`
+(SHA-256 `1552c408a3da5f6d29abe0a0912ee44879cfafbabd6e9e87fa92d55442156e8c`).
+Section 6 of `docs/COLORADO_SPRINGS_FORMAL_SOURCE_BUILD_CONTRACT.zh-CN.md`
+contains the full audit and source/space-support caveats.
+
+Only a metadata inventory was made for subsequent nonthermal work: the 47
+target-usable dates require 416 unique Sentinel physical acquisitions, 1,643
+items, 13,144 band assets plus 1,643 product metadata assets. One-sample
+engineering scenarios give 23.22–92.9 GB GET response bodies and 4.7–18.81
+hours; disk metadata/derived-state scenario is 82–329 MB, excluding temporary
+COG reads. Existing raw NLCD and Daymet footprints cover official clipped
+support and may be reused after identity checks; all geometry-dependent tract
+aggregates must be rebuilt. The known 2021-10-05 BOA-offset-deficient product
+is still in the required windows; remaining item calibration has not been
+audited. **Do not start the high-cost Sentinel batch, training or scoring.**
+ACTIVE_STAGE permissions are closed after this screen. No commit or push.
+
+## Previous resume point: official Colorado geometry differs; formal build stopped
+
+The user supplied local original Census 2020 Colorado PLACE/TRACT ZIPs and
+reported Census download URLs and 2026-09-17 19:18 Beijing download time. The
+offline read-only audit did not retry blocked official endpoints. The two file
+SHA-256 values are `3f5f0c917a4005c8c4fa081610db03f10ac3a83af98654849b7ea6936ae0694b`
+and `111978fb25abed1db139680abe21c08b61a8d6fdc4339f79b6e0b1866adbb3d7`.
+The fixed comparison found the same 110 tract GEOIDs and a 1.1144 m place
+Hausdorff distance, but **500 disagreeing 30 m tract-zone cells**: 102
+official-only, 111 mirror-only, and 287 assigned to a different tract. The
+pre-existing zero-cell-disagreement gate therefore failed. Evidence is the
+ignored `exports/SOURCE_CITY_QA_PILOT/offline_colorado_20260917.json`
+(SHA-256 `1f061b40370a766fb0f2e0afcd176fa24a4293a67c3a03ad89134f050093c73c`).
+The planning contract has an outcome addendum. Stop at this gate: no official
+WorldCover land denominator, full-date QA, new thermal target, directory
+recertification or post-screening Sentinel budget was produced. Preserve all
+mirror exploratory caches and their labels as development-only. A later
+explicit official-support rebuild/directory-refreeze amendment is required
+before downstream access; do not weaken the gate or promote the mirror data.
+ACTIVE_STAGE records this stopped state with permissions closed. Charlotte
+remains paused; the 2021-10-18 exact-product BOA gap is unchanged. No model
+work, commit or push occurred.
+
+## Current resume point: Colorado formal source-build contract prepared; execution closed
+
+Exploratory six-date technical validation is ended, without retrying the single
+missing Sentinel BOA offset or adding dates. The full 660-row key universe is
+preserved: five dates have 550 complete 46-feature rows and the 110 rows on
+2021-10-18 retain a documented Sentinel calibration block. Daymet, static,
+calendar, sources, and existing caches remain intact. This is technical
+feasibility evidence on mirror geometry, not formal training acceptance or a
+model-benefit result.
+
+The next-stage contract is
+`docs/COLORADO_SPRINGS_FORMAL_SOURCE_BUILD_CONTRACT.zh-CN.md`. It binds the
+existing metadata inventory (`exports/SOURCE_CITY_METADATA_SCREEN/summary.json`,
+SHA-256 `18a5d5b899ab43a1da45b9658a780dd0490c5d7fd30c0223a911a38fb2ce0ef9`):
+Colorado has 80 provisional independent candidate overpasses across 2020–24,
+10 previously QA-assessed, and 70 not yet QA-assessed. Before any remaining
+target read, obtain the original Census 2020 Colorado place/tract ZIPs with
+source records, review their provenance, and run the offline geometry comparison
+using the existing boundary-audit script. Its new optional local-ZIP mode never
+calls the blocked official endpoints or reads raster/target data. A geometry
+pass is not automatic official-source acceptance. If the support changes, redo
+affected mask, QA, target and predictor work; otherwise reuse certified caches
+with evidence. The contract then stages fixed land support, all-date QA,
+QA-passing-date thermal availability, and full-set nonthermal predictors, with
+per-date failure isolation and cost checks. Exact N0400 BOA evidence is still
+absent for 2021-10-18. Charlotte remains paused. ACTIVE_STAGE is planning-only
+with all current permissions closed; no new data, training, scoring, commit or
+push occurred in this planning turn.
+
+## Current resume point: five Sentinel dates complete; one date still blocked (2026-09-17)
+
+The one product without defensible BOA offsets belongs only to the frozen
+2021-10-18 window. The other five windows, with 120 distinct physical
+acquisitions, finished from the original authenticated cache locks. An earlier
+remote COG short read on 2021-04-21 B02 was handled by one bounded retry of
+that same acquisition with serial asset reads; no observation was omitted or
+calibration guessed. All 120/120 five-date caches were certified. The first
+compile attempt stopped only because its lineage already contained `city_id`;
+after correcting that duplicate-column insertion, it compiled wholly from
+cache without another image read.
+
+The ignored `sentinel_compiled_five_dates/FIVE_DATE_COMPLETE.json` has SHA-256
+`a8f9181847bf9f9778edce3605c54eaf0eb9dfbe7ebcc2a108c68716d2d2c559`.
+Its feature output is 550 unique keys, 110 for each of five dates, all five
+Sentinel features present and finite. The audit and lineage outputs have 550
+and 13,200 rows; all three recorded file hashes and byte counts match. Source
+ages are 1–59 days, all strictly before target dates. The current 660-key,
+46-feature table has all features finite on those 550 keys. The 110 keys for
+2021-10-18 remain; only their five Sentinel fields are deliberately uncomputed
+(550 missing cells), while their other 41 fields remain present. Existing
+exploratory label **keys** joined 587/660, with no temperature values read.
+The machine `summary.json` SHA-256 is
+`772a4b8b8f625a4808ad2a5f08202cefdd82b6890e99303ab8f40109ad5cb8c8`.
+No model training, prediction, or scoring occurred. This remains development
+data on mirror geometry; official 2020 equivalence is not certified, Charlotte
+is paused, and 2021-10-18 still requires exact-product BOA evidence. Temporary
+execution permission has been closed and the `colorado-sentinel` heartbeat
+removed after completion.
+
+## Previous resume point: Daymet verified before five-date Sentinel run (2026-09-17)
+
+The user's private `daymet_local` run completed. The frozen completion manifest,
+all 30 cached 2020–2024 year-variable NetCDF subsets, fixed grid/variable checks,
+and output SHA-256 agree. The actual table has 660 unique tract-date keys (110
+tracts × six dates) and all 21 contracted d−1/d−3/d−7 Daymet features, with no
+missing or non-finite cells. No credential was accessed in this verification and
+no subset was downloaded again.
+
+The current 46-feature schema audit has 660 complete predictor keys and 587
+matching existing exploratory label **keys**. All 18 static, two calendar, and
+21 Daymet fields are present; all five Sentinel fields remain absent (660 cells
+each). The frozen Sentinel preflight found one required BOA offset omission
+among 562 unique products. It affects the 2021-10-18 composite. The same
+Planetary Computer product/granule/datastrip metadata has no offset; checked
+public alternate paths yielded other processing baselines or no exact product.
+No verified same-product conversion was recovered, so the 142 remaining of 144
+physical acquisitions were **not** run. Do not skip the item, infer an offset,
+or treat the partial table as model-ready. Section 18 of the feasibility report
+records the current evidence. Official 2020 Colorado geometry is still
+unverified; Charlotte is paused. This exploratory output is not formal
+training data. No new target values or model operations were performed.
+
+The user's first private Daymet probe reached the endpoint but printed
+`DAYMET_ACCESS_NON_NETCDF`; that older eight-byte-only probe retained no
+response headers, redirect chain, or body, so its exact cause cannot be
+reconstructed and must not be called a bad token. The same `daymet_local`
+entrypoint now streams only the frozen 2020/dayl probe response to a 16 MB
+cap, saves no body, and prints `DAYMET_PROBE_DIAGNOSTIC` with HTTP status,
+allowlisted Content-Type/Encoding, declared and actual decoded byte counts,
+redirect count, redacted final host/path, Authorization *scheme only* on the
+first/final request, content-range flag, and classified payload. It recognizes
+CDF-1/2/5 and HDF5 (including standard user blocks); Requests decodes normal
+gzip/deflate transport encoding. HTML/login, JSON/XML errors, partial/truncated
+or unrecognized payloads still fail before subset downloads. No token was
+read during this repair; no Daymet subset or 660×21 output exists yet. The
+user may rerun the same private module command once and share only the safe
+diagnostic line if it still fails. The narrow stage permission is unchanged.
+
+The private `daymet_local` entrypoint was repaired after its preflight rejected
+the later, legitimate `paused_colorado_six_date_exploratory_predictor_trial_only`
+stage name. The existing narrow local approval was already true; inventory and
+fixed-support SHA-256, city, six dates, 660 keys, and closed target/model
+permissions all matched. The entry now recognizes that exact paused state while
+retaining the frozen-input and closed-permission checks, with named failures
+instead of one generic error. A no-token/no-network run against current local
+files reached the hidden credential prompt and stopped there deliberately.
+Daymet authentication, subset downloads, and 21 features are **not** complete;
+the user may rerun `daymet_local` privately. No broader permissions were opened.
+Launch it from the repository root with
+`.\.venv\Scripts\python.exe -m experiments.source_city_predictor_trial daymet_local`.
+Directly executing `experiments\source_city_predictor_trial.py` omits the
+repository root from Python's import path and fails before the credential prompt.
+
+## Current resume point: Sentinel metadata scope known; one exact product blocks batch (2026-09-17)
+
+Section 17 of `docs/SOURCE_CITY_DATA_EXPANSION_FEASIBILITY.zh-CN.md`
+records the frozen six-date metadata-only preflight. All 562 unique selected
+Sentinel products were identity-checked: 276 pre-04 products require no new BOA
+offset, 285 PB>=04 products have complete per-band conversion metadata, one
+PB04 product lacks required offsets, and none failed reading or identity checks.
+The sole blocker is
+`S2A_MSIL2A_20211005T174211_N0400_R098_T13SED_20220512T201134.SAFE`,
+which is needed by the 2021-10-18 target composite (one product, one physical
+acquisition, one of six dates). The other five dates' metadata passed; their
+Sentinel feature values have **not** been built. The ignored machine result is
+`exports/SOURCE_CITY_PREDICTOR_TRIAL/exploratory_mirror/colorado_springs_co/sentinel_metadata_preflight.json`
+with SHA-256 `0ba2c695bd709b1913ddcd827ec96c04b38519abca9b6d7985ecf974a47b3243`.
+
+Fresh Planetary Computer metadata for the exact frozen product was byte-identical
+to the cached root XML and still lacked BOA offsets. Same-product granule and
+datastrip XML lacked them too; an exact-name Copernicus catalog query found no
+entry. No other reprocessing version was substituted, no guessed calibration
+was used, and **no Sentinel batch was started**. The 2/144 authenticated
+acquisitions and existing cache remain unchanged. The batch authorization's
+all-products-calibrated and failed-sample-validation conditions did not pass.
+Daymet's private `daymet_local` run has not occurred: no frozen subset or
+660-row/21-feature result exists. Static18/calendar2 and full 660 keys remain
+the only completed predictor portions. General temporary permissions are
+closed again; the narrow user-initiated Daymet entry remains available.
+Official Colorado 2020 geometry equivalence is still unverified; Charlotte is
+paused. No new target read, model work, commit, or push occurred.
+
+## Current resume point: private Daymet entry ready; Sentinel PB04 still blocked (2026-09-17)
+
+The user authorized only a one-prompt local Daymet entry and a two-sample
+Sentinel BOA calibration audit, not a Sentinel batch. Section 16 of
+`docs/SOURCE_CITY_DATA_EXPANSION_FEASIBILITY.zh-CN.md` records the amended
+scope, actual metadata evidence and stop decision. `experiments/source_city_predictor_trial.py`
+now has `daymet_local`: it prompts once in a terminal, probes the frozen small
+2020/dayl subset, and only after valid NetCDF proceeds through the already
+frozen 30 year-variable subsets and compiles 660 keys × 21 Daymet features.
+Valid subset cache survives failures. The user has **not** run the entry with
+a fresh private credential; no authenticated download or feature completion
+is claimed. A narrow user-initiated Daymet-only approval is recorded in
+`ACTIVE_STAGE.json`; broad temporary execution permissions are closed.
+
+The failed PB04.00 Planetary Computer product has no BOA_ADD_OFFSET anywhere
+in its cached XML; its STAC band asset and actual uint16 COG tags also provide
+no applicable correction. This is missing conversion evidence, not an XML
+parser-path defect or proof that the offset is zero. The reader still fails
+closed; the earlier PB02.12 four-tile sample and its cache remain unchanged.
+Historical source and portable pipelines share this reader, so no global
+calibration change or cache rewrite was attempted. The 142 pending Sentinel
+acquisitions were **not** started; 73 of them have PB≥04 and require
+per-product evidence. Current static18/calendar2 are complete, Daymet21 and
+Sentinel5 are incomplete. The 660-row partial table remains non-model-ready.
+Official Colorado geometry equivalence and Charlotte's geometry issue remain
+open. No target/model activity, commit or push occurred.
+
+## Current resume point: Colorado auth/cost check complete; no full predictor build (2026-09-17)
+
+The user authorized only a Daymet credential diagnosis and two frozen Sentinel
+physical-acquisition cost samples, not a batch run. Section 15 of
+`docs/SOURCE_CITY_DATA_EXPANSION_FEASIBILITY.zh-CN.md` records the results;
+ignored `exports/SOURCE_CITY_PREDICTOR_TRIAL/exploratory_mirror/colorado_springs_co/sentinel_cost_audit.json`
+contains the machine counts and `sentinel_remaining_acquisitions.csv` is the
+reusable 142-acquisition pending list. The unique ACTIVE_STAGE permissions are
+closed again. Git changes from earlier phases remain untouched and uncommitted.
+
+The project's previously successful Daymet path requires exactly one ephemeral
+Earthdata bearer environment variable. None of its three configured variables
+was present at process, user or machine scope here, and no project-relevant
+`.netrc`/`.env` was found. No token was read or printed, no authenticated
+endpoint test was possible, and no Daymet values were downloaded. The existing
+trial script now has `daymet_access_probe`, which performs one frozen local
+subset request and checks only the NetCDF magic after the user privately loads
+a fresh token. The prior anonymous HTTP 401 does not establish token expiry.
+
+The four-item baseline-02.12 Sentinel sample completed in 82.446 s with 120
+GDAL GETs/113,082,421 downloaded body bytes plus 32 HEADs. The one-item
+baseline-04.00 sample was blocked before raster reads because its official
+product XML lacks required BOA offsets. There are now only **2/144**
+authenticated acquisitions and 142 pending/554 item tiles. Frozen item and
+asset URLs are unique, so no safe repeated-download elimination or algorithm
+change was made. A one-sample linear scenario for the remaining optical work
+is ~3.17 hours/~15.66 GB response bodies, not a validated forecast; the
+offset blocker must be resolved before any batch. All 21 Daymet and five
+Sentinel feature columns remain missing in the six-date 660-row table; static
+18/calendar 2 remain complete. Official geometry equivalence is still open,
+Charlotte remains paused, and no model/target work was done.
+
+## Current stage: Colorado six-date predictor trial paused with explicit input gaps (2026-09-16)
+
+The user authorized only nonthermal B1/M3 predictors for the same six
+development-only Colorado dates, with Charlotte paused. The scope was frozen
+in section 13 of `docs/SOURCE_CITY_DATA_EXPANSION_FEASIBILITY.zh-CN.md` and
+the unique ACTIVE_STAGE before predictor reads. Section 14 records the actual
+trial and its limits. The ignored machine audit is
+`exports/SOURCE_CITY_PREDICTOR_TRIAL/exploratory_mirror/colorado_springs_co/summary.json`;
+its SHA-256 is `bb6c78a9ee13181b8339b1baa39e1fad0316706bcf29b70e632865da76134638`;
+the reusable single-purpose entry point is
+`experiments/source_city_predictor_trial.py`.
+
+The complete predictor key set is **110 frozen mirror tracts × six existing
+dates = 660 rows**, independent of target validity. Exactly **587** existing
+exploratory label keys join; target temperatures were not read for this join.
+All 18 contracted NLCD 2016/SRTM/GSHHG static features were constructed once
+with no missing values, and the two calendar features are complete. The four
+new static raster files total 25,223,478 bytes; the GSHHG archive was reused.
+The official Daymet V4R1 metadata inventory is frozen at 30 year-variable
+granules on a 39×32 local grid window, but its OPeNDAP subset returned HTTP
+401 and no Earthdata credential was available in the running process. Thus
+all 21 weather columns remain missing. The six d−60:d−1 Sentinel windows
+contain 144 selected physical acquisitions/562 item tiles. One acquisition
+is durably authenticated; the batch was stopped before the other 143 because
+the missing Daymet credential already prevents complete B1/M3 inputs and
+full optical processing would require 4,496 item-asset window reads.
+The five Sentinel features therefore also remain missing. The partial
+46-column parquet is a missingness audit, **not** model-ready predictors.
+
+The official Colorado 2020 place/tract equivalence gate is still unfinished;
+all these outputs remain exploratory mirror-boundary development material.
+No new target dates, target values, LA 2025, evaluation-city targets, model
+fit/prediction/scoring, default-model change, commit or push occurred. The
+temporary ACTIVE_STAGE permissions are closed. A separately authorized
+**exploratory** resume may use the same mirror support and cached Sentinel
+inventory once a valid Earthdata credential is supplied only as a local
+process environment variable, never in a repo artifact; the frozen 30 local
+Daymet subsets and remaining optical acquisitions then need completion.
+For **formal** source-city acceptance, obtain the original complete Census
+`tl_2020_08_place.zip` and `tl_2020_08_tract.zip` with verifiable source,
+byte count and SHA-256 and apply the existing 15 m/exact GEOID/zero
+zone-difference comparison. For a full city, approximately 70 of the 80 directory dates
+have not yet had QA inspected; the six-date 6/6 result is not an 80-date yield
+estimate. Charlotte remains paused at its geometry blocker.
+
+## Previous stage: Colorado six-scene exploratory target availability complete; Charlotte geometry remains unresolved (2026-09-16)
+
+The user separately authorized thermal `lwir11` reads for only the six
+Colorado Springs overpasses previously selected by QA, plus a local-file-only
+Charlotte geometry diagnosis. This amendment was recorded in section 11 of
+`docs/SOURCE_CITY_DATA_EXPANSION_FEASIBILITY.zh-CN.md` and the unique
+ACTIVE_STAGE **before** any thermal value read. Section 12 gives the results;
+the ignored machine summary is
+`exports/SOURCE_CITY_TARGET_AVAILABILITY/exploratory_mirror/summary.json`
+(SHA-256 `eec87608885630d9c05bc725bbfbddedb4f489fefa04decbb22d4d4a5dbcbe85`).
+
+All **6/6** fixed Colorado overpasses remain provisionally target-usable
+after the existing thermal DN, scale, fill, QA4K and physical checks, yielding
+107, 99, 95, 101, 83 and 102 tract labels respectively (587 total).
+Reread QA pixel counts matched the frozen QA pilot; no thermal-invalid pixel
+was added within its QA4K eligible support. The other four QA-insufficient
+pilot dates were not opened for thermal values. All six target dates are now
+**development material, never independent confirmation**. They remain
+exploratory mirror-boundary outputs, not formally accepted training data.
+
+Charlotte's cached raw place geometry has a `Nested shells` defect near
+(-80.9691773, 35.1642059). On local copies, `make_valid` and `buffer(0)`
+disagree by 9.759 km² and 10,841 cells of 30 m city support. The old
+237-tract selected-GEOID list lacks locally saved tract geometries, so the
+effect on selected membership and tract-specific land denominator cannot be
+recomputed locally. There is **no demonstrated non-substantive repair**;
+original files were not overwritten, and Charlotte WorldCover/QA/thermal
+values were not read.
+
+Next, obtain verifiable official 2020 place/tract geometry for Colorado and
+apply the original 15 m/exact-GEOID/zero-zone-difference comparison. Reuse
+the exploratory cache only if analysis support is unchanged, else recompute
+affected parts. A full Colorado source-city build would still need separately
+approved collection of the untested candidate dates and nonthermal predictors;
+the 6/6 pilot is not a yield estimate for all 80 catalog dates. Charlotte
+requires valid official geometry and support reconciliation before any raster
+trial. Temporary permissions are closed. No LA 2025 access, model fit,
+prediction or scoring, default-model change, commit or push occurred.
+
+## Previous stage: exploratory mirror-boundary QA pilot complete; no formal boundary or target acceptance (2026-09-16)
+
+The user explicitly amended the QA pilot contract once to permit exploratory
+WorldCover 2020 v100 and four Landsat QA window reads on the *frozen Esri 2020
+mirror* geometry. This did not pass or remove the original official geometry
+gate. `experiments/source_city_qa_mirror_pilot.py` produced local ignored
+`exports/SOURCE_CITY_QA_PILOT/mirror_exploratory/summary.json` (SHA-256
+`7c1919f3d190f1f171456c6bb670da2b8a76cf6abe4753a2e162e1ea5280b3ce`).
+The contract amendment and full per-date results are in sections 9–10 of
+`docs/SOURCE_CITY_DATA_EXPANSION_FEASIBILITY.zh-CN.md`.
+
+Colorado Springs used 110 frozen tracts and a date-invariant 431,384-cell
+nonwater WorldCover denominator. Of the 10 preselected overpasses, **6 met
+provisional QA support**, 4 did not, and 0 had a technical raster failure;
+at least one provisional date exists in every year 2020–24. This is an
+exploratory QA-only upper bound, not a formally accepted date or proof of
+thermal target availability. Its two adjacent WorldCover tiles had 70
+mode-resampling seam cells resolved by center-containing source tile before
+QA reads. Charlotte's raw mirror place polygon is topologically invalid
+(`Nested shells`); the city was stopped *before* WorldCover or QA access,
+leaving all 10 dates unassessed rather than scientifically failed. Its prior
+237-tract metadata list does not certify the boundary.
+
+The next decision is to obtain valid official 2020 geometry: compare Colorado
+with the original 15 m/exact-GEOID/zero-zone-difference gate, and resolve
+Charlotte's invalid mirror geometry. Reuse Colorado's exploratory cache only
+if official geometry is shown not to alter analysis support; otherwise
+recompute affected support. A later thermal availability check requires its
+own authorization. Neither city is approved for training. No thermal/target
+or LA 2025 values were read; no model fit, prediction, score, default change,
+commit or push occurred. Temporary read permissions are closed.
+
+## Previous stage: two-city QA pilot blocked on official geometry access (2026-09-16)
+
+A bounded recovery pass checked the actual network failure before attempting
+more scientific reads. TIGERweb has TLS handshake timeout/closure without a
+usable HTTP response; local DNS resolves it to an internal 198.18.* mapping.
+The official Census TIGER2020 ZIP endpoints return Cloudflare HTTP 403 even
+in the browser. No full-resolution 2020 place/tract official files for either
+city were found in the existing local caches. Census confirms the original
+2020 TIGER/Line boundaries are January 1, 2020 vintage, but its documentation
+does not supply those geometries. Section 8 of
+`docs/SOURCE_CITY_DATA_EXPANSION_FEASIBILITY.zh-CN.md` records the bounded
+checks and exact four ZIP filenames needed to resume. No second audit run or
+QA attempt was made; previous evidence hashes and 0/0/10 unknown dates per
+city remain valid. Both city gates remain B (technical access blocker), not
+geometry mismatch or scientific QA failure. All permissions are closed.
+
+The user authorized a conditional, fixed 10-overpass-per-city QA-only pilot.
+Its official-versus-mirror 2020 place/tract boundary audit could not finish:
+the official TIGERweb endpoint failed with timeout/TLS EOF and the official TIGER/Line
+ZIP endpoint returned HTTP 403 on this host. The mirror still matches the
+previously frozen 110/237 tract lists and hashes, but this does **not** prove
+equivalence to official geometry. Both cities are therefore B (specific
+technical boundary-access blocker), with 0 QA-passing, 0 scientifically
+QA-failing, and 10 unassessable preselected overpasses each. No WorldCover,
+QA, thermal, target, or LA 2025 raster was opened; scientific raster download
+was 0 bytes. The comparison rule, attempts, input IDs and status are recorded
+in section 7 of `docs/SOURCE_CITY_DATA_EXPANSION_FEASIBILITY.zh-CN.md` and the
+ignored `exports/SOURCE_CITY_QA_PILOT/boundary_audit.json` (SHA-256
+`f54b75516b29c88ff33d49e3ce55401b4b3ff30d94b93963b4fd69643774135d`),
+generated by `experiments/source_city_qa_boundary_audit.py`. Temporary
+permissions are closed. The next smallest action is to obtain verifiable
+official 2020 place and tract geometry and compare it on the fixed pixel
+grid; only a city that passes may proceed to its already frozen QA windows
+under an appropriate subsequent authorization. No model or default changed,
+and no commit/push was made.
+
+## Previous stage: two-city public metadata screen complete (2026-09-16)
+
+The one-time metadata screen for Colorado Springs and Charlotte is complete.
+Its addendum is in `docs/SOURCE_CITY_DATA_EXPANSION_FEASIBILITY.zh-CN.md`;
+reproducible, target-free query code is
+`experiments/source_city_metadata_screen.py` and its local ignored output is
+`exports/SOURCE_CITY_METADATA_SCREEN/summary.json` (SHA-256
+`18a5d5b899ab43a1da45b9658a780dd0490c5d7fd30c0223a911a38fb2ce0ef9`).
+For 2020-24 May-October, the exact Landsat T1 L2SP metadata search found
+80 and 83 distinct >=98%-coverage, nonambiguous physical-overpass dates,
+respectively. Those are **catalog candidates, not QA-passing or target-usable
+dates**. Both cities have annual Sentinel-2 L2A catalog items and the expected
+ESA WorldCover 2020 v100 tile footprints. Their status is A at the metadata
+gate only: a small QA support pilot can be designed, but no sample has been
+downloaded, no fixed land denominator or eligible ST pixels have been read,
+and neither city has been approved as a new source training city.
+
+The target-independent 2020 incorporated-place identities are `0816000` and
+`3712000`. The local Census TIGERweb endpoint failed TLS, so the existing
+Esri 2020 Census pilot mirror supplied the geometry for the 50%-overlap,
+98xxxx-excluded tract rule (110 and 237 selected tracts). Before any QA-only
+trial, verify the official/mirror geometry equivalence or formally approve
+the source; do not silently change boundaries. The then-unexecuted trial contract
+preselects each year's earliest and latest qualifying physical overpass,
+10 per city (10/18 scenes). A subsequent authorization conditionally permitted only
+WorldCover fixed-land classes and Landsat QA windows, not thermal values.
+The boundary precondition blocked all raster reads; the fixed C1/C2/C3
+no-upgrade route remains closed.
+
+## Previous stage: source-city data expansion feasibility complete; collection not authorized (2026-09-16)
+
+The user accepted the stage-2 **no-upgrade** decision and closed the fixed
+C1/C2/C3 route. It must not proceed to the already opened four-city historical
+stress test or be rescued by adjusting candidates or thresholds. C1's 0.0348 C
+worst-city point deterioration is a contractual failure, not a demonstrated
+statistically significant harm.
+
+The read-only, source-expansion feasibility report is
+`docs/SOURCE_CITY_DATA_EXPANSION_FEASIBILITY.zh-CN.md`. It compares only existing
+non-target predictor summaries for the four source and four opened cities,
+plus official public metadata. Denver's tract elevation support is separated
+from all four source cities; Atlanta's city-date lagged NDVI median is above
+all four source medians. These are coverage findings, not evidence that adding
+cities will improve the model. Colorado Springs and Charlotte are **conditional
+metadata-screen candidates only**, not authorized collection cities. The
+decision is B: city-specific joint predictor support, scene inventory and
+QA-yield feasibility remain unknown. A minimal two-city metadata screen would
+require a new explicit scope before any scientific-data acquisition. This
+round read no target or LA 2025 values, downloaded no scientific data, fitted
+or scored no model, and changed no default model. Its temporary scope is closed
+in the single `ACTIVE_STAGE.json`; no commit or push occurred.
+
+## Completed record: four-city absolute transfer errors, stage 2 (2026-09-16)
+
+The user clarified that the high-error priority is the last four cities,
+especially Denver and Atlanta, rather than further LA-local relative tuning.
+`docs/FOUR_CITY_ABSOLUTE_ERROR_RESEARCH_PLAN.zh-CN.md` defines the research
+plan: preserve the original M3 anomaly branch, compare exactly three fixed
+level alternatives (B1 anchoring, source-support fallback, bounded weather
+correction), select using source cities, then use the opened four cities only
+as historical stress tests. Protect Seattle from material degradation and
+report Miami's four-date limitation. This supersedes the LA capacity-first
+priority in `US_MODEL_IMPROVEMENT_RESEARCH.zh-CN.md`; the earlier LA tail
+analysis below is a side analysis, not the active research objective.
+
+Stage 2 is complete and stopped before opened-city stress testing. The fixed
+source-only implementation is
+`experiments/four_city_absolute_error/run_stage2.py`; the detailed report is
+`docs/FOUR_CITY_ABSOLUTE_ERROR_STAGE_2_SOURCE_VALIDATION.zh-CN.md`; local
+machine-readable evidence is under the ignored
+`exports/FOUR_CITY_ABSOLUTE_ERROR_STAGE_2/` directory. Its run signature is
+`b29dc1fa09577cb89e99d3fcfc758b08d2b8ec5dcbfa40cfa88b81d65cfbcf1d`.
+The run used only the four source cities, performed no download or predictor
+build, did not read LA 2025 or opened-city targets, did not change a default
+model, and did not commit or push.
+
+On the same 96,061 QA4K OOF rows, 132 city-dates and 254 blocks, B1 absolute
+MAE is 3.6578 C and original M3 is 4.5796 C. C1 reaches 3.6094 C overall but
+worsens the worst city, Chicago, from B1's 4.6346 C to 4.6694 C. C2 and C3
+score 4.2414 C and 4.2727 C and also fail both source gates. Consequently no
+candidate is eligible and the final source selection is B1/no upgrade. The
+nested selection procedure chose C3 in three outer folds and B1 in one, but
+its outer OOF MAE is 4.3094 C; this is an evaluation of the selection procedure,
+not grounds to change the rule.
+
+All 1,268,160 fixed complete-OOF model rows satisfy absolute = level + anomaly
+within 3.55e-15 C. Original M3 and C1/C2/C3 retain identical centered relative
+predictions, deterministic GEOID-tiebroken rankings, and exact top-20% hotspot
+sets on all 132 scored city-dates. The candidate route therefore changed only
+the city-date level as intended. All stage-2 source read/fit/score/select
+permissions are closed. Under the frozen stop rule, do not enter the already
+opened Seattle/Denver/Atlanta/Miami historical stress test for these candidates.
+The result is reused-source development evidence, not independent confirmation.
+
+### Completed prerequisite: stage 0-1 contract and audit
+
+Stage 0-1 is complete. The machine-readable development contract is
+`experiments/four_city_absolute_error/fixed_contract.toml`; the audit method is
+`experiments/four_city_absolute_error/audit.py`; the concise evidence report is
+`docs/FOUR_CITY_ABSOLUTE_ERROR_STAGE_0_1_AUDIT.zh-CN.md`. The audit performed no
+fit, candidate prediction, candidate scoring, download, predictor build, LA
+2025 access, default-model change, commit, or push. Its temporary read
+permissions are closed in the single `ACTIVE_STAGE.json`.
+
+The frozen four-city baseline reproduces at 1.6696 C Seattle, 13.2004 C Denver,
+5.2466 C Atlanta, and 3.2206 C Miami; the equal-city/equal-date result is
+5.8343 C. Across 23,667 complete prediction rows, every absolute prediction
+equals its stored level plus anomaly, and the largest absolute city-date
+complete-support anomaly median is 2.22e-16 C. The scoring universe is the
+distinct 9,502-row, 66-city-date, 68-block target-available subset. Per-date
+level offsets, P95 errors, and rates above 5 C/10 C are in the local ignored
+`exports/FOUR_CITY_ABSOLUTE_ERROR_STAGE_0_1/` audit outputs.
+
+Model identity is resolved: the original anomaly is a component of the saved
+full M3 pickle, not the separate `M3_RELATIVE_V1` joblib. Fixed-QA4K scored
+source OOF predictions (96,061 rows, 132 city-dates, 254 blocks) can reproduce
+the original M3/B1 baselines, but they do not contain held-out complete-universe
+predictions. The older 96,904-row nested OOF mixed QA/model selections by outer
+fold and cannot substitute for the fixed stage-2 contract. Stage 2 subsequently
+filled this complete-universe gap as recorded above. Original blind-test
+failures remain immutable, and LA 2025 remains unavailable for retuning.
+
+## Historical side analysis: LA regional errors (2026-09-16)
+
+An earlier interpretation of the high-error request focused on LA-local
+areas; the user subsequently clarified the four-city priority above.
+A read-only recomputation of existing
+LA forward OOF results is reproducible with
+`exports/LA_HIGH_ERROR_REVIEW/review.py`; its report and input-hashed summary are
+in the same ignored directory. No fit, new target access, or permission change
+occurred. Current relative MAE is 0.95308 C, but date-macro worst-10%-row error
+is 2.50397 C; error exceeds 3 C on 3.1159% of rows under equal-date weighting.
+All eight errors above 10 C occurred on 2022-05-14. The seven worst baseline
+blocks among 68 blocks with >=25 dates across all three years average 1.61743 C.
+Some contain only 1-3 observed tracts, so their spatial representativeness is
+limited. All comparisons use the same baseline-defined seven blocks.
+The prior Tmax candidate reduces their descriptive MAE to 1.51726 C but does
+not improve datewise worst-10% error (2.50555 C). It remains unpromoted.
+These newly chosen groups/metrics are post-hoc diagnostics, not a revised
+historical gate or independent confirmation. A future tail-focused experiment
+must fix endpoints first and define priority regions using training-only data
+or outcome-independent geography, with overall performance guardrails.
+
+## Earlier research planning note (superseded priority; no model execution)
+
+The user requested research into potentially larger improvements for existing
+US cities. `docs/US_MODEL_IMPROVEMENT_RESEARCH.zh-CN.md` audits the actually tested
+candidate space and cites primary research/data documentation. It proposes a
+bounded same-feature capacity comparison first, then considers date-varying
+weather/geography and morphology/illumination information if data feasibility
+supports it. These are untested proposals, not expected performance gains.
+No model was fitted, no scientific data downloaded, no new target read, and no
+active-stage permission changed. The completed stage below remains closed;
+implementation requires a separately fixed next-experiment scope. LA 2025 and
+external target boundaries remain unchanged.
 
 ## Current direction: LA model-optimization stage complete (2026-09-14)
 

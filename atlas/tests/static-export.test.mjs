@@ -147,7 +147,39 @@ test("exports the complete M3 research line without rewriting the blind result",
   assert.match(renderedText, /36%/);
   assert.match(html, /Absolute-temperature route stopped/);
   assert.match(html, /development result/);
+  assert.match(html, /Fixed Colorado source addition/);
+  assert.match(html, /Large errors fell\. The upgrade still failed\./);
+  assert.match(renderedText, /4\.53°C/);
+  assert.match(renderedText, /4\.15°C/);
+  assert.match(renderedText, /96,061/);
+  assert.match(renderedText, /254/);
+  assert.match(html, /No upgrade/);
+  assert.match(html, /Chengdu pilot-area/);
   assert.equal(await sha256(sourceSummary), await sha256(exportedSummary));
+});
+
+test("ships the generated Colorado source-addition display result", async () => {
+  const source = new URL(
+    "../public/data/colorado-source-addition.json",
+    import.meta.url,
+  );
+  const exported = new URL(
+    "../out/data/colorado-source-addition.json",
+    import.meta.url,
+  );
+  const payload = JSON.parse(await readFile(source, "utf8"));
+
+  assert.equal(await sha256(source), await sha256(exported));
+  assert.equal(payload.decision, "no_upgrade");
+  assert.equal(payload.support.scoredRows, 96061);
+  assert.equal(payload.support.independentCityDates, 132);
+  assert.equal(payload.support.spatialBlocks, 254);
+  assert.equal(payload.scope.independentConfirmation, false);
+  assert.equal(payload.scope.defaultModelChanged, false);
+  assert.deepEqual(
+    payload.cities.map(({ id }) => id),
+    ["chicago_il", "houston_tx", "los_angeles_ca", "phoenix_az"],
+  );
 });
 
 test("keeps the LA homepage and exports the separate four-city atlas", async () => {

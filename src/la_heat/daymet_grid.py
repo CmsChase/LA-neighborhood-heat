@@ -76,7 +76,7 @@ _GRANULE_PATTERN = re.compile(
     r"(?P<variable>dayl|prcp|srad|swe|tmax|tmin|vp)_"
     r"(?P<year>\d{4})\.nc$"
 )
-_NETCDF_SIGNATURES = (b"CDF\x01", b"CDF\x02", b"CDF\x05", b"\x89HDF\r\n\x1a\n")
+_HDF5_SIGNATURE = b"\x89HDF\r\n\x1a\n"
 
 
 class DaymetGridAuditError(ValueError):
@@ -653,10 +653,23 @@ def request_daymet_subset_url(
     return matches[0]
 
 
+def netcdf_signature_kind(prefix: bytes) -> str | None:
+    """Identify CDF-1/2/5 or HDF5, including standard HDF5 user blocks."""
+
+    classic = {b"CDF\x01": "netcdf_classic", b"CDF\x02": "netcdf_64bit_offset",
+               b"CDF\x05": "netcdf_cdf5"}
+    if prefix[:4] in classic:
+        return classic[prefix[:4]]
+    for offset in (0, 512, 1024, 2048, 4096, 8192):
+        if prefix[offset:offset + 8] == _HDF5_SIGNATURE:
+            return "netcdf4_hdf5"
+    return None
+
+
 def _has_netcdf_signature(path: Path) -> bool:
     with path.open("rb") as handle:
-        prefix = handle.read(8)
-    return any(prefix.startswith(signature) for signature in _NETCDF_SIGNATURES)
+        prefix = handle.read(8200)
+    return netcdf_signature_kind(prefix) is not None
 
 
 def _authenticated_netcdf_download_once(

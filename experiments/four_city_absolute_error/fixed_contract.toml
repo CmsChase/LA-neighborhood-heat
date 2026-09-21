@@ -1,0 +1,120 @@
+schema_version = 1
+contract_id = "four-city-absolute-error-fixed-candidates-v1"
+frozen_at = "2026-09-16"
+status = "fixed_before-candidate-computation"
+purpose = "Develop a source-selected absolute-temperature level replacement while preserving the frozen original M3 anomaly branch."
+
+[scope]
+source_cities = ["los_angeles_ca", "phoenix_az", "houston_tx", "chicago_il"]
+opened_stress_test_cities = ["seattle_wa", "denver_co", "atlanta_ga", "miami_fl"]
+qa_candidate = "QA4K"
+target = "tract-level Landsat surface temperature in degrees Celsius"
+prediction_universe = "complete fixed predictor tract-date universe for each city and date"
+scoring_universe = "authorized target-available rows passing the frozen QA4K contract"
+opened_city_results_are_historical_stress_tests_only = true
+changes_original_blind_test_conclusion = false
+reoptimizes_los_angeles = false
+starts_chengdu_transfer = false
+
+[shared_model]
+formula = "absolute_prediction = candidate_level + frozen_original_m3_anomaly"
+anomaly_source = "anomaly_model component of data/processed/multicity/m3_source_joint_nested_loso_v1/joint/selected_source_model.pkl"
+anomaly_features = "18 static plus 5 lagged-Sentinel features from the original M3 contract"
+anomaly_centering = "median over the complete fixed prediction universe within each city-date"
+allow_anomaly_refit_during_nested_source_folds = true
+allow_anomaly_hyperparameter_search = false
+allow_opened_city_target_in_prediction_input = false
+
+[[candidates]]
+id = "C1"
+name = "B1 level plus frozen original M3 anomaly"
+level_definition = "median of B1 tract predictions over the complete fixed prediction universe within each city-date"
+features = "original 23 B1 calendar and lagged-Daymet features"
+special_cases = "none"
+
+[[candidates]]
+id = "C2"
+name = "source-range elevation gate"
+level_definition = "use the original M3 level inside the training-fold source-city median-elevation range; otherwise use the C1 level"
+range_statistic = "city median elevation over the complete fixed prediction universe, computed using training-fold sources only"
+boundary = "closed hard interval from the minimum to maximum training-fold source-city medians"
+buffer = false
+soft_gate = false
+city_special_cases = false
+
+[[candidates]]
+id = "C3"
+name = "d-1 Tmax anchor plus a small fixed correction tree"
+anchor_definition = "median daymet_tmax_c_mean_prev_1d over the complete fixed prediction universe within each city-date"
+response = "valid target median minus the complete-universe d-1 Tmax median for each source city-date"
+inputs = "complete-universe city-date medians of the original 23 B1 calendar and lagged-Daymet features"
+forbidden_inputs = ["elevation", "latitude", "longitude", "city_id", "tract_geoid", "target statistics outside the training fold"]
+estimator = "sklearn.tree.DecisionTreeRegressor"
+criterion = "absolute_error"
+max_depth = 2
+min_samples_leaf = 10
+random_state = 20260916
+city_date_weighting = "equal city and equal date"
+missing_value_handling = "fit inside each training fold only"
+weather_window_search = false
+hyperparameter_search = false
+
+[source_selection]
+method = "whole-city nested leave-one-source-city-out"
+outer_folds = 4
+inner_selection_uses_only_outer_training_cities = true
+baseline = "B1"
+candidate_eligibility = "candidate overall equal-city/equal-date absolute MAE must be no worse than B1 and candidate worst-source-city MAE must be no worse than B1"
+primary_rank = "minimum worst-source-city absolute MAE"
+tie_tolerance_c = 0.01
+secondary_rank = "minimum overall equal-city/equal-date absolute MAE"
+simplicity_order = ["C1", "C2", "C3"]
+no_eligible_candidate_action = "retain B1; no upgrade"
+outer_fold_scores_may_select_final_candidate = false
+final_source_choice = "apply the same fixed whole-city inner selection rule using all four source cities; opened-city outcomes are excluded"
+
+[opened_city_stress_test]
+batch_is_fixed = true
+single_source_selected_candidate_for_all_cities = true
+may_change_candidate_choice = false
+may_create_c4 = false
+may_choose_city_specific_winners = false
+denver_max_absolute_mae_c = 3.8993
+atlanta_max_absolute_mae_c = 4.3150
+seattle_max_absolute_mae_c = 1.8696
+miami_max_absolute_mae_c = 3.4206
+overall_equal_city_equal_date_max_absolute_mae_c = 3.8032
+tolerance_basis = "the 0.2 C Seattle/Miami tolerance is a frozen recommendation without independent empirical calibration"
+
+[metrics]
+primary = "absolute MAE, averaged by date within city and equally across cities"
+signed_error = "prediction minus observed target"
+relative_mae = "score after centering prediction and target separately within the scoring subset for each city-date"
+p95 = "compute row absolute-error P95 within each city-date, then summarize equally by date and city"
+threshold_rates = "compute fractions above 5 C and 10 C within each city-date, then summarize equally by date and city"
+pooled_row_metrics_must_be_labeled = true
+report_complete_and_scoring_universes_separately = true
+
+[stopping]
+source_no_eligible_candidate = "stop and retain B1"
+opened_city_any_threshold_failure = "do not upgrade; do not modify the fixed candidate set using opened-city outcomes"
+opened_city_all_thresholds_pass = "candidate remains a development result requiring future independent confirmation"
+
+[stage_0_1]
+allow_training = false
+allow_candidate_prediction = false
+allow_candidate_scoring = false
+allow_download = false
+allow_new_predictor_build = false
+allow_default_model_change = false
+allow_la_2025_access = false
+allow_git_commit_or_push = false
+audit_only = true
+
+[expected_current_baseline]
+seattle_absolute_mae_c = 1.6696
+denver_absolute_mae_c = 13.2004
+atlanta_absolute_mae_c = 5.2466
+miami_absolute_mae_c = 3.2206
+overall_equal_city_equal_date_absolute_mae_c = 5.8343
+tolerance_c = 0.0001

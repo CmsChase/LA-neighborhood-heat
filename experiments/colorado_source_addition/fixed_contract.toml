@@ -1,0 +1,62 @@
+schema_version = 1
+algorithm_version = "colorado-source-addition-fixed-v1"
+
+[objective]
+question = "Does adding Colorado Springs source-development data improve the already-selected M3 specification on the same four held-out original source cities?"
+interpretation = "iterative source-development evidence, not independent confirmation"
+
+[cohorts]
+original_source_city_ids = ["los_angeles_ca", "phoenix_az", "houston_tx", "chicago_il"]
+added_source_city_id = "colorado_springs_co"
+primary_holdout_city_ids = ["los_angeles_ca", "phoenix_az", "houston_tx", "chicago_il"]
+colorado_role = "training-only addition in primary comparison; separately reported held-city development diagnostic"
+excluded_colorado_date = "2021-10-18"
+la_2025_access = false
+external_four_city_target_access = false
+
+[model]
+qa_id = "4k"
+candidate_id = "level_ridge_alpha_10__anomaly_hgb_leaves_31"
+level_ridge_alpha = 10.0
+anomaly_hgb_max_leaf_nodes = 31
+feature_contract = "existing exact 46 plus city_centroid_latitude_deg context"
+hyperparameter_search = false
+
+[comparison]
+baseline = "for each original held city, train on the other three original cities"
+expanded = "for each original held city, train on the same three plus Colorado Springs"
+outer_split = "whole city"
+same_scoring_rows = true
+preprocessing_fit_within_training_fold = true
+primary_metric = "equal-city equal-date absolute MAE"
+secondary_metrics = ["signed bias", "relative MAE", "top-20-percent hotspot recall", "P95 absolute error", "fraction over 5C", "fraction over 10C"]
+uncertainty = "2000 deterministic paired hierarchical bootstrap replicates over cities then dates"
+
+[decision]
+minimum_primary_relative_improvement = 0.05
+maximum_allowed_any_city_mae_degradation_c = 0.25
+upgrade_requires_both_gates = true
+failure_action = "retain original four-source model and close this source-addition route"
+passing_action = "save expanded development candidate; require later independent confirmation for an upgrade claim"
+
+[inputs]
+original_authorization = "manifests/multicity/next_experiment/M3_SOURCE_JOINT_NESTED_LOSO_V1_AUTHORIZATION.json"
+original_authorization_sha256 = "cbfeddc5f9712b738df2dc5b9c95e5abac824cd8cb36c72a168d331e3e9fa238"
+colorado_predictor_acceptance = "exports/SOURCE_CITY_PREDICTOR_TRIAL/official_2020/colorado_springs_co/OFFICIAL_PREDICTOR_INPUT_ACCEPTANCE.json"
+colorado_predictor_acceptance_sha256 = "f1b2fa964e1af9831cc4a8b2bcff5983eacc24e599d137adf3325f0bf19cacda"
+colorado_predictor_table = "exports/SOURCE_CITY_PREDICTOR_TRIAL/official_2020/colorado_springs_co/official_predictor_inputs_46_with_blocked_date.parquet"
+colorado_predictor_table_sha256 = "9c9d0ef4b22c9ffa1a1b370e99f6716e718abfe51ef3aa4dd42ae8a871e07cc2"
+colorado_target_summary = "exports/SOURCE_CITY_TARGET_AVAILABILITY/official_2020/colorado_springs_co/summary.json"
+colorado_target_summary_sha256 = "e01e662cfc35573b459def276257082141c823b89299f9cc23eb121942d8834b"
+colorado_city_centroid_latitude_deg = 38.867394563539705
+colorado_city_centroid_source = "2020 Census place 0816000; centroid in EPSG:32613 transformed to EPSG:4326"
+
+[permissions]
+network = false
+read_la_2025 = false
+read_external_four_city_targets = false
+read_original_source_qa4k_targets_pre_2025 = true
+read_colorado_accepted_source_targets = true
+fit_and_score_fixed_comparison = true
+modify_default_model = false
+commit_or_push = false

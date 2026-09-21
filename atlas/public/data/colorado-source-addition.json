@@ -1,0 +1,105 @@
+{
+  "state": "complete",
+  "decision": "no_upgrade",
+  "label": "No upgrade",
+  "candidateId": "level_ridge_alpha_10__anomaly_hgb_leaves_31",
+  "qaId": "4k",
+  "support": {
+    "scoredRows": 96061,
+    "independentCityDates": 132,
+    "spatialBlocks": 254,
+    "heldCities": 4,
+    "coloradoTrainingRows": 4140,
+    "coloradoTrainingDates": 46
+  },
+  "baseline": {
+    "equal_city_equal_date_mae_c": 4.525093442004593,
+    "equal_city_equal_date_bias_c": 2.3041300522821597,
+    "equal_city_equal_date_relative_mae_c": 1.360594752193525,
+    "worst_city_mae_c": 8.118919724020172,
+    "p95_absolute_error_c": 10.297758630226006,
+    "fraction_absolute_error_over_5c": 0.303650805217518,
+    "fraction_absolute_error_over_10c": 0.05611017998979815,
+    "top20_hotspot_recall": 0.40242386323665336,
+    "scored_rows": 96061,
+    "independent_dates": 132,
+    "cities": 4
+  },
+  "expanded": {
+    "equal_city_equal_date_mae_c": 4.145424553347018,
+    "equal_city_equal_date_bias_c": 1.6744703513030512,
+    "equal_city_equal_date_relative_mae_c": 1.4060659590201405,
+    "worst_city_mae_c": 5.340311127377782,
+    "p95_absolute_error_c": 8.30617068389384,
+    "fraction_absolute_error_over_5c": 0.23670376115176814,
+    "fraction_absolute_error_over_10c": 0.021184455710433994,
+    "top20_hotspot_recall": 0.43119256073626056,
+    "scored_rows": 96061,
+    "independent_dates": 132,
+    "cities": 4
+  },
+  "relativeImprovementPercent": 8.390299416433342,
+  "expandedMinusBaselineCi95C": [
+    -1.9994664619205424,
+    0.8772912251592782
+  ],
+  "maximumCityMaeDegradationC": 0.9580589856046382,
+  "fivePercentGatePassed": true,
+  "cityGuardPassed": false,
+  "cities": [
+    {
+      "id": "chicago_il",
+      "name": "Chicago",
+      "baselineMaeC": 8.118919724020172,
+      "expandedMaeC": 5.340311127377782,
+      "deltaC": -2.77860859664239
+    },
+    {
+      "id": "houston_tx",
+      "name": "Houston",
+      "baselineMaeC": 4.594710881560125,
+      "expandedMaeC": 5.2763026481667685,
+      "deltaC": 0.6815917666066431
+    },
+    {
+      "id": "los_angeles_ca",
+      "name": "Los Angeles",
+      "baselineMaeC": 2.9771406221304715,
+      "expandedMaeC": 2.5974229119312793,
+      "deltaC": -0.3797177101991922
+    },
+    {
+      "id": "phoenix_az",
+      "name": "Phoenix",
+      "baselineMaeC": 2.4096025403076045,
+      "expandedMaeC": 3.3676615259122427,
+      "deltaC": 0.9580589856046382
+    }
+  ],
+  "scope": {
+    "evidenceRole": "source-city development validation",
+    "independentConfirmation": false,
+    "defaultModelChanged": false,
+    "la2025Accessed": false,
+    "externalFourCityTargetsAccessed": false,
+    "networkRequests": 0
+  },
+  "sources": [
+    {
+      "path": "exports/COLORADO_SOURCE_ADDITION_FIXED_V1/RESULTS.json",
+      "sha256": "db7055a64ad10101b5c138803586f8d47ed6e604bc59f249402e3d12c320c7ab"
+    },
+    {
+      "path": "exports/COLORADO_SOURCE_ADDITION_FIXED_V1/paired_city_metrics.parquet",
+      "sha256": "d4ebfaeb70a24bf292bb60fbacc66ac0b13759cd0df9e0014d470e5bacbbbc99"
+    },
+    {
+      "path": "exports/COLORADO_SOURCE_ADDITION_FIXED_V1/paired_outer_predictions.parquet",
+      "sha256": "93392b0929b6f03dba9c1210db7cf380b7fe4dcf13820eaa0ad6fb3bef433adf"
+    },
+    {
+      "path": "manifests/multicity/next_experiment/M3_SOURCE_JOINT_NESTED_LOSO_V1_AUTHORIZATION.json",
+      "sha256": "cbfeddc5f9712b738df2dc5b9c95e5abac824cd8cb36c72a168d331e3e9fa238"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import colorado from "../../public/data/colorado-source-addition.json";
 import { M3_BLIND_RESULT as result } from "./results";
 import styles from "./m3.module.css";
 
@@ -9,7 +10,7 @@ const repositoryRoot =
 export const metadata: Metadata = {
   title: "The M3 research story · Surface Heat Atlas",
   description:
-    "One continuous record from early transfer evidence through the failed M3 blind test, mechanism diagnosis, and the narrower relative-temperature result.",
+    "One continuous record from early transfer evidence through the failed M3 blind test, narrower relative-temperature result, and final Colorado source-addition decision.",
 };
 
 function signed(value: number, digits = 2) {
@@ -20,6 +21,9 @@ export default function M3ResultPage() {
   const maximumMae = Math.max(
     result.primary.b1MaeC,
     result.primary.m3MaeC,
+  );
+  const coloradoMaximumMae = Math.max(
+    ...colorado.cities.flatMap((city) => [city.baselineMaeC, city.expandedMaeC]),
   );
 
   return (
@@ -34,6 +38,7 @@ export default function M3ResultPage() {
           <a href="#blind-result">Blind result</a>
           <a href="#diagnosis">Diagnosis</a>
           <a href="#relative">Relative signal</a>
+          <a href="#colorado">Final experiment</a>
         </nav>
         <Link className="header-tag" href="/">
           LA interactive atlas
@@ -46,7 +51,7 @@ export default function M3ResultPage() {
           <span className={styles.recordBadge}>
             <i /> One continuous research record · 2025–2026
           </span>
-          <span className="eyebrow light">Eight cities · three experiments · one honest turn</span>
+          <span className="eyebrow light">Nine cities · four experiments · one preserved record</span>
           <h1>
             The model failed.
             <br />
@@ -572,15 +577,120 @@ export default function M3ResultPage() {
         </div>
       </section>
 
+      <section className={styles.coloradoSection} id="colorado">
+        <div className={styles.coloradoHeading}>
+          <div>
+            <span className="eyebrow">09 · Fixed Colorado source addition</span>
+            <h2>Large errors fell. The upgrade still failed.</h2>
+          </div>
+          <p>
+            Colorado Springs added 46 development dates to one fixed training
+            comparison. Absolute MAE improved in aggregate, but Houston and
+            Phoenix became worse. The prespecified city-protection rule failed,
+            so the original four-source model remains the default.
+          </p>
+        </div>
+
+        <div className={styles.coloradoOutcome}>
+          <article>
+            <span>Original four-source training</span>
+            <strong>{colorado.baseline.equal_city_equal_date_mae_c.toFixed(2)}°C</strong>
+            <small>equal-city / equal-date absolute MAE</small>
+          </article>
+          <div className={styles.coloradoDecision}>
+            <span>Point change</span>
+            <strong>−{colorado.relativeImprovementPercent.toFixed(2)}%</strong>
+            <p>
+              The 5% aggregate gate passed, but the maximum city degradation was{" "}
+              {colorado.maximumCityMaeDegradationC.toFixed(2)}°C against a fixed
+              0.25°C limit.
+            </p>
+            <b>{colorado.label}</b>
+          </div>
+          <article>
+            <span>Training plus Colorado</span>
+            <strong>{colorado.expanded.equal_city_equal_date_mae_c.toFixed(2)}°C</strong>
+            <small>same held cities, rows, dates, weights and scoring rule</small>
+          </article>
+        </div>
+
+        <div className={styles.coloradoCityGrid}>
+          {colorado.cities.map((city) => {
+            const improved = city.deltaC < 0;
+            return (
+              <article key={city.id} data-improved={improved}>
+                <div>
+                  <span>{city.name}</span>
+                  <strong>{signed(city.deltaC)}°C</strong>
+                </div>
+                <div className={styles.coloradoBars} aria-label={`${city.name} MAE comparison`}>
+                  <div>
+                    <span>Original</span>
+                    <i style={{ width: `${(city.baselineMaeC / coloradoMaximumMae) * 100}%` }} />
+                    <b>{city.baselineMaeC.toFixed(2)}°</b>
+                  </div>
+                  <div>
+                    <span>+ Colorado</span>
+                    <i style={{ width: `${(city.expandedMaeC / coloradoMaximumMae) * 100}%` }} />
+                    <b>{city.expandedMaeC.toFixed(2)}°</b>
+                  </div>
+                </div>
+                <small>{improved ? "absolute error reduced" : "held-city error increased"}</small>
+              </article>
+            );
+          })}
+        </div>
+
+        <dl className={styles.coloradoSupport}>
+          <div><dt>Scored rows</dt><dd>{colorado.support.scoredRows.toLocaleString()}</dd></div>
+          <div><dt>City-dates</dt><dd>{colorado.support.independentCityDates}</dd></div>
+          <div><dt>Spatial blocks</dt><dd>{colorado.support.spatialBlocks}</dd></div>
+          <div><dt>Colorado development support</dt><dd>{colorado.support.coloradoTrainingDates} dates</dd></div>
+        </dl>
+
+        <div className={styles.coloradoBoundary}>
+          <div>
+            <span>Paired expanded − original MAE interval</span>
+            <strong>
+              [{colorado.expandedMinusBaselineCi95C[0].toFixed(2)}, {" "}
+              {signed(colorado.expandedMinusBaselineCi95C[1])}]°C
+            </strong>
+          </div>
+          <p>
+            This is source-city development validation, not independent
+            confirmation. It does not re-evaluate or repair Denver, Seattle,
+            Atlanta or Miami. LST remains a surface-temperature proxy—not air
+            temperature or human heat exposure.
+          </p>
+          <a
+            href={repositoryRoot + "/docs/COLORADO_SOURCE_ADDITION_FIXED_V1.zh-CN.md"}
+            rel="noreferrer"
+            target="_blank"
+          >
+            Read fixed experiment report ↗
+          </a>
+        </div>
+
+        <div className={styles.nextDirection}>
+          <span>Next direction</span>
+          <p>
+            Chengdu pilot-area surface-heat research and public-space improvement
+            recommendations remain a feasibility idea only. No Chengdu data,
+            model or map has been started.
+          </p>
+        </div>
+      </section>
+
       <section className={styles.finalNote}>
         <span>Where the line ends</span>
-        <h2>Absolute M3 failed. Relative M3 is a development result.</h2>
+        <h2>The U.S. optimization stage is complete.</h2>
         <p>
           The existing 23-feature relative model remains the stage default and
-          model search is paused. Existing absolute-temperature outputs are
-          retained with their original limits; this result does not rescue the
-          failed cross-city blind test. Any future confirmation still requires
-          a genuinely untouched cohort.
+          model search is paused. The fixed Colorado experiment found useful
+          local improvement but no reliable unified upgrade. Existing absolute-
+          temperature outputs retain their original limits; this does not rescue
+          the failed cross-city blind test. Any future confirmation still
+          requires a genuinely untouched cohort.
           Landsat LST is a clear-sky surface-heat proxy—not air temperature,
           exposure, illness, or causation.
         </p>
@@ -589,7 +699,7 @@ export default function M3ResultPage() {
       <footer className={styles.footer}>
         <div>
           <strong>The M3 research record</strong>
-          <span>Los Angeles to eight-city development</span>
+          <span>Los Angeles to nine-city development</span>
         </div>
         <p>
           One continuous line · failure preserved · narrower result labeled ·{" "}

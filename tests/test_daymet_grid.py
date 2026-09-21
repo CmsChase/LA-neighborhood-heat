@@ -30,6 +30,7 @@ from la_heat.daymet_grid import (
     discover_daymet_v4r1_granules,
     inspect_daymet_netcdf,
     load_earthdata_bearer_token,
+    netcdf_signature_kind,
     prompt_earthdata_bearer_token,
     read_daymet_netcdf_cells,
     request_daymet_subset_url,
@@ -37,6 +38,14 @@ from la_heat.daymet_grid import (
     validate_daymet_netcdf_grid_specs,
     validate_fixed_cell_weights,
 )
+
+
+def test_netcdf_signature_kind_distinguishes_classic_hdf5_and_html() -> None:
+    assert netcdf_signature_kind(b"CDF\x01test") == "netcdf_classic"
+    assert netcdf_signature_kind(b"CDF\x02test") == "netcdf_64bit_offset"
+    assert netcdf_signature_kind(b"CDF\x05test") == "netcdf_cdf5"
+    assert netcdf_signature_kind(b"\x00" * 512 + b"\x89HDF\r\n\x1a\n") == "netcdf4_hdf5"
+    assert netcdf_signature_kind(b"<html>login</html>") is None
 
 
 class _FakeResponse:

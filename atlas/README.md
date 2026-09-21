@@ -21,6 +21,12 @@ already-opened stress-test results; they do not recompute metrics or turn the
 failed M3 absolute-temperature comparison into a new claim. Land-surface
 temperature is not air temperature, exposure, illness, or causation.
 
+The M3 research page also includes the final fixed Colorado Springs source-
+addition experiment. Its compact display payload is generated from the local
+machine results and records the `no_upgrade` decision; it is source-city
+development evidence, not a new independent confirmation or a re-evaluation of
+the opened four-city blind result.
+
 ## What the Los Angeles atlas shows
 
 - synchronized observed, predicted, and residual tract maps;
@@ -56,10 +62,14 @@ Regenerate the compact display payload from the frozen local inputs:
 
 ```bash
 python scripts/export_four_city_atlas.py --project-root .
+python scripts/export_colorado_source_addition_atlas.py --project-root .
 ```
 
 The exporter reads the existing M3 blind-evaluation rows and fixed Census tract
 geometries. Do not edit `atlas/public/data/four-city-atlas.json` by hand.
+The Colorado exporter reads the fixed experiment result, paired city metrics,
+paired scoring keys and authenticated source QA block assignments. Do not edit
+`atlas/public/data/colorado-source-addition.json` by hand.
 
 Files under `public/data/` are compact display exports authenticated against
 the frozen evaluations. They are presentation inputs and must not be edited by

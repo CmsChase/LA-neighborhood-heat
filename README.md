@@ -7,7 +7,7 @@ interactive Atlas for neighborhood-scale daytime land-surface temperature
 [![Python CI](https://github.com/CmsChase/LA-neighborhood-heat/actions/workflows/python-ci.yml/badge.svg)](https://github.com/CmsChase/LA-neighborhood-heat/actions/workflows/python-ci.yml)
 
 [Open the Los Angeles heat atlas](https://cmschase.github.io/LA-neighborhood-heat/)
-| [Open the M3 four-city blind result](https://cmschase.github.io/LA-neighborhood-heat/m3/)
+| [Open the M3 research record and final U.S. stage](https://cmschase.github.io/LA-neighborhood-heat/m3/)
 | [Open the earlier transfer study](https://cmschase.github.io/LA-neighborhood-heat/cities/)
 
 ## Research question
@@ -42,6 +42,8 @@ promising rather than protocol-confirmed.
 | Seattle–Denver–Atlanta–Miami predictor build | Complete | All 46 predictors and the frozen M3 predictions were authenticated before target access |
 | Four-city blind evaluation | Complete; not confirmed | M3 MAE 5.8343 °C versus B1 at 3.8032 °C; all primary gates failed and Miami had only four usable dates |
 | LA local relative-accuracy optimization | Complete; model search paused | The existing 23-feature relative model remains the stage default; strict-forward 2022–2024 development MAE was 0.9531 °C and no tested candidate passed the fixed 5% upgrade gate |
+| Colorado source addition | Complete; `no_upgrade` | Aggregate absolute MAE improved 8.39%, but Houston and Phoenix degraded beyond the fixed city guard; the original four-source model remains the default |
+| U.S. model optimization | Complete; search paused | Existing defaults and limitations are frozen; Chengdu feasibility is a future, separately authorized direction and has not started |
 
 The one-time M3 blind evaluation is complete. Its protocol state is
 `inconclusive_sample_size`, and its observed point estimate and full bootstrap
@@ -55,6 +57,15 @@ point on the original LA holdout or cross-city score curve. Its retained model,
 rejected candidates, absolute-output boundary, and local-only artifact inventory
 are recorded in the
 [LA model-optimization stage summary](docs/LA_MODEL_OPTIMIZATION_STAGE_SUMMARY.zh-CN.md).
+
+The final Colorado source-addition comparison is also development evidence,
+not a new blind confirmation. It used the same 96,061 original-source scoring
+rows, 132 city-dates and 254 spatial blocks: absolute MAE changed from 4.5251°C
+to 4.1454°C, but Houston and Phoenix degraded and the fixed city guard failed.
+The complete U.S. stage interpretation and local-artifact inventory are in the
+[U.S. model-optimization stage summary](docs/US_MODEL_OPTIMIZATION_STAGE_SUMMARY.zh-CN.md).
+The public M3 page displays this result without changing the earlier blind-test
+conclusion.
 
 The machine-readable current state is
 [`manifests/multicity/ACTIVE_STAGE.json`](manifests/multicity/ACTIVE_STAGE.json).

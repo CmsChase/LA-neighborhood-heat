@@ -327,6 +327,83 @@ def test_composite_requires_three_physical_acquisitions_and_keeps_audit_separate
     ).all()
 
 
+def test_composite_allows_one_acquisition_in_multiple_target_windows() -> None:
+    acquisitions = _acquisition_rows().loc[
+        lambda frame: frame.physical_acquisition_id == "physical-1"
+    ].copy()
+    membership = pd.DataFrame(
+        {
+            "target_date": ["2024-07-10", "2024-07-20"],
+            "physical_acquisition_id": ["physical-1", "physical-1"],
+            "acquisition_local_date": ["2024-07-01", "2024-07-01"],
+            "lag_days": [9, 19],
+        }
+    )
+
+    result = build_previous_60_day_composites(
+        acquisitions,
+        membership,
+        target_dates=["2024-07-10", "2024-07-20"],
+        tract_geoids=["a", "b"],
+        minimum_acquisition_coverage=0.8,
+        minimum_acquisitions=1,
+        final_test_year=2025,
+        unlock_final_test=False,
+    )
+
+    assert len(result.lineage) == 4
+    assert len(result.features) == 4
+    assert result.lineage.groupby("target_date").size().eq(2).all()
+    assert result.features[list(INDEX_COLUMNS)].notna().all(axis=None)
+
+
+def test_composite_rejects_inconsistent_membership_dates_for_one_acquisition() -> None:
+    membership = pd.DataFrame(
+        {
+            "target_date": ["2024-07-10", "2024-07-20"],
+            "physical_acquisition_id": ["physical-1", "physical-1"],
+            "acquisition_local_date": ["2024-07-01", "2024-07-02"],
+            "lag_days": [9, 18],
+        }
+    )
+
+    with pytest.raises(ValueError, match="multiple local dates"):
+        build_previous_60_day_composites(
+            _acquisition_rows().loc[
+                lambda frame: frame.physical_acquisition_id == "physical-1"
+            ],
+            membership,
+            target_dates=["2024-07-10", "2024-07-20"],
+            tract_geoids=["a", "b"],
+            minimum_acquisition_coverage=0.8,
+            minimum_acquisitions=1,
+            final_test_year=2025,
+            unlock_final_test=False,
+        )
+
+
+def test_composite_rejects_disagreement_between_membership_and_acquisition_date() -> None:
+    acquisitions = _acquisition_rows().loc[
+        lambda frame: frame.physical_acquisition_id == "physical-1"
+    ].copy()
+    acquisitions.loc[:, "acquisition_local_date"] = "2024-07-02"
+    membership = _membership().iloc[[0]].copy()
+    membership.loc[:, "target_date"] = "2024-07-10"
+    membership.loc[:, "lag_days"] = 9
+
+    with pytest.raises(ValueError, match="disagree on acquisition local date"):
+        build_previous_60_day_composites(
+            acquisitions,
+            membership,
+            target_dates=["2024-07-10"],
+            tract_geoids=["a", "b"],
+            minimum_acquisition_coverage=0.8,
+            minimum_acquisitions=1,
+            final_test_year=2025,
+            unlock_final_test=False,
+        )
+
+
 @pytest.mark.parametrize(
     ("target_date", "acquired", "lag"),
     [
